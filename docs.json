@@ -25,6 +25,58 @@
                         ]
                     }                    
                 ]
+            },
+            {
+                "tab": "API",
+                "groups": [
+                    {
+                        "group": "Get Started",
+                        "pages": [
+                            "introduction",
+                            "introduction/quickstart/setting-up-workspace",
+                            "introduction/quickstart/running-first-test"
+                        ]
+                    }                    
+                ]
+            },
+            {
+                "tab": "SDK",
+                "groups": [
+                    {
+                        "group": "Get Started",
+                        "pages": [
+                            "introduction",
+                            "introduction/quickstart/setting-up-workspace",
+                            "introduction/quickstart/running-first-test"
+                        ]
+                    }                    
+                ]
+            },
+            {
+                "tab": "CI/CD & CLI",
+                "groups": [
+                    {
+                        "group": "Get Started",
+                        "pages": [
+                            "introduction",
+                            "introduction/quickstart/setting-up-workspace",
+                            "introduction/quickstart/running-first-test"
+                        ]
+                    }                    
+                ]
+            },
+            {
+                "tab": "Self Hosting",
+                "groups": [
+                    {
+                        "group": "Get Started",
+                        "pages": [
+                            "introduction",
+                            "introduction/quickstart/setting-up-workspace",
+                            "introduction/quickstart/running-first-test"
+                        ]
+                    }                    
+                ]
             }
         ],
         "global": {
