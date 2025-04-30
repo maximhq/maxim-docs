@@ -1,0 +1,9 @@
+{
+  "title": "Test Runs",
+  "pages": [
+    "delete",
+    "get",
+    "entries",
+    "share-report"
+  ]
+}

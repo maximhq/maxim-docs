@@ -1,0 +1,70 @@
+---
+title: Use variable columns in Datasets
+description: Learn how to use variable columns in datasets
+---
+
+Maxim provides a way to insert dynamic values into your entities at runtime via your Datasets in the form of variables. A variable is a collection of a key and a value.
+
+You can refer to variables using the Jinja template syntax (double curly braces) `{{variable_name}}`.
+
+You can populate variable values in various ways
+
+- Dataset column
+- Use a context source to retrieve it at a run time
+
+<Callout type="info">
+  Maxim has specific types of reserved columns that take priority over the variables you've defined. These columns include:
+  - input
+  - expectedOutput
+  - output
+  - expectedToolCalls
+  - scenario
+  - expectedSteps
+
+</Callout>
+
+<Steps>
+
+<Step>
+### Variable usage in Prompt
+
+You can use variables in your Prompt to refer to dynamic values at runtime.
+For example, if you're creating a Prompt and want to provide context to the model, you can refer to the context via a variable in your system prompt
+
+```plaintext
+You are a helpful assistant, answer a given answer with respect, be nice and respectful
+
+You may use {{context}} to answer the questions
+```
+
+If you're using the Prompt playground, you can add variables via static values on the right side of the interface.
+
+Alternatively, if you're using it in a test run, you can create a context-named variable in your dataset. When the test run executes, this variable will be replaced with the values from your dataset column.
+
+<Callout type="info">
+    You can use variables for Prompt Comparison and Prompt Chain in the same way as you do in your Prompt playground
+</Callout>
+
+![Variable usage in Prompt](/images/docs/library/how-to/datasets/variables-usage/variable-usage-in-prompt-playground.png)
+
+</Step>
+
+<Step>
+### Variable usage in API Workflow
+
+If you're using an API Workflow, you can add variables to your workflow body, headers, or query parameters in the same way.
+
+![Variable usage in Prompt](/images/docs/library/how-to/datasets/variables-usage/variable-usage-in-workflow.png)
+
+</Step>
+
+<Step>
+### Variable usage in Evaluators
+
+You can use variables in your custom evaluators in the same way as you do in your Prompts. This allows you to provide additional context to your evaluators for better results.
+
+![Variable usage in Prompt](/images/docs/library/how-to/datasets/variables-usage/variable-usage-in-evaluators.png)
+
+</Step>
+
+</Steps>

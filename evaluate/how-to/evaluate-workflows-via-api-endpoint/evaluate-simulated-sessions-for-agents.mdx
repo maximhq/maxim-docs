@@ -1,0 +1,48 @@
+---
+title: Evaluate simulated sessions for agents
+description: Learn how to evaluate your AI agent's performance using automated simulated conversations. Get insights into how well your agent handles different scenarios and user interactions.
+---
+
+Follow these steps to test your AI agent with simulated sessions:
+
+<Steps>
+
+<Step>
+### Create a Dataset for testing
+- Configure the agent dataset template with:
+- **Agent scenarios**: Define specific situations for testing (e.g., "Update address", "Order an iPhone")
+- **Expected steps**: List expected actions and responses
+
+![Agent Dataset template](/images/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/evaluate-simulated-sessions-for-agents/agent-dataset-template.png)
+
+![Agent Dataset sample data](/images/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/evaluate-simulated-sessions-for-agents/agent-dataset-sample.png)
+
+</Step>
+
+<Step>
+### Set up the Test Run
+- Navigate to your workflow, click "Test", and select "Simulated session" mode
+- Pick your agent dataset from the dropdown
+- Configure additional parameters like persona, tools, and context sources
+- Enable relevant evaluators
+
+![Configure simulation Test Run](/images/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/evaluate-simulated-sessions-for-agents/agent-testrun-setup.png)
+
+</Step>
+
+<Step>
+### Execute Test Run
+- Click "Trigger test run" to begin
+- The system simulates conversations for each scenario
+</Step>
+
+<Step>
+### Review results
+- Each session runs end-to-end for thorough evaluation
+- You'll see detailed results for every scenario
+
+![Simulation Test Run result](/images/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/evaluate-simulated-sessions-for-agents/simulation-testrun-result.png)
+</Step>
+
+</Steps>
+

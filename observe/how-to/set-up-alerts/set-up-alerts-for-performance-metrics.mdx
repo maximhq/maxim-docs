@@ -1,0 +1,87 @@
+---
+title: Setting up alerts for performance metrics
+description: Learn how to set up alerts to monitor your application's performance metrics in Maxim.
+---
+
+Monitor your application's performance by setting up alerts for latency, token usage, and cost metrics. Create custom thresholds and receive notifications when metrics exceed your specified limits.
+
+## Available metrics
+
+Set up alerts for:
+
+- **Latency**: Response times for API calls
+- **Token Usage**: Token consumption per request
+- **Cost**: API usage expenses
+
+## Create an alert
+
+<Steps>
+<Step>
+Open the Logs page and select your repository
+</Step>
+<Step>
+Select the **Alerts** tab and click **Create alert**
+</Step>
+<Step>
+Configure your alert settings:
+  - Select **Log metrics** as the type of alert
+  - Select a metric (Latency, Token Usage, or Cost)
+  - Choose an operator (greater than, less than)
+  - Enter the threshold value
+  - Set minimum occurrence count
+  - Define evaluation time range
+</Step>
+<Step>
+Select your preferred notification channels (Slack, or PagerDuty)
+</Step>
+<Step>
+Click **Create alert**
+</Step>
+</Steps>
+
+<MaximPlayer url="https://drive.google.com/file/d/1jJc3wkB8LPi1q0RY8kEOWBnfuTI7CwE4/preview" />
+
+## Common alert configurations" or "Alert configuration examples
+
+### Monitor response time
+```
+Metric: Latency
+Operator: greater than
+Threshold: 1000 ms
+Minimum occurrences: 5
+Time range: 5 minutes
+```
+Triggers when response time exceeds 1 second in 5 requests within 5 minutes.
+
+### Setting up token consumption alerts
+```
+Metric: Token Usage
+Operator: greater than
+Threshold: 1000000
+Minimum occurrences: 1
+Time range: 1 hour
+```
+Triggers when hourly token usage exceeds 1 million.
+
+### Monitor daily costs
+```
+Metric: Cost
+Operator: greater than
+Threshold: 100 USD
+Minimum occurrences: 1
+Time range: 24 hours
+```
+Triggers when daily costs exceed $100.
+
+## Manage alerts
+
+- **Edit**: Click the options menu (three dots) > Edit alert
+- **Delete**: Click the options menu > Delete alert
+- **Pause/Resume**: Click the options menu > Pause alert or Resume alert
+
+## Best practices
+
+1. Begin with conservative thresholds to avoid alert fatigue
+2. Match time ranges to your application's usage patterns
+3. Use multiple occurrence thresholds for latency alerts to prevent false alarms
+4. Create layered alerts with different thresholds for comprehensive monitoring

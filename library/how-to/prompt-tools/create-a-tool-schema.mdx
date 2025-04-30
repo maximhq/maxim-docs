@@ -1,0 +1,49 @@
+---
+title: Create a Schema-based Prompt Tool
+description: Schema-based prompt tools provide a structured way to define tools that ensure accurate and schema-compliant outputs. This approach is particularly useful when you need to guarantee that the LLM's responses follow a specific format.
+---
+
+## Creating a Schema Tool
+
+<Steps>
+<Step>
+Navigate to the **Prompt Tools** section and click the + button.
+</Step>
+
+<Step>
+Select **Schema** as the tool type.
+</Step>
+
+<Step>
+Define your schema in the editor. Here's an example schema for a stock price tool:
+
+```json title="Function call schema"
+{
+    "type": "function",
+    "function": {
+        "name": "get-stock-price",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "stock": {
+                    "type": "string"
+                }
+            }
+        },
+        "description": "this function returns stock value"
+    }
+}
+```
+</Step>
+
+<Step>
+Click the **Save** button to create your schema-based tool.
+</Step>
+</Steps>
+
+## Testing Your Schema Tool
+
+After creating your schema-based tool:
+1. Add it to a prompt configuration
+2. Test if the model correctly identifies when to use it
+3. Verify that the outputs match your schema's structure

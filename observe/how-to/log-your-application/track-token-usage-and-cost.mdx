@@ -1,0 +1,101 @@
+---
+title: Track token usage and costs
+description: Learn how to efficiently track token usage and associated costs in your LLM application using Maxim's logging capabilities.
+---
+
+
+## Code examples by language
+
+Log token usage by including the usage object in your generation result:
+
+<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
+    ```typescript tab="JS/TS"
+    generation.result({
+        id: "chatcmpl-123",
+        object: "chat.completion",
+        created: Date.now(),
+        model: "gpt-4o",
+        choices: [{
+            index: 0,
+            message: {
+                role: "assistant",
+                content: "Apologies for the inconvenience. Can you please share your customer id?"
+            },
+            finish_reason: "stop"
+        }],
+        usage: {
+            prompt_tokens: 100,
+            completion_tokens: 50,
+            total_tokens: 150
+        }
+    });
+    ```
+
+    ```python tab="Python"
+    generation.result({
+        "id": "chatcmpl-123",
+        "object": "chat.completion",
+        "created": int(time.time()),
+        "model": "gpt-4o",
+        "choices": [{
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "Apologies for the inconvenience. Can you please share your customer id?"
+            },
+            "finish_reason": "stop"
+        }],
+        "usage": {
+            "prompt_tokens": 100,
+            "completion_tokens": 50,
+            "total_tokens": 150
+        }
+    })
+    ```
+
+    ```go tab="Go"
+    generation.SetResult(map[string]interface{}{
+        Id: "chatcmpl-123",
+        Object: "chat.completion",
+        Created: time.Now().Unix(),
+        Model: "gpt-4o",
+        Choices: []logging.ChatCompletionChoice{
+            {
+                Index: 0,
+                Message: &logging.ChatCompletionMessage{
+                    Role: "assistant",
+                    Content: "Apologies for the inconvenience. Can you please share your customer id?",
+                },
+                FinishReason: "stop",
+            },
+        },
+        Usage: &logging.Usage{
+            PromptTokens: 100,
+            CompletionTokens: 50,
+            TotalTokens: 150,
+        },
+    })
+    ```
+
+    ```java tab="Java"
+    generation.setResult(new ChatCompletionResult(
+        "chatcmpl-123",
+        "chat.completion",
+        System.currentTimeMillis() / 1000L,
+        "gpt-4o",
+        Arrays.asList(new ChatCompletionChoice(
+            0,
+            new Message("assistant", "Apologies for the inconvenience. Can you please share your customer id?"),
+            "stop"
+        )),
+        new Usage(100, 50, 150)
+    ));
+    ```
+</Tabs>
+
+<Callout>
+Learn more about tracking [generation results](/docs/observe/how-to/log-your-application/adding-llm-call).
+</Callout>
+
+## Custom pricing
+Need different pricing for your models? Read more on [custom pricing](/docs/observe/how-to/log-your-application/use-custom-pricing).

@@ -1,0 +1,78 @@
+---
+title: OpenAI Agents SDK
+description: How to integrate Maxim's observability and real-time evaluation capabilities with OpenAI Agents SDK.
+---
+
+<MaximPlayer url="https://www.youtube.com/embed/dn-QXc7JgsI" />
+
+The [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) enables you to build agentic AI apps in a lightweight, easy-to-use package with very few abstractions. It's a production-ready upgrade of our previous experimentation for agents, Swarm. The Agents SDK has a very small set of primitives:
+
+- **Agents**, which are LLMs equipped with instructions and tools
+- **Handoffs**, which allow agents to delegate to other agents for specific tasks
+- **Guardrails**, which enable the inputs to agents to be validated
+
+## Integrating with Maxim
+
+<Steps>
+				<Step>
+		Create a Maxim account and a Log repository. Follow the instructions in the [quickstart
+		section](https://www.getmaxim.ai/docs/observe/quickstart).
+	</Step>
+	<Step>
+	Install Maxim SDK
+
+    			```bash
+    			pip install maxim-py
+    			```
+    			</Step>
+    			<Step>
+       **Set the following environment variables to configure the Maxim SDK**
+    					| Environment Variable | Description |
+    					| --- | --- |
+    					| `MAXIM_API_KEY` | Your Maxim API key |
+    					| `MAXIM_LOG_REPO_ID` | ID of the log repository to use |
+
+    					And then Maxim SDK will automatically initialize using these env variables.
+
+```python
+from maxim import Maxim,Config
+from maxim.logger.openai.agents import MaximOpenAIAgentsTracingProcessor
+# Creating a new logger instance
+# It automatically initializes using MAXIM_API_KEY and MAXIM_LOG_REPO_ID from env variables.
+logger = Maxim(Config()).logger()
+```
+
+    			</Step>
+    			<Step>
+    				**OR you can manually initialize the SDK**
+
+```python
+from maxim import Maxim,Config
+from maxim.logger import LoggerConfig
+
+logger = Maxim(Config(api_key="your_api_key")).logger(LoggerConfig(id="your_log_repo_id"))
+```
+
+    			</Step>
+    			<Step>
+    					Add the `MaximOpenAIAgentsTracingProcessor` to your agent using `add_trace_processor` or `set_trace_processor`.
+
+```python
+from agents import add_trace_processor
+from maxim.logger.openai.agents import MaximOpenAIAgentsTracingProcessor
+
+add_trace_processor(MaximOpenAIAgentsTracingProcessor(logger))
+
+# Your agent code
+```
+
+    			</Step>
+
+</Steps>
+
+## Cookbooks
+
+Here are a few cookbooks that you can use to get started with Maxim:
+
+1. [Language Agent](https://getmax.im/openai-agents-language)
+2. [Customer support agent](https://getmax.im/openai-agents-customer-support)

@@ -1,0 +1,133 @@
+---
+title: Build complex AI workflows with Prompt Chains
+description: Connect prompts, code, and APIs to create sophisticated AI systems using our visual editor - no coding required
+---
+
+import { FileClock } from "lucide-react";
+
+When building AI applications, you often need multiple steps working together - like chaining multiple AI models, processing data, or calling external services. While single Prompts work well for simple tasks, complex workflows need a more structured approach.
+
+## What are Prompt Chains?
+
+Prompt Chains let you connect three types of nodes to build your AI workflow:
+
+1. **Prompt**: Run LLM interactions
+2. **Code**: Add custom logic
+3. **API**: Connect external services via HTTP API
+
+Each node's output feeds into the next, creating a seamless flow of data.
+
+![Visual editor showing connected Prompt Chain nodes](/images/docs/evaluate/how-to/prompt-chains/product-description-generator-and-translator-chain.png)
+
+## Available nodes
+
+<Accordions type="multiple">
+<Accordion title="Prompt">
+
+Run any [Prompt](/docs/evaluate/how-to/evaluate-prompts/experiment-in-prompt-playground) as part of your workflow.
+
+- Select from your existing prompts and versions
+- Support for variables and context
+- Input passed as user message
+- Output is the assistant's response
+
+Perfect for natural language tasks like classification, generation or analysis.
+
+<Img src="/images/docs/evaluate/how-to/prompt-chains/prompt-node.png" liftImageZIndex alt="Example of a Prompt node in the editor" className="mb-0" />
+</Accordion>
+
+<Accordion title="Code">
+
+Add JavaScript logic to process data between nodes.
+
+- Write custom code to transform data
+- Automatic JSON parsing of input
+- Automatic stringification of output
+- Seamless connection with other nodes
+
+Ideal for data manipulation, validation or custom processing.
+
+<Img src="/images/docs/evaluate/how-to/prompt-chains/code-node.png" liftImageZIndex alt="Example of a Code node with JavaScript editor" className="mb-0" />
+</Accordion>
+
+<Accordion title="API">
+
+Connect external services into your workflow.
+
+- Support for GET, POST and other methods
+- Variable substitution in headers, params and body
+- Automatic data format handling
+- Easy integration with other nodes
+
+Essential for retrieving external data or triggering services.
+
+<Img src="/images/docs/evaluate/how-to/prompt-chains/api-node.png" liftImageZIndex alt="Example of an API node configuration" className="mb-0" />
+</Accordion>
+</Accordions>
+## Create your first chain
+
+<Steps>
+<Step>
+### Initialize your chain
+Start from the `Start` node by dragging to create your first connection.
+</Step>
+
+<Step>
+### Choose node functionality
+Configure the type and settings for your new node based on your requirements.
+
+![Node type selection](/images/docs/evaluate/how-to/prompt-chains/new-node-state.png)
+</Step>
+
+<Step>
+### Expand the workflow
+Connect additional nodes by dragging from the output handles to create new steps.
+
+![Add more nodes](/images/docs/evaluate/how-to/prompt-chains/add-more-nodes.png)
+</Step>
+
+<Step>
+### Optimize connections
+Modify the flow by adjusting node connections to achieve your desired logic.
+
+![Restructure nodes](/images/docs/evaluate/how-to/prompt-chains/restructure-edges.png)
+</Step>
+
+<Step>
+### Run a test
+Try out your chain in the playground to verify its behavior
+
+![Input](/images/docs/evaluate/how-to/prompt-chains/prompt-chain-input.png)
+</Step>
+</Steps>
+
+
+<Callout type="warn">
+
+Ensure each node's output matches the input requirements of connected nodes.
+
+</Callout>
+
+## Version and deploy
+
+Create versions to test or deploy your chain:
+
+1. Click `Save` in the top right
+2. Add an optional description
+3. Click `Update`
+
+![Version creation dialog](/images/docs/evaluate/how-to/prompt-chains/create-version-dialog.png)
+
+<Callout type="info">
+
+View all versions using the <FileClock className="w-4 h-4 inline-block" /> icon
+
+</Callout>
+
+Next steps:
+
+- [Run tests](/docs/evaluate/how-to/evaluate-chains/test-prompt-chains)
+- [Deploy to production](/docs/evaluate/how-to/evaluate-chains/deploy-prompt-chains)
+- [Access via SDK](/docs/evaluate/how-to/evaluate-chains/querying-prompt-chains)
+
+Learn more about [testing prompts](/docs/evaluate/how-to/evaluate-prompts/bulk-comparisons-across-test-cases) or check our [SDK documentation](/docs/sdk/overview).

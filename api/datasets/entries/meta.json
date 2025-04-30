@@ -1,0 +1,9 @@
+{
+  "title": "Entries",
+  "pages": [
+    "delete",
+    "get",
+    "post",
+    "put"
+  ]
+}

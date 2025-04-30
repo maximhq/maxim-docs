@@ -1,0 +1,60 @@
+---
+title: Test your agentic workflows using chains
+description: Test Prompt Chains using datasets to evaluate performance across examples
+---
+
+import { Button } from "ui";
+import { ActivityIcon } from "lucide-react";
+
+After testing in the playground, evaluate your Prompt Chains across multiple test cases to ensure consistent performance. You can do the same via test run.
+
+<Steps>
+<Step>
+
+### Create a Dataset
+
+Add test cases by creating a [Dataset](/docs/library/how-to/datasets/use-dataset-templates). For this example, we'll use a Dataset of product images to generate descriptions.
+
+![Dataset with product images for testing](/images/docs/evaluate/how-to/prompt-chains/product-images-dataset.png)
+
+</Step>
+
+<Step>
+
+### Build your Prompt Chain
+
+Create a Prompt Chain that processes your test examples. In this case, the chain generates product descriptions, translates them to multiple languages, and formats them to match specific requirements.
+
+![Prompt chain for product description generation](/images/docs/evaluate/how-to/prompt-chains/product-description-generator-and-translator-chain.png)
+
+</Step>
+
+<Step>
+
+### Start a test run
+
+Open the test configuration by clicking <Button><ActivityIcon className="h-3.5 w-3.5" /> Test</Button> in the top right corner.
+
+</Step>
+
+<Step>
+
+### Configure your test
+
+Select your dataset and add [Evaluators](/docs/library/how-to/evaluators/use-pre-built-evaluators) to measure the quality of outputs.
+
+![Test configuration with dataset and evaluator options](/images/docs/evaluate/how-to/prompt-chains/prompt-chain-test-run-trigger-sheet.png)
+
+</Step>
+
+<Step>
+
+### Review results
+
+Monitor the [test run](/docs/evaluate/concepts#test-runs) to analyze the performance of your Prompt Chain across all inputs.
+
+![Test run results showing performance metrics](/images/docs/evaluate/how-to/prompt-chains/prompt-chain-test-run-report.png)
+
+</Step>
+
+</Steps>

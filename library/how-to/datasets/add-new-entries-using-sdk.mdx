@@ -1,0 +1,74 @@
+---
+title: Add Dataset entries using SDK
+description: Learn how to add new entries to a Dataset using the Maxim SDK
+---
+
+The Maxim SDK provides a convenient way to programmatically add new entries to your datasets. This guide will walk you through the process of using the SDK to add entries, helping you efficiently manage and update your datasets for AI training and evaluation.
+
+## Getting your Dataset ID
+
+Get the Dataset ID from the Maxim dashboard:
+
+1. Click the three dots on your target Dataset
+2. Select "Copy ID"
+3. Use the copied Dataset ID in your code
+
+## Adding entries to a Dataset
+
+<Tabs groupId="language" items={["JS/TS", "Python"]}>
+    ```typescript tab="JS/TS"
+    // [!code word:apiKey]
+    const maxim = new Maxim({ apiKey: "" });
+
+    await maxim.addDatasetEntries("dataset-id", [
+        {
+            input: {
+                type: "text",
+                payload: "your content here",
+            },
+            //optional
+            expectedOutput: {
+                type: "text",
+                payload: "your content here",
+            },
+            //optional
+            context: {
+                type: "text",
+                payload: "your content here",
+            },
+        },
+    ]);
+    ```
+
+    ```python tab="Python"
+    from maxim import Maxim, Config
+    from maxim.logger import Logger, LoggerConfig
+
+    # [!code word:api_key]
+    maxim = Maxim(Config(api_key=""))
+
+    maxim.maxim_api.add_dataset_entries(
+        "dataset-id",
+        [
+            {
+                "input": {
+                    "type": "text",
+                    "payload": "your content here",
+                },
+                # optional
+                "expectedOutput": {
+                    "type": "text",
+                    "payload": "your content here",
+                },
+                # optional
+                "context": {
+                    "type": "text",
+                    "payload": "your content here",
+                },
+            },
+        ],
+    )
+    ```
+</Tabs>
+
+<Callout>You can insert a maximum of 100 entries at a time to your Dataset.</Callout>

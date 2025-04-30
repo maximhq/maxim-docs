@@ -1,0 +1,104 @@
+---
+title: Create custom AI Evaluators
+description: Learn how to create custom AI Evaluators when built-in Evaluators don't meet your specific evaluation needs.
+---
+
+import { Plus } from "lucide-react";
+
+While Maxim offers a comprehensive set of evaluators in the [Store](/docs/library/how-to/evaluators/use-pre-built-evaluators), you might need custom evaluators for specific use cases. Create your own AI evaluator by selecting an LLM as the judge and configuring custom evaluation instructions.
+
+<Steps>
+<Step>
+### Create new Evaluator
+
+Click the create button and select AI to start building your custom evaluator.
+
+![Create AI Evaluator](/images/docs/library/how-to/evaluators/common/create-evaluator.png)
+
+</Step>
+
+<Step>
+### Configure model and parameters
+
+Select the LLM you want to use as the judge and configure model-specific parameters based on your requirements.
+
+![Model configuration for custom AI evaluator](/images/docs/library/how-to/evaluators/custom-ai-evaluators/model-config-for-ai-evaluator.png)
+
+</Step>
+
+<Step>
+### Define evaluation logic
+
+Configure how your evaluator should judge the outputs:
+
+- **Requirements**: Define evaluation criteria in plain English
+
+  ```plaintext
+  "Check if the text uses punctuation marks correctly to clarify meaning"
+  ```
+
+- **Evaluation scale**: Choose your scoring type
+
+  - **Scale**: Score from 1 to 5
+  - **Binary**: Yes/No response
+
+- **Grading logic**: Define what each score means
+
+  ```plaintext
+  1: Punctuation is consistently incorrect or missing; hampers readability
+  2: Frequent punctuation errors; readability is often disrupted
+  3: Some punctuation errors; readability is generally maintained
+  4: Few punctuation errors; punctuation mostly aids in clarity
+  5: Punctuation is correct and enhances clarity; no errors
+  ```
+
+  <Callout type="info">You can use variables in **Requirements** and **Grading logic**</Callout>
+
+![Evaluation logic configuration](/images/docs/library/how-to/evaluators/custom-ai-evaluators/ai-evaluator-model-instruction.png)
+
+</Step>
+
+<Step>
+### Normalize score (Optional)
+
+Convert your custom evaluator scores from a 1-5 scale to match Maxim's standard 0-1 scale. This helps align your custom evaluator with [pre-built evaluators](/docs/library/how-to/evaluators/use-pre-built-evaluators) in the Store.
+
+For example, a score of 4 becomes 0.8 after normalization.
+
+![Score normalization toggle for AI evaluators](/images/docs/library/how-to/evaluators/custom-ai-evaluators/ai-evaluator-score-normalization.png)
+
+</Step>
+
+<Step>
+### Set pass criteria
+
+Configure two types of pass criteria:
+
+**Pass query**
+Define criteria for individual evaluation metrics
+
+Example: Pass if evaluation score > 0.8
+
+**Pass evaluator (%)**
+Set threshold for overall evaluation across multiple entries
+
+Example: Pass if 80% of entries meet the evaluation criteria
+
+![Pass criteria configuration](/images/docs/library/how-to/evaluators/common/pass-criteria.png)
+
+</Step>
+
+<Step>
+### Test your Evaluator
+
+Test your Evaluator in the playground before using it in your workflows. The right panel shows input fields for all variables used in your Evaluator.
+
+1. Fill in sample values for each variable
+2. Click **Run** to see how your evaluator performs
+3. Iterate and improve your evaluator based on the results
+
+![Testing an evaluator in the playground with input fields for variables](/images/docs/library/how-to/evaluators/common/evaluator-playground.png)
+
+</Step>
+
+</Steps>

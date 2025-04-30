@@ -1,0 +1,284 @@
+---
+title: Running your first test
+description: Learn how to get started with your first test run in Maxim
+---
+
+## 1. Set up your environment
+
+First, configure your AI model providers:
+
+<Steps>
+    <Step>
+
+Go to `Settings` → `Models`.
+
+    </Step>
+    <Step>
+
+Click on the tab of the provider for which you want to add an API key.
+
+    </Step>
+    <Step>
+
+Click on `Add New` and fill in the required details.
+
+    </Step>
+
+</Steps>
+
+<Callout type="info">
+
+Maxim requires at least one provider with access to GPT-3.5 and GPT-4 models. We use industry-standard encryption to securely store your API keys.
+
+</Callout>
+
+To learn more about API keys, inviting users, and managing roles, refer to our [Workspace and roles](/docs/introduction/quickstart/setting-up-workspace) guide.
+
+<MaximPlayer url="https://drive.google.com/file/d/1WzUCBIDewojn6r3Om0HUEmb_oI8OyM3W/preview" />
+
+## 2. Create your first prompt or workflow
+
+Create prompts to experiment and evaluate a call to a model with attached context or tools. Use workflows to easily test your complex AI agents using the HTTP endpoint for your application without any integration.
+
+### Prompt
+
+<Steps>
+    <Step>
+
+Navigate to the `Prompts` tab under the `Evaluate` section and click on Single prompts.
+
+    </Step>
+    <Step>
+
+Click `Create prompt` or `Try sample` to get started.
+
+    </Step>
+    <Step>
+
+Write your system prompt and user prompt in the respective fields.
+
+    </Step>
+    <Step>
+
+Configure additional settings like model, temperature, and max tokens.
+
+    </Step>
+    <Step>
+
+Click `Run` to test your prompt and see the AI's response.
+
+    </Step>
+    <Step>
+
+Iterate on your prompt based on the results.
+
+    </Step>
+    <Step>
+
+When satisfied, click `Save` to create a new version of your prompt.
+
+    </Step>
+
+</Steps>
+
+To learn more about prompts, refer to our [detailed guide on prompts](/docs/evaluate/how-to/evaluate-prompts/experiment-in-prompt-playground).
+
+### Workflow
+
+<Steps>
+    <Step>
+
+Navigate to the `Workflows` tab under the `Evaluate` section.
+
+    </Step>
+    <Step>
+
+Click `Create Workflow` or `Try sample`.
+
+    </Step>
+    <Step>
+
+Enter your API endpoint URL in the `URL` field.
+
+    </Step>
+    <Step>
+
+Configure any necessary headers or parameters. You can use dynamic variables like `{input}` to reference static context easily in any part of your workflow using `{}`
+
+    </Step>
+    <Step>
+
+Click `Run` to test your endpoint in the playground.
+
+    </Step>
+    <Step>
+
+In the `Output Mapping` section, select the part of the response you want to evaluate (e.g., `data.response`).
+
+    </Step>
+    <Step>
+
+Click `Save` to create your workflow.
+
+    </Step>
+
+To learn more about workflows, refer to our detailed guide on [Workflows](/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/test-your-ai-outputs-using-application-endpoint).
+
+## 3. Prepare your dataset
+
+Organize and manage the data you'll use for testing and evaluation:
+
+<Steps>
+    <Step>
+
+Navigate to the Datasets tab under the `Library` section.
+
+    </Step>
+    <Step>
+
+Click `Create New` or `Upload CSV`. We also have a sample dataset created for you. Click on `View our sample dataset` to get started.
+
+    </Step>
+    <Step>
+
+If creating a new dataset, enter a name and description for your dataset.
+
+    </Step>
+    <Step>
+
+Add columns to your dataset (e.g., 'input' and 'expected_output').
+
+    </Step>
+    <Step>
+
+Add entries to your dataset, filling in the values for each column.
+
+    </Step>
+    <Step>
+
+Click `Save` to create your dataset.
+
+    </Step>
+
+</Steps>
+
+To learn more about datasets, refer to our detailed guide on [Datasets](/docs/library/how-to/datasets/use-dataset-templates).
+
+</Steps>
+
+## 5. Add evaluators
+
+Set up evaluators to assess your prompt or workflow's performance:
+
+<Steps>
+    <Step>
+
+Navigate to the `Evaluators` tab under the `Library` section.
+
+    </Step>
+    <Step>
+
+Click `Add Evaluator` to browse available evaluators.
+
+    </Step>
+    <Step>
+
+Choose an evaluator type (e.g., AI, Programmatic, API, or Human).
+
+    </Step>
+    <Step>
+
+Configure the evaluator settings as needed.
+
+    </Step>
+    <Step>
+
+Click `Save` to add the evaluator to your workspace.
+
+    </Step>
+
+</Steps>
+
+To learn more about evaluators, refer to our detailed guide on [Evaluators](/docs/library/how-to/evaluators/use-pre-built-evaluators).
+
+## 6. Run your first test
+
+Execute a test run to evaluate your prompt or workflow:
+
+<Steps>
+    <Step>
+
+Navigate to your saved prompt or workflow.
+
+    </Step>
+    <Step>
+
+Click `Test` in the top right corner.
+
+    </Step>
+    <Step>
+
+Select the dataset you created earlier.
+
+    </Step>
+    <Step>
+
+Choose the evaluators you want to use for this test run.
+
+    </Step>
+    <Step>
+
+Click `Trigger Test Run` to start the evaluation process.
+
+    </Step>
+
+</Steps>
+
+<Callout type="info">
+	If you've added human evaluators, you'll be prompted to set up human annotation on the report or via email.
+</Callout>
+
+## 7. Analyze test results
+
+Review and analyze the results of your test run:
+
+<Steps>
+    <Step>
+
+Navigate to the `Runs` tab in the left navigation menu.
+
+    </Step>
+    <Step>
+
+Find your recent test run and click on it to view details.
+
+    </Step>
+    <Step>
+
+Review the overall performance metrics and scores for each evaluator.
+
+    </Step>
+    <Step>
+
+Drill down into individual queries to see specific scores and reasoning.
+
+    </Step>
+    <Step>
+
+Use these insights to identify areas for improvement in your prompt or workflow.
+
+    </Step>
+
+</Steps>
+
+## Next steps
+
+Now that you've completed your first cycle on the Maxim platform, consider exploring these additional capabilities:
+
+1. [Prompt comparisons](/docs/evaluate/how-to/evaluate-prompts/compare-prompts-playground): Evaluate different prompts side-by-side to determine which ones produce the best results for a given task.
+2. [Prompt chains](/docs/evaluate/how-to/evaluate-chains/experiment-with-prompt-chains): Create complex, multi-step AI workflows. Learn how to connect prompts, code, and APIs to build powerful, real-world AI systems using our intuitive, no-code editor.
+3. [Context sources](/docs/library/how-to/context-sources/bring-your-rag-via-an-api-endpoint): Integrate Retrieval-Augmented Generation (RAG) into your workflows.
+4. [Prompt tools](/docs/library/how-to/prompt-tools/create-a-code-tool): Enhance your prompts with custom functions and agentic behaviors.
+5. [Observability](/docs/observe/overview): Use our stateless SDK to monitor real-time production logs and run periodic quality checks.
+
+By following this guide, you've learned how to set up your environment, create prompts, prepare datasets, set up workflows, add evaluators, run tests, and analyze results. This foundational knowledge will help you leverage Maxim's powerful features to develop and improve your AI applications efficiently.

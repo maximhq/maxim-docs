@@ -1,0 +1,41 @@
+---
+title: Use Prompt partials in your Prompts
+description: Learn how to use Prompt partials within your Prompts
+---
+
+![Using Prompt partials in the Prompt playground](/images/docs/evaluate/how-to/evaluate-prompts/prompt-partials/prompt-playground-with-partials.png)
+
+<Steps>
+
+<Step>Create a new Prompt</Step>
+
+<Step>
+Add Prompt partials to your messages
+
+1. Type `{{` in either System or User message
+2. Select a Prompt partial from the dropdown list
+3. To use a specific version, continue typing after selecting the partial
+4. Choose the version from the list showing creation date and author
+
+<Callout type="info">The latest version is used by default if no specific version is selected</Callout>
+
+</Step>
+
+<Step>
+Configure variables and preview partials
+
+- Variables used in partials automatically appear in the Prompt variables section
+- Add variable values to test in the playground
+- Click on the partial content in variables view to:
+  - Preview the partial content
+  - Navigate directly to the partial editor
+
+![Variables view with Prompt partials](/images/docs/evaluate/how-to/evaluate-prompts/prompt-partials/prompt-partial-preview.png)
+
+<Callout type="info">
+	Partials are replaced with actual content during test runs using values from your test configuration or context sources
+</Callout>
+
+</Step>
+
+</Steps>

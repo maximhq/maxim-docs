@@ -1,0 +1,19 @@
+{
+    "title": "Evaluate Prompts",
+    "pages": [
+        "experiment-in-prompt-playground",
+        "run-prompt-tool-calls",
+        "use-prompt-partials",
+        "rag-quality",
+        "create-prompt-versions",
+        "compare-prompt-versions",
+        "save-prompt-session",
+        "compare-prompts-playground",
+        "bulk-comparisons-across-test-cases",
+        "deploy-prompts",
+        "organize-prompts",
+        "querying-prompts",
+        "automate-via-ci-cd",
+        "human-annotation-pipeline"
+    ]
+}

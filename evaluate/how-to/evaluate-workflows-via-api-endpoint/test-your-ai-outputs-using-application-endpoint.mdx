@@ -1,0 +1,39 @@
+---
+title: Test your AI application using an API endpoint
+description: Expose your AI application to Maxim using your existing API endpoint
+---
+
+## Create a Workflow for a public endpoint
+
+Connect your application's API endpoint to Maxim. Enter your API URL and add any necessary headers and parameters.
+
+Configure the payload for your API request. Include all data your backend needs to process requests. When running tests, attach a dataset to your workflow.
+
+Reference column values from your dataset using `{{column_name}}` variables. These resolve during test runtime. Use variables in headers and parameters for flexible workflow configuration.
+
+See it in action:
+
+<MaximPlayer url="https://drive.google.com/file/d/12c3B1TWifq4cAa-43lF2enCLoN7PO0JX/preview" />
+
+## Test your Workflow
+
+Send messages to your API from the **Messages** panel to test your endpoint with a conversational experience. See this demonstrated at the end of the video above.
+
+## Map the output for evaluation
+
+Before running tests, tell us what part of your response to evaluate by mapping an `output` from the response payload.
+
+Click the `Test` button in the top right corner to open the **Test run** configuration panel. Select your **Output** from the dropdown of mappable response fields. View the full response payload by clicking `Show response`. Optionally, map the **Context to Evaluate** field using the **Context field** selector.
+
+See how to map outputs for evaluation:
+
+<MaximPlayer url="https://drive.google.com/file/d/1gQz4zF_Mmy-l10pyOStM-8wuxTbW6ms4/preview" />
+
+<Callout type="warn">
+
+**Note**
+
+- The `Test` button remains disabled until you send messages to your endpoint. The system requires a response payload structure for `output` mapping.
+- When mapping without triggering a test run, save your workflow explicitly. Map in the configuration sheet, click outside to close it, then click **Save workflow**
+
+</Callout>

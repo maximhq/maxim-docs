@@ -1,0 +1,82 @@
+---
+title: Generate and translate product descriptions with AI
+description: Build an AI workflow to generate product descriptions from images using Prompt Chains
+---
+
+Let's take a scenario where you have an application in which you want to build an AI workflow that generates a product description from a product image. Now, if you want to add more functionalities like translation, data processing, or sending data to external services, you would have to create a separate translation service, write additional code, and build an API layer to communicate with those external services.
+
+This is exactly where Maxim [Prompt Chains](/docs/evaluate/how-to/evaluate-chains/experiment-with-prompt-chains) can help you build the workflow, covering all these pieces. With different types of nodes, you can create the same functionality with ease. Let's go through it step by step.
+
+![Product description generator workflow](/images/docs/evaluate/how-to/prompt-chains/tutorials/product-description-generator-and-translator-chain.png)
+
+<Steps>
+<Step>
+### Create Prompt that generates product description
+
+Create a new [Prompt](/docs/evaluate/how-to/evaluate-prompts/experiment-in-prompt-playground) with these system instructions:
+
+```plaintext title="System instructions for product description generator"
+You are a highly skilled AI that generates compelling product descriptions. Your goal is to highlight key features, benefits, and unique selling points in an engaging and brand-aligned tone.
+
+Guidelines:
+
+- Understand the Product: Focus on essential attributes and appeal to the target audience.
+- Tone & Style: Adapt based on the brand (e.g., luxury, casual, tech-savvy).
+- SEO & Readability: Use relevant keywords naturally, keep it concise, and structure for easy reading.
+- Persuasive & Action-Driven: Highlight USPs and include a strong call to action.
+
+Ensure descriptions are clear, engaging, and tailored to different product categories.
+```
+
+</Step>
+
+<Step>
+### Add the Prompt to a chain
+
+Create a [Prompt chain](/docs/evaluate/how-to/evaluate-chains/experiment-with-prompt-chains) and add your product description generator Prompt as the first step.
+
+![Add product description generator to chain](/images/docs/evaluate/how-to/prompt-chains/tutorials/product-description-generator-bot-prompt-node.png)
+
+</Step>
+
+<Step>
+### Add translation support
+
+Add another AI node to translate the generated product description:
+
+1. Connect it after the product description generator Prompt
+2. Configure it to translate the product description output
+3. Choose your target languages
+
+![Add product description translator](/images/docs/evaluate/how-to/prompt-chains/tutorials/translator-prompt-node.png)
+
+</Step>
+
+<Step>
+### Process translations with code block node
+
+Add a Code block node to handle translated product descriptions:
+
+1. Split text by language
+2. Structure output as key-value pairs
+
+![Split translations with Code](/images/docs/evaluate/how-to/prompt-chains/tutorials/code-block-node.png)
+
+</Step>
+
+<Step>
+### Connect logging service
+
+Add an API node to integrate with external systems:
+
+- Log results
+- Send notifications
+- Connect to analytics
+- Trigger actions in other tools
+
+[Configure](/docs/evaluate/how-to/evaluate-chains/use-api-nodes-within-chains) your endpoint details and required payload format.
+
+![Configure API integration](/images/docs/evaluate/how-to/prompt-chains/tutorials/api-block-node.png)
+
+</Step>
+</Steps>

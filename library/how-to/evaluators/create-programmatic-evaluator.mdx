@@ -1,0 +1,102 @@
+---
+title: Create Programmatic Evaluators
+description: Build custom code-based evaluators using Javascript or Python
+---
+
+import { Plus } from "lucide-react";
+
+While Maxim offers several pre-built evaluators in the [Store](/docs/library/how-to/evaluators/use-pre-built-evaluators), you might need custom evaluators for specific use cases. Create programmatic evaluators using Javascript or Python with access to standard libraries.
+
+<Steps>
+<Step>
+### Create evaluator
+
+Select Programmatic from the create menu <Plus className="inline-block size-5"/> to start building
+
+![Create programmatic evaluator](/images/docs/library/how-to/evaluators/common/create-evaluator.png)
+
+</Step>
+
+<Step>
+### Configure evaluation settings
+
+Choose your programming language and set the Response type (Number or Boolean) from the top bar
+
+![Evaluation configuration options](/images/docs/library/how-to/evaluators/programmatic-evaluator/config-top-bar.png)
+
+</Step>
+
+<Step>
+### Write evaluation logic
+
+Define a function named `validate` in your chosen language. This function is required as Maxim uses it during execution.
+
+<Callout type="info">
+Code restrictions
+
+**Javascript**
+
+- No infinite loops
+- No debugger statements
+- No global objects (window, document, global, process)
+- No require statements
+- No with statements
+- No Function constructor
+- No eval
+- No setTimeout or setInterval
+
+**Python**
+
+- No infinite loops
+- No recursive functions
+- No global/nonlocal statements
+- No raise, try, or assert statements
+- No disallowed variable assignments
+
+</Callout>
+
+![Code editor for evaluation logic](/images/docs/library/how-to/evaluators/programmatic-evaluator/code-editor.png)
+
+</Step>
+
+<Step>
+### Evaluator console
+
+Monitor your evaluator execution with the built-in console. Add console logs for debugging to track what's happening during evaluation. All logs will appear in this view.
+
+![Console showing debug logs during evaluator execution](/images/docs/library/how-to/evaluators/programmatic-evaluator/programmatic-evaluator-console.png)
+
+</Step>
+
+<Step>
+### Set pass criteria
+
+Configure two types of pass criteria:
+
+**Pass query**
+Define criteria for individual evaluation metrics
+
+Example: Pass if evaluation score > 0.8
+
+**Pass evaluator (%)**
+Set threshold for overall evaluation across multiple entries
+
+Example: Pass if 80% of entries meet the evaluation criteria
+
+![Pass criteria configuration](/images/docs/library/how-to/evaluators/common/pass-criteria.png)
+
+</Step>
+
+<Step>
+### Test your evaluator
+
+Test your evaluator in the playground before using it in your workflows. The right panel shows input fields for all variables used in your evaluator.
+
+1. Fill in sample values for each variable
+2. Click **Run** to see how your evaluator performs
+3. Iterate and improve your evaluator based on the results
+
+![Testing an evaluator in the playground with input fields for variables](/images/docs/library/how-to/evaluators/common/evaluator-playground.png)
+
+</Step>
+</Steps>

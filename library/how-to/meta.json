@@ -1,0 +1,10 @@
+{
+    "title": "How to",
+    "pages": [
+        "evaluators",
+        "datasets",
+        "context-sources",
+        "prompt-tools",
+        "prompt-partials"
+    ]
+}

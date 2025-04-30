@@ -1,0 +1,61 @@
+---
+title: Setting up your workspace
+description: Learn how to set up workspaces, invite team members, and manage role-based access control (RBAC) in Maxim. Streamline your AI project organization and control user permission within your enterprise.
+---
+
+## Add model API keys
+
+First, configure your model providers:
+
+- Go to `Settings` → `Models`.
+- Click on the tab of the provider for which you want to add an API key.
+- Click on `Add new` and fill in the required details.
+
+
+For easy onboaring, we offer 50 free model usage credits that can be used across the platform. You can use these credits to run your first test.
+
+<Callout type="info">
+    To set up local models from Ollama with Maxim, follow the same steps as above. Don't forget to run his command to forward Ollama's port via ngrok:
+
+    ```bash
+    ngrok http 11434 --host-header="localhost:11434"
+    ```
+    To download Ollama, follow this [link](https://ollama.com/). Learn more about setting up Ollama via ngrok [here](https://github.com/ollama/ollama/blob/main/docs/faq.md#how-can-i-use-ollama-with-ngrok).
+</Callout>
+
+<MaximPlayer url="https://drive.google.com/file/d/1LgdYAUCymvVfj76gL1YJiy1KZZBPku6Y/preview" />
+
+## Create Maxim API key
+
+- Go to `Settings` → `API keys`.
+- Click on `Generate new`, name your key, and copy the generated key.
+
+![Create Maxim API key](/images/docs/introduction/create-maxim-api-key.png)
+
+## Invite team members
+
+To invite a team member to your workspace, follow these steps:
+
+- Go to `Settings` → `Members`.
+- Click on `Invite`, located at the top right of the page.
+- Enter the email ID of the person you want to invite. To invite multiple people, separate their email IDs with commas.
+- Select the role you want to assign to the invited people from the dropdown menu, along with the workspace.
+- Click on `Send invites`.
+
+The invited people will receive an email with a link to join the workspace.
+
+<MaximPlayer url="https://drive.google.com/file/d/1feOFDpnfLYmtdGPleT7FMocsEHNN-vAL/preview" />
+
+## Create roles
+
+Maxim uses a role-based access control (RBAC) system to manage user permissions. You can create a role by following these steps:
+
+- Go to `Settings` → `Roles`.
+- Click on `Create role`.
+- Enter a name for the role.
+- Select the permissions you want to assign to the role.
+- Click on `Create`.
+
+<MaximPlayer url="https://drive.google.com/file/d/10s17EcrpWYVhVxDE-nVCL-KakdAA3u6X/preview" />
+
+You can explore more about your workspace settings by heading to the workspace settings page. You can explore more about billing, proxy settings and more.

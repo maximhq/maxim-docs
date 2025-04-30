@@ -1,0 +1,44 @@
+---
+title: Receive notifications for Test Run status
+description: Test runs are a core part of continuous testing workflows and could be triggered via UI or in the CI/CD pipeline. Teams need visibility into triggered runs, status updates, and result summaries without having to come to the dashboard to constantly check. Integrations with Slack and PagerDuty allow notifications to be configured for some of these events.
+---
+
+Set up notifications that will be triggered based on the status of a test run. These could be linked to Slack or PagerDuty and will send a message to the defined channel.
+
+<Steps>
+<Step>
+
+Connect [Slack](/docs/observe/how-to/set-up-alerts/create-a-slack-integration) and [PagerDuty](/docs/observe/how-to/set-up-alerts/create-a-pagerduty-integration) via Settings > Integrations. Use these integrations for both log alerts and notifications.
+
+![Integrations](/images/docs/evaluate/how-to/optimize-evaluation-processes/test-run-notifications/integrations.png)
+
+</Step>
+<Step>
+
+To set up notifications for test run status, go to `Settings > Notifications`.
+
+![Set up notifications](/images/docs/evaluate/how-to/optimize-evaluation-processes/test-run-notifications/notifications.png)
+
+</Step>
+<Step>
+
+Click the `configure` button under the `test run status` section.
+
+![Configure notifications](/images/docs/evaluate/how-to/optimize-evaluation-processes/test-run-notifications/configure-notifications.png)
+
+</Step>
+<Step>
+
+Select a channel from your configured integrations list that are already set up.
+
+![Select channels](/images/docs/evaluate/how-to/optimize-evaluation-processes/test-run-notifications/select-channel.png)
+
+</Step>
+<Step>
+
+Select the statuses on which you would want to trigger a notification. By default, notifications trigger automatically for `Completed` or `Failed` status.
+
+![Select statuses](/images/docs/evaluate/how-to/optimize-evaluation-processes/test-run-notifications/select-statuses.png)
+
+</Step>
+</Steps>

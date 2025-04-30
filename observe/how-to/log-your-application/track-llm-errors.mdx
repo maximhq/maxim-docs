@@ -1,0 +1,119 @@
+---
+title: Track errors in traces
+description: Learn how to effectively track and log errors from LLM results and Tool calls in your AI application traces to improve performance and reliability.
+---
+
+
+## Track LLM errors in your workflow
+
+<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
+    ```typescript tab="JS/TS"
+    // Create generation object
+    const generation = trace.generation({
+        id: "generation-id",
+        name: "customer-support--gather-information",
+        // Additional fields
+    });
+
+    // Track error
+    generation.error({
+        message: "Rate limit exceeded. Please try again later.",
+        type: "RateLimitError",
+        code: "429",
+    });
+    ```
+
+    ```python tab="Python"
+    from maxim.logger.components.generation import GenerationConfig, GenerationError
+
+    # Create generation object
+    generation = trace.generation(GenerationConfig(
+        id="generation-id",
+        name="customer-support--gather-information",
+        # Additional fields
+    ))
+
+    # Track error
+    generation.error(GenerationError(
+        message="Rate limit exceeded. Please try again later.",
+        type="RateLimitError",
+        code="429",
+    ))
+    ```
+
+    ```go tab="Go"
+    // Create generation object
+    generation := trace.AddGeneration(&logging.GenerationConfig{
+        Id: "generation-id",
+        Name: "customer-support--gather-information",
+        // Additional fields
+    })
+
+    // Track error
+    generation.SetError(&logging.GenerationError{
+        Message: "Rate limit exceeded. Please try again later.",
+        Type:    "RateLimitError",
+        Code:    "429",
+    })
+    ```
+
+    ```java tab="Java"
+    // Create generation object
+    Generation generation = trace.addGeneration(new GenerationConfig(
+        "generation-id",
+        "customer-support--gather-information",
+        // Additional fields
+    ));
+
+    // Track error
+    generation.error(new GenerationError(
+        "Rate limit exceeded. Please try again later.",
+        "429",
+        "RateLimitError",
+    ));
+    ```
+</Tabs>
+
+<Callout>
+
+Learn how to track complete LLM flows in the [LLM logging guide](/docs/observe/how-to/log-your-application/adding-llm-call).
+
+</Callout>
+
+## Track errors from tool calls
+
+<Tabs groupId="language" items={["JS/TS", "Python"]}>
+    ```typescript tab="JS/TS"
+    const traceToolCall = trace.toolCall({
+        id: "tool-call-id",
+        name: "tool-call-name",
+    });
+
+    traceToolCall.error({
+        message: "Service is currently unavailable. Please try again later.",
+        type: "ServiceUnavailableError",
+        code: "503",
+    });
+    ```
+
+    ```python tab="Python"
+    from maxim.logger import ToolCallConfig
+
+    trace_tool_call = trace.tool_call(ToolCallConfig(
+        id="tool-call-id",
+        name="tool-call-name",
+    ))
+
+    trace_tool_call.error(ToolCallError(
+        message="Service is currently unavailable. Please try again later.",
+        type="ServiceUnavailableError",
+        code="503",
+    ))
+    ```
+</Tabs>
+
+<Callout>
+
+Explore more on tool call tracking in the [Tool calls logging guide](/docs/observe/how-to/log-your-application/track-tool-calls).
+
+</Callout>

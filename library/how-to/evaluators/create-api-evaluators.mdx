@@ -1,0 +1,82 @@
+---
+title: Bring your existing Evaluators via API
+description: Connect your evaluation system to Maxim using simple API endpoints.
+---
+
+import { Plus } from "lucide-react";
+
+Connect your existing evaluation system to Maxim by exposing it via an API endpoint. This lets you reuse your Evaluators without rebuilding them.
+
+<Steps>
+<Step>
+### Create Evaluator
+
+Select `API-based` from the create menu to start building.
+
+![Create a new API evaluator](/images/docs/library/how-to/evaluators/common/create-evaluator.png)
+
+</Step>
+
+<Step>
+### Configure endpoint
+
+Add your API endpoint details including:
+
+- Headers
+- Query parameters
+- Request body
+
+For advanced transformations, use pre and post scripts under the `Scripts` tab.
+
+<Callout type="info">Use variables in the body, query parameters and headers</Callout>
+
+![Configure API endpoint details](/images/docs/library/how-to/evaluators/api-evaluator/api-evaluator-editor.png)
+
+</Step>
+
+<Step>
+### Map response fields
+
+Test your endpoint using the playground. On successful response, map your API response fields to:
+
+- Score (required)
+- Reasoning (optional)
+
+This mapping allows you to keep your API structure unchanged.
+
+![Map API response to evaluator fields](/images/docs/library/how-to/evaluators/api-evaluator/api-evaluator-fields-mapping.png)
+
+</Step>
+
+<Step>
+### Set pass criteria
+
+Configure two types of pass criteria:
+
+**Pass query**
+Define criteria for individual evaluation metrics
+
+Example: Pass if clarity score > 0.8
+
+**Pass evaluator (%)**
+Set threshold for overall evaluation across multiple entries
+
+Example: Pass if 80% of entries meet the clarity criteria
+
+![Pass criteria configuration](/images/docs/library/how-to/evaluators/common/pass-criteria.png)
+
+</Step>
+
+<Step>
+### Test your Evaluator
+
+Test your Evaluator in the playground before using it in your workflows. The right panel shows input fields for all variables used in your Evaluator.
+
+1. Fill in sample values for each variable
+2. Click **Run** to see how your Evaluator performs
+3. Iterate and improve your evaluator based on the results
+
+![Testing an evaluator in the playground with input fields for variables](/images/docs/library/how-to/evaluators/common/evaluator-playground.png)
+
+</Step>
+</Steps>

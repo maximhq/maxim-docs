@@ -1,0 +1,56 @@
+---
+title: Simulate multi-turn conversations
+description: Test your AI's conversational abilities with realistic, scenario-based simulations
+---
+
+## Why simulate conversations?
+
+Testing AI conversations manually is time-consuming and often misses edge cases. It helps you:
+
+- Test how your AI maintains context across multiple exchanges
+- Evaluate responses to different user emotions and behaviors
+- Verify proper use of business context and policies
+- Identify potential conversation dead-ends
+
+## 1. Create a realistic scenario and be specific about the situation you want to test
+
+- Customer requesting refund for a defective laptop
+- New user needs help configuring account security settings
+- Customer confused about unexpected charges on their bill
+
+## 2. Define the user persona
+
+- Frustrated customer seeking refund
+- New user needing security help
+- Confused customer with billing issues
+
+<Callout type="info">
+Mix different emotional states and expertise levels to test how your agent adapts its communication style.
+</Callout>
+
+After defining the user persona, select the field where your agent's replies come from:
+
+![Response configuration](/images/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/simulate-multi-turn-conversations/simulation-config-form.png)
+
+## 3. Advanced settings (optional)
+
+- **Maximum number of turns:** Set a limit for conversation turns. If no value's set, the simulation ends when complete
+- **Reference tools**: Attach any tools you want to test with the simulation. You can learn more about setting up tools [here](/docs/library/how-to/prompt-tools/create-a-code-tool)
+- **Reference context**: Add context sources to enhance conversations. Learn more [here](/docs/library/how-to/context-sources/bring-your-rag-via-an-api-endpoint)
+
+![Workflow simulation - advanced settings](/images/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/simulate-multi-turn-conversations/workflow-simulation-advanced-settings.png)
+
+## Example simulation
+
+Here's a real-world example of a simulated conversation:
+
+![Live simulation](/images/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/simulate-multi-turn-conversations/workflow-simulated-agentic-conversation.png)
+
+<Callout type="info">
+This tests a refund scenario where:
+- Customer needs refund for defective product
+- Agent verifies purchase
+- Policy guides the process
+- Must resolve in 5 turns
+</Callout>
+

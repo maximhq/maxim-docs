@@ -1,0 +1,257 @@
+---
+title: Node level evaluation
+description: Evaluate any component of your trace or log to gain insights into your agent's behavior.
+---
+
+## What is Node level evaluation (or Agentic evaluation)?
+
+As your AI application grows in complexity, it becomes increasingly difficult to understand how it is performing on different flows and components. This granular insight becomes necessary to identify bottlenecks or low quality areas in your application's or agent's flow. By targeting the underperforming areas, you can optimize overall performance more effectively than using brute force approaches.
+
+This is where Node level evaluation can help out. It enables you to evaluate a trace or its component (a span, generation or retrieval) in isolation. This can be done via the Maxim SDK's `logger` using a very simple API. Let us see how we can start evaluating our nodes.
+
+<Callout title="Before you start">
+
+You need to have your **logging set up** to capture interactions between your LLM and users before you can evaluate them. To do so, you would need to integrate [Maxim SDK](/docs/observe/how-to/log-your-application/setting-up-trace) into your application.
+
+</Callout>
+
+## Understanding how the Maxim SDK logger evaluates
+
+Two actions are mainly required to evaluate a node:
+
+1. **Attach Evaluators**: This action defines what evaluators to run on the particular node, this needs to be called to start an evaluation on any component.
+2. **Attach Variables**: Once evaluators are attached on a component, each evaluator waits for all the variables it needs to evaluate to be attached to it. Only after all the variables an evaluator needs are attached, does it start processing.
+
+Once you have attached evaluators and variables to them, we will process the evaluator and display the results in the `Evaluation` tab under the respective node.
+
+- The evaluator will not run until all of the variables it needs are attached to it.
+- If we don't receive all the variables needed for an evaluator for over 5 minutes, we will start displaying a `Missing variables` message (although we will still process the evaluator even if variables are received after 5 minutes).
+- The variables that an evaluator needs can be found in the evaluator's page. The evaluator test panel on the right has all the variables that the evalutor needs listed (all of them are required).
+
+![Screenshot of evaluator test panel](/images/docs/observe/how-to/evaluate-logs/node-level-evaluation/screenshot-of-evaluator-test-panel.png)
+
+> As per the image above, we can see that the evaluator needs `input`, `context` and `expectedOutput` variables.
+
+### Attaching evaluators via Maxim SDK
+
+We use the `withEvaluators` method to attach evaluators to any component within a trace or the trace itself. It is as easy as just listing the names of the evaluators you want to attach, which are available on the platform.
+
+<Tabs groupId="language" items={["JS/TS", "Python"]} persist>
+
+```typescript tab="JS/TS" title="Attaching evaluators to components"
+// [!code word:withEvaluators]
+component.evaluate.withEvaluators("evaluator");
+
+// example
+generation.evaluate.withEvaluators("clarity", "toxicity");
+```
+
+```python tab="Python" title="Attaching evaluators to components"
+# [!code word:with_evaluators]
+component.evaluate().with_evaluators("evaluator")
+
+# example
+generation.evaluate().with_evaluators("clarity", "toxicity")
+```
+
+</Tabs>
+
+<Callout>
+
+If you list an evaluator that doesn't exist in your workspace but is available in the store, we will **auto install** it for you in the workspace.
+
+If the evaluator is not available in the store as well, we will **ignore** it.
+
+</Callout>
+
+### Providing variables to evaluators
+
+Once evaluators are attached to a component, variables can be passed to them via the `withVariables` method. This method accepts a key-value pair of variable names to their values.
+
+You also need to specify which evaluators you want these variables to be attached to, which can be done by passing the list of evaluator names as the second argument.
+
+<Tabs groupId="language" items={["JS/TS", "Python"]} persist>
+
+```typescript tab="JS/TS" title="Providing variables to evaluators"
+// [!code word:withVariables]
+component.evaluate.withVariables(
+	{ variableName: "value" }, // Key-value pair of variables
+	["evaluator"], // List of evaluators
+);
+
+// example
+retrieval.evaluate.withVariables(
+    { output: assistantResponse.choices[0].message.content },
+    ["clarity", "toxicity"],
+);
+```
+
+```python tab="Python" title="Providing variables to evaluators"
+# [!code word:with_variables]
+component.evaluate().with_variables(
+    { "variableName": "value" }, # Key-value pair of variables
+    ["evaluator"], # List of evaluators
+)
+
+# example
+retrieval.evaluate().with_variables(
+    { "output": assistant_response.choices[0].message.content },
+    ["clarity", "toxicity"],
+)
+```
+
+</Tabs>
+
+<Callout>
+
+You can directly chain the `withVariables` method after attaching evaluators to any component. Allowing you to skip mentioning the evaluator names again.
+
+<Tabs groupId="language" items={["JS/TS", "Python"]} persist>
+
+```typescript tab="JS/TS" title="Chaining withVariables method directly"
+// [!code word:withVariables]
+trace.evaluate
+    .withEvaluators("clarity", "toxicity")
+    .withVariables({
+        input: userInput,
+    });
+```
+
+```python tab="Python" title="Chaining withVariables method directly"
+# [!code word:with_variables]
+trace.evaluate()
+    .with_evaluators("clarity", "toxicity")
+    .with_variables({
+    	"input": userInput,
+    });
+```
+
+</Tabs>
+
+</Callout>
+
+## Viewing evaluation results on evaluations tab
+
+This is very similar to [Making sense of evaluations on logs](/docs/observe/how-to/evaluate-logs/auto-evaluation#making-sense-of-evaluations-on-logs), except that the evaluations for each component appear on their own card as it did for the trace.
+
+![Screenshot of node level evaluation result](/images/docs/observe/how-to/evaluate-logs/node-level-evaluation/screenshot-of-node-level-evaluation-result.png)
+
+## Code example for agentic evaluation
+
+This example displays how Node level evaluation might fit in a workflow.
+
+<Tabs groupId="language" items={["JS/TS", "Python"]} persist>
+
+```typescript tab="JS/TS" title="agenticWorkflow.ts"
+// ...previous flow
+
+const generation = trace.generation({
+	id: uuid(),
+	messages: [
+		{
+			role: "system",
+			content: `You are a helpful assistant that helps people with their questions`,
+		},
+	],
+	model: "gpt-4o",
+	provider: "openai",
+	modelParameters: {
+		temperature: 0.7,
+		topP: 1,
+		maxTokens: 100,
+	},
+	name: "user-facing-chatbot",
+});
+
+// ...user message received
+
+generation.addMessages([
+	{
+		role: "user",
+		content: userMessage,
+	},
+]);
+
+generation.evaluate
+    .withEvaluators("clarity", "toxicity")
+    .withVariables({
+        input: userMessage,
+    });
+
+// ...retrieve and process context
+
+generation.evaluate.withVariables(
+	{ context: context },
+	["toxicity"], // only toxicity requires context
+);
+
+// ...generate response
+
+generation.result(llmResponse);
+
+generation.evaluate.withVariables(
+    { output: llmResponse.choices[0].message.content },
+    ["clarity", "toxicity"],
+);
+
+// ...flow continues
+```
+
+```python tab="Python" title="agentic_workflow.py"
+# ...previous flow
+
+generationConfig = GenerationConfig(
+	id=str(uuid()),
+	messages=[
+    	{
+    		"role": "system",
+    		"content": "You are a helpful assistant that helps people with their questions",
+    	},
+        {
+            "role": "user",
+            "content": user_input,
+        },
+	]
+	model="gpt-4o",
+	provider="openai",
+	model_parameters={
+		"temperature": 0.7,
+		"topP": 1,
+		"maxTokens": 100,
+	},
+	name="user-facing-chatbot",
+)
+generation = trace.generation(generationConfig)
+
+generation.evaluate()
+    .with_evaluators("clarity", "toxicity")
+    .with_variables({
+    	"input": user_input,
+    });
+
+# ...retrieve and process context
+
+generation.evaluate().with_variables(
+    { "context": context },
+    ["toxicity"] # only toxicity requires context
+);
+
+# ...generate response
+
+generation.result(llm_response);
+
+generation.evaluate.withVariables(
+    { output: llm_response.choices[0].message.content },
+    ["clarity", "toxicity"]
+);
+
+# ...flow continues
+```
+
+</Tabs>
+
+## Best practices
+
+- Use evaluators selectively to monitor key performance metrics. Do not overdo with attaching too many evaluators.
+- Setup sampling and filtering according to your needs to ensure accurate evaluation processing without eating up too much cost.
+- Attach variables reliably to ensure no evaluation is left pending due to lack of variables.

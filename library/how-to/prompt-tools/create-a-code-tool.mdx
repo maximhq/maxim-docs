@@ -1,0 +1,95 @@
+---
+title: Create a code-based Prompt Tool
+description: Code-based Prompt Tools allow you to create custom functions directly within the editor. This guide will show you how to create and test these tools.
+---
+
+## Creating a code-based tool
+
+<Steps>
+<Step>
+Go to the left navigation bar and click on the "Prompts Tools" tab.
+</Step>
+
+<Step>
+On the Prompt Tools page, click the + button.
+</Step>
+
+<Step>
+Select "Code" as the tool type and click "Create".
+</Step>
+
+<Step>
+Write your custom function in JavaScript in the code editor.
+</Step>
+</Steps>
+
+<MaximPlayer url="https://drive.google.com/file/d/12E7FaogMtQ3gs0UE64pbKlOmEbwur-jM/preview"/>
+
+## Code editor interface
+
+The interface provides:
+- A code editor for writing your function
+- An input panel on the right for testing
+- A console at the bottom to view outputs
+
+## Example: Travel price calculator
+
+Here's an example of a prompt tool that calculates travel fares between cities:
+
+```js
+const pricesMap = {
+	London_Barcelona: 3423,
+	Barcelona_London: 3500,
+	London_Chicago: 3021,
+	Chicago_London: 3670,
+	London_Madrid: 6375,
+	Madrid_London: 6590,
+	London_Paris: 5621,
+	Paris_London: 5560,
+	Barcelona_Chicago: 3000,
+	Chicago_Barcelona: 3890,
+	Barcelona_Madrid: 4000,
+	Madrid_Barcelona: 4321,
+	Barcelona_Paris: 2034,
+	Paris_Barcelona: 2041,
+	Chicago_Madrid: 6987,
+	Madrid_Chicago: 6456,
+	Chicago_Paris: 3970,
+	Paris_Chicago: 3256,
+	Madrid_Paris: 4903,
+	Paris_Madrid: 4678,
+};
+
+function Travel_Prices(st1, st2) {
+	const key1 = `${st1}_${st2}`;
+	const key2 = `${st2}_${st1}`;
+
+	if (pricesMap[key1] !== undefined) {
+		return pricesMap[key1];
+	} else if (pricesMap[key2] !== undefined) {
+		return pricesMap[key2];
+	} else {
+		return "Price not found for the given stations";
+	}
+}
+
+function Total_Travel_Price(cities) {
+	if (cities.length < 2) {
+		return "At least two cities are required to calculate travel price";
+	}
+
+	let total_price = 0;
+
+	for (let i = 0; i < cities.length - 1; i++) {
+		const price = Travel_Prices(cities[i], cities[i + 1]);
+		if (typeof price === "string") {
+			return price; // Return the error message if price not found
+		}
+		total_price += price;
+	}
+
+	return total_price;
+}
+```
+
+<MaximPlayer url="https://drive.google.com/file/d/1iXSAKAiQ4DyMOX2tiO7DDXxhKrd2uV-1/preview"/>

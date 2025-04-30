@@ -1,0 +1,9 @@
+{
+  "title": "Integrations",
+  "pages": [
+    "delete",
+    "get",
+    "post",
+    "put"
+  ]
+}

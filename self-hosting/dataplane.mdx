@@ -1,0 +1,48 @@
+---
+title: Data plane deployment
+description: This guide details Maxim's data plane deployment process, outlining how to establish data processing infrastructure within your cloud environment. It emphasizes enhanced security, control, and data tenancy, ensuring compliance with data residency requirements while leveraging cloud-based services.
+---
+
+Data Plane Deployment is designed for organizations seeking a balance between enhanced security and the benefits of cloud-based services. This deployment option ensures that your sensitive data processing occurs within your own infrastructure while still allowing secure connections to Maxim's cloud-hosted application services. It's particularly beneficial for companies subject to data residency requirements, such as those mandated by GDPR, as it allows for precise control over data location and processing, helping to maintain compliance with regional data protection regulations.
+
+With Data Plane Deployment:
+- Your data remains within your controlled environment
+- Only the data processing infrastructure is deployed in your VPC
+- Secure VPC peering enables connection to Maxim's cloud-hosted application services
+- You maintain control over data locality and processing
+- You benefit from Maxim's managed application services and updates
+
+This approach offers a hybrid solution, combining the security of on-premises data handling with the scalability and features of cloud-based applications.
+
+## Setup requirements
+
+- ✅ Google Cloud Project or AWS sub-account.
+- ✅ Credentials attached to the eng@getmaxim.ai email address.
+- ✅ Admin access to the Google Cloud Project or AWS sub-account.
+
+## Deployment process
+
+- We deploy the data plane in a VPC.
+- We use secure VPC peering to connect to Maxim's cloud-hosted application plane.
+
+## Release cadence
+
+- All application plane updates are available at the same time as cloud offering updates.
+
+## Security measures
+
+- All service account keys will be rotated at least every 90 days.
+- Access to the shared Google Cloud Project or AWS sub-account will be limited to the eng@getmaxim.ai email address.
+- 2FA will be required for accessing the shared Google Cloud Project or AWS sub-account.
+
+## SLAs
+
+- 99.9% uptime.
+- < 5 mins response time (acknowledgment) in case of incidents.
+- < 48 hrs resolution time.
+
+## Support
+
+- We provide 24/7 support for any issues that may occur during the deployment process.
+- We also offer 24/7 support for any issues that may arise during the operation of the service.
+- We assign a dedicated support engineer to each account to address any issues that may occur during the deployment process and operation.

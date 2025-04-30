@@ -1,0 +1,94 @@
+---
+title: Zero Touch Deployment
+description: This guide outlines Maxim's zero-touch deployment process, covering infrastructure components, security protocols, and supported cloud providers.
+---
+
+Zero Touch Deployment is designed for organizations that require the highest level of security and privacy. This deployment option ensures that your data remains within your infrastructure, with no data exchange occurring with Maxim's cloud services.
+
+## Setup Requirements
+
+- ✅ Google Cloud Project or AWS sub-account
+- ✅ Credentials attached to eng@getmaxim.ai email address
+- ✅ Admin access to the Google Cloud Project or AWS sub-account
+- ✅ Domain name/subdomain for generating SSL certificates and serving Maxim app
+- ✅ If the service is going to be public, we will configure a Cloudflare Turnstile key for the subdomain used in the Maxim INVPC deployment.
+
+## Infrastructure requirements
+
+1. k8s
+    1.1 GCP - Google Kubernetes Engine (GKE)
+    1.2 AWS - Elastic Kubernetes Service (EKS)
+    1.3 Azure - Azure Kubernetes Service (AKS)
+2. 3 VMs, min: 2vCPU + 8 Gi RAM
+3. 1 L7 load balancer
+4. 1 Bucket as CDN backend
+5. 1/2 Static IPs for egress
+6. NAT gateway for internet access
+7. Security (Optional)
+    1.1. GCP - Cloud armor for DDoS protection and WAF capabilities
+    1.2. AWS - AWS Shield and AWS WAF for threat protection
+    1.3. Azure - Azure DDoS Protection and Azure Web Application Firewall
+8. Data lake
+    1.1 GCP - BigQuery
+    1.2 AWS - Amazon Redshift
+    1.3 Azure - Azure Synapse Analytics
+9. Document DB
+    1.1 GCP - Firestore
+    1.2 AWS - Amazon DocumentDB
+    1.3 Azure - Azure Cosmos DB
+10. MySQL
+    1.1. GCP - Cloud SQL for MySQL
+    1.2. AWS - Amazon RDS for MySQL
+    1.3. Azure - Azure Database for MySQL
+11. Cloud native logging and error tracking
+
+## Services we deploy
+
+1. Dashboard: NextJS service (3 instances)
+2. AIStack: Python(FastAPI) service (2 instances)
+3. Workers: Go(workers) (3 instances)
+4. Kafka cluster: 3 nodes 
+    4.1. Kafka UI: 1 node
+    4.2. Kafka exporter (Observability)
+5. Clickhouse cluster: 3 nodes
+6. Redis sentinel: 1 master, 3 read-replica, 3 sentinel
+7. k8s-prometheus (Observability)
+
+## Deployment Process
+
+- We deploy the data plane and application plane in the same VPC.
+- We create a cloud provider-specific Docker image repository for storing all images.
+- We use Tailscale for secure communication between the central CD pipeline and the application plane.
+
+## Release Cadence
+
+- We release new versions every week, combining all fixes and features released in the previous week's cloud offering.
+- For security vulnerabilities, we release a patch within 24 hours.
+- For critical vulnerabilities, we release a patch within 1 hour.
+
+## Observability
+
+- We use a shared Sentry instance to track errors and exceptions.
+- We use a shared Prometheus + Grafana instance to track metrics.
+- Customers receive access to Sentry projects and Grafana dashboards for audit and monitoring purposes.
+
+## Security Measures
+
+- All service account keys are rotated at least every 90 days.
+- Access to the shared Google Cloud Project or AWS sub-account is limited to the eng@getmaxim.ai email address.
+- 2FA is required for accessing the shared Google Cloud Project or AWS sub-account.
+- We enable cloud provider-specific security features and share the audit every 60 days (example dashboard).
+
+![security2](/images/docs/invpc/security-report-image-2.png)
+
+## SLAs
+
+- 99.9% uptime.
+- < 5 minutes response time (acknowledgment) for incidents.
+- < 48 hours resolution time.
+
+## Support
+
+- We provide 24/7 support for any issues that may occur during the deployment process.
+- We also offer 24/7 support for any issues that may arise during service operation.
+- We assign a dedicated support engineer to each account to address any issues that may occur during the deployment process and operation.

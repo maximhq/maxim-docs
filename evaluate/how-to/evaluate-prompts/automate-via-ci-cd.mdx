@@ -1,0 +1,192 @@
+---
+title: Automate Prompt evaluation via CI/CD
+description: Trigger test runs in CI/CD pipelines to evaluate prompts automatically.
+---
+
+## Ensuring quality with every deployment
+
+AI applications today are shipping lightning fast and there are a lot of iterations / changes being made to the system. Moving as fast means having to break a lot; but it doesn't necessarily have to. A good practice is to ensure that none of previous functionality breaks with the new changes.
+
+This is where Maxim's CI/CD integration can help you out. By integrating a step to run a **Test run** into your deployment workflow, you can ensure that every new deployment is meeting a certain baseline quality.
+
+## Before we start
+
+Triggering a test run from CI/CD requires you have the following setup and ready:
+
+1. [An API key from Maxim](/docs/observe/quickstart#2-generate-api-key)
+2. [**A prompt version to test upon**](/docs/evaluate/how-to/evaluate-prompts/create-prompt-versions)
+3. [A dataset to test against](/docs/library/how-to/datasets/use-dataset-templates)
+4. [Evaluators to evaluate the prompt version against the dataset](/docs/library/how-to/evaluators/use-pre-built-evaluators)
+
+Now that we have all the prerequisites, test runs can be triggered via:
+
+- [CLI (executable binary)](#test-runs-via-cli)
+- [GitHub Action](#test-runs-via-github-action)
+
+## Test runs via CLI
+
+Maxim offers a CLI tool that can be used to run test runs. It is an executable binary that can be run from the command line.
+
+### Installation
+
+Use the following command template to install the CLI tool (if you are using Windows, please refer to the Windows example as well):
+
+<Tabs items={["Command template", "Linux amd64 example", "Windows example"]}>
+
+```bash tab="Command template"
+wget https://downloads.getmaxim.ai/cli/<VERSION>/<OS>/<ARCH>/maxim
+```
+
+```bash tab="Linux amd64 example"
+wget https://downloads.getmaxim.ai/cli/v1/linux/amd64/maxim
+```
+
+```powershell tab="Windows example"
+# Use `.exe` extension for windows downloads.
+wget https://downloads.getmaxim.ai/cli/v1/windows/amd64/maxim.exe
+```
+
+</Tabs>
+
+<Callout>
+
+We currently only have `v1` of the CLI tool. So please replace `<VERSION>` with `v1`.
+
+</Callout>
+
+#### Supported OS + ARCH
+
+The command template can have the following OS + Architectures values,
+
+| OS      | ARCH  |
+| ------- | ----- |
+| Linux   | amd64 |
+| Linux   | 386   |
+| Darwin  | arm64 |
+| Darwin  | 386   |
+| Windows | amd64 |
+| Windows | 386   |
+
+### Env Variables
+
+We require you to set these environment variables before using the CLI, **these values cannot be passed via arguments/flags**.
+
+| Name          | Value                          |
+| ------------- | ------------------------------ |
+| MAXIM_API_KEY | [API key obtained via Maxim](/docs/observe/quickstart#2-generate-api-key) |
+
+### Triggering a test run
+
+Use this template to trigger a test run:
+
+```bash title="Shell command to trigger a test run"
+# If you haven't added the binary to your PATH,
+# replace `maxim` with the path to the binary you just downloaded
+maxim test -p <prompt_version_id> -d <dataset_id> -e <comma_separated_evaluator_names>
+```
+
+Here are the arguments/flags that you can pass to the CLI to configure your test run
+
+| Argument&nbsp;/&nbsp;Flag | Description                                                                                                 |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| -p                        | Prompt version ID or IDs; in case you send multiple IDs (comma separated), it will create a comparison run. |
+| -d                        | Dataset ID                                                                                                  |
+| -e                        | Comma separated evaluator names <br /> Ex. `bias,clarity`                                                   |
+| --json                    | (optional) Output the result in JSON format                                                                 |
+
+## Test runs via GitHub Action
+
+GitHub actions provide a powerful way to run tests, build, and deploy your application. Our GitHub Action can seamlessly integrate with your existing deployment workflows, allowing you to ensure that your LLM is functioning as you expect.
+
+### Quick Start
+
+In order to add the GitHub Action to your workflow, you can start by adding a step that uses `maximhq/actions/test-runs@v1` as follows:
+
+<Callout type="warn">
+
+Please ensure that you have the following setup:
+
+- in GitHub action **secrets**
+  - MAXIM_API_KEY
+- in GitHub action **variables**
+  - WORKSPACE_ID
+  - DATASET_ID
+  - **PROMPT_VERSION_ID**
+
+</Callout>
+
+```yaml title=".github/workflows/test-runs.yml"
+name: Run Test Runs with Maxim
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  TEST_RUN_NAME: "Test Run via GitHub Action"
+  CONTEXT_TO_EVALUATE: "context"
+  EVALUATORS: "bias, clarity, faithfulness"
+
+jobs:
+  test_run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Running Test Run
+        id: test_run
+        uses: maximhq/actions/test-runs@v1
+        with:
+          api_key: ${{ secrets.MAXIM_API_KEY }}
+          prompt_version_id: ${{ vars.PROMPT_VERSION_ID }}
+          test_run_name: ${{ env.TEST_RUN_NAME }}
+          dataset_id: ${{ vars.DATASET_ID }}
+          workflow_id: ${{ vars.WORKFLOW_ID }}
+          context_to_evaluate: ${{ env.CONTEXT_TO_EVALUATE }}
+          evaluators: ${{ env.EVALUATORS }}
+      - name: Display Test Run Results
+        if: success()
+        run: |
+          printf '%s\n' '${{ steps.test_run.outputs.test_run_result }}'
+          printf '%s\n' '${{ steps.test_run.outputs.test_run_failed_indices }}'
+          echo 'Test Run Report URL: ${{ steps.test_run.outputs.test_run_report_url }}'
+```
+
+This will trigger a test run on the platform and wait for it to complete before proceeding. The progress of the test run will be displayed in the **Running Test Run** section of the GitHub Action's logs as displayed below:
+
+![GitHub Action Running Test Run Logs](/images/docs/evaluate/how-to/evaluate-prompts/automate-via-ci-cd/github-action-running-test-run-logs.png)
+
+### Inputs
+
+The following are the inputs that can be used to configure the GitHub Action:
+
+| Name                            | Description                                                                                                                                                                                                                                        | Required                                                         |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `api_key`                       | Maxim API key                                                                                                                                                                                                                                      | Yes                                                              |
+| `workspace_id`                  | Workspace ID to run the test run in                                                                                                                                                                                                                | Yes                                                              |
+| `test_run_name`                 | Name of the test run                                                                                                                                                                                                                               | Yes                                                              |
+| `dataset_id`                    | Dataset ID for the test run                                                                                                                                                                                                                        | Yes                                                              |
+| `prompt_version_id`             | Prompt version ID to run for the test run (do not use with `workflow_id`)                                                                                                                                                                          | Yes (No if `workflow_id` is provided)                            |
+| `workflow_id`                   | Workflow ID to run for the test run <br />(discussed in [Evaluate Workflows via API -> Automate workflow evaluation via CI/CD](/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/automate-via-ci-cd), do not use with `prompt_version_id`) | Yes (No if `prompt_version_id` is provided)                      |
+| `context_to_evaluate`           | Variable name to evaluate; could be any variable used in the workflow / prompt or a column name                                                                                                                                                    | No                                                               |
+| `evaluators`                    | Comma separated list of evaluator names                                                                                                                                                                                                            | No                                                               |
+| `human_evaluation_emails`       | Comma separated list of emails to send human evaluations to                                                                                                                                                                                        | No (required in case there is a human evaluator in `evaluators`) |
+| `human_evaluation_instructions` | Overall instructions for human evaluators                                                                                                                                                                                                          | No                                                               |
+| `concurrency`                   | Maximum number of concurrent test run entries running                                                                                                                                                                                              | No (defaults to 10)                                              |
+| `timeout_in_minutes`            | Fail if test run overall takes longer than this many minutes                                                                                                                                                                                       | No (defaults to 15 minutes)                                      |
+
+### Outputs
+
+The outputs that are provided by the GitHub Action in case it doesn't fail are:
+
+| Name                      | Description                        |
+| ------------------------- | ---------------------------------- |
+| `test_run_result`         | Result of the test run             |
+| `test_run_report_url`     | URL of the test run report         |
+| `test_run_failed_indices` | Indices of failed test run entries |
+
+## Evaluating Workflows
+
+Please refer to [Evaluate Workflows via API -> Automate workflow evaluation via CI/CD](/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/automate-via-ci-cd)

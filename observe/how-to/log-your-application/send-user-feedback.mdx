@@ -1,0 +1,39 @@
+---
+title: Send feedback for AI application traces
+description: Track and collect user feedback in application traces using Maxim's Feedback entity. Enhance your AI applications with structured user ratings and comments
+---
+
+<div className="w-full flex justify-end -mb-11">
+    <LanguageSwitcher />
+</div>
+
+## Add feedback to traces
+
+<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
+    ```typescript tab="JS/TS"
+    trace.feedback({
+        score: 5,
+        feedback: "Great job!",
+    });
+    ```
+
+    ```python tab="Python"
+    from maxim.logger.components import Feedback
+
+    trace.feedback(feedback=Feedback(score=5, comment="Great job!"))
+    ```
+
+    ```go tab="Go"
+    trace.SetFeedback(&logging.Feedback{
+        Score:   5,
+        Comment: StrPtr("Great job!"),
+    })
+    ```
+
+    ```java tab="Java"
+    Feedback feedback = trace.setFeedback(new Feedback(
+        5,
+        "Great job!"
+    ));
+    ```
+</Tabs>

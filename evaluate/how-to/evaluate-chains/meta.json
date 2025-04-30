@@ -1,0 +1,13 @@
+{
+	"title": "Evaluate Chains",
+	"pages": [
+		"experiment-with-prompt-chains",
+		"debug-errors-at-every-node",
+		"use-api-nodes-within-chains",
+		"deploy-prompt-chains",
+		"test-prompt-chains",
+		"create-product-description-generator",
+		"create-customer-support-agent",
+		"querying-prompt-chains"
+	]
+}

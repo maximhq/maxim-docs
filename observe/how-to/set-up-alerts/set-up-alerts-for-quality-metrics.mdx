@@ -1,0 +1,83 @@
+---
+title: Set up alerts for quality metrics
+description: Learn how to set up alerts to monitor evaluation scores and quality checks in Maxim.
+---
+
+Monitor your AI application's quality with alerts for evaluation scores and quality checks. Receive notifications when AI responses don't meet expected quality standards.
+
+## Choose evaluation metrics for alerts
+
+Set up alerts for various evaluation scores, such as:
+
+- Bias-check: Monitor potential biases in AI responses
+- Toxicity: Check for inappropriate or harmful content
+- Clarity: Validate clear and understandable output
+- Factual accuracy: Verify generated information accuracy
+- Custom evaluators: Monitor your defined evaluation metrics
+
+## Create a quality alert
+
+<Steps>
+<Step>
+Open the **Logs** page and select the repository you want to monitor.
+</Step>
+<Step>
+Select the **Alerts** tab and click **Create alert**
+</Step>
+<Step>
+Select **Evaluation scores** as the type of alert.
+</Step>
+<Step>
+Configure alert settings:
+  - Choose an evaluation metric (e.g., "Bias-check")
+  - The violation criteria is based on your evaluator's type and configuration.
+  - Specify how many times this should occur
+  - Set the evaluation time range
+</Step>
+<Step>
+Select the notification channels where you want to receive alerts.
+</Step>
+<Step>
+Click **Create alert** to save your configuration.
+</Step>
+</Steps>
+
+<MaximPlayer url="https://drive.google.com/file/d/1F7MeY-fHmI8zF1rPwSd23ronC2gumFGa/preview" />
+
+## Example configurations
+
+### Bias check alert
+
+```
+Metric: Bias-check
+Minimum occurrences: 1
+Time range: 15 minutes
+```
+
+Triggers when a response fails the bias check within 15 minutes.
+
+### Toxicity alert
+```
+Metric: Toxicity
+Condition: violates pass criteria
+Score: 0.8
+Minimum occurrences: 1
+Time range: 5 minutes
+```
+Triggers when a response reaches 0.8 or higher toxicity score.
+
+## Manage quality alerts
+
+Manage your quality alerts in the following ways:
+
+- **Edit an alert**: Click the options icon (three dots) on the alert card and select "Edit alert"
+- **Delete an alert**: Click the options icon and select "Delete alert"
+- **Pause/Resume an alert**: Click the options icon and select "Pause alert" or "Resume alert"
+
+## Follow these best practices
+
+1. Monitor critical evaluators with immediate alerts for bias and toxicity
+2. Adjust score thresholds to match application requirements
+3. Combine evaluation metrics for comprehensive monitoring
+4. Review and adjust alert criteria based on performance
+5. Document quality issues and solutions from alerts

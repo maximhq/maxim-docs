@@ -1,0 +1,87 @@
+---
+title: Overview
+description: Maxim offers self hosting and flexible enterprise deployment options with either full VPC isolation (Zero Touch) or hybrid setup with secure VPC peering (Data Plane), tailored to your security needs.
+---
+
+## Zero Touch Deployment
+
+We set up both the data plane and control plane directly in your VPC.
+This ensures that your data stays completely within your infrastructure, with no data exchange between your VPC and our cloud services.
+
+## Data Plane Deployment
+
+We deploy only the data plane in your VPC, which connects to our cloud-hosted application plane through secure VPC peering.
+Each deployment type is designed to meet different security and integration needs. Let's explore the details of each option.
+
+
+<div className="flex flex-col bg-background-highlight-primary rounded-md">
+    <div className="px-4 text-md border-b border-border-strong rounded-tl-md rounded-tr-md">
+        Maxim is designed for companies with a security mindset.
+    </div>
+    <div className="flex flex-row gap-4 w-full px-4">
+        <img src="https://cdn.prod.website-files.com/665ab0daac869acad030a349/66fe99bae027e906828812ed_21972-312_SOC_NonCPA.png" width={92} height={92}/>
+        <img src="https://cdn.prod.website-files.com/665ab0daac869acad030a349/66fe9aa86579ed03ca44fde2_PNG_GDPR-e1672263252689-p-500.png" width={92} height={92}/>
+        <img src="https://cdn.prod.website-files.com/665ab0daac869acad030a349/6703769213e45e2379621c47_ISO%2027001.png" width={92} height={92}/>
+        <img src="https://cdn.prod.website-files.com/665ab0daac869acad030a349/674059445b7e5f0567d4aa54_image%20(15).png" width={92} height={92}/>
+    </div>
+</div>
+
+
+## Maxim infrastructure
+
+To better understand these deployment options, let's examine the key components of our infrastructure:
+
+![infrastructure](/images/docs/invpc/architecture.png)
+
+
+### Control plane
+
+The control plane encompasses all applications that handle the business logic and user experience. Web service and serverless functions are exposed to internet via a load balancer.
+
+#### Components
+
+| Component | Description | Language |
+|-----------|-------------|----------|
+| Web service | Dashboard + APIs | TypeScript |
+| AI-Stack | Proprietary evaluators | Python |
+| Workers | Real-time log processing, evaluation, and alerts | Go |
+| Serverless functions | SDK APIs | Go |
+
+
+
+### Data plane
+
+The data plane encompasses all components that handle data at rest and in transit. We utilize secure VPC peering (where required) to connect to control plane.
+
+#### Components
+
+| Component | Description |
+|-----------|-------------|
+| Dragonfly | In-memory key-value store |
+| Kafka | Queue for real-time log processing |
+| BigQuery/Redshift | Data lake |
+| Clickhouse | OLAP database for logs and evaluations |
+| MySQL | OLTP database |
+| Firestore/DocumentDB | Used as a vector database |
+
+## Pillars of Maxim's Infrastructure
+
+### Infra as code
+
+- We deploy our infrastructure using Terraform.
+- All the images are securely hosted and fingerprinted by customer-specific keys for every version.
+- Our infra as code is available for review by the customer.
+
+### Cloud provider support
+
+- We manage the orchestration of the infrastructure using Kubernetes.
+- We support GCP and AWS cloud providers.
+
+
+### Security measures
+
+- We attach a cloud-native security layer to ingress (Cloud Armor on GCP, AWS WAF, etc.).
+- We have pre-defined configurations vetted by our security team for every cloud provider.
+- The k8s cluster is deployed in a separate VPC.
+- We use cloud-native MySQL for storage with encryption at rest.
+- All outgoing traffic is routed through a cloud-native internet gateway.

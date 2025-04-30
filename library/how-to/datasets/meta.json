@@ -1,0 +1,12 @@
+{
+    "title": "Datasets",
+    "pages": [
+        "use-dataset-templates",
+        "use-variable-columns-in-datasets",
+        "use-splits-within-a-dataset",
+        "curate-data-from-production",
+        "curate-golden-dataset-for-human-annotation",
+        "create-dataset-with-files-and-images",
+        "add-new-entries-using-sdk"
+    ]
+}

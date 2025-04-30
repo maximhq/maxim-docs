@@ -1,0 +1,138 @@
+---
+title: Set up auto evaluation on logs
+description: Evaluate captured logs automatically from the UI based on filters and sampling
+---
+
+import { Save, Settings2 } from "lucide-react";
+import { Button } from "ui";
+
+## Why evaluate logs?
+
+We know that evaluation is a necessary step while building an LLM, but since an LLM can be non-deterministic, all possible scenarios can never be covered; thus evaluating the LLM on live system also becomes crucial.
+
+Evaluation on logs helps cover cases or scenarios that might not be covered by **Test runs**, ensuring that the LLM is performing optimally under various conditions. Additionally, it allows for potential issues to be identified early on which allows for making necessary adjustments to improve the overall performance of the LLM in time.
+
+![Diagram of the evaluation iteration loop](/images/docs/observe/how-to/evaluate-logs/auto-evaluation/diagram-of-the-evaluation-iteration-loop.png)
+
+<Callout title="Before you start">
+
+You need to have your **logging set up** to capture interactions between your LLM and users before you can evaluate them. To do so, you would need to integrate [Maxim SDK](/docs/observe/how-to/log-your-application/setting-up-trace) into your application.
+
+</Callout>
+
+## Setting up auto evaluation
+
+<Steps>
+<Step>
+
+Navigate to the repository where you want to evaluate your logs.
+
+</Step>
+<Step>
+
+Click on `Configure evaluation` in the top right corner of the page and choose the <Code>Setup&nbsp;evaluation&nbsp;configuration</Code> option. This will open up the evaluation configuration sheet.
+
+<Img
+    src={
+        <div className="p-4 flex flex-col gap-1 items-end">
+            <Button className="flex flex-row items-center border bg-background-primary" variant="ghost">
+                <Settings2 className="h-4 w-4" strokeWidth={1.5} />
+                Configure evaluation
+            </Button>
+            <div className="min-w-[8rem] overflow-hidden rounded-sm border bg-background-primary p-1 text-content-primary shadow-md">
+                <div className="flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-md outline-hidden bg-background-highlight-primary text-content-primary">
+                    Setup evaluation configuration
+                </div>
+                <div className="flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-md outline-hidden">
+                    Create annotation queue
+                </div>
+            </div>
+        </div>
+    }
+    alt="Screenshot of the repository page with the configure evaluation button highlighted"
+/>
+
+</Step>
+<Step>
+
+The sheet's `Auto Evaluation` section has 3 parts:
+
+- `Select evaluators`: Choose the evaluators you want to use for your evaluation.
+- `Filters`: Setup filters to only evaluate logs that meet a certain criteria.
+- `Sampling`: Choose a sampling rate, this will help you control the amount of logs that are evaluated and prevent evaluating every log; which could potentially lead to very high costs.
+
+![Screenshot of the evaluation configuration sheet](/images/docs/observe/how-to/evaluate-logs/auto-evaluation/screenshot-of-the-evaluation-configuration-sheet.png)
+
+<Callout>
+
+The `Human Evaluation` section below is explained in the [Set up human evaluation on logs](/docs/observe/how-to/evaluate-logs/human-evaluation) section
+
+</Callout>
+
+</Step>
+<Step>
+
+Finally click on the <Code className="inline-flex items-center gap-1 max-h-[23px]"><Save className="h-4 w-4" /> Save configuration</Code> button.
+
+</Step>
+</Steps>
+
+The configuration is now done and your logs should start evaluating automatically based on the filters and sampling rate you have set up! 🎉
+
+## Making sense of evaluations on logs
+
+In the logs' table view, you can find the evaluations on a trace in its row towards the left end, displaying the evaluation scores. You can sort the logs by evaluation scores as well by clicking on either of the evaluators' column header.
+
+![Screenshot of the logs table with traces having evaluation](/images/docs/observe/how-to/evaluate-logs/auto-evaluation/screenshot-of-the-logs-table-with-traces-having-evaluation.png)
+
+Click the trace to view detailed evaluation results. In the sheet, you will find the `Evaluation` tab, wherein you can see the evaluation in detail.
+
+![Screenshot of the details sheet with the evaluation tab highlighted](/images/docs/observe/how-to/evaluate-logs/auto-evaluation/screenshot-of-the-details-sheet-with-the-evaluation-tab-highlighted.png)
+
+The evaluation tab displays many details regarding the evaluation of the trace, let us see how you can navigate through them and get more insights into how your LLM is performing.
+
+### Evaluation summary
+
+![Screenshot of the evaluation summary](/images/docs/observe/how-to/evaluate-logs/auto-evaluation/screenshot-of-the-evaluation-summary.png)
+
+Evaluation summary displays the following information (top to bottom, left to right):
+
+- How many evaluators passed out of the total evaluators across the trace
+- How much did all the evaluators' evaluation cost
+- How many tokens were used across the all evaluators' evaluations
+- What was the total time taken for the evaluation to process
+
+### Trace evaluation card
+
+In each card, you will find a tab switcher on the top right corner, this is used to navigate through the evaluation's details. Here is what you can find in in different tabs:
+
+#### Overview tab
+
+![Screenshot of the overview tab in trace evaluation card](/images/docs/observe/how-to/evaluate-logs/auto-evaluation/screenshot-of-the-overview-tab-in-trace-evaluation-card.png)
+
+All the evaluators run on the trace level and their scores are displayed in a table here along with whether the evaluator passed or failed.
+
+#### Individual evaluator's tab
+
+![Screenshot of the individual evaluator's tab in trace evaluation card](/images/docs/observe/how-to/evaluate-logs/auto-evaluation/screenshot-of-the-individual-evaluator_s-tab-in-trace-evaluation-card.png)
+
+This tab contains the following sections:
+
+- **Result**: Shows whether the evaluator passed or failed.
+- **Score**: Shows the score of the evaluator.
+- **Reason** (shown where applicable): Displays the reasoning behind the score of the evaluator, if given.
+  <div className="h-5" />
+- **Cost** (shown where applicable): Shows the cost of the individual evaluator's evaluation.
+- **Tokens used** (shown where applicable): Shows the number of tokens used by the individual evaluator's evaluation.
+- **Model latency** (shown where applicable): Shows the time taken by the model to respond back with a result for an evaluator.
+- **Time taken**: Shows the time taken by the evaluator to evaluate.
+  <div className="h-5" />
+- **Variables used to evaluate**: Shows the values that were used to replace the variables with while processing the evaluator.
+  <div className="h-5" />
+- **Logs**: These are logs that were generated during the evaluation process. They might be useful for debugging errors or issues that occurred during the evaluation.
+
+### Tree view on the left panel
+
+![Screenshot of the tree view on the left panel](/images/docs/observe/how-to/evaluate-logs/auto-evaluation/screenshot-of-the-tree-view-on-the-left-panel.png)
+
+This view is essential for when you are evaluating the each log on the node level, essentially on each component of the trace (like a generation or retrieval, etc). This view helps with your perception as to what component's evaluation you are looking at on the right panel (and the component's place in the trace as well). We discuss more about the [Node Level Evaluation](/docs/observe/how-to/evaluate-logs/node-level-evaluation) further down.

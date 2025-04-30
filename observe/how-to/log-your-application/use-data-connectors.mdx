@@ -1,0 +1,95 @@
+---
+title: Connect your logs to external platforms
+description: Learn how to integrate Maxim with external observability platforms using data connectors for enhanced log analysis and monitoring.
+---
+
+Export your logs to external observability platforms to analyze and monitor application behavior in your preferred tools. Connect your logs to these platforms:
+
+- New Relic
+- Snowflake
+- Any OpenTelemetry (OTLP) collector
+
+<MaximPlayer url="https://drive.google.com/file/d/1xpqcz9CCvHuczSbWWYd-w7xyf7CbpY7-/preview" />
+
+<Callout type="info">
+Navigate to your log repository, click the top-right menu, and select "Set up data connectors" to manage your connections.
+</Callout>
+
+## Connect to New Relic
+
+<Steps>
+<Step>
+Select "New Relic" as your platform in the data connectors setup dialog.
+</Step>
+<Step>
+Name your connector - for example, Production connector.
+</Step>
+<Step>
+Enter your New Relic API key from your [account settings](https://one.newrelic.com/api-keys).
+</Step>
+<Step>
+![Configure your New Relic connection settings](/images/docs/observe/data-connectors/new-relic-connector.png)
+</Step>
+</Steps>
+
+## Connect to Snowflake
+
+<Steps>
+<Step>
+Select "Snowflake" as your platform in the data connectors setup dialog.
+</Step>
+<Step>
+Name your connector - for example, Production connector.
+</Step>
+<Step>
+Login to your Snowflake account.
+</Step>
+<Step>
+Open profile menu and select "Connect a tool to Snowflake".
+</Step>
+<Step>
+Select "Connectors/Drivers" tab and then "Go Driver Connection String".
+</Step>
+<Step>
+Select Warehouse, Database, Schema, and Connection method as "Password".
+</Step>
+<Step>
+![Snowflake connection string dialog](/images/docs/observe/data-connectors/snowflake-connection-string.png)
+</Step>
+<Step>
+Copy the connection string and paste it in the data connectors setup dialog.
+</Step>
+<Step>
+![Configure your Snowflake connection settings](/images/docs/observe/data-connectors/snowflake-connector.png)
+</Step>
+</Steps>
+
+## Connect to an OTLP collector
+
+<Steps>
+<Step>
+Select "Other OTel collector" in the data connectors setup dialog
+</Step>
+<Step>
+Name your connector
+</Step>
+<Step>
+Configure the OTLP endpoint:
+   - Choose HTTP or gRPC protocol
+   - Enter your OTLP collector URL (Example: https://otel-collector.acme.com)
+</Step>
+<Step>
+Configure headers:
+   - Add authentication headers (Example: x-api-key)
+   - Include additional headers as needed
+</Step>
+<Step>
+![Configure your OTLP collector settings](/images/docs/observe/data-connectors/otlp-connector.png)
+</Step>
+</Steps>
+
+## How we protect your data
+
+- We encrypt all credentials in storage
+- We transmit data securely using HTTPS encryption
+- We recommend using dedicated API keys with minimal permissions

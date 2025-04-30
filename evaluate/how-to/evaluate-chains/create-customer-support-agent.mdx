@@ -1,0 +1,108 @@
+---
+title: Build an AI-powered customer support email agent
+description: Create a workflow that automatically categorizes support emails, creates help desk tickets, and sends responses
+---
+
+Create an intelligent workflow to process customer emails by classifying their intent, setting priorities, and generating personalized responses.
+
+![Email support agent workflow](/images/docs/evaluate/how-to/prompt-chains/tutorials/customer-support-agent.png)
+
+<Steps>
+<Step>
+### Set up email classification
+
+![Priority scoring setup](/images/docs/evaluate/how-to/prompt-chains/tutorials/email-classifier-node.png)
+
+Create a [Prompt](/docs/evaluate/how-to/evaluate-prompts/experiment-in-prompt-playground) with these system instructions:
+
+```plaintext title="Email classifier Prompt"
+Analyze support emails and classify them by:
+
+1. Category:
+
+   - Technical Issue
+   - Billing Question
+   - Feature Request
+   - Account Management
+   - General Inquiry
+
+2. Priority:
+
+   - P1: Critical - Service down, security issues
+   - P2: High - Major functionality blocked
+   - P3: Medium - Non-critical issues
+   - P4: Low - General questions, feedback
+
+3. Sentiment:
+   - Positive
+   - Neutral
+   - Negative
+   - Urgent
+
+Output:
+{
+"category": "string",
+"priority": "number",
+"sentiment": "string",
+"key_points": ["array of main issues"]
+}
+```
+
+</Step>
+
+<Step>
+### Add priority scoring
+
+Create a Prompt to determine response handling:
+
+![Priority scoring setup](/images/docs/evaluate/how-to/prompt-chains/tutorials/priority-scorer-node.png)
+
+```plaintext title="Priority scorer"
+Determine:
+
+1. Response time SLA(Service Level Agreement)
+2. Team assignment
+3. Escalation needs
+4. Customer tier impact
+```
+
+</Step>
+
+<Step>
+### Create help desk ticket
+
+Add an [API node](/docs/evaluate/how-to/evaluate-chains/use-api-nodes-within-chains) to create tickets in your help desk system:
+
+![Create help desk ticket](/images/docs/evaluate/how-to/prompt-chains/tutorials/create-ticket-in-helpdesk-node.png)
+
+</Step>
+
+<Step>
+### Generate personalized response
+
+Create a Prompt for customized responses:
+
+```plaintext title="Response generator Prompt"
+Create a response that:
+
+1. Uses customer name
+2. Acknowledges the issue
+3. Lists next steps
+4. Follows brand voice
+5. Includes helpful resources
+6. Sets clear expectations
+```
+
+![Response generator](/images/docs/evaluate/how-to/prompt-chains/tutorials/support-response-generator-node.png)
+
+</Step>
+
+<Step>
+### Send email response
+
+Configure an [API node](/docs/evaluate/how-to/evaluate-chains/use-api-nodes-within-chains) to send the generated response:
+
+![Email API setup](/images/docs/evaluate/how-to/prompt-chains/tutorials/send-email-response-api-block.png)
+
+</Step>
+</Steps>

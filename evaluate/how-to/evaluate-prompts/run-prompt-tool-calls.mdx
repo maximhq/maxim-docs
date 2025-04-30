@@ -1,0 +1,87 @@
+---
+title: Run a Prompt with tool calls
+description: Ensuring your prompt selects the accurate tool call (function) is crucial for building reliable and efficient AI workflows. Maxim's playground allows you to attach your tools (API, code or schema) and measure tool call accuracy for agentic systems.
+---
+
+<MaximPlayer url="https://www.youtube.com/embed/LGItsF0y5qk" />
+
+Tool call usage is a core part of any agentic AI workflow. Maxim's playground allows you to effectively test if the right tools and are being chosen by the LLM and if they are getting successfully executed. 
+
+In Maxim, you can create [prompt tools](/docs/library/how-to/prompt-tools/create-a-code-tool) within the `library` section of your workspace. These could be executable or just the schema and then attached to your prompt for testing.
+
+## Attach and run your tools in playground
+
+<Steps>
+	<Step>
+		Create a new tool in the library. Use an API or code for executable tools and schema if you only want to test tool choice.
+
+        ![Create Prompt tool](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/create-tool.png)
+	</Step>
+	<Step>
+		Select and attach tools to the prompt within the configuration section.
+
+        ![Attach Prompt Tool](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/attach-tool.png)
+	</Step>
+	<Step>
+		Send your prompt referencing the tool usage instructions.
+
+		![Prompt with tool instructions](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/prompt-tool-instruction.png)
+	</Step>
+    <Step>
+        Check the assistant response with tool choice and arguments.
+
+        ![Assistant message of tool choice](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/tool-details.png)
+    </Step>
+    <Step>
+        For executable tools, check the tool response message that is shown post execution.
+
+        ![Tool message](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/tool-response.png)
+    </Step>
+    <Step>
+        Edit tool type messages manually to test for different responses.
+
+        ![Tool message edit](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/manual-tool-message.png)
+    </Step>
+</Steps>
+
+By experimenting in the playground, you can now make sure your prompt is calling the right tools in specific scenarios and that the execution of the tool leads to the right responses. 
+
+To test tool call accuracy at scale across all your use cases, run experiments using a dataset and evaluators as shown below.
+
+## Measure tool call accuracy across your test cases
+
+<Steps>
+    <Step>
+		Set up your dataset with `input` and `expected tool calls` columns.
+
+        ![Dataset creation](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/create-dataset-tool.png)
+	</Step>
+	<Step>
+		For each input, add the JSON of one or more expected tool calls and arguments you expect from the assistant.
+
+        ![Dataset example](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/dataset-tool.png)
+	</Step>
+	<Step>
+		Trigger a test on the prompt which has the tools attached.
+
+        ![Trigger test](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/prompt-with-tools-test.png)
+	</Step>
+	<Step>
+		Select your dataset from the dropdown.
+
+		![Prompt with tool instructions](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/select-dataset-with-tools.png)
+	</Step>
+    <Step>
+        Select the tool call accuracy evaluator under statistical evaluators and trigger the run. Add from evaluator store if not available in your workspace.
+
+        ![Tool call accuracy evaluator](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/tool-call-accuracy-eval.png)
+    </Step>
+    <Step>
+        Once the test run is completed, the tool call accuracy scores will be 0 or 1 based on assistant output.
+    </Step>
+    <Step>
+        To check details of the messages click on any entry and click on the `messages` tab.
+        
+        ![Messages including tool](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/message-details-with-tool.png)
+    </Step>
+</Steps>

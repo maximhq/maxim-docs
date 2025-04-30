@@ -1,0 +1,73 @@
+---
+title: Set up human evaluation
+description: Set up human raters to review and assess AI outputs for quality control
+---
+
+import { Plus } from "lucide-react";
+
+Human evaluation is essential for maintaining quality control and oversight of your AI system's outputs. Create structured workflows for human reviewers to rate and provide feedback on AI responses.
+
+<Steps>
+<Step>
+### Create Evaluator
+
+Select `Human` from the create menu.
+
+![Create human evaluator](/images/docs/library/how-to/evaluators/common/create-evaluator.png)
+
+</Step>
+
+<Step>
+### Add evaluation instructions
+
+Write clear guidelines for human reviewers. These instructions appear during the review process and should include:
+
+- What aspects to evaluate
+- How to assign ratings
+- Examples of good and bad responses
+
+![Add reviewer instructions](/images/docs/library/how-to/evaluators/human-evaluator/human-evaluator-instructions.png)
+
+</Step>
+
+<Step>
+### Select evaluation type
+
+Choose between two rating formats:
+
+**Binary (Yes/No)**
+Simple binary evaluation
+
+![Binary config](/images/docs/library/how-to/evaluators/human-evaluator/human-evaluator-binary-type.png)
+
+![Binary config](/images/docs/library/how-to/evaluators/human-evaluator/human-evaluator-binary-type-interface.png)
+
+**Scale**
+Nuanced rating system for detailed quality assessment
+
+![Scale config](/images/docs/library/how-to/evaluators/human-evaluator/human-evaluator-scale-type.png)
+
+![Scale config](/images/docs/library/how-to/evaluators/human-evaluator/human-evaluator-scale-type-interface.png)
+
+</Step>
+
+<Step>
+### Set pass criteria
+
+Configure two types of pass criteria:
+
+**Pass query**
+Define criteria for individual evaluation metrics
+
+Example: Pass if evaluation score > 0.8
+
+**Pass evaluator (%)**
+Set threshold for overall evaluation across multiple entries
+
+Example: Pass if 80% of entries meet the human evaluation criteria
+
+![Pass criteria configuration](/images/docs/library/how-to/evaluators/common/pass-criteria.png)
+
+</Step>
+
+</Steps>

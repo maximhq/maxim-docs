@@ -1,0 +1,133 @@
+---
+title: Compare Prompts in the playground
+description: Iterating on Prompts as you evolve your AI application would need experiments across models, prompt structures, etc. In order to compare versions and make informed decisions about changes, the comparison playground allows a side by side view of results.
+---
+
+
+<MaximPlayer url="https://www.youtube.com/embed/ms-0zXuo0ks" />
+
+## Why use Prompt comparison?
+
+Prompt comparison combines multiple single Prompts into one view, enabling a streamlined approach for various workflows:
+
+1. **Model comparison**: Evaluate the performance of different models on the same Prompt.
+2. **Prompt optimization**: Compare different versions of a Prompt to identify the most effective formulation.
+3. **Cross-Model consistency**: Ensure consistent outputs across various models for the same Prompt.
+4. **Performance benchmarking**: Analyze metrics like latency, cost, and token count across different models and Prompts.
+
+### Create a new comparison
+
+<Steps>
+    <Step>
+
+Navigate to the `Prompt` tab on the left side panel.
+
+    </Step>
+    <Step>
+
+Click on `Prompt` and choose `Prompt comparison`.
+
+![Prompt comparison tab in navigation](/images/docs/evaluate/how-to/evaluate-prompts/compare-prompts-playground/prompt-comparison-tab-navigation.png)
+
+    </Step>
+    <Step>
+
+Click the `+` icon in the left sidebar.
+
+    </Step>
+    <Step>
+
+Choose to create a new Prompt comparison directly or create a folder for better organization.
+
+![Dropdown menu for creating a new Prompt comparison](/images/docs/evaluate/how-to/evaluate-prompts/compare-prompts-playground/create-prompt-comparison-dropdown.png)
+
+    </Step>
+    <Step>
+
+Name your new Prompt comparison and optionally assign it to an existing folder.
+
+![Creating a new Prompt comparison in Maxim](/images/docs/evaluate/how-to/evaluate-prompts/compare-prompts-playground/create-prompt-comparison-dialog.png)
+
+    </Step>
+
+</Steps>
+
+### Configure Prompts
+
+<Steps>
+    <Step>
+
+Choose Prompts from your existing [Prompts](/docs/evaluate/how-to/evaluate-prompts/experiment-in-prompt-playground) or just select a model from the dropdown menu directly.
+
+        <Img
+            src={
+                <div className="grid grid-cols-2 gap-2 items-center">
+                    <img
+                        src="/images/docs/evaluate/how-to/evaluate-prompts/compare-prompts-playground/selecting-prompts-for-comparison.png"
+                        aria-disabled
+                        className="rounded-md my-0 border"
+                    />
+                    <img
+                        src="/images/docs/evaluate/how-to/evaluate-prompts/compare-prompts-playground/selecting-models-for-comparison.png"
+                        aria-disabled
+                        className="rounded-md my-0 border"
+                    />
+                </div>
+            }
+            alt="Selecting prompts and models for comparison"
+        />
+    </Step>
+    <Step>
+
+Add more Prompts to compare using the "+" icon.
+
+    </Step>
+    <Step>
+
+Customize each Prompt independently. This won't affect the base Prompt in any manner so experiment freely.
+
+    </Step>
+
+</Steps>
+
+### Run your comparison
+
+You can choose to have the `Multi input` option either enabled or disabled.
+
+- If enabled, provide input to each entry in the comparison individually.
+- If disabled, the same input is taken for all the Prompts in the comparison.
+
+<Img
+	src={
+		<div className="flex flex-col gap-2">
+			<img
+				src="/images/docs/evaluate/how-to/evaluate-prompts/compare-prompts-playground/prompt-comparison-multi-input-enabled.png"
+				aria-disabled
+				className="rounded-md my-0 border"
+			/>
+			<img
+				src="/images/docs/evaluate/how-to/evaluate-prompts/compare-prompts-playground/prompt-comparison-multi-input-disabled.png"
+				aria-disabled
+				className="rounded-md my-0 border"
+			/>
+		</div>
+	}
+	alt="Multi input enabled vs disabled"
+/>
+
+<Callout type="info">
+
+You can compare up to **five** different Prompts side by side in a single comparison.
+
+</Callout>
+
+## Next steps
+
+- [Compare results across test cases](/docs/evaluate/how-to/evaluate-prompts/bulk-comparisons-across-test-cases)
+
+
+
+
+
+
+

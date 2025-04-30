@@ -1,0 +1,89 @@
+---
+title: Measure the quality of your RAG pipeline
+description: Retrieval quality directly impacts the quality of output from your AI application. While testing prompts, Maxim allows you to connect your RAG pipeline via a simple API endpoint and evaluates the retrieved context for every run. Context specific evaluators for precision, recall and relevance make it easy to see where retrieval quality is low.
+---
+
+## Fetch retrieved context while running prompts
+
+To mimic the real output that your users would see when sending a query, it is necessary to consider what context is being retrieved and fed to the LLM. To make this easier in Maxim's playground, we allow you to attach the Context Source and fetch the relevant chunks. Follow the steps given below to use context in the prompt playground.
+
+<Steps>
+	<Step>
+		Create a new [Context Source](/docs/library/how-to/context-sources/bring-your-rag-via-an-api-endpoint) in the Library of type API.
+
+        ![Create context source](/images/docs/evaluate/how-to/evaluate-prompts/rag-quality/create-context-source.png)
+	</Step>
+	<Step>
+		Set up the API endpoint of your RAG pipeline that provides the response of the final chunks for any given input.
+
+        ![RAG API endpoint](/images/docs/evaluate/how-to/evaluate-prompts/rag-quality/api-endpoint.png)
+	</Step>
+	<Step>
+		Reference a variable `{{context}}` in  your prompt to provide instructions on using this dynamic data.
+
+		![Variable usage](/images/docs/evaluate/how-to/evaluate-prompts/rag-quality/prompt-with-context-variable.png)
+	</Step>
+    <Step>
+        Connect the Context Source as the dynamic value of the context variable in the variables table.
+
+        ![Variable linking](/images/docs/evaluate/how-to/evaluate-prompts/rag-quality/dynamic-context-link.png)
+    </Step>
+    <Step>
+        Run your prompt to see the retrieved context that is fetched for that input.
+        
+        ![Retrieved context](/images/docs/evaluate/how-to/evaluate-prompts/rag-quality/retrieved-context.png)
+    </Step>
+</Steps>
+
+Test different inputs iteratively and make improvements to your RAG pipeline's performance.
+
+## Evaluate retrieval at scale
+
+While the playground experience allows you to experiment and debug when retrieval is not working well, it is important to do this at scale across multiple inputs and with a set of defined metrics. Follow the steps given below to run a test and evaluate context retrieval.
+
+<Steps>
+	<Step>
+		Click on test for a prompt that has an attached context (as explained in the previous section).
+
+        ![Test button](/images/docs/evaluate/how-to/evaluate-prompts/rag-quality/test-prompt-with-context.png)
+	</Step>
+	<Step>
+		Select your dataset which has the required inputs.
+
+        ![Dataset selection](/images/docs/evaluate/how-to/evaluate-prompts/rag-quality/select-dataset-context.png)
+	</Step>
+    <Step>
+		For the `context to evaluate`, select the dynamic Context Source
+
+        ![Dataset selection](/images/docs/evaluate/how-to/evaluate-prompts/rag-quality/select-context-evaluate.png)
+	</Step>
+	<Step>
+		Select context specific evaluators - e.g. Context recall, context precision or context relevance and trigger the test
+
+		![Context evaluators](/images/docs/evaluate/how-to/evaluate-prompts/rag-quality/context-evaluation.png)
+	</Step>
+    <Step>
+        Once the run is complete, the retrieved context column will be filled for all inputs.
+
+        ![Variable linking](/images/docs/evaluate/how-to/evaluate-prompts/rag-quality/run-retrieved-context-column.png)
+    </Step>
+    <Step>
+        View complete details of retrieved chunks by clicking on any entry.
+
+        ![Retrieval details](/images/docs/evaluate/how-to/evaluate-prompts/rag-quality/retrieved-chunks-details.png)
+    </Step>
+     <Step>
+        Evaluator scores and reasoning for every entry can be checked under the `evaluation` tab. Use this to debug retrieval issues. 
+
+        ![Evaluator reasoning](/images/docs/evaluate/how-to/evaluate-prompts/rag-quality/context-evaluation-reasoning.png)
+    </Step>
+</Steps>
+
+By running experiments iteratively as you are making changes to your AI application, you can check for any regressions in the retrieval pipeline and continue to test for new test cases.
+
+
+
+
+
+
+

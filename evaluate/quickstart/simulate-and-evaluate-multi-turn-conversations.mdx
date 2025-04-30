@@ -1,0 +1,46 @@
+---
+title: Test multi-turn AI conversations
+description: Evaluate AI chat interactions automatically using conversation simulation, without code changes
+---
+
+Simulate and test multi-turn conversations with your AI agent using Maxim Workflows. Instead of manual testing, our simulation engine interacts with your agent based on predefined configurations.
+
+<Steps>
+<Step>
+
+### Configure your HTTP endpoint
+
+Add your API endpoint in [Workflows](/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/test-your-ai-outputs-using-application-endpoint). Configure request headers and body parameters as needed.
+
+![Multi turn workflow interface](/images/docs/evaluate/quickstart/workflow/multi-turn/multi-turn-simulation-interface.png)
+
+</Step>
+
+<Step>
+
+### Configure test settings
+
+Create a test run with:
+
+- A dataset containing test scenarios
+- Relevant evaluators for chat quality
+- Simulation settings for conversation flow
+- Optional columns for additional test parameters
+
+![Test run trigger for multi turn simulation](/images/docs/evaluate/quickstart/workflow/multi-turn/multi-turn-simulation-testrun-trigger-sheet.png)
+
+</Step>
+
+<Step>
+
+### Review simulation results
+
+Analyze the test report to understand conversation quality and performance metrics.
+
+<Callout type="info">Multi-turn test runs take longer to complete since each scenario involves multiple conversation steps</Callout>
+
+![Test run report showing conversation metrics](/images/docs/evaluate/quickstart/workflow/multi-turn/multi-turn-simulation-testrun-report.png)
+
+</Step>
+
+</Steps>

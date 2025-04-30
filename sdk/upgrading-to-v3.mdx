@@ -1,0 +1,36 @@
+---
+title: Upgrading to v3
+description: Changes in the Maxim SDK
+---
+
+## Maxim SDK Initialization changes
+
+- `apiKey` is now `api_key` in `Config`
+- `baseUrl` is now `base_url` in `Config`
+
+```python title="apiKey is now api_key in Config"
+from maxim import Maxim,Config
+
+maxim = Maxim(Config(api_key="maxim-api-key"))
+```
+
+## Import changes
+
+We have pulled out most commonly used imports at the relevant places.
+
+1. `from maxim.logger import Logger, LoggerConfig` instead of `from maxim.logger.logger import Logger, LoggerConfig`
+2. `from maxim import Maxim, Config` instead of `from maxim.maxim import Maxim, Config`
+3. `from maxim.logger import Trace, TraceConfig` instead of `from maxim.logger.trace import Trace, TraceConfig`
+
+<Callout>
+Old imports will still work.
+</Callout>
+
+## Prompt management changes
+
+1. `getPrompt` is now `get_prompt`
+2. `getPromptChain` is now `get_prompt_chain`
+3. `getPrompts` is now `get_prompts`
+4. `getPromptChains` is now `get_prompt_chains`
+5. `getFolder` is now `get_folder`
+6. `getFolders` is now `get_folders`

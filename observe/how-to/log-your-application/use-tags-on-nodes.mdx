@@ -1,0 +1,58 @@
+---
+title: Use tags on nodes
+description: Tag your traces to group and filter workflow data effectively. Add tags to any node type - spans, generations, retrievals, events, and more.
+---
+
+<div className="w-full flex justify-end -mb-11">
+    <LanguageSwitcher />
+</div>
+
+## Add tags to a trace
+
+<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
+    ```typescript tab="JS/TS"
+    const trace = logger.trace({
+        id: "trace-id",
+        name: "user-query",
+        tags: {
+            productId: "instaTravel",
+            experimentId: "fastlane",
+        },
+    });
+    ```
+
+    ```python tab="Python"
+    from maxim.logger.components.trace import TraceConfig
+
+    trace = logger.trace(TraceConfig(
+        id="trace-id",
+        name="user-query",
+        tags={
+            "productId": "instaTravel",
+            "experimentId": "fastlane",
+        },
+    ))
+    ```
+
+    ```go tab="Go"
+    trace := logger.Trace(&logging.TraceConfig{
+        Id: "trace-id",
+        Name: "user-query",
+        Tags: {
+            "productId": "instaTravel",
+            "experimentId": "fastlane",
+        },
+    })
+    ```
+
+    ```java tab="Java"
+    import ai.getmaxim.sdk.logger.components.Trace;
+    import ai.getmaxim.sdk.logger.components.TraceConfig;
+
+    Trace trace = logger.trace(new TraceConfig(
+        "trace-id",
+        "user-query",
+        Map.of("productId", "instaTravel", "experimentId", "fastlane"),
+    ));
+    ```
+</Tabs>

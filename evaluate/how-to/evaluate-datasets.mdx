@@ -1,0 +1,40 @@
+---
+title: Evaluate Datasets
+description: Learn how to evaluate your AI outputs against expected results using Maxim's Dataset evaluation tools
+---
+
+## Get started with Dataset evaluation
+
+Have a dataset ready directly for evaluation? Maxim lets you evaluate your AI's performance directly without setting up workflows.
+
+<Steps>
+
+<Step>
+### Prepare Your Dataset
+
+Include these columns in your dataset:
+- Input queries or prompts
+- Your AI's actual outputs
+- Expected outputs (ground truth)
+
+![Configure Test Run for Datasets](/images/docs/evaluate/how-to/evaluate-datasets/evaluation-dataset.png)
+</Step>
+
+<Step>
+### Configure the Test Run
+
+- On the Dataset page, click the "Test" button, on the top right corner
+- Your Dataset should be already be pre-selected in the drop-down. Attach the [Evaluators](/docs/library/how-to/evaluators/use-pre-built-evaluators) and [Context Sources](/docs/library/how-to/context-sources/bring-your-rag-via-an-api-endpoint) you want to use.
+- Click "Trigger Test Run"
+
+The Dataset appears pre-selected in the drop-down. You can attach the evaluators and context sources (if any) you want to use.
+
+![Configure Test Run for Datasets](/images/docs/evaluate/how-to/evaluate-datasets/test-form-dataset.png)
+</Step>
+
+</Steps>
+
+
+<Callout type="info">
+If you want to test only certain entries from your Dataset, you can [create a Dataset split](/docs/library/how-to/datasets/use-splits-within-a-dataset) and run the test run on the split the same way as above.
+</Callout>

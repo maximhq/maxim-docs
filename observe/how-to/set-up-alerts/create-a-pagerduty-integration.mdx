@@ -1,0 +1,77 @@
+---
+title: Create a PagerDuty integration
+description: Send alert notifications to your PagerDuty service by creating a PagerDuty integration in Maxim.
+---
+
+## Prerequisites
+
+Gather these requirements before starting:
+
+1.  A PagerDuty account with permission to create a service and integration.
+2.  A PagerDuty service where you want to receive notifications.
+3.  The **Integration Key** (also known as the **Routing Key**) for the PagerDuty service.
+
+Find this key by following these steps:
+
+<Steps>
+<Step>
+In PagerDuty, navigate to **Services** → **Service Directory** and select or search the service you want to integrate with Maxim.
+</Step>
+<Step>
+Go to the **Integrations** tab.
+</Step>
+<Step>
+Click **Add or manage integrations**.
+</Step>
+<Step>
+Click the **+ New Integration** button.
+</Step>
+<Step>
+Enter a name for the integration (e.g., "Maxim Alerts").
+</Step>
+<Step>
+Select the integration type (usually "Events API v2").
+</Step>
+<Step>
+Click **Add Integration**.
+</Step>
+<Step>
+Copy the **Integration Key** that is generated.
+</Step>
+</Steps>
+
+## Creating the integration in Maxim
+
+<Steps>
+<Step>
+Navigate to the **Settings** page in Maxim.
+</Step>
+<Step>
+Click on **Integrations** in the left sidebar.
+</Step>
+<Step>
+Click the **Add integration** button.
+</Step>
+<Step>
+Choose **PagerDuty** as the integration type.
+</Step>
+<Step>
+In the **Integration Key** field, paste the Integration Key you copied from PagerDuty.
+</Step>
+<Step>
+Give your integration a descriptive name (e.g., "Production Alerts").
+</Step>
+<Step>
+Click **Save** to create the integration.
+</Step>
+</Steps>
+
+<MaximPlayer url="https://drive.google.com/file/d/1o6MmU4jT1MY6u5YXer4GKcW0dJHK2lgY/preview" />
+
+## Using the integration
+
+Once the PagerDuty integration is created, you can select it as a notification channel when creating or editing alerts. Triggered alerts create incidents in the specified PagerDuty service.
+
+## Editing or deleting the integration
+
+Edit or delete an integration by hovering over the respective integration on the Integrations page and clicking on the edit/delete icons respectively.

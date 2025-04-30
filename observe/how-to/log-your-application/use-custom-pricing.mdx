@@ -1,0 +1,50 @@
+---
+title: Set up custom token pricing
+description: Learn how to set up custom token pricing in Maxim for accurate cost reporting in AI evaluations and logs, ensuring displayed costs match your actual expenses.
+---
+
+Configure your negotiated token costs for accurate cost reporting in AI evaluations and real-time logs. Custom token pricing ensures that displayed costs match your actual expenses based on special pricing agreements.
+
+## How it works
+<Steps>
+<Step>
+Enter your custom input and output token costs
+</Step>
+<Step>
+Apply costs to model configs and log repositories
+</Step>
+<Step>
+System calculates actual costs for each evaluation
+</Step>
+<Step>
+Standard pricing applies when no custom rates exist
+</Step>
+</Steps>
+
+## Create custom pricing structures
+
+1. Navigate to **Settings > Models > Pricing**
+2. Enter a model name pattern (string or regex) that matches your model names
+3. Input your token usage cost (per 1000 tokens)
+
+![Interface for creating custom token pricing structures](/images/docs/observe/custom-pricing-structures/add_pricing.png)
+
+## Configure model pricing
+
+1. Go to **Settings > Models > Model Configs**
+2. Select a model config to edit
+3. Locate the **Pricing structure** section
+4. Choose your pricing structure from the dropdown
+
+Custom pricing supports OpenAI, Microsoft Azure, Groq, HuggingFace, Together AI, Google Cloud, and Amazon Bedrock models.
+
+![Attach the pricing structure to model config](/images/docs/observe/custom-pricing-structures/attach_pricing_model_config.png)
+
+## Set up pricing for log repository
+
+1. Open **Logs** from the sidebar
+2. Select the log repository you want to configure custom pricing for
+3. Find the **Pricing structure** section
+4. Choose your pricing structure from the dropdown
+
+![Attach pricing structure to log repository](/images/docs/observe/custom-pricing-structures/attach_pricing_log_repo.png)

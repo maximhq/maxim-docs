@@ -1,0 +1,12 @@
+{
+    "title": "How to",
+    "pages": [
+        "evaluate-prompts",
+        "evaluate-chains",
+        "evaluate-workflows-via-api-endpoint",
+        "evaluate-datasets",
+        "scheduled-test-runs",
+        "trigger-test-runs-using-sdk",
+        "optimize-evaluation-processes"
+    ]
+}

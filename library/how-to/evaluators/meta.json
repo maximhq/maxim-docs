@@ -1,0 +1,10 @@
+{
+	"title": "Evaluators",
+	"pages": [
+		"use-pre-built-evaluators",
+		"create-custom-ai-evaluator",
+		"create-programmatic-evaluator",
+		"create-api-evaluators",
+		"create-human-evaluators"
+	]
+}

@@ -1,0 +1,9 @@
+{
+  "title": "Prompt Tools",
+  "pages": [
+    "create-a-code-tool",
+    "create-an-api-tool",
+    "create-a-tool-schema",
+    "evaluate-tool-call-accuracy"
+  ]
+}

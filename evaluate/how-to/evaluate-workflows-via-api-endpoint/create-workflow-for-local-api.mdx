@@ -1,0 +1,73 @@
+---
+title: Test your local AI endpoint
+description: Learn how to test your local AI endpoint using Maxim's Workflows.
+---
+
+## Getting Started with Local Testing
+
+Want to evaluate your AI application but it's running locally? No problem! We'll help you connect your local AI app to Maxim for testing.
+
+<Steps>
+<Step>
+### Create Your local AI Endpoint
+Create a simple Flask API that implements RAG (Retrieval-Augmented Generation) - a technique that enhances AI responses with relevant context from your data:
+
+```python title="Example Flask API for RAG implementation"
+from flask import Flask, request
+
+app = Flask(__name__)
+
+@app.route('/rag', methods=['POST'])
+def rag_output():
+    # Get the query from the request
+    body = request.get_json()
+    print(body)
+    output = runPrompt(body['query'])
+    response = {'response':output}
+    return response
+
+# main driver function
+if __name__ == '__main__':
+    # run() method of Flask class runs the application
+    # on the local development server.
+    app.run()
+```
+
+This example shows a RAG application using Google's PaLM model with "Harry Potter" content. The endpoint runs at `http://localhost:5000/rag`.
+
+</Step>
+
+<Step>
+### Set up Ngrok
+To make your local API accessible to Maxim, we'll use Ngrok - a secure tunneling tool that creates a public URL for your local server.
+
+Follow these steps on MacOS:
+
+```bash title="Install and configure Ngrok"
+# Install Ngrok
+brew install ngrok/ngrok/ngrok
+
+# Set up your auth token (you'll need to sign up at ngrok.com)
+ngrok config add-authtoken your_token
+
+# Create a secure tunnel to your local server
+ngrok http 5000
+```
+
+You can read about ngrok setup for other operating systems [here](https://ngrok.com/docs/getting-started).
+</Step>
+
+<Step>
+### Connect to Maxim
+Now that your API is accessible, let's connect it to Maxim:
+
+1. Copy your Ngrok URL (looks like `https://xxxx-xx-xx-xxx-xx.ngrok.io`) and navigate to [Workflows](/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/test-your-ai-outputs-using-application-endpoint)
+2. Add your Ngrok URL as the API endpoint
+3. Start testing your AI responses
+
+<Callout type="info">
+Remember to keep both your Flask server and Ngrok running during testing. Once you stop Ngrok, you'll need a new URL for your next testing session.
+</Callout>
+
+</Step>
+</Steps>

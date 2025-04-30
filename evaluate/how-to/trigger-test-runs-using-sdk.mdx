@@ -1,0 +1,1070 @@
+---
+title: Trigger Test Runs using SDK
+description: Learn how to programmatically trigger test runs using Maxim's SDK with custom datasets, flexible output functions, and evaluations for your AI applications.
+---
+
+import { SquareActivity, SquareCheck, SquareTerminal, Table2 } from 'lucide-react'
+
+While Maxim's web interface provides a powerful way to run tests, the SDK offers even more flexibility and control. With the SDK, you can:
+
+- Use custom datasets directly from your code
+- Control how outputs are generated
+- Integrate testing into your CI/CD pipeline
+- Get real-time feedback on test progress
+- Handle errors programmatically
+
+## Example of triggering test runs using the SDK
+
+The SDK uses a builder pattern to configure and run tests. Follow this example to trigger test runs:
+
+<Tabs groupId="language" items={["JS/TS", "Python"]}>
+    ```typescript tab="JS/TS"
+    import { Maxim } from "@maximai/maxim-js";
+
+    // [!code word:apiKey]
+    const maxim = new Maxim({ apiKey: "" });
+
+    const result = await maxim
+    .createTestRun("My First SDK Test", "your-workspace-id")
+    .withDataStructure(/* your data structure here */)
+    .withData(/* your data here */)
+    .yieldsOutput(/* your output function here */)
+    .withWorkflowId(/* or you can pass workflow ID from Maxim platform */)
+    .withPromptVersionId(/* or you can pass prompt version ID from Maxim platform */)
+    .withEvaluators(/* your evaluators here */)
+    .run();
+    ```
+
+    ```python tab="Python"
+    from maxim import Maxim, Config
+    from maxim.logger import Logger, LoggerConfig
+
+    # [!code word:api_key]
+    maxim = Maxim(Config(api_key=""))
+
+    result = maxim
+    .create_test_run("My First SDK Test", "your-workspace-id")
+    .with_data_structure() # your data structure here
+    .with_data() # your data here
+    .yields_output() # your output function here
+    .with_workflow_id() # or you can pass workflow ID from Maxim platform
+    .with_prompt_version_id() # or you can pass prompt version ID from Maxim platform
+    .with_evaluators() # your evaluators here
+    .run();
+    ```
+</Tabs>
+
+Copy your workspace ID from the workspace switcher in the left topbar
+
+![Screenshot of copy workspace ID option](/images/docs/sdk/copy-workspace-id-option.png)
+
+## Understanding the data structure
+
+Understand the data structure to maintain type safety and validate data columns. It maps your data columns to specific types that Maxim understands.
+
+### Basic structure
+
+Define your data structure using an object that maps column names to specific types.
+
+<Tabs groupId="language" items={["JS/TS", "Python"]}>
+    ```typescript tab="JS/TS"
+    const dataStructure = {
+        myQuestionColumn: "INPUT",
+        expectedAnswerColumn: "EXPECTED_OUTPUT",
+        contextColumn: "CONTEXT_TO_EVALUATE",
+        additionalDataColumn: "VARIABLE"
+    }
+    ```
+
+    ```python tab="Python"
+    data_structure = {
+        myQuestionColumn: "INPUT",
+        expectedAnswerColumn: "EXPECTED_OUTPUT",
+        contextColumn: "CONTEXT_TO_EVALUATE",
+        additionalDataColumn: "VARIABLE"
+    }
+    ```
+</Tabs>
+
+### Available types
+
+- `INPUT` - Main input text (only one allowed)
+- `EXPECTED_OUTPUT` - Expected response (only one allowed)
+- `CONTEXT_TO_EVALUATE` - Context for evaluation (only one allowed)
+- `VARIABLE` - Additional data columns (multiple allowed)
+- `NULLABLE_VARIABLE` - Optional data columns (multiple allowed)
+
+### Example
+
+<Tabs groupId="language" items={["JS/TS", "Python"]}>
+    ```typescript tab="JS/TS"
+    import { Maxim } from "@maximai/maxim-js";
+
+    // [!code word:apiKey]
+    const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
+
+    const result = maxim
+        .createTestRun("Question Answering Test", workspaceId)
+        .withDataStructure({
+            question: "INPUT",
+            answer: "EXPECTED_OUTPUT",
+            context: "CONTEXT_TO_EVALUATE",
+            metadata: "NULLABLE_VARIABLE"
+        })
+        // ... rest of the configuration
+    ```
+
+    ```python tab="Python"
+    from maxim import Maxim, Config
+
+    # [!code word:api_key]
+    maxim = Maxim(Config(api_key="YOUR_API_KEY"))
+
+    result = maxim
+        .create_test_run("Question Answering Test", workspace_id)
+        .with_data_structure({
+            question: "INPUT",
+            answer: "EXPECTED_OUTPUT",
+            context: "CONTEXT_TO_EVALUATE",
+            metadata: "NULLABLE_VARIABLE"
+        })
+        # ... rest of the configuration
+    ```
+</Tabs>
+
+## Working with data sources
+
+Maxim's SDK supports multiple ways to provide test data:
+
+### 1. Callable
+
+<Tabs groupId="language" items={["JS/TS", "Python"]}>
+<Tab value="JS/TS">
+    ```typescript tab="JS/TS"
+    import { CSVFile, Maxim } from '@maximai/maxim-js';
+
+    const myCSVFile = new CSVFile('./test.csv', {
+        question: 0, // column index in CSV
+        answer: 1,
+        context: 2
+    });
+
+    // [!code word:apiKey]
+    const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
+
+    const result = maxim
+        .createTestRun("CSV Test Run", workspaceId)
+        .withDataStructure({
+            question: "INPUT",
+            answer: "EXPECTED_OUTPUT",
+            context: "CONTEXT_TO_EVALUATE"
+        })
+        .withData(myCSVFile)
+        // ... rest of the configuration
+    ```
+    <Callout type="info">
+
+    The `CSVFile` class automatically validates your CSV headers against the data structure and provides type-safe access to your data.
+
+    </Callout>
+</Tab>
+<Tab value="Python">
+```python tab="Python"
+from maxim import Maxim, Config
+
+# [!code word:api_key]
+maxim = Maxim(Config(api_key="YOUR_API_KEY"))
+
+index = 0
+
+def get_next_row() -> Optional[Dict[str, Any]]:
+    index = index + 1
+    return db.get_row(index)
+
+
+result = maxim
+    .create_test_run("CSV Test Run", workspace_id)
+    .with_data_structure({
+        question: "INPUT",
+        answer: "EXPECTED_OUTPUT",
+        context: "CONTEXT_TO_EVALUATE"
+    })
+    .with_data(get_next_row)
+    # ... rest of the configuration
+```
+</Tab>
+</Tabs>
+
+### 2. Manual data array
+
+For smaller datasets or programmatically generated data:
+
+<Tabs groupId="language" items={["JS/TS", "Python"]}>
+```typescript tab="JS/TS"
+import { Maxim } from "@maximai/maxim-js";
+
+// [!code word:apiKey]
+const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
+
+const manualData = [
+    {
+        question: "What is the capital of France?",
+        answer: "Paris",
+        context: "France is a country in Western Europe..."
+    },
+    {
+        question: "Who wrote Romeo and Juliet?",
+        answer: "William Shakespeare",
+        context: "William Shakespeare was an English playwright..."
+    }
+];
+
+const result = maxim
+    .createTestRun("Manual Data Test", workspaceId)
+    .withDataStructure({
+        question: "INPUT",
+        answer: "EXPECTED_OUTPUT",
+        context: "CONTEXT_TO_EVALUATE"
+    })
+    .withData(manualData)
+    // ... rest of the configuration
+```
+
+```python tab="Python"
+from maxim import Maxim, Config
+
+# [!code word:api_key]
+maxim = Maxim(Config(api_key="YOUR_API_KEY"))
+
+manual_data = [
+    {
+        question: "What is the capital of France?",
+        answer: "Paris",
+        context: "France is a country in Western Europe..."
+    },
+    {
+        question: "Who wrote Romeo and Juliet?",
+        answer: "William Shakespeare",
+        context: "William Shakespeare was an English playwright..."
+    }
+];
+
+result = maxim
+    .create_test_run("Manual Data Test", workspace_id)
+    .with_data_structure({
+        question: "INPUT",
+        answer: "EXPECTED_OUTPUT",
+        context: "CONTEXT_TO_EVALUATE"
+    })
+    .with_data(manual_data)
+    # ... rest of the configuration
+```
+</Tabs>
+
+### 3. Platform datasets
+
+Use existing datasets from your Maxim workspace:
+
+<Tabs groupId="language" items={["JS/TS", "Python"]}>
+```typescript tab="JS/TS"
+import { Maxim } from "@maximai/maxim-js";
+
+// [!code word:apiKey]
+const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
+
+const result = maxim
+    .createTestRun("Platform Dataset Test", workspaceId)
+    .withDataStructure({
+        question: "INPUT",
+        answer: "EXPECTED_OUTPUT",
+        context: "CONTEXT_TO_EVALUATE"
+    })
+    .withData("your-dataset-id")
+    // ... rest of the configuration
+```
+
+```python tab="Python"
+from maxim import Maxim, Config
+
+# [!code word:api_key]
+maxim = Maxim(Config(api_key="YOUR_API_KEY"))
+
+result = maxim
+    .create_test_run("Platform Dataset Test", workspaceId)
+    .with_data_structure({
+        question: "INPUT",
+        answer: "EXPECTED_OUTPUT",
+        context: "CONTEXT_TO_EVALUATE"
+    })
+    .with_data("your-dataset-id")
+    # ... rest of the configuration
+```
+</Tabs>
+
+## Trigger a test on a workflow stored on Maxim platform
+
+<Tabs groupId="language" items={["JS/TS", "Python"]}>
+```typescript tab="JS/TS"
+import { Maxim } from "@maximai/maxim-js";
+
+// [!code word:apiKey]
+const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
+
+const result = maxim
+    .createTestRun("Custom Output Test", workspaceId)
+    .withDataStructure({
+        question: "INPUT",
+        answer: "EXPECTED_OUTPUT",
+        context: "CONTEXT_TO_EVALUATE"
+    })
+    .withData(myData)
+    .withWorkflowId(workflowIdFromDashboard, contextToEvaluate) // context to evaluate is optional; it can either be a variable used in the workflow or a column name present in the dataset
+```
+
+```python tab="Python"
+const result = maxim
+    .create_test_run("Custom Output Test", workspaceId)
+    .with_data_structure({
+        question: "INPUT",
+        answer: "EXPECTED_OUTPUT",
+        context: "CONTEXT_TO_EVALUATE"
+    })
+    .with_data(myData)
+    .with_workflow_id(workflowIdFromDashboard, contextToEvaluate) # context to evaluate is optional; it can either be a variable used in the workflow or a column name present in the dataset
+```
+</Tabs>
+
+Find the workflow ID in the workflows tab and from menu click on copy ID.
+
+![screenshot of copying ID workflow](/images/docs/sdk/copy-id-workflow.png)
+
+## Trigger a test on a prompt version stored on Maxim platform
+
+<Tabs groupId="language" items={["JS/TS", "Python"]}>
+```typescript tab="JS/TS"
+import { Maxim } from "@maximai/maxim-js";
+
+// [!code word:apiKey]
+const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
+
+const result = maxim
+    .createTestRun("Custom Output Test", workspaceId)
+    .withDataStructure({
+        question: "INPUT",
+        answer: "EXPECTED_OUTPUT",
+        context: "CONTEXT_TO_EVALUATE"
+    })
+    .withData(myData)
+    .withPromptVersionId(promptVersionIdFromPlatform, contextToEvaluate) // context to evaluate is optional; it can either be a variable used in the prompt or a column name present in the dataset
+```
+
+```python tab="Python"
+const result = maxim
+    .create_test_run("Custom Output Test", workspaceId)
+    .with_data_structure({
+        question: "INPUT",
+        answer: "EXPECTED_OUTPUT",
+        context: "CONTEXT_TO_EVALUATE"
+    })
+    .with_data(myData)
+    .with_prompt_version_id(promptVersionIdFromPlatform, contextToEvaluate) # context to evaluate is optional; it can either be a variable used in the prompt or a column name present in the dataset
+```
+</Tabs>
+
+To get prompt version ID, go to prompts tab, select the version you want to run tests on and from menu click on copy version id.
+
+![topbar](/images/docs/sdk/copy-prompt-version-id.png)
+
+## Custom output function
+
+The output function is where you define how to generate responses for your test cases:
+
+<Tabs groupId="language" items={["JS/TS", "Python"]}>
+```typescript tab="JS/TS"
+import { Maxim } from "@maximai/maxim-js";
+
+// [!code word:apiKey]
+const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
+
+const result = maxim
+    .createTestRun("Custom Output Test", workspaceId)
+    .withDataStructure({
+        question: "INPUT",
+        answer: "EXPECTED_OUTPUT",
+        context: "CONTEXT_TO_EVALUATE"
+    })
+    .withData(myData)
+    .yieldsOutput(async (data) => {
+        // Call your model or API
+        const response = await yourModel.call(
+            data.question,
+            data.context
+        );
+
+        return {
+            // Required: The actual output
+            data: response.text,
+
+            // Optional: Context used for evaluation
+            // Returning a value here will utilize this context for
+            // evaluation instead of the CONTEXT_TO_EVALUATE column (if provided)
+            retrievedContextToEvaluate: response.relevantContext,
+
+            // Optional: Performance metrics
+            meta: {
+                usage: {
+                    promptTokens: response.usage.prompt_tokens,
+                    completionTokens: response.usage.completion_tokens,
+                    totalTokens: response.usage.total_tokens,
+                    latency: response.latency
+                },
+                cost: {
+                    input: response.cost.input,
+                    output: response.cost.output,
+                    total: response.cost.input + response.cost.output
+                }
+            }
+        };
+    })
+```
+
+```python tab="Python"
+from maxim import Maxim, Config
+
+# [!code word:api_key]
+maxim = Maxim(Config(api_key="YOUR_API_KEY"))
+
+def run(data):
+    # ======================================================#
+    # REPLACE THIS WITH YOUR ACTUAL WORKFLOW / MODEL CALL
+    # ======================================================#
+    response = {
+        "text": "dummy response",
+        "usage":{
+            "prompt_tokens":10,
+            "completion_tokens":20,
+            "total_tokens":30,
+            "latency": 233
+        },
+        "cost": {
+            "input_cost": 0.2,
+            "output_cost": 0.002,
+            "total_cost": 0.202
+        }
+    }
+    # ======================================================#
+    # END
+    # ======================================================#
+    return {
+        # Required: The actual output
+        data: response.text,
+
+        # Optional: Context used for evaluation
+        # Returning a value here will utilize this context for
+        # evaluation instead of the CONTEXT_TO_EVALUATE column (if provided)
+        retrieved_context_to_evaluate: response.relevantContext,
+
+        # Optional: Performance metrics
+        meta: {
+            usage: {
+                prompt_tokens: response.usage.prompt_tokens,
+                completion_tokens: response.usage.completion_tokens,
+                total_tokens: response.usage.total_tokens,
+                latency: response.latency
+            },
+            cost: {
+                input_cost: response.cost.input,
+                output_cost: response.cost.output,
+                total_cost: response.cost.input + response.cost.output
+            }
+        }
+    }
+
+result = maxim
+    .create_test_run("Custom Output Test", workspaceId)
+    .with_data_structure({
+        question: "INPUT",
+        answer: "EXPECTED_OUTPUT",
+        context: "CONTEXT_TO_EVALUATE"
+    })
+    .with_data(myData)
+    .yields_output(lambda data: run(data))
+
+```
+</Tabs>
+
+<Callout type="warn">
+
+If your output function throws an error, the entry will be marked as failed and you'll receive the index in the `failed_entry_indices` array after the run completes.
+
+</Callout>
+
+## Adding evaluators
+
+Choose which evaluators to use for your test run:
+
+<Tabs groupId="language" items={["JS/TS", "Python"]}>
+```typescript tab="JS/TS"
+import { Maxim } from "@maximai/maxim-js";
+
+// [!code word:apiKey]
+const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
+
+const result = maxim
+    .createTestRun("Evaluated Test", workspaceId)
+    // ... previous configuration
+    .withEvaluators(
+        "Faithfulness", // names of evaluators installed in your workspace
+        "Semantic Similarity",
+        "Answer Relevance"
+    )
+```
+```python tab="Python"
+from maxim import Maxim, Config
+
+# [!code word:api_key]
+maxim = Maxim(Config(api_key="YOUR_API_KEY"))
+
+result = maxim
+    .create_test_run("Evaluated Test", workspace_id)
+    # ... previous configuration
+    .with_evaluators(
+        "Faithfulness", # names of evaluators installed in your workspace
+        "Semantic Similarity",
+        "Answer Relevance"
+    )
+```
+</Tabs>
+
+### Human evaluation
+
+For evaluators that require human input, setting up the human evaluation configuration is required and can be done as follows:
+
+<Tabs groupId="language" items={["JS/TS", "Python"]}>
+```typescript tab="JS/TS"
+import { Maxim } from "@maximai/maxim-js";
+
+// [!code word:apiKey]
+const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
+
+const result = maxim
+    .createTestRun("Human Evaluated Test", workspaceId)
+    // ... previous configuration
+    .withEvaluators("Human Evaluator")
+    .withHumanEvaluationConfig({
+        emails: ["evaluator@company.com"],
+        instructions: "Please evaluate the response according to the evaluation criteria"
+    })
+```
+
+```python tab="Python"
+from maxim import Maxim, Config
+
+# [!code word:api_key]
+maxim = Maxim(Config(api_key="YOUR_API_KEY"))
+
+result = maxim
+    .create_test_run("Human Evaluated Test", workspace_id)
+    # ... previous configuration
+    .with_evaluators("Human Evaluator")
+    .with_human_evaluation_config({
+        emails: ["evaluator@company.com"],
+        instructions: "Please evaluate the response according to the evaluation criteria"
+    })
+```
+</Tabs>
+
+## Custom evaluators
+
+You can create custom evaluators to implement specific evaluation logic for your test runs:
+
+<Tabs groupId="language" items={["JS/TS", "Python"]}>
+```typescript tab="JS/TS"
+import {
+    Maxim,
+    createDataStructure,
+    createCustomEvaluator,
+    createCustomCombinedEvaluatorsFor,
+} from "@maximai/maxim-js";
+
+// [!code word:apiKey]
+const maxim = new Maxim({
+    apiKey: process.env.MAXIM_API_KEY
+});
+
+const dataStructure = createDataStructure({
+    Input: 'INPUT',
+    'Expected Output': 'EXPECTED_OUTPUT',
+    stuff: 'CONTEXT_TO_EVALUATE',
+});
+
+// example of creating a custom evaluator
+const myCustomEvaluator = createCustomEvaluator<typeof dataStructure>(
+    'apostrophe-checker',
+    (result) => {
+        if (result.output.includes("'")) {
+            return {
+                score: true,
+                reasoning: 'The output contains an apostrophe',
+            };
+        } else {
+            return {
+                score: false,
+                reasoning: 'The output does not contain an apostrophe',
+            };
+        }
+    },
+    {
+        onEachEntry: {
+            scoreShouldBe: '=',
+            value: true,
+        },
+        forTestrunOverall: {
+            overallShouldBe: '>=',
+            value: 80,
+            for: 'percentageOfPassedResults',
+        },
+    },
+);
+
+// example of creating a combined custom evaluator
+const myCombinedCustomEvaluator = createCustomCombinedEvaluatorsFor(
+    'apostrophe-checker-2',
+    'containsSpecialCharacters',
+).build<typeof dataStructure>(
+    (result) => {
+        return {
+            'apostrophe-checker-2': {
+                score: result.output.includes("'") ? true : false,
+                reasoning: result.output.includes("'")
+                    ? 'The output contains an apostrophe'
+                    : 'The output does not contain an apostrophe',
+            },
+            containsSpecialCharacters: {
+                score: result.output
+                    .split('')
+                    .filter((char) => /[!@#$%^&*(),.?"':{}|<>]/.test(char))
+                    .length,
+            },
+        };
+    },
+    {
+        'apostrophe-checker-2': {
+            onEachEntry: {
+                scoreShouldBe: '=',
+                value: true,
+            },
+            forTestrunOverall: {
+                overallShouldBe: '>=',
+                value: 80,
+                for: 'percentageOfPassedResults',
+            },
+        },
+        containsSpecialCharacters: {
+            onEachEntry: {
+                scoreShouldBe: '>',
+                value: 3,
+            },
+            forTestrunOverall: {
+                overallShouldBe: '>=',
+                value: 80,
+                for: 'percentageOfPassedResults',
+            },
+        },
+    },
+);
+```
+
+```python tab="Python"
+from maxim import Maxim
+from typing import Dict
+from maxim.evaluators import BaseEvaluator
+from maxim.models import LocalEvaluatorResultParameter, LocalEvaluatorReturn, PassFailCriteria, PassFailCriteriaForTestrunOverall, PassFailCriteriaOnEachEntry, ManualData, Data, TestRunLogger, YieldedOutput
+
+class MyCustomEvaluator(BaseEvaluator):
+    # implement evaluate function
+    def evaluate(
+        self, result: LocalEvaluatorResultParameter, data: ManualData
+    ) -> Dict[str, LocalEvaluatorReturn]:
+        # You can pass as many scores as you want in this dict
+        # All of these will show up in the test run report
+        return {
+            "apostrophe-checker-2": LocalEvaluatorReturn(
+                score="'" in result.output,
+                reasoning="The output contains an apostrophe" if "'" in result.output else "The output does not contain an apostrophe"
+            ),
+            "contains_special_characters": LocalEvaluatorReturn(
+                score=len([char for char in result.output if char in '!@#$%^&*(),.?":{}|<>']),
+                reasoning="The output contains special characters"
+            )
+        }
+```
+</Tabs>
+
+### Using custom evaluators
+
+Once created, custom evaluators can be used alongside built-in evaluators:
+
+<Tabs groupId="language" items={["JS/TS", "Python"]}>
+```typescript tab="JS/TS"
+import { Maxim } from "@maximai/maxim-js";
+
+// [!code word:apiKey]
+const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
+
+const result = await maxim
+    .createTestRun(`sdk test run ${Date.now()}`, payload.workspaceId)
+    .withEvaluators(
+        // platform evaluators
+        'Faithfulness',
+        'Semantic Similarity',
+        // custom evaluators
+        myCustomEvaluator,
+        myCombinedCustomEvaluator,
+    )
+    .run();
+```
+
+```python tab="Python"
+result = maxim
+    .create_test_run("Custom Evaluated Test", workspace_id)
+    # ... previous configuration
+    .with_evaluators(
+        # Platform evaluators
+        "Faithfulness",
+        "Semantic Similarity",
+        # Custom evaluators
+        MyCustomEvaluator(
+            pass_fail_criteria={
+                "apostrophe-checker-2": PassFailCriteria(
+                    on_each_entry_pass_if=PassFailCriteriaOnEachEntry(
+                        score_should_be="=",
+                        value=True
+                    ),
+                    for_testrun_overall_pass_if=PassFailCriteriaForTestrunOverall(
+                        overall_should_be=">=",
+                        value=80,
+                        for_result="percentageOfPassedResults"
+                    )
+                ),
+                "contains-special-characters": PassFailCriteria(
+                    on_each_entry_pass_if=PassFailCriteriaOnEachEntry(
+                        score_should_be=">",
+                        value=3
+                    ),
+                    for_testrun_overall_pass_if=PassFailCriteriaForTestrunOverall(
+                        overall_should_be=">=",
+                        value=80,
+                        for_result="percentageOfPassedResults"
+                    )
+                )
+            }
+        )
+    )
+```
+</Tabs>
+
+## Advanced configuration
+
+### Concurrency control
+
+Manage how many entries are processed in parallel:
+
+<Tabs groupId="language" items={["JS/TS", "Python"]}>
+```typescript tab="JS/TS"
+import { Maxim } from "@maximai/maxim-js";
+
+// [!code word:apiKey]
+const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
+
+const result = await maxim
+    .createTestRun("Long Test", workspaceId)
+    // ... previous configuration
+    .withConcurrency(5); // Process 5 entries at a time
+```
+
+```python tab="Python"
+from maxim import Maxim, Config
+
+# [!code word:api_key]
+maxim = Maxim(Config(api_key="YOUR_API_KEY"))
+
+result = maxim
+    .create_test_run("Concurrent Test", workspace_id)
+    # ... previous configuration
+    .with_concurrency(5) # Process 5 entries at a time
+```
+</Tabs>
+
+
+### Timeout configuration
+
+Set custom timeout for long-running tests:
+
+<Tabs groupId="language" items={["JS/TS", "Python"]}>
+```typescript tab="JS/TS"
+import { Maxim } from "@maximai/maxim-js";
+
+// [!code word:apiKey]
+const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
+
+const result = await maxim
+    .createTestRun("Long Test", workspaceId)
+    // ... previous configuration
+    .run(120) // Wait up to 120 minutes
+```
+
+```python tab="Python"
+from maxim import Maxim, Config
+
+# [!code word:api_key]
+maxim = Maxim(Config(api_key="YOUR_API_KEY"))
+
+result = maxim
+    .create_test_run("Long Test", workspace_id)
+    # ... previous configuration
+    .run(120) # Wait up to 120 minutes
+```
+</Tabs>
+
+## Complete example
+
+Here's a complete example combining all the features:
+
+<Tabs groupId="language" items={["JS/TS", "Python"]}>
+```typescript tab="JS/TS"
+import { CSVFile, Maxim } from '@maximai/maxim-js';
+
+// [!code word:apiKey]
+const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
+
+// Initialize your data source
+const testData = new CSVFile('./qa_dataset.csv', {
+    question: 0,
+    expected_answer: 1,
+    context: 2,
+    metadata: 3
+});
+
+try {
+    const result = await maxim
+        .createTestRun(`QA Evaluation ${new Date().toISOString()}`, 'your-workspace-id')
+        .withDataStructure({
+            question: "INPUT",
+            expected_answer: "EXPECTED_OUTPUT",
+            context: "CONTEXT_TO_EVALUATE",
+            metadata: "NULLABLE_VARIABLE"
+        })
+        .withData(testData)
+        .yieldsOutput(async (data) => {
+            const startTime = Date.now();
+
+            // Your model call here
+            const response = await yourModel.generateAnswer(
+                data.question,
+                data.context
+            );
+
+            const latency = Date.now() - startTime;
+
+            return {
+                data: response.answer,
+                // Returning a value here will utilize this context for
+                // evaluation instead of the CONTEXT_TO_EVALUATE column
+                // (in this case, the `context` column)
+                retrievedContextToEvaluate: response.retrievedContext,
+                meta: {
+                    usage: {
+                        promptTokens: response.tokens.prompt,
+                        completionTokens: response.tokens.completion,
+                        totalTokens: response.tokens.total,
+                        latency
+                    },
+                    cost: {
+                        input: response.cost.prompt,
+                        output: response.cost.completion,
+                        total: response.cost.total
+                    }
+                }
+            };
+        })
+        .withEvaluators(
+            "Faithfulness",
+            "Answer Relevance",
+            "Human Evaluator"
+        )
+        .withHumanEvaluationConfig({
+            emails: ["qa-team@company.com"],
+            instructions: `Please evaluate the responses for accuracy and completeness. Consider both factual correctness and answer format.`
+        })
+        .withConcurrency(10)
+        .run(30); // 30 minutes timeout
+
+    console.log("Test Run Link:", result.testRunResult.link);
+    console.log("Failed Entries:", result.failedEntryIndices);
+    console.log("Evaluation Results:", result.testRunResult.result[0]);
+    /*
+    the result.testRunResult.result[0] object looks like this (values are mock data):
+    {
+        cost: {
+            input: 1.905419538506091,
+            completion: 2.010163610111029,
+            total: 3.915583148617119
+        },
+        latency: {
+            min: 6,
+            max: 484.5761906393187,
+            p50: 438,
+            p90: 484,
+            p95: 484,
+            p99: 484,
+            mean: 346.2,
+            standardDeviation: 179.4284,
+            total: 5
+        },
+        name: 'sdk test run 1734931207308',
+        usage: { completion: 206, input: 150, total: 356 },
+        individualEvaluatorMeanScore: {
+            Faithfulness: { score: 0, outOf: 1 },
+            'Answer Relevance': { score: 0.2, outOf: 1 },
+        }
+    }
+    */
+} catch (error) {
+    console.error("Test Run Failed:", error);
+} finally {
+    await maxim.cleanup();
+}
+```
+
+```python tab="Python"
+from maxim import Maxim, Config
+from maxim.evaluators.evaluators import create_custom_evaluator
+from maxim.models.dataset import ManualData
+from maxim.models.evaluator import LocalEvaluatorResultParameter, LocalEvaluatorReturn, PassFailCriteria, PassFailCriteriaForTestrunOverall, PassFailCriteriaOnEachEntry
+
+# [!code word:api_key]
+maxim = Maxim(Config(api_key="YOUR_API_KEY"))
+
+def apostrophe_checker(result: LocalEvaluatorResultParameter, data: ManualData) -> LocalEvaluatorReturn:
+    if "'" in result.output:
+        return LocalEvaluatorReturn(
+            score=True,
+            reasoning="The output contains an apostrophe"
+        )
+    else:
+        return LocalEvaluatorReturn(
+            score=False,
+            reasoning="The output does not contain an apostrophe"
+        )
+
+custom_evaluator = create_custom_evaluator(
+    "apostrophe-checker",
+    apostrophe_checker,
+    PassFailCriteria(
+        on_each_entry=PassFailCriteriaOnEachEntry(
+            score_should_be="=",
+            value=True
+        ),
+        for_testrun_overall=PassFailCriteriaForTestrunOverall(
+            overall_should_be=">=",
+            value=80,
+            for_result="percentageOfPassedResults"
+        )
+    )
+)
+
+def run(data):
+    start_time = time.time()
+
+    # Your model call here
+    response = your_model.generate_answer(
+        data.question,
+        data.context
+    )
+
+    latency = (time.time() - start_time) * 1000  # Convert to milliseconds
+
+    return {
+        "data": response.answer,
+        # Returning a value here will utilize this context for
+        # evaluation instead of the CONTEXT_TO_EVALUATE column
+        # (in this case, the `context` column)
+        "retrieved_context_to_evaluate": response.retrieved_context,
+        "meta": {
+            "usage": {
+                "prompt_tokens": response.tokens.prompt,
+                "completion_tokens": response.tokens.completion,
+                "total_tokens": response.tokens.total,
+                "latency": latency
+            },
+            "cost": {
+                "input_cost": response.cost.prompt,
+                "output_cost": response.cost.completion,
+                "total_cost": response.cost.total
+            }
+        }
+    }
+
+
+try:
+    result = maxim
+        .create_test_run(f"QA Evaluation {time.now()}", 'your-workspace-id')
+        .with_data_structure({
+            "question": "INPUT",
+            "expected_answer": "EXPECTED_OUTPUT",
+            "context": "CONTEXT_TO_EVALUATE",
+            "metadata": "NULLABLE_VARIABLE"
+        })
+        .with_data(testData)
+        .yields_output(lambda data : run(data))
+        .with_evaluators(
+            custom_evaluator,
+            "Faithfulness",
+            "Answer Relevance",
+            "Human Evaluator"
+        )
+        .with_human_evaluation_config({
+            "emails": ["qa-team@company.com"],
+            "instructions": 'Please evaluate the responses for accuracy and completeness. Consider both factual correctness and answer format.'
+        })
+        .with_concurrency(10)
+        .run(30); # 30 minutes timeout
+
+    print("Test Run Link:", result.test_run_result.link);
+    print("Failed Entries:", result.failed_entry_indices);
+    print("Evaluation Results:", result.test_run_result.result[0]);
+    """
+    the result.test_run_result.result[0] object looks like this (values are mock data):
+    {
+        cost: {
+            input: 1.905419538506091,
+            completion: 2.010163610111029,
+            total: 3.915583148617119
+        },
+        latency: {
+            min: 6,
+            max: 484.5761906393187,
+            p50: 438,
+            p90: 484,
+            p95: 484,
+            p99: 484,
+            mean: 346.2,
+            standard_deviation: 179.4284,
+            total: 5
+        },
+        name: 'sdk test run 1734931207308',
+        usage: { completion: 206, input: 150, total: 356 },
+        individual_evaluator_mean_score: {
+            Faithfulness: { score: 0, outOf: 1, pass: False },
+            'Answer Relevance': { score: 0.2, outOf: 1, pass: True },
+            'apostrophe-checker': { score: 0.7, pass: False },
+        }
+    }
+    """
+except Exception as e:
+    print("Test Run Failed:", e)
+finally:
+    maxim.cleanup();
+```
+</Tabs>

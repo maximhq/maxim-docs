@@ -1,0 +1,106 @@
+---
+title: Set up a human annotation pipeline
+description: Human annotation is critical to improve your AI quality. Getting human raters to provide feedback on various dimensions can help measure the present status and be used to improve the system over time. Maxim's human-in-the-loop pipeline allows team members as well as external raters like subject matter experts to annotate AI outputs. 
+---
+
+The Maxim platform allows you to integrate your human annotation pipeline alongside other forms of auto evaluation throughout the development lifecycle.
+
+Add human evaluators to test runs using the following steps:
+
+<Steps>
+<Step>
+**Creating human evaluators**
+
+Add instructions, score type and pass criteria.
+
+</Step>
+<Step>
+
+**Select the relevant human evaluators while triggering a test run**
+
+Switch these on while configuring test run for a Prompt or Workflow.
+
+</Step>
+<Step>
+
+**Set up human evaluation configurations for this run**
+
+Choose method of annotation, add general instructions and emails of raters if applicable and configure sampling rate.
+
+</Step>
+<Step>
+
+**Collect ratings via test report columns or via email**
+
+Based on method chosen, annotators can add their ratings on the run report or external dashboard link sent on their email.
+
+</Step>
+<Step>
+
+**See summary of human ratings and deep dive into particular cases**
+
+As a part of the test report, you can view status of rater inputs, rating details and add corrected outputs to dataset.
+
+</Step>
+</Steps>
+
+## Create human evaluators
+
+Create custom human evaluators with specific criteria for rating. You can add instructions that will be sent alongside the evaluator so that human annotators or subject matter experts are aware of the logic for rating. You can also define the evaluation score type and pass criteria.
+
+![Create human evaluator](/images/docs/evaluate/how-to/evaluate-prompts/human-annotation-pipeline/create-evaluators.png)
+
+## Select human evaluators while triggering a test run
+
+On the test run configuration panel for Prompt (or Workflow), you can switch on the relevant human evaluators from the list. When you click on the `Trigger test run` button, if any human evaluators were chosen, you will see a popover to set up the human evaluation.
+
+![Create human evaluator](/images/docs/evaluate/how-to/evaluate-prompts/human-annotation-pipeline/select-human-evaluators.png)
+
+## Set up human evaluation for this run
+
+The human evaluation set requires the following choices
+
+1. Method
+    - Annotate on report - Columns will be added to existing report for all editors to add ratings
+    - Send via email - People within or outside your organization can submit ratings. The link sent is accessible separately and does not need a paid seat on your Maxim organization.
+2. If you choose to send evaluation requests via email, you need to provide the emails of the raters and instructions to be sent.
+3. For email based evaluation requests to SMEs or external annotators, we make it easy to send only required entries using a sampling rate. Sampling rate can be defined in 2 ways:
+    - Percentage of total entries - This is relevant for large datasets where in it’s not possible to manually rate all entries
+    - Custom logic - This helps send entries of a particular type to raters. Eg. Ratings which have a low score on the Bias metric (auto eval). By defining these rules, you can make sure to use your SME’s time on the most relevant cases.
+
+![Human annotation set up](/images/docs/evaluate/how-to/evaluate-prompts/human-annotation-pipeline/set-up-human-annotation.png)
+
+## Collect ratings via test report columns
+
+All editors can add human annotations to the test report directly. Clicking on `select rating` button in the relevant evaluator column. A popover will show with all the evaluators that need ratings. Add comments for each rating. In case the output is not upto the mark, submit a re-written output.
+
+![Annotate on report](/images/docs/evaluate/how-to/evaluate-prompts/human-annotation-pipeline/annotate-on-report.png)
+
+If one rater has already provided ratings, a different rater can still add their inputs. Hover on the row to reveal a button near the previous value. Add ratings via the popover as mentioned above. Average rating across raters will be shown for that evaluator and considered for the overall results calculations.
+
+![Add rating](/images/docs/evaluate/how-to/evaluate-prompts/human-annotation-pipeline/add-rating.png)
+
+## Collect ratings via email
+
+On completion of the test run, emails are sent to all raters provided during set up. This email will contain the requester name and instructions along with the link to the rater dashboard.
+
+![email](/images/docs/evaluate/how-to/evaluate-prompts/human-annotation-pipeline/email.png)
+
+<Callout>
+The human rater external dashboard is accessible externally without a paid slot on Maxim.
+</Callout>
+
+You can send this to external annotation teams or SMEs who might be helping with annotation needs. As soon as a rater has started evaluating via the dashboard, you will see the status of evaluation change from `Pending` to `In-progress` on the test run summary.
+
+Human raters can go through the query, retrieved context, output and expected output (if applicable) for each entry and then provide their ratings for each evaluation metric. They can also add comments or re-write the output for a particular entry. On completion of a rating for a particular entry they can save and proceed and these values will start reflecting on the Maxim test run report. 
+
+![Human rater dashboard](/images/docs/evaluate/how-to/evaluate-prompts/human-annotation-pipeline/rater-dashboard.png)
+
+
+## Analyze human ratings
+
+Once all entries are completed by a rater, the summary scores and pass/fail results for the human ratings are shown along side all other auto evaluation results in the test run report. The human annotation section will show a `Completed` status next to this rater's email. To view the detailed ratings by a particular individual, click the `View details` button and go through the table provided. 
+
+![Human review details](/images/docs/evaluate/how-to/evaluate-prompts/human-annotation-pipeline/review-details.png)
+
+If there are particular cases where you would like to use the human corrected output to build ground truth in your datasets, you can use the [data curation flows.](/docs/library/how-to/datasets/curate-golden-dataset-for-human-annotation)

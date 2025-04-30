@@ -1,0 +1,60 @@
+---
+title: Run bulk comparisons across test cases
+description: Experimenting across prompt versions at scale helps you compare results for performance and quality scores. By running experiments across datasets of test cases, you can make more informed decisions, prevent regressions and push to production with confidence and speed.
+---
+
+## Why run comparison experiments
+
+- Make decisions between Prompt versions and models by comparing output differences.
+- Analyze scores across all test cases in your Dataset for the evaluation metrics that you choose.
+- Side by side comparison views for easy decision making and detailed view for every entry.
+
+### Run a comparison report
+
+<Steps>
+	<Step>
+		Open the Prompt playground for one of the Prompts you want to compare.
+
+        ![Prompt playground](/images/docs/evaluate/how-to/evaluate-prompts/bulk-comparisons-across-test-cases/prompt-to-compare.png)
+	</Step>
+	<Step>
+		Click the `test` button to start configuring your experiment.
+
+        ![Open test configuration](/images/docs/evaluate/how-to/evaluate-prompts/bulk-comparisons-across-test-cases/test-config.png)
+	</Step>
+	<Step>
+		Select the Prompt versions you want to compare it to. These could be totally different Prompts or another version of the same Prompt.
+
+		![Select versions to compare](/images/docs/evaluate/how-to/evaluate-prompts/bulk-comparisons-across-test-cases/select-prompts-to-compare.png)
+	</Step>
+    <Step>
+        Select your Dataset to test it against.
+
+        ![Select dataset](/images/docs/evaluate/how-to/evaluate-prompts/bulk-comparisons-across-test-cases/select-dataset.png)
+    </Step>
+    <Step>
+        Optionally, select the context you want to evaluate if there is a difference in retrieval pipeline that needs comparison.
+
+        ![Select context to evaluate](/images/docs/evaluate/how-to/evaluate-prompts/bulk-comparisons-across-test-cases/select-context-evaluate.png)
+    </Step>
+    <Step>
+        Select existing Evaluators or add new ones from the store, then run your test.
+
+        ![Select evaluators](/images/docs/evaluate/how-to/evaluate-prompts/bulk-comparisons-across-test-cases/select-evaluators.png)
+    </Step>
+    <Step>
+        Once the run is completed, you will see summary details for each Evaluator. Below that, charts show the comparison data for latency, cost and tokens used.
+
+        ![Report summary](/images/docs/evaluate/how-to/evaluate-prompts/bulk-comparisons-across-test-cases/report-summary.png)
+    </Step>
+    <Step>
+        Each entry has 2 rows one below the other showing the outputs, latency and scores for the entities or versions compared. Deep dive into any entry by clicking the row and looking into the particular messages, evaluation details and logs.
+        
+        ![Report table](/images/docs/evaluate/how-to/evaluate-prompts/bulk-comparisons-across-test-cases/report-table.png)
+    </Step>
+</Steps>
+
+If you want to compare Prompt versions over time (e.g. Last month's scores and this month's scores post a Prompt iteration), you can instead [generate a comparison report retrospectively](/docs/analyze/how-to/comparison-reports) under the analyze section.
+
+## Next steps
+- [Create presets to re-use your test configurations](/docs/evaluate/how-to/optimize-evaluation-processes/re-use-configuration-via-presets)

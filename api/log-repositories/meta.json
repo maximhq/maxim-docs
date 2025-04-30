@@ -1,0 +1,11 @@
+{
+  "title": "Log Repositories",
+  "pages": [
+    "delete",
+    "get",
+    "post",
+    "put",
+    "search",
+    "traces"
+  ]
+}

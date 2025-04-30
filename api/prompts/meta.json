@@ -1,0 +1,13 @@
+{
+  "title": "Prompts",
+  "pages": [
+    "delete",
+    "get",
+    "post",
+    "put",
+    "config",
+    "deploy",
+    "run",
+    "versions"
+  ]
+}

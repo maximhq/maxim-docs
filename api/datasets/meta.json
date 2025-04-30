@@ -1,0 +1,12 @@
+{
+  "title": "Datasets",
+  "pages": [
+    "delete",
+    "get",
+    "post",
+    "put",
+    "columns",
+    "entries",
+    "splits"
+  ]
+}

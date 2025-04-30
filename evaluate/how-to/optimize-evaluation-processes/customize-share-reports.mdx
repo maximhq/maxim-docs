@@ -1,0 +1,65 @@
+---
+title: Customize and share reports
+description: The run report is a single source of truth for you to understand exactly how your AI system is performing during your experiments or pre-release testing. You can customize reports to gain insights and make decisions.
+---
+
+## Toggle columns
+
+For prompt/workflow runs, by default we only show the input from the dataset and the retrieved context (if applicable) and output from the run. However, there might be cases where you want to see other dataset columns to analyze the output. Similarly, you may want to hide some already visible columns in order to see limited data while analyzing evaluations. To show/hide columns, follow the below steps:
+
+<Steps>
+<Step>
+
+On the run report table header, click the `Toggle columns` button
+
+</Step>
+<Step>
+
+Clicking on this will open a dropdown with options of all columns from the dataset and the run result
+
+</Step>
+<Step>
+
+Select columns that you want to be visible. Use search if you have a lot of columns.
+
+![Toggle columns](/images/docs/evaluate/how-to/optimize-evaluation-processes/customize-report/toggle-columns.png)
+
+</Step>
+<Step>
+
+You can also do this via the column header cell by hovering and clicking the `three dot button > Hide column`
+
+![Hide column](/images/docs/evaluate/how-to/optimize-evaluation-processes/customize-report/hide-column.png)
+
+</Step>
+</Steps>
+
+## Pinning columns
+
+While analyzing the report, you can horizontally scroll to see all columns. In case you have certain columns that you would want to always have as reference while looking at rest of the data, you can pin them. Eg. Pin inputs columns to the left and a certain evaluation column to the right while analyzing the retrieved context, output, etc.
+
+To pin a column, click the 3 dots buttons on the row header and choose `Pin to left` or `Pin to right`. You can also unpin the column in the same way.
+
+![Pin column](/images/docs/evaluate/how-to/optimize-evaluation-processes/customize-report/pin-column.png)
+
+## Re-ordering columns
+
+You can easily re-order all columns of the table by holding down the button shown in the below screenshot and dragging the column
+
+![Re-order column](/images/docs/evaluate/how-to/optimize-evaluation-processes/customize-report/re-order-column.png)
+
+## Search and filter
+
+In case of large reports with a lot of entries, you can use the search or filters to easily reach the relevant entries you care about. Filtering allows you to put a combination of criteria. These could be performance metrics or evaluation scores.
+
+You can also directly filter out the results that are failing on a particular metric by clicking the filter icon next to its score in the summary card.
+
+![Filter table](/images/docs/evaluate/how-to/optimize-evaluation-processes/customize-report/filter-table.png)
+
+![Search table](/images/docs/evaluate/how-to/optimize-evaluation-processes/customize-report/search-table.png)
+
+## Share links
+
+Share results of runs with external stakeholders via a read-only link that can be accessed without being on the Maxim dashboard. Click the `share report` button on the header of any run report, and a link to the current view will be copied to your clipboard.
+
+![Shared report](/images/docs/evaluate/how-to/optimize-evaluation-processes/customize-report/share-report.png)

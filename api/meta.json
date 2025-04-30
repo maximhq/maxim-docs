@@ -1,0 +1,14 @@
+{
+  "title": "Api",
+  "pages": [
+    "overview",
+    "alerts",
+    "datasets",
+    "evaluators",
+    "folders",
+    "integrations",
+    "log-repositories",
+    "prompts",
+    "test-runs"
+  ]
+}

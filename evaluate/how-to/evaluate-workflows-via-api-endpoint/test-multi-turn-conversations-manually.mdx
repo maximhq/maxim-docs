@@ -1,0 +1,60 @@
+---
+title: Test multi-turn conversations manually
+description: Learn how to test and simulate multi-turn conversations with your AI endpoint using Maxim's interactive Workflows
+---
+
+## Why do we need to test multi-turn conversations?
+
+Real conversations create fascinating puzzles because:
+
+- Testing single responses doesn't reveal the complete interaction pattern
+- Just like human conversations, AI chats can take unexpected turns
+- When something goes wrong, you need to replay the conversation - but what if you could change history?
+
+These intriguing challenges make it crucial to test your AI's conversational abilities thoroughly before it faces real users. 
+Maxim solves this with an interactive Messages panel that lets you simulate, manipulate, and debug multi-turn conversations in real-time. Bring your application endpoint to create and test multi-turn conversations without any code integration.
+
+## Configure your endpoint
+
+Before testing conversations, you need to configure your endpoint:
+
+1. Enter your AI endpoint URL (e.g., `https://astronomy-ai.example.com/chat`)
+2. Configure the request body
+   ```json
+   {
+     "query": "{{input}}"
+   }
+   ```
+   Your application receives and processes messages correctly with this configuration.
+
+## Start a conversation
+
+1. Type your initial message in the input field
+2. Click Send to start the conversation
+
+## Edit and modify conversations
+
+You can manipulate the conversation to test different scenarios:
+
+- **Delete Messages**: Remove any message from the conversation history to test how your AI handles modified contexts
+- **Edit History**: Change previous messages to simulate different conversation paths
+
+![Manual simulation](/images/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/test-multi-turn-conversations-manually/manual-multi-turn-simulation.png)
+
+## Example usage
+
+Here's a typical workflow for testing multi-turn conversations:
+
+1. Start with a simple query:
+   ```
+   User: "How old is the universe?"
+   AI: "The universe is estimated to be around 13.8 billion years old..."
+   ```
+
+2. Follow up with related questions:
+   ```
+   User: "What's the Big Bang theory?"
+   AI: "The Big Bang theory explains the origin of the universe..."
+   ```
+
+By using the Messages panel effectively, you can ensure your AI endpoint handles multi-turn conversations reliably and maintains appropriate context throughout the interaction.

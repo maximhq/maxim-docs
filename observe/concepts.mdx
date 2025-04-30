@@ -1,0 +1,194 @@
+---
+title: Concepts
+description: Learn about the key concepts of Maxim's AI Observability.
+---
+
+Maxim's observability platform builds upon established distributed tracing principles while extending them for GenAI-specific monitoring. Our architecture leverages proven concepts and enhances them with specialized components for AI applications.
+
+Our observability features provide a comprehensive view of your AI applications through monitoring, troubleshooting, and alerting capabilities.
+
+## Log Repository
+
+The most central component of Maxim's observability platform is the Log Repository, as it is where logs are ingested. It allows for ease of searching and analyzing.
+
+<Callout title="How should you be structuring log repositories?">
+
+Split your logs across multiple repositories in your workspace based on your needs. For example, you might have **one repository for production logs** and **another for development logs**; or you could have **a single repository for all logs**, differentiated by tags indicating the environment.
+
+We recommend implementing **separate log repositories for separate applications**, but also separate log repositories for separate services that managed by distinct teams. Trying to keep logs that are related to different applications or services in the same repository can lead to difficulties in analyzing and troubleshooting.
+
+</Callout>
+
+A Log Repository contains three main components:
+
+### Overview Tab
+
+The Overview tab provides a comprehensive snapshot of activity within your Log Repository for your specified timeframe. The metrics that are displayed in **the overview** include:
+
+- Total traces
+- Total usage
+- Average user feedback
+- Traces over time (graph)
+- Total usage over time (graph)
+- Average user feedback over time (graph)
+- Latency over time (graph)
+- Error rate (graph)
+
+![Screenshot of overview metrics]
+
+There is also an overview for **Evaluation results**, which includes:
+
+- No of traces evaluated
+- Evaluation summary
+- Mean score over time (graph)
+- Pass rate over time (graph)
+
+![Screenshot of evaluation results overview metrics]
+
+<Callout>
+
+We talk more about evaluation logs in [How to evaluate logs](/docs/observe/how-to/evaluate-logs/auto-evaluation) section of the documentation.
+
+</Callout>
+
+### Logs Tab
+
+Logs Tab is where you'll find all the ingested logs in a tabular format, it is a detailed view where each log is displayed separately with it's own metrics.
+
+![Screenshot of the logs tab]
+
+For each log entry we display the following in the table:
+
+| Field         | Description                                        |
+| ------------- | -------------------------------------------------- |
+| Timestamp     | The start time of the log                          |
+| Input         | The user's prompt or query                         |
+| Output        | The final response                                 |
+| Model         | The AI models seen within the trace (e.g., gpt-4o) |
+| Tokens        | Token count for the whole trace                    |
+| Cost          | The cost for the whole trace in USD                |
+| Latency       | Response time in milliseconds                      |
+| User feedback | User feedback for a trace (if available)           |
+| Tags          | Tags associated with the log entry                 |
+
+Apart from the above fields, there are Evaluation score fields per evaluator too, these display any evaluation done on the trace and what score was obtained for that evaluation.
+
+Each trace can be clicked to see an expanded view of the trace in a sheet. It displays detailed information on each component of the trace and also the evaluations done on each component.
+
+<Callout>
+
+Learn more about logging in the [How to log your application](/docs/observe/how-to/log-your-application/setting-up-trace) section of the documentation.
+
+</Callout>
+
+### Alerts Tab
+
+Once you start logging, you can set up alerts to monitor specific metrics. Alerts are triggered when the metric exceeds a certain threshold, and they can be configured to notify you via slack, pagerduty or opsgenie.
+
+![Screenshot of the alerts tab]
+
+<Callout>
+
+You can learn more on configuring alerts in the [How to set up alerts](/docs/observe/how-to/set-up-alerts/create-a-slack-integration) section of the documentation.
+
+</Callout>
+
+## Components of a log
+
+Now that you know how to navigate through a Log Repository, let us discuss what each log contains and what each component of the log and their properties represent.
+
+### Session
+
+Session is a top level entity that captures all the multi-turn interactions of your system. For example, if you are building a chatbot, a session in Maxim logger is an entire conversation of a user with your chatbot.
+
+Sessions persist across multiple interactions and remain active until explicitly closed - you can keep on adding different traces to it over the course of time unless you want to explicitly close the session.
+
+### Trace
+
+![trace](/images/docs/observe/trace.png)
+
+In distributed tracing, a trace is the complete processing of a request through a distributed system, including all the actions between the request and the response.
+
+| Property               | Description                                                                                                                                                                                                                                 |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| id                     | Unique identifier for the trace; this usually can be your request id.                                                                                                                                                                       |
+| name&nbsp;(optional)   | Name of the trace; you can keep it same as your API call. i.e. chatQuery                                                                                                                                                                    |
+| tags&nbsp;(optional)   | Key-value pairs which you can use for filtering on the dashboard. <br /><br />There is no limit on the number of tags or the size of the string, although lower amounts are better and faster for search performance specific to your repo. |
+| input&nbsp;(optional)  | The user's prompt or query.                                                                                                                                                                                                                 |
+| output&nbsp;(optional) | This is the final response your API sends back.                                                                                                                                                                                             |
+
+### Span
+
+![span](/images/docs/observe/span.png)
+
+Spans are fundamental building blocks of distributed tracing. A single trace in distributed tracing consists of a series of tagged time intervals known as spans. Spans represent a logical unit of work in completing a user request or transaction.
+
+<Callout type="info" title="Sub-spans">
+
+A span can have other spans as children. You can create as many subspans as you want to logically group flows within a span.
+
+</Callout>
+
+| Property | Description                                                                                                                                                                    |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| id       | Unique identifier for the span; it can be uuid() for each new trace. This has to be unique across all elements in a trace. If you these are duplicated, data gets overwritten. |
+| name     | Name of the span; you can keep it same as your API call. i.e. chatQuery                                                                                                        |
+| tags     | These are span specific tags.                                                                                                                                                  |
+| spanId   | Parent span id; these are automatically generated when you call `span.addSpan()`.                                                                                              |
+
+### Event
+
+![event](/images/docs/observe/event.png)
+
+Events mark significant points within a span or a trace recording instantaneous occurrences that provide additional context for understanding system behavior.
+
+| Property | Description                                                                           |
+| -------- | ------------------------------------------------------------------------------------- |
+| id       | Unique identifier for the event; this has to be unique in a trace across all elements |
+| name     | Name of the event. you can keep it same as your API call. i.e. chatQuery              |
+| tags     | These are event specific tags.                                                        |
+
+### Generation
+
+A Generation represents a single Large Language Model (LLM) call within a trace or span. Multiple generations can exist within a single trace/span.
+
+#### Structure
+
+- Maxim SDK uses OpenAI's LLM call structure as the standard format.
+- All incoming LLM calls are automatically converted to match OpenAI's structure via SDK.
+- This standardization ensures consistent handling across different LLM providers.
+
+| Property         | Description                                                                                                       |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------- |
+| id               | Unique identifier for the generation; this has to be unique in a trace.                                           |
+| name             | Name of the generation; it can be specific to your workflow intent detection or final summarization call.         |
+| tags             | These are generation specific tags.                                                                               |
+| messages         | The messages you are sending to LLM as input.                                                                     |
+| model            | Model that is being used for this LLM call.                                                                       |
+| model_parameters | The model parameters that you are setting up. This is a key-value pair; you can pass any model parameter.         |
+| error            | You can pass LLM error if it has occurred. You can filter all logs with LLM error on the dashboard using filters. |
+| result           | Result object coming from the LLM.                                                                                |
+
+### Retrieval
+
+A Retrieval represents a query operation to fetch relevant context or information from a knowledge base or vector database within a trace or span. It is commonly used in RAG (Retrieval Augmented Generation) workflows, where context needs to be fetched before making LLM calls.
+
+| Property | Description                                                                                               |
+| -------- | --------------------------------------------------------------------------------------------------------- |
+| id       | Unique identifier for the retrieval; this has to be unique in a trace.                                    |
+| name     | Name of the retrieval; it can be specific to your workflow intent detection or final summarization call . |
+| tags     | These are retrieval specific tags.                                                                        |
+| input    | Input used to fetch relevant chunks from your knowledge base                                              |
+| output   | Array of chunks returned by the knowledge base                                                            |
+
+### Tool Call
+
+Tool Call represents an external system or service call done based on an LLM response. Each tool call can be logged separately to track its input, output and latency.
+
+| Property    | Description                                                                                                               |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------- |
+| id          | Unique identifier for the tool call; this has to be unique in a trace (can be found in the tool call reponse of the LLM). |
+| name        | Name of the tool call.                                                                                                    |
+| description | Description of the tool call.                                                                                             |
+| args        | Arguments passed to the tool call, these are tool specific arguments.                                                     |
+| result      | Result returned by the tool call.                                                                                         |

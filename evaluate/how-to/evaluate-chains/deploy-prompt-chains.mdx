@@ -1,0 +1,148 @@
+---
+title: Deploy Prompt Chains
+description: Quick iterations on prompt chains should not require code deployments every time. With more and more stakeholders working on prompt engineering, its critical to keep deployments of prompt chains as easy as possible without much overhead. Prompt chain deployments on Maxim allow conditional deployment of prompt chain changes that can be used via the SDK.
+---
+
+import { Rocket } from "lucide-react";
+import { Button } from "ui";
+
+## Why deploy Prompt Chains via Maxim
+
+- Prompt experimentation - Create multiple versions of your prompt chains, and use a wide variety of models available on Maxim to test and compare their performance using your custom data.
+- Deploy without code changes - Deploy the final version directly from UI—no code changes required. Use Maxim’s RBAC support to limit deployment permission to key stakeholders.
+- Custom variables - Use custom variables to create rules to control which environments or user groups should receive the updates. This helps in setting up A/B tests or testing prompt variations internally before pushing to users.
+
+### Deploying a Prompt Chain
+
+<Steps>
+	<Step>
+		Navigate to Evaluation > Prompts > Prompt Chains and open the prompt chain you want to deploy.
+	</Step>
+	<Step>
+		Click the <Button size="icon" variant="outline" className="inline-flex cursor-auto"><Rocket className="h-4 w-4" /></Button> button in the header and choose to deploy the present version.
+	</Step>
+    <Step>
+        Add one or more rules for deployment e.g. Environment = prod.
+
+        ![Deployment rules selection](/images/docs/evaluate/how-to/evaluate-prompts/deployments/deployment-rule-selection.png)
+    </Step>
+    <Step>
+        Edit or define new variables by clicking <Button variant={"outline"} className="cursor-auto">Edit deployment variables</Button>
+    </Step>
+    <Step>
+        Define the name and type of any variable. For variables of type `select` provide possible options. e.g. Environment: Beta, Staging, Prod.
+
+        ![Add new deployment variable](/images/docs/evaluate/how-to/evaluate-prompts/deployments/add-new-deployment-variable.png)
+    </Step>
+    <Step>
+        Every time you have a new version to deploy, use the variable based rules to deploy conditionally.
+    </Step>
+    <Step>
+        View existing deployments for any prompt from the deploy button in the header.
+
+        ![Deployments list](/images/docs/evaluate/how-to/evaluate-prompts/deployments/all-deployments-list.png)
+    </Step>
+</Steps>
+
+## Fetching prompt chains via SDK
+
+For building query to get prompt chain with specific deployment variables, you can use `QueryBuilder`.
+
+<Tabs groupId="language" items={["JS/TS", "Python"]}>
+
+```typescript tab="JS/TS"
+import { Maxim, QueryBuilder } from "@maximai/maxim-js;
+
+// [!code word:apiKey]
+const maxim = new Maxim({ apiKey: "", promptManagement: true });
+
+const prompt = await maxim.getPromptChain("prompt-chain-id",
+					new QueryBuilder()
+						.and()
+						.deploymentVar("Environment", "prod")
+						.build());
+```
+
+```python tab="Python"
+from maxim import Maxim, Config
+from maxim.models import QueryBuilder
+
+# [!code word:api_key]
+maxim = Maxim(Config(api_key="", prompt_management=True))
+
+prompt = maxim.get_prompt_chain("prompt-chain-id",
+	QueryBuilder()
+	.and_()
+	.deployment_var("Environment", "prod")
+	.build())
+```
+
+</Tabs>
+
+Adding multiple queries
+
+<Tabs groupId="language" items={["JS/TS", "Python"]}>
+
+```typescript tab="JS/TS"
+import { Maxim, QueryBuilder } from "@maximai/maxim-js;
+
+// [!code word:apiKey]
+const maxim = new Maxim({ apiKey: "", promptManagement: true });
+
+const prompt = await maxim.getPromptChain(
+	"prompt-chain-id",
+	new QueryBuilder().and().deploymentVar("Environment", "prod").deploymentVar("CustomerId", "123").build(),
+);
+```
+
+```python tab="Python"
+from maxim import Maxim, Config
+from maxim.models import QueryBuilder
+
+# [!code word:api_key]
+maxim = Maxim(Config(api_key="", prompt_management=True))
+
+prompt = maxim.get_prompt_chain("prompt-id",
+	QueryBuilder()
+		.and_()
+		.deployment_var("Environment", "prod")
+		.deployment_var("CustomerId", "123")
+		.build())
+```
+
+</Tabs>
+
+Adding filters based on Tags
+
+<Tabs groupId="language" items={["JS/TS", "Python"]}>
+
+```typescript tab="JS/TS"
+import { Maxim, QueryBuilder } from "@maximai/maxim-js;
+
+// [!code word:apiKey]
+const maxim = new Maxim({ apiKey: "", promptManagement: true});
+
+const prompt = await maxim.getPromptChain(
+	"prompt-chain-id",
+	new QueryBuilder().and().deploymentVar("Environment", "prod").tag("TenantId", "3000").build(),
+);
+```
+
+```python tab="Python"
+from maxim import Maxim, Config
+from maxim.models import QueryBuilder
+
+# [!code word:api_key]
+maxim = Maxim(Config(api_key="", prompt_management=True))
+
+prompt = maxim.get_prompt_chain("prompt-chain-id",
+	QueryBuilder()
+		.and_()
+		.deployment_var("Environment", "prod")
+		.tag("TenantId", "3000")
+		.build())
+```
+
+</Tabs>
+
+<Callout>Learn more about advanced [prompt chain querying](/docs/evaluate/how-to/evaluate-chains/querying-prompt-chains) techniques.</Callout>

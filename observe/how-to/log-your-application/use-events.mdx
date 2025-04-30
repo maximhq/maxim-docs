@@ -1,0 +1,50 @@
+---
+title: Use Events to send point-in-time information
+description: Track application milestones and state changes using event logging
+---
+
+Create events to mark specific points in time during your application execution. Capture additional metadata such as intermediate states and system milestones through events.
+
+<div className="w-full flex justify-end -mb-11">
+    <LanguageSwitcher />
+</div>
+
+## Attach an event to your trace
+
+<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
+    ```typescript tab="JS/TS"
+    await trace.event({
+        id: "event-id",
+        name: "travel-plan-emailed",
+        tags: { "email": "JetSetJoe@travelo.com" },
+    });
+    // Note: Replace 'trace.event' with 'span.event' when you are creating events within a span
+    ```
+
+    ```python tab="Python"
+    await trace.event(
+        id="event-id",
+        name="travel-plan-emailed",
+        tags={"email": "JetSetJoe@travelo.com"}
+    )
+    # Note: Replace 'trace.event' with 'span.event' when you are creating events within a span
+    ```
+
+    ```go tab="Go"
+    trace.AddEvent(
+        "event-id",
+        "travel-plan-emailed",
+        map[string]string{"email": "JetSetJoe@travelo.com"}
+    )
+    // Note: Replace 'trace.AddEvent' with 'span.AddEvent' when you are creating events within a span
+    ```
+
+    ```java tab="Java"
+    Event event = trace.addEvent(
+        "event-id",
+        "travel-plan-emailed",
+        Map.of("email", "JetSetJoe@travelo.com")
+    );
+    // Note: Replace 'trace.addEvent' with 'span.addEvent' when you are creating events within a span
+    ```
+</Tabs>

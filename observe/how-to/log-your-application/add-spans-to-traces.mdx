@@ -1,0 +1,113 @@
+---
+title: Use spans to group units of work
+description: Spans help you organize and track requests across microservices within traces. A trace represents the entire journey of a request through your system, while spans are smaller units of work within that trace.
+---
+
+
+<div className="w-full flex justify-end -mb-11">
+    <LanguageSwitcher />
+</div>
+
+<Steps>
+
+<Step>
+## Create spans with trace object
+
+<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
+    ```typescript tab="JS/TS"
+    // Create a new trace instance with a unique identifier for request tracking
+    const trace = logger.trace({id: "trace-id"});
+
+    // Define a new span to track the question classification process
+    const span = trace.span({
+        id: "span-id",
+        name: "customer-support--classify-question",
+    });
+
+    // Note: Replace 'trace.span' with 'span.span' when creating spans within an existing span
+    ```
+
+    ```python tab="Python"
+    from maxim.logger.components.span import SpanConfig
+
+    # Create a new trace instance with a unique identifier for request tracking
+    trace = logger.trace({"id": "trace-id"})
+
+    # Define a new span to track the question classification process
+    span = trace.span(SpanConfig(
+        id="span-id",
+        name="customer-support--classify-question"
+    ))
+
+    # Note: Replace 'trace.span' with 'span.span' when creating spans within an existing span
+    ```
+
+    ```go tab="Go"
+    // Create a new trace instance with a unique identifier for request tracking
+    trace := logger.Trace(&logging.TraceConfig{
+        Id: "trace-id",
+    })
+
+    // Define a new span to track the question classification process
+    span := trace.Span(&logging.SpanConfig{
+        Id: "span-id",
+        Name: "customer-support--classify-question",
+    })
+    // Note: Replace 'trace.Span' with 'span.Span' when creating spans within an existing span
+    ```
+
+    ```java tab="Java"
+    // Create a new trace instance with a unique identifier for request tracking
+    Trace trace = logger.trace(new TraceConfig(
+        "trace-id",
+    ));
+
+    // Define a new span to track the question classification process
+    Span span = trace.span(new SpanConfig(
+        "span-id",
+        "customer-support--classify-question"
+    ));
+    // Note: Replace 'trace.span' with 'span.span' when creating spans within an existing span
+    ```
+</Tabs>
+
+</Step>
+
+<Step>
+## Create spans with logger object
+
+<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
+    ```typescript tab="JS/TS"
+    const span = logger.traceSpan("trace-id", {
+        id: "span-id",
+        name: "customer-support--classify-question",
+    });
+    ```
+
+    ```python tab="Python"
+    from maxim.logger.components.span import SpanConfig
+
+    span = logger.trace_add_span("trace-id", SpanConfig(
+        id="span-id",
+        name="customer-support--classify-question"
+    ))
+    ```
+
+    ```go tab="Go"
+    span := logger.AddSpanToTrace("trace-id", &logging.SpanConfig{
+        Id: "span-id",
+        Name: "customer-support--classify-question",
+    })
+    ```
+
+    ```java tab="Java"
+    Span span = logger.traceAddSpan("trace-id", new SpanConfig(
+        "span-id",
+        "customer-support--classify-question"
+    ));
+    ```
+</Tabs>
+
+</Step>
+
+</Steps>

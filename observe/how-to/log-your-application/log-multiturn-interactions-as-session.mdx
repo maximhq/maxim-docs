@@ -1,0 +1,117 @@
+---
+title: Log multi-turn interactions as a session
+description: Learn how to group related traces into sessions to track complete user interactions with your GenAI system.
+---
+
+Sessions are particularly useful for tracking multi-turn conversations or complex workflows that span multiple API calls or user interactions. Maintain context across multiple traces, analyze user behavior, and debug multi-interaction issues with sessions. Track the full lifecycle of user engagement by organizing traces into sessions.
+
+<div className="w-full flex justify-end -mb-11">
+    <LanguageSwitcher />
+</div>
+
+<Steps>
+<Step>
+## Create a new session
+
+<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
+    ```typescript tab="JS/TS"
+    const session = logger.session({
+        id: "session-id",
+        name: "session-name",
+    });
+    ```
+
+    ```python tab="Python"
+    from maxim.logger import SessionConfig
+
+    session = logger.session(
+        SessionConfig(id="session-id", name="session-name")
+    )
+    ```
+
+    ```go tab="Go"
+    session := logger.Session(&logging.SessionConfig{
+        Id: "session-id",
+        Name: "session-name",
+    })
+    ```
+
+    ```java tab="Java"
+    Session session = logger.session(
+        new SessionConfig("session-id", "session-name")
+    );
+    ```
+</Tabs>
+</Step>
+
+<Step>
+## Add a trace to the session
+
+After creating a `session` object, you can add multiple traces across the lifecycle of the conversation.
+
+<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
+    ```typescript tab="JS/TS"
+    const trace = session.trace({
+        id: "trace-id",
+        name: "trace-name",
+    });
+    ```
+
+    ```python tab="Python"
+    from maxim.logger import TraceConfig
+
+    trace = session.trace(
+        TraceConfig(id="trace-id", name="trace-name")
+    )
+    ```
+
+    ```go tab="Go"
+    trace := session.AddTrace(&logging.TraceConfig{
+        Id: "trace-id",
+        Name: "trace-name",
+    })
+    ```
+
+    ```java tab="Java"
+    Trace trace = session.addTrace(
+        new TraceConfig("trace-id", "trace-name")
+    );
+    ```
+</Tabs>
+</Step>
+
+<Step>
+## Linking traces using session IDs
+<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
+    ```typescript tab="JS/TS"
+    const trace = logger.trace({
+        id: "trace-id",
+        name: "trace-name",
+        sessionId: "session-id",
+    });
+    ```
+
+    ```python tab="Python"
+    from maxim.logger import TraceConfig
+
+    trace = logger.trace(
+        TraceConfig(id="trace-id", name="trace-name", session_id="session-id")
+    )
+    ```
+
+    ```go tab="Go"
+    trace := logger.Trace(&logging.TraceConfig{
+        Id: "trace-id",
+        Name: "trace-name",
+        SessionId: "session-id",
+    })
+    ```
+
+    ```java tab="Java"
+    Trace trace = logger.trace(
+        new TraceConfig("trace-id", "trace-name", "session-id")
+    );
+    ```
+</Tabs>
+</Step>
+</Steps>

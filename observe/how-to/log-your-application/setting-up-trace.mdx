@@ -1,0 +1,148 @@
+---
+title: Setting up your first trace
+description: Learn how to set up tracing using the Maxim platform
+---
+
+We will cover the necessary steps to instrument your AI application and start monitoring and evaluating its performance.
+
+
+<div className="w-full flex justify-end -mb-11">
+    <LanguageSwitcher />
+</div>
+
+<Steps>
+<Step>
+
+## Create a new repository on Maxim dashboard
+
+Select **Logs** from the sidebar and click the "Create repository" button.
+
+</Step>
+
+<Step>
+	## Install Maxim SDK
+	<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
+		<Tab value="JS/TS">
+		```package-install title="Installing Maxim JS SDK"
+		npm install @maximai/maxim-js
+		```
+		</Tab>
+		<Tab value="Python">
+		```bash
+		pip install maxim-py
+		```
+		</Tab>
+		<Tab value="Go">
+		```bash
+		go get github.com/maximhq/maxim-go
+		```
+		</Tab>
+		<Tab value="Java">
+		https://central.sonatype.com/artifact/ai.getmaxim/sdk
+		```groovy
+		implementation("ai.getmaxim:sdk:0.1.3")
+		```
+		</Tab>
+	</Tabs>
+</Step>
+<Step>
+	## Initialize Maxim SDK
+	<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
+		```typescript tab="JS/TS"
+		import Maxim from "@maximai/maxim-js"
+
+		// [!code word:apiKey]
+		const maxim = new Maxim({ apiKey: "" });
+
+		// [!code word:id]
+		const logger = await maxim.logger({ id: "" });
+		```
+
+		```python tab="Python"
+		from maxim import Maxim, Config
+		from maxim.logger import Logger, LoggerConfig
+
+		# [!code word:api_key]
+		maxim = Maxim(Config(api_key=""))
+
+		# [!code word:id]
+		logger = Logger(LoggerConfig(id=""))
+		```
+
+		```go tab="Go"
+		import "github.com/maximhq/maxim-go"
+
+		// [!code word:ApiKey]
+		mx := maxim.Init(&maxim.MaximSDKConfig{ApiKey: ""})
+
+		// [!code word:Id]
+		logger, err := mx.GetLogger(&logging.LoggerConfig{Id: ""})
+		```
+
+		```java tab="Java"
+		import ai.getmaxim.sdk.Maxim;
+		import ai.getmaxim.sdk.Config;
+
+		// [!code word:"api-key"]
+		Maxim maxim = new Maxim(new Config(null, "api-key", null, false));
+
+		// [!code word:"id"]
+		Logger logger = maxim.logger(new LoggerConfig("id"));
+		```
+	</Tabs>
+</Step>
+<Step>
+	## Start tracing your application
+	<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
+		```typescript tab="JS/TS"
+		const trace = logger.trace({
+			id: "trace-id", // Unique ID of the trace
+			name: "user-query",
+		});
+
+		trace.input("Hello, how are you?");
+		trace.output("I'm fine, thank you!");
+		trace.end();
+		```
+
+		```python tab="Python"
+		from maxim.logger.components.trace import TraceConfig
+
+		trace = logger.trace(TraceConfig(
+			id="trace-id", # Unique ID of the trace
+			name="user-query",
+		))
+
+		trace.set_input("Hello, how are you?")
+		trace.set_output("I'm fine, thank you!")
+		trace.end()
+		```
+
+		```go tab="Go"
+		trace := logger.Trace(&logging.TraceConfig{
+			Id: "trace-id", // Unique ID of the trace
+			Name: maxim.StrPtr("user-query"),
+		})
+
+		trace.SetInput("Hello, how are you?")
+		trace.SetOutput("I'm fine, thank you!")
+		trace.End()
+		```
+
+		```java tab="Java"
+		import ai.getmaxim.sdk.logger.components.Trace;
+		import ai.getmaxim.sdk.logger.components.TraceConfig;
+
+		Trace trace = logger.trace(new TraceConfig(
+			"trace-id", // Unique ID of the trace
+			"user-query"
+		));
+
+		trace.setInput("Hello, how are you?");
+		trace.setOutput("I'm fine, thank you!");
+		trace.end();
+		```
+	</Tabs>
+</Step>
+
+</Steps>

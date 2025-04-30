@@ -1,0 +1,190 @@
+---
+title: Log LLM generations in your AI application traces
+description: Use generations to log individual calls to Large Language Models (LLMs)
+---
+
+Each trace/span can contain multiple generations.
+
+<div className="w-full flex justify-end -mb-11">
+    <LanguageSwitcher />
+</div>
+
+<Steps>
+
+<Step>
+## Send and record LLM request
+<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
+    ```typescript tab="JS/TS"
+    // Initialize a trace with a unique ID
+    const trace = logger.trace({id: "trace-id"});
+
+    // Adding a generation
+    const generation = trace.generation({
+        id: "generation-id",
+        name: "customer-support--gather-information",
+        provider: "openai",
+        model: "gpt-4o",
+        modelParameters: { temperature: 0.7 },
+        messages: [
+            { "role": "system", "content": "you are a helpful assistant who helps gather customer information" },
+            { "role": "user", "content": "My internet is not working" },
+        ],
+    });
+    // Note: Replace 'trace.generation' with 'span.generation' when creating generations within an existing span
+
+    // Execute the LLM call
+    // const aiCompletion = await openai.chat.completions.create({ ... })
+    ```
+
+    ```python tab="Python"
+    from maxim.logger.components.generation import GenerationConfig
+
+    generation = trace.generation(GenerationConfig(
+        id="generation-id",
+        name="customer-support--gather-information",
+        provider="openai",
+        model="gpt-4o",
+        messages=[
+            { "role": "system", "content": "you are a helpful assistant who helps gather customer information" },
+            { "role": "user", "content": "My internet is not working" },
+        ],
+        model_parameters={"temperature": 0.7},
+    ))
+    # Note: Replace 'trace.generation' with 'span.generation' when creating generations within an existing span
+
+    # Execute the LLM call
+    # aiCompletion = client.chat.completions.create(...)
+    ```
+
+    ```go tab="Go"
+    generation := trace.AddGeneration(&logging.GenerationConfig{
+        Id: "generation-id",
+        Name: "customer-support--gather-information",
+        Provider: "openai",
+        Model: "gpt-4o",
+        Messages: []logging.CompletionRequest{
+            {
+                Role:    "system",
+                Content: "you are a helpful assistant who helps gather customer information",
+            },
+            {
+                Role:    "user",
+                Content: "My internet is not working",
+            },
+        },
+        ModelParameters: map[string]interface{}{"temperature": 0.7},
+    })
+    // Note: Replace 'trace.AddGeneration' with 'span.AddGeneration' when creating generations within an existing span
+
+    // Execute the LLM call
+    // aiCompletion, err := client.CreateChatCompletion(ctx, openai.ChatCompletionRequest{...})
+    ```
+
+    ```java tab="Java"
+    Generation generation = trace.addGeneration(new GenerationConfig(
+        "generation-id",
+        "customer-support--gather-information",
+        "openai",
+        "gpt-4o",
+        Arrays.asList(
+                new Message("system", "you are a helpful assistant who helps gather customer information"),
+                new Message("user", "My internet is not working"),
+        ),
+        Map.of("temperature", 0.7),
+    ));
+    // Note: Replace 'trace.addGeneration' with 'span.addGeneration' when creating generations within an existing span
+
+    // Execute the LLM call
+    // ChatCompletionResult aiCompletion = openAiService.createChatCompletion(new ChatCompletionRequest(...));
+    ```
+</Tabs>
+</Step>
+
+<Step>
+## Record LLM response
+<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
+    ```typescript tab="JS/TS"
+    generation.result({
+        id: "chatcmpl-123",
+        object: "chat.completion",
+        created: Date.now(),
+        model: "gpt-4o",
+        choices: [{
+            index: 0,
+            message: {
+                role: "assistant",
+                content: "Apologies for the inconvenience. Can you please share your customer id?"
+            },
+            finish_reason: "stop"
+        }],
+        usage: {
+            prompt_tokens: 100,
+            completion_tokens: 50,
+            total_tokens: 150
+        }
+    });
+    ```
+
+    ```python tab="Python"
+    generation.result({
+        "id": "chatcmpl-123",
+        "object": "chat.completion",
+        "created": int(time.time()),
+        "model": "gpt-4o",
+        "choices": [{
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "Apologies for the inconvenience. Can you please share your customer id?"
+            },
+            "finish_reason": "stop"
+        }],
+        "usage": {
+            "prompt_tokens": 100,
+            "completion_tokens": 50,
+            "total_tokens": 150
+        }
+    })
+    ```
+
+    ```go tab="Go"
+    generation.SetResult(map[string]interface{}{
+        Id: "chatcmpl-123",
+        Object: "chat.completion",
+        Created: time.Now().Unix(),
+        Model: "gpt-4o",
+        Choices: []logging.ChatCompletionChoice{
+            {
+                Index: 0,
+                Message: &logging.ChatCompletionMessage{
+                    Role: "assistant",
+                    Content: "Apologies for the inconvenience. Can you please share your customer id?",
+                },
+                FinishReason: "stop",
+            },
+        },
+        Usage: &logging.Usage{
+            PromptTokens: 100,
+            CompletionTokens: 50,
+            TotalTokens: 150,
+        },
+    })
+    ```
+
+    ```java tab="Java"
+    generation.setResult(new ChatCompletionResult(
+        "chatcmpl-123",
+        "chat.completion",
+        System.currentTimeMillis() / 1000L,
+        "gpt-4o",
+        Arrays.asList(new ChatCompletionChoice(
+            0,
+            new Message("assistant", "Apologies for the inconvenience. Can you please share your customer id?"),
+            "stop"
+        )),
+        new Usage(100, 50, 150)
+    ));
+    ```
+</Tabs>
+</Step>
+</Steps>
