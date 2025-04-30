@@ -3,34 +3,18 @@ title: Running your first test
 description: Learn how to get started with your first test run in Maxim
 ---
 
+import { MaximPlayer } from "/snippets/maximPlayer.mdx";
+
 ## 1. Set up your environment
 
 First, configure your AI model providers:
 
 <Steps>
-    <Step>
-
-Go to `Settings` → `Models`.
-
-    </Step>
-    <Step>
-
-Click on the tab of the provider for which you want to add an API key.
-
-    </Step>
-    <Step>
-
-Click on `Add New` and fill in the required details.
-
-    </Step>
-
+    <Step title="Go to `Settings` → `Models`.">Click on the tab of the provider for which you want to add an API key.</Step>
+    <Step title="Configure model provider">Click on `Add New` and fill in the required details.</Step>
 </Steps>
 
-<Callout type="info">
-
-Maxim requires at least one provider with access to GPT-3.5 and GPT-4 models. We use industry-standard encryption to securely store your API keys.
-
-</Callout>
+<Note>Maxim requires at least one provider with access to GPT-3.5 and GPT-4 models. We use industry-standard encryption to securely store your API keys.</Note>
 
 To learn more about API keys, inviting users, and managing roles, refer to our [Workspace and roles](/docs/introduction/quickstart/setting-up-workspace) guide.
 
@@ -43,42 +27,11 @@ Create prompts to experiment and evaluate a call to a model with attached contex
 ### Prompt
 
 <Steps>
-    <Step>
-
-Navigate to the `Prompts` tab under the `Evaluate` section and click on Single prompts.
-
-    </Step>
-    <Step>
-
-Click `Create prompt` or `Try sample` to get started.
-
-    </Step>
-    <Step>
-
-Write your system prompt and user prompt in the respective fields.
-
-    </Step>
-    <Step>
-
-Configure additional settings like model, temperature, and max tokens.
-
-    </Step>
-    <Step>
-
-Click `Run` to test your prompt and see the AI's response.
-
-    </Step>
-    <Step>
-
-Iterate on your prompt based on the results.
-
-    </Step>
-    <Step>
-
-When satisfied, click `Save` to create a new version of your prompt.
-
-    </Step>
-
+    <Step title="Create prompt">Navigate to the `Prompts` tab under the `Evaluate` section and click on Single prompts. Click `Create prompt` or `Try sample` to get started.</Step>
+    <Step title="Write your first prompt">Write your system prompt and user prompt in the respective fields.</Step>
+    <Step title="Configure model and parameters.">Configure additional settings like model, temperature, and max tokens.</Step>
+    <Step title="Iterate">Click `Run` to test your prompt and see the AI's response. Iterate on your prompt based on the results.</Step>
+    <Step title="Save prompt and publish a version.">When satisfied, click `Save` to create a new version of your prompt.</Step>
 </Steps>
 
 To learn more about prompts, refer to our [detailed guide on prompts](/docs/evaluate/how-to/evaluate-prompts/experiment-in-prompt-playground).
@@ -86,41 +39,11 @@ To learn more about prompts, refer to our [detailed guide on prompts](/docs/eval
 ### Workflow
 
 <Steps>
-    <Step>
-
-Navigate to the `Workflows` tab under the `Evaluate` section.
-
-    </Step>
-    <Step>
-
-Click `Create Workflow` or `Try sample`.
-
-    </Step>
-    <Step>
-
-Enter your API endpoint URL in the `URL` field.
-
-    </Step>
-    <Step>
-
-Configure any necessary headers or parameters. You can use dynamic variables like `{input}` to reference static context easily in any part of your workflow using `{}`
-
-    </Step>
-    <Step>
-
-Click `Run` to test your endpoint in the playground.
-
-    </Step>
-    <Step>
-
-In the `Output Mapping` section, select the part of the response you want to evaluate (e.g., `data.response`).
-
-    </Step>
-    <Step>
-
-Click `Save` to create your workflow.
-
-    </Step>
+    <Step title="Create workflow">Navigate to the `Workflows` tab under the `Evaluate` section. Click `Create Workflow` or `Try sample`.</Step>
+    <Step title="Configure agent endpoint">Enter your API endpoint URL in the `URL` field. Configure any necessary headers or parameters. You can use dynamic variables like `{input}` to reference static context easily in any part of your workflow using `{}`</Step>
+    <Step title="Test your agent">Click `Run` to test your endpoint in the playground.</Step>
+    <Step title="Configure workflow for testing">In the `Output Mapping` section, select the part of the response you want to evaluate (e.g., `data.response`). Click `Save` to create your workflow.</Step>
+</Steps>
 
 To learn more about workflows, refer to our detailed guide on [Workflows](/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/test-your-ai-outputs-using-application-endpoint).
 
@@ -129,74 +52,21 @@ To learn more about workflows, refer to our detailed guide on [Workflows](/docs/
 Organize and manage the data you'll use for testing and evaluation:
 
 <Steps>
-    <Step>
-
-Navigate to the Datasets tab under the `Library` section.
-
-    </Step>
-    <Step>
-
-Click `Create New` or `Upload CSV`. We also have a sample dataset created for you. Click on `View our sample dataset` to get started.
-
-    </Step>
-    <Step>
-
-If creating a new dataset, enter a name and description for your dataset.
-
-    </Step>
-    <Step>
-
-Add columns to your dataset (e.g., 'input' and 'expected_output').
-
-    </Step>
-    <Step>
-
-Add entries to your dataset, filling in the values for each column.
-
-    </Step>
-    <Step>
-
-Click `Save` to create your dataset.
-
-    </Step>
-
+    <Step title="Create dataset">Navigate to the Datasets tab under the `Library` section. Click `Create New` or `Upload CSV`. We also have a sample dataset created for you. Click on `View our sample dataset` to get started.</Step> 
+    <Step title="Edit dataset">If creating a new dataset, enter a name and description for your dataset. Add columns to your dataset (e.g., 'input' and 'expected_output').</Step>
+    <Step title="Save">Add entries to your dataset, filling in the values for each column. Click `Save` to create your dataset.</Step>    
 </Steps>
 
 To learn more about datasets, refer to our detailed guide on [Datasets](/docs/library/how-to/datasets/use-dataset-templates).
 
-</Steps>
 
 ## 5. Add evaluators
 
 Set up evaluators to assess your prompt or workflow's performance:
 
 <Steps>
-    <Step>
-
-Navigate to the `Evaluators` tab under the `Library` section.
-
-    </Step>
-    <Step>
-
-Click `Add Evaluator` to browse available evaluators.
-
-    </Step>
-    <Step>
-
-Choose an evaluator type (e.g., AI, Programmatic, API, or Human).
-
-    </Step>
-    <Step>
-
-Configure the evaluator settings as needed.
-
-    </Step>
-    <Step>
-
-Click `Save` to add the evaluator to your workspace.
-
-    </Step>
-
+    <Step title="Add evaluators from store">Navigate to the `Evaluators` tab under the `Library` section. Click `Add Evaluator` to browse available evaluators.</Step>
+    <Step title="Configure added evaluators">Choose an evaluator type (e.g., AI, Programmatic, API, or Human). Configure the evaluator settings as needed. Click `Save` to add the evaluator to your workspace.</Step>
 </Steps>
 
 To learn more about evaluators, refer to our detailed guide on [Evaluators](/docs/library/how-to/evaluators/use-pre-built-evaluators).
@@ -206,68 +76,21 @@ To learn more about evaluators, refer to our detailed guide on [Evaluators](/doc
 Execute a test run to evaluate your prompt or workflow:
 
 <Steps>
-    <Step>
-
-Navigate to your saved prompt or workflow.
-
-    </Step>
-    <Step>
-
-Click `Test` in the top right corner.
-
-    </Step>
-    <Step>
-
-Select the dataset you created earlier.
-
-    </Step>
-    <Step>
-
-Choose the evaluators you want to use for this test run.
-
-    </Step>
-    <Step>
-
-Click `Trigger Test Run` to start the evaluation process.
-
-    </Step>
-
+    <Step title="Select workflow/prompt to test">Navigate to your saved prompt or workflow. Click `Test` in the top right corner.</Step>
+    <Step title="Configure test run">Select the dataset you created earlier. Choose the evaluators you want to use for this test run.</Step>
+    <Step title="Trigger">Click `Trigger Test Run` to start the evaluation process.</Step>
 </Steps>
 
-<Callout type="info">
-	If you've added human evaluators, you'll be prompted to set up human annotation on the report or via email.
-</Callout>
+<Note>If you've added human evaluators, you'll be prompted to set up human annotation on the report or via email.</Note>
 
 ## 7. Analyze test results
 
 Review and analyze the results of your test run:
 
 <Steps>
-    <Step>
-
-Navigate to the `Runs` tab in the left navigation menu.
-
-    </Step>
-    <Step>
-
-Find your recent test run and click on it to view details.
-
-    </Step>
-    <Step>
-
-Review the overall performance metrics and scores for each evaluator.
-
-    </Step>
-    <Step>
-
-Drill down into individual queries to see specific scores and reasoning.
-
-    </Step>
-    <Step>
-
-Use these insights to identify areas for improvement in your prompt or workflow.
-
-    </Step>
+    <Step title="View report">Navigate to the `Runs` tab in the left navigation menu. Find your recent test run and click on it to view details.</Step>
+    <Step title="Review performance">Review the overall performance metrics and scores for each evaluator. Drill down into individual queries to see specific scores and reasoning.</Step>
+    <Step title="Iterate">Use these insights to identify areas for improvement in your prompt or workflow.</Step>
 
 </Steps>
 

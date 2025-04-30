@@ -1,0 +1,10 @@
+export const MaximPlayer = ({ url }) => {
+	return (
+		<iframe
+			className="border-background-highlight-secondary h-full w-full rounded-md border-2 aspect-video"
+			src={url}
+			allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+			allowFullScreen
+		></iframe>
+	);
+};

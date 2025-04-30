@@ -3,103 +3,90 @@
     "theme": "palm",
     "name": "Mint Starter Kit",
     "colors": {
-        "primary": "#16A34A",
+        "primary": "#0C3B43",
         "light": "#07C983"
-    },
-    "appearance": {
+    },    
+    "appearance": {        
         "default": "light",
         "strict": true
     },
     "favicon": "/favicon.svg",
-    "navigation": {
+    "navigation": {        
         "tabs": [
             {
-                "tab": "Guides",
+                "tab": "Documentation",
                 "groups": [
                     {
                         "group": "Get Started",
                         "pages": [
                             "introduction",
-                            "quickstart",
-                            "development"
+                            "introduction/quickstart/setting-up-workspace",
+                            "introduction/quickstart/running-first-test"
                         ]
-                    },
-                    {
-                        "group": "Essentials",
-                        "pages": [
-                            "essentials/markdown",
-                            "essentials/code",
-                            "essentials/images",
-                            "essentials/settings",
-                            "essentials/navigation",
-                            "essentials/reusable-snippets"
-                        ]
-                    }
-                ]
-            },
-            {
-                "tab": "API Reference",
-                "groups": [
-                    {
-                        "group": "API Documentation",
-                        "pages": [
-                            "api-reference/introduction"
-                        ]
-                    },
-                    {
-                        "group": "Endpoint Examples",
-                        "pages": [
-                            "api-reference/endpoint/get",
-                            "api-reference/endpoint/create",
-                            "api-reference/endpoint/delete",
-                            "api-reference/endpoint/webhook"
-                        ]
-                    }
+                    }                    
                 ]
             }
         ],
         "global": {
             "anchors": [
                 {
-                    "anchor": "Documentation",
-                    "href": "https://mintlify.com/docs",
-                    "icon": "book-open-cover"
-                },
-                {
-                    "anchor": "Community",
-                    "href": "https://mintlify.com/community",
-                    "icon": "slack"
-                },
-                {
                     "anchor": "Blog",
-                    "href": "https://mintlify.com/blog",
+                    "href": "https://www.getmaxim.ai/blog",
                     "icon": "newspaper"
+                },
+                {
+                    "anchor": "Cookbooks",
+                    "href": "https://github.com/maximhq/maxim-cookbooks",
+                    "icon": "github-alt"
+                },
+                {
+                    "anchor": "Tutorials",
+                    "href": "https://www.youtube.com/@getmaximai",
+                    "icon": "youtube"
                 }
             ]
         }
     },
+    "integrations": {
+        "intercom": {
+            "appId": "glx5mihe"
+        }
+    },
     "logo": {
         "light": "/logo/light.svg",
-        "dark": "/logo/dark.svg"
+        "dark": "/logo/dark.svg",
+        "href": "https://www.getmaxim.ai"
     },
     "navbar": {
         "links": [
             {
-                "label": "Support",
-                "href": "mailto:hi@mintlify.com"
+                "label": "Home",
+                "href": "https://www.getmaxim.ai"
+            },
+            {
+                "label": "Careers",
+                "href": "https://www.getmaxim.ai/careers"
+            },
+            {
+                "label": "Blog",
+                "href": "https://www.getmaxim.ai/blog"                
+            },
+            {
+                "label": "Pricing",
+                "href": "https://www.getmaxim.ai/pricing"
             }
         ],
         "primary": {
             "type": "button",
-            "label": "Dashboard",
-            "href": "https://dashboard.mintlify.com"
+            "label": "Login",
+            "href": "https://www.getmaxim.ai/login"
         }
     },
     "footer": {
         "socials": {
-            "x": "https://x.com/mintlify",
-            "github": "https://github.com/mintlify",
-            "linkedin": "https://linkedin.com/company/mintlify"
+            "x": "https://x.com/getmaximai",
+            "github": "https://github.com/maximhq",
+            "linkedin": "https://linkedin.com/company/maxim-ai"
         }
     }
 }
