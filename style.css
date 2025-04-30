@@ -11,6 +11,22 @@
     background: #A3FFDC !important;
 }
 
+#navbar > div.z-10.mx-auto.relative > div.relative > div.flex.items-center.h-14.py-4.px-5.lg\:hidden > div > div.font-semibold.text-gray-900.truncate.dark\:text-gray-200 {
+    color: #fff !important;
+}
+
+#search-bar-entry-mobile > svg {
+    background-color: #fff !important;
+}
+
+#navbar > div.z-10.mx-auto.relative > div.relative > div.flex.items-center.lg\:px-12.h-16.min-w-0.mx-4.lg\:mx-0 > div > div.flex.lg\:hidden.items-center.gap-2 > button.h-7.w-5.flex.items-center.justify-end > svg {
+    background-color: #fff !important;
+}
+
+#navbar > div.z-10.mx-auto.relative > div.relative > div.flex.items-center.h-14.py-4.px-5.lg\:hidden > button > svg {
+    color: #fff !important;
+}
+
 #navbar > li > a div {
     background: #fff !important;
 }
