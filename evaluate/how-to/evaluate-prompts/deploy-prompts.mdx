@@ -3,46 +3,43 @@ title: Deploy Prompts
 description: Quick iterations on Prompts should not require code deployments every time. With more and more stakeholders working on prompt engineering, its critical to keep deployments of Prompts as easy as possible without much overhead. Prompt deployments on Maxim allow conditional deployment of prompt changes that can be used via the SDK.
 ---
 
-import { Rocket } from "lucide-react";
-import { Button } from "ui";
-
 ## Why deploy Prompts via Maxim
 
 - Prompt experimentation - Create multiple versions of your Prompts, and use a wide variety of models available on Maxim to test and compare their performance using your custom data.
-- Deploy without code changes - Deploy the final version directly from UI—no code changes required. Use Maxim’s RBAC support to limit deployment permission to key stakeholders.
+- Deploy without code changes - Deploy the final version directly from UI—no code changes required. Use Maxim's RBAC support to limit deployment permission to key stakeholders.
 - Custom variables - Use custom variables to create rules to control which environments or user groups should receive the updates. This helps in setting up A/B tests or testing prompt variations internally before pushing to users.
 
 ### Deploying a prompt
 
 <Steps>
-	<Step>
+	<Step title="Select prompt version">
 		Open the prompt version you want to deploy.
 
-        ![Prompt version list](/images/docs/evaluate/how-to/evaluate-prompts/deployments/prompt-versions-list.png)
+        <img src="/images/docs/evaluate/how-to/evaluate-prompts/deployments/prompt-versions-list.png" alt="Prompt version list" width="100%" className="max-w-full" />
 	</Step>
-	<Step>
-		Click the <Button size="icon" variant="outline" className="inline-flex cursor-auto"><Rocket className="h-4 w-4" /></Button> button in the header and choose to deploy the present version.
+	<Step title="Access deployment options">
+		Click the <Icon icon="rocket"/> button in the header and choose to deploy the present version.
 	</Step>
-    <Step>
+    <Step title="Configure deployment rules">
         Add one or more rules for deployment e.g. Environment = prod.
 
-        ![Deployment rules selection](/images/docs/evaluate/how-to/evaluate-prompts/deployments/deployment-rule-selection.png)
+        <img src="/images/docs/evaluate/how-to/evaluate-prompts/deployments/deployment-rule-selection.png" alt="Deployment rules selection" width="100%" className="max-w-full" />
     </Step>
-    <Step>
-        Edit or define new variables by clicking <Button variant={"outline"} className="cursor-auto">Edit deployment variables</Button>
+    <Step title="Manage deployment variables">
+        Edit or define new variables by clicking `Edit deployment variables`
     </Step>
-    <Step>
+    <Step title="Define variable properties">
         Define the name and type of any variable. For variables of type `select` provide possible options. e.g. Environment: Beta, Staging, Prod.
 
-        ![Add new deployment variable](/images/docs/evaluate/how-to/evaluate-prompts/deployments/add-new-deployment-variable.png)
+        <img src="/images/docs/evaluate/how-to/evaluate-prompts/deployments/add-new-deployment-variable.png" alt="Add new deployment variable" width="100%" className="max-w-full" />
     </Step>
-    <Step>
+    <Step title="Apply conditional deployments">
         Every time you have a new version to deploy, use the variable based rules to deploy conditionally.
     </Step>
-    <Step>
+    <Step title="Review existing deployments">
         View existing deployments for any prompt from the deploy button in the header.
 
-        ![Deployments list](/images/docs/evaluate/how-to/evaluate-prompts/deployments/deployment-list.png)
+        <img src="/images/docs/evaluate/how-to/evaluate-prompts/deployments/deployment-list.png" alt="Deployments list" width="100%" className="max-w-full" />
     </Step>
 </Steps>
 
@@ -50,101 +47,89 @@ import { Button } from "ui";
 
 For building query to get prompt with specific deployment variables, you can use `QueryBuilder`.
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
+<CodeGroup>
+  ```typescript JS/TS
+  import { Maxim, QueryBuilder } from "@maximai/maxim-js;
 
-```typescript tab="JS/TS"
-import { Maxim, QueryBuilder } from "@maximai/maxim-js;
+  const maxim = new Maxim({ apiKey: "", promptManagement: true });
 
-// [!code word:apiKey]
-const maxim = new Maxim({ apiKey: "", promptManagement: true });
+  const prompt = await maxim.getPrompt("prompt-id",
+                  new QueryBuilder()
+                    .and()
+                    .deploymentVar("Environment", "prod")
+                    .build());
+  ```
 
-const prompt = await maxim.getPrompt("prompt-id",
-					new QueryBuilder()
-						.and()
-						.deploymentVar("Environment", "prod")
-						.build());
-```
+  ```python Python
+  from maxim import Maxim, Config
+  from maxim.models import QueryBuilder
 
-```python tab="Python"
-from maxim import Maxim, Config
-from maxim.models import QueryBuilder
+  maxim = Maxim(Config(api_key="", prompt_management=True))
 
-# [!code word:api_key]
-maxim = Maxim(Config(api_key="", prompt_management=True))
-
-prompt = maxim.get_prompt("prompt-id",
-	QueryBuilder()
-	.and_()
-	.deployment_var("Environment", "prod")
-	.build())
-```
-
-</Tabs>
+  prompt = maxim.get_prompt("prompt-id",
+    QueryBuilder()
+    .and_()
+    .deployment_var("Environment", "prod")
+    .build())
+  ```
+</CodeGroup>
 
 Add multiple queries
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
+<CodeGroup>
+  ```typescript JS/TS
+  import { Maxim, QueryBuilder } from "@maximai/maxim-js;
 
-```typescript tab="JS/TS"
-import { Maxim, QueryBuilder } from "@maximai/maxim-js;
+  const maxim = new Maxim({ apiKey: "", promptManagement: true });
 
-// [!code word:apiKey]
-const maxim = new Maxim({ apiKey: "", promptManagement: true });
+  const prompt = await maxim.getPrompt(
+    "prompt-id",
+    new QueryBuilder().and().deploymentVar("Environment", "prod").deploymentVar("CustomerId", "123").build(),
+  );
+  ```
 
-const prompt = await maxim.getPrompt(
-	"prompt-id",
-	new QueryBuilder().and().deploymentVar("Environment", "prod").deploymentVar("CustomerId", "123").build(),
-);
-```
+  ```python Python
+  from maxim import Maxim, Config
+  from maxim.models import QueryBuilder
 
-```python tab="Python"
-from maxim import Maxim, Config
-from maxim.models import QueryBuilder
+  maxim = Maxim(Config(api_key="", prompt_management=True))
 
-# [!code word:api_key]
-maxim = Maxim(Config(api_key="", prompt_management=True))
-
-prompt = maxim.get_prompt("prompt-id",
-	QueryBuilder()
-		.and_()
-		.deployment_var("Environment", "prod")
-		.deployment_var("CustomerId", "123")
-		.build())
-```
-
-</Tabs>
+  prompt = maxim.get_prompt("prompt-id",
+    QueryBuilder()
+      .and_()
+      .deployment_var("Environment", "prod")
+      .deployment_var("CustomerId", "123")
+      .build())
+  ```
+</CodeGroup>
 
 Add filters based on tags
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
+<CodeGroup>
+  ```typescript JS/TS
+  import { Maxim, QueryBuilder } from "@maximai/maxim-js;
 
-```typescript tab="JS/TS"
-import { Maxim, QueryBuilder } from "@maximai/maxim-js;
+  const maxim = new Maxim({ apiKey: "", promptManagement: true});
 
-// [!code word:apiKey]
-const maxim = new Maxim({ apiKey: "", promptManagement: true});
+  const prompt = await maxim.getPrompt(
+    "prompt-id",
+    new QueryBuilder().and().deploymentVar("Environment", "prod").tag("TenantId", "3000").build(),
+  );
+  ```
 
-const prompt = await maxim.getPrompt(
-	"prompt-id",
-	new QueryBuilder().and().deploymentVar("Environment", "prod").tag("TenantId", "3000").build(),
-);
-```
+  ```python Python
+  from maxim import Maxim, Config
+  from maxim.models import QueryBuilder
 
-```python tab="Python"
-from maxim import Maxim, Config
-from maxim.models import QueryBuilder
+  maxim = Maxim(Config(api_key="", prompt_management=True))
 
-# [!code word:api_key]
-maxim = Maxim(Config(api_key="", prompt_management=True))
-
-prompt = maxim.get_prompt("prompt-id",
-	QueryBuilder()
-		.and_()
-		.deployment_var("Environment", "prod")
-		.tag("TenantId", "3000")
-		.build())
-```
-
-</Tabs>
+  prompt = maxim.get_prompt("prompt-id",
+    QueryBuilder()
+      .and_()
+      .deployment_var("Environment", "prod")
+      .tag("TenantId", "3000")
+      .build())
+  ```
+</CodeGroup>
 
 <Callout>Learn more about advanced [prompt querying](/docs/evaluate/how-to/evaluate-prompts/querying-prompts) techniques.</Callout>

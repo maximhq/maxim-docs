@@ -21,41 +21,34 @@ Tags act as custom metadata that can be used to identify and retrieve Prompts th
 
 Fetch relevant Prompts in your code using the SDK and querying as per tag values as shown below:
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-<Tab value="JS/TS">
+<CodeGroup>
+  ```typescript JS/TS
+  import { Maxim, QueryBuilder } from "@maximai/maxim-js";
 
-```typescript
-import { Maxim, QueryBuilder } from "@maximai/maxim-js";
+  const maxim = new Maxim({
+    apiKey: "",
+  });
 
-// [!code word:apiKey]
-const maxim = new Maxim({
-	apiKey: "",
-});
+  const prompt = await maxim.getPrompt(
+    promptId,
+    new QueryBuilder()
+      .and()
+      .deploymentVar("Environment", "test")
+      .tag("CustomerId", 1234)
+      .tag("grade", "A")
+      .tag("test", true)
+      .exactMatch()
+      .build(),
+  );
+  ```
 
-const prompt = await maxim.getPrompt(
-	promptId,
-	new QueryBuilder()
-		.and()
-		.deploymentVar("Environment", "test")
-		.tag("CustomerId", 1234)
-		.tag("grade", "A")
-		.tag("test", true)
-		.exactMatch()
-		.build(),
-);
-```
+  ```python Python
+  from maxim import Maxim, Config
+  from maxim.models import QueryBuilder
 
-</Tab>
-<Tab value="Python">
+  maxim = Maxim(Config(api_key=""))
 
-```python
-from maxim import Maxim, Config
-from maxim.models import QueryBuilder
-
-# [!code word:api_key]
-maxim = Maxim(Config(api_key=""))
-
-prompt = maxim.get_prompt(
+  prompt = maxim.get_prompt(
     prompt_id,
     QueryBuilder()
         .and_()
@@ -65,11 +58,9 @@ prompt = maxim.get_prompt(
         .tag("test", True)
         .exactMatch()
         .build()
-)
-```
-
-</Tab>
-</Tabs>
+  )
+  ```
+</CodeGroup>
 
 ## Prompt versions and sessions
 

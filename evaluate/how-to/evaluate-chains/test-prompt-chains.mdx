@@ -9,9 +9,7 @@ import { ActivityIcon } from "lucide-react";
 After testing in the playground, evaluate your Prompt Chains across multiple test cases to ensure consistent performance. You can do the same via test run.
 
 <Steps>
-<Step>
-
-### Create a Dataset
+<Step title="Create a Dataset">
 
 Add test cases by creating a [Dataset](/docs/library/how-to/datasets/use-dataset-templates). For this example, we'll use a Dataset of product images to generate descriptions.
 
@@ -19,9 +17,7 @@ Add test cases by creating a [Dataset](/docs/library/how-to/datasets/use-dataset
 
 </Step>
 
-<Step>
-
-### Build your Prompt Chain
+<Step title="Build your Prompt Chain">
 
 Create a Prompt Chain that processes your test examples. In this case, the chain generates product descriptions, translates them to multiple languages, and formats them to match specific requirements.
 
@@ -29,17 +25,13 @@ Create a Prompt Chain that processes your test examples. In this case, the chain
 
 </Step>
 
-<Step>
-
-### Start a test run
+<Step title="Start a test run">
 
 Open the test configuration by clicking <Button><ActivityIcon className="h-3.5 w-3.5" /> Test</Button> in the top right corner.
 
 </Step>
 
-<Step>
-
-### Configure your test
+<Step title="Configure your test">
 
 Select your dataset and add [Evaluators](/docs/library/how-to/evaluators/use-pre-built-evaluators) to measure the quality of outputs.
 
@@ -47,9 +39,7 @@ Select your dataset and add [Evaluators](/docs/library/how-to/evaluators/use-pre
 
 </Step>
 
-<Step>
-
-### Review results
+<Step title="Review results">
 
 Monitor the [test run](/docs/evaluate/concepts#test-runs) to analyze the performance of your Prompt Chain across all inputs.
 

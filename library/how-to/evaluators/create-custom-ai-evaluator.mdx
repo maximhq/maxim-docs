@@ -8,8 +8,7 @@ import { Plus } from "lucide-react";
 While Maxim offers a comprehensive set of evaluators in the [Store](/docs/library/how-to/evaluators/use-pre-built-evaluators), you might need custom evaluators for specific use cases. Create your own AI evaluator by selecting an LLM as the judge and configuring custom evaluation instructions.
 
 <Steps>
-<Step>
-### Create new Evaluator
+<Step title="Create new Evaluator">
 
 Click the create button and select AI to start building your custom evaluator.
 
@@ -17,8 +16,7 @@ Click the create button and select AI to start building your custom evaluator.
 
 </Step>
 
-<Step>
-### Configure model and parameters
+<Step title="Configure model and parameters">
 
 Select the LLM you want to use as the judge and configure model-specific parameters based on your requirements.
 
@@ -26,8 +24,7 @@ Select the LLM you want to use as the judge and configure model-specific paramet
 
 </Step>
 
-<Step>
-### Define evaluation logic
+<Step title="Define evaluation logic">
 
 Configure how your evaluator should judge the outputs:
 
@@ -58,8 +55,7 @@ Configure how your evaluator should judge the outputs:
 
 </Step>
 
-<Step>
-### Normalize score (Optional)
+<Step title="Normalize score (Optional)">
 
 Convert your custom evaluator scores from a 1-5 scale to match Maxim's standard 0-1 scale. This helps align your custom evaluator with [pre-built evaluators](/docs/library/how-to/evaluators/use-pre-built-evaluators) in the Store.
 
@@ -69,8 +65,7 @@ For example, a score of 4 becomes 0.8 after normalization.
 
 </Step>
 
-<Step>
-### Set pass criteria
+<Step title="Set pass criteria">
 
 Configure two types of pass criteria:
 
@@ -88,8 +83,7 @@ Example: Pass if 80% of entries meet the evaluation criteria
 
 </Step>
 
-<Step>
-### Test your Evaluator
+<Step title="Test your Evaluator">
 
 Test your Evaluator in the playground before using it in your workflows. The right panel shows input fields for all variables used in your Evaluator.
 

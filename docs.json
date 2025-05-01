@@ -5,13 +5,13 @@
     "colors": {
         "primary": "#0C3B43",
         "light": "#07C983"
-    },    
-    "appearance": {        
+    },
+    "appearance": {
         "default": "light",
         "strict": true
     },
     "favicon": "/favicon.svg",
-    "navigation": {        
+    "navigation": {
         "tabs": [
             {
                 "tab": "Documentation",
@@ -20,13 +20,8 @@
                         "group": "Introduction",
                         "pages": [
                             "introduction/overview",
-                            {
-                                "group": "Quickstart",
-                                "pages": [
-                                    "introduction/quickstart/setting-up-workspace",
-                                    "introduction/quickstart/running-first-test"
-                                ]
-                            }
+                            "introduction/quickstart/setting-up-workspace",
+                            "introduction/quickstart/running-first-test"
                         ]
                     },
                     {
@@ -90,6 +85,9 @@
                                             "evaluate/how-to/evaluate-workflows-via-api-endpoint/automate-via-ci-cd"
                                         ]
                                     },
+                                    "evaluate/how-to/evaluate-datasets",
+                                    "evaluate/how-to/scheduled-test-runs",
+                                    "evaluate/how-to/trigger-test-runs-using-sdk",
                                     {
                                         "group": "Optimize Evaluation Processes",
                                         "pages": [
@@ -99,10 +97,7 @@
                                         ]
                                     }
                                 ]
-                            },
-                            "evaluate/how-to/evaluate-datasets",
-                            "evaluate/how-to/scheduled-test-runs",
-                            "evaluate/how-to/trigger-test-runs-using-sdk"
+                            }
                         ]
                     },
                     {
@@ -244,7 +239,7 @@
             },
             {
                 "label": "Blog",
-                "href": "https://www.getmaxim.ai/blog"                
+                "href": "https://www.getmaxim.ai/blog"
             },
             {
                 "label": "Pricing",

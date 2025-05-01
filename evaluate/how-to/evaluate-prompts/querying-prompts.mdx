@@ -15,124 +15,108 @@ You can create prompts with versions and create their deployments that can be us
 
 ### Initializing the SDK
 
-<Tabs groupId="language" items={["JS/TS", "Python"]} persist>
-```typescript tab="JS/TS"
-import { Maxim } from "@maximai/maxim-js";
+<CodeGroup>
+  ```typescript JS/TS
+  import { Maxim } from "@maximai/maxim-js";
 
-// [!code word:apiKey]
-const maxim = new Maxim({ apiKey: "", promptManagement: true });
+  const maxim = new Maxim({ apiKey: "", promptManagement: true });
+  ```
 
-````
+  ```python Python
+  from maxim import Maxim, Config
 
-```python tab="Python"
-from maxim import Maxim, Config
-
-# [!code word:api_key]
-maxim = Maxim(Config(api_key="", prompt_management=True))
-````
-
-</Tabs>
+  maxim = Maxim(Config(api_key="", prompt_management=True))
+  ```
+</CodeGroup>
 
 ### For a prompt with specific deployment variables
 
 For building query to get prompt with specific deployment variables, you can use `QueryBuilder`.
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
+<CodeGroup>
+  ```typescript JS/TS
+  import { Maxim, QueryBuilder } from "@maximai/maxim-js;
 
-```typescript tab="JS/TS"
-import { Maxim, QueryBuilder } from "@maximai/maxim-js;
+  const maxim = new Maxim({ apiKey: "", promptManagement: true });
 
-// [!code word:apiKey]
-const maxim = new Maxim({ apiKey: "", promptManagement: true });
-
-const prompt = await maxim.getPrompt("prompt-id",
+  const prompt = await maxim.getPrompt("prompt-id",
 					new QueryBuilder()
 						.and()
 						.deploymentVar("Environment", "prod")
 						.build());
-```
+  ```
 
-```python tab="Python"
-from maxim import Maxim, Config
-from maxim.models import QueryBuilder
+  ```python Python
+  from maxim import Maxim, Config
+  from maxim.models import QueryBuilder
 
-# [!code word:api_key]
-maxim = Maxim(Config(api_key="", prompt_management=True))
+  maxim = Maxim(Config(api_key="", prompt_management=True))
 
-prompt = maxim.get_prompt("prompt-id",
+  prompt = maxim.get_prompt("prompt-id",
 	QueryBuilder()
 	.and_()
 	.deployment_var("Environment", "prod")
 	.build())
-```
-
-</Tabs>
+  ```
+</CodeGroup>
 
 Adding multiple queries
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
+<CodeGroup>
+  ```typescript JS/TS
+  import { Maxim, QueryBuilder } from "@maximai/maxim-js;
 
-```typescript tab="JS/TS"
-import { Maxim, QueryBuilder } from "@maximai/maxim-js;
+  const maxim = new Maxim({ apiKey: "", promptManagement: true });
 
-// [!code word:apiKey]
-const maxim = new Maxim({ apiKey: "", promptManagement: true });
-
-const prompt = await maxim.getPrompt(
+  const prompt = await maxim.getPrompt(
 	"prompt-id",
 	new QueryBuilder().and().deploymentVar("Environment", "prod").deploymentVar("CustomerId", "123").build(),
-);
-```
+  );
+  ```
 
-```python tab="Python"
-from maxim import Maxim, Config
-from maxim.models import QueryBuilder
+  ```python Python
+  from maxim import Maxim, Config
+  from maxim.models import QueryBuilder
 
-# [!code word:api_key]
-maxim = Maxim(Config(api_key="", prompt_management=True))
+  maxim = Maxim(Config(api_key="", prompt_management=True))
 
-prompt = maxim.get_prompt("prompt-id",
+  prompt = maxim.get_prompt("prompt-id",
 	QueryBuilder()
 		.and_()
 		.deployment_var("Environment", "prod")
 		.deployment_var("CustomerId", "123")
 		.build())
-```
-
-</Tabs>
+  ```
+</CodeGroup>
 
 Adding filters based on Tags
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
+<CodeGroup>
+  ```typescript JS/TS
+  import { Maxim, QueryBuilder } from "@maximai/maxim-js;
 
-```typescript tab="JS/TS"
-import { Maxim, QueryBuilder } from "@maximai/maxim-js;
+  const maxim = new Maxim({ apiKey: "", promptManagement: true});
 
-// [!code word:apiKey]
-const maxim = new Maxim({ apiKey: "", promptManagement: true});
-
-const prompt = await maxim.getPrompt(
+  const prompt = await maxim.getPrompt(
 	"prompt-id",
 	new QueryBuilder().and().deploymentVar("Environment", "prod").tag("TenantId", "3000").build(),
-);
-```
+  );
+  ```
 
-```python tab="Python"
-from maxim import Maxim, Config
-from maxim.models import QueryBuilder
+  ```python Python
+  from maxim import Maxim, Config
+  from maxim.models import QueryBuilder
 
-# [!code word:api_key]
-maxim = Maxim(Config(api_key="", prompt_management=True))
+  maxim = Maxim(Config(api_key="", prompt_management=True))
 
-prompt = maxim.get_prompt("prompt-id",
+  prompt = maxim.get_prompt("prompt-id",
 	QueryBuilder()
 		.and_()
 		.deployment_var("Environment", "prod")
 		.tag("TenantId", "3000")
 		.build())
-```
-
-</Tabs>
+  ```
+</CodeGroup>
 
 ## Querying Prompts
 
@@ -144,33 +128,29 @@ Sometimes you have usescases where you need to fetch multiple deployed prompts a
 
 ### Query deployed prompts using tags
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
+<CodeGroup>
+  ```typescript JS/TS
+  import { Maxim, QueryBuilder } from "@maximai/maxim-js;
 
-```typescript tab="JS/TS"
-import { Maxim, QueryBuilder } from "@maximai/maxim-js;
+  const maxim = new Maxim({ apiKey: "", promptManagement: true });
 
-// [!code word:apiKey]
-const maxim = new Maxim({ apiKey: "", promptManagement: true });
+  const prompts = await maxim.getPrompts(new QueryBuilder().and().deploymentVar("Environment", "prod").tag("CustomerId", "123").build());
+  ```
 
-const prompts = await maxim.getPrompts(new QueryBuilder().and().deploymentVar("Environment", "prod").tag("CustomerId", "123").build());
-```
+  ```python Python
+  from maxim import Maxim, Config
+  from maxim.models import QueryBuilder
 
-```python tab="Python"
-from maxim import Maxim, Config
-from maxim.models import QueryBuilder
+  maxim = Maxim(Config(api_key="", prompt_management=True))
 
-# [!code word:api_key]
-maxim = Maxim(Config(api_key="", prompt_management=True))
-
-prompts = maxim.get_prompts(
+  prompts = maxim.get_prompts(
 	QueryBuilder()
 		.and_()
 		.deployment_var("Environment", "prod")
 		.tag("CustomerId", "123")
 		.build())
-```
-
-</Tabs>
+  ```
+</CodeGroup>
 
 ### Query deployed prompts using folder
 
@@ -186,140 +166,123 @@ There are multiple ways to capture folder id. You can use Maxim dashboard to get
 
 ![Settings Page](/images/docs/folder-id.png)
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
+<CodeGroup>
+  ```typescript JS/TS
+  import { Maxim } from "@maximai/maxim-js;
 
-```typescript tab="JS/TS"
-import { Maxim } from "@maximai/maxim-js;
+  const maxim = new Maxim({ apiKey: "", promptManagement: true });
 
-// [!code word:apiKey]
-const maxim = new Maxim({ apiKey: "", promptManagement: true });
+  const folder = await maxim.getFolderById("folder-id");
+  ```
 
-const folder = await maxim.getFolderById("folder-id");
-```
+  ```python Python
+  from maxim import Maxim, Config
 
-```python tab="Python"
-from maxim import Maxim, Config
+  maxim = Maxim(Config(api_key="", prompt_management=True))
 
-# [!code word:api_key]
-maxim = Maxim(Config(api_key="", prompt_management=True))
-
-folder = maxim.get_folder_by_id("folder-id")
-```
-
-</Tabs>
+  folder = maxim.get_folder_by_id("folder-id")
+  ```
+</CodeGroup>
 
 **To get folders using tags attached to the folder.**
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
+<CodeGroup>
+  ```typescript JS/TS
+  import { Maxim, QueryBuilder } from "@maximai/maxim-js;
 
-```typescript tab="JS/TS"
-import { Maxim, QueryBuilder } from "@maximai/maxim-js;
+  const maxim = new Maxim({ apiKey: "", promptManagement: true });
 
-// [!code word:apiKey]
-const maxim = new Maxim({ apiKey: "", promptManagement: true });
+  const folders = await maxim.getFolders(new QueryBuilder().and().tag("CustomerId", "123").build());
+  ```
 
-const folders = await maxim.getFolders(new QueryBuilder().and().tag("CustomerId", "123").build());
-```
+  ```python Python
+  from maxim import Maxim, Config
+  from maxim.models import QueryBuilder
 
-```python tab="Python"
-from maxim import Maxim, Config
-from maxim.models import QueryBuilder
+  maxim = Maxim(Config(api_key="",prompt_management=True))
 
-# [!code word:api_key]
-maxim = Maxim(Config(api_key="",prompt_management=True))
-
-folders = maxim.get_folders(QueryBuilder().and_().tag("CustomerId", "123").build())
-```
-
-</Tabs>
+  folders = maxim.get_folders(QueryBuilder().and_().tag("CustomerId", "123").build())
+  ```
+</CodeGroup>
 
 <Callout>All the rules of prompt matching algorithm apply here. You can use same overriding techniques as explained above.</Callout>
 
 #### Get all deployed prompts from a folder
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
+<CodeGroup>
+  ```typescript JS/TS
+  import { Maxim, QueryBuilder } from "@maximai/maxim-js;
 
-```typescript tab="JS/TS"
-import { Maxim, QueryBuilder } from "@maximai/maxim-js;
+  const maxim = new Maxim({ apiKey: "", promptManagement: true });
 
-// [!code word:apiKey]
-const maxim = new Maxim({ apiKey: "", promptManagement: true });
-
-const folder = maxim.getFolderById("folder-id")
-const prompts = await maxim.getPrompts(
+  const folder = maxim.getFolderById("folder-id")
+  const prompts = await maxim.getPrompts(
 	new QueryBuilder()
 	.and()
 	.folder(folder.id)
 	.deploymentVar("Environment", "prod")
 	.build(),
-);
-```
+  );
+  ```
 
-```python tab="Python"
-from maxim import Maxim, Config
-from maxim.models import QueryBuilder
+  ```python Python
+  from maxim import Maxim, Config
+  from maxim.models import QueryBuilder
 
-# [!code word:api_key]
-maxim = Maxim(Config(api_key="", prompt_management=True))
+  maxim = Maxim(Config(api_key="", prompt_management=True))
 
-folder = await maxim.get_folder_by_id("folder-id");
-prompts = maxim.get_prompts(
+  folder = await maxim.get_folder_by_id("folder-id");
+  prompts = maxim.get_prompts(
 	QueryBuilder()
 	.and_()
 	.folder(folder.id)
 	.deployment_var("Environment", "prod")
 	.build())
-```
-
-</Tabs>
+  ```
+</CodeGroup>
 
 You can filter prompts based on deploymentVars or tags attached to the prompt.
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
+<CodeGroup>
+  ```typescript JS/TS
+  import { Maxim, QueryBuilder } from "@maximai/maxim-js;
 
-```typescript tab="JS/TS"
-import { Maxim, QueryBuilder } from "@maximai/maxim-js;
+  const maxim = new Maxim({ apiKey: "", promptManagement: true });
 
-// [!code word:apiKey]
-const maxim = new Maxim({ apiKey: "", promptManagement: true });
-
-const folder = await maxim.getFolderById("folder-id");
-const prompts = await maxim.getPrompts(
+  const folder = await maxim.getFolderById("folder-id");
+  const prompts = await maxim.getPrompts(
 		new QueryBuilder()
 		.and()
 		.folder(folder.id)
 		.deploymentVar("Environment", "prod")
 		.tag("CustomerId","123")
 		.build());
-```
+  ```
 
-```python tab="Python"
-from maxim import Maxim, Config
-from maxim.models import QueryBuilder
+  ```python Python
+  from maxim import Maxim, Config
+  from maxim.models import QueryBuilder
 
-# [!code word:api_key]
-maxim = Maxim(Config(api_key="", prompt_management=True))
+  maxim = Maxim(Config(api_key="", prompt_management=True))
 
-folder = maxim.get_folder_by_id("folder-id")
-prompts = maxim.get_prompts(
+  folder = maxim.get_folder_by_id("folder-id")
+  prompts = maxim.get_prompts(
 	QueryBuilder()
 	.and_()
 	.folder(folder.id)
 	.deployment_var("Environment", "prod")
 	.tag("CustomerId","123")
 	.build())
-```
-
-</Tabs>
+  ```
+</CodeGroup>
 
 <Callout>You have to pass at-least one filter along with `folder()`. Either a `deploymentVar` or a `tag`.</Callout>
 
 ## Prompt Structure
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-
-```typescript tab="JS/TS"
-export type Prompt = {
+<CodeGroup>
+  ```typescript JS/TS
+  export type Prompt = {
 	promptId: string;
 	version: number;
 	versionId: string;
@@ -328,49 +291,46 @@ export type Prompt = {
 	provider: string;
 	model: string;
 	tags: { [key: string]: string };
-};
-```
+  };
+  ```
 
-```python tab="Python"
-@dataclass
-class Message():
+  ```python Python
+  @dataclass
+  class Message():
 	role: str
 	content: str
 
-@dataclass
-class Prompt():
+  @dataclass
+  class Prompt():
 	prompt_id: str
 	version: int
 	version_id: str
 	messages: List[Message]
 	model_parameters: Dict[str, Union[str, int, bool, Dict, None]]
-```
-
-</Tabs>
+  ```
+</CodeGroup>
 
 ## Folder Structure
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-
-```typescript tab="JS/TS"
-export type Folder = {
+<CodeGroup>
+  ```typescript JS/TS
+  export type Folder = {
 	id: string;
 	name: string;
 	parentFolderId?: string;
 	tags: { [key: string]: string };
-};
-```
+  };
+  ```
 
-```python tab="Python"
-@dataclass
-class Folder():
+  ```python Python
+  @dataclass
+  class Folder():
 	id: str
 	name: str
 	parent_folder_id: str
 	tags: Optional[Dict[str, Union[str, int, bool, None]]] = None
-```
-
-</Tabs>
+  ```
+</CodeGroup>
 
 ### Using your own cache for prompts
 
@@ -378,19 +338,18 @@ Maxim SDK uses in-memory caching by default. You can use your own caching implem
 
 #### Interface for custom cache
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-
-```typescript tab="JS/TS"
-export interface MaximCache {
+<CodeGroup>
+  ```typescript JS/TS
+  export interface MaximCache {
 	getAllKeys(): Promise<string[]>;
 	get(key: string): Promise<string | null>;
 	set(key: string, value: string): Promise<void>;
 	delete(key: string): Promise<void>;
-}
-```
+  }
+  ```
 
-```python tab="Python"
-class MaximInMemoryCache():
+  ```python Python
+  class MaximInMemoryCache():
 	def get_all_keys(self) -> List[str]:
 		pass
 
@@ -402,36 +361,32 @@ class MaximInMemoryCache():
 
 	def delete(self, key: str) -> None:
 		pass
-```
-
-</Tabs>
+  ```
+</CodeGroup>
 
 You will have to pass this custom cache object to the SDK while initializing it.
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
+<CodeGroup>
+  ```typescript JS/TS
+  import { Maxim } from "@maximai/maxim-js";
 
-```typescript tab="JS/TS"
-import { Maxim } from "@maximai/maxim-js";
+  const maxim = new Maxim({ apiKey: "api-key", promptManagement: true, cache: new CustomCache() });
+  ```
 
-const maxim = new Maxim({ apiKey: "api-key", promptManagement: true, cache: new CustomCache() });
-```
+  ```python Python
+  from maxim import Maxim, Config
 
-```python tab="Python"
-from maxim import Maxim, Config
-
-maxim = Maxim(Config(api_key=apiKey, prompt_management=True, cache=CustomCache()))
-```
-
-</Tabs>
+  maxim = Maxim(Config(api_key=apiKey, prompt_management=True, cache=CustomCache()))
+  ```
+</CodeGroup>
 
 #### Example
 
 Here is the default in-memory cache implementation used by the SDK.
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-
-```typescript tab="JS/TS"
-export class MaximInMemoryCache implements MaximCache {
+<CodeGroup>
+  ```typescript JS/TS
+  export class MaximInMemoryCache implements MaximCache {
 	private cache: Map<string, string> = new Map();
 
 	getAllKeys(): Promise<string[]> {
@@ -445,11 +400,11 @@ export class MaximInMemoryCache implements MaximCache {
 		this.cache.set(key, value);
 		return Promise.resolve();
 	}
-}
-```
+  }
+  ```
 
-```python tab="Python"
-class MaximInMemoryCache():
+  ```python Python
+  class MaximInMemoryCache():
 	def __init__(self):
 		self.cache = {}
 
@@ -465,9 +420,8 @@ class MaximInMemoryCache():
 	def delete(self, key: str) -> None:
 		if key in self.cache:
 			del self.cache[key]
-```
-
-</Tabs>
+  ```
+</CodeGroup>
 
 ## Matching algorithm
 
@@ -483,64 +437,56 @@ Before going into the details of how to use the SDK, let's understand how the ma
 
 1. You can override fallback algorithm by calling `.exactMatch()` on `QueryBuilder` object. That will enforce all conditions to be matched.
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
+<CodeGroup>
+  ```typescript JS/TS
+  import { Maxim, QueryBuilder } from "@maximai/maxim-js;
 
-```typescript tab="JS/TS"
-import { Maxim, QueryBuilder } from "@maximai/maxim-js;
+  const maxim = new Maxim({ apiKey: "", promptManagement: true });
 
-// [!code word:apiKey]
-const maxim = new Maxim({ apiKey: "", promptManagement: true });
-
-const prompt = await maxim.getPrompt(
+  const prompt = await maxim.getPrompt(
 	"prompt-id",
 	new QueryBuilder().and().deploymentVar("Environment", "prod").tag("CustomerId", "123").exactMatch().build(),
-);
-```
+  );
+  ```
 
-```python tab="Python"
-from maxim import Maxim, Config
-from maxim.models import QueryBuilder
+  ```python Python
+  from maxim import Maxim, Config
+  from maxim.models import QueryBuilder
 
-# [!code word:api_key]
-maxim = Maxim(Config(api_key="", prompt_management=True))
+  maxim = Maxim(Config(api_key="", prompt_management=True))
 
-prompt = maxim.get_prompt("prompt-id", QueryBuilder().and_()
+  prompt = maxim.get_prompt("prompt-id", QueryBuilder().and_()
 		.deployment_var("Environment", "prod")
 		.tag("CustomerId","123")
 		.exact_match()
 		.build())
-```
-
-</Tabs>
+  ```
+</CodeGroup>
 
 2. You can override fallback algorithm at each variable level. The third optional parameter in `deploymentVar` & `tag` function is `enforce`. If you pass `true` to this parameter, it will enforce exact match for that variable.
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
+<CodeGroup>
+  ```typescript JS/TS
+  import { Maxim, QueryBuilder } from "@maximai/maxim-js;
 
-```typescript tab="JS/TS"
-import { Maxim, QueryBuilder } from "@maximai/maxim-js;
+  const maxim = new Maxim({ apiKey: "", promptManagement: true });
 
-// [!code word:apiKey]
-const maxim = new Maxim({ apiKey: "", promptManagement: true });
-
-const prompt = await maxim.getPrompt(
+  const prompt = await maxim.getPrompt(
 	"prompt-id",
 	new QueryBuilder().and().deploymentVar("Environment", "prod").tag("CustomerId", "123", true).build(),
-);
-```
+  );
+  ```
 
-```python tab="Python"
-from maxim import Maxim, Config
-from maxim.models import QueryBuilder
+  ```python Python
+  from maxim import Maxim, Config
+  from maxim.models import QueryBuilder
 
-# [!code word:api_key]
-maxim = Maxim(Config(api_key="", prompt_management=True))
+  maxim = Maxim(Config(api_key="", prompt_management=True))
 
-prompt = maxim.get_prompt("prompt-id", QueryBuilder().and_()
+  prompt = maxim.get_prompt("prompt-id", QueryBuilder().and_()
 		.deployment_var("Environment", "prod")
 		.tag("CustomerId", "123", true)
 		.exact_match()
 		.build())
-```
-
-</Tabs>
+  ```
+</CodeGroup>

@@ -31,28 +31,26 @@ Maxim offers a CLI tool that can be used to run test runs. It is an executable b
 
 Use the following command template to install the CLI tool (if you are using Windows, please refer to the Windows example as well):
 
-<Tabs items={["Command template", "Linux amd64 example", "Windows example"]}>
+<CodeGroup>
+  ```bash Command template
+  wget https://downloads.getmaxim.ai/cli/<VERSION>/<OS>/<ARCH>/maxim
+  ```
 
-```bash tab="Command template"
-wget https://downloads.getmaxim.ai/cli/<VERSION>/<OS>/<ARCH>/maxim
-```
+  ```bash Linux amd64 example
+  wget https://downloads.getmaxim.ai/cli/v1/linux/amd64/maxim
+  ```
 
-```bash tab="Linux amd64 example"
-wget https://downloads.getmaxim.ai/cli/v1/linux/amd64/maxim
-```
+  ```powershell Windows example
+  # Use `.exe` extension for windows downloads.
+  wget https://downloads.getmaxim.ai/cli/v1/windows/amd64/maxim.exe
+  ```
+</CodeGroup>
 
-```powershell tab="Windows example"
-# Use `.exe` extension for windows downloads.
-wget https://downloads.getmaxim.ai/cli/v1/windows/amd64/maxim.exe
-```
-
-</Tabs>
-
-<Callout>
+<Note>
 
 We currently only have `v1` of the CLI tool. So please replace `<VERSION>` with `v1`.
 
-</Callout>
+</Note>
 
 #### Supported OS + ARCH
 
@@ -79,7 +77,7 @@ We require you to set these environment variables before using the CLI, **these 
 
 Use this template to trigger a test run:
 
-```bash title="Shell command to trigger a test run"
+```bash Shell command to trigger a test run
 # If you haven't added the binary to your PATH,
 # replace `maxim` with the path to the binary you just downloaded
 maxim test -p <prompt_version_id> -d <dataset_id> -e <comma_separated_evaluator_names>
@@ -102,7 +100,7 @@ GitHub actions provide a powerful way to run tests, build, and deploy your appli
 
 In order to add the GitHub Action to your workflow, you can start by adding a step that uses `maximhq/actions/test-runs@v1` as follows:
 
-<Callout type="warn">
+<Warning>
 
 Please ensure that you have the following setup:
 
@@ -113,9 +111,9 @@ Please ensure that you have the following setup:
   - DATASET_ID
   - **PROMPT_VERSION_ID**
 
-</Callout>
+</Warning>
 
-```yaml title=".github/workflows/test-runs.yml"
+```yaml .github/workflows/test-runs.yml
 name: Run Test Runs with Maxim
 
 on:
