@@ -1,13 +1,21 @@
 ---
-title: "OpenAI one line integration"
+title: "OpenAI SDK"
 description: "This tutorial shows how to integrate Maxim observability with OpenAI SDK."
 ---
 
-## Setup
+## Requirements
 
 ```
 "openai>=1.65.4"
 "maxim-py>=3.5.0"
+```
+
+## Env variables
+
+```
+MAXIM_API_KEY=
+MAXIM_LOG_REPO_ID=
+OPENAI_API_KEY=
 ```
 
 ## Initialize logger
@@ -27,6 +35,32 @@ from maxim.logger.openai import MaximOpenAIClient
 client = MaximOpenAIClient(client=OpenAI(api_key=OPENAI_API_KEY),logger=logger)
 ```
 
+## Make LLM call
+
+```python
+from openai import OpenAI
+from maxim.logger.openai import MaximOpenAIClient
+
+client = MaximOpenAIClient(client=OpenAI(api_key=OPENAI_API_KEY),logger=logger)
+
+messages = [
+    {"role": "system", "content": "You are a helpful assistant."},
+    {"role": "user", "content": "Write a haiku about recursion in programming."},
+]
+
+# Create a chat completion request
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=messages,        
+
+)
+# Extract response text and usage
+response_text = response.choices[0].message.content
+print(response_text)
+```
+
+![Py Openai Integration Gi](/images/docs/sdk/python/py-openai-integration.gif)
+
 <CardGroup cols={2}>
   <Card title="OpenAI one line integration cookbook" icon="github" href="https://github.com/maximhq/maxim-cookbooks/blob/main/python/observability-online-eval/openai/openai-sdk/one-line-integration.ipynb">
     
@@ -35,3 +69,4 @@ client = MaximOpenAIClient(client=OpenAI(api_key=OPENAI_API_KEY),logger=logger)
     
   </Card>
 </CardGroup>
+
