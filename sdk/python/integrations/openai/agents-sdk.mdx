@@ -3,6 +3,21 @@ title: "Agents SDK"
 description: "Let's see how you can integrate Maxim into OpenAI Agents SDK"
 ---
 
+## Requirements
+
+```
+"openai>=1.65.4"
+"maxim-py>=3.5.0"
+```
+
+## Env variables
+
+```
+MAXIM_API_KEY=
+MAXIM_LOG_REPO_ID=
+OPENAI_API_KEY=
+```
+
 ## **Customer service agent**
 
 Taken from [OpenAI Agents Example Folder](https://github.com/openai/openai-agents-python/blob/main/examples/customer_service/main.py).
@@ -184,8 +199,6 @@ seat_booking_agent.handoffs.append(triage_agent)
 - You can pass them as parameters if you would like to.
 - Learn more [here](https://www.getmaxim.ai/docs/observe/concepts#log-repository).
 
-In [2]:
-
 ```python
 from agents import add_trace_processor
 from maxim import Maxim
@@ -199,9 +212,7 @@ add_trace_processor(MaximOpenAIAgentsTracingProcessor(logger))
 
 ### **Run agent**
 
-In [3]:
-
-```
+```python
 current_agent: Agent[AirlineAgentContext] = triage_agent
 input_items: list[TResponseInputItem] = []
 context = AirlineAgentContext()
@@ -240,3 +251,5 @@ FAQ Agent: You are allowed to bring one bag on the plane, which must be under 50
 # **Maxim dashboard**
 
 You can view the trace of the agents' interactions on the [Maxim](https://www.getmaxim.ai/) dashboard, which provides detailed insights and visualizations of the entire process.
+
+![Openai Agents Customer Support Gi](/images/docs/sdk/python/openai/openai-agents-customer-support.gif)
