@@ -3,6 +3,8 @@ title: Set up alerts for quality metrics
 description: Learn how to set up alerts to monitor evaluation scores and quality checks in Maxim.
 ---
 
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
 Monitor your AI application's quality with alerts for evaluation scores and quality checks. Receive notifications when AI responses don't meet expected quality standards.
 
 ## Choose evaluation metrics for alerts
@@ -18,26 +20,25 @@ Set up alerts for various evaluation scores, such as:
 ## Create a quality alert
 
 <Steps>
-<Step>
+<Step title="Navigate to repository">
 Open the **Logs** page and select the repository you want to monitor.
 </Step>
-<Step>
+<Step title="Access alerts tab">
 Select the **Alerts** tab and click **Create alert**
 </Step>
-<Step>
+<Step title="Select alert type">
 Select **Evaluation scores** as the type of alert.
 </Step>
-<Step>
-Configure alert settings:
+<Step title="Configure alert settings">
   - Choose an evaluation metric (e.g., "Bias-check")
   - The violation criteria is based on your evaluator's type and configuration.
   - Specify how many times this should occur
   - Set the evaluation time range
 </Step>
-<Step>
+<Step title="Choose notification channels">
 Select the notification channels where you want to receive alerts.
 </Step>
-<Step>
+<Step title="Save your alert">
 Click **Create alert** to save your configuration.
 </Step>
 </Steps>

@@ -3,8 +3,6 @@ title: Set up auto evaluation on logs
 description: Evaluate captured logs automatically from the UI based on filters and sampling
 ---
 
-import { Save, Settings2 } from "lucide-react";
-import { Button } from "ui";
 
 ## Why evaluate logs?
 
@@ -14,31 +12,26 @@ Evaluation on logs helps cover cases or scenarios that might not be covered by *
 
 ![Diagram of the evaluation iteration loop](/images/docs/observe/how-to/evaluate-logs/auto-evaluation/diagram-of-the-evaluation-iteration-loop.png)
 
-<Callout title="Before you start">
+<Note>
+**Before you start**
 
 You need to have your **logging set up** to capture interactions between your LLM and users before you can evaluate them. To do so, you would need to integrate [Maxim SDK](/docs/observe/how-to/log-your-application/setting-up-trace) into your application.
-
-</Callout>
+</Note>
 
 ## Setting up auto evaluation
 
 <Steps>
-<Step>
-
+<Step title="Navigate to repository">
 Navigate to the repository where you want to evaluate your logs.
-
 </Step>
-<Step>
-
-Click on `Configure evaluation` in the top right corner of the page and choose the <Code>Setup&nbsp;evaluation&nbsp;configuration</Code> option. This will open up the evaluation configuration sheet.
+<Step title="Access evaluation configuration">
+Click on `Configure evaluation` in the top right corner of the page and choose the `Setup&nbsp;evaluation&nbsp;configuration` option. This will open up the evaluation configuration sheet.
 
 <Img
     src={
         <div className="p-4 flex flex-col gap-1 items-end">
-            <Button className="flex flex-row items-center border bg-background-primary" variant="ghost">
-                <Settings2 className="h-4 w-4" strokeWidth={1.5} />
-                Configure evaluation
-            </Button>
+                <Icon icon="settings2" />Configure evaluation
+            
             <div className="min-w-[8rem] overflow-hidden rounded-sm border bg-background-primary p-1 text-content-primary shadow-md">
                 <div className="flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-md outline-hidden bg-background-highlight-primary text-content-primary">
                     Setup evaluation configuration
@@ -51,10 +44,8 @@ Click on `Configure evaluation` in the top right corner of the page and choose t
     }
     alt="Screenshot of the repository page with the configure evaluation button highlighted"
 />
-
 </Step>
-<Step>
-
+<Step title="Configure auto evaluation settings">
 The sheet's `Auto Evaluation` section has 3 parts:
 
 - `Select evaluators`: Choose the evaluators you want to use for your evaluation.
@@ -63,17 +54,12 @@ The sheet's `Auto Evaluation` section has 3 parts:
 
 ![Screenshot of the evaluation configuration sheet](/images/docs/observe/how-to/evaluate-logs/auto-evaluation/screenshot-of-the-evaluation-configuration-sheet.png)
 
-<Callout>
-
+<Note>
 The `Human Evaluation` section below is explained in the [Set up human evaluation on logs](/docs/observe/how-to/evaluate-logs/human-evaluation) section
-
-</Callout>
-
+</Note>
 </Step>
-<Step>
-
-Finally click on the <Code className="inline-flex items-center gap-1 max-h-[23px]"><Save className="h-4 w-4" /> Save configuration</Code> button.
-
+<Step title="Save configuration">
+Finally click on the <Icon icon="floppy-disk" /> Save configuration button.
 </Step>
 </Steps>
 

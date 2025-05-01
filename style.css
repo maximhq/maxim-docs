@@ -27,6 +27,10 @@
     color: #fff !important;
 }
 
+#content-container  {
+    overflow: scroll;
+}
+
 #navbar > li > a div {
     background: #fff !important;
 }

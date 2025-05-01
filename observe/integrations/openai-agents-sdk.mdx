@@ -16,19 +16,18 @@ The [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) enables 
 ## Integrating with Maxim
 
 <Steps>
-				<Step>
+				<Step title="Create account">
 		Create a Maxim account and a Log repository. Follow the instructions in the [quickstart
 		section](https://www.getmaxim.ai/docs/observe/quickstart).
 	</Step>
-	<Step>
+	<Step title="Install SDK">
 	Install Maxim SDK
 
     			```bash
     			pip install maxim-py
     			```
     			</Step>
-    			<Step>
-       **Set the following environment variables to configure the Maxim SDK**
+    			<Step title="Set the following environment variables to configure the Maxim SDK">       
     					| Environment Variable | Description |
     					| --- | --- |
     					| `MAXIM_API_KEY` | Your Maxim API key |
@@ -45,8 +44,7 @@ logger = Maxim(Config()).logger()
 ```
 
     			</Step>
-    			<Step>
-    				**OR you can manually initialize the SDK**
+    			<Step title="Manually initialize OR you can manually initialize the SDK">    				
 
 ```python
 from maxim import Maxim,Config
@@ -56,7 +54,7 @@ logger = Maxim(Config(api_key="your_api_key")).logger(LoggerConfig(id="your_log_
 ```
 
     			</Step>
-    			<Step>
+    			<Step title="Add tracing processor">
     					Add the `MaximOpenAIAgentsTracingProcessor` to your agent using `add_trace_processor` or `set_trace_processor`.
 
 ```python

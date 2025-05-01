@@ -13,52 +13,48 @@ While Maxim's web interface provides a powerful way to run tests, the SDK offers
 - Get real-time feedback on test progress
 - Handle errors programmatically
 
-## Example of triggering test runs using the SDK
+## Getting Started: Basic SDK Example
 
-The SDK uses a builder pattern to configure and run tests. Follow this example to trigger test runs:
+<CodeGroup>
+```typescript JS/TS
+import { Maxim } from "@maximai/maxim-js";
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-    ```typescript tab="JS/TS"
-    import { Maxim } from "@maximai/maxim-js";
+const maxim = new Maxim({ apiKey: "" });
 
-    // [!code word:apiKey]
-    const maxim = new Maxim({ apiKey: "" });
+const result = await maxim
+.createTestRun("My First SDK Test", "your-workspace-id")
+.withDataStructure(/* your data structure here */)
+.withData(/* your data here */)
+.yieldsOutput(/* your output function here */)
+.withWorkflowId(/* or you can pass workflow ID from Maxim platform */)
+.withPromptVersionId(/* or you can pass prompt version ID from Maxim platform */)
+.withEvaluators(/* your evaluators here */)
+.run();
+```
 
-    const result = await maxim
-    .createTestRun("My First SDK Test", "your-workspace-id")
-    .withDataStructure(/* your data structure here */)
-    .withData(/* your data here */)
-    .yieldsOutput(/* your output function here */)
-    .withWorkflowId(/* or you can pass workflow ID from Maxim platform */)
-    .withPromptVersionId(/* or you can pass prompt version ID from Maxim platform */)
-    .withEvaluators(/* your evaluators here */)
-    .run();
-    ```
+```python Python
+from maxim import Maxim, Config
+from maxim.logger import Logger, LoggerConfig
 
-    ```python tab="Python"
-    from maxim import Maxim, Config
-    from maxim.logger import Logger, LoggerConfig
+maxim = Maxim(Config(api_key=""))
 
-    # [!code word:api_key]
-    maxim = Maxim(Config(api_key=""))
-
-    result = maxim
-    .create_test_run("My First SDK Test", "your-workspace-id")
-    .with_data_structure() # your data structure here
-    .with_data() # your data here
-    .yields_output() # your output function here
-    .with_workflow_id() # or you can pass workflow ID from Maxim platform
-    .with_prompt_version_id() # or you can pass prompt version ID from Maxim platform
-    .with_evaluators() # your evaluators here
-    .run();
-    ```
-</Tabs>
+result = maxim
+.create_test_run("My First SDK Test", "your-workspace-id")
+.with_data_structure() # your data structure here
+.with_data() # your data here
+.yields_output() # your output function here
+.with_workflow_id() # or you can pass workflow ID from Maxim platform
+.with_prompt_version_id() # or you can pass prompt version ID from Maxim platform
+.with_evaluators() # your evaluators here
+.run();
+```
+</CodeGroup>
 
 Copy your workspace ID from the workspace switcher in the left topbar
 
 ![Screenshot of copy workspace ID option](/images/docs/sdk/copy-workspace-id-option.png)
 
-## Understanding the data structure
+## Data Structure Configuration
 
 Understand the data structure to maintain type safety and validate data columns. It maps your data columns to specific types that Maxim understands.
 
@@ -66,25 +62,25 @@ Understand the data structure to maintain type safety and validate data columns.
 
 Define your data structure using an object that maps column names to specific types.
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-    ```typescript tab="JS/TS"
-    const dataStructure = {
-        myQuestionColumn: "INPUT",
-        expectedAnswerColumn: "EXPECTED_OUTPUT",
-        contextColumn: "CONTEXT_TO_EVALUATE",
-        additionalDataColumn: "VARIABLE"
-    }
-    ```
+<CodeGroup>
+```typescript JS/TS
+const dataStructure = {
+    myQuestionColumn: "INPUT",
+    expectedAnswerColumn: "EXPECTED_OUTPUT",
+    contextColumn: "CONTEXT_TO_EVALUATE",
+    additionalDataColumn: "VARIABLE"
+}
+```
 
-    ```python tab="Python"
-    data_structure = {
-        myQuestionColumn: "INPUT",
-        expectedAnswerColumn: "EXPECTED_OUTPUT",
-        contextColumn: "CONTEXT_TO_EVALUATE",
-        additionalDataColumn: "VARIABLE"
-    }
-    ```
-</Tabs>
+```python Python
+data_structure = {
+    myQuestionColumn: "INPUT",
+    expectedAnswerColumn: "EXPECTED_OUTPUT",
+    contextColumn: "CONTEXT_TO_EVALUATE",
+    additionalDataColumn: "VARIABLE"
+}
+```
+</CodeGroup>
 
 ### Available types
 
@@ -94,85 +90,76 @@ Define your data structure using an object that maps column names to specific ty
 - `VARIABLE` - Additional data columns (multiple allowed)
 - `NULLABLE_VARIABLE` - Optional data columns (multiple allowed)
 
-### Example
+### Implementation Example
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-    ```typescript tab="JS/TS"
-    import { Maxim } from "@maximai/maxim-js";
+<CodeGroup>
+```typescript JS/TS
+import { Maxim } from "@maximai/maxim-js";
 
-    // [!code word:apiKey]
-    const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
+const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
 
-    const result = maxim
-        .createTestRun("Question Answering Test", workspaceId)
-        .withDataStructure({
-            question: "INPUT",
-            answer: "EXPECTED_OUTPUT",
-            context: "CONTEXT_TO_EVALUATE",
-            metadata: "NULLABLE_VARIABLE"
-        })
-        // ... rest of the configuration
-    ```
+const result = maxim
+    .createTestRun("Question Answering Test", workspaceId)
+    .withDataStructure({
+        question: "INPUT",
+        answer: "EXPECTED_OUTPUT",
+        context: "CONTEXT_TO_EVALUATE",
+        metadata: "NULLABLE_VARIABLE"
+    })
+    // ... rest of the configuration
+```
 
-    ```python tab="Python"
-    from maxim import Maxim, Config
+```python Python
+from maxim import Maxim, Config
 
-    # [!code word:api_key]
-    maxim = Maxim(Config(api_key="YOUR_API_KEY"))
+maxim = Maxim(Config(api_key="YOUR_API_KEY"))
 
-    result = maxim
-        .create_test_run("Question Answering Test", workspace_id)
-        .with_data_structure({
-            question: "INPUT",
-            answer: "EXPECTED_OUTPUT",
-            context: "CONTEXT_TO_EVALUATE",
-            metadata: "NULLABLE_VARIABLE"
-        })
-        # ... rest of the configuration
-    ```
-</Tabs>
+result = maxim
+    .create_test_run("Question Answering Test", workspace_id)
+    .with_data_structure({
+        question: "INPUT",
+        answer: "EXPECTED_OUTPUT",
+        context: "CONTEXT_TO_EVALUATE",
+        metadata: "NULLABLE_VARIABLE"
+    })
+    # ... rest of the configuration
+```
+</CodeGroup>
 
-## Working with data sources
+## Data Source Integration
 
 Maxim's SDK supports multiple ways to provide test data:
 
-### 1. Callable
+### 1. Using Callable Data Source
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-<Tab value="JS/TS">
-    ```typescript tab="JS/TS"
-    import { CSVFile, Maxim } from '@maximai/maxim-js';
+<CodeGroup>
+```typescript JS/TS
+import { CSVFile, Maxim } from '@maximai/maxim-js';
 
-    const myCSVFile = new CSVFile('./test.csv', {
-        question: 0, // column index in CSV
-        answer: 1,
-        context: 2
-    });
+const myCSVFile = new CSVFile('./test.csv', {
+    question: 0, // column index in CSV
+    answer: 1,
+    context: 2
+});
 
-    // [!code word:apiKey]
-    const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
+const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
 
-    const result = maxim
-        .createTestRun("CSV Test Run", workspaceId)
-        .withDataStructure({
-            question: "INPUT",
-            answer: "EXPECTED_OUTPUT",
-            context: "CONTEXT_TO_EVALUATE"
-        })
-        .withData(myCSVFile)
-        // ... rest of the configuration
-    ```
-    <Callout type="info">
+const result = maxim
+    .createTestRun("CSV Test Run", workspaceId)
+    .withDataStructure({
+        question: "INPUT",
+        answer: "EXPECTED_OUTPUT",
+        context: "CONTEXT_TO_EVALUATE"
+    })
+    .withData(myCSVFile)
+    // ... rest of the configuration
 
-    The `CSVFile` class automatically validates your CSV headers against the data structure and provides type-safe access to your data.
 
-    </Callout>
-</Tab>
-<Tab value="Python">
-```python tab="Python"
+```
+
+```python Python
 from maxim import Maxim, Config
 
-# [!code word:api_key]
 maxim = Maxim(Config(api_key="YOUR_API_KEY"))
 
 index = 0
@@ -192,18 +179,21 @@ result = maxim
     .with_data(get_next_row)
     # ... rest of the configuration
 ```
-</Tab>
-</Tabs>
+
+</CodeGroup>
+
+<Note>
+The `CSVFile` class automatically validates your CSV headers against the data structure and provides type-safe access to your data.
+</Note>
 
 ### 2. Manual data array
 
 For smaller datasets or programmatically generated data:
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
-// [!code word:apiKey]
 const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
 
 const manualData = [
@@ -230,10 +220,9 @@ const result = maxim
     // ... rest of the configuration
 ```
 
-```python tab="Python"
+```python Python
 from maxim import Maxim, Config
 
-# [!code word:api_key]
 maxim = Maxim(Config(api_key="YOUR_API_KEY"))
 
 manual_data = [
@@ -259,17 +248,16 @@ result = maxim
     .with_data(manual_data)
     # ... rest of the configuration
 ```
-</Tabs>
+</CodeGroup>
 
 ### 3. Platform datasets
 
 Use existing datasets from your Maxim workspace:
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
-// [!code word:apiKey]
 const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
 
 const result = maxim
@@ -283,10 +271,9 @@ const result = maxim
     // ... rest of the configuration
 ```
 
-```python tab="Python"
+```python Python
 from maxim import Maxim, Config
 
-# [!code word:api_key]
 maxim = Maxim(Config(api_key="YOUR_API_KEY"))
 
 result = maxim
@@ -299,15 +286,14 @@ result = maxim
     .with_data("your-dataset-id")
     # ... rest of the configuration
 ```
-</Tabs>
+</CodeGroup>
 
-## Trigger a test on a workflow stored on Maxim platform
+## Platform Integration: Testing with Workflows
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
-// [!code word:apiKey]
 const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
 
 const result = maxim
@@ -321,7 +307,7 @@ const result = maxim
     .withWorkflowId(workflowIdFromDashboard, contextToEvaluate) // context to evaluate is optional; it can either be a variable used in the workflow or a column name present in the dataset
 ```
 
-```python tab="Python"
+```python Python
 const result = maxim
     .create_test_run("Custom Output Test", workspaceId)
     .with_data_structure({
@@ -332,19 +318,18 @@ const result = maxim
     .with_data(myData)
     .with_workflow_id(workflowIdFromDashboard, contextToEvaluate) # context to evaluate is optional; it can either be a variable used in the workflow or a column name present in the dataset
 ```
-</Tabs>
+</CodeGroup>
 
 Find the workflow ID in the workflows tab and from menu click on copy ID.
 
 ![screenshot of copying ID workflow](/images/docs/sdk/copy-id-workflow.png)
 
-## Trigger a test on a prompt version stored on Maxim platform
+## Platform Integration: Testing with Prompt Versions
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
-// [!code word:apiKey]
 const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
 
 const result = maxim
@@ -358,7 +343,7 @@ const result = maxim
     .withPromptVersionId(promptVersionIdFromPlatform, contextToEvaluate) // context to evaluate is optional; it can either be a variable used in the prompt or a column name present in the dataset
 ```
 
-```python tab="Python"
+```python Python
 const result = maxim
     .create_test_run("Custom Output Test", workspaceId)
     .with_data_structure({
@@ -369,21 +354,18 @@ const result = maxim
     .with_data(myData)
     .with_prompt_version_id(promptVersionIdFromPlatform, contextToEvaluate) # context to evaluate is optional; it can either be a variable used in the prompt or a column name present in the dataset
 ```
-</Tabs>
+</CodeGroup>
 
 To get prompt version ID, go to prompts tab, select the version you want to run tests on and from menu click on copy version id.
 
 ![topbar](/images/docs/sdk/copy-prompt-version-id.png)
 
-## Custom output function
+## Output Function Configuration
 
-The output function is where you define how to generate responses for your test cases:
-
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
-// [!code word:apiKey]
 const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
 
 const result = maxim
@@ -428,10 +410,9 @@ const result = maxim
     })
 ```
 
-```python tab="Python"
+```python Python
 from maxim import Maxim, Config
 
-# [!code word:api_key]
 maxim = Maxim(Config(api_key="YOUR_API_KEY"))
 
 def run(data):
@@ -489,25 +470,21 @@ result = maxim
     })
     .with_data(myData)
     .yields_output(lambda data: run(data))
-
 ```
-</Tabs>
+</CodeGroup>
 
-<Callout type="warn">
-
+<Warning>
 If your output function throws an error, the entry will be marked as failed and you'll receive the index in the `failed_entry_indices` array after the run completes.
+</Warning>
 
-</Callout>
-
-## Adding evaluators
+## Evaluator Configuration
 
 Choose which evaluators to use for your test run:
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
-// [!code word:apiKey]
 const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
 
 const result = maxim
@@ -519,10 +496,10 @@ const result = maxim
         "Answer Relevance"
     )
 ```
-```python tab="Python"
+
+```python Python
 from maxim import Maxim, Config
 
-# [!code word:api_key]
 maxim = Maxim(Config(api_key="YOUR_API_KEY"))
 
 result = maxim
@@ -534,17 +511,14 @@ result = maxim
         "Answer Relevance"
     )
 ```
-</Tabs>
+</CodeGroup>
 
-### Human evaluation
+### Human Evaluation Setup
 
-For evaluators that require human input, setting up the human evaluation configuration is required and can be done as follows:
-
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
-// [!code word:apiKey]
 const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
 
 const result = maxim
@@ -557,10 +531,9 @@ const result = maxim
     })
 ```
 
-```python tab="Python"
+```python Python
 from maxim import Maxim, Config
 
-# [!code word:api_key]
 maxim = Maxim(Config(api_key="YOUR_API_KEY"))
 
 result = maxim
@@ -572,14 +545,12 @@ result = maxim
         instructions: "Please evaluate the response according to the evaluation criteria"
     })
 ```
-</Tabs>
+</CodeGroup>
 
-## Custom evaluators
+## Custom Evaluator Implementation
 
-You can create custom evaluators to implement specific evaluation logic for your test runs:
-
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import {
     Maxim,
     createDataStructure,
@@ -587,7 +558,6 @@ import {
     createCustomCombinedEvaluatorsFor,
 } from "@maximai/maxim-js";
 
-// [!code word:apiKey]
 const maxim = new Maxim({
     apiKey: process.env.MAXIM_API_KEY
 });
@@ -675,7 +645,7 @@ const myCombinedCustomEvaluator = createCustomCombinedEvaluatorsFor(
 );
 ```
 
-```python tab="Python"
+```python Python
 from maxim import Maxim
 from typing import Dict
 from maxim.evaluators import BaseEvaluator
@@ -699,17 +669,14 @@ class MyCustomEvaluator(BaseEvaluator):
             )
         }
 ```
-</Tabs>
+</CodeGroup>
 
-### Using custom evaluators
+### Using Custom Evaluators
 
-Once created, custom evaluators can be used alongside built-in evaluators:
-
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
-// [!code word:apiKey]
 const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
 
 const result = await maxim
@@ -725,7 +692,7 @@ const result = await maxim
     .run();
 ```
 
-```python tab="Python"
+```python Python
 result = maxim
     .create_test_run("Custom Evaluated Test", workspace_id)
     # ... previous configuration
@@ -762,19 +729,16 @@ result = maxim
         )
     )
 ```
-</Tabs>
+</CodeGroup>
 
-## Advanced configuration
+## Advanced Configuration
 
-### Concurrency control
+### Concurrency Control
 
-Manage how many entries are processed in parallel:
-
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
-// [!code word:apiKey]
 const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
 
 const result = await maxim
@@ -783,29 +747,24 @@ const result = await maxim
     .withConcurrency(5); // Process 5 entries at a time
 ```
 
-```python tab="Python"
+```python Python
 from maxim import Maxim, Config
 
-# [!code word:api_key]
 maxim = Maxim(Config(api_key="YOUR_API_KEY"))
 
 result = maxim
     .create_test_run("Concurrent Test", workspace_id)
     # ... previous configuration
-    .with_concurrency(5) # Process 5 entries at a time
+    .with_concurrency(5) // Process 5 entries at a time
 ```
-</Tabs>
+</CodeGroup>
 
+### Timeout Configuration
 
-### Timeout configuration
-
-Set custom timeout for long-running tests:
-
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
-// [!code word:apiKey]
 const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
 
 const result = await maxim
@@ -814,28 +773,26 @@ const result = await maxim
     .run(120) // Wait up to 120 minutes
 ```
 
-```python tab="Python"
+```python Python
 from maxim import Maxim, Config
 
-# [!code word:api_key]
 maxim = Maxim(Config(api_key="YOUR_API_KEY"))
 
 result = maxim
     .create_test_run("Long Test", workspace_id)
     # ... previous configuration
-    .run(120) # Wait up to 120 minutes
+    .run(120) // Wait up to 120 minutes
 ```
-</Tabs>
+</CodeGroup>
 
-## Complete example
+## Complete Implementation Example
 
 Here's a complete example combining all the features:
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import { CSVFile, Maxim } from '@maximai/maxim-js';
 
-// [!code word:apiKey]
 const maxim = new Maxim({ apiKey: "YOUR_API_KEY" });
 
 // Initialize your data source
@@ -937,13 +894,12 @@ try {
 }
 ```
 
-```python tab="Python"
+```python Python
 from maxim import Maxim, Config
 from maxim.evaluators.evaluators import create_custom_evaluator
 from maxim.models.dataset import ManualData
 from maxim.models.evaluator import LocalEvaluatorResultParameter, LocalEvaluatorReturn, PassFailCriteria, PassFailCriteriaForTestrunOverall, PassFailCriteriaOnEachEntry
 
-# [!code word:api_key]
 maxim = Maxim(Config(api_key="YOUR_API_KEY"))
 
 def apostrophe_checker(result: LocalEvaluatorResultParameter, data: ManualData) -> LocalEvaluatorReturn:
@@ -1067,4 +1023,4 @@ except Exception as e:
 finally:
     maxim.cleanup();
 ```
-</Tabs>
+</CodeGroup>

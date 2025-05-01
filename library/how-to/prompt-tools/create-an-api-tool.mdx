@@ -3,19 +3,22 @@ title: Create an API-based Prompt Tool
 description: Maxim allows you to expose external API endpoints as prompt tools. The platform automatically generates function schemas based on the API's query parameters and payload structure.
 ---
 
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
+
 ## Example
 
 Here's how an API payload gets converted into a function schema:
 
 1. Original API Payload:
-```json title="Zipcode API payload"
+```json Zipcode API payload
 {
 	"check": "123333"
 }
 ```
 
 2. Generated Schema for LLM:
-```json title="Payload sent to the model while making requests"
+```json Payload sent to the model while making requests
 {
 	"type": "function",
 	"function": {

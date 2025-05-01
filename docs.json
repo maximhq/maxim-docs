@@ -10,10 +10,10 @@
         "default": "light",
         "strict": true
     },
-    "fonts":{
+    "fonts": {
         "heading": {
             "family": "Bricolage Grotesque, sans-serif"
-        }        
+        }
     },
     "favicon": "/favicon.svg",
     "navigation": {
@@ -85,7 +85,6 @@
                                             "evaluate/how-to/evaluate-workflows-via-api-endpoint/test-multi-turn-conversations-manually",
                                             "evaluate/how-to/evaluate-workflows-via-api-endpoint/simulate-multi-turn-conversations",
                                             "evaluate/how-to/evaluate-workflows-via-api-endpoint/evaluate-simulated-sessions-for-agents",
-                                            "evaluate/how-to/evaluate-workflows-via-api-endpoint/create-workflow-for-local-api",
                                             "evaluate/how-to/evaluate-workflows-via-api-endpoint/scripting-to-configure-response-structures",
                                             "evaluate/how-to/evaluate-workflows-via-api-endpoint/automate-via-ci-cd"
                                         ]
@@ -117,10 +116,31 @@
                                     {
                                         "group": "Log Your Application",
                                         "pages": [
+                                            "observe/how-to/log-your-application/setting-up-trace",
+                                            "observe/how-to/log-your-application/add-spans-to-traces",
+                                            "observe/how-to/log-your-application/adding-llm-call",
+                                            "observe/how-to/log-your-application/logging-rag-pipeline",
+                                            "observe/how-to/log-your-application/log-multiturn-interactions-as-session",
+                                            "observe/how-to/log-your-application/track-tool-calls",
+                                            "observe/how-to/log-your-application/use-tags-on-nodes",
+                                            "observe/how-to/log-your-application/use-events",
+                                            "observe/how-to/log-your-application/send-user-feedback",
+                                            "observe/how-to/log-your-application/add-user-feedback",
+                                            "observe/how-to/log-your-application/track-llm-errors",
+                                            "observe/how-to/log-your-application/track-token-usage-and-cost",
                                             "observe/how-to/log-your-application/filters-and-saved-views",
+                                            "observe/how-to/log-your-application/use-custom-pricing",
+                                            "observe/how-to/log-your-application/use-data-connectors",
                                             "observe/how-to/log-your-application/export-logs",
-                                            "observe/how-to/log-your-application/summary-emails",
-                                            "observe/how-to/log-your-application/use-data-connectors"
+                                            "observe/how-to/log-your-application/summary-emails"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Evaluate logs",
+                                        "pages": [
+                                            "observe/how-to/evaluate-logs/auto-evaluation",
+                                            "observe/how-to/evaluate-logs/human-evaluation",
+                                            "observe/how-to/evaluate-logs/node-level-evaluation"
                                         ]
                                     },
                                     {
@@ -128,8 +148,8 @@
                                         "pages": [
                                             "observe/how-to/set-up-alerts/create-a-slack-integration",
                                             "observe/how-to/set-up-alerts/create-a-pagerduty-integration",
-                                            "observe/how-to/set-up-alerts/set-up-alerts-for-quality-metrics",
-                                            "observe/how-to/set-up-alerts/set-up-alerts-for-performance-metrics"
+                                            "observe/how-to/set-up-alerts/set-up-alerts-for-performance-metrics",
+                                            "observe/how-to/set-up-alerts/set-up-alerts-for-quality-metrics"
                                         ]
                                     }
                                 ]
@@ -143,6 +163,18 @@
                         ]
                     },
                     {
+                        "group": "Analyze",
+                        "pages": [
+                            "analyze/overview",
+                            {
+                                "group": "How To",
+                                "pages": [
+                                    "analyze/how-to/comparison-reports"
+                                ]
+                            }
+                        ]
+                    },
+                    {
                         "group": "Library",
                         "pages": [
                             "library/overview",
@@ -151,56 +183,87 @@
                                 "group": "How To",
                                 "pages": [
                                     {
-                                        "group": "Prompt Tools",
+                                        "group": "Evaluators",
                                         "pages": [
-                                            "library/how-to/prompt-tools/create-a-code-tool",
-                                            "library/how-to/prompt-tools/create-an-api-tool",
-                                            "library/how-to/prompt-tools/create-a-prompt-tool"
-                                        ]
-                                    },
-                                    {
-                                        "group": "Context Sources",
-                                        "pages": [
-                                            "library/how-to/context-sources/bring-your-rag-via-an-api-endpoint"
+                                            "library/how-to/evaluators/use-pre-built-evaluators",
+                                            "library/how-to/evaluators/create-custom-ai-evaluator",
+                                            "library/how-to/evaluators/create-programmatic-evaluator",
+                                            "library/how-to/evaluators/create-api-evaluators",
+                                            "library/how-to/evaluators/create-human-evaluators"
                                         ]
                                     },
                                     {
                                         "group": "Datasets",
                                         "pages": [
-                                            "library/how-to/datasets/curate-golden-dataset-for-human-annotation"
+                                            "library/how-to/datasets/use-dataset-templates",
+                                            "library/how-to/datasets/use-variable-columns-in-datasets",
+                                            "library/how-to/datasets/use-splits-within-a-dataset",
+                                            "library/how-to/datasets/curate-data-from-production",
+                                            "library/how-to/datasets/curate-golden-dataset-for-human-annotation",
+                                            "library/how-to/datasets/create-dataset-with-files-and-images",
+                                            "library/how-to/datasets/add-new-entries-using-sdk"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Context Sources",
+                                        "pages": [
+                                            "library/how-to/context-sources/bring-your-rag-via-an-api-endpoint",
+                                            "library/how-to/context-sources/ingest-files-as-a-context-source",
+                                            "library/how-to/context-sources/evaluate-your-context"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Prompt Tools",
+                                        "pages": [
+                                            "library/how-to/prompt-tools/create-a-code-tool",
+                                            "library/how-to/prompt-tools/create-an-api-tool",
+                                            "library/how-to/prompt-tools/create-a-tool-schema",
+                                            "library/how-to/prompt-tools/evaluate-tool-call-accuracy"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Prompt Partials",
+                                        "pages": [
+                                            "library/how-to/prompt-partials/create-prompt-partial"
                                         ]
                                     }
                                 ]
                             }
                         ]
-                    },
+                    }
+                ]
+            },
+            {
+                "tab": "SDK",
+                "groups": [
                     {
-                        "group": "Analyze",
+                        "group": "Overview",
                         "pages": [
-                            "analyze/overview",
-                            {
-                                "group": "How To",
-                                "pages": []
-                            }
+                            "sdk/overview"
                         ]
                     },
                     {
-                        "group": "SDK",
+                        "group": "Python",
                         "pages": [
-                            "sdk/overview",
                             "sdk/upgrading-to-v3"
-                        ]
-                    },
-                    {
-                        "group": "Self Hosting",
-                        "pages": [
-                            "self-hosting/overview",
-                            "self-hosting/zerotouch",
-                            "self-hosting/dataplane"
                         ]
                     }
                 ]
-            }
+            },
+        {
+            "tab":"Self Hosting",
+            "groups":[
+                {
+                    "group": "Overview",
+                    "pages": [
+                        "self-hosting/overview",
+                        "self-hosting/zerotouch",
+                        "self-hosting/dataplane"
+                    ]
+                }
+                
+            ]
+        }
         ],
         "global": {
             "anchors": [

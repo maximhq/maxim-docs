@@ -3,12 +3,12 @@ title: Bring your existing Evaluators via API
 description: Connect your evaluation system to Maxim using simple API endpoints.
 ---
 
-import { Plus } from "lucide-react";
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
 
 Connect your existing evaluation system to Maxim by exposing it via an API endpoint. This lets you reuse your Evaluators without rebuilding them.
 
 <Steps>
-<Step title="Create Evaluator">
+<Step title="Navigate to Create Menu">
 
 Select `API-based` from the create menu to start building.
 
@@ -16,7 +16,7 @@ Select `API-based` from the create menu to start building.
 
 </Step>
 
-<Step title="Configure endpoint">
+<Step title="Configure Endpoint Details">
 
 Add your API endpoint details including:
 
@@ -26,13 +26,13 @@ Add your API endpoint details including:
 
 For advanced transformations, use pre and post scripts under the `Scripts` tab.
 
-<Callout type="info">Use variables in the body, query parameters and headers</Callout>
+<Note>Use variables in the body, query parameters and headers</Note>
 
 ![Configure API endpoint details](/images/docs/library/how-to/evaluators/api-evaluator/api-evaluator-editor.png)
 
 </Step>
 
-<Step title="Map response fields">
+<Step title="Map Response Fields">
 
 Test your endpoint using the playground. On successful response, map your API response fields to:
 
@@ -45,7 +45,7 @@ This mapping allows you to keep your API structure unchanged.
 
 </Step>
 
-<Step title="Set pass criteria">
+<Step title="Configure Pass Criteria">
 
 Configure two types of pass criteria:
 
@@ -63,7 +63,7 @@ Example: Pass if 80% of entries meet the clarity criteria
 
 </Step>
 
-<Step title="Test your Evaluator">
+<Step title="Test in Playground">
 
 Test your Evaluator in the playground before using it in your workflows. The right panel shows input fields for all variables used in your Evaluator.
 

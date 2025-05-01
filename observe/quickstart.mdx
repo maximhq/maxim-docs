@@ -36,10 +36,10 @@ Create a new repository called "Chatbot production":
 
 ### 2. Generate API key
 <Steps>
-<Step>
+<Step title="Navigate to Settings">
 Navigate to Settings → API Keys
 </Step>
-<Step>
+<Step title="Generate Key">
 Generate and save new API key
 </Step>
 </Steps>
@@ -52,15 +52,15 @@ Generate and save new API key
 npm install @maximai/maxim-js
 ```
 
-```bash title="Python"
+```bash Python
 pip install maxim-py
 ```
 
-```bash title="Go"
+```bash Go
 go get github.com/maximhq/maxim-go
 ```
 
-```groovy title="Java"
+```groovy Java
 compileOnly("ai.getmaxim:sdk:0.1.3")
 ```
 
@@ -68,25 +68,24 @@ compileOnly("ai.getmaxim:sdk:0.1.3")
 
 Add this code to initialize the logger in each service:
 
-<Tabs groupId="language" items={["JS/TS", "Python", "Go","Java"]}>
-
-    ```typescript tab="JS/TS"
+<CodeGroup>
+    ```typescript JS/TS
     import { Maxim } from "@maximai/maxim-js";
 
     const maxim = new Maxim({ apiKey: "api-key" });
     const logger = await maxim.logger({ id: "log-repository-id" });
     ```
 
-    ```python tab="Python"
-    from maxim.maxim import Config, Maxim
-    from maxim.logger.logger import LoggerConfig
+    ```python Python
+    from maxim import Config, Maxim
+    from maxim.logger import LoggerConfig
 
     maxim = Maxim(Config(apiKey=apiKey))
 
     logger = maxim.logger(LoggerConfig(id="log-repository-id"))
     ```
 
-    ```go tab="Go"
+    ```go Go
     import "github.com/maximhq/maxim-go"
     import "github.com/maximhq/maxim-go/logging"
 
@@ -97,21 +96,21 @@ Add this code to initialize the logger in each service:
     logger, err := m.GetLogger(&logging.LoggerConfig{Id: "log-repository-id"})
     ```
 
-    ```java tab="Java"
+    ```java Java
     import ai.getmaxim.sdk.Maxim;
 
     Maxim maxim = new Maxim(new Config(null, "api-key", null, false));
 
     Logger logger = maxim.logger(new LoggerConfig("log-repository-id"));
     ```
-</Tabs>
+</CodeGroup>
 
 ### 5. Create trace in API gateway
 
 Use `cf-request-id` as trace identifier:
 
-<Tabs groupId="language" items={["JS/TS", "Python","Go","Java"]}>
-    ```typescript tab="JS/TS"
+<CodeGroup>
+    ```typescript JS/TS
     const trace = logger.trace({
         id: req.headers["cf-request-id"],
         name: "user-query",
@@ -127,8 +126,8 @@ Use `cf-request-id` as trace identifier:
     trace.end();
     ```
 
-    ```python tab="Python"
-    from maxim.logger.components.trace import TraceConfig
+    ```python Python
+    from maxim.logger import TraceConfig
 
     trace = logger.trace(TraceConfig(
         id=request.headers.get("cf-request-id"),
@@ -145,7 +144,7 @@ Use `cf-request-id` as trace identifier:
     trace.end()
     ```
 
-    ```go tab="Go"
+    ```go Go
     trace := logger.Trace(&logging.TraceConfig{
         Id: r.Header.Get("Cf-Request-Id"),
         Name: "user-query",
@@ -161,7 +160,7 @@ Use `cf-request-id` as trace identifier:
     trace.End()
     ```
 
-    ```java tab="Java"
+    ```java Java
     Trace trace = logger.trace(new TraceConfig(
         req.getHeader("cf-request-id"),
         "user-query",
@@ -173,12 +172,12 @@ Use `cf-request-id` as trace identifier:
 
     trace.end();
     ```
-</Tabs>
+</CodeGroup>
 
 You can get a hold of a trace in two ways:
 
-<Tabs groupId="language" items={["JS/TS", "Python","Go","Java"]}>
-    ```typescript tab="JS/TS"
+<CodeGroup>
+    ```typescript JS/TS
     // Method 1: Using logger and trace ID
     logger.traceTag("trace-id", "newTag", "newValue");
     logger.traceEnd("trace-id");
@@ -189,8 +188,8 @@ You can get a hold of a trace in two ways:
     trace.end();
     ```
 
-    ```python tab="Python"
-    from maxim.logger.components.trace import TraceConfig
+    ```python Python
+    from maxim.logger import TraceConfig
 
     # Method 1: Using logger and trace ID
     trace = logger.trace_add_tag("trace-id", "newTag", "newValue")
@@ -202,7 +201,7 @@ You can get a hold of a trace in two ways:
     trace.end()
     ```
 
-    ```go tab="Go"
+    ```go Go
     // Method 1: Using logger and trace ID
     logger.AddTagToTrace("trace-id", "newTag", "newValue")
     logger.EndTrace("trace-id")
@@ -215,7 +214,7 @@ You can get a hold of a trace in two ways:
     trace.End()
     ```
 
-    ```java tab="Java"
+    ```java Java
     // Method 1: Using logger and trace ID
     logger.traceAddTag("trace-id", "newTag", "newValue");
     logger.traceEnd("trace-id");
@@ -225,21 +224,19 @@ You can get a hold of a trace in two ways:
     trace.addTag("newTag", "newValue");
     trace.end();
     ```
-</Tabs>
+</CodeGroup>
 
-<Callout>
+<Note>
     You can manipulate every entity of Maxim observability framework (Span, Generation, Retrieval, Event) in the same way.
-</Callout>
+</Note>
 
 ### 6. Add spans in services
 
 Create spans to track operations in each service:
 
-<Tabs groupId="language" items={["JS/TS", "Python","Go","Java"]}>
-    ```typescript tab="JS/TS"
-    // Getting hold of trace using request id / trace id
+<CodeGroup>
+    ```typescript JS/TS
     const trace = logger.trace({id: req.headers["cf-request-id"]});
-    // Creating a new span
     const span = trace.span({
         id: uuid(),
         name: "plan-query",
@@ -250,8 +247,8 @@ Create spans to track operations in each service:
     });
     ```
 
-    ```python tab="Python"
-    from maxim.logger.components.span import SpanConfig
+    ```python Python
+    from maxim.logger import SpanConfig
 
     trace = logger.trace({"id": request.headers.get("cf-request-id")})
     span = trace.span(SpanConfig(
@@ -264,7 +261,7 @@ Create spans to track operations in each service:
     ))
     ```
 
-    ```go tab="Go"
+    ```go Go
     trace := logger.Trace(&logging.TraceConfig{
         Id: r.Header.Get("cf-Request-Id"),
     })
@@ -278,7 +275,7 @@ Create spans to track operations in each service:
     })
     ```
 
-    ```java tab="Java"
+    ```java Java
     Trace trace = logger.trace(new TraceConfig(
         req.getHeader("cf-request-id"),
     ));
@@ -288,22 +285,18 @@ Create spans to track operations in each service:
         Map.of("userId", req.getBody().getUserId(), "accountId", req.getBody().getAccountId())
     ));
     ```
-</Tabs>
+</CodeGroup>
 
-<Callout>
+<Note>
 When creating spans, consider adding relevant tags that provide context about the operation being performed. These tags help in filtering and analyzing traces later. Remember to end each span once its operation completes to ensure accurate timing measurements.
-</Callout>
+</Note>
 
 ### 7. Log LLM calls
 
 <Steps>
-<Step>
-Track LLM interactions using generations:
-
-<Tabs groupId="language" items={["JS/TS", "Python","Go","Java"]}>
-
-    ```typescript tab="JS/TS"
-    // Creating a new generation
+<Step title="Track LLM Interactions">
+<CodeGroup>
+    ```typescript JS/TS
     const generation = span.generation({
         id: uuid(),
         name: "plan-query",
@@ -317,8 +310,8 @@ Track LLM interactions using generations:
     });
     ```
 
-    ```python tab="Python"
-    from maxim.logger.components.generation import GenerationConfig
+    ```python Python
+    from maxim.logger import GenerationConfig
 
     generation = span.generation(GenerationConfig(
         id=uuid4(),
@@ -330,7 +323,7 @@ Track LLM interactions using generations:
     ))
     ```
 
-    ```go tab="Go"
+    ```go Go
     generation := span.Generation(&logging.GenerationConfig{
         Id: r.Header.Get("cf-Request-Id"),
         Name: "plan-query",
@@ -346,25 +339,22 @@ Track LLM interactions using generations:
     })
     ```
 
-    ```java tab="Java"
+    ```java Java
     Generation generation = span.generation(new GenerationConfig(
         req.getHeader("cf-request-id"),
         "plan-query",
         "openai",
         "gpt-3.5-turbo-16k",
-        Arrays.asList(new Message("system", "SYSTEM PROMPT")), // messages (optional)
+        Arrays.asList(new Message("system", "SYSTEM PROMPT")),
         Map.of("temperature", 0.7),
     ));
     ```
-
-</Tabs>
+</CodeGroup>
 </Step>
 
-<Step>
-Log LLM responses:
-
-<Tabs groupId="language" items={["JS/TS", "Python","Go","Java"]}>
-    ```typescript tab="JS/TS"
+<Step title="Log Response Data">
+<CodeGroup>
+    ```typescript JS/TS
     generation.result({
         id: uuid(),
         object: "chat.completion",
@@ -386,7 +376,7 @@ Log LLM responses:
     });
     ```
 
-    ```python tab="Python"
+    ```python Python
     generation.result({
         "id": str(uuid4()),
         "object": "chat.completion",
@@ -408,7 +398,7 @@ Log LLM responses:
     })
     ```
 
-    ```go tab="Go"
+    ```go Go
     generation.Result(&logging.GenerationResult{
         Id: r.Header.Get("cf-Request-Id"),
         Object: "chat.completion",
@@ -432,7 +422,7 @@ Log LLM responses:
     })
     ```
 
-    ```java tab="Java"
+    ```java Java
     generation.result(new GenerationResult(
         req.getHeader("cf-request-id"),
         "chat.completion",
@@ -446,13 +436,13 @@ Log LLM responses:
         new Usage(100, 50, 150)
     ));
     ```
-</Tabs>
+</CodeGroup>
 </Step>
 </Steps>
 
-<Callout>
+<Note>
 Maxim currently supports OpenAI message format. to convert other messaging formats to OpenAI format in the SDK.
-</Callout>
+</Note>
 
 ## View traces
 

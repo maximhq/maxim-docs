@@ -11,13 +11,14 @@ Our observability features provide a comprehensive view of your AI applications 
 
 The most central component of Maxim's observability platform is the Log Repository, as it is where logs are ingested. It allows for ease of searching and analyzing.
 
-<Callout title="How should you be structuring log repositories?">
+<Note>
+**How should you be structuring log repositories?**
 
 Split your logs across multiple repositories in your workspace based on your needs. For example, you might have **one repository for production logs** and **another for development logs**; or you could have **a single repository for all logs**, differentiated by tags indicating the environment.
 
 We recommend implementing **separate log repositories for separate applications**, but also separate log repositories for separate services that managed by distinct teams. Trying to keep logs that are related to different applications or services in the same repository can lead to difficulties in analyzing and troubleshooting.
 
-</Callout>
+</Note>
 
 A Log Repository contains three main components:
 
@@ -43,13 +44,13 @@ There is also an overview for **Evaluation results**, which includes:
 - Mean score over time (graph)
 - Pass rate over time (graph)
 
-![Screenshot of evaluation results overview metrics]
+![Screenshot of evaluation results overview metrics](/images/docs/observe/repo-overview.png)
 
-<Callout>
+<Note>
 
-We talk more about evaluation logs in [How to evaluate logs](/docs/observe/how-to/evaluate-logs/auto-evaluation) section of the documentation.
+We will talk more about evaluation logs in [How to evaluate logs](/docs/observe/how-to/evaluate-logs/auto-evaluation) section of the documentation.
 
-</Callout>
+</Note>
 
 ### Logs Tab
 
@@ -75,11 +76,11 @@ Apart from the above fields, there are Evaluation score fields per evaluator too
 
 Each trace can be clicked to see an expanded view of the trace in a sheet. It displays detailed information on each component of the trace and also the evaluations done on each component.
 
-<Callout>
+<Note>
 
 Learn more about logging in the [How to log your application](/docs/observe/how-to/log-your-application/setting-up-trace) section of the documentation.
 
-</Callout>
+</Note>
 
 ### Alerts Tab
 
@@ -87,11 +88,11 @@ Once you start logging, you can set up alerts to monitor specific metrics. Alert
 
 ![Screenshot of the alerts tab]
 
-<Callout>
+<Note>
 
 You can learn more on configuring alerts in the [How to set up alerts](/docs/observe/how-to/set-up-alerts/create-a-slack-integration) section of the documentation.
 
-</Callout>
+</Note>
 
 ## Components of a log
 
@@ -123,11 +124,11 @@ In distributed tracing, a trace is the complete processing of a request through 
 
 Spans are fundamental building blocks of distributed tracing. A single trace in distributed tracing consists of a series of tagged time intervals known as spans. Spans represent a logical unit of work in completing a user request or transaction.
 
-<Callout type="info" title="Sub-spans">
+<Note type="info" title="Sub-spans">
 
 A span can have other spans as children. You can create as many subspans as you want to logically group flows within a span.
 
-</Callout>
+</Note>
 
 | Property | Description                                                                                                                                                                    |
 | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |

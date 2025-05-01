@@ -3,6 +3,8 @@ title: Add Dataset entries using SDK
 description: Learn how to add new entries to a Dataset using the Maxim SDK
 ---
 
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
 The Maxim SDK provides a convenient way to programmatically add new entries to your datasets. This guide will walk you through the process of using the SDK to add entries, helping you efficiently manage and update your datasets for AI training and evaluation.
 
 ## Getting your Dataset ID
@@ -15,8 +17,8 @@ Get the Dataset ID from the Maxim dashboard:
 
 ## Adding entries to a Dataset
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-    ```typescript tab="JS/TS"
+<CodeGroup groupId="language" items={["JS/TS", "Python"]}>
+    ```typescript JS/TS
     // [!code word:apiKey]
     const maxim = new Maxim({ apiKey: "" });
 
@@ -40,7 +42,7 @@ Get the Dataset ID from the Maxim dashboard:
     ]);
     ```
 
-    ```python tab="Python"
+    ```python Python
     from maxim import Maxim, Config
     from maxim.logger import Logger, LoggerConfig
 
@@ -69,6 +71,6 @@ Get the Dataset ID from the Maxim dashboard:
         ],
     )
     ```
-</Tabs>
+</CodeGroup>
 
-<Callout>You can insert a maximum of 100 entries at a time to your Dataset.</Callout>
+<Note>You can insert a maximum of 100 entries at a time to your Dataset.</Note>

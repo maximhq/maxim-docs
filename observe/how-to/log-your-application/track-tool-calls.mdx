@@ -3,11 +3,10 @@ title: Track tool calls
 description: Track external system calls triggered by LLM responses in your agentic workflows. Tool calls represent interactions with external services, allowing you to monitor execution time and responses.
 ---
 
+## Creating and Logging Tool Calls
 
-## How to log tool calls
-
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-    ```typescript tab="JS/TS"
+<CodeGroup>
+    ```typescript JS/TS
     const toolCall = completion.choices[0].message.tool_calls[0];
     const traceToolCall = trace.toolCall({
         id: toolCall.id,
@@ -16,7 +15,6 @@ description: Track external system calls triggered by LLM responses in your agen
         args: toolCall.function.arguments,
         tags: { location: toolCall.function.arguments["location"] }
     });
-    // Note: Replace 'trace.toolCall' with 'span.toolCall' when you are creating tool calls within an existing span
 
     try {
         const result = callExternalService(toolCall.function.name, toolCall.function.arguments);
@@ -24,10 +22,9 @@ description: Track external system calls triggered by LLM responses in your agen
     } catch (error) {
         traceToolCall.error(error);
     }
-
     ```
 
-    ```python tab="Python"
+    ```python Python
     from maxim.logger import ToolCallConfig
 
     tool_call = completion.choices[0].message.tool_calls[0]
@@ -39,7 +36,6 @@ description: Track external system calls triggered by LLM responses in your agen
         tags={ "location": toolCall.function.arguments["location"] }
     )
     trace_tool_call = trace.tool_call(tool_call_config)
-    # Note: Replace 'trace.tool_call' with 'span.tool_call' when you are creating tool calls within an existing span
 
     try:
         result = call_external_service(tool_call.function.name, tool_call.function.arguments)
@@ -48,4 +44,8 @@ description: Track external system calls triggered by LLM responses in your agen
         error = ToolCallError(message=str(e), type=type(e).__name__)
         trace_tool_call.error(error)
     ```
-</Tabs>
+</CodeGroup>
+
+<Note>
+Replace 'trace.toolCall' with 'span.toolCall' when you are creating tool calls within an existing span
+</Note>

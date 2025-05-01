@@ -3,18 +3,20 @@ title: Ingest files as a context source
 description: Ingest files as a context source in Maxim to enable RAG context for your GenAI application.
 ---
 
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
 Maxim allows you to upload various document formats (.pdf, .docx, .csv, .txt, .md) and automatically creates embeddings for use as context in your applications.
 
 <Steps>
-<Step>
+<Step title="Navigate to Context Sources">
 Navigate to the Context Sources section in your workspace and click on the Plus icon.
 </Step>
 
-<Step>
+<Step title="Select Files source type">
 Select "Files" as your context source type.
 </Step>
 
-<Step>
+<Step title="Upload your documents">
 Drag and drop your files or click "Browse files" and select files from your system.
 Supported formats:
 - PDF documents (.pdf)
@@ -24,11 +26,11 @@ Supported formats:
 - Markdown files (.md)
 </Step>
 
-<Step>
+<Step title="Wait for processing">
 Wait for the files to upload and for embeddings to be generated. The status indicator will show progress.
 </Step>
 
-<Step>
+<Step title="Use your context source">
 Once processing is complete, your files are ready to be used as context. You can now reference this context source in agent simulation.
 </Step>
 </Steps>

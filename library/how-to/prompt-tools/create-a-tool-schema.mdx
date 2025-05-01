@@ -3,21 +3,23 @@ title: Create a Schema-based Prompt Tool
 description: Schema-based prompt tools provide a structured way to define tools that ensure accurate and schema-compliant outputs. This approach is particularly useful when you need to guarantee that the LLM's responses follow a specific format.
 ---
 
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
 ## Creating a Schema Tool
 
 <Steps>
-<Step>
+<Step title="Navigate to Prompt Tools">
 Navigate to the **Prompt Tools** section and click the + button.
 </Step>
 
-<Step>
+<Step title="Select tool type">
 Select **Schema** as the tool type.
 </Step>
 
-<Step>
+<Step title="Define your schema">
 Define your schema in the editor. Here's an example schema for a stock price tool:
 
-```json title="Function call schema"
+```json Function call schema
 {
     "type": "function",
     "function": {

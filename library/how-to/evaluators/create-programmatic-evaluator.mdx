@@ -3,20 +3,20 @@ title: Create Programmatic Evaluators
 description: Build custom code-based evaluators using Javascript or Python
 ---
 
-import { Plus } from "lucide-react";
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
 
 While Maxim offers several pre-built evaluators in the [Store](/docs/library/how-to/evaluators/use-pre-built-evaluators), you might need custom evaluators for specific use cases. Create programmatic evaluators using Javascript or Python with access to standard libraries.
 
 <Steps>
-<Step title="Create evaluator">
+<Step title="Navigate to Create Menu">
 
-Select Programmatic from the create menu <Plus className="inline-block size-5"/> to start building
+Select Programmatic from the create menu <Icon icon="plus" className="inline-block size-5"/> to start building
 
 ![Create programmatic evaluator](/images/docs/library/how-to/evaluators/common/create-evaluator.png)
 
 </Step>
 
-<Step title="Configure evaluation settings">
+<Step title="Select Language and Response Type">
 
 Choose your programming language and set the Response type (Number or Boolean) from the top bar
 
@@ -24,12 +24,12 @@ Choose your programming language and set the Response type (Number or Boolean) f
 
 </Step>
 
-<Step title="Write evaluation logic">
+<Step title="Implement the Validate Function">
 
 Define a function named `validate` in your chosen language. This function is required as Maxim uses it during execution.
 
-<Callout type="info">
-Code restrictions
+<Note>
+**Code restrictions**
 
 **Javascript**
 
@@ -49,14 +49,13 @@ Code restrictions
 - No global/nonlocal statements
 - No raise, try, or assert statements
 - No disallowed variable assignments
-
-</Callout>
+</Note>
 
 ![Code editor for evaluation logic](/images/docs/library/how-to/evaluators/programmatic-evaluator/code-editor.png)
 
 </Step>
 
-<Step title="Evaluator console">
+<Step title="Debug with Console">
 
 Monitor your evaluator execution with the built-in console. Add console logs for debugging to track what's happening during evaluation. All logs will appear in this view.
 
@@ -64,7 +63,7 @@ Monitor your evaluator execution with the built-in console. Add console logs for
 
 </Step>
 
-<Step title="Set pass criteria">
+<Step title="Configure Pass Criteria">
 
 Configure two types of pass criteria:
 
@@ -82,7 +81,7 @@ Example: Pass if 80% of entries meet the evaluation criteria
 
 </Step>
 
-<Step title="Test your evaluator">
+<Step title="Test in Playground">
 
 Test your evaluator in the playground before using it in your workflows. The right panel shows input fields for all variables used in your evaluator.
 

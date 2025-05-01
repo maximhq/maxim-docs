@@ -3,6 +3,8 @@ title: Connect your logs to external platforms
 description: Learn how to integrate Maxim with external observability platforms using data connectors for enhanced log analysis and monitoring.
 ---
 
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
 Export your logs to external observability platforms to analyze and monitor application behavior in your preferred tools. Connect your logs to these platforms:
 
 - New Relic
@@ -11,23 +13,23 @@ Export your logs to external observability platforms to analyze and monitor appl
 
 <MaximPlayer url="https://drive.google.com/file/d/1xpqcz9CCvHuczSbWWYd-w7xyf7CbpY7-/preview" />
 
-<Callout type="info">
+<Note>
 Navigate to your log repository, click the top-right menu, and select "Set up data connectors" to manage your connections.
-</Callout>
+</Note>
 
 ## Connect to New Relic
 
 <Steps>
-<Step>
+<Step title="Select platform">
 Select "New Relic" as your platform in the data connectors setup dialog.
 </Step>
-<Step>
+<Step title="Name your connector">
 Name your connector - for example, Production connector.
 </Step>
-<Step>
+<Step title="Enter API key">
 Enter your New Relic API key from your [account settings](https://one.newrelic.com/api-keys).
 </Step>
-<Step>
+<Step title="Configure connection">
 ![Configure your New Relic connection settings](/images/docs/observe/data-connectors/new-relic-connector.png)
 </Step>
 </Steps>
@@ -35,31 +37,31 @@ Enter your New Relic API key from your [account settings](https://one.newrelic.c
 ## Connect to Snowflake
 
 <Steps>
-<Step>
+<Step title="Select platform">
 Select "Snowflake" as your platform in the data connectors setup dialog.
 </Step>
-<Step>
+<Step title="Name your connector">
 Name your connector - for example, Production connector.
 </Step>
-<Step>
+<Step title="Login to Snowflake">
 Login to your Snowflake account.
 </Step>
-<Step>
+<Step title="Access connection tool">
 Open profile menu and select "Connect a tool to Snowflake".
 </Step>
-<Step>
+<Step title="Select connection type">
 Select "Connectors/Drivers" tab and then "Go Driver Connection String".
 </Step>
-<Step>
+<Step title="Configure connection parameters">
 Select Warehouse, Database, Schema, and Connection method as "Password".
 </Step>
-<Step>
+<Step title="View connection string">
 ![Snowflake connection string dialog](/images/docs/observe/data-connectors/snowflake-connection-string.png)
 </Step>
-<Step>
+<Step title="Copy connection string">
 Copy the connection string and paste it in the data connectors setup dialog.
 </Step>
-<Step>
+<Step title="Complete configuration">
 ![Configure your Snowflake connection settings](/images/docs/observe/data-connectors/snowflake-connector.png)
 </Step>
 </Steps>
@@ -67,23 +69,23 @@ Copy the connection string and paste it in the data connectors setup dialog.
 ## Connect to an OTLP collector
 
 <Steps>
-<Step>
+<Step title="Select platform">
 Select "Other OTel collector" in the data connectors setup dialog
 </Step>
-<Step>
+<Step title="Name your connector">
 Name your connector
 </Step>
-<Step>
+<Step title="Configure OTLP endpoint">
 Configure the OTLP endpoint:
    - Choose HTTP or gRPC protocol
    - Enter your OTLP collector URL (Example: https://otel-collector.acme.com)
 </Step>
-<Step>
+<Step title="Set up authentication">
 Configure headers:
    - Add authentication headers (Example: x-api-key)
    - Include additional headers as needed
 </Step>
-<Step>
+<Step title="Complete configuration">
 ![Configure your OTLP collector settings](/images/docs/observe/data-connectors/otlp-connector.png)
 </Step>
 </Steps>

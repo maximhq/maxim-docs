@@ -3,6 +3,8 @@ title: Use variable columns in Datasets
 description: Learn how to use variable columns in datasets
 ---
 
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
 Maxim provides a way to insert dynamic values into your entities at runtime via your Datasets in the form of variables. A variable is a collection of a key and a value.
 
 You can refer to variables using the Jinja template syntax (double curly braces) `{{variable_name}}`.
@@ -12,7 +14,7 @@ You can populate variable values in various ways
 - Dataset column
 - Use a context source to retrieve it at a run time
 
-<Callout type="info">
+<Note>
   Maxim has specific types of reserved columns that take priority over the variables you've defined. These columns include:
   - input
   - expectedOutput
@@ -20,12 +22,11 @@ You can populate variable values in various ways
   - expectedToolCalls
   - scenario
   - expectedSteps
-
-</Callout>
+</Note>
 
 <Steps>
 
-<Step title="Variable usage in Prompt">
+<Step title="Add Variables to Your Prompt">
 
 You can use variables in your Prompt to refer to dynamic values at runtime.
 For example, if you're creating a Prompt and want to provide context to the model, you can refer to the context via a variable in your system prompt
@@ -40,9 +41,9 @@ If you're using the Prompt playground, you can add variables via static values o
 
 Alternatively, if you're using it in a test run, you can create a context-named variable in your dataset. When the test run executes, this variable will be replaced with the values from your dataset column.
 
-<Callout type="info">
+<Note>
     You can use variables for Prompt Comparison and Prompt Chain in the same way as you do in your Prompt playground
-</Callout>
+</Note>
 
 ![Variable usage in Prompt](/images/docs/library/how-to/datasets/variables-usage/variable-usage-in-prompt-playground.png)
 

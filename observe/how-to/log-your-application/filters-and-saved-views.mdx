@@ -3,8 +3,6 @@ title: Configure filters and saved views
 description: Learn how to efficiently filter and organize your logs with custom criteria and saved views for streamlined debugging and quick access to frequently used search patterns.
 ---
 
-import { Bookmark } from "lucide-react";
-import { Button } from "ui";
 import { MaximPlayer } from "/snippets/maximPlayer.mdx"
 
 Filter and sort your logs using custom criteria to streamline debugging. Create saved views to quickly access your most-used search patterns.
@@ -12,16 +10,16 @@ Filter and sort your logs using custom criteria to streamline debugging. Create 
 ## Create filters and saved views
 
 <Steps>
-<Step>
+<Step title="Access the search interface">
 Open your log repository and type filters directly in the search bar or select from the filter menu
 </Step>
-<Step>
+<Step title="Apply filtering criteria">
 Apply filters to display logs matching your specified criteria
 </Step>
-<Step>
-Click the bookmark icon <Button size="icon" variant="outline" className="inline-flex cursor-auto"><Bookmark className="h-4 w-4" /></Button> to save your current filter configuration
+<Step title="Save your view">
+Click the bookmark icon <Icon icon="bookmark" className="h-4 w-4" /> to save your current filter configuration
 </Step>
-<Step>
+<Step title="Quick access">
 Access your saved filters directly from the search bar for quick navigation
 </Step>
 </Steps>

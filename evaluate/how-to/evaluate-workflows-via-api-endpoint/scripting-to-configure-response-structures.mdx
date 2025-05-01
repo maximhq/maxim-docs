@@ -5,18 +5,16 @@ description: Customize your API requests and responses using Workflow scripts
 
 Maxim Workflows provide powerful scripting capabilities to modify requests and responses. These scripts help you transform data, add authentication, and handle complex response structures.
 
-<Callout type="info">Scripts are optional - you'll only need them when you want to modify your API's behavior.</Callout>
+<Note>Scripts are optional - you'll only need them when you want to modify your API's behavior.</Note>
 
-### Pre-request Script
-
+## Request Modification
 The `prescript` function runs before sending requests to your API. Use it to modify request parameters, add headers, or transform data.
 
-```javascript
+<CodeGroup>
+```javascript prescript
 function prescript(request) {
-	// Add an authorization header
 	request.headers["Authorization"] = "Bearer your-token";
 
-	// Modify the request body
 	request.data = {
 		...JSON.parse(request.data || "{}"),
 		timestamp: Date.now(),
@@ -25,29 +23,29 @@ function prescript(request) {
 	return request;
 }
 ```
+</CodeGroup>
 
-### Post-response Script
-
+## Response Processing
 The `postscriptV2` function processes API responses before displaying them. Use it to transform response data or extract specific fields:
 
-```javascript
+<CodeGroup>
+```javascript postscriptV2
 function postscriptV2(response, request) {
-	// Extract only the 'message' field from response
 	return {
 		content: response.data.message,
 		confidence: response.data.metadata?.confidence || 1.0,
 	};
 }
 ```
+</CodeGroup>
 
-### Simulation Scripts
-
-<Callout type="info">Simulation scripts only run for multi-turn conversations. They won't execute for single-turn tests.</Callout>
+## Conversation Management
+<Note>Simulation scripts only run for multi-turn conversations. They won't execute for single-turn tests.</Note>
 
 Use these scripts to set up and clean up multi-turn conversation tests:
 
-```javascript
-// Initialize conversation context
+<CodeGroup>
+```javascript simulation
 function preSimulation() {
 	return {
 		sessionId: generateUUID(),
@@ -55,7 +53,6 @@ function preSimulation() {
 	};
 }
 
-// Clean up after simulation
 function postSimulation() {
 	return {
 		status: "completed",
@@ -63,11 +60,12 @@ function postSimulation() {
 	};
 }
 ```
+</CodeGroup>
 
-## Supported models
+## Available Libraries
 
-<Callout type="info">
+<Note>
 	You don't need to use `require` or `import` to use these modules in scripts. These are directly available in the script environment.
-</Callout>
+</Note>
 
 - `axios`: Axios is a popular HTTP client library for JavaScript. It provides a simple API for making HTTP requests and supports various features like request and response interceptors, request cancellation, and automatic JSON parsing.
