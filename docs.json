@@ -274,7 +274,8 @@
                     {
                         "group": "Prompts",
                         "openapi": {
-                            "source": "public-apis/openapi/prompts.json"                            
+                            "source": "public-apis/openapi/prompts.json",
+                            "directory": "Prompts"
                         }
                     }
                 ]

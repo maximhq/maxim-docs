@@ -34,6 +34,9 @@
             "ApiKeyAuth": []
           }
         ],
+        "tags": [
+          "Prompt"
+        ],
         "description": "Get prompts for a workspace",
         "summary": "Get Prompts",
         "parameters": [
@@ -298,16 +301,16 @@
           "401": {
             "description": "Unauthorized"
           }
-        },
-        "tags": [
-          "Prompts"
-        ]
+        }
       },
       "post": {
         "security": [
           {
             "ApiKeyAuth": []
           }
+        ],
+        "tags": [
+          "Prompt"
         ],
         "description": "Create a new prompt",
         "summary": "Create Prompt",
@@ -425,16 +428,16 @@
           "401": {
             "description": "Unauthorized"
           }
-        },
-        "tags": [
-          "Prompts"
-        ]
+        }
       },
       "put": {
         "security": [
           {
             "ApiKeyAuth": []
           }
+        ],
+        "tags": [
+          "Prompt"
         ],
         "description": "Update an existing prompt",
         "externalDocs": {
@@ -681,16 +684,16 @@
           "404": {
             "description": "Prompt not found"
           }
-        },
-        "tags": [
-          "Prompts"
-        ]
+        }
       },
       "delete": {
         "security": [
           {
             "ApiKeyAuth": []
           }
+        ],
+        "tags": [
+          "Prompt"
         ],
         "description": "Delete a prompt",
         "summary": "Delete Prompt",
@@ -728,10 +731,7 @@
             "description": "Prompt not found"
           }
         }
-      },
-      "tags": [
-        "Prompts"
-      ]
+      }
     },
     "/v1/prompts/versions": {
       "get": {
@@ -741,7 +741,7 @@
           }
         ],
         "tags": [
-          "Prompts"
+          "Prompt Version"
         ],
         "description": "Get versions of a prompt",
         "summary": "Get Prompt Versions",
@@ -972,7 +972,7 @@
           }
         ],
         "tags": [
-          "Prompt Versions"
+          "Prompt Version"
         ],
         "description": "Create a prompt version",
         "summary": "Create a prompt version",
@@ -1344,7 +1344,7 @@
           }
         ],
         "tags": [
-          "Prompts"
+          "Prompt Version"
         ],
         "description": "Run a specific version of a prompt",
         "summary": "Run Prompt Version",
@@ -1662,7 +1662,7 @@
           }
         ],
         "tags": [
-          "Prompts"
+          "Prompt Deployment"
         ],
         "description": "Deploy a prompt version",
         "summary": "Deploy Prompt Version",
@@ -1786,10 +1786,7 @@
             "description": "Prompt or version not found"
           }
         }
-      },
-      "tags": [
-        "Prompts"
-      ]
+      }
     },
     "/v1/prompts/config": {
       "get": {
@@ -1799,7 +1796,7 @@
           }
         ],
         "tags": [
-          "Prompts"
+          "Prompt Config"
         ],
         "description": "Get prompt configuration",
         "summary": "Get Prompt Config",
@@ -1867,7 +1864,7 @@
           }
         ],
         "tags": [
-          "Prompts"
+          "Prompt Config"
         ],
         "description": "Update prompt configuration",
         "summary": "Update Prompt Config",
