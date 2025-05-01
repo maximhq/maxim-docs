@@ -252,7 +252,7 @@
                                 {
                                    "group": "OpenAI",
                                    "pages": [
-                                     "sdk/python/integration/openai/one-line-integration.mdx"
+                                     "sdk/python/integrations/openai/one-line-integration.mdx"
                                    ]
                                 }
                               ]
