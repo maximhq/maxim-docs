@@ -10,6 +10,11 @@
         "default": "light",
         "strict": true
     },
+    "fonts":{
+        "heading": {
+            "family": "Bricolage Grotesque, sans-serif"
+        }        
+    },
     "favicon": "/favicon.svg",
     "navigation": {
         "tabs": [
@@ -224,7 +229,7 @@
     },
     "logo": {
         "light": "/logo/light.svg",
-        "dark": "/logo/dark.svg",
+        "dark": "/logo/light.svg",
         "href": "https://www.getmaxim.ai"
     },
     "navbar": {
