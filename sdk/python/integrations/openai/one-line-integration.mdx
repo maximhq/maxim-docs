@@ -1,0 +1,37 @@
+---
+title: "OpenAI one line integration"
+description: "This tutorial shows how to integrate Maxim observability with OpenAI SDK."
+---
+
+## Setup
+
+```
+"openai>=1.65.4"
+"maxim-py>=3.5.0"
+```
+
+## Initialize logger
+
+```python
+import maxim from Maxim
+
+logger = Maxim().logger()
+```
+
+## Initialize OpenAI SDK and wrap it using MaximOpenAIClient
+
+```python
+from openai import OpenAI
+from maxim.logger.openai import MaximOpenAIClient
+
+client = MaximOpenAIClient(client=OpenAI(api_key=OPENAI_API_KEY),logger=logger)
+```
+
+<CardGroup cols={2}>
+  <Card title="OpenAI one line integration cookbook" icon="github" href="https://github.com/maximhq/maxim-cookbooks/blob/main/python/observability-online-eval/openai/openai-sdk/one-line-integration.ipynb">
+    
+  </Card>
+  <Card title="OpenAI one line integration cookbook" icon="g" href="https://colab.research.google.com/github/maximhq/maxim-cookbooks/blob/main/python/observability-online-eval/openai/openai-sdk/one-line-integration.ipynb?authuser=1#scrollTo=0XWIM8tvNg6u">
+    
+  </Card>
+</CardGroup>
