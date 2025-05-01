@@ -34,9 +34,7 @@ Flow:
 
 This system ensures that user requests are efficiently routed to the right agent, and all interactions are tracked for quality and performance monitoring.
 
-In [1]:
-
-```python
+```python [expandable]
 from __future__ import annotations as _annotations
 
 import random
@@ -211,7 +209,7 @@ add_trace_processor(MaximOpenAIAgentsTracingProcessor(logger))
 
 ### **Run agent**
 
-```python
+```python [expandable]
 current_agent: Agent[AirlineAgentContext] = triage_agent
 input_items: list[TResponseInputItem] = []
 context = AirlineAgentContext()
