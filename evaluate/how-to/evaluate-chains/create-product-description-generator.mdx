@@ -10,8 +10,7 @@ This is exactly where Maxim [Prompt Chains](/docs/evaluate/how-to/evaluate-chain
 ![Product description generator workflow](/images/docs/evaluate/how-to/prompt-chains/tutorials/product-description-generator-and-translator-chain.png)
 
 <Steps>
-<Step>
-### Create Prompt that generates product description
+<Step title="Create Prompt that generates product description">
 
 Create a new [Prompt](/docs/evaluate/how-to/evaluate-prompts/experiment-in-prompt-playground) with these system instructions:
 
@@ -30,8 +29,7 @@ Ensure descriptions are clear, engaging, and tailored to different product categ
 
 </Step>
 
-<Step>
-### Add the Prompt to a chain
+<Step title="Add the Prompt to a chain">
 
 Create a [Prompt chain](/docs/evaluate/how-to/evaluate-chains/experiment-with-prompt-chains) and add your product description generator Prompt as the first step.
 
@@ -39,8 +37,7 @@ Create a [Prompt chain](/docs/evaluate/how-to/evaluate-chains/experiment-with-pr
 
 </Step>
 
-<Step>
-### Add translation support
+<Step title="Add translation support">
 
 Add another AI node to translate the generated product description:
 
@@ -52,8 +49,7 @@ Add another AI node to translate the generated product description:
 
 </Step>
 
-<Step>
-### Process translations with code block node
+<Step title="Process translations with code block node">
 
 Add a Code block node to handle translated product descriptions:
 
@@ -64,8 +60,7 @@ Add a Code block node to handle translated product descriptions:
 
 </Step>
 
-<Step>
-### Connect logging service
+<Step title="Connect logging service">
 
 Add an API node to integrate with external systems:
 

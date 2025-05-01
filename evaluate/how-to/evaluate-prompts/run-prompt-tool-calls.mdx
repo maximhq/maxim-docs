@@ -3,6 +3,9 @@ title: Run a Prompt with tool calls
 description: Ensuring your prompt selects the accurate tool call (function) is crucial for building reliable and efficient AI workflows. Maxim's playground allows you to attach your tools (API, code or schema) and measure tool call accuracy for agentic systems.
 ---
 
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
+
 <MaximPlayer url="https://www.youtube.com/embed/LGItsF0y5qk" />
 
 Tool call usage is a core part of any agentic AI workflow. Maxim's playground allows you to effectively test if the right tools and are being chosen by the LLM and if they are getting successfully executed. 
@@ -12,32 +15,32 @@ In Maxim, you can create [prompt tools](/docs/library/how-to/prompt-tools/create
 ## Attach and run your tools in playground
 
 <Steps>
-	<Step>
+	<Step title="Create a new tool">
 		Create a new tool in the library. Use an API or code for executable tools and schema if you only want to test tool choice.
 
         ![Create Prompt tool](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/create-tool.png)
 	</Step>
-	<Step>
+	<Step title="Attach tools to your prompt">
 		Select and attach tools to the prompt within the configuration section.
 
         ![Attach Prompt Tool](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/attach-tool.png)
 	</Step>
-	<Step>
+	<Step title="Send prompt with tool instructions">
 		Send your prompt referencing the tool usage instructions.
 
 		![Prompt with tool instructions](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/prompt-tool-instruction.png)
 	</Step>
-    <Step>
+    <Step title="Review assistant's tool selection">
         Check the assistant response with tool choice and arguments.
 
         ![Assistant message of tool choice](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/tool-details.png)
     </Step>
-    <Step>
+    <Step title="Examine tool execution results">
         For executable tools, check the tool response message that is shown post execution.
 
         ![Tool message](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/tool-response.png)
     </Step>
-    <Step>
+    <Step title="Manually test different scenarios">
         Edit tool type messages manually to test for different responses.
 
         ![Tool message edit](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/manual-tool-message.png)
@@ -51,35 +54,35 @@ To test tool call accuracy at scale across all your use cases, run experiments u
 ## Measure tool call accuracy across your test cases
 
 <Steps>
-    <Step>
+    <Step title="Prepare your dataset">
 		Set up your dataset with `input` and `expected tool calls` columns.
 
         ![Dataset creation](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/create-dataset-tool.png)
 	</Step>
-	<Step>
+	<Step title="Define expected tool calls">
 		For each input, add the JSON of one or more expected tool calls and arguments you expect from the assistant.
 
         ![Dataset example](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/dataset-tool.png)
 	</Step>
-	<Step>
+	<Step title="Initiate prompt testing">
 		Trigger a test on the prompt which has the tools attached.
 
         ![Trigger test](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/prompt-with-tools-test.png)
 	</Step>
-	<Step>
+	<Step title="Select your test dataset">
 		Select your dataset from the dropdown.
 
 		![Prompt with tool instructions](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/select-dataset-with-tools.png)
 	</Step>
-    <Step>
+    <Step title="Choose the accuracy evaluator">
         Select the tool call accuracy evaluator under statistical evaluators and trigger the run. Add from evaluator store if not available in your workspace.
 
         ![Tool call accuracy evaluator](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/tool-call-accuracy-eval.png)
     </Step>
-    <Step>
+    <Step title="Review accuracy scores">
         Once the test run is completed, the tool call accuracy scores will be 0 or 1 based on assistant output.
     </Step>
-    <Step>
+    <Step title="Analyze detailed message logs">
         To check details of the messages click on any entry and click on the `messages` tab.
         
         ![Messages including tool](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/message-details-with-tool.png)

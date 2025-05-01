@@ -3,19 +3,16 @@ title: Scheduled test runs
 description: Learn how to schedule test runs for your prompts, prompt chains and workflows at a regular interval.
 ---
 
-import { CalendarClockIcon } from "lucide-react";
 
 <Steps>
 
-<Step>
-## Select Prompt or Workflow or Prompt chain to schedule runs for.
-
-<div className="flex flex-row flex-grow items-center gap-0.5">Click on **"Test"** and select <CalendarClockIcon className="w-4 h-4 mx-1"/> from the test run sheet header.</div>
+<Step title="Select Prompt or Workflow or Prompt chain to schedule runs for.">
+<div className="flex flex-row flex-grow items-center gap-0.5">
+  Click on **"Test"** and select <Icon icon="calendar-clock" /> from the test run sheet header.
+</div>
 </Step>
 
-<Step>
-## Pick version
-
+<Step title="Pick version">
 Add name of the schedule, version (applicable for Prompts and Prompt chains) to run this scheduled test on.
 
 <Callout type="info">
@@ -24,20 +21,12 @@ Add name of the schedule, version (applicable for Prompts and Prompt chains) to 
 
 </Step>
 
-<Step>
-
-## Decide schedule of the run
-
+<Step title="Decide schedule of the run">
 Select schedule (every hour, day etc) along with the starting date time for the run. The granularity of repetition is an hour at the moment. Please reach out to us if you want lower granularity than this.
-
 </Step>
 
-<Step>
-
-## Select evaluators
-
+<Step title="Select evaluators">
 As a last step, select evaluators you want to run. You can update this config anytime by editing this schedule.
-
 </Step>
 
 <Step>

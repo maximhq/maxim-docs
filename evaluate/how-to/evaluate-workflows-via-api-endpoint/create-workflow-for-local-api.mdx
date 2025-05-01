@@ -8,8 +8,7 @@ description: Learn how to test your local AI endpoint using Maxim's Workflows.
 Want to evaluate your AI application but it's running locally? No problem! We'll help you connect your local AI app to Maxim for testing.
 
 <Steps>
-<Step>
-### Create Your local AI Endpoint
+<Step title="Create Your local AI Endpoint">
 Create a simple Flask API that implements RAG (Retrieval-Augmented Generation) - a technique that enhances AI responses with relevant context from your data:
 
 ```python title="Example Flask API for RAG implementation"
@@ -37,8 +36,7 @@ This example shows a RAG application using Google's PaLM model with "Harry Potte
 
 </Step>
 
-<Step>
-### Set up Ngrok
+<Step title="Set up Ngrok">
 To make your local API accessible to Maxim, we'll use Ngrok - a secure tunneling tool that creates a public URL for your local server.
 
 Follow these steps on MacOS:
@@ -57,8 +55,7 @@ ngrok http 5000
 You can read about ngrok setup for other operating systems [here](https://ngrok.com/docs/getting-started).
 </Step>
 
-<Step>
-### Connect to Maxim
+<Step title="Connect to Maxim">
 Now that your API is accessible, let's connect it to Maxim:
 
 1. Copy your Ngrok URL (looks like `https://xxxx-xx-xx-xxx-xx.ngrok.io`) and navigate to [Workflows](/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/test-your-ai-outputs-using-application-endpoint)

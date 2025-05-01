@@ -5,77 +5,200 @@
     "colors": {
         "primary": "#0C3B43",
         "light": "#07C983"
-    },    
-    "appearance": {        
+    },
+    "appearance": {
         "default": "light",
         "strict": true
     },
+    "fonts":{
+        "heading": {
+            "family": "Bricolage Grotesque, sans-serif"
+        }        
+    },
     "favicon": "/favicon.svg",
-    "navigation": {        
+    "navigation": {
         "tabs": [
             {
                 "tab": "Documentation",
                 "groups": [
                     {
-                        "group": "Get Started",
+                        "group": "Introduction",
                         "pages": [
-                            "introduction",
+                            "introduction/overview",
                             "introduction/quickstart/setting-up-workspace",
                             "introduction/quickstart/running-first-test"
                         ]
-                    }                    
-                ]
-            },
-            {
-                "tab": "API",
-                "groups": [
+                    },
                     {
-                        "group": "Get Started",
+                        "group": "Evaluate",
                         "pages": [
-                            "introduction",
-                            "introduction/quickstart/setting-up-workspace",
-                            "introduction/quickstart/running-first-test"
+                            "evaluate/overview",
+                            "evaluate/concepts",
+                            {
+                                "group": "Quickstart",
+                                "pages": [
+                                    "evaluate/quickstart/run-your-first-test-on-prompt",
+                                    "evaluate/quickstart/run-your-first-test-on-api-workflow",
+                                    "evaluate/quickstart/simulate-and-evaluate-multi-turn-conversations",
+                                    "evaluate/quickstart/run-your-first-test-on-prompt-chains"
+                                ]
+                            },
+                            {
+                                "group": "How To",
+                                "pages": [
+                                    {
+                                        "group": "Evaluate Prompts",
+                                        "pages": [
+                                            "evaluate/how-to/evaluate-prompts/experiment-in-prompt-playground",
+                                            "evaluate/how-to/evaluate-prompts/run-prompt-tool-calls",
+                                            "evaluate/how-to/evaluate-prompts/use-prompt-partials",
+                                            "evaluate/how-to/evaluate-prompts/rag-quality",
+                                            "evaluate/how-to/evaluate-prompts/create-prompt-versions",
+                                            "evaluate/how-to/evaluate-prompts/compare-prompt-versions",
+                                            "evaluate/how-to/evaluate-prompts/save-prompt-session",
+                                            "evaluate/how-to/evaluate-prompts/compare-prompts-playground",
+                                            "evaluate/how-to/evaluate-prompts/bulk-comparisons-across-test-cases",
+                                            "evaluate/how-to/evaluate-prompts/deploy-prompts",
+                                            "evaluate/how-to/evaluate-prompts/organize-prompts",
+                                            "evaluate/how-to/evaluate-prompts/querying-prompts",
+                                            "evaluate/how-to/evaluate-prompts/automate-via-ci-cd",
+                                            "evaluate/how-to/evaluate-prompts/human-annotation-pipeline"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Evaluate Chains",
+                                        "pages": [
+                                            "evaluate/how-to/evaluate-chains/experiment-with-prompt-chains",
+                                            "evaluate/how-to/evaluate-chains/debug-errors-at-every-node",
+                                            "evaluate/how-to/evaluate-chains/use-api-nodes-within-chains",
+                                            "evaluate/how-to/evaluate-chains/deploy-prompt-chains",
+                                            "evaluate/how-to/evaluate-chains/test-prompt-chains",
+                                            "evaluate/how-to/evaluate-chains/create-product-description-generator",
+                                            "evaluate/how-to/evaluate-chains/create-customer-support-agent",
+                                            "evaluate/how-to/evaluate-chains/querying-prompt-chains"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Evaluate Workflows via API",
+                                        "pages": [
+                                            "evaluate/how-to/evaluate-workflows-via-api-endpoint/test-your-ai-outputs-using-application-endpoint",
+                                            "evaluate/how-to/evaluate-workflows-via-api-endpoint/test-multi-turn-conversations-manually",
+                                            "evaluate/how-to/evaluate-workflows-via-api-endpoint/simulate-multi-turn-conversations",
+                                            "evaluate/how-to/evaluate-workflows-via-api-endpoint/evaluate-simulated-sessions-for-agents",
+                                            "evaluate/how-to/evaluate-workflows-via-api-endpoint/create-workflow-for-local-api",
+                                            "evaluate/how-to/evaluate-workflows-via-api-endpoint/scripting-to-configure-response-structures",
+                                            "evaluate/how-to/evaluate-workflows-via-api-endpoint/automate-via-ci-cd"
+                                        ]
+                                    },
+                                    "evaluate/how-to/evaluate-datasets",
+                                    "evaluate/how-to/scheduled-test-runs",
+                                    "evaluate/how-to/trigger-test-runs-using-sdk",
+                                    {
+                                        "group": "Optimize Evaluation Processes",
+                                        "pages": [
+                                            "evaluate/how-to/optimize-evaluation-processes/re-use-configuration-via-presets",
+                                            "evaluate/how-to/optimize-evaluation-processes/receive-notifications-test-runs",
+                                            "evaluate/how-to/optimize-evaluation-processes/customize-share-reports"
+                                        ]
+                                    }
+                                ]
+                            }
                         ]
-                    }                    
-                ]
-            },
-            {
-                "tab": "SDK",
-                "groups": [
+                    },
                     {
-                        "group": "Get Started",
+                        "group": "Observe",
                         "pages": [
-                            "introduction",
-                            "introduction/quickstart/setting-up-workspace",
-                            "introduction/quickstart/running-first-test"
+                            "observe/overview",
+                            "observe/concepts",
+                            "observe/quickstart",
+                            {
+                                "group": "How To",
+                                "pages": [
+                                    {
+                                        "group": "Log Your Application",
+                                        "pages": [
+                                            "observe/how-to/log-your-application/filters-and-saved-views",
+                                            "observe/how-to/log-your-application/export-logs",
+                                            "observe/how-to/log-your-application/summary-emails",
+                                            "observe/how-to/log-your-application/use-data-connectors"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Set Up Alerts",
+                                        "pages": [
+                                            "observe/how-to/set-up-alerts/create-a-slack-integration",
+                                            "observe/how-to/set-up-alerts/create-a-pagerduty-integration",
+                                            "observe/how-to/set-up-alerts/set-up-alerts-for-quality-metrics",
+                                            "observe/how-to/set-up-alerts/set-up-alerts-for-performance-metrics"
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "group": "Integrations",
+                                "pages": [
+                                    "observe/integrations/openai-agents-sdk"
+                                ]
+                            }
                         ]
-                    }                    
-                ]
-            },
-            {
-                "tab": "CI/CD & CLI",
-                "groups": [
+                    },
                     {
-                        "group": "Get Started",
+                        "group": "Library",
                         "pages": [
-                            "introduction",
-                            "introduction/quickstart/setting-up-workspace",
-                            "introduction/quickstart/running-first-test"
+                            "library/overview",
+                            "library/concepts",
+                            {
+                                "group": "How To",
+                                "pages": [
+                                    {
+                                        "group": "Prompt Tools",
+                                        "pages": [
+                                            "library/how-to/prompt-tools/create-a-code-tool",
+                                            "library/how-to/prompt-tools/create-an-api-tool",
+                                            "library/how-to/prompt-tools/create-a-prompt-tool"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Context Sources",
+                                        "pages": [
+                                            "library/how-to/context-sources/bring-your-rag-via-an-api-endpoint"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Datasets",
+                                        "pages": [
+                                            "library/how-to/datasets/curate-golden-dataset-for-human-annotation"
+                                        ]
+                                    }
+                                ]
+                            }
                         ]
-                    }                    
-                ]
-            },
-            {
-                "tab": "Self Hosting",
-                "groups": [
+                    },
                     {
-                        "group": "Get Started",
+                        "group": "Analyze",
                         "pages": [
-                            "introduction",
-                            "introduction/quickstart/setting-up-workspace",
-                            "introduction/quickstart/running-first-test"
+                            "analyze/overview",
+                            {
+                                "group": "How To",
+                                "pages": []
+                            }
                         ]
-                    }                    
+                    },
+                    {
+                        "group": "SDK",
+                        "pages": [
+                            "sdk/overview",
+                            "sdk/upgrading-to-v3"
+                        ]
+                    },
+                    {
+                        "group": "Self Hosting",
+                        "pages": [
+                            "self-hosting/overview",
+                            "self-hosting/zerotouch",
+                            "self-hosting/dataplane"
+                        ]
+                    }
                 ]
             }
         ],
@@ -106,7 +229,7 @@
     },
     "logo": {
         "light": "/logo/light.svg",
-        "dark": "/logo/dark.svg",
+        "dark": "/logo/light.svg",
         "href": "https://www.getmaxim.ai"
     },
     "navbar": {
@@ -121,7 +244,7 @@
             },
             {
                 "label": "Blog",
-                "href": "https://www.getmaxim.ai/blog"                
+                "href": "https://www.getmaxim.ai/blog"
             },
             {
                 "label": "Pricing",
