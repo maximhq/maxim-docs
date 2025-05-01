@@ -125,7 +125,6 @@
                                             "observe/how-to/log-your-application/use-tags-on-nodes",
                                             "observe/how-to/log-your-application/use-events",
                                             "observe/how-to/log-your-application/send-user-feedback",
-                                            "observe/how-to/log-your-application/add-user-feedback",
                                             "observe/how-to/log-your-application/track-llm-errors",
                                             "observe/how-to/log-your-application/track-token-usage-and-cost",
                                             "observe/how-to/log-your-application/filters-and-saved-views",
@@ -247,18 +246,36 @@
                         "pages": [
                             "sdk/python/overview",
                             {
-                              "group": "Integrations",
-                              "pages":[
-                                {
-                                   "group": "OpenAI",
-                                   "pages": [
-                                     "sdk/python/integrations/openai/one-line-integration"
-                                   ]
-                                }
-                              ]
+                                "group": "Integrations",
+                                "pages": [
+                                    {
+                                        "group": "OpenAI",
+                                        "pages": [
+                                            "sdk/python/integrations/openai/one-line-integration",
+                                            "sdk/python/integrations/openai/agents-sdk"
+                                        ]
+                                    }
+                                ]
                             },
                             "sdk/python/upgrading-to-v3"
                         ]
+                    }
+                ]
+            },
+            {
+                "tab": "API Reference",
+                "groups": [
+                    {
+                        "group": "Overview",
+                        "pages": [
+                            "public-apis/overview"
+                        ]
+                    },
+                    {
+                        "group": "Prompts",
+                        "openapi": {
+                            "source": "public-apis/openapi/prompts.json"                            
+                        }
                     }
                 ]
             },

@@ -1,0 +1,1972 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "contact": {
+      "name": "Maxim Engineering",
+      "email": "eng@getmaxim.ai"
+    },
+    "title": "Maxim SDK API - prompts",
+    "description": "API documentation for Maxim SDK prompts endpoints"
+  },
+  "servers": [
+    {
+      "url": "https://api.getmaxim.ai"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-maxim-api-key",
+        "description": "API key for authentication"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "paths": {
+    "/v1/prompts": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Get prompts for a workspace",
+        "summary": "Get Prompts",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the workspace"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the prompt"
+            },
+            "required": false,
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Name of the prompt"
+            },
+            "required": false,
+            "name": "name",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "nullable": true,
+              "maximum": 100,
+              "default": 10,
+              "description": "Maximum number of records to return (max: 100)"
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the folder"
+            },
+            "required": false,
+            "name": "folderId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "boolean",
+              "nullable": true,
+              "default": false,
+              "description": "Include prompt versions in the response"
+            },
+            "required": false,
+            "name": "includeVersions",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the cursor"
+            },
+            "required": false,
+            "name": "cursor",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Prompts retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "workspaceId": {
+                      "type": "string"
+                    },
+                    "accountId": {
+                      "type": "string"
+                    },
+                    "folderId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "meta": {
+                      "nullable": true
+                    },
+                    "createdById": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "string"
+                    },
+                    "updatedAt": {
+                      "type": "string"
+                    },
+                    "deletedAt": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "deploymentHistory": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "workspaceId": {
+                          "type": "string"
+                        },
+                        "accountId": {
+                          "type": "string"
+                        },
+                        "promptId": {
+                          "type": "string"
+                        },
+                        "strategy": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string"
+                            },
+                            "config": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string"
+                                    },
+                                    "rules": {
+                                      "type": "object",
+                                      "properties": {
+                                        "query": {
+                                          "type": "object",
+                                          "properties": {
+                                            "not": {
+                                              "type": "boolean"
+                                            },
+                                            "rules": {
+                                              "type": "array",
+                                              "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                  "field": {
+                                                    "type": "string"
+                                                  },
+                                                  "value": {
+                                                    "type": "string"
+                                                  },
+                                                  "operator": {
+                                                    "type": "string"
+                                                  },
+                                                  "valueSource": {
+                                                    "type": "string"
+                                                  }
+                                                },
+                                                "required": [
+                                                  "field",
+                                                  "value",
+                                                  "operator",
+                                                  "valueSource"
+                                                ]
+                                              }
+                                            },
+                                            "combinator": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "not",
+                                            "rules",
+                                            "combinator"
+                                          ]
+                                        },
+                                        "version": {
+                                          "type": "number"
+                                        }
+                                      },
+                                      "required": [
+                                        "query",
+                                        "version"
+                                      ]
+                                    },
+                                    "timestamp": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "rules",
+                                    "timestamp"
+                                  ]
+                                }
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "config"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "deletedAt": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "workspaceId",
+                        "accountId",
+                        "promptId",
+                        "strategy",
+                        "createdAt",
+                        "updatedAt",
+                        "deletedAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "description",
+                    "workspaceId",
+                    "accountId",
+                    "folderId",
+                    "createdById",
+                    "createdAt",
+                    "updatedAt",
+                    "deletedAt",
+                    "deploymentHistory"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "tags": [
+          "Prompts"
+        ]
+      },
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Create a new prompt",
+        "summary": "Create Prompt",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workspaceId": {
+                    "type": "string",
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the prompt"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description of the prompt"
+                  },
+                  "folderId": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "Unique identifier for the folder"
+                  }
+                },
+                "required": [
+                  "workspaceId",
+                  "name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Prompt created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "workspaceId": {
+                              "type": "string"
+                            },
+                            "accountId": {
+                              "type": "string"
+                            },
+                            "folderId": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "meta": {
+                              "nullable": true
+                            },
+                            "createdById": {
+                              "type": "string"
+                            },
+                            "createdAt": {
+                              "type": "string"
+                            },
+                            "updatedAt": {
+                              "type": "string"
+                            },
+                            "deletedAt": {
+                              "type": "string",
+                              "nullable": true
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "name",
+                            "description",
+                            "workspaceId",
+                            "accountId",
+                            "folderId",
+                            "createdById",
+                            "createdAt",
+                            "updatedAt",
+                            "deletedAt"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "data"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "tags": [
+          "Prompts"
+        ]
+      },
+      "put": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Update an existing prompt",
+        "externalDocs": {
+          "url": "https://app.getmaxim.ai/docs/evaluate/concepts#prompts",
+          "description": "This API can be used to modify prompts."
+        },
+        "summary": "Update Prompt",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workspaceId": {
+                    "type": "string",
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "Unique identifier for the prompt"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the prompt"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description of the prompt"
+                  },
+                  "folderId": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "Unique identifier for the folder"
+                  }
+                },
+                "required": [
+                  "workspaceId",
+                  "id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Prompt updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "workspaceId": {
+                          "type": "string"
+                        },
+                        "accountId": {
+                          "type": "string"
+                        },
+                        "folderId": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "meta": {
+                          "nullable": true
+                        },
+                        "createdById": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "deletedAt": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "deploymentHistory": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "workspaceId": {
+                              "type": "string"
+                            },
+                            "accountId": {
+                              "type": "string"
+                            },
+                            "promptId": {
+                              "type": "string"
+                            },
+                            "strategy": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string"
+                                },
+                                "config": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string"
+                                        },
+                                        "rules": {
+                                          "type": "object",
+                                          "properties": {
+                                            "query": {
+                                              "type": "object",
+                                              "properties": {
+                                                "not": {
+                                                  "type": "boolean"
+                                                },
+                                                "rules": {
+                                                  "type": "array",
+                                                  "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                      "field": {
+                                                        "type": "string"
+                                                      },
+                                                      "value": {
+                                                        "type": "string"
+                                                      },
+                                                      "operator": {
+                                                        "type": "string"
+                                                      },
+                                                      "valueSource": {
+                                                        "type": "string"
+                                                      }
+                                                    },
+                                                    "required": [
+                                                      "field",
+                                                      "value",
+                                                      "operator",
+                                                      "valueSource"
+                                                    ]
+                                                  }
+                                                },
+                                                "combinator": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "required": [
+                                                "not",
+                                                "rules",
+                                                "combinator"
+                                              ]
+                                            },
+                                            "version": {
+                                              "type": "number"
+                                            }
+                                          },
+                                          "required": [
+                                            "query",
+                                            "version"
+                                          ]
+                                        },
+                                        "timestamp": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "id",
+                                        "rules",
+                                        "timestamp"
+                                      ]
+                                    }
+                                  }
+                                }
+                              },
+                              "required": [
+                                "type",
+                                "config"
+                              ]
+                            },
+                            "createdAt": {
+                              "type": "string"
+                            },
+                            "updatedAt": {
+                              "type": "string"
+                            },
+                            "deletedAt": {
+                              "type": "string",
+                              "nullable": true
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "workspaceId",
+                            "accountId",
+                            "promptId",
+                            "strategy",
+                            "createdAt",
+                            "updatedAt",
+                            "deletedAt"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "description",
+                        "workspaceId",
+                        "accountId",
+                        "folderId",
+                        "createdById",
+                        "createdAt",
+                        "updatedAt",
+                        "deletedAt",
+                        "deploymentHistory"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Prompt not found"
+          }
+        },
+        "tags": [
+          "Prompts"
+        ]
+      },
+      "delete": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Delete a prompt",
+        "summary": "Delete Prompt",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the workspace"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the prompt"
+            },
+            "required": true,
+            "name": "id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Prompt deleted successfully"
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Prompt not found"
+          }
+        }
+      },
+      "tags": [
+        "Prompts"
+      ]
+    },
+    "/v1/prompts/versions": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Prompts"
+        ],
+        "description": "Get versions of a prompt",
+        "summary": "Get Prompt Versions",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Version ID you want to query"
+            },
+            "required": false,
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Prompt ID whose versions you want to query"
+            },
+            "required": false,
+            "name": "promptId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Prompt versions retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "type": "number"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "promptId": {
+                          "type": "string"
+                        },
+                        "config": {
+                          "type": "object",
+                          "properties": {
+                            "tags": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "nullable": true
+                              }
+                            },
+                            "model": {
+                              "type": "string"
+                            },
+                            "author": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "email": {
+                                  "type": "string"
+                                },
+                                "image": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "name",
+                                "email",
+                                "image"
+                              ]
+                            },
+                            "modelId": {
+                              "type": "string"
+                            },
+                            "messages": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "index": {
+                                    "type": "number"
+                                  },
+                                  "payload": {
+                                    "type": "object",
+                                    "properties": {
+                                      "role": {
+                                        "type": "string"
+                                      },
+                                      "content": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "role",
+                                      "content"
+                                    ]
+                                  },
+                                  "currentType": {
+                                    "type": "string"
+                                  },
+                                  "originalType": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "index",
+                                  "payload",
+                                  "currentType",
+                                  "originalType"
+                                ]
+                              }
+                            },
+                            "provider": {
+                              "type": "string"
+                            },
+                            "modelParameters": {
+                              "type": "object",
+                              "properties": {
+                                "n": {
+                                  "type": "number"
+                                },
+                                "top_p": {
+                                  "type": "number"
+                                },
+                                "logprobs": {
+                                  "type": "boolean"
+                                },
+                                "max_tokens": {
+                                  "type": "number"
+                                },
+                                "promptTools": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "temperature": {
+                                  "type": "number"
+                                },
+                                "presence_penalty": {
+                                  "type": "number"
+                                },
+                                "frequency_penalty": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "n",
+                                "top_p",
+                                "logprobs",
+                                "max_tokens",
+                                "promptTools",
+                                "temperature",
+                                "presence_penalty",
+                                "frequency_penalty"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "tags",
+                            "model",
+                            "author",
+                            "modelId",
+                            "messages",
+                            "provider",
+                            "modelParameters"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "deletedAt": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "version",
+                        "description",
+                        "promptId",
+                        "config",
+                        "createdAt",
+                        "updatedAt",
+                        "deletedAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Prompt not found"
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Prompt Versions"
+        ],
+        "description": "Create a prompt version",
+        "summary": "Create a prompt version",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "promptId": {
+                    "type": "string",
+                    "description": "Prompt identifier"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Version description"
+                  },
+                  "modelName": {
+                    "type": "string",
+                    "description": "Name of the model"
+                  },
+                  "modelProvider": {
+                    "type": "string",
+                    "enum": [
+                      "openai",
+                      "azure",
+                      "huggingface",
+                      "anthropic",
+                      "together",
+                      "google",
+                      "groq",
+                      "bedrock",
+                      "maxim",
+                      "cohere",
+                      "ollama",
+                      "xai"
+                    ],
+                    "description": "Provider of the model"
+                  },
+                  "messages": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "type": "string",
+                          "enum": [
+                            "assistant",
+                            "user",
+                            "system",
+                            "model",
+                            "chatbot",
+                            "tool"
+                          ],
+                          "description": "Role of the message sender"
+                        },
+                        "content": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "anyOf": [
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "text"
+                                        ],
+                                        "description": "Content type"
+                                      },
+                                      "text": {
+                                        "type": "string",
+                                        "description": "Text content"
+                                      }
+                                    },
+                                    "required": [
+                                      "type",
+                                      "text"
+                                    ],
+                                    "description": "Text content object"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "image_url"
+                                        ],
+                                        "description": "Content type"
+                                      },
+                                      "image_url": {
+                                        "type": "object",
+                                        "properties": {
+                                          "url": {
+                                            "type": "string",
+                                            "description": "Image URL"
+                                          },
+                                          "detail": {
+                                            "type": "string",
+                                            "enum": [
+                                              "auto",
+                                              "low",
+                                              "high"
+                                            ],
+                                            "description": "Image detail level"
+                                          }
+                                        },
+                                        "required": [
+                                          "url"
+                                        ],
+                                        "description": "Image URL configuration"
+                                      }
+                                    },
+                                    "required": [
+                                      "type",
+                                      "image_url"
+                                    ],
+                                    "description": "Image URL content object"
+                                  }
+                                ],
+                                "description": "Content schema"
+                              }
+                            }
+                          ],
+                          "description": "Message content"
+                        }
+                      },
+                      "required": [
+                        "role",
+                        "content"
+                      ],
+                      "description": "Message object"
+                    },
+                    "description": "Array of messages"
+                  },
+                  "modelParameters": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "nullable": true
+                    },
+                    "default": {},
+                    "description": "Model parameters"
+                  }
+                },
+                "required": [
+                  "promptId",
+                  "description",
+                  "modelName",
+                  "modelProvider",
+                  "messages"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Prompt version created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "type": "number"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "promptId": {
+                          "type": "string"
+                        },
+                        "config": {
+                          "type": "object",
+                          "properties": {
+                            "model": {
+                              "type": "string"
+                            },
+                            "author": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "email": {
+                                  "type": "string"
+                                },
+                                "image": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "name",
+                                "email",
+                                "image"
+                              ]
+                            },
+                            "messages": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "index": {
+                                    "type": "number"
+                                  },
+                                  "payload": {
+                                    "type": "object",
+                                    "properties": {
+                                      "role": {
+                                        "type": "string"
+                                      },
+                                      "content": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "role",
+                                      "content"
+                                    ]
+                                  },
+                                  "currentType": {
+                                    "type": "string"
+                                  },
+                                  "originalType": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "index",
+                                  "payload",
+                                  "currentType",
+                                  "originalType"
+                                ]
+                              }
+                            },
+                            "provider": {
+                              "type": "string"
+                            },
+                            "modelParameters": {
+                              "type": "object",
+                              "properties": {
+                                "top_p": {
+                                  "type": "number"
+                                },
+                                "max_tokens": {
+                                  "type": "number"
+                                },
+                                "promptTools": {
+                                  "type": "array",
+                                  "items": {
+                                    "nullable": true
+                                  }
+                                },
+                                "temperature": {
+                                  "type": "number"
+                                },
+                                "image_detail": {
+                                  "type": "object",
+                                  "properties": {
+                                    "detail": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "detail"
+                                  ]
+                                },
+                                "response_format": {
+                                  "type": "object",
+                                  "properties": {
+                                    "type": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "type"
+                                  ]
+                                },
+                                "frequency_penalty": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "top_p",
+                                "max_tokens",
+                                "promptTools",
+                                "temperature",
+                                "image_detail",
+                                "response_format",
+                                "frequency_penalty"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "model",
+                            "author",
+                            "messages",
+                            "provider",
+                            "modelParameters"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "deletedAt": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "version",
+                        "description",
+                        "promptId",
+                        "config",
+                        "createdAt",
+                        "updatedAt",
+                        "deletedAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Prompt not found"
+          }
+        }
+      }
+    },
+    "/v1/prompts/run": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Prompts"
+        ],
+        "description": "Run a specific version of a prompt",
+        "summary": "Run Prompt Version",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "promptId": {
+                    "type": "string",
+                    "description": "Unique identifier for the prompt"
+                  },
+                  "versionId": {
+                    "type": "string",
+                    "description": "Unique identifier for the version"
+                  },
+                  "workspaceId": {
+                    "type": "string",
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "messages": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "role": {
+                          "type": "string",
+                          "enum": [
+                            "assistant",
+                            "user",
+                            "system",
+                            "model",
+                            "chatbot",
+                            "tool"
+                          ],
+                          "description": "Role of the message sender"
+                        },
+                        "content": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "anyOf": [
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "text"
+                                        ],
+                                        "description": "Content type"
+                                      },
+                                      "text": {
+                                        "type": "string",
+                                        "description": "Text content"
+                                      }
+                                    },
+                                    "required": [
+                                      "type",
+                                      "text"
+                                    ],
+                                    "description": "Text content object"
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "image_url"
+                                        ],
+                                        "description": "Content type"
+                                      },
+                                      "image_url": {
+                                        "type": "object",
+                                        "properties": {
+                                          "url": {
+                                            "type": "string",
+                                            "description": "Image URL"
+                                          },
+                                          "detail": {
+                                            "type": "string",
+                                            "enum": [
+                                              "auto",
+                                              "low",
+                                              "high"
+                                            ],
+                                            "description": "Image detail level"
+                                          }
+                                        },
+                                        "required": [
+                                          "url"
+                                        ],
+                                        "description": "Image URL configuration"
+                                      }
+                                    },
+                                    "required": [
+                                      "type",
+                                      "image_url"
+                                    ],
+                                    "description": "Image URL content object"
+                                  }
+                                ],
+                                "description": "Content schema"
+                              }
+                            }
+                          ],
+                          "description": "Message content"
+                        }
+                      },
+                      "required": [
+                        "role",
+                        "content"
+                      ],
+                      "description": "Message object"
+                    },
+                    "description": "Array of messages"
+                  },
+                  "modelName": {
+                    "type": "string",
+                    "description": "Name of the model to use"
+                  },
+                  "modelProvider": {
+                    "type": "string",
+                    "enum": [
+                      "openai",
+                      "azure",
+                      "huggingface",
+                      "anthropic",
+                      "together",
+                      "google",
+                      "groq",
+                      "bedrock",
+                      "maxim",
+                      "cohere",
+                      "ollama",
+                      "lmstudio",
+                      "xai"
+                    ],
+                    "description": "Provider of the model"
+                  },
+                  "modelParameters": {
+                    "allOf": [
+                      {
+                        "type": "object",
+                        "additionalProperties": {
+                          "nullable": true
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "tools": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string",
+                                  "enum": [
+                                    "function"
+                                  ],
+                                  "description": "Type of tool"
+                                },
+                                "function": {
+                                  "type": "object",
+                                  "properties": {
+                                    "name": {
+                                      "type": "string",
+                                      "description": "Function name"
+                                    },
+                                    "description": {
+                                      "type": "string",
+                                      "description": "Function description"
+                                    },
+                                    "parameters": {
+                                      "type": "object",
+                                      "properties": {
+                                        "type": {
+                                          "type": "string",
+                                          "description": "JSON Schema type"
+                                        },
+                                        "properties": {
+                                          "type": "object",
+                                          "additionalProperties": {
+                                            "nullable": true
+                                          },
+                                          "description": "Object properties schema definitions"
+                                        },
+                                        "description": {
+                                          "type": "string",
+                                          "description": "Schema description"
+                                        },
+                                        "items": {
+                                          "nullable": true,
+                                          "description": "Array items schema"
+                                        },
+                                        "required": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string"
+                                          },
+                                          "description": "Required property names"
+                                        }
+                                      },
+                                      "required": [
+                                        "type"
+                                      ],
+                                      "description": "JSON Schema definition"
+                                    }
+                                  },
+                                  "required": [
+                                    "name",
+                                    "description",
+                                    "parameters"
+                                  ],
+                                  "description": "Function configuration"
+                                }
+                              },
+                              "required": [
+                                "type",
+                                "function"
+                              ],
+                              "description": "Tool configuration"
+                            },
+                            "description": "Array of tools"
+                          }
+                        }
+                      }
+                    ],
+                    "default": {},
+                    "description": "Model parameters configuration"
+                  }
+                },
+                "required": [
+                  "promptId",
+                  "versionId",
+                  "workspaceId",
+                  "messages",
+                  "modelName",
+                  "modelProvider"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Prompt version executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "output": {
+                          "nullable": true
+                        },
+                        "usage": {
+                          "type": "object",
+                          "properties": {
+                            "totalTokens": {
+                              "type": "number"
+                            },
+                            "promptTokens": {
+                              "type": "number"
+                            },
+                            "completionTokens": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "totalTokens",
+                            "promptTokens",
+                            "completionTokens"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "usage"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Prompt or version not found"
+          }
+        }
+      }
+    },
+    "/v1/prompts/deploy": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Prompts"
+        ],
+        "description": "Deploy a prompt version",
+        "summary": "Deploy Prompt Version",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "promptId": {
+                    "type": "string",
+                    "description": "Unique identifier for the prompt"
+                  },
+                  "versionId": {
+                    "type": "string",
+                    "description": "Unique identifier for the version"
+                  },
+                  "workspaceId": {
+                    "type": "string",
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "deploymentConditions": {
+                    "type": "object",
+                    "properties": {
+                      "variable": {
+                        "type": "string",
+                        "description": "Variable name for deployment condition"
+                      },
+                      "operator": {
+                        "type": "string",
+                        "enum": [
+                          ">",
+                          "<",
+                          "<=",
+                          ">=",
+                          "="
+                        ],
+                        "description": "Comparison operator for the deployment condition"
+                      },
+                      "value": {
+                        "type": "string",
+                        "description": "Value to compare with"
+                      }
+                    },
+                    "required": [
+                      "variable",
+                      "operator",
+                      "value"
+                    ],
+                    "description": "Deployment conditions configuration"
+                  }
+                },
+                "required": [
+                  "promptId",
+                  "versionId",
+                  "workspaceId",
+                  "deploymentConditions"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Prompt version deployed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "promptId": {
+                          "type": "string"
+                        },
+                        "versionId": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "active",
+                            "inactive"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "promptId",
+                        "versionId",
+                        "status",
+                        "createdAt",
+                        "updatedAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Prompt or version not found"
+          }
+        }
+      },
+      "tags": [
+        "Prompts"
+      ]
+    },
+    "/v1/prompts/config": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Prompts"
+        ],
+        "description": "Get prompt configuration",
+        "summary": "Get Prompt Config",
+        "responses": {
+          "200": {
+            "description": "Prompt configuration retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "promptId": {
+                          "type": "string"
+                        },
+                        "config": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "nullable": true
+                          }
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "promptId",
+                        "config",
+                        "createdAt",
+                        "updatedAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Prompt configuration not found"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Prompts"
+        ],
+        "description": "Update prompt configuration",
+        "summary": "Update Prompt Config",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "deploymentFields": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "variable": {
+                          "type": "string"
+                        },
+                        "operator": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "nullable": true
+                        }
+                      },
+                      "required": [
+                        "variable",
+                        "operator"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "id",
+                  "deploymentFields"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Prompt configuration updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "promptId": {
+                          "type": "string"
+                        },
+                        "config": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "nullable": true
+                          }
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "promptId",
+                        "config",
+                        "createdAt",
+                        "updatedAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Prompt configuration not found"
+          }
+        }
+      }
+    }
+  }
+}

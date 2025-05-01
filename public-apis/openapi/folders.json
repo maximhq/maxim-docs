@@ -1,0 +1,465 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "contact": {
+      "name": "Maxim Engineering",
+      "email": "eng@getmaxim.ai"
+    },
+    "title": "Maxim SDK API - folders",
+    "description": "API documentation for Maxim SDK folders endpoints"
+  },
+  "servers": [
+    {
+      "url": "https://api.getmaxim.ai"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-maxim-api-key",
+        "description": "API key for authentication"
+      }
+    },
+    "schemas": {
+      "Folder": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "entityType": {
+            "type": "string",
+            "enum": [
+              "WORKFLOW",
+              "WORKFLOW_SIMULATION",
+              "PROMPT_CHAIN",
+              "DATASET",
+              "DATASET_SPLIT",
+              "PROMPT",
+              "DATASOURCE",
+              "PROMPT_EXPERIMENT",
+              "LOG_REPOSITORY",
+              "PROMPT_TOOL",
+              "EVALUATOR",
+              "SDK",
+              "TEST_RUN",
+              "RUN_REPORT"
+            ]
+          },
+          "parentId": {
+            "type": "string",
+            "nullable": true
+          },
+          "config": {
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "FOLDER"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "workspaceId",
+          "name",
+          "entityType",
+          "parentId",
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    },
+    "parameters": {}
+  },
+  "paths": {
+    "/v1/folders": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Create a new folder for organizing entities",
+        "summary": "Create Folder",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workspaceId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Name of the folder"
+                  },
+                  "entityType": {
+                    "type": "string",
+                    "enum": [
+                      "WORKFLOW",
+                      "PROMPT_CHAIN",
+                      "DATASET",
+                      "PROMPT",
+                      "CONTEXT_SOURCE",
+                      "PROMPT_COMPARISONS",
+                      "LOG_REPOSITORY",
+                      "PROMPT_TOOL"
+                    ],
+                    "description": "Type of entity for the folder"
+                  },
+                  "parentId": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "ID of the parent folder, if any"
+                  },
+                  "config": {
+                    "nullable": true,
+                    "description": "Additional configuration for the folder. Can be any key-value pair."
+                  }
+                },
+                "required": [
+                  "workspaceId",
+                  "name",
+                  "entityType"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Folder created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Folder"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Get folder details. If id or name is provided, returns a single folder object. Otherwise, lists sub-folders under the parentFolderId (or root).",
+        "summary": "Get Folders",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the folder"
+            },
+            "required": false,
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Name of the folder"
+            },
+            "required": false,
+            "name": "name",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the workspace"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "description": "ID of the parent folder to filter by"
+            },
+            "required": false,
+            "name": "parentFolderId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Name of the parent folder to filter by (alternative to parentFolderId)"
+            },
+            "required": false,
+            "name": "parentFolderName",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "WORKFLOW",
+                "PROMPT_CHAIN",
+                "DATASET",
+                "PROMPT",
+                "CONTEXT_SOURCE",
+                "PROMPT_COMPARISONS",
+                "LOG_REPOSITORY",
+                "PROMPT_TOOL"
+              ]
+            },
+            "required": true,
+            "name": "entityType",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "nullable": true,
+              "maximum": 100,
+              "default": 20,
+              "description": "Maximum number of records to return (max: 100)"
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "description": "Cursor for pagination"
+            },
+            "required": false,
+            "name": "cursor",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Folders retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/Folder"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Folder"
+                          }
+                        }
+                      ],
+                      "description": "Single Folder object if fetching by id/name, array of Folders if listing."
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "nextCursor": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "hasMore": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "hasMore"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Folder not found"
+          }
+        }
+      }
+    },
+    "/v1/folders/contents": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Folders"
+        ],
+        "description": "Get the contents (entities) of a specific folder, identified by folderId or name+parentFolderId.",
+        "summary": "Get Folder Contents",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Unique identifier for the workspace"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the folder whose contents are to be fetched"
+            },
+            "required": false,
+            "name": "folderId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Name of the folder whose contents are to be fetched"
+            },
+            "required": false,
+            "name": "name",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "description": "ID of the parent folder (used with name for uniqueness)"
+            },
+            "required": false,
+            "name": "parentFolderId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "WORKFLOW",
+                "PROMPT_CHAIN",
+                "DATASET",
+                "PROMPT",
+                "CONTEXT_SOURCE",
+                "PROMPT_COMPARISONS",
+                "LOG_REPOSITORY",
+                "PROMPT_TOOL"
+              ]
+            },
+            "required": true,
+            "name": "entityType",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "nullable": true,
+              "maximum": 100,
+              "default": 20,
+              "description": "Maximum number of records to return (max: 100)"
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "description": "Cursor for pagination"
+            },
+            "required": false,
+            "name": "cursor",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Folder contents retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "nullable": true
+                      },
+                      "description": "Array of entities within the folder."
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "nextCursor": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "hasMore": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "hasMore"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "pagination"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Folder not found"
+          }
+        }
+      }
+    }
+  }
+}

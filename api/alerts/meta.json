@@ -1,9 +1,0 @@
-{
-  "title": "Alerts",
-  "pages": [
-    "delete",
-    "get",
-    "post",
-    "put"
-  ]
-}

@@ -1,9 +1,0 @@
-{
-  "title": "Columns",
-  "pages": [
-    "delete",
-    "get",
-    "post",
-    "put"
-  ]
-}

@@ -1,0 +1,11 @@
+{
+	"name": "maxim-docs",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "apps/maxim-docs",
+	"projectType": "application",
+	"targets": {		
+		"dev": {
+			"command": "cd apps/maxim-docs && mintlify dev"
+		}
+	}
+}

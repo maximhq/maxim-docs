@@ -1,0 +1,1712 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "contact": {
+      "name": "Maxim Engineering",
+      "email": "eng@getmaxim.ai"
+    },
+    "title": "Maxim SDK API - log-repositories",
+    "description": "API documentation for Maxim SDK log-repositories endpoints"
+  },
+  "servers": [
+    {
+      "url": "https://api.getmaxim.ai"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-maxim-api-key",
+        "description": "API key for authentication"
+      }
+    },
+    "schemas": {
+      "LogRepository": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string"
+          },
+          "folderId": {
+            "type": "string"
+          },
+          "config": {
+            "type": "object",
+            "properties": {}
+          },
+          "customPricingStructureId": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "workspaceId",
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    },
+    "parameters": {}
+  },
+  "paths": {
+    "/v1/log-repositories": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Create a new log repository",
+        "summary": "Create a new log repository",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the log repository"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Optional description for the log repository"
+                  },
+                  "workspaceId": {
+                    "type": "string",
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "folderId": {
+                    "type": "string",
+                    "description": "Optional ID of the folder to create the repository in"
+                  },
+                  "customPricingStructureId": {
+                    "type": "string",
+                    "description": "Optional custom pricing structure ID"
+                  }
+                },
+                "required": [
+                  "name",
+                  "workspaceId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Log repository created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/LogRepository"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Workspace not found"
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Get log repositories",
+        "summary": "Get log repositories",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the workspace"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Log repository ID to fetch specific repository"
+            },
+            "required": false,
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Log repository name"
+            },
+            "required": false,
+            "name": "name",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "nullable": true,
+              "maximum": 20,
+              "default": 20,
+              "description": "Maximum number of records to return (max: 20)"
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "description": "Cursor for pagination"
+            },
+            "required": false,
+            "name": "cursor",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "description": "Filter repositories created after this date (eg: 2023-01-01) //YYYY-MM-DD"
+            },
+            "required": false,
+            "name": "gte",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "description": "Filter repositories created before this date (eg: 2023-12-31) //YYYY-MM-DD"
+            },
+            "required": false,
+            "name": "lte",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "description": "Folder ID to fetch repositories in"
+            },
+            "required": false,
+            "name": "folderId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Log repositories retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/LogRepository"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Log repository not found"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Update log repository",
+        "summary": "Update log repository",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "Log repository ID to fetch specific repository"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the log repository"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description of the log respository"
+                  },
+                  "folderId": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "Optional ID of the folder containing the repository"
+                  },
+                  "customPricingStructureId": {
+                    "type": "string",
+                    "description": "Optional custom pricing structure ID"
+                  }
+                },
+                "required": [
+                  "id",
+                  "name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Log repository updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/LogRepository"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Log repository not found"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Delete a log repository",
+        "summary": "Delete a log repository",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the workspace"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Log repository ID to fetch specific repository"
+            },
+            "required": true,
+            "name": "id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Log repository deleted successfully"
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Log repository not found"
+          }
+        }
+      }
+    },
+    "/v1/log-repositories/logs/search": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Search logs in a log repository",
+        "summary": "Search logs in a log repository",
+        "tags": [
+          "LogRepositories"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the workspace"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Log repository ID"
+            },
+            "required": true,
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "session",
+                "trace"
+              ],
+              "description": "Type of logs to retrieve (session or trace)"
+            },
+            "required": true,
+            "name": "type",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "gte": {
+                  "type": "string",
+                  "nullable": true,
+                  "description": "Start timestamp for filtering logs in UTC format (e.g., 2024-01-01T00:00:00Z)"
+                },
+                "lte": {
+                  "type": "string",
+                  "nullable": true,
+                  "description": "End timestamp for filtering logs in UTC format (e.g., 2024-01-31T23:59:59Z)"
+                }
+              },
+              "description": "Timestamp range for filtering logs eg: { gte: '2024-01-01T00:00:00Z', lte: '2024-01-31T23:59:59Z' }"
+            },
+            "required": false,
+            "name": "timestamp",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Filter logs by session ID"
+            },
+            "required": false,
+            "name": "sessionId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Search query to filter logs"
+            },
+            "required": false,
+            "name": "searchQuery",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "combinator": {
+                  "type": "string",
+                  "enum": [
+                    "all",
+                    "any"
+                  ],
+                  "description": "Determines how multiple filters are combined - either ALL must match or ANY must match"
+                },
+                "filters": {
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "columnName": {
+                            "type": "string",
+                            "enum": [
+                              "tags"
+                            ],
+                            "description": "Filter by trace tags (key-value pairs)"
+                          },
+                          "operator": {
+                            "type": "string",
+                            "enum": [
+                              "equal",
+                              "not_equal"
+                            ]
+                          },
+                          "value": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "key": {
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "key",
+                                "value"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "columnName",
+                          "operator",
+                          "value"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "columnName": {
+                            "type": "string",
+                            "enum": [
+                              "traceId"
+                            ],
+                            "description": " Filter by unique trace identifier"
+                          },
+                          "operator": {
+                            "type": "string",
+                            "enum": [
+                              "="
+                            ]
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "columnName",
+                          "operator",
+                          "value"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "columnName": {
+                            "type": "string",
+                            "enum": [
+                              "isError"
+                            ],
+                            "description": " Filter by error status"
+                          },
+                          "operator": {
+                            "type": "string",
+                            "enum": [
+                              "=",
+                              "!="
+                            ]
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "columnName",
+                          "operator",
+                          "value"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "columnName": {
+                            "type": "string",
+                            "enum": [
+                              "models"
+                            ],
+                            "description": "Filter by AI models used"
+                          },
+                          "operator": {
+                            "type": "string",
+                            "enum": [
+                              "=",
+                              "!=",
+                              "in",
+                              "not_in"
+                            ]
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "columnName",
+                          "operator",
+                          "value"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "columnName": {
+                            "type": "string",
+                            "enum": [
+                              "tokens"
+                            ],
+                            "description": " Filter by token usage "
+                          },
+                          "operator": {
+                            "type": "string",
+                            "enum": [
+                              "=",
+                              "!=",
+                              ">",
+                              "<",
+                              ">=",
+                              "<="
+                            ]
+                          },
+                          "value": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "columnName",
+                          "operator",
+                          "value"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "columnName": {
+                            "type": "string",
+                            "enum": [
+                              "cost"
+                            ],
+                            "description": "Filter by cost "
+                          },
+                          "operator": {
+                            "type": "string",
+                            "enum": [
+                              "=",
+                              "!=",
+                              ">",
+                              "<",
+                              ">=",
+                              "<="
+                            ]
+                          },
+                          "value": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "columnName",
+                          "operator",
+                          "value"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "columnName": {
+                            "type": "string",
+                            "enum": [
+                              "latency"
+                            ],
+                            "description": "Filter by latency/response time"
+                          },
+                          "operator": {
+                            "type": "string",
+                            "enum": [
+                              "=",
+                              "!=",
+                              ">",
+                              "<",
+                              ">=",
+                              "<="
+                            ]
+                          },
+                          "value": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "columnName",
+                          "operator",
+                          "value"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "columnName": {
+                            "type": "string",
+                            "enum": [
+                              "userFeedback"
+                            ],
+                            "description": "Filter by user feedback score"
+                          },
+                          "operator": {
+                            "type": "string",
+                            "enum": [
+                              "=",
+                              "!=",
+                              ">",
+                              "<",
+                              ">=",
+                              "<="
+                            ]
+                          },
+                          "value": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "columnName",
+                          "operator",
+                          "value"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "combinator",
+                "filters"
+              ],
+              "description": "Trace properties to filter on"
+            },
+            "required": false,
+            "name": "traceFilters",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "combinator": {
+                  "type": "string",
+                  "enum": [
+                    "all",
+                    "any"
+                  ],
+                  "description": "Determines how multiple evaluator filters are combined - either ALL must match or ANY must match "
+                },
+                "filters": {
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "evaluatorName": {
+                            "type": "string"
+                          },
+                          "operator": {
+                            "type": "string",
+                            "enum": [
+                              "null",
+                              "notNull"
+                            ]
+                          },
+                          "value": {
+                            "nullable": true
+                          }
+                        },
+                        "required": [
+                          "evaluatorName",
+                          "operator"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "evaluatorName": {
+                            "type": "string"
+                          },
+                          "operator": {
+                            "type": "string",
+                            "enum": [
+                              "=",
+                              "!=",
+                              ">",
+                              "<",
+                              ">=",
+                              "<="
+                            ]
+                          },
+                          "value": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "number"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "evaluatorName",
+                          "operator",
+                          "value"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "evaluatorName": {
+                            "type": "string"
+                          },
+                          "operator": {
+                            "type": "string",
+                            "enum": [
+                              "is"
+                            ]
+                          },
+                          "value": {
+                            "type": "string",
+                            "enum": [
+                              "pass",
+                              "fail",
+                              "Err",
+                              "NA"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "evaluatorName",
+                          "operator",
+                          "value"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "combinator",
+                "filters"
+              ],
+              "description": "Evaluator metrics to be filtered on"
+            },
+            "required": false,
+            "name": "evaluatorFilters",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "default": 0,
+              "description": "Page number for pagination"
+            },
+            "required": false,
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "maximum": 50,
+              "default": 10,
+              "description": "Number of records per page (max: 100)"
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "columnName": {
+                  "type": "string",
+                  "description": "Field to sort by (e.g., startTimestamp)"
+                },
+                "desc": {
+                  "type": "boolean",
+                  "description": "Sort direction (true for descending)"
+                }
+              },
+              "required": [
+                "columnName",
+                "desc"
+              ],
+              "description": "Sorting configuration for logs eg: { id: 'startTimestamp', desc: true }"
+            },
+            "required": false,
+            "name": "sorting",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logs retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "uniqueTags": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "logs": {
+                          "type": "array",
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "tags": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "timestamp": {
+                                    "type": "string"
+                                  },
+                                  "startTimestamp": {
+                                    "type": "string"
+                                  },
+                                  "endTimestamp": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "feedback": {
+                                    "type": "object",
+                                    "properties": {
+                                      "score": {
+                                        "type": "number"
+                                      },
+                                      "comment": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "score"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "tags",
+                                  "timestamp",
+                                  "startTimestamp",
+                                  "name"
+                                ]
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "tags": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "startTimestamp": {
+                                    "type": "string"
+                                  },
+                                  "sessionId": {
+                                    "type": "string"
+                                  },
+                                  "type": {
+                                    "type": "string"
+                                  },
+                                  "input": {
+                                    "nullable": true
+                                  },
+                                  "output": {
+                                    "nullable": true
+                                  },
+                                  "feedback": {
+                                    "type": "object",
+                                    "properties": {
+                                      "score": {
+                                        "type": "number"
+                                      },
+                                      "comment": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "score",
+                                      "comment"
+                                    ]
+                                  },
+                                  "duration": {
+                                    "type": "number"
+                                  },
+                                  "endTimestamp": {
+                                    "type": "string"
+                                  },
+                                  "version": {
+                                    "type": "number"
+                                  },
+                                  "timeline": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "traceId": {
+                                          "type": "string"
+                                        },
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "id": {
+                                          "type": "string"
+                                        },
+                                        "type": {
+                                          "type": "string"
+                                        },
+                                        "startTimestamp": {
+                                          "type": "string"
+                                        },
+                                        "tags": {
+                                          "type": "object",
+                                          "additionalProperties": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "timeline": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "object",
+                                            "properties": {
+                                              "spanId": {
+                                                "type": "string"
+                                              },
+                                              "modelParameters": {
+                                                "type": "object",
+                                                "properties": {
+                                                  "presencePenalty": {
+                                                    "type": "number"
+                                                  },
+                                                  "maxTokens": {
+                                                    "type": "number"
+                                                  },
+                                                  "temperature": {
+                                                    "type": "number"
+                                                  },
+                                                  "frequencyPenalty": {
+                                                    "type": "number"
+                                                  },
+                                                  "topP": {
+                                                    "type": "number"
+                                                  }
+                                                },
+                                                "required": [
+                                                  "presencePenalty",
+                                                  "maxTokens",
+                                                  "temperature",
+                                                  "frequencyPenalty",
+                                                  "topP"
+                                                ]
+                                              },
+                                              "provider": {
+                                                "type": "string"
+                                              },
+                                              "name": {
+                                                "type": "string"
+                                              },
+                                              "messages": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "role": {
+                                                      "type": "string"
+                                                    },
+                                                    "content": {
+                                                      "type": "string"
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "role",
+                                                    "content"
+                                                  ]
+                                                }
+                                              },
+                                              "model": {
+                                                "type": "string"
+                                              },
+                                              "id": {
+                                                "type": "string"
+                                              },
+                                              "type": {
+                                                "type": "string"
+                                              },
+                                              "startTimestamp": {
+                                                "type": "string"
+                                              },
+                                              "completionResult": {
+                                                "type": "object",
+                                                "properties": {
+                                                  "cost": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                      "output": {
+                                                        "type": "number"
+                                                      },
+                                                      "input": {
+                                                        "type": "number"
+                                                      },
+                                                      "total": {
+                                                        "type": "number"
+                                                      }
+                                                    },
+                                                    "required": [
+                                                      "output",
+                                                      "input",
+                                                      "total"
+                                                    ]
+                                                  },
+                                                  "provider": {
+                                                    "type": "string"
+                                                  },
+                                                  "created": {
+                                                    "nullable": true
+                                                  },
+                                                  "usage": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                      "completion_tokens": {
+                                                        "type": "number"
+                                                      },
+                                                      "prompt_tokens": {
+                                                        "type": "number"
+                                                      },
+                                                      "total_tokens": {
+                                                        "type": "number"
+                                                      }
+                                                    },
+                                                    "required": [
+                                                      "completion_tokens",
+                                                      "prompt_tokens",
+                                                      "total_tokens"
+                                                    ]
+                                                  },
+                                                  "model": {
+                                                    "type": "string"
+                                                  },
+                                                  "model_params": {
+                                                    "nullable": true
+                                                  },
+                                                  "id": {
+                                                    "type": "string"
+                                                  },
+                                                  "choices": {
+                                                    "type": "array",
+                                                    "items": {
+                                                      "type": "object",
+                                                      "properties": {
+                                                        "index": {
+                                                          "type": "number"
+                                                        },
+                                                        "message": {
+                                                          "type": "object",
+                                                          "properties": {
+                                                            "role": {
+                                                              "type": "string"
+                                                            },
+                                                            "content": {
+                                                              "type": "string"
+                                                            },
+                                                            "function_call": {
+                                                              "nullable": true
+                                                            },
+                                                            "tool_calls": {
+                                                              "nullable": true
+                                                            }
+                                                          },
+                                                          "required": [
+                                                            "role",
+                                                            "content",
+                                                            "function_call",
+                                                            "tool_calls"
+                                                          ]
+                                                        },
+                                                        "finish_reason": {
+                                                          "type": "string"
+                                                        },
+                                                        "logprobs": {
+                                                          "nullable": true
+                                                        }
+                                                      },
+                                                      "required": [
+                                                        "message",
+                                                        "finish_reason",
+                                                        "logprobs"
+                                                      ]
+                                                    }
+                                                  },
+                                                  "error": {
+                                                    "nullable": true
+                                                  }
+                                                },
+                                                "required": [
+                                                  "cost",
+                                                  "provider",
+                                                  "created",
+                                                  "usage",
+                                                  "model",
+                                                  "model_params",
+                                                  "id",
+                                                  "choices",
+                                                  "error"
+                                                ]
+                                              },
+                                              "duration": {
+                                                "type": "number"
+                                              },
+                                              "endTimestamp": {
+                                                "type": "string"
+                                              },
+                                              "timestamp": {
+                                                "type": "string"
+                                              },
+                                              "tags": {
+                                                "type": "object",
+                                                "additionalProperties": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "input": {
+                                                "type": "string"
+                                              },
+                                              "docs": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": "string"
+                                                }
+                                              }
+                                            },
+                                            "required": [
+                                              "spanId",
+                                              "name",
+                                              "id",
+                                              "type"
+                                            ]
+                                          }
+                                        }
+                                      },
+                                      "required": [
+                                        "traceId",
+                                        "name",
+                                        "id",
+                                        "type",
+                                        "startTimestamp",
+                                        "tags",
+                                        "timeline"
+                                      ]
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "name",
+                                  "tags",
+                                  "startTimestamp",
+                                  "sessionId",
+                                  "type",
+                                  "feedback",
+                                  "duration",
+                                  "endTimestamp",
+                                  "version",
+                                  "timeline"
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "uniqueTags",
+                        "logs"
+                      ]
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "number"
+                        },
+                        "page": {
+                          "type": "number"
+                        },
+                        "limit": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "total",
+                        "page",
+                        "limit"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "pagination"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Log repository not found"
+          }
+        }
+      }
+    },
+    "/v1/log-repositories/logs/traces": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Get a specific trace by ID",
+        "summary": "Get trace by ID",
+        "tags": [
+          "LogRepositories"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the trace"
+            },
+            "required": true,
+            "name": "id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Trace retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "tags": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "string"
+                          }
+                        },
+                        "startTimestamp": {
+                          "type": "string"
+                        },
+                        "sessionId": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "input": {
+                          "nullable": true
+                        },
+                        "output": {
+                          "nullable": true
+                        },
+                        "feedback": {
+                          "type": "object",
+                          "properties": {
+                            "score": {
+                              "type": "number"
+                            },
+                            "comment": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "score",
+                            "comment"
+                          ]
+                        },
+                        "duration": {
+                          "type": "number"
+                        },
+                        "endTimestamp": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "type": "number"
+                        },
+                        "timeline": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "traceId": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "id": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              },
+                              "startTimestamp": {
+                                "type": "string"
+                              },
+                              "tags": {
+                                "type": "object",
+                                "additionalProperties": {
+                                  "type": "string"
+                                }
+                              },
+                              "timeline": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "spanId": {
+                                      "type": "string"
+                                    },
+                                    "modelParameters": {
+                                      "type": "object",
+                                      "properties": {
+                                        "presencePenalty": {
+                                          "type": "number"
+                                        },
+                                        "maxTokens": {
+                                          "type": "number"
+                                        },
+                                        "temperature": {
+                                          "type": "number"
+                                        },
+                                        "frequencyPenalty": {
+                                          "type": "number"
+                                        },
+                                        "topP": {
+                                          "type": "number"
+                                        }
+                                      },
+                                      "required": [
+                                        "presencePenalty",
+                                        "maxTokens",
+                                        "temperature",
+                                        "frequencyPenalty",
+                                        "topP"
+                                      ]
+                                    },
+                                    "provider": {
+                                      "type": "string"
+                                    },
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "messages": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "role": {
+                                            "type": "string"
+                                          },
+                                          "content": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "role",
+                                          "content"
+                                        ]
+                                      }
+                                    },
+                                    "model": {
+                                      "type": "string"
+                                    },
+                                    "id": {
+                                      "type": "string"
+                                    },
+                                    "type": {
+                                      "type": "string"
+                                    },
+                                    "startTimestamp": {
+                                      "type": "string"
+                                    },
+                                    "completionResult": {
+                                      "type": "object",
+                                      "properties": {
+                                        "cost": {
+                                          "type": "object",
+                                          "properties": {
+                                            "output": {
+                                              "type": "number"
+                                            },
+                                            "input": {
+                                              "type": "number"
+                                            },
+                                            "total": {
+                                              "type": "number"
+                                            }
+                                          },
+                                          "required": [
+                                            "output",
+                                            "input",
+                                            "total"
+                                          ]
+                                        },
+                                        "provider": {
+                                          "type": "string"
+                                        },
+                                        "created": {
+                                          "nullable": true
+                                        },
+                                        "usage": {
+                                          "type": "object",
+                                          "properties": {
+                                            "completion_tokens": {
+                                              "type": "number"
+                                            },
+                                            "prompt_tokens": {
+                                              "type": "number"
+                                            },
+                                            "total_tokens": {
+                                              "type": "number"
+                                            }
+                                          },
+                                          "required": [
+                                            "completion_tokens",
+                                            "prompt_tokens",
+                                            "total_tokens"
+                                          ]
+                                        },
+                                        "model": {
+                                          "type": "string"
+                                        },
+                                        "model_params": {
+                                          "nullable": true
+                                        },
+                                        "id": {
+                                          "type": "string"
+                                        },
+                                        "choices": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "object",
+                                            "properties": {
+                                              "index": {
+                                                "type": "number"
+                                              },
+                                              "message": {
+                                                "type": "object",
+                                                "properties": {
+                                                  "role": {
+                                                    "type": "string"
+                                                  },
+                                                  "content": {
+                                                    "type": "string"
+                                                  },
+                                                  "function_call": {
+                                                    "nullable": true
+                                                  },
+                                                  "tool_calls": {
+                                                    "nullable": true
+                                                  }
+                                                },
+                                                "required": [
+                                                  "role",
+                                                  "content",
+                                                  "function_call",
+                                                  "tool_calls"
+                                                ]
+                                              },
+                                              "finish_reason": {
+                                                "type": "string"
+                                              },
+                                              "logprobs": {
+                                                "nullable": true
+                                              }
+                                            },
+                                            "required": [
+                                              "message",
+                                              "finish_reason",
+                                              "logprobs"
+                                            ]
+                                          }
+                                        },
+                                        "error": {
+                                          "nullable": true
+                                        }
+                                      },
+                                      "required": [
+                                        "cost",
+                                        "provider",
+                                        "created",
+                                        "usage",
+                                        "model",
+                                        "model_params",
+                                        "id",
+                                        "choices",
+                                        "error"
+                                      ]
+                                    },
+                                    "duration": {
+                                      "type": "number"
+                                    },
+                                    "endTimestamp": {
+                                      "type": "string"
+                                    },
+                                    "timestamp": {
+                                      "type": "string"
+                                    },
+                                    "tags": {
+                                      "type": "object",
+                                      "additionalProperties": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "input": {
+                                      "type": "string"
+                                    },
+                                    "docs": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  "required": [
+                                    "spanId",
+                                    "name",
+                                    "id",
+                                    "type"
+                                  ]
+                                }
+                              }
+                            },
+                            "required": [
+                              "traceId",
+                              "name",
+                              "id",
+                              "type",
+                              "startTimestamp",
+                              "tags",
+                              "timeline"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "tags",
+                        "startTimestamp",
+                        "sessionId",
+                        "type",
+                        "feedback",
+                        "duration",
+                        "endTimestamp",
+                        "version",
+                        "timeline"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Trace not found"
+          }
+        }
+      }
+    }
+  }
+}

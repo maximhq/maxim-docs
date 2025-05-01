@@ -1,0 +1,1676 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "contact": {
+      "name": "Maxim Engineering",
+      "email": "eng@getmaxim.ai"
+    },
+    "title": "Maxim SDK API - datasets",
+    "description": "API documentation for Maxim SDK datasets endpoints"
+  },
+  "servers": [
+    {
+      "url": "https://api.getmaxim.ai"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-maxim-api-key",
+        "description": "API key for authentication"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "paths": {
+    "/v1/datasets": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Create a new dataset",
+        "summary": "Create Dataset",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workspaceId": {
+                    "type": "string",
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the dataset"
+                  },
+                  "createDefaultColumns": {
+                    "type": "boolean",
+                    "description": "Create default columns for the dataset. Columns Input and Expected Output will get created by default"
+                  },
+                  "columns": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Name of the column"
+                        },
+                        "columnType": {
+                          "type": "string",
+                          "enum": [
+                            "CONVERSATION_HISTORY",
+                            "INPUT",
+                            "VARIABLE",
+                            "EXPECTED_OUTPUT",
+                            "EXPECTED_TOOL_CALLS",
+                            "TAGS",
+                            "OUTPUT",
+                            "EXPECTED_STEPS",
+                            "SCENARIO"
+                          ],
+                          "description": "Type of the column"
+                        },
+                        "meta": {
+                          "type": "object",
+                          "properties": {
+                            "columnDataType": {
+                              "type": "string",
+                              "enum": [
+                                "file",
+                                "text"
+                              ],
+                              "description": "Type of the data in the column"
+                            },
+                            "delimiter": {
+                              "type": "string",
+                              "minLength": 1,
+                              "description": "Delimiter for the column"
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "columnType",
+                        "meta"
+                      ]
+                    },
+                    "description": "Columns for the dataset"
+                  }
+                },
+                "required": [
+                  "workspaceId",
+                  "name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Dataset created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Delete a dataset",
+        "summary": "Delete Dataset",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the workspace"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the dataset to delete"
+            },
+            "required": true,
+            "name": "id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Dataset deleted successfully"
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Get datasets or a specific dataset",
+        "summary": "Get Datasets",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the dataset"
+            },
+            "required": false,
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "boolean",
+              "nullable": true,
+              "description": "Whether to list splits within a dataset"
+            },
+            "required": false,
+            "name": "listSplits",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the workspace"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the folder"
+            },
+            "required": false,
+            "name": "folderId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "nullable": true,
+              "maximum": 100,
+              "default": 20,
+              "description": "Maximum number of records to return (max: 100)"
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "description": "Cursor for pagination"
+            },
+            "required": false,
+            "name": "cursor",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Datasets retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "config": {
+                        "type": "object",
+                        "nullable": true,
+                        "properties": {}
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "accountId": {
+                        "type": "string"
+                      },
+                      "workspaceId": {
+                        "type": "string"
+                      },
+                      "folderId": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "createdAt": {
+                        "type": "string"
+                      },
+                      "updatedAt": {
+                        "type": "string"
+                      },
+                      "deletedAt": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "columns": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            },
+                            "meta": {
+                              "type": "object",
+                              "properties": {
+                                "columnDataType": {
+                                  "type": "string"
+                                },
+                                "delimiter": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "columnDataType",
+                                "delimiter"
+                              ]
+                            },
+                            "columnType": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "name",
+                            "type",
+                            "meta",
+                            "columnType"
+                          ]
+                        }
+                      },
+                      "entriesCount": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "config",
+                      "description",
+                      "accountId",
+                      "workspaceId",
+                      "folderId",
+                      "createdAt",
+                      "updatedAt",
+                      "deletedAt",
+                      "columns",
+                      "entriesCount"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Dataset not found"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Update a dataset",
+        "summary": "Update Dataset",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier for the alert"
+                  },
+                  "workspaceId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Name of the dataset"
+                  }
+                },
+                "required": [
+                  "id",
+                  "workspaceId",
+                  "name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dataset updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Dataset not found"
+          }
+        }
+      }
+    },
+    "/v1/datasets/columns": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Create dataset columns",
+        "summary": "Create Dataset Columns",
+        "tags": [
+          "Datasets"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workspaceId": {
+                    "type": "string",
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "datasetId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier for the dataset"
+                  },
+                  "columns": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Name of the column"
+                        },
+                        "columnType": {
+                          "type": "string",
+                          "enum": [
+                            "CONVERSATION_HISTORY",
+                            "INPUT",
+                            "VARIABLE",
+                            "EXPECTED_OUTPUT",
+                            "EXPECTED_TOOL_CALLS",
+                            "TAGS",
+                            "OUTPUT",
+                            "EXPECTED_STEPS",
+                            "SCENARIO"
+                          ],
+                          "description": "Type of the column"
+                        },
+                        "meta": {
+                          "type": "object",
+                          "properties": {
+                            "columnDataType": {
+                              "type": "string",
+                              "enum": [
+                                "file",
+                                "text"
+                              ],
+                              "description": "Type of the data in the column"
+                            },
+                            "delimiter": {
+                              "type": "string",
+                              "minLength": 1,
+                              "description": "Delimiter for the column"
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "columnType"
+                      ]
+                    },
+                    "description": "Columns for the dataset"
+                  }
+                },
+                "required": [
+                  "workspaceId",
+                  "datasetId",
+                  "columns"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Dataset columns created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Dataset not found"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Delete dataset columns",
+        "summary": "Delete Dataset Columns",
+        "tags": [
+          "Datasets"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workspaceId": {
+                    "type": "string",
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "datasetId": {
+                    "type": "string",
+                    "description": "Unique identifier for the dataset to to fetch the columns of"
+                  },
+                  "columnIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 1,
+                    "description": "Unique identifiers for the columns to delete"
+                  }
+                },
+                "required": [
+                  "workspaceId",
+                  "datasetId",
+                  "columnIds"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Dataset columns deleted successfully"
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Dataset not found"
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Get dataset columns",
+        "summary": "Get Dataset Columns",
+        "tags": [
+          "Datasets"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the workspace"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the dataset to to fetch the columns of"
+            },
+            "required": true,
+            "name": "datasetId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "nullable": true,
+              "maximum": 100,
+              "default": 10,
+              "description": "Maximum number of records to return (max: 100)"
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dataset columns retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "meta": {
+                        "type": "object",
+                        "properties": {
+                          "columnDataType": {
+                            "type": "string"
+                          },
+                          "delimiter": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "columnDataType",
+                          "delimiter"
+                        ]
+                      },
+                      "columnType": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "type",
+                      "meta",
+                      "columnType"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Dataset not found"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Update dataset columns",
+        "summary": "Update Dataset Columns",
+        "tags": [
+          "Datasets"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workspaceId": {
+                    "type": "string",
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "datasetId": {
+                    "type": "string",
+                    "description": "Unique identifier for the dataset to to fetch the columns of"
+                  },
+                  "columnData": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "columnId": {
+                          "type": "string",
+                          "description": "columnId of the column you want to update"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "name of the column"
+                        }
+                      },
+                      "required": [
+                        "columnId",
+                        "name"
+                      ]
+                    },
+                    "minItems": 1
+                  }
+                },
+                "required": [
+                  "workspaceId",
+                  "datasetId",
+                  "columnData"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dataset columns updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Dataset not found"
+          }
+        }
+      }
+    },
+    "/v1/datasets/entries": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Create dataset entries",
+        "summary": "Create Dataset entries",
+        "tags": [
+          "Datasets"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workspaceId": {
+                    "type": "string",
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "datasetId": {
+                    "type": "string",
+                    "description": "Unique identifier for the dataset"
+                  },
+                  "entries": {
+                    "type": "array",
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "columnId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "file",
+                                  "text"
+                                ],
+                                "description": "Type of the data in the column"
+                              },
+                              "payload": {
+                                "nullable": true
+                              }
+                            },
+                            "required": [
+                              "type"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "columnId",
+                          "value"
+                        ]
+                      }
+                    },
+                    "minItems": 1,
+                    "description": "Entries to be added to a column in a dataset"
+                  }
+                },
+                "required": [
+                  "workspaceId",
+                  "datasetId",
+                  "entries"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Dataset entries created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "rowNo": {
+                            "type": "number"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "cells": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "columnId": {
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "type": "object",
+                                  "properties": {
+                                    "type": {
+                                      "type": "string"
+                                    },
+                                    "payload": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "type",
+                                    "payload"
+                                  ]
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "deletedAt": {
+                                  "nullable": true
+                                },
+                                "updatedAt": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "columnId",
+                                "value",
+                                "createdAt",
+                                "deletedAt",
+                                "updatedAt"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "rowNo",
+                          "createdAt",
+                          "cells"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Dataset not found"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Delete dataset entries",
+        "summary": "Delete Dataset Entries",
+        "tags": [
+          "Datasets"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workspaceId": {
+                    "type": "string",
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "datasetId": {
+                    "type": "string",
+                    "description": "Unique identifier for the dataset"
+                  },
+                  "splitId": {
+                    "type": "string",
+                    "description": "Unique identifier for the split"
+                  },
+                  "deleteAll": {
+                    "type": "boolean",
+                    "description": "Delete all entries from the dataset"
+                  },
+                  "columnIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 1,
+                    "description": "Unique identifiers for the columns to delete. All entries from this column will be deleted."
+                  },
+                  "entries": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "rowNo": {
+                          "type": "integer",
+                          "description": "The row number you want to delete from the dataset"
+                        },
+                        "entryId": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "The entryId you want to delete from the dataset. This field is required only when a splitId is passed"
+                        },
+                        "cells": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "columnId": {
+                                "type": "string",
+                                "description": "The columnId of which the entries will be deleted"
+                              }
+                            },
+                            "required": [
+                              "columnId"
+                            ]
+                          },
+                          "minItems": 1
+                        }
+                      },
+                      "required": [
+                        "rowNo"
+                      ]
+                    },
+                    "minItems": 1,
+                    "description": "Unique identifiers for the entries to delete. All entries from this entry will be deleted."
+                  }
+                },
+                "required": [
+                  "workspaceId",
+                  "datasetId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Dataset entries deleted successfully"
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Dataset not found"
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Get dataset entries",
+        "summary": "Get Dataset Entries",
+        "tags": [
+          "Datasets"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the workspace"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the dataset"
+            },
+            "required": true,
+            "name": "datasetId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for a split in the dataset"
+            },
+            "required": false,
+            "name": "splitId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "nullable": true,
+              "maximum": 30,
+              "default": 5,
+              "description": "Maximum number of records to return (max: 30)"
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "description": "Cursor for pagination"
+            },
+            "required": false,
+            "name": "cursor",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dataset entries retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "rowNo": {
+                            "type": "number"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "cells": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "columnId": {
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "type": "object",
+                                  "properties": {
+                                    "type": {
+                                      "type": "string"
+                                    },
+                                    "payload": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "type",
+                                    "payload"
+                                  ]
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "deletedAt": {
+                                  "nullable": true
+                                },
+                                "updatedAt": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "columnId",
+                                "value",
+                                "createdAt",
+                                "deletedAt",
+                                "updatedAt"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "rowNo",
+                          "createdAt",
+                          "cells"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Dataset not found"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Update dataset entries",
+        "summary": "Update Dataset Entries",
+        "tags": [
+          "Datasets"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workspaceId": {
+                    "type": "string",
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "datasetId": {
+                    "type": "string",
+                    "description": "Unique identifier for the dataset"
+                  },
+                  "entries": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "rowNo": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "description": "The row number you want to update"
+                        },
+                        "cells": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "columnId": {
+                                "type": "string",
+                                "description": "The column in the row you want to update"
+                              },
+                              "value": {
+                                "type": "object",
+                                "properties": {
+                                  "type": {
+                                    "type": "string"
+                                  },
+                                  "payload": {
+                                    "nullable": true
+                                  }
+                                },
+                                "required": [
+                                  "type"
+                                ],
+                                "description": "Value of the cell"
+                              }
+                            },
+                            "required": [
+                              "columnId",
+                              "value"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "rowNo",
+                        "cells"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "workspaceId",
+                  "datasetId",
+                  "entries"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dataset entries updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "rowNo": {
+                            "type": "number"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "cells": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "columnId": {
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "type": "object",
+                                  "properties": {
+                                    "type": {
+                                      "type": "string"
+                                    },
+                                    "payload": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "type",
+                                    "payload"
+                                  ]
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "deletedAt": {
+                                  "nullable": true
+                                },
+                                "updatedAt": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "columnId",
+                                "value",
+                                "createdAt",
+                                "deletedAt",
+                                "updatedAt"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "rowNo",
+                          "createdAt",
+                          "cells"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Dataset not found"
+          }
+        }
+      }
+    },
+    "/v1/datasets/splits": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Create dataset split",
+        "summary": "Create Dataset Split",
+        "tags": [
+          "Datasets"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the dataset split"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description of the dataset split"
+                  },
+                  "datasetId": {
+                    "type": "string",
+                    "description": "Unique identifier for the dataset"
+                  },
+                  "rows": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "description": "Rows of the dataset split. Pass a value of -1 to create an empty split"
+                  }
+                },
+                "required": [
+                  "name",
+                  "datasetId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Dataset split created successfully",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Dataset not found"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Delete dataset split",
+        "summary": "Delete Dataset Split",
+        "tags": [
+          "Datasets"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the dataset split to delete"
+            },
+            "required": true,
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the dataset"
+            },
+            "required": true,
+            "name": "datasetId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Dataset split deleted successfully"
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Dataset not found"
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Get dataset splits",
+        "summary": "Get Dataset Splits",
+        "tags": [
+          "Datasets"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the dataset split to delete"
+            },
+            "required": false,
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the dataset"
+            },
+            "required": true,
+            "name": "datasetId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dataset splits retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "meta": {
+                            "type": "object",
+                            "properties": {
+                              "columnDataType": {
+                                "type": "string"
+                              },
+                              "delimiter": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "columnDataType",
+                              "delimiter"
+                            ]
+                          },
+                          "columnType": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "type",
+                          "meta",
+                          "columnType"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Dataset not found"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Update dataset split",
+        "summary": "Update Dataset Split",
+        "tags": [
+          "Datasets"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "Unique identifier for the dataset split to update"
+                  },
+                  "datasetId": {
+                    "type": "string",
+                    "description": "Unique identifier for the dataset"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 255,
+                    "description": "Name of the dataset split"
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "description": "Description of the dataset split"
+                  }
+                },
+                "required": [
+                  "id",
+                  "datasetId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dataset split updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "meta": {
+                            "type": "object",
+                            "properties": {
+                              "columnDataType": {
+                                "type": "string"
+                              },
+                              "delimiter": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "columnDataType",
+                              "delimiter"
+                            ]
+                          },
+                          "columnType": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "type",
+                          "meta",
+                          "columnType"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Dataset not found"
+          }
+        }
+      }
+    }
+  }
+}

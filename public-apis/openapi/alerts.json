@@ -1,0 +1,776 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "contact": {
+      "name": "Maxim Engineering",
+      "email": "eng@getmaxim.ai"
+    },
+    "title": "Maxim SDK API - alerts",
+    "description": "API documentation for Maxim SDK alerts endpoints"
+  },
+  "servers": [
+    {
+      "url": "https://api.getmaxim.ai"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-maxim-api-key",
+        "description": "API key for authentication"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "paths": {
+    "/v1/alerts": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Create a new alert",
+        "summary": "Create Alert",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workspaceId": {
+                    "type": "string",
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "entityId": {
+                    "type": "string",
+                    "description": "ID of the entity to create alert for"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "WORKFLOW",
+                      "WORKFLOW_SIMULATION",
+                      "PROMPT_CHAIN",
+                      "DATASET",
+                      "DATASET_SPLIT",
+                      "PROMPT",
+                      "DATASOURCE",
+                      "PROMPT_EXPERIMENT",
+                      "LOG_REPOSITORY",
+                      "PROMPT_TOOL",
+                      "EVALUATOR",
+                      "SDK",
+                      "TEST_RUN",
+                      "RUN_REPORT"
+                    ],
+                    "description": "Type of entity for the alert"
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Whether the alert is enabled"
+                  },
+                  "config": {
+                    "type": "object",
+                    "properties": {
+                      "metric": {
+                        "type": "string",
+                        "description": "Metric to monitor"
+                      },
+                      "minimumThreshold": {
+                        "type": "number",
+                        "minimum": 1,
+                        "description": "Minimum threshold for the alert"
+                      },
+                      "duration": {
+                        "type": "number",
+                        "description": "Duration must be one of: 60, 300, 600, 1800, 3600 or 86400 (seconds)"
+                      },
+                      "operator": {
+                        "type": "string",
+                        "description": "Comparison operator for the alert condition"
+                      },
+                      "value": {
+                        "type": "string",
+                        "description": "Value to compare against"
+                      },
+                      "renotifyTTL": {
+                        "type": "number",
+                        "default": -1,
+                        "description": "Time to live for renotification in seconds. -1 means no TTL"
+                      }
+                    },
+                    "required": [
+                      "metric",
+                      "minimumThreshold",
+                      "duration",
+                      "operator",
+                      "value"
+                    ]
+                  },
+                  "notificationChannelIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "List of notification channel IDs eg: [\"channel_123\", \"channel_456\"]"
+                  }
+                },
+                "required": [
+                  "workspaceId",
+                  "entityId",
+                  "type",
+                  "config"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Alert created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "workspaceId": {
+                      "type": "string"
+                    },
+                    "entityId": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "enabled": {
+                      "type": "boolean"
+                    },
+                    "config": {
+                      "type": "object",
+                      "properties": {
+                        "metric": {
+                          "type": "string",
+                          "description": "Metric to monitor"
+                        },
+                        "minimumThreshold": {
+                          "type": "number",
+                          "minimum": 1,
+                          "description": "Minimum threshold for the alert"
+                        },
+                        "duration": {
+                          "type": "number",
+                          "description": "Duration must be one of: 60, 300, 600, 1800, 3600 or 86400 (seconds)"
+                        },
+                        "operator": {
+                          "type": "string",
+                          "description": "Comparison operator for the alert condition"
+                        },
+                        "value": {
+                          "type": "string",
+                          "description": "Value to compare against"
+                        },
+                        "renotifyTTL": {
+                          "type": "number",
+                          "default": -1,
+                          "description": "Time to live for renotification in seconds. -1 means no TTL"
+                        }
+                      },
+                      "required": [
+                        "metric",
+                        "minimumThreshold",
+                        "duration",
+                        "operator",
+                        "value"
+                      ]
+                    },
+                    "createdAt": {
+                      "type": "string"
+                    },
+                    "updatedAt": {
+                      "type": "string"
+                    },
+                    "notificationChannels": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "notificationChannel": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "description": "Unique identifier for the notification channel"
+                              },
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "SLACK",
+                                  "PAGER_DUTY"
+                                ],
+                                "description": "Type of notification channel."
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "Name of the notification channel"
+                              },
+                              "config": {
+                                "type": "object",
+                                "additionalProperties": {
+                                  "nullable": true
+                                },
+                                "description": "Channel-specific configuration"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "type",
+                              "name",
+                              "config"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "notificationChannel"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "workspaceId",
+                    "entityId",
+                    "type",
+                    "enabled",
+                    "config",
+                    "createdAt",
+                    "updatedAt"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Get alerts for a workspace",
+        "summary": "Get Alerts",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the alert"
+            },
+            "required": false,
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Unique identifier for the workspace"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "ID of the entity associated with the alert"
+            },
+            "required": true,
+            "name": "entityId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "nullable": true,
+              "maximum": 100,
+              "default": 20,
+              "description": "Maximum number of records to return (max: 100)"
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "description": "Cursor for pagination"
+            },
+            "required": false,
+            "name": "cursor",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Alerts retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "workspaceId": {
+                            "type": "string"
+                          },
+                          "entityId": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          },
+                          "config": {
+                            "type": "object",
+                            "properties": {
+                              "metric": {
+                                "type": "string",
+                                "description": "Metric to monitor"
+                              },
+                              "minimumThreshold": {
+                                "type": "number",
+                                "minimum": 1,
+                                "description": "Minimum threshold for the alert"
+                              },
+                              "duration": {
+                                "type": "number",
+                                "description": "Duration must be one of: 60, 300, 600, 1800, 3600 or 86400 (seconds)"
+                              },
+                              "operator": {
+                                "type": "string",
+                                "description": "Comparison operator for the alert condition"
+                              },
+                              "value": {
+                                "type": "string",
+                                "description": "Value to compare against"
+                              },
+                              "renotifyTTL": {
+                                "type": "number",
+                                "default": -1,
+                                "description": "Time to live for renotification in seconds. -1 means no TTL"
+                              }
+                            },
+                            "required": [
+                              "metric",
+                              "minimumThreshold",
+                              "duration",
+                              "operator",
+                              "value"
+                            ]
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "type": "string"
+                          },
+                          "notificationChannels": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "notificationChannel": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "description": "Unique identifier for the notification channel"
+                                    },
+                                    "type": {
+                                      "type": "string",
+                                      "enum": [
+                                        "SLACK",
+                                        "PAGER_DUTY"
+                                      ],
+                                      "description": "Type of notification channel."
+                                    },
+                                    "name": {
+                                      "type": "string",
+                                      "description": "Name of the notification channel"
+                                    },
+                                    "config": {
+                                      "type": "object",
+                                      "additionalProperties": {
+                                        "nullable": true
+                                      },
+                                      "description": "Channel-specific configuration"
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "type",
+                                    "name",
+                                    "config"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "notificationChannel"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "workspaceId",
+                          "entityId",
+                          "type",
+                          "enabled",
+                          "config",
+                          "createdAt",
+                          "updatedAt"
+                        ]
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "cursor": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "hasMore": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "cursor",
+                        "hasMore"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "pagination"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Delete an alert",
+        "summary": "Delete Alert",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the workspace"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the alert to delete"
+            },
+            "required": true,
+            "name": "id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Alert deleted successfully"
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Alert not found"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Update an alert",
+        "summary": "Update Alert",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier for the alert"
+                  },
+                  "workspaceId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "type": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "enum": [
+                          "LOG_REPOSITORY"
+                        ]
+                      },
+                      {
+                        "type": "string",
+                        "enum": [
+                          "EVALUATOR"
+                        ]
+                      }
+                    ],
+                    "description": "Type of entity for the alert",
+                    "enum": [
+                      "LOG_REPOSITORY",
+                      "EVALUATOR"
+                    ]
+                  },
+                  "config": {
+                    "type": "object",
+                    "properties": {
+                      "metric": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Metric to monitor"
+                      },
+                      "duration": {
+                        "type": "number",
+                        "minimum": 1,
+                        "description": "Duration in seconds"
+                      },
+                      "minimumThreshold": {
+                        "type": "number",
+                        "minimum": 1,
+                        "description": "Minimum threshold for the alert"
+                      },
+                      "operator": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Comparison operator for the alert condition"
+                      },
+                      "value": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Value to compare against"
+                      }
+                    },
+                    "required": [
+                      "metric",
+                      "duration",
+                      "minimumThreshold",
+                      "operator",
+                      "value"
+                    ],
+                    "description": "Alert configuration"
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "description": "Whether the alert is enabled"
+                  },
+                  "notificationChannelIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "List of notification channel IDs eg: [\"channel_123\", \"channel_456\"]"
+                  }
+                },
+                "required": [
+                  "id",
+                  "workspaceId",
+                  "type",
+                  "config"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Alert updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "workspaceId": {
+                          "type": "string"
+                        },
+                        "entityId": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "config": {
+                          "type": "object",
+                          "properties": {
+                            "metric": {
+                              "type": "string",
+                              "description": "Metric to monitor"
+                            },
+                            "minimumThreshold": {
+                              "type": "number",
+                              "minimum": 1,
+                              "description": "Minimum threshold for the alert"
+                            },
+                            "duration": {
+                              "type": "number",
+                              "description": "Duration must be one of: 60, 300, 600, 1800, 3600 or 86400 (seconds)"
+                            },
+                            "operator": {
+                              "type": "string",
+                              "description": "Comparison operator for the alert condition"
+                            },
+                            "value": {
+                              "type": "string",
+                              "description": "Value to compare against"
+                            },
+                            "renotifyTTL": {
+                              "type": "number",
+                              "default": -1,
+                              "description": "Time to live for renotification in seconds. -1 means no TTL"
+                            }
+                          },
+                          "required": [
+                            "metric",
+                            "minimumThreshold",
+                            "duration",
+                            "operator",
+                            "value"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "notificationChannels": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "notificationChannel": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "description": "Unique identifier for the notification channel"
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "enum": [
+                                      "SLACK",
+                                      "PAGER_DUTY"
+                                    ],
+                                    "description": "Type of notification channel."
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                    "description": "Name of the notification channel"
+                                  },
+                                  "config": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "nullable": true
+                                    },
+                                    "description": "Channel-specific configuration"
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "type",
+                                  "name",
+                                  "config"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "notificationChannel"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "workspaceId",
+                        "entityId",
+                        "type",
+                        "enabled",
+                        "config",
+                        "createdAt",
+                        "updatedAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Alert not found"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,533 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "contact": {
+      "name": "Maxim Engineering",
+      "email": "eng@getmaxim.ai"
+    },
+    "title": "Maxim SDK API - evaluators",
+    "description": "API documentation for Maxim SDK evaluators endpoints"
+  },
+  "servers": [
+    {
+      "url": "https://api.getmaxim.ai"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-maxim-api-key",
+        "description": "API key for authentication"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "paths": {
+    "/v1/evaluators": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Get an evaluator by ID, name or fetch all evaluators for a workspace",
+        "summary": "Get evaluators",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workspaceId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "Unique identifier for the evaluator"
+                  },
+                  "limit": {
+                    "type": "number",
+                    "default": 10,
+                    "description": "Maximum number of records to return. 10 by default"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the evaluator"
+                  },
+                  "cursor": {
+                    "type": "string",
+                    "description": "Cursor for pagination"
+                  }
+                },
+                "required": [
+                  "workspaceId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Evaluators retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            },
+                            "config": {
+                              "type": "object",
+                              "properties": {
+                                "model": {
+                                  "type": "string"
+                                },
+                                "provider": {
+                                  "type": "string"
+                                },
+                                "variables": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "nullable": true
+                                  }
+                                },
+                                "gradingStyle": {
+                                  "type": "string"
+                                },
+                                "passFailCriteria": {
+                                  "type": "object",
+                                  "properties": {
+                                    "runLevel": {
+                                      "type": "object",
+                                      "properties": {
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "value": {
+                                          "type": "number"
+                                        },
+                                        "operator": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "name",
+                                        "value",
+                                        "operator"
+                                      ]
+                                    },
+                                    "entryLevel": {
+                                      "type": "object",
+                                      "properties": {
+                                        "name": {
+                                          "type": "string"
+                                        },
+                                        "value": {
+                                          "type": "string"
+                                        },
+                                        "operator": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "name",
+                                        "value",
+                                        "operator"
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "runLevel",
+                                    "entryLevel"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "model",
+                                "provider",
+                                "gradingStyle",
+                                "passFailCriteria"
+                              ]
+                            },
+                            "accountId": {
+                              "type": "string"
+                            },
+                            "workspaceId": {
+                              "type": "string"
+                            },
+                            "builtin": {
+                              "type": "boolean"
+                            },
+                            "createdAt": {
+                              "type": "string"
+                            },
+                            "updatedAt": {
+                              "type": "string"
+                            },
+                            "deletedAt": {
+                              "type": "string"
+                            },
+                            "tags": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "label": {
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "label",
+                                  "value"
+                                ]
+                              }
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "name",
+                            "description",
+                            "type",
+                            "config",
+                            "accountId",
+                            "workspaceId",
+                            "builtin",
+                            "createdAt",
+                            "updatedAt",
+                            "deletedAt"
+                          ]
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              },
+                              "config": {
+                                "type": "object",
+                                "properties": {
+                                  "model": {
+                                    "type": "string"
+                                  },
+                                  "provider": {
+                                    "type": "string"
+                                  },
+                                  "variables": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "nullable": true
+                                    }
+                                  },
+                                  "gradingStyle": {
+                                    "type": "string"
+                                  },
+                                  "passFailCriteria": {
+                                    "type": "object",
+                                    "properties": {
+                                      "runLevel": {
+                                        "type": "object",
+                                        "properties": {
+                                          "name": {
+                                            "type": "string"
+                                          },
+                                          "value": {
+                                            "type": "number"
+                                          },
+                                          "operator": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "name",
+                                          "value",
+                                          "operator"
+                                        ]
+                                      },
+                                      "entryLevel": {
+                                        "type": "object",
+                                        "properties": {
+                                          "name": {
+                                            "type": "string"
+                                          },
+                                          "value": {
+                                            "type": "string"
+                                          },
+                                          "operator": {
+                                            "type": "string"
+                                          }
+                                        },
+                                        "required": [
+                                          "name",
+                                          "value",
+                                          "operator"
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "runLevel",
+                                      "entryLevel"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "model",
+                                  "provider",
+                                  "gradingStyle",
+                                  "passFailCriteria"
+                                ]
+                              },
+                              "accountId": {
+                                "type": "string"
+                              },
+                              "workspaceId": {
+                                "type": "string"
+                              },
+                              "builtin": {
+                                "type": "boolean"
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              },
+                              "updatedAt": {
+                                "type": "string"
+                              },
+                              "deletedAt": {
+                                "type": "string"
+                              },
+                              "tags": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "label": {
+                                      "type": "string"
+                                    },
+                                    "value": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "label",
+                                    "value"
+                                  ]
+                                }
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name",
+                              "description",
+                              "type",
+                              "config",
+                              "accountId",
+                              "workspaceId",
+                              "builtin",
+                              "createdAt",
+                              "updatedAt",
+                              "deletedAt"
+                            ]
+                          }
+                        }
+                      ]
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "cursor": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "hasMore": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "cursor",
+                        "hasMore"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Evaluator not found"
+          }
+        }
+      }
+    },
+    "/v1/evaluators/execute": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Evaluators"
+        ],
+        "description": "Execute an evaluator to assess content based on predefined criteria and return grading results, reasoning, and execution logs",
+        "summary": "Execute an evaluator",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Unique identifier for the workspace"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Unique identifier for the evaluator"
+            },
+            "required": false,
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Name of the evaluator"
+            },
+            "required": false,
+            "name": "name",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "javascript",
+                "python"
+              ],
+              "description": "Programming language for the evaluator"
+            },
+            "required": false,
+            "name": "language",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              },
+              "description": "Variables to be used in evaluation"
+            },
+            "required": false,
+            "name": "variables",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Evaluator executed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "result": {
+                          "type": "string"
+                        },
+                        "reasoning": {
+                          "type": "string"
+                        },
+                        "logs": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "timestamp": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              },
+                              "text": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "timestamp",
+                              "type",
+                              "text"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "result",
+                        "logs"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Evaluator not found"
+          }
+        }
+      }
+    }
+  }
+}

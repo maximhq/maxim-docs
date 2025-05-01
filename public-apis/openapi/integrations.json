@@ -1,0 +1,456 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "contact": {
+      "name": "Maxim Engineering",
+      "email": "eng@getmaxim.ai"
+    },
+    "title": "Maxim SDK API - integrations",
+    "description": "API documentation for Maxim SDK integrations endpoints"
+  },
+  "servers": [
+    {
+      "url": "https://api.getmaxim.ai"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-maxim-api-key",
+        "description": "API key for authentication"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "paths": {
+    "/v1/integrations": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Create a new integration for notification channels",
+        "summary": "Create Integration",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workspaceId": {
+                    "type": "string",
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "Unique identifier for the integration"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "SLACK",
+                      "PAGER_DUTY"
+                    ],
+                    "description": "Type of integration (SLACK or PAGER_DUTY)"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the integration"
+                  },
+                  "config": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Optional name for the integration config"
+                      },
+                      "routingKey": {
+                        "type": "string",
+                        "description": "PagerDuty routing key"
+                      },
+                      "webhookName": {
+                        "type": "string",
+                        "description": "Slack webhook name"
+                      },
+                      "webhookUrl": {
+                        "type": "string",
+                        "description": "Slack webhook URL"
+                      },
+                      "dedupKey": {
+                        "type": "string",
+                        "description": "Optional deduplication key for PagerDuty alerts"
+                      }
+                    },
+                    "description": "Integration-specific configuration"
+                  }
+                },
+                "required": [
+                  "workspaceId",
+                  "type",
+                  "name",
+                  "config"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Integration created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Unique identifier for the notification channel"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "SLACK",
+                            "PAGER_DUTY"
+                          ],
+                          "description": "Type of notification channel."
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Name of the notification channel"
+                        },
+                        "config": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "nullable": true
+                          },
+                          "description": "Channel-specific configuration"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "type",
+                        "name",
+                        "config"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Get integrations for a workspace",
+        "summary": "Get Integrations",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the workspace"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Integration ID to fetch specific integration"
+            },
+            "required": false,
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "nullable": true,
+              "maximum": 100,
+              "default": 20,
+              "description": "Maximum number of records to return (max: 100)"
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "description": "Cursor for pagination"
+            },
+            "required": false,
+            "name": "cursor",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Integrations retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "Unique identifier for the notification channel"
+                          },
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "SLACK",
+                              "PAGER_DUTY"
+                            ],
+                            "description": "Type of notification channel."
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "Name of the notification channel"
+                          },
+                          "config": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "nullable": true
+                            },
+                            "description": "Channel-specific configuration"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "type",
+                          "name",
+                          "config"
+                        ]
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "cursor": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "hasMore": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "cursor",
+                        "hasMore"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "pagination"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Integration not found"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Delete an integration",
+        "summary": "Delete Integration",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the workspace"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "ID of the integration to delete"
+            },
+            "required": true,
+            "name": "id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Integration deleted successfully"
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Integration not found"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Update an integration",
+        "summary": "Update Integration",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workspaceId": {
+                    "type": "string",
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "Unique identifier for the integration"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "SLACK",
+                      "PAGER_DUTY"
+                    ],
+                    "description": "Type of integration)"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the integration"
+                  },
+                  "config": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Optional name for the integration config"
+                      },
+                      "routingKey": {
+                        "type": "string",
+                        "description": "PagerDuty routing key"
+                      },
+                      "webhookName": {
+                        "type": "string",
+                        "description": "Slack webhook name"
+                      },
+                      "webhookUrl": {
+                        "type": "string",
+                        "description": "Slack webhook URL"
+                      },
+                      "dedupKey": {
+                        "type": "string",
+                        "description": "Optional deduplication key for PagerDuty alerts"
+                      }
+                    },
+                    "description": "Integration-specific configuration"
+                  }
+                },
+                "required": [
+                  "workspaceId",
+                  "type",
+                  "name",
+                  "config"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Integration updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Unique identifier for the notification channel"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "SLACK",
+                            "PAGER_DUTY"
+                          ],
+                          "description": "Type of notification channel."
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Name of the notification channel"
+                        },
+                        "config": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "nullable": true
+                          },
+                          "description": "Channel-specific configuration"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "type",
+                        "name",
+                        "config"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Integration not found"
+          }
+        }
+      }
+    }
+  }
+}
