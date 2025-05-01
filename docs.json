@@ -245,25 +245,25 @@
                     {
                         "group": "Python",
                         "pages": [
-                            "sdk/upgrading-to-v3"
+                            "sdk/python/overview",
+                            "sdk/python/upgrading-to-v3"
                         ]
                     }
                 ]
             },
-        {
-            "tab":"Self Hosting",
-            "groups":[
-                {
-                    "group": "Overview",
-                    "pages": [
-                        "self-hosting/overview",
-                        "self-hosting/zerotouch",
-                        "self-hosting/dataplane"
-                    ]
-                }
-                
-            ]
-        }
+            {
+                "tab": "Self Hosting",
+                "groups": [
+                    {
+                        "group": "Overview",
+                        "pages": [
+                            "self-hosting/overview",
+                            "self-hosting/zerotouch",
+                            "self-hosting/dataplane"
+                        ]
+                    }
+                ]
+            }
         ],
         "global": {
             "anchors": [
