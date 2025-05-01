@@ -230,24 +230,40 @@
                                 ]
                             }
                         ]
-                    },
+                    }
+                ]
+            },
+            {
+                "tab": "SDK",
+                "groups": [
                     {
-                        "group": "SDK",
+                        "group": "Overview",
                         "pages": [
-                            "sdk/overview",
-                            "sdk/upgrading-to-v3"
+                            "sdk/overview"
                         ]
                     },
                     {
-                        "group": "Self Hosting",
+                        "group": "Python",
                         "pages": [
-                            "self-hosting/overview",
-                            "self-hosting/zerotouch",
-                            "self-hosting/dataplane"
+                            "sdk/upgrading-to-v3"
                         ]
                     }
                 ]
-            }
+            },
+        {
+            "tab":"Self Hosting",
+            "groups":[
+                {
+                    "group": "Overview",
+                    "pages": [
+                        "self-hosting/overview",
+                        "self-hosting/zerotouch",
+                        "self-hosting/dataplane"
+                    ]
+                }
+                
+            ]
+        }
         ],
         "global": {
             "anchors": [
