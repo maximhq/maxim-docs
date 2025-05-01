@@ -10,18 +10,16 @@ Sessions are particularly useful for tracking multi-turn conversations or comple
 </div>
 
 <Steps>
-<Step>
-## Create a new session
-
-<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
-    ```typescript tab="JS/TS"
+<Step title="Create a new session">
+<CodeGroup>
+    ```typescript JS/TS
     const session = logger.session({
         id: "session-id",
         name: "session-name",
     });
     ```
 
-    ```python tab="Python"
+    ```python Python
     from maxim.logger import SessionConfig
 
     session = logger.session(
@@ -29,35 +27,33 @@ Sessions are particularly useful for tracking multi-turn conversations or comple
     )
     ```
 
-    ```go tab="Go"
+    ```go Go
     session := logger.Session(&logging.SessionConfig{
         Id: "session-id",
         Name: "session-name",
     })
     ```
 
-    ```java tab="Java"
+    ```java Java
     Session session = logger.session(
         new SessionConfig("session-id", "session-name")
     );
     ```
-</Tabs>
+</CodeGroup>
 </Step>
 
-<Step>
-## Add a trace to the session
-
+<Step title="Add a trace to the session">
 After creating a `session` object, you can add multiple traces across the lifecycle of the conversation.
 
-<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
-    ```typescript tab="JS/TS"
+<CodeGroup>
+    ```typescript JS/TS
     const trace = session.trace({
         id: "trace-id",
         name: "trace-name",
     });
     ```
 
-    ```python tab="Python"
+    ```python Python
     from maxim.logger import TraceConfig
 
     trace = session.trace(
@@ -65,25 +61,24 @@ After creating a `session` object, you can add multiple traces across the lifecy
     )
     ```
 
-    ```go tab="Go"
+    ```go Go
     trace := session.AddTrace(&logging.TraceConfig{
         Id: "trace-id",
         Name: "trace-name",
     })
     ```
 
-    ```java tab="Java"
+    ```java Java
     Trace trace = session.addTrace(
         new TraceConfig("trace-id", "trace-name")
     );
     ```
-</Tabs>
+</CodeGroup>
 </Step>
 
-<Step>
-## Linking traces using session IDs
-<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
-    ```typescript tab="JS/TS"
+<Step title="Linking traces using session IDs">
+<CodeGroup>
+    ```typescript JS/TS
     const trace = logger.trace({
         id: "trace-id",
         name: "trace-name",
@@ -91,7 +86,7 @@ After creating a `session` object, you can add multiple traces across the lifecy
     });
     ```
 
-    ```python tab="Python"
+    ```python Python
     from maxim.logger import TraceConfig
 
     trace = logger.trace(
@@ -99,7 +94,7 @@ After creating a `session` object, you can add multiple traces across the lifecy
     )
     ```
 
-    ```go tab="Go"
+    ```go Go
     trace := logger.Trace(&logging.TraceConfig{
         Id: "trace-id",
         Name: "trace-name",
@@ -107,11 +102,11 @@ After creating a `session` object, you can add multiple traces across the lifecy
     })
     ```
 
-    ```java tab="Java"
+    ```java Java
     Trace trace = logger.trace(
         new TraceConfig("trace-id", "trace-name", "session-id")
     );
     ```
-</Tabs>
+</CodeGroup>
 </Step>
 </Steps>

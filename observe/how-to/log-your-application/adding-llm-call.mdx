@@ -11,10 +11,9 @@ Each trace/span can contain multiple generations.
 
 <Steps>
 
-<Step>
-## Send and record LLM request
-<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
-    ```typescript tab="JS/TS"
+<Step title="Send and record LLM request">
+<CodeGroup>
+    ```typescript JS/TS
     // Initialize a trace with a unique ID
     const trace = logger.trace({id: "trace-id"});
 
@@ -36,7 +35,7 @@ Each trace/span can contain multiple generations.
     // const aiCompletion = await openai.chat.completions.create({ ... })
     ```
 
-    ```python tab="Python"
+    ```python Python
     from maxim.logger.components.generation import GenerationConfig
 
     generation = trace.generation(GenerationConfig(
@@ -50,13 +49,13 @@ Each trace/span can contain multiple generations.
         ],
         model_parameters={"temperature": 0.7},
     ))
-    # Note: Replace 'trace.generation' with 'span.generation' when creating generations within an existing span
+    // Note: Replace 'trace.generation' with 'span.generation' when creating generations within an existing span
 
-    # Execute the LLM call
-    # aiCompletion = client.chat.completions.create(...)
+    // Execute the LLM call
+    // aiCompletion = client.chat.completions.create(...)
     ```
 
-    ```go tab="Go"
+    ```go Go
     generation := trace.AddGeneration(&logging.GenerationConfig{
         Id: "generation-id",
         Name: "customer-support--gather-information",
@@ -80,7 +79,7 @@ Each trace/span can contain multiple generations.
     // aiCompletion, err := client.CreateChatCompletion(ctx, openai.ChatCompletionRequest{...})
     ```
 
-    ```java tab="Java"
+    ```java Java
     Generation generation = trace.addGeneration(new GenerationConfig(
         "generation-id",
         "customer-support--gather-information",
@@ -97,13 +96,12 @@ Each trace/span can contain multiple generations.
     // Execute the LLM call
     // ChatCompletionResult aiCompletion = openAiService.createChatCompletion(new ChatCompletionRequest(...));
     ```
-</Tabs>
+</CodeGroup>
 </Step>
 
-<Step>
-## Record LLM response
-<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
-    ```typescript tab="JS/TS"
+<Step title="Record LLM response">
+<CodeGroup>
+    ```typescript JS/TS
     generation.result({
         id: "chatcmpl-123",
         object: "chat.completion",
@@ -125,7 +123,7 @@ Each trace/span can contain multiple generations.
     });
     ```
 
-    ```python tab="Python"
+    ```python Python
     generation.result({
         "id": "chatcmpl-123",
         "object": "chat.completion",
@@ -147,7 +145,7 @@ Each trace/span can contain multiple generations.
     })
     ```
 
-    ```go tab="Go"
+    ```go Go
     generation.SetResult(map[string]interface{}{
         Id: "chatcmpl-123",
         Object: "chat.completion",
@@ -171,7 +169,7 @@ Each trace/span can contain multiple generations.
     })
     ```
 
-    ```java tab="Java"
+    ```java Java
     generation.setResult(new ChatCompletionResult(
         "chatcmpl-123",
         "chat.completion",
@@ -185,6 +183,6 @@ Each trace/span can contain multiple generations.
         new Usage(100, 50, 150)
     ));
     ```
-</Tabs>
+</CodeGroup>
 </Step>
 </Steps>

@@ -3,6 +3,8 @@ title: Setting up alerts for performance metrics
 description: Learn how to set up alerts to monitor your application's performance metrics in Maxim.
 ---
 
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
 Monitor your application's performance by setting up alerts for latency, token usage, and cost metrics. Create custom thresholds and receive notifications when metrics exceed your specified limits.
 
 ## Available metrics
@@ -16,14 +18,13 @@ Set up alerts for:
 ## Create an alert
 
 <Steps>
-<Step>
+<Step title="Navigate to repository">
 Open the Logs page and select your repository
 </Step>
-<Step>
+<Step title="Access alerts tab">
 Select the **Alerts** tab and click **Create alert**
 </Step>
-<Step>
-Configure your alert settings:
+<Step title="Configure alert settings">
   - Select **Log metrics** as the type of alert
   - Select a metric (Latency, Token Usage, or Cost)
   - Choose an operator (greater than, less than)
@@ -31,10 +32,10 @@ Configure your alert settings:
   - Set minimum occurrence count
   - Define evaluation time range
 </Step>
-<Step>
+<Step title="Select notification channels">
 Select your preferred notification channels (Slack, or PagerDuty)
 </Step>
-<Step>
+<Step title="Save your alert">
 Click **Create alert**
 </Step>
 </Steps>

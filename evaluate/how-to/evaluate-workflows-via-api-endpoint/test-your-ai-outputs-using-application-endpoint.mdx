@@ -3,6 +3,9 @@ title: Test your AI application using an API endpoint
 description: Expose your AI application to Maxim using your existing API endpoint
 ---
 
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
+
 ## Create a Workflow for a public endpoint
 
 Connect your application's API endpoint to Maxim. Enter your API URL and add any necessary headers and parameters.
@@ -29,11 +32,11 @@ See how to map outputs for evaluation:
 
 <MaximPlayer url="https://drive.google.com/file/d/1gQz4zF_Mmy-l10pyOStM-8wuxTbW6ms4/preview" />
 
-<Callout type="warn">
+<Warning>
 
-**Note**
+**Important**
 
 - The `Test` button remains disabled until you send messages to your endpoint. The system requires a response payload structure for `output` mapping.
 - When mapping without triggering a test run, save your workflow explicitly. Map in the configuration sheet, click outside to close it, then click **Save workflow**
 
-</Callout>
+</Warning>

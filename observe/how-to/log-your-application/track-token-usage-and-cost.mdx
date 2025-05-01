@@ -3,13 +3,12 @@ title: Track token usage and costs
 description: Learn how to efficiently track token usage and associated costs in your LLM application using Maxim's logging capabilities.
 ---
 
-
-## Code examples by language
+## Log token usage in your application
 
 Log token usage by including the usage object in your generation result:
 
-<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
-    ```typescript tab="JS/TS"
+<CodeGroup>
+    ```typescript JS/TS
     generation.result({
         id: "chatcmpl-123",
         object: "chat.completion",
@@ -31,7 +30,7 @@ Log token usage by including the usage object in your generation result:
     });
     ```
 
-    ```python tab="Python"
+    ```python Python
     generation.result({
         "id": "chatcmpl-123",
         "object": "chat.completion",
@@ -53,7 +52,7 @@ Log token usage by including the usage object in your generation result:
     })
     ```
 
-    ```go tab="Go"
+    ```go Go
     generation.SetResult(map[string]interface{}{
         Id: "chatcmpl-123",
         Object: "chat.completion",
@@ -77,7 +76,7 @@ Log token usage by including the usage object in your generation result:
     })
     ```
 
-    ```java tab="Java"
+    ```java Java
     generation.setResult(new ChatCompletionResult(
         "chatcmpl-123",
         "chat.completion",
@@ -91,11 +90,11 @@ Log token usage by including the usage object in your generation result:
         new Usage(100, 50, 150)
     ));
     ```
-</Tabs>
+</CodeGroup>
 
-<Callout>
+<Note>
 Learn more about tracking [generation results](/docs/observe/how-to/log-your-application/adding-llm-call).
-</Callout>
+</Note>
 
 ## Custom pricing
 Need different pricing for your models? Read more on [custom pricing](/docs/observe/how-to/log-your-application/use-custom-pricing).

@@ -9,31 +9,37 @@ description: Track and collect user feedback in application traces using Maxim's
 
 ## Add feedback to traces
 
-<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
-    ```typescript tab="JS/TS"
+<CodeGroup>
+    ```typescript JS/TS
     trace.feedback({
         score: 5,
         feedback: "Great job!",
+        metadata: {
+            "flow": "support",
+            "properties" :{
+                "name": "John Doe"
+            }
+        }
     });
     ```
 
-    ```python tab="Python"
+    ```python Python
     from maxim.logger.components import Feedback
 
-    trace.feedback(feedback=Feedback(score=5, comment="Great job!"))
+    trace.feedback(feedback=Feedback(score=5, comment="Great job!", metadata: {"flow": "support","properties" :{"name": "John Doe"}}))
     ```
 
-    ```go tab="Go"
+    ```go Go
     trace.SetFeedback(&logging.Feedback{
         Score:   5,
-        Comment: StrPtr("Great job!"),
+        Comment: StrPtr("Great job!"),        
     })
     ```
 
-    ```java tab="Java"
+    ```java Java
     Feedback feedback = trace.setFeedback(new Feedback(
         5,
         "Great job!"
     ));
     ```
-</Tabs>
+</CodeGroup>

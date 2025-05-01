@@ -5,8 +5,8 @@ description: Retrieval-Augmented Generation (RAG) is a technique that enhances l
 
 This approach combines the power of pre-trained models with up-to-date, domain-specific knowledge, leading to more accurate and contextually appropriate outputs. To capture the RAG pipeline, you need to log it as a "Retrieval" entity. A Retrieval represents a query that fetches relevant context from a knowledge base or vector database.
 
-<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
-    ```typescript tab="JS/TS"
+<CodeGroup>
+    ```typescript JS/TS
     const retrieval = trace.retrieval({
 		id: "retrieval-id",
 		name: "National Geographic survey report 2025.pdf",
@@ -21,11 +21,9 @@ This approach combines the power of pre-trained models with up-to-date, domain-s
 		"Pune, India",
 		"Seoul, South Korea",
 	])
-
-    // Note: Replace 'trace.retrieval' with 'span.retrieval' when creating retrievals within an existing span
     ```
 
-    ```python tab="Python"
+    ```python Python
     from maxim.logger import RetrievalConfig
 
 	retrieval = trace.retrieval(RetrievalConfig(
@@ -41,11 +39,9 @@ This approach combines the power of pre-trained models with up-to-date, domain-s
 		"Pune, India",
 		"Seoul, South Korea",
 	])
-
-    # Note: Replace 'trace.retrieval' with 'span.retrieval' when creating retrievals within an existing span
     ```
 
-    ```go tab="Go"
+    ```go Go
     retrieval := span.AddRetrieval(&logging.RetrievalConfig{
 		Id:       "retrieval-id",
 		Name:     "National Geographic survey report 2025.pdf",
@@ -59,10 +55,9 @@ This approach combines the power of pre-trained models with up-to-date, domain-s
 		"Pune, India",
 		"Seoul, South Korea",
 	})
-    // Note: Replace 'trace.AddRetrieval' with 'span.AddRetrieval when creating retrievals within an existing span
     ```
 
-    ```java tab="Java"
+    ```java Java
 	Retrieval retrieval = trace.addRetrieval(
 		new RetrievalConfig(
 			"retrieval-id",
@@ -80,6 +75,9 @@ This approach combines the power of pre-trained models with up-to-date, domain-s
 		"Pune, India",
 		"Seoul, South Korea",
 	));
-    // Note: Replace 'trace.addRetrieval' with 'span.addRetrieval' when creating retrievals within an existing span
     ```
-</Tabs>
+</CodeGroup>
+
+<Note>
+Replace 'trace.retrieval' with 'span.retrieval' when creating retrievals within an existing span
+</Note>

@@ -11,40 +11,40 @@ Create events to mark specific points in time during your application execution.
 
 ## Attach an event to your trace
 
-<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
-    ```typescript tab="JS/TS"
+<CodeGroup>
+    ```typescript JS/TS
     await trace.event({
         id: "event-id",
         name: "travel-plan-emailed",
         tags: { "email": "JetSetJoe@travelo.com" },
     });
-    // Note: Replace 'trace.event' with 'span.event' when you are creating events within a span
     ```
 
-    ```python tab="Python"
+    ```python Python
     await trace.event(
         id="event-id",
         name="travel-plan-emailed",
         tags={"email": "JetSetJoe@travelo.com"}
     )
-    # Note: Replace 'trace.event' with 'span.event' when you are creating events within a span
     ```
 
-    ```go tab="Go"
+    ```go Go
     trace.AddEvent(
         "event-id",
         "travel-plan-emailed",
         map[string]string{"email": "JetSetJoe@travelo.com"}
     )
-    // Note: Replace 'trace.AddEvent' with 'span.AddEvent' when you are creating events within a span
     ```
 
-    ```java tab="Java"
+    ```java Java
     Event event = trace.addEvent(
         "event-id",
         "travel-plan-emailed",
         Map.of("email", "JetSetJoe@travelo.com")
     );
-    // Note: Replace 'trace.addEvent' with 'span.addEvent' when you are creating events within a span
     ```
-</Tabs>
+</CodeGroup>
+
+<Note>
+Replace 'trace.event' with 'span.event' when you are creating events within a span
+</Note>

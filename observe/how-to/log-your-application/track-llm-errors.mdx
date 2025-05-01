@@ -3,11 +3,10 @@ title: Track errors in traces
 description: Learn how to effectively track and log errors from LLM results and Tool calls in your AI application traces to improve performance and reliability.
 ---
 
-
 ## Track LLM errors in your workflow
 
-<Tabs groupId="language" items={["JS/TS", "Python", "Go", "Java"]}>
-    ```typescript tab="JS/TS"
+<CodeGroup>
+    ```typescript JS/TS
     // Create generation object
     const generation = trace.generation({
         id: "generation-id",
@@ -23,7 +22,7 @@ description: Learn how to effectively track and log errors from LLM results and 
     });
     ```
 
-    ```python tab="Python"
+    ```python Python
     from maxim.logger.components.generation import GenerationConfig, GenerationError
 
     # Create generation object
@@ -41,7 +40,7 @@ description: Learn how to effectively track and log errors from LLM results and 
     ))
     ```
 
-    ```go tab="Go"
+    ```go Go
     // Create generation object
     generation := trace.AddGeneration(&logging.GenerationConfig{
         Id: "generation-id",
@@ -57,7 +56,7 @@ description: Learn how to effectively track and log errors from LLM results and 
     })
     ```
 
-    ```java tab="Java"
+    ```java Java
     // Create generation object
     Generation generation = trace.addGeneration(new GenerationConfig(
         "generation-id",
@@ -72,18 +71,16 @@ description: Learn how to effectively track and log errors from LLM results and 
         "RateLimitError",
     ));
     ```
-</Tabs>
+</CodeGroup>
 
-<Callout>
-
+<Note>
 Learn how to track complete LLM flows in the [LLM logging guide](/docs/observe/how-to/log-your-application/adding-llm-call).
-
-</Callout>
+</Note>
 
 ## Track errors from tool calls
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-    ```typescript tab="JS/TS"
+<CodeGroup>
+    ```typescript JS/TS
     const traceToolCall = trace.toolCall({
         id: "tool-call-id",
         name: "tool-call-name",
@@ -96,7 +93,7 @@ Learn how to track complete LLM flows in the [LLM logging guide](/docs/observe/h
     });
     ```
 
-    ```python tab="Python"
+    ```python Python
     from maxim.logger import ToolCallConfig
 
     trace_tool_call = trace.tool_call(ToolCallConfig(
@@ -110,10 +107,8 @@ Learn how to track complete LLM flows in the [LLM logging guide](/docs/observe/h
         code="503",
     ))
     ```
-</Tabs>
+</CodeGroup>
 
-<Callout>
-
+<Note>
 Explore more on tool call tracking in the [Tool calls logging guide](/docs/observe/how-to/log-your-application/track-tool-calls).
-
-</Callout>
+</Note>

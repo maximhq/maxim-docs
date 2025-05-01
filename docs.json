@@ -84,8 +84,7 @@
                                             "evaluate/how-to/evaluate-workflows-via-api-endpoint/test-your-ai-outputs-using-application-endpoint",
                                             "evaluate/how-to/evaluate-workflows-via-api-endpoint/test-multi-turn-conversations-manually",
                                             "evaluate/how-to/evaluate-workflows-via-api-endpoint/simulate-multi-turn-conversations",
-                                            "evaluate/how-to/evaluate-workflows-via-api-endpoint/evaluate-simulated-sessions-for-agents",
-                                            "evaluate/how-to/evaluate-workflows-via-api-endpoint/create-workflow-for-local-api",
+                                            "evaluate/how-to/evaluate-workflows-via-api-endpoint/evaluate-simulated-sessions-for-agents",                                            
                                             "evaluate/how-to/evaluate-workflows-via-api-endpoint/scripting-to-configure-response-structures",
                                             "evaluate/how-to/evaluate-workflows-via-api-endpoint/automate-via-ci-cd"
                                         ]
@@ -117,10 +116,31 @@
                                     {
                                         "group": "Log Your Application",
                                         "pages": [
+                                            "observe/how-to/log-your-application/setting-up-trace",
+                                            "observe/how-to/log-your-application/add-spans-to-traces",
+                                            "observe/how-to/log-your-application/adding-llm-call",
+                                            "observe/how-to/log-your-application/logging-rag-pipeline",
+                                            "observe/how-to/log-your-application/log-multiturn-interactions-as-session",
+                                            "observe/how-to/log-your-application/track-tool-calls",
+                                            "observe/how-to/log-your-application/use-tags-on-nodes",
+                                            "observe/how-to/log-your-application/use-events",
+                                            "observe/how-to/log-your-application/send-user-feedback",
+                                            "observe/how-to/log-your-application/add-user-feedback",
+                                            "observe/how-to/log-your-application/track-llm-errors",
+                                            "observe/how-to/log-your-application/track-token-usage-and-cost",
                                             "observe/how-to/log-your-application/filters-and-saved-views",
+                                            "observe/how-to/log-your-application/use-custom-pricing",
+                                            "observe/how-to/log-your-application/use-data-connectors",
                                             "observe/how-to/log-your-application/export-logs",
-                                            "observe/how-to/log-your-application/summary-emails",
-                                            "observe/how-to/log-your-application/use-data-connectors"
+                                            "observe/how-to/log-your-application/summary-emails"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Evaluate logs",
+                                        "pages": [
+                                            "observe/how-to/evaluate-logs/auto-evaluation",
+                                            "observe/how-to/evaluate-logs/human-evaluation",
+                                            "observe/how-to/evaluate-logs/node-level-evaluation"                                            
                                         ]
                                     },
                                     {
@@ -128,8 +148,9 @@
                                         "pages": [
                                             "observe/how-to/set-up-alerts/create-a-slack-integration",
                                             "observe/how-to/set-up-alerts/create-a-pagerduty-integration",
-                                            "observe/how-to/set-up-alerts/set-up-alerts-for-quality-metrics",
-                                            "observe/how-to/set-up-alerts/set-up-alerts-for-performance-metrics"
+                                            "observe/how-to/set-up-alerts/set-up-alerts-for-performance-metrics",
+                                            "observe/how-to/set-up-alerts/set-up-alerts-for-quality-metrics"
+                                            
                                         ]
                                     }
                                 ]
@@ -138,6 +159,18 @@
                                 "group": "Integrations",
                                 "pages": [
                                     "observe/integrations/openai-agents-sdk"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "group": "Analyze",
+                        "pages": [
+                            "analyze/overview",
+                            {
+                                "group": "How To",
+                                "pages": [
+                                    "analyze/how-to/comparison-reports"
                                 ]
                             }
                         ]
@@ -173,17 +206,7 @@
                                 ]
                             }
                         ]
-                    },
-                    {
-                        "group": "Analyze",
-                        "pages": [
-                            "analyze/overview",
-                            {
-                                "group": "How To",
-                                "pages": []
-                            }
-                        ]
-                    },
+                    },                    
                     {
                         "group": "SDK",
                         "pages": [

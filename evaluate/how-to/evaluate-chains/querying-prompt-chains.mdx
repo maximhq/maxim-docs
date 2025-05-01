@@ -5,36 +5,32 @@ description: Learn how to efficiently query and retrieve prompt chains using the
 
 <Callout>All Python code snippets in this document are for version 3.4.0+.</Callout>
 
+## Setting Up the SDK
 ### Initializing the SDK
 
-<Tabs groupId="language" items={["JS/TS", "Python"]} persist>
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
-// [!code word:apiKey]
 const maxim = new Maxim({ apiKey: "" });
-
 ```
 
-```python tab="Python"
+```python Python
 from maxim import Maxim, Config
 
-# [!code word:api_key]
 maxim = Maxim(Config(api_key=""))
-````
+```
+</CodeGroup>
 
-</Tabs>
-
+## Working with Deployment Variables
 ### For a prompt chain with specific deployment variables
 
 For building query to get prompt chain with specific deployment variables, you can use `QueryBuilder`.
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import { Maxim, QueryBuilder } from "@maximai/maxim-js;
 
-// [!code word:apiKey]
 const maxim = new Maxim({ apiKey: "" });
 
 const promptChain = await maxim.getPromptChain("prompt-chain-id",
@@ -44,11 +40,10 @@ const promptChain = await maxim.getPromptChain("prompt-chain-id",
 						.build()});
 ```
 
-```python tab="Python"
+```python Python
 from maxim import Maxim, Config
 from maxim.models import QueryBuilder
 
-# [!code word:api_key]
 maxim = Maxim(Config(api_key=""))
 
 prompt_chain = maxim.get_prompt_chain("prompt-chain-id",
@@ -57,17 +52,14 @@ prompt_chain = maxim.get_prompt_chain("prompt-chain-id",
 	.deployment_var("Environment", "prod")
 	.build())
 ```
+</CodeGroup>
 
-</Tabs>
+### Adding Multiple Queries
 
-Adding multiple queries
-
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import { Maxim, QueryBuilder } from "@maximai/maxim-js;
 
-// [!code word:apiKey]
 const maxim = new Maxim({ apiKey: "" });
 
 const promptChain = await maxim.getPromptChain(
@@ -76,11 +68,10 @@ const promptChain = await maxim.getPromptChain(
 );
 ```
 
-```python tab="Python"
+```python Python
 from maxim import Maxim, Config
 from maxim.models import QueryBuilder
 
-# [!code word:api_key]
 maxim = Maxim(Config(api_key=""))
 
 prompt_chain = maxim.get_prompt_chain("prompt-chain-id",
@@ -90,8 +81,7 @@ prompt_chain = maxim.get_prompt_chain("prompt-chain-id",
 		.deployment_var("CustomerId", "123")
 		.build())
 ```
-
-</Tabs>
+</CodeGroup>
 
 ## Querying Prompts Chains
 
@@ -116,63 +106,53 @@ There are multiple ways to capture folder id. You can use Maxim dashboard to get
 
 ![Settings Page](/images/docs/folder-id.png)
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js;
 
-// [!code word:apiKey]
 const maxim = new Maxim({ apiKey: "" });
 
 const folder = await maxim.getFolderById("folder-id");
 ```
 
-```python tab="Python"
+```python Python
 from maxim import Maxim, Config
 
-# [!code word:api_key]
 maxim = Maxim(Config(api_key=""))
 
 folder = maxim.get_folder_by_id("folder-id")
 ```
+</CodeGroup>
 
-</Tabs>
+### Getting Folders by Tags
 
-**To get folders using tags attached to the folder.**
-
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import { Maxim, QueryBuilder } from "@maximai/maxim-js;
 
-// [!code word:apiKey]
 const maxim = new Maxim({ apiKey: "" });
 
 const folders = await maxim.getFolders(new QueryBuilder().and().tag("CustomerId", "123").build());
 ```
 
-```python tab="Python"
+```python Python
 from maxim import Maxim, Config
 from maxim.models import QueryBuilder
 
-# [!code word:api_key]
 maxim = Maxim(Config(api_key=""))
 
 folders = maxim.get_folders(QueryBuilder().and_().tag("CustomerId", "123").build())
 ```
-
-</Tabs>
+</CodeGroup>
 
 <Callout>All the rules of prompt chain matching algorithm apply here. You can use same overriding techniques as explained above.</Callout>
 
-#### Get all deployed prompts from a folder
+### Retrieving Deployed Prompts from a Folder
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import { Maxim, QueryBuilder } from "@maximai/maxim-js;
 
-// [!code word:apiKey]
 const maxim = new Maxim({ apiKey: "" });
 
 const folder = await maxim.getFolderById("folder-id");
@@ -185,11 +165,10 @@ const promptChains = await maxim.getPromptChains(
 );
 ```
 
-```python tab="Python"
+```python Python
 from maxim import Maxim, Config
 from maxim.models import QueryBuilder
 
-# [!code word:api_key]
 maxim = Maxim(Config(api_key=""))
 
 folder = maxim.get_folder_by_id("folder-id")
@@ -200,17 +179,14 @@ promptChains = maxim.get_folders(
 	.deployment_var("Environment", "prod")
 	.build())
 ```
+</CodeGroup>
 
-</Tabs>
+### Filtering Prompt Chains by Deployment Variables
 
-You can filter prompt chains based on deploymentVars.
-
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import { Maxim, QueryBuilder } from "@maximai/maxim-js;
 
-// [!code word:apiKey]
 const maxim = new Maxim({ apiKey: "" });
 
 const folder = await maxim.getFolderById("folder-id");
@@ -222,11 +198,10 @@ const promptChains = await maxim.getPromptChains(
 		.build());
 ```
 
-```python tab="Python"
+```python Python
 from maxim import Maxim, Config
 from maxim.models import QueryBuilder
 
-# [!code word:api_key]
 maxim = Maxim(Config(api_key=""))
 
 folder = maxim.get_folder_by_id("folder-id")
@@ -237,16 +212,15 @@ prompt_chains = maxim.get_prompt_chain(
 	.deployment_var("Environment", "prod")
 	.build())
 ```
-
-</Tabs>
+</CodeGroup>
 
 <Callout>You have to pass at-least one filter along with `folder()`.</Callout>
 
-## Prompt chain Structure
+## Data Structures
+### Prompt Chain Structure
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 export type PromptChain = {
 	promptChainId: string;
 	version: number;
@@ -269,7 +243,7 @@ export type Prompt = {
 };
 ```
 
-```python tab="Python"
+```python Python
 @dataclass
 class PromptChain():
 	prompt_chain_id: str
@@ -294,14 +268,12 @@ class Message():
 	role: str
 	content: str
 ```
+</CodeGroup>
 
-</Tabs>
+### Folder Structure
 
-## Folder Structure
-
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 export type Folder = {
 	id: string;
 	name: string;
@@ -310,7 +282,7 @@ export type Folder = {
 };
 ```
 
-```python tab="Python"
+```python Python
 @dataclass
 class Folder():
 	id: str
@@ -318,18 +290,17 @@ class Folder():
 	parentFolderId: str
 	tags: Optional[Dict[str, Union[str, int, bool, None]]] = None
 ```
+</CodeGroup>
 
-</Tabs>
-
-### Using your own cache for prompts
+## Caching
+### Using Custom Cache Implementation
 
 Maxim SDK uses in-memory caching by default. You can use your own caching implementation by passing a custom cache object to the SDK. This allows you to remove complete dependency on our backend.
 
-#### Interface for custom cache
+### Cache Interface Definition
 
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 export interface MaximCache {
 	getAllKeys(): Promise<string[]>;
 	get(key: string): Promise<string | null>;
@@ -338,7 +309,7 @@ export interface MaximCache {
 }
 ```
 
-```python tab="Python"
+```python Python
 class MaximInMemoryCache():
 	def getAllKeys(self) -> List[str]:
 		pass
@@ -352,34 +323,28 @@ class MaximInMemoryCache():
 	def delete(self, key: str) -> None:
 		pass
 ```
+</CodeGroup>
 
-</Tabs>
+### Implementing Custom Cache
 
-You will have to pass this custom cache object to the SDK while initializing it.
-
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
 const maxim = new Maxim({ apiKey: "api-key", cache: new CustomCache() });
 ```
 
-```python tab="Python"
+```python Python
 from maxim import Maxim, Config
 
 maxim = Maxim(Config(apiKey=apiKey, baseUrl=baseUrl, cache=CustomCache()))
 ```
+</CodeGroup>
 
-</Tabs>
+### Default In-Memory Cache Implementation
 
-#### Example
-
-Here is the default in-memory cache implementation used by the SDK.
-
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import { MaximCache } from "@maximai/maxim-js";
 
 export class MaximInMemoryCache implements MaximCache {
@@ -399,7 +364,7 @@ export class MaximInMemoryCache implements MaximCache {
 }
 ```
 
-```python tab="Python"
+```python Python
 class MaximInMemoryCache():
 	def __init__(self):
 		self.cache = {}
@@ -417,10 +382,9 @@ class MaximInMemoryCache():
 		if key in self.cache:
 			del self.cache[key]
 ```
+</CodeGroup>
 
-</Tabs>
-
-## Matching algorithm
+## Matching Algorithm
 
 Before going into the details of how to use the SDK, let's understand how the matching algorithm works. Maxim SDK uses best matching entity algorithm.
 
@@ -430,13 +394,11 @@ Before going into the details of how to use the SDK, let's understand how the ma
 4. If we still don't find any prompt chain, we check for a prompt chain version marked as fallback.
 5. If we still don't find any prompt chain, we return `null`.
 
-## Overriding fallback algorithm
+## Overriding Matching Algorithm
+### Enforcing Exact Matches
 
-1. You can override fallback algorithm by calling `.exactMatch()` on `QueryBuilder` object. That will enforce all conditions to be matched.
-
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import { QueryBuilder } from "@maximai/maxim-js;
 
 const promptChain = await maxim.getPromptChain(
@@ -445,11 +407,10 @@ const promptChain = await maxim.getPromptChain(
 );
 ```
 
-```python tab="Python"
+```python Python
 from maxim import Maxim, Config
 from maxim.models import QueryBuilder
 
-# [!code word:api_key]
 maxim = Maxim(Config(api_key=""))
 
 prompt_chain = maxim.get_prompt_chain(
@@ -461,27 +422,23 @@ prompt_chain = maxim.get_prompt_chain(
     		.build()
 )
 ```
+</CodeGroup>
 
-</Tabs>
+### Variable-Level Overrides
 
-2. You can override fallback algorithm at each variable level. The third optional parameter in `deploymentVar` & `tag` function is `enforce`. If you pass `true` to this parameter, it will enforce exact match for that variable.
-
-<Tabs groupId="language" items={["JS/TS", "Python"]}>
-
-```typescript tab="JS/TS"
+<CodeGroup>
+```typescript JS/TS
 import { Maxim, QueryBuilder } from "@maximai/maxim-js;
 
-// [!code word:apiKey]
 const maxim = new Maxim({ apiKey: "" });
 
 const promptChain = await maxim.getPromptChain("prompt-id", new QueryBuilder().and().deploymentVar("Environment", "prod").build());
 ```
 
-```python tab="Python"
+```python Python
 from maxim import Maxim, Config
 from maxim.models import QueryBuilder
 
-# [!code word:api_key]
 maxim = Maxim(Config(api_key=""))
 
 prompt_chain = maxim.get_prompt_chain(
@@ -493,5 +450,4 @@ prompt_chain = maxim.get_prompt_chain(
     		.build()
 )
 ```
-
-</Tabs>
+</CodeGroup>

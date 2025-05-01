@@ -81,9 +81,9 @@ If you have built your own evaluation model for specific use cases, you can expo
 
 This allows for the last mile of evaluation with human annotators in the loop. You can create a Human Evaluator for specific criteria that you want annotators to assess. During a test run, simply attach the evaluators, add details of the raters, and choose the sample set for human annotation. Learn more about the human evaluation lifecycle [here](/docs/evaluate/how-to/evaluate-prompts/human-annotation-pipeline).
 
-<Callout type="info">
+<Note>
 Every evaluator should return a score and reasoning, which are then analyzed and used to summarize results according to your criteria.
-</Callout>
+</Note>
 
 ## Evaluator Grading
 
@@ -102,7 +102,7 @@ For custom evaluators, both of these are configurable, while for pre-built evalu
 
 The evaluator below assigns a score between 0 and 1. The pass criteria are defined such that a query passes if it scores **≥ 0.8**, and for the entire report, the evaluator **"Clarity"** passes if **80% of the queries score ≥ 0.8**.
 
-<Callout type="info" id="evaluator-variables">
+<Note id="evaluator-variables">
 Maxim uses reserved variables with specific meanings:
 - `{{input}}`: Input from the dataset
 - `{{expectedOutput}}`: Expected output from the dataset
@@ -111,7 +111,7 @@ Maxim uses reserved variables with specific meanings:
 - `{{expectedSteps}}`: Expected steps from the dataset
 - `{{output}}`: Generated output of the workflow/prompt/prompt chain
 - `{{context}}`: Context to evaluate
-</Callout>
+</Note>
 
 <MaximPlayer url="https://drive.google.com/file/d/1toRqrwyKNB8Kpw4_MRlpojKTNdzBHzS1/preview"/>
 

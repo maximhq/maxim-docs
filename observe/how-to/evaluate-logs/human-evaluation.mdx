@@ -3,43 +3,34 @@ title: Set up human evaluation on logs
 description: Use human evaluation or rating to assess the quality of your logs and evaluate them.
 ---
 
-import { ChevronRight, NotebookPen, Save, Settings2, SquareCheck } from "lucide-react";
-import { Button } from "ui";
-import { v4 as uuid } from "uuid";
-
 ## The need for human evaluation
 
 While machine learning models can provide a baseline evaluation, they may not always capture the nuances of human perception, simply because they lack the ability to understand context and emotions behind some scenarios. Humans, in these scenarios, can also provide better comments and insights. This makes it essential to also have humans be a part of the evaluation process.
 
 Human evaluation on logs are very similar to how human annotation is done on test runs, in fact, the **Human Evaluators** used in test runs are also used here. Let's see how we can set up a human evaluation pipeline for our logs.
 
-<Callout title="Before you start">
+<Note>
+**Before you start**
 
 You need to have your **logging set up** to capture interactions between your LLM and users before you can evaluate them. To do so, you would need to integrate [Maxim SDK](/docs/observe/how-to/log-your-application/setting-up-trace) into your application.
 
-Also if you do not have a **Human Evaluator** created in your workspace, please create one by navigating to the **Evaluators** (<SquareCheck className="w-5 h-5 inline" />) tab from the sidebar, as we will need it to setup the human evaluation pipeline.
-
-</Callout>
+Also if you do not have a **Human Evaluator** created in your workspace, please create one by navigating to the **Evaluators** (<Icon icon="square-check" className="w-5 h-5 inline" />) tab from the sidebar, as we will need it to setup the human evaluation pipeline.
+</Note>
 
 ## Setting up human evaluation
 
 <Steps>
-<Step>
-
+<Step title="Navigate to repository">
 Navigate to the repository where you want to setup human evaluation on logs.
-
 </Step>
-<Step>
-
-Click on `Configure evaluation` in the top right corner of the page and choose the <Code>Setup&nbsp;evaluation&nbsp;configuration</Code> option. This will open up the evaluation configuration sheet.
+<Step title="Access evaluation configuration">
+Click on `Configure evaluation` in the top right corner of the page and choose the `Setup evaluation configuration` option. This will open up the evaluation configuration sheet.
 
 <Img
     src={
         <div className="p-4 flex flex-col gap-1 items-end">
-            <Button className="flex flex-row items-center border bg-background-primary" variant="ghost">
-                <Settings2 className="h-4 w-4" strokeWidth={1.5} />
-                Configure evaluation
-            </Button>
+                <Icon icon="settings2" />Configure evaluation
+            
             <div className="min-w-[8rem] overflow-hidden rounded-sm border bg-background-primary p-1 text-content-primary shadow-md">
                 <div className="flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-md outline-hidden bg-background-highlight-primary text-content-primary">
                     Setup evaluation configuration
@@ -52,56 +43,43 @@ Click on `Configure evaluation` in the top right corner of the page and choose t
     }
     alt="Screenshot of the repository page with the configure evaluation button highlighted"
 />
-
 </Step>
-<Step>
-
+<Step title="Select human evaluators">
 We need to focus on the `Human Evaluation` section below. Here we will see a dropdown under `Select evaluators`, we need to choose **Human Evaluators** to use for our evaluation from here.
 
 This will setup what evaluation we want to do upon our logs. Now we need to setup filtering criteria to determine which logs should be evaluated as evaluating all logs by hand can get out of hand very fast.
 
 ![Screenshot of the evaluation configuration sheet](/images/docs/observe/how-to/evaluate-logs/human-evaluation/screenshot-of-the-evaluation-configuration-sheet.png)
 
-<Callout>
-
+<Note>
 We talked about the [Auto evaluation](/docs/observe/how-to/evaluate-logs/auto-evaluation) section above. You can learn more about using other types of evaluators to evaluate your logs there.
-
-</Callout>
-
+</Note>
 </Step>
-<Step>
-
-Before we setup the filtering criteria though, we need to save this configuration, do this by clicking on the <Code className="inline-flex items-center gap-1 max-h-[23px]"><Save className="h-4 w-4" /> Save configuration</Code> button.
-
+<Step title="Save configuration">
+Before we setup the filtering criteria though, we need to save this configuration, do this by clicking on the <Icon icon="floppy-disk" /> `Save configuration` button.
 </Step>
-<Step>
-
-Now to get to filtering criteria, we will click on `Configure evaluation` in the top right corner of the page again but choose the <Code>View&nbsp;annotation&nbsp;queue</Code> option this time. You will be taken to the annotation queue page.
-
+<Step title="Access annotation queue">
+Now to get to filtering criteria, we will click on `Configure evaluation` in the top right corner of the page again but choose the `View annotation queue` option this time. You will be taken to the annotation queue page.
 </Step>
-<Step>
-
+<Step title="Set up queue logic">
 ![Screenshot of the annotation queue page](/images/docs/observe/how-to/evaluate-logs/human-evaluation/screenshot-of-the-annotation-queue-page.png)
 
-Here we will see a `Set up queue logic` button, click on it to setup the logic for the queue and click on the <Code>Save&nbsp;queue&nbsp;logic</Code> button finally to save.
+Here we will see a `Set up queue logic` button, click on it to setup the logic for the queue and click on the `Save queue logic` button finally to save.
 
 ![Screenshot of queue logic setup form](/images/docs/observe/how-to/evaluate-logs/human-evaluation/screenshot-of-queue-logic-setup-form.png)
-
 </Step>
 </Steps>
 
 Human evaluation is now setup to automatically keep adding logs that match the certain criteria you have given to the queue; over which annotation can now happen and thus be evaluated! ✍🏻
 
-<Callout>
-
+<Note>
 Manually add logs to the queue by:
 
 - Selecting the logs you want to add to the queue by clicking on the checkboxes at the left of each log
-- Clicking on the <Code className="inline-flex items-center gap-1 max-h-[23px]"><NotebookPen className="h-4 w-4" /> Add to annotation queue</Code> button and you're done!
+- Clicking on the `<Icon icon="notebook-pen" /> Add to annotation queue` button and you're done!
 
 ![Screenshot of the add to annotation queue button](/images/docs/observe/how-to/evaluate-logs/human-evaluation/screenshot-of-the-add-to-annotation-queue-button.png)
-
-</Callout>
+</Note>
 
 ## Viewing annotations
 
@@ -123,7 +101,7 @@ Clicking on the **Select rating** dropdown will open a modal where you can selec
 
 You can also click on one of the entries to open annotation sheet, wherein you can see the complete input and output and rate for all the evaluators in each entry at once.
 
-After scoring an entry, click on the <Code className="inline-flex items-center gap-1 max-h-[23px]">Save and next <ChevronRight className="h-4 w-4" /></Code> button to move to the next log/entry and score it.
+After scoring an entry, click on the `Save and next` <Icon icon="chevron-right" /> button to move to the next log/entry and score it.
 
 ![Screenshot of the annotation sheet view](/images/docs/observe/how-to/evaluate-logs/human-evaluation/screenshot-of-the-annotation-sheet-view.png)
 
