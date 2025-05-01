@@ -1,9 +1,9 @@
 ---
-title: Introduction
-slug: sdk
-index: 2
-group: SDK
-description: Dive into the Maxim SDK to supercharge your AI application development
+title: "Introduction"
+slug: "sdk"
+index: "2"
+group: "SDK"
+description: "Dive into the Maxim SDK to supercharge your AI application development"
 ---
 
 Maxim is a comprehensive platform designed to streamline AI application evaluation and observability. It offers a suite of tools and services that help developers and teams apply traditional software best practices to non-deterministic AI workflows.
@@ -22,7 +22,7 @@ Maxim SDK exposes Maxim's most critical functionalities behind a simple set of f
 
 ## Initializing SDK
 
-<CodeGroup id="language" items={["JS/TS", "Python","Go", "Java/Kotlin"]} persist>
+<CodeGroup>
 
 ```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js"
@@ -30,17 +30,20 @@ import { Maxim } from "@maximai/maxim-js"
 const maxim = new Maxim({ apiKey: "" });
 ```
 
+
 ```python Python
 from maxim import Maxim, Config
 
 maxim = Maxim(Config(api_key=""))
 ```
 
+
 ```go Go
 import "github.com/maximhq/maxim-go"
 
 mx := maxim.Init(&maxim.MaximSDKConfig{ApiKey: ""})
 ```
+
 
 ```kotlin Java/Kotlin
 import ai.getmaxim.sdk.Maxim;
@@ -53,25 +56,17 @@ var maxim = Maxim(Config(apiKey = ""))
 
 ## Whats next?
 
-<div className="grid grid-cols-3 gap-4 pt-2 sm:grid-cols-2">
-	<Card
-		className="flex flex-col no-underline"
-		href="/docs/evaluate/how-to/evaluate-prompts/deploy-prompts"
-		title="Prompt management using Maxim"
-	/>
-	<Card
-		className="flex flex-col no-underline"
-		href="/docs/library/how-to/datasets/add-new-entries-using-sdk"
-		title="Dataset management using Maxim"
-	/>
-	<Card
-		className="flex flex-col items-center justify-center no-underline"
-		href="/docs/observe/overview"
-		title="Observe and evaluate your production logs realtime using Maxim."
-	/>
-	<Card
-		className="flex w-full flex-col justify-center no-underline"
-		href="/docs/evaluate/how-to/trigger-test-runs-using-sdk"
-		title="Run tests using Maxim SDK."
-	/>
-</div>
+<CardGroup cols={2}>
+  <Card title="Prompt management using Maxim" icon="terminal" href="/docs/evaluate/how-to/evaluate-prompts/deploy-prompts">
+    
+  </Card>
+  <Card title="Dataset management using Maxim" icon="table" href="/docs/library/how-to/datasets/add-new-entries-using-sdk">
+    
+  </Card>
+  <Card title="Observe and evaluate your production logs realtime using Maxim." icon="tower-observation" href="/docs/observe/overview">
+    
+  </Card>
+  <Card title="Run tests using Maxim SDK." icon="box" href="/docs/evaluate/how-to/trigger-test-runs-using-sdk">
+    
+  </Card>
+</CardGroup>

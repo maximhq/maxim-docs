@@ -246,6 +246,17 @@
                         "group": "Python",
                         "pages": [
                             "sdk/python/overview",
+                            {
+                              "group": "Integrations",
+                              "pages":[
+                                {
+                                   "group": "OpenAI",
+                                   "pages": [
+                                     "sdk/python/integration/openai/one-line-integration.mdx"
+                                   ]
+                                }
+                              ]
+                            },
                             "sdk/python/upgrading-to-v3"
                         ]
                     }
