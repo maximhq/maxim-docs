@@ -3,28 +3,30 @@ title: Curate data from production
 description: Learn how to extract and transform production logs into structured Datasets for model training and evaluation
 ---
 
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
 <Steps>
 
-    <Step>
+    <Step title="Select logs from your repository">
     Select the logs from your log repository (preferably where you push your production data) and click on the `Add to Dataset` button in the top right corner.
 
     ![Curate data from production](/images/docs/library/how-to/datasets/curate-data-from-production/select-logs-from-production-for-curation.png)
     </Step>
 
-    <Step>
+    <Step title="Choose or create a Dataset">
     Next, you'll see a dialog where you can either choose an existing Dataset or create a new one. Let's create a fresh Dataset for this example.
     You can use one of our templates (we'll use "Dataset testing") or create a custom structure. Click the `Create Dataset` button when ready.
     
     ![Add curated logs to dataset dialog](/images/docs/library/how-to/datasets/curate-data-from-production/add-curated-logs-to-dataset-dialog.png)
     </Step>
 
-    <Step>
+    <Step title="Map log columns to Dataset columns">
     Now it's time to map your log columns to Dataset columns. In this example, we're mapping the Input field to the Dataset's Input column and Output to the Output column. Once you've set up your mappings, click "Add to Dataset".
 
     ![Add curated entries to dataset](/images/docs/library/how-to/datasets/curate-data-from-production/add-curated-entries-to-dataset.png)
     </Step>
 
-    <Step>
+    <Step title="Access your new Dataset">
     That's it! You'll receive a notification when your Dataset is ready. Simply click the `Open Dataset` button to start working with your newly created Dataset.
     
     ![Open curated Dataset](/images/docs/library/how-to/datasets/curate-data-from-production/open-curated-dataset.png)
