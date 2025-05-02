@@ -246,7 +246,7 @@
                         "pages": [
                             "sdk/python/overview",
                             {
-                                "group": "Integrations",
+                                "group": "Logging",
                                 "pages": [
                                     {
                                         "group": "OpenAI",
