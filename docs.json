@@ -232,7 +232,36 @@
                     }
                 ]
             },
-           
+            {
+                "tab": "SDK",
+                "groups": [
+                    {
+                        "group": "Overview",
+                        "pages": [
+                            "sdk/overview"
+                        ]
+                    },
+                    {
+                        "group": "Python",
+                        "pages": [
+                            "sdk/python/overview",
+                            {
+                                "group": "Integrations",
+                                "pages": [
+                                    {
+                                        "group": "OpenAI",
+                                        "pages": [
+                                            "sdk/python/integrations/openai/one-line-integration",
+                                            "sdk/python/integrations/openai/agents-sdk"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "sdk/python/upgrading-to-v3"
+                        ]
+                    }
+                ]
+            },
             {
                 "tab": "API Reference",
                 "groups": [

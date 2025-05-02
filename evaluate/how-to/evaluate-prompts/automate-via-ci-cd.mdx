@@ -13,10 +13,10 @@ This is where Maxim's CI/CD integration can help you out. By integrating a step 
 
 Triggering a test run from CI/CD requires you have the following setup and ready:
 
-1. [An API key from Maxim](/docs/observe/quickstart#2-generate-api-key)
-2. [**A prompt version to test upon**](/docs/evaluate/how-to/evaluate-prompts/create-prompt-versions)
-3. [A dataset to test against](/docs/library/how-to/datasets/use-dataset-templates)
-4. [Evaluators to evaluate the prompt version against the dataset](/docs/library/how-to/evaluators/use-pre-built-evaluators)
+1. [An API key from Maxim](/observe/quickstart#2-generate-api-key)
+2. [**A prompt version to test upon**](/evaluate/how-to/evaluate-prompts/create-prompt-versions)
+3. [A dataset to test against](/library/how-to/datasets/use-dataset-templates)
+4. [Evaluators to evaluate the prompt version against the dataset](/library/how-to/evaluators/use-pre-built-evaluators)
 
 Now that we have all the prerequisites, test runs can be triggered via:
 
@@ -71,7 +71,7 @@ We require you to set these environment variables before using the CLI, **these 
 
 | Name          | Value                          |
 | ------------- | ------------------------------ |
-| MAXIM_API_KEY | [API key obtained via Maxim](/docs/observe/quickstart#2-generate-api-key) |
+| MAXIM_API_KEY | [API key obtained via Maxim](/observe/quickstart#2-generate-api-key) |
 
 ### Triggering a test run
 
@@ -167,7 +167,7 @@ The following are the inputs that can be used to configure the GitHub Action:
 | `test_run_name`                 | Name of the test run                                                                                                                                                                                                                               | Yes                                                              |
 | `dataset_id`                    | Dataset ID for the test run                                                                                                                                                                                                                        | Yes                                                              |
 | `prompt_version_id`             | Prompt version ID to run for the test run (do not use with `workflow_id`)                                                                                                                                                                          | Yes (No if `workflow_id` is provided)                            |
-| `workflow_id`                   | Workflow ID to run for the test run <br />(discussed in [Evaluate Workflows via API -> Automate workflow evaluation via CI/CD](/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/automate-via-ci-cd), do not use with `prompt_version_id`) | Yes (No if `prompt_version_id` is provided)                      |
+| `workflow_id`                   | Workflow ID to run for the test run <br />(discussed in [Evaluate Workflows via API -> Automate workflow evaluation via CI/CD](/evaluate/how-to/evaluate-workflows-via-api-endpoint/automate-via-ci-cd), do not use with `prompt_version_id`) | Yes (No if `prompt_version_id` is provided)                      |
 | `context_to_evaluate`           | Variable name to evaluate; could be any variable used in the workflow / prompt or a column name                                                                                                                                                    | No                                                               |
 | `evaluators`                    | Comma separated list of evaluator names                                                                                                                                                                                                            | No                                                               |
 | `human_evaluation_emails`       | Comma separated list of emails to send human evaluations to                                                                                                                                                                                        | No (required in case there is a human evaluator in `evaluators`) |
@@ -187,4 +187,4 @@ The outputs that are provided by the GitHub Action in case it doesn't fail are:
 
 ## Evaluating Workflows
 
-Please refer to [Evaluate Workflows via API -> Automate workflow evaluation via CI/CD](/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/automate-via-ci-cd)
+Please refer to [Evaluate Workflows via API -> Automate workflow evaluation via CI/CD](/evaluate/how-to/evaluate-workflows-via-api-endpoint/automate-via-ci-cd)

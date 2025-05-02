@@ -5,14 +5,14 @@ description: Build an AI workflow to generate product descriptions from images u
 
 Let's take a scenario where you have an application in which you want to build an AI workflow that generates a product description from a product image. Now, if you want to add more functionalities like translation, data processing, or sending data to external services, you would have to create a separate translation service, write additional code, and build an API layer to communicate with those external services.
 
-This is exactly where Maxim [Prompt Chains](/docs/evaluate/how-to/evaluate-chains/experiment-with-prompt-chains) can help you build the workflow, covering all these pieces. With different types of nodes, you can create the same functionality with ease. Let's go through it step by step.
+This is exactly where Maxim [Prompt Chains](/evaluate/how-to/evaluate-chains/experiment-with-prompt-chains) can help you build the workflow, covering all these pieces. With different types of nodes, you can create the same functionality with ease. Let's go through it step by step.
 
 ![Product description generator workflow](/images/docs/evaluate/how-to/prompt-chains/tutorials/product-description-generator-and-translator-chain.png)
 
 <Steps>
 <Step title="Create Product Description Generator">
 
-Create a new [Prompt](/docs/evaluate/how-to/evaluate-prompts/experiment-in-prompt-playground) with these system instructions:
+Create a new [Prompt](/evaluate/how-to/evaluate-prompts/experiment-in-prompt-playground) with these system instructions:
 
 ```plaintext System instructions for product description generator
 You are a highly skilled AI that generates compelling product descriptions. Your goal is to highlight key features, benefits, and unique selling points in an engaging and brand-aligned tone.
@@ -31,7 +31,7 @@ Ensure descriptions are clear, engaging, and tailored to different product categ
 
 <Step title="Add the Prompt to a chain">
 
-Create a [Prompt chain](/docs/evaluate/how-to/evaluate-chains/experiment-with-prompt-chains) and add your product description generator Prompt as the first step.
+Create a [Prompt chain](/evaluate/how-to/evaluate-chains/experiment-with-prompt-chains) and add your product description generator Prompt as the first step.
 
 ![Add product description generator to chain](/images/docs/evaluate/how-to/prompt-chains/tutorials/product-description-generator-bot-prompt-node.png)
 
@@ -69,7 +69,7 @@ Add an API node to integrate with external systems:
 - Connect to analytics
 - Trigger actions in other tools
 
-[Configure](/docs/evaluate/how-to/evaluate-chains/use-api-nodes-within-chains) your endpoint details and required payload format.
+[Configure](/evaluate/how-to/evaluate-chains/use-api-nodes-within-chains) your endpoint details and required payload format.
 
 ![Configure API integration](/images/docs/evaluate/how-to/prompt-chains/tutorials/api-block-node.png)
 

@@ -12,7 +12,7 @@ Human evaluation on logs are very similar to how human annotation is done on tes
 <Note>
 **Before you start**
 
-You need to have your **logging set up** to capture interactions between your LLM and users before you can evaluate them. To do so, you would need to integrate [Maxim SDK](/docs/observe/how-to/log-your-application/setting-up-trace) into your application.
+You need to have your **logging set up** to capture interactions between your LLM and users before you can evaluate them. To do so, you would need to integrate [Maxim SDK](/observe/how-to/log-your-application/setting-up-trace) into your application.
 
 Also if you do not have a **Human Evaluator** created in your workspace, please create one by navigating to the **Evaluators** (<Icon icon="square-check" className="w-5 h-5 inline" />) tab from the sidebar, as we will need it to setup the human evaluation pipeline.
 </Note>
@@ -52,7 +52,7 @@ This will setup what evaluation we want to do upon our logs. Now we need to setu
 ![Screenshot of the evaluation configuration sheet](/images/docs/observe/how-to/evaluate-logs/human-evaluation/screenshot-of-the-evaluation-configuration-sheet.png)
 
 <Note>
-We talked about the [Auto evaluation](/docs/observe/how-to/evaluate-logs/auto-evaluation) section above. You can learn more about using other types of evaluators to evaluate your logs there.
+We talked about the [Auto evaluation](/observe/how-to/evaluate-logs/auto-evaluation) section above. You can learn more about using other types of evaluators to evaluate your logs there.
 </Note>
 </Step>
 <Step title="Save configuration">
@@ -113,7 +113,7 @@ Similar to how the evaluator scores are shown for auto evaluation, human evaluat
 
 ### The trace details sheet (under the Evaluation tab)
 
-On opening any trace, you will find a `Details` and `Evaluation` tab. The `Evaluation` tab here would display all the evaluations on that happened on the trace. We will focus on the **Human Evaluators** here but in order to make sense of other evaluators in this sheet you can refer to [Auto Evaluation -> Making sense of evaluations on logs](/docs/observe/how-to/evaluate-logs/auto-evaluation#making-sense-of-evaluations-on-logs)
+On opening any trace, you will find a `Details` and `Evaluation` tab. The `Evaluation` tab here would display all the evaluations on that happened on the trace. We will focus on the **Human Evaluators** here but in order to make sense of other evaluators in this sheet you can refer to [Auto Evaluation -> Making sense of evaluations on logs](/observe/how-to/evaluate-logs/auto-evaluation#making-sense-of-evaluations-on-logs)
 
 The trace evaluation overview tab shows the average score of each **Human Evaluator** and **Rewritten Outputs**, if present, by each individual user.
 
