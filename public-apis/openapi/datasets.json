@@ -34,6 +34,9 @@
             "ApiKeyAuth": []
           }
         ],
+        "tags": [
+          "Dataset"
+        ],
         "description": "Create a new dataset",
         "summary": "Create Dataset",
         "requestBody": {
@@ -138,6 +141,9 @@
             "ApiKeyAuth": []
           }
         ],
+        "tags": [
+          "Dataset"
+        ],
         "description": "Delete a dataset",
         "summary": "Delete Dataset",
         "parameters": [
@@ -174,6 +180,9 @@
           {
             "ApiKeyAuth": []
           }
+        ],
+        "tags": [
+          "Dataset"
         ],
         "description": "Get datasets or a specific dataset",
         "summary": "Get Datasets",
@@ -361,6 +370,9 @@
             "ApiKeyAuth": []
           }
         ],
+        "tags": [
+          "Dataset"
+        ],
         "description": "Update a dataset",
         "summary": "Update Dataset",
         "requestBody": {
@@ -422,11 +434,11 @@
             "ApiKeyAuth": []
           }
         ],
+        "tags": [
+          "Dataset column"
+        ],
         "description": "Create dataset columns",
         "summary": "Create Dataset Columns",
-        "tags": [
-          "Datasets"
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -532,7 +544,7 @@
         "description": "Delete dataset columns",
         "summary": "Delete Dataset Columns",
         "tags": [
-          "Datasets"
+          "Dataset column"
         ],
         "requestBody": {
           "content": {
@@ -587,7 +599,7 @@
         "description": "Get dataset columns",
         "summary": "Get Dataset Columns",
         "tags": [
-          "Datasets"
+          "Dataset column"
         ],
         "parameters": [
           {
@@ -688,7 +700,7 @@
         "description": "Update dataset columns",
         "summary": "Update Dataset Columns",
         "tags": [
-          "Datasets"
+          "Dataset column"
         ],
         "requestBody": {
           "content": {
@@ -766,7 +778,7 @@
         "description": "Create dataset entries",
         "summary": "Create Dataset entries",
         "tags": [
-          "Datasets"
+          "Dataset entry"
         ],
         "requestBody": {
           "content": {
@@ -934,7 +946,7 @@
         "description": "Delete dataset entries",
         "summary": "Delete Dataset Entries",
         "tags": [
-          "Datasets"
+          "Dataset entry"
         ],
         "requestBody": {
           "content": {
@@ -1034,7 +1046,7 @@
         "description": "Get dataset entries",
         "summary": "Get Dataset Entries",
         "tags": [
-          "Datasets"
+          "Dataset entry"
         ],
         "parameters": [
           {
@@ -1189,7 +1201,7 @@
         "description": "Update dataset entries",
         "summary": "Update Dataset Entries",
         "tags": [
-          "Datasets"
+          "Dataset entry"
         ],
         "requestBody": {
           "content": {
@@ -1367,7 +1379,7 @@
         "description": "Create dataset split",
         "summary": "Create Dataset Split",
         "tags": [
-          "Datasets"
+          "Dataset split"
         ],
         "requestBody": {
           "content": {
@@ -1429,7 +1441,7 @@
         "description": "Delete dataset split",
         "summary": "Delete Dataset Split",
         "tags": [
-          "Datasets"
+          "Dataset split"
         ],
         "parameters": [
           {
@@ -1472,7 +1484,7 @@
         "description": "Get dataset splits",
         "summary": "Get Dataset Splits",
         "tags": [
-          "Datasets"
+          "Dataset split"
         ],
         "parameters": [
           {
@@ -1569,7 +1581,7 @@
         "description": "Update dataset split",
         "summary": "Update Dataset Split",
         "tags": [
-          "Datasets"
+          "Dataset split"
         ],
         "requestBody": {
           "content": {

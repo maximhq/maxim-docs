@@ -36,6 +36,9 @@
         ],
         "description": "Get test runs for a workspace",
         "summary": "Get test runs",
+        "tags": [
+          "Test run"
+        ],
         "parameters": [
           {
             "schema": {
@@ -187,6 +190,9 @@
         ],
         "description": "Delete test runs from a workspace",
         "summary": "Delete test runs",
+        "tags": [
+          "Test run"
+        ],
         "requestBody": {
           "content": {
             "application/json": {

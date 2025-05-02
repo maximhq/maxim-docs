@@ -96,6 +96,9 @@
             "ApiKeyAuth": []
           }
         ],
+        "tags": [
+          "Folder"
+        ],
         "description": "Create a new folder for organizing entities",
         "summary": "Create Folder",
         "requestBody": {
@@ -176,6 +179,9 @@
           {
             "ApiKeyAuth": []
           }
+        ],
+        "tags": [
+          "Folder"
         ],
         "description": "Get folder details. If id or name is provided, returns a single folder object. Otherwise, lists sub-folders under the parentFolderId (or root).",
         "summary": "Get Folders",
@@ -329,7 +335,7 @@
           }
         ],
         "tags": [
-          "Folders"
+          "Folder contents"
         ],
         "description": "Get the contents (entities) of a specific folder, identified by folderId or name+parentFolderId.",
         "summary": "Get Folder Contents",

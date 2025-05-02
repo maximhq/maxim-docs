@@ -77,6 +77,9 @@
         ],
         "description": "Create a new log repository",
         "summary": "Create a new log repository",
+        "tags": [
+          "Log repository"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -147,6 +150,9 @@
         ],
         "description": "Get log repositories",
         "summary": "Get log repositories",
+        "tags": [
+          "Log repository"
+        ],
         "parameters": [
           {
             "schema": {
@@ -266,6 +272,9 @@
         ],
         "description": "Update log repository",
         "summary": "Update log repository",
+        "tags": [
+          "Log repository"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -337,6 +346,9 @@
         ],
         "description": "Delete a log repository",
         "summary": "Delete a log repository",
+        "tags": [
+          "Log repository"
+        ],
         "parameters": [
           {
             "schema": {
@@ -380,7 +392,7 @@
         "description": "Search logs in a log repository",
         "summary": "Search logs in a log repository",
         "tags": [
-          "LogRepositories"
+          "Log repository"
         ],
         "parameters": [
           {
@@ -1342,7 +1354,7 @@
         "description": "Get a specific trace by ID",
         "summary": "Get trace by ID",
         "tags": [
-          "LogRepositories"
+          "Log repository"
         ],
         "parameters": [
           {

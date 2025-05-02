@@ -37,7 +37,7 @@
         "description": "Get test run entries",
         "summary": "Get test run entries",
         "tags": [
-          "TestRuns"
+          "Test run entries"
         ],
         "parameters": [
           {

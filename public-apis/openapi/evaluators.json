@@ -34,6 +34,9 @@
             "ApiKeyAuth": []
           }
         ],
+        "tags": [
+          "Evaluator"
+        ],
         "description": "Get an evaluator by ID, name or fetch all evaluators for a workspace",
         "summary": "Get evaluators",
         "requestBody": {
@@ -406,7 +409,7 @@
           }
         ],
         "tags": [
-          "Evaluators"
+          "Evaluator"
         ],
         "description": "Execute an evaluator to assess content based on predefined criteria and return grading results, reasoning, and execution logs",
         "summary": "Execute an evaluator",

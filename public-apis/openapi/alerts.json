@@ -34,6 +34,9 @@
             "ApiKeyAuth": []
           }
         ],
+        "tags": [
+          "Alert"
+        ],
         "description": "Create a new alert",
         "summary": "Create Alert",
         "requestBody": {
@@ -269,6 +272,9 @@
             "ApiKeyAuth": []
           }
         ],
+        "tags": [
+          "Alert"
+        ],
         "description": "Get alerts for a workspace",
         "summary": "Get Alerts",
         "parameters": [
@@ -489,6 +495,9 @@
             "ApiKeyAuth": []
           }
         ],
+        "tags": [
+          "Alert"
+        ],
         "description": "Delete an alert",
         "summary": "Delete Alert",
         "parameters": [
@@ -528,6 +537,9 @@
           {
             "ApiKeyAuth": []
           }
+        ],
+        "tags": [
+          "Alert"
         ],
         "description": "Update an alert",
         "summary": "Update Alert",

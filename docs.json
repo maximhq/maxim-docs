@@ -232,36 +232,7 @@
                     }
                 ]
             },
-            {
-                "tab": "SDK",
-                "groups": [
-                    {
-                        "group": "Overview",
-                        "pages": [
-                            "sdk/overview"
-                        ]
-                    },
-                    {
-                        "group": "Python",
-                        "pages": [
-                            "sdk/python/overview",
-                            {
-                                "group": "Integrations",
-                                "pages": [
-                                    {
-                                        "group": "OpenAI",
-                                        "pages": [
-                                            "sdk/python/integrations/openai/one-line-integration",
-                                            "sdk/python/integrations/openai/agents-sdk"
-                                        ]
-                                    }
-                                ]
-                            },
-                            "sdk/python/upgrading-to-v3"
-                        ]
-                    }
-                ]
-            },
+           
             {
                 "tab": "API Reference",
                 "groups": [
@@ -276,6 +247,69 @@
                         "openapi": {
                             "source": "public-apis/openapi/prompts.json",
                             "directory": "Prompts"
+                        }
+                    },
+                    {
+                        "group": "Datasets",
+                        "openapi": {
+                            "source": "public-apis/openapi/datasets.json",
+                            "directory": "Datasets"
+                        }
+                    },
+                    {
+                        "group": "Evaluators",
+                        "openapi": {
+                            "source": "public-apis/openapi/evaluators.json",
+                            "directory": "Evaluators"
+                        }
+                    },
+                    {
+                        "group": "Log repositories",
+                        "openapi": {
+                            "source": "public-apis/openapi/log-repositories.json",
+                            "directory": "Log repositories"
+                        }
+                    },
+                    {
+                        "group": "Folders",
+                        "openapi": {
+                            "source": "public-apis/openapi/folders.json",
+                            "directory": "Folders"
+                        }
+                    },
+                    {
+                        "group": "Integrations",
+                        "openapi": {
+                            "source": "public-apis/openapi/integrations.json",
+                            "directory": "Integrations"
+                        }
+                    },
+                    {
+                        "group": "Alerts",
+                        "openapi": {
+                            "source": "public-apis/openapi/alerts.json",
+                            "directory": "Alerts"
+                        }
+                    },
+                    {
+                        "group": "Test runs",
+                        "openapi": {
+                            "source": "public-apis/openapi/test-runs.json",
+                            "directory": "Test runs"
+                        }
+                    },
+                    {
+                        "group": "Test run entries",
+                        "openapi": {
+                            "source": "public-apis/openapi/test-run-entries.json",
+                            "directory": "Test run entries"
+                        }
+                    },
+                    {
+                        "group": "Test run reports",
+                        "openapi": {
+                            "source": "public-apis/openapi/test-run-share-report.json",
+                            "directory": "Test run reports"
                         }
                     }
                 ]

@@ -37,7 +37,7 @@
         "description": "Share a test run report",
         "summary": "Share test run report",
         "tags": [
-          "TestRuns"
+          "Test run report"
         ],
         "parameters": [
           {

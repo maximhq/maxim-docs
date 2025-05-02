@@ -34,6 +34,9 @@
             "ApiKeyAuth": []
           }
         ],
+        "tags": [
+          "Integration"
+        ],
         "description": "Create a new integration for notification channels",
         "summary": "Create Integration",
         "requestBody": {
@@ -159,6 +162,9 @@
           {
             "ApiKeyAuth": []
           }
+        ],
+        "tags": [
+          "Integration"
         ],
         "description": "Get integrations for a workspace",
         "summary": "Get Integrations",
@@ -288,6 +294,9 @@
             "ApiKeyAuth": []
           }
         ],
+        "tags": [
+          "Integration"
+        ],
         "description": "Delete an integration",
         "summary": "Delete Integration",
         "parameters": [
@@ -327,6 +336,9 @@
           {
             "ApiKeyAuth": []
           }
+        ],
+        "tags": [
+          "Integration"
         ],
         "description": "Update an integration",
         "summary": "Update Integration",
