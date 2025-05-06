@@ -54,7 +54,7 @@ from maxim.logger import Logger, LoggerConfig
 
 maxim = Maxim(Config(api_key=""))
 
-logger = Logger(LoggerConfig(id=""))
+logger = maxim.logger(LoggerConfig(id=""))
 ```
 ```go Go
 import "github.com/maximhq/maxim-go"
