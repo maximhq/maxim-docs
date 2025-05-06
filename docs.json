@@ -261,6 +261,18 @@
                                             "sdk/python/integrations/litellm/litellm-sdk",
                                             "sdk/python/integrations/litellm/litellm-proxy"
                                         ]
+                                    },
+                                    {
+                                        "group": "LangChain",
+                                        "pages": [
+                                            "sdk/python/integrations/langchain/langchain"                                            
+                                        ]
+                                    },
+                                    {
+                                        "group": "LangGraph",
+                                        "pages": [
+                                            "sdk/python/integrations/langgraph/langgraph"                                            
+                                        ]
                                     }
                                 ]
                             },

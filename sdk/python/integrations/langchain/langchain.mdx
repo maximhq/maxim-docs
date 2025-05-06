@@ -1,0 +1,94 @@
+---
+title: Langchain with & without streaming
+description: "Learn how to integrate Maxim observability with LangChain OpenAI calls."
+---
+
+[LangChain](https://www.langchain.com/) is a popular framework for developing applications powered by language models. It provides a standard interface for chains, integrations with other tools, and end-to-end chains for common applications.
+
+This guide demonstrates how to integrate Maxim's observability capabilities with LangChain applications, allowing you to:
+
+1. **Track LLM interactions** - Monitor all calls to language models
+2. **Analyze performance** - Measure latency, token usage, and costs
+3. **Debug chains** - Visualize the flow of information through your LangChain applications
+4. **Evaluate outputs** - Assess the quality of responses from your LLM chains
+
+The integration is simple and requires minimal changes to your existing LangChain code.
+
+
+## Requirements
+
+```
+maxim-py
+langchain-openai>=0.0.1
+langchain
+python-dotenv
+```
+
+## Env variables
+
+```
+MAXIM_LOG_REPO_ID=
+OPENAI_API_KEY=
+```
+
+## Initialize logger
+
+```python
+from maxim import Maxim, Config, LoggerConfig
+
+# Instantiate Maxim and create a logger
+logger = Maxim(Config()).logger(
+    LoggerConfig(id=MAXIM_LOG_REPO_ID)
+)
+```
+
+## Initialize MaximLangchainTracer
+
+```python {4}
+from maxim.logger.langchain import MaximLangchainTracer
+
+# Create the LangChain-specific tracer
+langchain_tracer = MaximLangchainTracer(logger)
+```
+
+## Make LLM calls using MaximLangchainTracer
+
+```python
+from langchain_openai import ChatOpenAI
+
+MODEL_NAME = "gpt-4o"
+llm = ChatOpenAI(model=MODEL_NAME, api_key=OPENAI_API_KEY)
+
+messages = [
+  ("system", "You are a helpful assistant."),
+  ("human", "Describe big bang theory")
+]
+
+response = llm.invoke(
+  messages,
+  config={"callbacks": [langchain_tracer]}
+)
+print(response.content)
+```
+
+## Streaming example
+
+```python
+# Enable streaming
+llm_stream = ChatOpenAI(
+  model=MODEL_NAME,
+  api_key=OPENAI_API_KEY,
+  streaming=True
+)
+
+response_text = ""
+for chunk in llm_stream.stream(
+  messages,
+  config={"callbacks": [langchain_tracer]}
+):
+  response_text += chunk.content
+
+print("\nFull response:", response_text)
+```
+
+---
