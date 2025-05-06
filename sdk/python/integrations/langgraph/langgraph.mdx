@@ -129,7 +129,7 @@ def call_model(state, config):
 
 ## 8. Compile & Instrument with Maxim
 
-```python {3,7,14}
+```python {3,7,9,14}
 app = workflow.compile()
 
 @span(name="post-process-span")
@@ -158,3 +158,5 @@ resp = await handle("What is the capital of France?")
 print(resp)
 ```
 
+
+![LangGraph Dashboard](/images/docs/sdk/python/langchain/langgraph.gif)
