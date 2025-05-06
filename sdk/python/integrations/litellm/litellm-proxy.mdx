@@ -1,0 +1,87 @@
+---
+title: "LiteLLM Proxy one-line integration"
+description: Learn how to integrate Maxim with the LiteLLM Proxy
+---
+
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
+
+<MaximPlayer url="https://www.youtube.com/embed/o4cUXXBLC_Y?si=c5OAT93NWhMlfzDp" />
+
+Learn how to integrate Maxim observability and online evaluation with your LiteLLM Proxy in just one line of configuration.
+
+## Prerequisites
+
+Install the required Python packages:
+
+```bash
+pip install litellm[proxy]>=1.30.0 maxim-py==3.4.16 python-dotenv>=0.21.1
+```
+
+## Project Layout
+
+```text
+.
+├── config.yml
+├── maxim_proxy_tracer.py
+├── requirements.txt
+├── .env
+└── (optional) Dockerfile & docker-compose.yml
+```
+
+## 1. Define the Tracer
+
+Create a file `maxim_proxy_tracer.py` next to your proxy entrypoint:
+
+```python maxim_proxy_tracer.py
+from maxim.logger.litellm_proxy import MaximLiteLLMProxyTracer
+
+# This single object wires up all LiteLLM traffic to Maxim
+litellm_handler = MaximLiteLLMProxyTracer()
+```
+
+## 2. Update `config.yml`
+
+Point LiteLLM’s callback at your tracer:
+
+```yaml config.yml
+litellm_settings:
+  callbacks: maxim_proxy_tracer.litellm_handler
+```
+
+_(Your existing `model_list` and `general_settings` remain unchanged.)_
+
+## 3. Configure Environment Variables
+
+Add the following to a `.env` file or export in your shell:
+
+```bash
+OPENAI_API_KEY=…       # API key for LiteLLM
+MAXIM_API_KEY=…        # API key for Maxim ingestion
+MAXIM_LOG_REPO_ID=…    # ID of your Maxim log repository
+```
+
+## 4. Run the Proxy Locally
+
+You can start the proxy directly via the LiteLLM CLI:
+
+```bash
+litellm --port 8000 --config config.yml
+```
+
+## 5. Run with Docker Compose
+
+If you prefer Docker, use the provided `Dockerfile` and `docker-compose.yml`:
+
+```bash
+docker-compose up -d
+```
+
+- **Port:** 8000  
+- **Health check:** `GET /health`  
+- **Logs:** streamed to `proxy_logs.log`
+
+
+That’s it—no additional code changes required. Every request through your LiteLLM Proxy will now be traced, logged, and evaluated in Maxim.  
+
+

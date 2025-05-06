@@ -246,13 +246,32 @@
                         "pages": [
                             "sdk/python/overview",
                             {
-                                "group": "Logging",
+                                "group": "Tracing",
                                 "pages": [
                                     {
                                         "group": "OpenAI",
                                         "pages": [
                                             "sdk/python/integrations/openai/one-line-integration",
                                             "sdk/python/integrations/openai/agents-sdk"
+                                        ]
+                                    },
+                                    {
+                                        "group": "LiteLLM",
+                                        "pages": [
+                                            "sdk/python/integrations/litellm/litellm-sdk",
+                                            "sdk/python/integrations/litellm/litellm-proxy"
+                                        ]
+                                    },
+                                    {
+                                        "group": "LangChain",
+                                        "pages": [
+                                            "sdk/python/integrations/langchain/langchain"                                            
+                                        ]
+                                    },
+                                    {
+                                        "group": "LangGraph",
+                                        "pages": [
+                                            "sdk/python/integrations/langgraph/langgraph"                                            
                                         ]
                                     }
                                 ]

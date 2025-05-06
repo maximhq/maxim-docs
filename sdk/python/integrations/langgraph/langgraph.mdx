@@ -1,0 +1,162 @@
+---
+title: "Tavily Search & LangGraph Agent with Maxim Observability"
+description: "Tutorial showing how to integrate Tavily Search API with LangChain and LangGraph, plus instrumentation using Maxim for full observability in just 5 lines."
+---
+
+# Integrating Maxim Observability into a LangGraph Agent
+
+This tutorial demonstrates how to build a ReAct-style LangGraph agent that uses the Tavily Search API to fetch information and then processes it with either OpenAI or Anthropic models—while instrumenting the entire workflow with Maxim for tracing, spans, and performance insights.
+
+## 1. Prerequisites
+
+- **Python 3.8+**
+- API keys for:
+  - OpenAI (`OPENAI_API_KEY`)  
+  - Anthropic (`ANTHROPIC_API_KEY`)
+  - Tavily (`TAVILY_API_KEY`)
+  - Maxim (`MAXIM_API_KEY`)
+  - Maxim Log Repository ID  (`MAXIM_LOG_REPO_ID`)
+- Install packages:
+  ```txt
+  langchain>=0.3.22
+  langchain-anthropic>=0.3.10
+  langchain-community>=0.3.20
+  langchain-openai>=0.3.11
+  langgraph>=0.3.21
+  maxim-py>=3.5.6
+  python-dotenv>=1.0.1
+  ```
+
+## 2. Imports & Environment
+
+```python
+import os
+from functools import lru_cache
+from typing import Annotated, Sequence, TypedDict, Literal
+
+# LangChain & community tools
+from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
+from langchain_community.tools.tavily_search import TavilySearchResults
+
+# LangGraph workflow
+from langgraph.graph import START, END, StateGraph, add_messages
+from langgraph.prebuilt import ToolNode
+
+# Maxim tracing
+from maxim import Maxim
+from maxim.decorators import trace, span
+from maxim.decorators.langchain import langchain_callback, langgraph_agent
+```
+
+Load your API keys:
+
+```python
+openAIKey    = os.getenv("OPENAI_API_KEY")
+anthropicKey = os.getenv("ANTHROPIC_API_KEY")
+tavilyKey    = os.getenv("TAVILY_API_KEY")
+```
+
+## 3. Initialize Maxim Logger
+
+```python
+config = Config(api_key=maximKey)
+logger = Maxim().logger()
+```
+
+## 4. Define Agent State & Tools
+
+```python
+class AgentState(TypedDict):
+    messages: Annotated[Sequence[dict], add_messages]
+
+tools = [TavilySearchResults(max_results=1, tavily_api_key=tavilyKey)]
+tool_node = ToolNode(tools)
+```
+
+## 5. Model Selection Helper
+
+```python
+@lru_cache(maxsize=4)
+def _get_model(name: str):
+    if name == "openai":
+        m = ChatOpenAI(temperature=0, model_name="gpt-4o", api_key=openAIKey)
+    elif name == "anthropic":
+        m = ChatAnthropic(temperature=0, model_name="claude-3-sonnet-20240229", api_key=anthropicKey)
+    else:
+        raise ValueError(f"Unsupported model: {name}")
+    return m.bind_tools(tools)
+```
+
+## 6. Control Flow: Continue or End
+
+```python
+def should_continue(state):
+    last_msg = state["messages"][-1]
+    return "end" if not getattr(last_msg, "tool_calls", None) else "continue"
+```
+
+## 7. Build the LangGraph Workflow
+
+```python
+from typing import TypedDict
+
+GraphConfig = TypedDict("GraphConfig", {"model_name": Literal["anthropic","openai"]})
+workflow = StateGraph(AgentState, config_schema=GraphConfig)
+
+workflow.add_node("agent", call_model, name="LLM Node")
+workflow.add_node("action", tool_node, name="Tavily Search Node")
+workflow.set_entry_point("agent")
+
+workflow.add_conditional_edges(
+    "agent",
+    should_continue,
+    {"continue": "action", "end": END},
+)
+workflow.add_edge("action", "agent")
+```
+
+`call_model` wraps your LLM calls:
+
+```python
+system_prompt = "Be a helpful assistant"
+
+def call_model(state, config):
+    messages = [{"role":"system","content":system_prompt}] + state["messages"]
+    model = _get_model(config.get("configurable", {}).get("model_name", "anthropic"))
+    return {"messages": [ model.invoke(messages) ]}
+```
+
+## 8. Compile & Instrument with Maxim
+
+```python {3,7,9,14}
+app = workflow.compile()
+
+@span(name="post-process-span")
+def post_process(output: str) -> str:
+    return output
+
+@langgraph_agent(name="tavily-agent-v1")
+async def ask_agent(query: str) -> str:
+    config = {"recursion_limit": 50, "callbacks": [langchain_callback()]}
+    async for event in app.astream(input={"messages":[query]}, config=config):
+        if "agent" in event:
+            return event["agent"][0].content
+
+@trace(logger=logger, name="tavily-chat-v1")
+async def handle(query: str) -> str:
+    response = await ask_agent(query)
+    current_trace().set_output(response)
+    post_process(response)
+    return response
+```
+
+## 9. Execute & Observe
+
+```python
+resp = await handle("What is the capital of France?")
+print(resp)
+```
+
+
+![LangGraph Dashboard](/images/docs/sdk/python/langchain/langgraph.gif)
