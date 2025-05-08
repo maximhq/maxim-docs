@@ -435,6 +435,12 @@
             "href": "https://www.getmaxim.ai/login"
         }
     },
+  "redirects": [
+      {
+        "source": "/api/overview",
+        "destination": "/public-apis/overview"
+      }
+    ],
     "footer": {
         "socials": {
             "x": "https://x.com/getmaximai",
