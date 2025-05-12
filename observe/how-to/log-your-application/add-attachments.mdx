@@ -1,0 +1,55 @@
+---
+title: Add file and URL attachments
+description: Learn how to attach files and URLs to traces and spans for richer observability in Maxim.
+---
+
+<Warning>
+This feature is currently in beta. Requires `maxim-py` >= 5.6.x
+</Warning>
+
+Attach files (such as audio, images, or text) and URLs to your traces and spans to provide additional context for debugging, analytics, and audit trails. Attachments are stored and viewable in the Maxim UI alongside your trace data.
+
+<div className="w-full flex justify-end -mb-11">
+  <LanguageSwitcher />
+</div>
+
+<Steps>
+
+<Step title="Add file and URL attachments to a trace or span">
+You can add attachments to both traces and spans. Use `FileAttachment` for local files and `UrlAttachment` for remote resources.
+
+<CodeGroup>
+```python Python
+from uuid import uuid4
+from maxim.logger import FileAttachment, UrlAttachment
+
+# attaching to a trace
+trace = logger.trace({"id": str(uuid4())})
+trace.set_input("test input")
+trace.add_attachment(FileAttachment(path="./files/wav_audio.wav"))
+
+# attaching to a span
+span = trace.span({"id": str(uuid4()), "name": "test span"})
+span.add_attachment(UrlAttachment(url="https://images.unsplash.com/photo-1520004434532-668416a08753?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", mime_type="image/*"))
+span.add_attachment(FileAttachment(path="./files/text_file.txt", name="Main data file"))
+```
+</CodeGroup>
+
+<Note>
+You can provide custom name to each file by passing name property.
+</Note>
+
+<Note>
+- Use <code>FileAttachment</code> for local files (audio, images, text, etc.).
+- Use <code>UrlAttachment</code> for remote files or images (provide a valid URL and optional MIME type).
+- You can add attachments to both traces and spans, depending on the context you want to enrich.
+- Attachments are visible in the Maxim UI for each trace/span.
+</Note>
+</Step>
+
+<Step title="Best practices for attachments">
+- Keep file sizes reasonable for upload and storage limits. Currently the limit is 50 MB per file.
+- Maxim detects MIME type on server side. But you can override that by sending mime_type as parameter.
+</Step>
+
+</Steps>
