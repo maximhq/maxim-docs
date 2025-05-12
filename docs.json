@@ -398,7 +398,9 @@
         }
     },
     "integrations": {
-        "intercom": "glx5mihe",        
+        "intercom": {
+            "appId": "glx5mihe"
+        },
         "posthog": {
             "apiKey": "phc_tIH4RrILTB5RdiI22hDijKui0K8c4PNGfaPIoAA5Lcj",
             "apiHost": "https://ph.getmaxim.ai"            
