@@ -119,6 +119,7 @@
                                             "observe/how-to/log-your-application/setting-up-trace",
                                             "observe/how-to/log-your-application/add-spans-to-traces",
                                             "observe/how-to/log-your-application/adding-llm-call",
+                                            "observe/how-to/log-your-application/add-attachments",
                                             "observe/how-to/log-your-application/logging-rag-pipeline",
                                             "observe/how-to/log-your-application/log-multiturn-interactions-as-session",
                                             "observe/how-to/log-your-application/track-tool-calls",
