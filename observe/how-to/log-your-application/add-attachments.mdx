@@ -4,52 +4,62 @@ description: Learn how to attach files and URLs to traces and spans for richer o
 ---
 
 <Warning>
-This feature is currently in beta. Requires `maxim-py` >= 5.6.x
+- This feature is currently in beta.
+- Requires `maxim-py` >= 5.6.x
 </Warning>
 
-Attach files (such as audio, images, or text) and URLs to your traces and spans to provide additional context for debugging, analytics, and audit trails. Attachments are stored and viewable in the Maxim UI alongside your trace data.
+## Overview
 
-<div className="w-full flex justify-end -mb-11">
-  <LanguageSwitcher />
-</div>
+Attachments let you add files (audio, images, text, etc.) or URLs to your traces and spans in Maxim. This provides extra context for debugging, analytics, and audit trails. All attachments are stored and viewable in the Maxim UI alongside your trace data.
 
-<Steps>
 
-<Step title="Add file and URL attachments to a trace or span">
-You can add attachments to both traces and spans. Use `FileAttachment` for local files and `UrlAttachment` for remote resources.
+## How to Add Attachments
+
+You can attach files or URLs to both traces and spans. There are three main types of attachments:
+
+| Attachment Type         | Use For                        | Example Parameter(s)                |
+|------------------------ |-------------------------------|-------------------------------------|
+| `FileAttachment`        | Local files (audio, images)    | `path`                              |
+| `UrlAttachment`         | Remote files or images         | `url`, `mime_type` (optional)       |
+| `FileDataAttachment`    | Data blobs (bytes in memory)   | `data`, `name`, `mime_type` (opt.)  |
+
+### Example: Add Attachments to a Trace
 
 <CodeGroup>
 ```python Python
 from uuid import uuid4
-from maxim.logger import FileAttachment, UrlAttachment
+from maxim.logger import FileAttachment, UrlAttachment, FileDataAttachment
 
-# attaching to a trace
-trace = logger.trace({"id": str(uuid4())})
-trace.set_input("test input")
-trace.add_attachment(FileAttachment(path="./files/wav_audio.wav"))
+# Create a new trace
+trace = logger.trace({'id': str(uuid4())})
+trace.set_input('test input')
 
-# attaching to a span
-span = trace.span({"id": str(uuid4()), "name": "test span"})
-span.add_attachment(UrlAttachment(url="https://images.unsplash.com/photo-1520004434532-668416a08753?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", mime_type="image/*"))
-span.add_attachment(FileAttachment(path="./files/text_file.txt", name="Main data file"))
+# Attach a local file
+trace.add_attachment(FileAttachment(path='./files/wav_audio.wav'))
+
+# Attach a remote file or image by URL
+trace.add_attachment(UrlAttachment(url='https://sample-image.com/test-image'))
+
+# Attach a data blob (e.g., in-memory text)
+trace.add_attachment(FileDataAttachment(data=b'Hello World', name='greeting.txt'))
 ```
 </CodeGroup>
 
-<Note>
-You can provide custom name to each file by passing name property.
-</Note>
+**Tip:**  
+You can also add attachments to a `span` or `generation` by replacing `trace` with your span or generation object.
 
-<Note>
-- Use <code>FileAttachment</code> for local files (audio, images, text, etc.).
-- Use <code>UrlAttachment</code> for remote files or images (provide a valid URL and optional MIME type).
-- You can add attachments to both traces and spans, depending on the context you want to enrich.
-- Attachments are visible in the Maxim UI for each trace/span.
-</Note>
-</Step>
+## Notes
 
-<Step title="Best practices for attachments">
-- Keep file sizes reasonable for upload and storage limits. Currently the limit is 50 MB per file.
-- Maxim detects MIME type on server side. But you can override that by sending mime_type as parameter.
-</Step>
+- You can provide a custom name for each file by passing the `name` property.
+- Attachments are visible in the Maxim UI for each trace or span.
+- The server detects the MIME type automatically, but you can override it by passing the `mime_type` parameter.
 
-</Steps>
+## Best Practices
+
+- **File size limit:** Each file must be under 50 MB.
+- **MIME type:** Maxim detects MIME type on the server, but you can override it if needed.
+- **Name:** Add names to each file to easily detect them while surfing through logs.
+
+---
+
+If you have further questions, contact support.
