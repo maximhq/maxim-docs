@@ -37,14 +37,14 @@ Once you have attached evaluators and variables to them, we will process the eva
 We use the `withEvaluators` method to attach evaluators to any component within a trace or the trace itself. It is as easy as just listing the names of the evaluators you want to attach, which are available on the platform.
 
 <CodeGroup>
-  ```typescript Attaching evaluators to components
+  ```typescript JS/TS
   component.evaluate.withEvaluators("evaluator");
 
   // example
   generation.evaluate.withEvaluators("clarity", "toxicity");
   ```
 
-  ```python Attaching evaluators to components
+  ```python Python
   component.evaluate().with_evaluators("evaluator")
 
   # example
@@ -67,7 +67,7 @@ Once evaluators are attached to a component, variables can be passed to them via
 You also need to specify which evaluators you want these variables to be attached to, which can be done by passing the list of evaluator names as the second argument.
 
 <CodeGroup>
-  ```typescript Providing variables to evaluators
+  ```typescript JS/TS
   component.evaluate.withVariables(
     { variableName: "value" }, // Key-value pair of variables
     ["evaluator"], // List of evaluators
@@ -80,7 +80,7 @@ You also need to specify which evaluators you want these variables to be attache
   );
   ```
 
-  ```python Providing variables to evaluators
+  ```python Python
   component.evaluate().with_variables(
     { "variableName": "value" }, # Key-value pair of variables
     ["evaluator"], # List of evaluators
@@ -98,7 +98,7 @@ You also need to specify which evaluators you want these variables to be attache
 
 You can directly chain the `withVariables` method after attaching evaluators to any component. Allowing you to skip mentioning the evaluator names again.
 <CodeGroup>
-  ```typescript Chaining withVariables method directly
+  ```typescript JS/TS
   trace.evaluate
       .withEvaluators("clarity", "toxicity")
       .withVariables({
@@ -106,7 +106,7 @@ You can directly chain the `withVariables` method after attaching evaluators to 
       });
   ```
 
-  ```python Chaining withVariables method directly
+  ```python Python 
   trace.evaluate()
       .with_evaluators("clarity", "toxicity")
       .with_variables({
@@ -129,7 +129,7 @@ This example displays how Node level evaluation might fit in a workflow.
 
 <CodeGroup groupId="language" items={["JS/TS", "Python"]} persist>
 
-```typescript agenticWorkflow.ts
+```typescript JS/TS
 // ...previous flow
 
 const generation = trace.generation({
@@ -184,7 +184,7 @@ generation.evaluate.withVariables(
 // ...flow continues
 ```
 
-```python agentic_workflow.py
+```python Python
 # ...previous flow
 
 generationConfig = GenerationConfig(
