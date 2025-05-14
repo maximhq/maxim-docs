@@ -1,6 +1,6 @@
 ---
-title: Trigger Test Runs using SDK
-description: Learn how to programmatically trigger test runs using Maxim's SDK with custom datasets, flexible output functions, and evaluations for your AI applications.
+title: "Trigger Test Runs using SDK"
+description: "Learn how to programmatically trigger test runs using Maxim's SDK with custom datasets, flexible output functions, and evaluations for your AI applications."
 ---
 
 import { SquareActivity, SquareCheck, SquareTerminal, Table2 } from 'lucide-react'
@@ -16,6 +16,7 @@ While Maxim's web interface provides a powerful way to run tests, the SDK offers
 ## Getting Started: Basic SDK Example
 
 <CodeGroup>
+
 ```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
@@ -31,6 +32,7 @@ const result = await maxim
 .withEvaluators(/* your evaluators here */)
 .run();
 ```
+
 
 ```python Python
 from maxim import Maxim, Config
@@ -48,6 +50,7 @@ result = maxim
 .with_evaluators() # your evaluators here
 .run();
 ```
+
 </CodeGroup>
 
 Copy your workspace ID from the workspace switcher in the left topbar
@@ -63,6 +66,7 @@ Understand the data structure to maintain type safety and validate data columns.
 Define your data structure using an object that maps column names to specific types.
 
 <CodeGroup>
+
 ```typescript JS/TS
 const dataStructure = {
     myQuestionColumn: "INPUT",
@@ -72,6 +76,7 @@ const dataStructure = {
 }
 ```
 
+
 ```python Python
 data_structure = {
     myQuestionColumn: "INPUT",
@@ -80,6 +85,7 @@ data_structure = {
     additionalDataColumn: "VARIABLE"
 }
 ```
+
 </CodeGroup>
 
 ### Available types
@@ -93,6 +99,7 @@ data_structure = {
 ### Implementation Example
 
 <CodeGroup>
+
 ```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
@@ -109,6 +116,7 @@ const result = maxim
     // ... rest of the configuration
 ```
 
+
 ```python Python
 from maxim import Maxim, Config
 
@@ -124,6 +132,7 @@ result = maxim
     })
     # ... rest of the configuration
 ```
+
 </CodeGroup>
 
 ## Data Source Integration
@@ -132,7 +141,10 @@ Maxim's SDK supports multiple ways to provide test data:
 
 ### 1. Using Callable Data Source
 
+eg. Data Source is a Local CSV file
+
 <CodeGroup>
+
 ```typescript JS/TS
 import { CSVFile, Maxim } from '@maximai/maxim-js';
 
@@ -154,36 +166,41 @@ const result = maxim
     .withData(myCSVFile)
     // ... rest of the configuration
 
-
 ```
+
 
 ```python Python
 from maxim import Maxim, Config
+from typing import Dict, Any, Optional, List
+import csv
 
+# Setup Maxim
 maxim = Maxim(Config(api_key="YOUR_API_KEY"))
 
-index = 0
+# Load all rows from CSV
+def load_csv_data(filepath: str) -> List[Dict[str, Any]]:
+    with open(filepath, 'r', encoding='utf-8') as f:
+        return list(csv.DictReader(f))
 
-def get_next_row() -> Optional[Dict[str, Any]]:
-    index = index + 1
-    return db.get_row(index)
+db = load_csv_data("path_to_csv")
 
-
-result = maxim
-    .create_test_run("CSV Test Run", workspace_id)
+# Setup Test Run
+result = (
+    maxim
+    .create_test_run("CSV Test Run", workspace_id="your_workspace_id")
     .with_data_structure({
-        question: "INPUT",
-        answer: "EXPECTED_OUTPUT",
-        context: "CONTEXT_TO_EVALUATE"
+        "question": "INPUT",
+        "answer": "EXPECTED_OUTPUT",
+        "context": "CONTEXT_TO_EVALUATE"
     })
-    .with_data(get_next_row)
-    # ... rest of the configuration
+    .with_data(db)
+)
 ```
 
 </CodeGroup>
 
 <Note>
-The `CSVFile` class automatically validates your CSV headers against the data structure and provides type-safe access to your data.
+  The `CSVFile` class automatically validates your CSV headers against the data structure and provides type-safe access to your data.
 </Note>
 
 ### 2. Manual data array
@@ -191,6 +208,7 @@ The `CSVFile` class automatically validates your CSV headers against the data st
 For smaller datasets or programmatically generated data:
 
 <CodeGroup>
+
 ```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
@@ -220,6 +238,7 @@ const result = maxim
     // ... rest of the configuration
 ```
 
+
 ```python Python
 from maxim import Maxim, Config
 
@@ -248,6 +267,7 @@ result = maxim
     .with_data(manual_data)
     # ... rest of the configuration
 ```
+
 </CodeGroup>
 
 ### 3. Platform datasets
@@ -255,6 +275,7 @@ result = maxim
 Use existing datasets from your Maxim workspace:
 
 <CodeGroup>
+
 ```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
@@ -271,6 +292,7 @@ const result = maxim
     // ... rest of the configuration
 ```
 
+
 ```python Python
 from maxim import Maxim, Config
 
@@ -286,11 +308,13 @@ result = maxim
     .with_data("your-dataset-id")
     # ... rest of the configuration
 ```
+
 </CodeGroup>
 
 ## Platform Integration: Testing with Workflows
 
 <CodeGroup>
+
 ```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
@@ -307,6 +331,7 @@ const result = maxim
     .withWorkflowId(workflowIdFromDashboard, contextToEvaluate) // context to evaluate is optional; it can either be a variable used in the workflow or a column name present in the dataset
 ```
 
+
 ```python Python
 const result = maxim
     .create_test_run("Custom Output Test", workspaceId)
@@ -318,6 +343,7 @@ const result = maxim
     .with_data(myData)
     .with_workflow_id(workflowIdFromDashboard, contextToEvaluate) # context to evaluate is optional; it can either be a variable used in the workflow or a column name present in the dataset
 ```
+
 </CodeGroup>
 
 Find the workflow ID in the workflows tab and from menu click on copy ID.
@@ -327,6 +353,7 @@ Find the workflow ID in the workflows tab and from menu click on copy ID.
 ## Platform Integration: Testing with Prompt Versions
 
 <CodeGroup>
+
 ```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
@@ -343,6 +370,7 @@ const result = maxim
     .withPromptVersionId(promptVersionIdFromPlatform, contextToEvaluate) // context to evaluate is optional; it can either be a variable used in the prompt or a column name present in the dataset
 ```
 
+
 ```python Python
 const result = maxim
     .create_test_run("Custom Output Test", workspaceId)
@@ -354,6 +382,7 @@ const result = maxim
     .with_data(myData)
     .with_prompt_version_id(promptVersionIdFromPlatform, contextToEvaluate) # context to evaluate is optional; it can either be a variable used in the prompt or a column name present in the dataset
 ```
+
 </CodeGroup>
 
 To get prompt version ID, go to prompts tab, select the version you want to run tests on and from menu click on copy version id.
@@ -363,6 +392,7 @@ To get prompt version ID, go to prompts tab, select the version you want to run 
 ## Output Function Configuration
 
 <CodeGroup>
+
 ```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
@@ -409,6 +439,7 @@ const result = maxim
         };
     })
 ```
+
 
 ```python Python
 from maxim import Maxim, Config
@@ -471,10 +502,11 @@ result = maxim
     .with_data(myData)
     .yields_output(lambda data: run(data))
 ```
+
 </CodeGroup>
 
 <Warning>
-If your output function throws an error, the entry will be marked as failed and you'll receive the index in the `failed_entry_indices` array after the run completes.
+  If your output function throws an error, the entry will be marked as failed and you'll receive the index in the `failed_entry_indices` array after the run completes.
 </Warning>
 
 ## Evaluator Configuration
@@ -482,6 +514,7 @@ If your output function throws an error, the entry will be marked as failed and 
 Choose which evaluators to use for your test run:
 
 <CodeGroup>
+
 ```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
@@ -497,6 +530,7 @@ const result = maxim
     )
 ```
 
+
 ```python Python
 from maxim import Maxim, Config
 
@@ -511,11 +545,13 @@ result = maxim
         "Answer Relevance"
     )
 ```
+
 </CodeGroup>
 
 ### Human Evaluation Setup
 
 <CodeGroup>
+
 ```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
@@ -531,6 +567,7 @@ const result = maxim
     })
 ```
 
+
 ```python Python
 from maxim import Maxim, Config
 
@@ -545,11 +582,13 @@ result = maxim
         instructions: "Please evaluate the response according to the evaluation criteria"
     })
 ```
+
 </CodeGroup>
 
 ## Custom Evaluator Implementation
 
 <CodeGroup>
+
 ```typescript JS/TS
 import {
     Maxim,
@@ -645,6 +684,7 @@ const myCombinedCustomEvaluator = createCustomCombinedEvaluatorsFor(
 );
 ```
 
+
 ```python Python
 from maxim import Maxim
 from typing import Dict
@@ -669,11 +709,13 @@ class MyCustomEvaluator(BaseEvaluator):
             )
         }
 ```
+
 </CodeGroup>
 
 ### Using Custom Evaluators
 
 <CodeGroup>
+
 ```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
@@ -691,6 +733,7 @@ const result = await maxim
     )
     .run();
 ```
+
 
 ```python Python
 result = maxim
@@ -729,6 +772,7 @@ result = maxim
         )
     )
 ```
+
 </CodeGroup>
 
 ## Advanced Configuration
@@ -736,6 +780,7 @@ result = maxim
 ### Concurrency Control
 
 <CodeGroup>
+
 ```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
@@ -747,6 +792,7 @@ const result = await maxim
     .withConcurrency(5); // Process 5 entries at a time
 ```
 
+
 ```python Python
 from maxim import Maxim, Config
 
@@ -757,11 +803,13 @@ result = maxim
     # ... previous configuration
     .with_concurrency(5) // Process 5 entries at a time
 ```
+
 </CodeGroup>
 
 ### Timeout Configuration
 
 <CodeGroup>
+
 ```typescript JS/TS
 import { Maxim } from "@maximai/maxim-js";
 
@@ -773,6 +821,7 @@ const result = await maxim
     .run(120) // Wait up to 120 minutes
 ```
 
+
 ```python Python
 from maxim import Maxim, Config
 
@@ -783,6 +832,7 @@ result = maxim
     # ... previous configuration
     .run(120) // Wait up to 120 minutes
 ```
+
 </CodeGroup>
 
 ## Complete Implementation Example
@@ -790,6 +840,7 @@ result = maxim
 Here's a complete example combining all the features:
 
 <CodeGroup>
+
 ```typescript JS/TS
 import { CSVFile, Maxim } from '@maximai/maxim-js';
 
@@ -893,6 +944,7 @@ try {
     await maxim.cleanup();
 }
 ```
+
 
 ```python Python
 from maxim import Maxim, Config
@@ -1023,4 +1075,5 @@ except Exception as e:
 finally:
     maxim.cleanup();
 ```
+
 </CodeGroup>
