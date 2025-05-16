@@ -9,14 +9,15 @@ This tutorial demonstrates how to build a ReAct-style LangGraph agent that uses 
 
 ## 1. Prerequisites
 
-- **Python 3.8+**
+- **Python 3.8\+**
 - API keys for:
-  - OpenAI (`OPENAI_API_KEY`)  
+  - OpenAI (`OPENAI_API_KEY`)
   - Anthropic (`ANTHROPIC_API_KEY`)
   - Tavily (`TAVILY_API_KEY`)
   - Maxim (`MAXIM_API_KEY`)
   - Maxim Log Repository ID  (`MAXIM_LOG_REPO_ID`)
 - Install packages:
+
   ```txt
   langchain>=0.3.22
   langchain-anthropic>=0.3.10
@@ -158,5 +159,12 @@ resp = await handle("What is the capital of France?")
 print(resp)
 ```
 
+![Langgraph Gif](https://github.com/maximhq/maxim-docs/blob/main/images/docs/sdk/python/langchain/langgraph.gif?raw=true)
 
-![LangGraph Dashboard](/images/docs/sdk/python/langchain/langgraph.gif)
+
+<CardGroup cols={2}>
+  <Card title="LangGraph integration (GitHub)" icon="github" href="https://github.com/maximhq/maxim-cookbooks/blob/main/python/observability-online-eval/langgraph/tavily-search.ipynb">
+  </Card>
+  <Card title="LangGraph integration cookbook (Colab)" icon="g" href="https://colab.research.google.com/github/maximhq/maxim-cookbooks/blob/main/python/observability-online-eval/langgraph/tavily-search.ipynb">
+  </Card>
+</CardGroup>
