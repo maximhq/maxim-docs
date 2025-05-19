@@ -249,6 +249,13 @@
                             {
                                 "group": "Tracing",
                                 "pages": [
+                                  {
+                                    "group" : "CrewAI",
+                                    "pages" : [
+                                      "sdk/python/integrations/crewai/crewai"
+                                    ]
+                                  },
+                                                              
                                     {
                                         "group": "OpenAI",
                                         "pages": [
