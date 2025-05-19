@@ -394,514 +394,473 @@
         "tags": [
           "Log repository"
         ],
-        "parameters": [
-          {
-            "schema": {
-              "type": "string",
-              "description": "Unique identifier for the workspace"
-            },
-            "required": true,
-            "name": "workspaceId",
-            "in": "query"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "description": "Log repository ID"
-            },
-            "required": true,
-            "name": "id",
-            "in": "query"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "enum": [
-                "session",
-                "trace"
-              ],
-              "description": "Type of logs to retrieve (session or trace)"
-            },
-            "required": true,
-            "name": "type",
-            "in": "query"
-          },
-          {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "gte": {
-                  "type": "string",
-                  "nullable": true,
-                  "description": "Start timestamp for filtering logs in UTC format (e.g., 2024-01-01T00:00:00Z)"
-                },
-                "lte": {
-                  "type": "string",
-                  "nullable": true,
-                  "description": "End timestamp for filtering logs in UTC format (e.g., 2024-01-31T23:59:59Z)"
-                }
-              },
-              "description": "Timestamp range for filtering logs eg: { gte: '2024-01-01T00:00:00Z', lte: '2024-01-31T23:59:59Z' }"
-            },
-            "required": false,
-            "name": "timestamp",
-            "in": "query"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "description": "Filter logs by session ID"
-            },
-            "required": false,
-            "name": "sessionId",
-            "in": "query"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "description": "Search query to filter logs"
-            },
-            "required": false,
-            "name": "searchQuery",
-            "in": "query"
-          },
-          {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "combinator": {
-                  "type": "string",
-                  "enum": [
-                    "all",
-                    "any"
-                  ],
-                  "description": "Determines how multiple filters are combined - either ALL must match or ANY must match"
-                },
-                "filters": {
-                  "type": "array",
-                  "items": {
-                    "oneOf": [
-                      {
-                        "type": "object",
-                        "properties": {
-                          "columnName": {
-                            "type": "string",
-                            "enum": [
-                              "tags"
-                            ],
-                            "description": "Filter by trace tags (key-value pairs)"
-                          },
-                          "operator": {
-                            "type": "string",
-                            "enum": [
-                              "equal",
-                              "not_equal"
-                            ]
-                          },
-                          "value": {
-                            "type": "array",
-                            "items": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workspaceId": {
+                    "type": "string",
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "Log repository ID"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "session",
+                      "trace"
+                    ],
+                    "description": "Type of logs to retrieve (session or trace)"
+                  },
+                  "timestamp": {
+                    "type": "object",
+                    "properties": {
+                      "gte": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Start timestamp for filtering logs in UTC format (e.g., 2024-01-01T00:00:00Z)"
+                      },
+                      "lte": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "End timestamp for filtering logs in UTC format (e.g., 2024-01-31T23:59:59Z)"
+                      }
+                    },
+                    "description": "Timestamp range for filtering logs eg: { gte: '2024-01-01T00:00:00Z', lte: '2024-01-31T23:59:59Z' }"
+                  },
+                  "sessionId": {
+                    "type": "string",
+                    "description": "Filter logs by session ID"
+                  },
+                  "searchQuery": {
+                    "type": "string",
+                    "description": "Search query to filter logs"
+                  },
+                  "traceFilters": {
+                    "type": "object",
+                    "properties": {
+                      "combinator": {
+                        "type": "string",
+                        "enum": [
+                          "all",
+                          "any"
+                        ],
+                        "description": "Determines how multiple filters are combined - either ALL must match or ANY must match"
+                      },
+                      "filters": {
+                        "type": "array",
+                        "items": {
+                          "oneOf": [
+                            {
                               "type": "object",
                               "properties": {
-                                "key": {
-                                  "type": "string"
+                                "columnName": {
+                                  "type": "string",
+                                  "enum": [
+                                    "tags"
+                                  ],
+                                  "description": "Filter by trace tags (key-value pairs)"
+                                },
+                                "operator": {
+                                  "type": "string",
+                                  "enum": [
+                                    "equal",
+                                    "not_equal"
+                                  ]
+                                },
+                                "value": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "key": {
+                                        "type": "string"
+                                      },
+                                      "value": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "key",
+                                      "value"
+                                    ]
+                                  }
+                                }
+                              },
+                              "required": [
+                                "columnName",
+                                "operator",
+                                "value"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "columnName": {
+                                  "type": "string",
+                                  "enum": [
+                                    "traceId"
+                                  ],
+                                  "description": " Filter by unique trace identifier"
+                                },
+                                "operator": {
+                                  "type": "string",
+                                  "enum": [
+                                    "="
+                                  ]
                                 },
                                 "value": {
                                   "type": "string"
                                 }
                               },
                               "required": [
-                                "key",
+                                "columnName",
+                                "operator",
+                                "value"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "columnName": {
+                                  "type": "string",
+                                  "enum": [
+                                    "isError"
+                                  ],
+                                  "description": " Filter by error status"
+                                },
+                                "operator": {
+                                  "type": "string",
+                                  "enum": [
+                                    "=",
+                                    "!="
+                                  ]
+                                },
+                                "value": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "columnName",
+                                "operator",
+                                "value"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "columnName": {
+                                  "type": "string",
+                                  "enum": [
+                                    "models"
+                                  ],
+                                  "description": "Filter by AI models used"
+                                },
+                                "operator": {
+                                  "type": "string",
+                                  "enum": [
+                                    "=",
+                                    "!=",
+                                    "in",
+                                    "not_in"
+                                  ]
+                                },
+                                "value": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "columnName",
+                                "operator",
+                                "value"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "columnName": {
+                                  "type": "string",
+                                  "enum": [
+                                    "tokens"
+                                  ],
+                                  "description": " Filter by token usage "
+                                },
+                                "operator": {
+                                  "type": "string",
+                                  "enum": [
+                                    "=",
+                                    "!=",
+                                    ">",
+                                    "<",
+                                    ">=",
+                                    "<="
+                                  ]
+                                },
+                                "value": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "columnName",
+                                "operator",
+                                "value"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "columnName": {
+                                  "type": "string",
+                                  "enum": [
+                                    "cost"
+                                  ],
+                                  "description": "Filter by cost "
+                                },
+                                "operator": {
+                                  "type": "string",
+                                  "enum": [
+                                    "=",
+                                    "!=",
+                                    ">",
+                                    "<",
+                                    ">=",
+                                    "<="
+                                  ]
+                                },
+                                "value": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "columnName",
+                                "operator",
+                                "value"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "columnName": {
+                                  "type": "string",
+                                  "enum": [
+                                    "latency"
+                                  ],
+                                  "description": "Filter by latency/response time"
+                                },
+                                "operator": {
+                                  "type": "string",
+                                  "enum": [
+                                    "=",
+                                    "!=",
+                                    ">",
+                                    "<",
+                                    ">=",
+                                    "<="
+                                  ]
+                                },
+                                "value": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "columnName",
+                                "operator",
+                                "value"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "columnName": {
+                                  "type": "string",
+                                  "enum": [
+                                    "userFeedback"
+                                  ],
+                                  "description": "Filter by user feedback score"
+                                },
+                                "operator": {
+                                  "type": "string",
+                                  "enum": [
+                                    "=",
+                                    "!=",
+                                    ">",
+                                    "<",
+                                    ">=",
+                                    "<="
+                                  ]
+                                },
+                                "value": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "columnName",
+                                "operator",
                                 "value"
                               ]
                             }
-                          }
-                        },
-                        "required": [
-                          "columnName",
-                          "operator",
-                          "value"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "columnName": {
-                            "type": "string",
-                            "enum": [
-                              "traceId"
-                            ],
-                            "description": " Filter by unique trace identifier"
-                          },
-                          "operator": {
-                            "type": "string",
-                            "enum": [
-                              "="
-                            ]
-                          },
-                          "value": {
-                            "type": "string"
-                          }
-                        },
-                        "required": [
-                          "columnName",
-                          "operator",
-                          "value"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "columnName": {
-                            "type": "string",
-                            "enum": [
-                              "isError"
-                            ],
-                            "description": " Filter by error status"
-                          },
-                          "operator": {
-                            "type": "string",
-                            "enum": [
-                              "=",
-                              "!="
-                            ]
-                          },
-                          "value": {
-                            "type": "string"
-                          }
-                        },
-                        "required": [
-                          "columnName",
-                          "operator",
-                          "value"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "columnName": {
-                            "type": "string",
-                            "enum": [
-                              "models"
-                            ],
-                            "description": "Filter by AI models used"
-                          },
-                          "operator": {
-                            "type": "string",
-                            "enum": [
-                              "=",
-                              "!=",
-                              "in",
-                              "not_in"
-                            ]
-                          },
-                          "value": {
-                            "type": "string"
-                          }
-                        },
-                        "required": [
-                          "columnName",
-                          "operator",
-                          "value"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "columnName": {
-                            "type": "string",
-                            "enum": [
-                              "tokens"
-                            ],
-                            "description": " Filter by token usage "
-                          },
-                          "operator": {
-                            "type": "string",
-                            "enum": [
-                              "=",
-                              "!=",
-                              ">",
-                              "<",
-                              ">=",
-                              "<="
-                            ]
-                          },
-                          "value": {
-                            "type": "number"
-                          }
-                        },
-                        "required": [
-                          "columnName",
-                          "operator",
-                          "value"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "columnName": {
-                            "type": "string",
-                            "enum": [
-                              "cost"
-                            ],
-                            "description": "Filter by cost "
-                          },
-                          "operator": {
-                            "type": "string",
-                            "enum": [
-                              "=",
-                              "!=",
-                              ">",
-                              "<",
-                              ">=",
-                              "<="
-                            ]
-                          },
-                          "value": {
-                            "type": "number"
-                          }
-                        },
-                        "required": [
-                          "columnName",
-                          "operator",
-                          "value"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "columnName": {
-                            "type": "string",
-                            "enum": [
-                              "latency"
-                            ],
-                            "description": "Filter by latency/response time"
-                          },
-                          "operator": {
-                            "type": "string",
-                            "enum": [
-                              "=",
-                              "!=",
-                              ">",
-                              "<",
-                              ">=",
-                              "<="
-                            ]
-                          },
-                          "value": {
-                            "type": "number"
-                          }
-                        },
-                        "required": [
-                          "columnName",
-                          "operator",
-                          "value"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "columnName": {
-                            "type": "string",
-                            "enum": [
-                              "userFeedback"
-                            ],
-                            "description": "Filter by user feedback score"
-                          },
-                          "operator": {
-                            "type": "string",
-                            "enum": [
-                              "=",
-                              "!=",
-                              ">",
-                              "<",
-                              ">=",
-                              "<="
-                            ]
-                          },
-                          "value": {
-                            "type": "number"
-                          }
-                        },
-                        "required": [
-                          "columnName",
-                          "operator",
-                          "value"
-                        ]
+                          ]
+                        }
                       }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "combinator",
-                "filters"
-              ],
-              "description": "Trace properties to filter on"
-            },
-            "required": false,
-            "name": "traceFilters",
-            "in": "query"
-          },
-          {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "combinator": {
-                  "type": "string",
-                  "enum": [
-                    "all",
-                    "any"
-                  ],
-                  "description": "Determines how multiple evaluator filters are combined - either ALL must match or ANY must match "
-                },
-                "filters": {
-                  "type": "array",
-                  "items": {
-                    "oneOf": [
-                      {
-                        "type": "object",
-                        "properties": {
-                          "evaluatorName": {
-                            "type": "string"
-                          },
-                          "operator": {
-                            "type": "string",
-                            "enum": [
-                              "null",
-                              "notNull"
-                            ]
-                          },
-                          "value": {
-                            "nullable": true
-                          }
-                        },
-                        "required": [
-                          "evaluatorName",
-                          "operator"
-                        ]
+                    },
+                    "required": [
+                      "combinator",
+                      "filters"
+                    ],
+                    "description": "Trace properties to filter on"
+                  },
+                  "evaluatorFilters": {
+                    "type": "object",
+                    "properties": {
+                      "combinator": {
+                        "type": "string",
+                        "enum": [
+                          "all",
+                          "any"
+                        ],
+                        "description": "Determines how multiple evaluator filters are combined - either ALL must match or ANY must match "
                       },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "evaluatorName": {
-                            "type": "string"
-                          },
-                          "operator": {
-                            "type": "string",
-                            "enum": [
-                              "=",
-                              "!=",
-                              ">",
-                              "<",
-                              ">=",
-                              "<="
-                            ]
-                          },
-                          "value": {
-                            "anyOf": [
-                              {
-                                "type": "string"
+                      "filters": {
+                        "type": "array",
+                        "items": {
+                          "oneOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "evaluatorName": {
+                                  "type": "string"
+                                },
+                                "operator": {
+                                  "type": "string",
+                                  "enum": [
+                                    "null",
+                                    "notNull"
+                                  ]
+                                },
+                                "value": {
+                                  "nullable": true
+                                }
                               },
-                              {
-                                "type": "number"
-                              }
-                            ]
-                          }
-                        },
-                        "required": [
-                          "evaluatorName",
-                          "operator",
-                          "value"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "evaluatorName": {
-                            "type": "string"
-                          },
-                          "operator": {
-                            "type": "string",
-                            "enum": [
-                              "is"
-                            ]
-                          },
-                          "value": {
-                            "type": "string",
-                            "enum": [
-                              "pass",
-                              "fail",
-                              "Err",
-                              "NA"
-                            ]
-                          }
-                        },
-                        "required": [
-                          "evaluatorName",
-                          "operator",
-                          "value"
-                        ]
+                              "required": [
+                                "evaluatorName",
+                                "operator"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "evaluatorName": {
+                                  "type": "string"
+                                },
+                                "operator": {
+                                  "type": "string",
+                                  "enum": [
+                                    "=",
+                                    "!=",
+                                    ">",
+                                    "<",
+                                    ">=",
+                                    "<="
+                                  ]
+                                },
+                                "value": {
+                                  "anyOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "number"
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "evaluatorName",
+                                "operator",
+                                "value"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "evaluatorName": {
+                                  "type": "string"
+                                },
+                                "operator": {
+                                  "type": "string",
+                                  "enum": [
+                                    "is"
+                                  ]
+                                },
+                                "value": {
+                                  "type": "string",
+                                  "enum": [
+                                    "pass",
+                                    "fail",
+                                    "Err",
+                                    "NA"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "evaluatorName",
+                                "operator",
+                                "value"
+                              ]
+                            }
+                          ]
+                        }
                       }
-                    ]
+                    },
+                    "required": [
+                      "combinator",
+                      "filters"
+                    ],
+                    "description": "Evaluator metrics to be filtered on"
+                  },
+                  "page": {
+                    "type": "number",
+                    "default": 0,
+                    "description": "Page number for pagination"
+                  },
+                  "limit": {
+                    "type": "number",
+                    "maximum": 50,
+                    "default": 10,
+                    "description": "Number of records per page (max: 100)"
+                  },
+                  "sorting": {
+                    "type": "object",
+                    "properties": {
+                      "columnName": {
+                        "type": "string",
+                        "description": "Field to sort by (e.g., startTimestamp)"
+                      },
+                      "desc": {
+                        "type": "boolean",
+                        "description": "Sort direction (true for descending)"
+                      }
+                    },
+                    "required": [
+                      "columnName",
+                      "desc"
+                    ],
+                    "description": "Sorting configuration for logs eg: { id: 'startTimestamp', desc: true }"
                   }
-                }
-              },
-              "required": [
-                "combinator",
-                "filters"
-              ],
-              "description": "Evaluator metrics to be filtered on"
-            },
-            "required": false,
-            "name": "evaluatorFilters",
-            "in": "query"
-          },
-          {
-            "schema": {
-              "type": "number",
-              "default": 0,
-              "description": "Page number for pagination"
-            },
-            "required": false,
-            "name": "page",
-            "in": "query"
-          },
-          {
-            "schema": {
-              "type": "number",
-              "maximum": 50,
-              "default": 10,
-              "description": "Number of records per page (max: 100)"
-            },
-            "required": false,
-            "name": "limit",
-            "in": "query"
-          },
-          {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "columnName": {
-                  "type": "string",
-                  "description": "Field to sort by (e.g., startTimestamp)"
                 },
-                "desc": {
-                  "type": "boolean",
-                  "description": "Sort direction (true for descending)"
-                }
-              },
-              "required": [
-                "columnName",
-                "desc"
-              ],
-              "description": "Sorting configuration for logs eg: { id: 'startTimestamp', desc: true }"
-            },
-            "required": false,
-            "name": "sorting",
-            "in": "query"
+                "required": [
+                  "workspaceId",
+                  "id",
+                  "type"
+                ]
+              }
+            }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "Logs retrieved successfully",
