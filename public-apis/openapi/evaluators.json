@@ -39,41 +39,55 @@
         ],
         "description": "Get an evaluator by ID, name or fetch all evaluators for a workspace",
         "summary": "Get evaluators",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "workspaceId": {
-                    "type": "string",
-                    "minLength": 1,
-                    "description": "Unique identifier for the workspace"
-                  },
-                  "id": {
-                    "type": "string",
-                    "description": "Unique identifier for the evaluator"
-                  },
-                  "limit": {
-                    "type": "number",
-                    "default": 10,
-                    "description": "Maximum number of records to return. 10 by default"
-                  },
-                  "name": {
-                    "type": "string",
-                    "description": "Name of the evaluator"
-                  },
-                  "cursor": {
-                    "type": "string",
-                    "description": "Cursor for pagination"
-                  }
-                },
-                "required": [
-                  "workspaceId"
-                ]
-              }
+        "parameters": [
+          {
+            "name": "workspaceId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Unique identifier for the workspace"
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the evaluator"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 10,
+              "description": "Maximum number of records to return. 10 by default"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Name of the evaluator"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Cursor for pagination"
             }
           }
+        ]
         },
         "responses": {
           "200": {
@@ -413,63 +427,50 @@
         ],
         "description": "Execute an evaluator to assess content based on predefined criteria and return grading results, reasoning, and execution logs",
         "summary": "Execute an evaluator",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string",
-              "minLength": 1,
-              "description": "Unique identifier for the workspace"
-            },
-            "required": true,
-            "name": "workspaceId",
-            "in": "query"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "minLength": 1,
-              "description": "Unique identifier for the evaluator"
-            },
-            "required": false,
-            "name": "id",
-            "in": "query"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "minLength": 1,
-              "description": "Name of the evaluator"
-            },
-            "required": false,
-            "name": "name",
-            "in": "query"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "enum": [
-                "javascript",
-                "python"
-              ],
-              "description": "Programming language for the evaluator"
-            },
-            "required": false,
-            "name": "language",
-            "in": "query"
-          },
-          {
-            "schema": {
-              "type": "object",
-              "additionalProperties": {
-                "type": "string"
-              },
-              "description": "Variables to be used in evaluation"
-            },
-            "required": false,
-            "name": "variables",
-            "in": "query"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workspaceId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier for the evaluator"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Name of the evaluator"
+                  },
+                  "language": {
+                    "type": "string",
+                    "enum": [
+                      "javascript",
+                      "python"
+                    ],
+                    "description": "Programming language for the evaluator"
+                  },
+                  "variables": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "description": "Variables to be used in evaluation"
+                  }
+                },
+                "required": [
+                  "workspaceId"
+                ]
+              }
+            }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "Evaluator executed successfully",
@@ -532,5 +533,4 @@
         }
       }
     }
-  }
 }
