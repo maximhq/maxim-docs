@@ -41,54 +41,53 @@
         "summary": "Get evaluators",
         "parameters": [
           {
-            "name": "workspaceId",
-            "in": "query",
-            "required": true,
             "schema": {
               "type": "string",
               "minLength": 1,
               "description": "Unique identifier for the workspace"
-            }
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "query"
           },
           {
-            "name": "id",
-            "in": "query",
-            "required": false,
             "schema": {
               "type": "string",
               "description": "Unique identifier for the evaluator"
-            }
+            },
+            "required": false,
+            "name": "id",
+            "in": "query"
           },
           {
-            "name": "limit",
-            "in": "query",
-            "required": false,
             "schema": {
               "type": "number",
               "default": 10,
               "description": "Maximum number of records to return. 10 by default"
-            }
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
           },
           {
-            "name": "name",
-            "in": "query",
-            "required": false,
             "schema": {
               "type": "string",
               "description": "Name of the evaluator"
-            }
+            },
+            "required": false,
+            "name": "name",
+            "in": "query"
           },
           {
-            "name": "cursor",
-            "in": "query",
-            "required": false,
             "schema": {
               "type": "string",
               "description": "Cursor for pagination"
-            }
+            },
+            "required": false,
+            "name": "cursor",
+            "in": "query"
           }
-        ]
-        },
+        ],
         "responses": {
           "200": {
             "description": "Evaluators retrieved successfully",
@@ -466,7 +465,11 @@
                 },
                 "required": [
                   "workspaceId"
-                ]
+                ],
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Payload for executing an evaluator"
               }
             }
           }
@@ -533,4 +536,5 @@
         }
       }
     }
+  }
 }
