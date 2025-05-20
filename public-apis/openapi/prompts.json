@@ -1685,33 +1685,37 @@
                     "description": "Unique identifier for the workspace"
                   },
                   "deploymentConditions": {
-                    "type": "object",
-                    "properties": {
-                      "variable": {
-                        "type": "string",
-                        "description": "Variable name for deployment condition"
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "variable": {
+                          "type": "string",
+                          "description": "Variable name for deployment condition"
+                        },
+                        "operator": {
+                          "type": "string",
+                          "enum": [
+                            ">",
+                            "<",
+                            "<=",
+                            ">=",
+                            "="
+                          ],
+                          "description": "Comparison operator for the deployment condition"
+                        },
+                        "value": {
+                          "type": "string",
+                          "description": "Value to compare with"
+                        }
                       },
-                      "operator": {
-                        "type": "string",
-                        "enum": [
-                          ">",
-                          "<",
-                          "<=",
-                          ">=",
-                          "="
-                        ],
-                        "description": "Comparison operator for the deployment condition"
-                      },
-                      "value": {
-                        "type": "string",
-                        "description": "Value to compare with"
-                      }
+                      "required": [
+                        "variable",
+                        "operator",
+                        "value"
+                      ]
                     },
-                    "required": [
-                      "variable",
-                      "operator",
-                      "value"
-                    ],
+                    "minItems": 1,
                     "description": "Deployment conditions configuration"
                   }
                 },
