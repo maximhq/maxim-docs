@@ -1,0 +1,254 @@
+---
+title: "Anthropic SDK"
+description: "Learn how to integrate Maxim observability with the Anthropic SDK in just one line of code."
+---
+
+## Requirements
+
+```
+"anthropic>=0.21.0"
+"maxim-py>=3.6.4"
+```
+
+## Env variables
+
+```
+MAXIM_API_KEY=
+MAXIM_LOG_REPO_ID=
+ANTHROPIC_API_KEY=
+```
+
+## Initialize logger
+
+```python
+from maxim import Maxim
+
+logger = Maxim().logger()
+```
+
+## Initialize MaximAnthropicClient
+
+```python
+from anthropic import Anthropic
+from maxim.logger.anthropic import MaximAnthropicClient
+
+client = MaximAnthropicClient(client=Anthropic(api_key=ANTHROPIC_API_KEY), logger=logger)
+```
+
+## Make LLM calls using MaximAnthropicClient
+
+```python
+from anthropic import Anthropic
+from maxim.logger.anthropic import MaximAnthropicClient
+
+client = MaximAnthropicClient(client=Anthropic(api_key=ANTHROPIC_API_KEY), logger=logger)
+
+# Create a message request
+response = client.messages.create(
+    model="claude-3-5-sonnet-20241022",
+    max_tokens=1024,
+    messages=[
+        {"role": "user", "content": "Write a haiku about recursion in programming."}
+    ]
+)
+
+# Extract response text
+response_text = response.content[0].text
+print(response_text)
+```
+
+## Advance use case: Streaming Support
+
+### Initialize Maxim SDK and Anthropic Client
+
+```python
+import os
+import dotenv
+from uuid import uuid4
+from anthropic import Anthropic
+from maxim import Maxim
+from maxim.logger.anthropic import MaximAnthropicClient
+
+# Load environment variables
+dotenv.load_dotenv()
+MODEL_NAME = "claude-3-5-sonnet-20241022"
+ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
+
+# Initialize Maxim logger
+logger = Maxim().logger()
+
+# Initialize MaximAnthropicClient
+client = MaximAnthropicClient(Anthropic(api_key=ANTHROPIC_API_KEY), logger)
+```
+
+### Make streaming calls
+
+```python
+user_input = "What was the capital of France in 1800s?"
+final_response = ""
+response_chunks = []
+
+with client.messages.stream(
+    max_tokens=1024,
+    messages=[{"role": "user", "content": user_input}],
+    model=MODEL_NAME,
+) as stream:
+    for text_chunk in stream.text_stream:
+        # Collect streamed chunks
+        response_chunks.append(text_chunk)
+        
+        # Print the streamed text chunk
+        print(text_chunk, end="", flush=True)    
+    
+    final_response = "".join(response_chunks)
+```
+
+## Capture multiple LLM calls in one trace
+
+**Initialize Maxim SDK and Anthropic Client**
+
+```python
+from anthropic import Anthropic
+from maxim import Maxim
+from maxim.logger.anthropic import MaximAnthropicClient
+
+# Make sure MAXIM_API_KEY and MAXIM_LOG_REPO_ID are set in env variables
+logger = Maxim().logger()
+
+# Initialize MaximAnthropicClient
+client = MaximAnthropicClient(client=Anthropic(api_key=ANTHROPIC_API_KEY), logger=logger)
+```
+
+**Create a new trace externally**
+
+```python
+from uuid import uuid4
+
+trace_id = str(uuid4())
+
+trace = logger.trace({
+    "id": trace_id,
+    "name": "Trace name"
+})
+```
+
+**Make LLM calls and use this trace id**
+
+```python
+response = client.messages.create(
+    model="claude-3-5-sonnet-20241022",
+    max_tokens=1024,
+    messages=[
+        {"role": "user", "content": "What was the capital of France in 1800s?"}
+    ],
+    extra_headers={"x-maxim-trace-id": trace_id}
+)
+
+# Extract response text
+response_text = response.content[0].text
+print(response_text)
+```
+
+**Keep adding LLM calls** All LLM calls with extra header `x-maxim-trace-id: trace_id` will add it to the declared trace.
+
+## Capture multi-turn conversations
+
+**Initialize Maxim SDK and Anthropic Client**
+
+```python
+from anthropic import Anthropic
+from maxim import Maxim
+from maxim.logger.anthropic import MaximAnthropicClient
+
+# Make sure MAXIM_API_KEY and MAXIM_LOG_REPO_ID are set in env variables
+logger = Maxim().logger()
+
+# Initialize MaximAnthropicClient
+client = MaximAnthropicClient(client=Anthropic(api_key=ANTHROPIC_API_KEY), logger=logger)
+```
+
+**Create a new trace externally and add it to a session**
+
+```python
+from uuid import uuid4
+
+# use this session id to add multiple traces in one session
+session_id = str(uuid4())
+trace_id = str(uuid4())
+
+trace = logger.trace({
+    "id": trace_id,
+    "name": "Trace name",
+    "session_id": session_id
+})
+```
+
+**Make LLM calls and use this trace id**
+
+```python
+messages = [
+    {"role": "user", "content": "Hello, can you help me with Python programming?"}
+]
+
+response = client.messages.create(
+    model="claude-3-5-sonnet-20241022",
+    max_tokens=1024,
+    messages=messages,
+    extra_headers={"x-maxim-trace-id": trace_id}
+)
+
+# Extract response text
+response_text = response.content[0].text
+print(response_text)
+
+# Continue the conversation - add assistant's response to messages
+messages.append({"role": "assistant", "content": response_text})
+messages.append({"role": "user", "content": "Can you write a simple Python function?"})
+
+# Make another call with the same trace_id to continue the conversation
+response2 = client.messages.create(
+    model="claude-3-5-sonnet-20241022",
+    max_tokens=1024,
+    messages=messages,
+    extra_headers={"x-maxim-trace-id": trace_id}
+)
+
+response_text2 = response2.content[0].text
+print(response_text2)
+```
+
+**Create additional traces in the same session** To add more conversations to the same session, create new traces with the same `session_id`:
+
+```python
+# Create another trace in the same session
+trace_id_2 = str(uuid4())
+
+trace2 = logger.trace({
+    "id": trace_id_2,
+    "name": "Second conversation",
+    "session_id": session_id  # Same session_id to group conversations
+})
+
+# Make calls with the new trace_id
+response3 = client.messages.create(
+    model="claude-3-5-sonnet-20241022",
+    max_tokens=1024,
+    messages=[{"role": "user", "content": "Tell me about machine learning"}],
+    extra_headers={"x-maxim-trace-id": trace_id_2}
+)
+```
+
+## Supported Models
+
+- claude-3-5-sonnet-20241022
+- claude-3-5-haiku-20241022
+- claude-3-opus-20240229
+- claude-3-sonnet-20240229
+- claude-3-haiku-20240307
+
+## Additional Features
+
+- **Streaming Support**: MaximAnthropicClient supports streaming responses
+- **Token Usage Tracking**: Automatically tracks input and output tokens
+- **Error Handling**: Comprehensive error logging and handling
+- **Custom Metadata**: Add custom metadata to traces and spans
