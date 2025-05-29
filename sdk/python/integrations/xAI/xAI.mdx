@@ -1,0 +1,441 @@
+---
+title: "Grok (xAI)"
+description: "Learn how to integrate Maxim observability with Grok (xAI) API to trace and monitor LLM inferences using manual logging."
+---
+
+## Requirements
+
+```
+"requests>=2.31.0"
+"maxim-py>=3.6.4"
+```
+
+## Env variables
+
+```
+MAXIM_API_KEY=
+LOG_REPOSITORY_ID=
+XAI_API_KEY=
+```
+
+## Initialize logger
+
+```python
+import os
+from uuid import uuid4
+from maxim.maxim import Logger, LoggerConfig
+from maxim.logger.components.session import SessionConfig
+from maxim.logger.components.trace import TraceConfig
+
+# Retrieve API keys from environment variables
+MAXIM_API_KEY = os.getenv("MAXIM_API_KEY")
+LOG_REPOSITORY_ID = os.getenv("LOG_REPOSITORY_ID")
+XAI_API_KEY = os.getenv("XAI_API_KEY")
+
+# Set up Maxim logger configuration
+logger_config = LoggerConfig(id=LOG_REPOSITORY_ID)
+logger = Logger(config=logger_config, api_key=MAXIM_API_KEY, base_url="https://app.getmaxim.ai")
+```
+
+## Initialize Session and Trace
+
+```python
+# Set up a unique session and trace
+session_id = str(uuid4())
+session_config = SessionConfig(id=session_id)
+session = logger.session(session_config)
+
+trace_id = str(uuid4())
+trace_config = TraceConfig(id=trace_id)
+trace = session.trace(trace_config)
+```
+
+## Make LLM calls to Grok API
+
+```python
+import requests
+from time import time
+from maxim.logger.components.generation import GenerationConfig, GenerationError
+
+# Define the Grok API URL and headers
+grok_url = "https://api.x.ai/v1/chat/completions"
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": f"Bearer {XAI_API_KEY}",
+}
+
+user_input = "Write a haiku about recursion in programming."
+data = {
+    "messages": [
+        {"role": "system", "content": "You are Grok, a chatbot inspired by the Hitchhikers Guide to the Galaxy."},
+        {"role": "user", "content": user_input}
+    ],
+    "model": "grok-beta",
+    "stream": False,
+    "temperature": 0
+}
+
+# Set up generation configuration
+generation_id = str(uuid4())
+generation_config = GenerationConfig(
+    id=generation_id,
+    name="generation",
+    provider="xai",
+    model="grok-beta",
+    messages=[{"role": "user", "content": user_input}]
+)
+generation = trace.generation(generation_config)
+
+try:
+    # Make the API call to Grok
+    response = requests.post(grok_url, headers=headers, json=data)
+    
+    if response.status_code == 200:
+        response_json = response.json()
+        response_text = response_json['choices'][0]['message']['content']
+        
+        # Log the response with Maxim
+        generation.result({
+            "id": generation_id,
+            "object": "text_completion",
+            "created": int(time()),
+            "model": generation_config.model,
+            "choices": [
+                {
+                    "index": 0,
+                    "text": response_text,
+                    "logprobs": None,
+                    "finish_reason": "stop",
+                },
+            ],
+            "usage": {
+                "prompt_tokens": response_json.get('usage', {}).get('prompt_tokens', 0),
+                "completion_tokens": response_json.get('usage', {}).get('completion_tokens', 0),
+                "total_tokens": response_json.get('usage', {}).get('total_tokens', 0),
+            },
+        })
+        
+        print(response_text)
+        
+except Exception as e:
+    generation.error(GenerationError(str(e)))
+    print(f"Error occurred: {str(e)}")
+finally:
+    generation.end()
+    trace.end()
+    logger.cleanup()
+```
+
+## Advanced use-cases
+
+### Streaming Support
+
+```python
+import os
+import requests
+import json
+from uuid import uuid4
+from time import time
+from maxim.maxim import Logger, LoggerConfig
+from maxim.logger.components.session import SessionConfig
+from maxim.logger.components.trace import TraceConfig
+from maxim.logger.components.generation import GenerationConfig
+
+# Retrieve API keys from environment variables
+MAXIM_API_KEY = os.getenv("MAXIM_API_KEY")
+LOG_REPOSITORY_ID = os.getenv("LOG_REPOSITORY_ID")
+XAI_API_KEY = os.getenv("XAI_API_KEY")
+
+# Set up Maxim logger configuration
+logger_config = LoggerConfig(id=LOG_REPOSITORY_ID)
+logger = Logger(config=logger_config, api_key=MAXIM_API_KEY, base_url="https://app.getmaxim.ai")
+
+# Set up session and trace
+session_id = str(uuid4())
+session_config = SessionConfig(id=session_id)
+session = logger.session(session_config)
+
+trace_id = str(uuid4())
+trace_config = TraceConfig(id=trace_id)
+trace = session.trace(trace_config)
+```
+
+### **Make streaming calls**
+
+```python
+# Define the Grok API URL and headers
+grok_url = "https://api.x.ai/v1/chat/completions"
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": f"Bearer {XAI_API_KEY}",
+}
+
+user_input = "What is the answer to life and universe?"
+generation_id = str(uuid4())
+
+# Initialize the generation
+generation_config = GenerationConfig(
+    id=generation_id,
+    name="generation",
+    provider="xai",
+    model="grok-beta",
+    messages=[{"role": "user", "content": user_input}]
+)
+generation = trace.generation(generation_config)
+
+# Prepare the request data for streaming
+data = {
+    "messages": [
+        {"role": "system", "content": "You are Grok, a chatbot inspired by the Hitchhikers Guide to the Galaxy."},
+        {"role": "user", "content": user_input}
+    ],
+    "model": "grok-beta",
+    "stream": True,
+    "temperature": 0
+}
+
+# Variable to store streamed chunks
+response_chunks = []
+
+try:
+    print("Grok's Response (streaming):")
+    
+    # Make the streaming request
+    response = requests.post(grok_url, headers=headers, json=data, stream=True)
+    
+    if response.status_code == 200:
+        for line in response.iter_lines():
+            if line:
+                # Parse the SSE data
+                line = line.decode('utf-8')
+                if line.startswith('data: '):
+                    json_str = line[6:]  # Remove 'data: ' prefix
+                    if json_str != '[DONE]':
+                        chunk_data = json.loads(json_str)
+                        if chunk_data['choices'][0].get('delta', {}).get('content'):
+                            chunk_text = chunk_data['choices'][0]['delta']['content']
+                            response_chunks.append(chunk_text)
+                            print(chunk_text, end="", flush=True)
+        
+        # Combine all chunks into the final response text
+        final_response = "".join(response_chunks)
+        
+        # Log the response with Maxim
+        generation.result({
+            "id": generation_id,
+            "object": "text_completion",
+            "created": int(time()),
+            "model": generation_config.model,
+            "choices": [
+                {
+                    "index": 0,
+                    "text": final_response,
+                    "logprobs": None,
+                    "finish_reason": "stop",
+                },
+            ],
+            "usage": {
+                "prompt_tokens": 0,  # Set to 0 for streaming
+                "completion_tokens": 0,  # Set to 0 for streaming
+                "total_tokens": 0,  # Set to 0 for streaming
+            },
+        })
+        
+finally:
+    generation.end()
+    trace.end()
+    logger.cleanup()
+```
+
+---
+
+## Multi-turn Conversations
+
+**Initialize Maxim SDK and Setup**
+
+```python
+import os
+import requests
+from uuid import uuid4
+from time import time
+from maxim.maxim import Logger, LoggerConfig
+from maxim.logger.components.session import SessionConfig
+from maxim.logger.components.trace import TraceConfig
+from maxim.logger.components.generation import GenerationConfig, GenerationError
+
+# Initialize logger and session
+MAXIM_API_KEY = os.getenv("MAXIM_API_KEY")
+LOG_REPOSITORY_ID = os.getenv("LOG_REPOSITORY_ID")
+XAI_API_KEY = os.getenv("XAI_API_KEY")
+
+logger_config = LoggerConfig(id=LOG_REPOSITORY_ID)
+logger = Logger(config=logger_config, api_key=MAXIM_API_KEY, base_url="https://app.getmaxim.ai")
+
+session_id = str(uuid4())
+session_config = SessionConfig(id=session_id)
+session = logger.session(session_config)
+
+trace_id = str(uuid4())
+trace_config = TraceConfig(id=trace_id)
+trace = session.trace(trace_config)
+```
+
+**Maintain conversation history**
+
+```python
+# Initialize conversation
+grok_url = "https://api.x.ai/v1/chat/completions"
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": f"Bearer {XAI_API_KEY}",
+}
+
+# Start conversation history
+conversation_history = [
+    {"role": "system", "content": "You are Grok, a chatbot inspired by the Hitchhikers Guide to the Galaxy."}
+]
+
+def make_grok_call(user_message, conversation_history):
+    # Add user message to conversation
+    conversation_history.append({"role": "user", "content": user_message})
+    
+    generation_id = str(uuid4())
+    generation_config = GenerationConfig(
+        id=generation_id,
+        name="generation",
+        provider="xai",
+        model="grok-beta",
+        messages=[{"role": "user", "content": user_message}]
+    )
+    generation = trace.generation(generation_config)
+    
+    data = {
+        "messages": conversation_history,
+        "model": "grok-beta",
+        "stream": False,
+        "temperature": 0
+    }
+    
+    try:
+        response = requests.post(grok_url, headers=headers, json=data)
+        
+        if response.status_code == 200:
+            response_json = response.json()
+            response_text = response_json['choices'][0]['message']['content']
+            
+            # Add assistant response to conversation history
+            conversation_history.append({"role": "assistant", "content": response_text})
+            
+            # Log with Maxim
+            generation.result({
+                "id": generation_id,
+                "object": "text_completion",
+                "created": int(time()),
+                "model": generation_config.model,
+                "choices": [
+                    {
+                        "index": 0,
+                        "text": response_text,
+                        "logprobs": None,
+                        "finish_reason": "stop",
+                    },
+                ],
+                "usage": {
+                    "prompt_tokens": response_json.get('usage', {}).get('prompt_tokens', 0),
+                    "completion_tokens": response_json.get('usage', {}).get('completion_tokens', 0),
+                    "total_tokens": response_json.get('usage', {}).get('total_tokens', 0),
+                },
+            })
+            
+            return response_text
+            
+    except Exception as e:
+        generation.error(GenerationError(str(e)))
+        print(f"Error occurred: {str(e)}")
+        return None
+    finally:
+        generation.end()
+
+# First message
+response1 = make_grok_call("Hello, can you help me with Python programming?", conversation_history)
+print("Grok:", response1)
+
+# Second message (continues the conversation)
+response2 = make_grok_call("Can you write a simple Python function?", conversation_history)
+print("Grok:", response2)
+
+# Cleanup
+trace.end()
+logger.cleanup()
+```
+
+## Multiple Traces in One Session
+
+### **Create multiple traces for different conversation topics**
+
+```python
+# Initialize session (reuse from above)
+session_id = str(uuid4())
+session_config = SessionConfig(id=session_id)
+session = logger.session(session_config)
+
+# First trace - Programming questions
+trace_id_1 = str(uuid4())
+trace_config_1 = TraceConfig(id=trace_id_1)
+trace_1 = session.trace(trace_config_1)
+
+# Make calls in first trace
+generation_id_1 = str(uuid4())
+generation_config_1 = GenerationConfig(
+    id=generation_id_1,
+    name="programming_generation",
+    provider="xai",
+    model="grok-beta",
+    messages=[{"role": "user", "content": "Explain Python classes"}]
+)
+generation_1 = trace_1.generation(generation_config_1)
+
+# ... make API call and log result ...
+
+generation_1.end()
+trace_1.end()
+
+# Second trace - Science questions
+trace_id_2 = str(uuid4())
+trace_config_2 = TraceConfig(id=trace_id_2)
+trace_2 = session.trace(trace_config_2)
+
+generation_id_2 = str(uuid4())
+generation_config_2 = GenerationConfig(
+    id=generation_id_2,
+    name="science_generation",
+    provider="xai",
+    model="grok-beta",
+    messages=[{"role": "user", "content": "Explain quantum physics"}]
+)
+generation_2 = trace_2.generation(generation_config_2)
+
+# ... make API call and log result ...
+
+generation_2.end()
+trace_2.end()
+
+# Cleanup
+logger.cleanup()
+```
+
+## API Features
+
+- **Chat Completions**: Standard chat completion API
+- **Streaming Support**: Real-time response streaming
+- **System Messages**: Support for system-level instructions
+- **Temperature Control**: Fine-tune response creativity
+- **Token Usage Tracking**: Detailed token consumption metrics
+
+## Manual Logging Benefits
+
+- **Full Control**: Complete control over what gets logged
+- **Custom Metadata**: Add any custom fields to generations
+- **Error Handling**: Comprehensive error tracking with GenerationError
+- **Session Management**: Organize multiple traces within sessions
+- **Cleanup**: Proper resource cleanup with logger.cleanup()
