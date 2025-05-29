@@ -1,0 +1,333 @@
+---
+title: "AWS Bedrock"
+description: "Learn how to integrate Maxim observability with AWS Bedrock to trace and monitor LLM inferences in just one line of code."
+---
+
+## Requirements
+
+```
+"boto3>=1.38.25"
+"maxim-py>=3.6.4"
+```
+
+## Env variables
+
+```
+MAXIM_API_KEY=
+MAXIM_LOG_REPO_ID=
+AWS_MODEL_ARN=
+AWS_REGION=
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+```
+
+## Initialize logger
+
+```python
+from maxim import Maxim, Config
+
+logger = Maxim(Config(raise_exceptions=False)).logger()
+```
+
+## Initialize MaximBedrockClient
+
+```python
+import boto3
+from maxim.logger.bedrock import MaximBedrockClient
+
+# Initialize AWS Bedrock client
+bedrock_client = boto3.client(
+    'bedrock-runtime', 
+    region_name=AWS_REGION,
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+)
+
+# Initialize MaximBedrockClient
+maxim_bedrock_client = MaximBedrockClient(logger, bedrock_client)
+```
+
+## Make LLM calls using MaximBedrockClient
+
+```python
+import boto3
+from maxim.logger.bedrock import MaximBedrockClient
+
+# Initialize clients
+bedrock_client = boto3.client(
+    'bedrock-runtime', 
+    region_name=AWS_REGION,
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+)
+maxim_bedrock_client = MaximBedrockClient(logger, bedrock_client)
+
+# Prepare messages in Converse API format
+messages = [
+    {
+        "role": "user",
+        "content": [{"text": "Write a haiku about recursion in programming."}]
+    }
+]
+
+# Configure inference parameters
+inference_config = {
+    "maxTokens": 100, 
+    "temperature": 0.7
+}
+
+# Make the call
+response_dict = maxim_bedrock_client.converse(
+    messages=messages,
+    modelId=AWS_MODEL_ARN,
+    inferenceConfig=inference_config
+)
+
+# Extract response text
+response_text = response_dict['output']['message']['content'][0]['text']
+print(response_text)
+```
+
+## Advanced use-cases
+
+### Multi-turn Conversations
+
+```python
+import os
+import boto3
+from dotenv import load_dotenv
+from maxim import Maxim, Config
+from maxim.logger.bedrock import MaximBedrockClient
+
+# Load environment variables
+load_dotenv()
+
+AWS_MODEL_ARN = os.getenv('AWS_MODEL_ARN')
+AWS_REGION = os.getenv('AWS_REGION')
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+
+# Initialize Maxim logger
+logger = Maxim(Config(raise_exceptions=False)).logger()
+
+# Initialize Bedrock clients
+bedrock_client = boto3.client(
+    'bedrock-runtime', 
+    region_name=AWS_REGION,
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+)
+maxim_bedrock_client = MaximBedrockClient(logger, bedrock_client)
+```
+
+### **Maintain conversation history**
+
+```python
+# Start with initial conversation
+messages = [
+    {
+        "role": "user",
+        "content": [{"text": "Hello, can you help me with Python programming?"}]
+    }
+]
+
+inference_config = {"maxTokens": 200, "temperature": 0.7}
+
+# First call
+response1 = maxim_bedrock_client.converse(
+    messages=messages,
+    modelId=AWS_MODEL_ARN,
+    inferenceConfig=inference_config
+)
+
+# Extract and add assistant's response to conversation history
+assistant_response = response1['output']['message']['content'][0]['text']
+messages.append({
+    "role": "assistant",
+    "content": [{"text": assistant_response}]
+})
+
+print("Assistant:", assistant_response)
+
+# Continue conversation
+messages.append({
+    "role": "user", 
+    "content": [{"text": "Can you write a simple Python function?"}]
+})
+
+# Second call with conversation history
+response2 = maxim_bedrock_client.converse(
+    messages=messages,
+    modelId=AWS_MODEL_ARN,
+    inferenceConfig=inference_config
+)
+
+assistant_response2 = response2['output']['message']['content'][0]['text']
+print("Assistant:", assistant_response2)
+```
+
+## Capture multiple LLM calls in one trace
+
+### **Initialize Maxim SDK and Bedrock Client**
+
+```python
+import boto3
+from maxim import Maxim, Config
+from maxim.logger.bedrock import MaximBedrockClient
+
+# Make sure MAXIM_API_KEY and MAXIM_LOG_REPO_ID are set in env variables
+logger = Maxim(Config(raise_exceptions=False)).logger()
+
+# Initialize MaximBedrockClient
+bedrock_client = boto3.client(
+    'bedrock-runtime', 
+    region_name=AWS_REGION,
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+)
+maxim_bedrock_client = MaximBedrockClient(logger, bedrock_client)
+```
+
+### Create a new trace externally
+
+```python
+from uuid import uuid4
+from maxim.logger import TraceConfig
+
+trace_id = str(uuid4())
+
+trace = logger.trace(TraceConfig(
+    id=trace_id,
+    name="Bedrock Trace"
+))
+```
+
+### Make LLM calls and use this trace id
+
+```python
+messages = [
+    {
+        "role": "user",
+        "content": [{"text": "Who was the first president of the United States? and where was he born?"}]
+    }
+]
+
+inference_config = {"maxTokens": 100, "temperature": 0.7}
+
+response = maxim_bedrock_client.converse(
+    messages=messages,
+    modelId=AWS_MODEL_ARN,
+    inferenceConfig=inference_config,
+    trace_id=trace_id  # Pass the trace ID
+)
+
+# Extract response
+response_text = response['output']['message']['content'][0]['text']
+print(response_text)
+
+# End the trace when done
+trace.end()
+```
+
+## Capture multi-turn conversations in sessions
+
+### Initialize Maxim SDK and Bedrock Client
+
+```python
+import boto3
+from maxim import Maxim, Config
+from maxim.logger.bedrock import MaximBedrockClient
+
+# Initialize logger and client
+logger = Maxim(Config(raise_exceptions=False)).logger()
+bedrock_client = boto3.client(
+    'bedrock-runtime', 
+    region_name=AWS_REGION,
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+)
+maxim_bedrock_client = MaximBedrockClient(logger, bedrock_client)
+```
+
+### Create a new trace externally and add it to a session
+
+```python
+from uuid import uuid4
+from maxim.logger import TraceConfig
+
+# Use this session id to add multiple traces in one session
+session_id = str(uuid4())
+trace_id = str(uuid4())
+
+trace = logger.trace(TraceConfig(
+    id=trace_id,
+    name="Bedrock Conversation",
+    session_id=session_id
+))
+```
+
+### Make LLM calls and use this trace id
+
+```python
+messages = [
+    {
+        "role": "user",
+        "content": [{"text": "Explain machine learning in simple terms"}]
+    }
+]
+
+inference_config = {"maxTokens": 200, "temperature": 0.7}
+
+response = maxim_bedrock_client.converse(
+    messages=messages,
+    modelId=AWS_MODEL_ARN,
+    inferenceConfig=inference_config,
+    trace_id=trace_id
+)
+
+response_text = response['output']['message']['content'][0]['text']
+print("Response:", response_text)
+
+# End the trace
+trace.end()
+```
+
+**Create additional traces in the same session** To add more conversations to the same session, create new traces with the same `session_id`:
+
+```python
+# Create another trace in the same session
+trace_id_2 = str(uuid4())
+
+trace2 = logger.trace(TraceConfig(
+    id=trace_id_2,
+    name="Second Bedrock Conversation",
+    session_id=session_id  # Same session_id to group conversations
+))
+
+# Make calls with the new trace_id
+messages2 = [
+    {
+        "role": "user",
+        "content": [{"text": "What are neural networks?"}]
+    }
+]
+
+response2 = maxim_bedrock_client.converse(
+    messages=messages2,
+    modelId=AWS_MODEL_ARN,
+    inferenceConfig=inference_config,
+    trace_id=trace_id_2
+)
+
+print("Response 2:", response2['output']['message']['content'][0]['text'])
+trace2.end()
+```
+
+## Additional Features
+
+- **AWS Integration**: Native support for AWS authentication and regions
+- **Token Usage Tracking**: Automatically tracks input, output, and total tokens
+- **Latency Metrics**: Captures response latency for performance monitoring
+- **Error Handling**: Comprehensive error logging and handling with AWS-specific error codes
+- **Custom Metadata**: Add custom metadata to traces and spans
+- **Multi-region Support**: Support for different AWS regions
