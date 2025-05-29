@@ -1,0 +1,254 @@
+---
+title: Custom Evaluators
+description: Create and configure custom evaluators to meet your specific evaluation needs
+---
+
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+import { Plus } from "lucide-react";
+
+While Maxim offers a comprehensive set of evaluators in the [Store](/library/evaluators/pre-built-evaluators), you might need custom evaluators for specific use cases. This guide covers four types of custom evaluators you can create:
+
+- AI-based evaluators
+- API-based evaluators
+- Human evaluators
+- Programmatic evaluators
+
+## AI-based Evaluators
+
+Create custom AI evaluators by selecting an LLM as the judge and configuring custom evaluation instructions.
+
+<Steps>
+<Step title="Create new Evaluator">
+
+Click the create button and select AI to start building your custom evaluator.
+
+![Create AI Evaluator](/images/docs/library/how-to/evaluators/common/create-evaluator.png)
+
+</Step>
+
+<Step title="Configure model and parameters">
+
+Select the LLM you want to use as the judge and configure model-specific parameters based on your requirements.
+
+![Model configuration for custom AI evaluator](/images/docs/library/how-to/evaluators/custom-ai-evaluators/model-config-for-ai-evaluator.png)
+
+</Step>
+
+<Step title="Define evaluation logic">
+
+Configure how your evaluator should judge the outputs:
+
+- **Requirements**: Define evaluation criteria in plain English
+
+  ```plaintext
+  "Check if the text uses punctuation marks correctly to clarify meaning"
+  ```
+
+- **Evaluation scale**: Choose your scoring type
+  - **Scale**: Score from 1 to 5
+  - **Binary**: Yes/No response
+
+- **Grading logic**: Define what each score means
+
+  ```plaintext
+  1: Punctuation is consistently incorrect or missing; hampers readability
+  2: Frequent punctuation errors; readability is often disrupted
+  3: Some punctuation errors; readability is generally maintained
+  4: Few punctuation errors; punctuation mostly aids in clarity
+  5: Punctuation is correct and enhances clarity; no errors
+  ```
+
+  <Callout type="info">You can use variables in **Requirements** and **Grading logic**</Callout>
+
+![Evaluation logic configuration](/images/docs/library/how-to/evaluators/custom-ai-evaluators/ai-evaluator-model-instruction.png)
+
+</Step>
+
+<Step title="Normalize score (Optional)">
+
+Convert your custom evaluator scores from a 1-5 scale to match Maxim's standard 0-1 scale. This helps align your custom evaluator with pre-built evaluators in the Store.
+
+For example, a score of 4 becomes 0.8 after normalization.
+
+![Score normalization toggle for AI evaluators](/images/docs/library/how-to/evaluators/custom-ai-evaluators/ai-evaluator-score-normalization.png)
+
+</Step>
+</Steps>
+
+## API-based Evaluators
+
+Connect your existing evaluation system to Maxim by exposing it via an API endpoint. This lets you reuse your evaluators without rebuilding them.
+
+<Steps>
+<Step title="Navigate to Create Menu">
+
+Select `API-based` from the create menu to start building.
+
+![Create a new API evaluator](/images/docs/library/how-to/evaluators/common/create-evaluator.png)
+
+</Step>
+
+<Step title="Configure Endpoint Details">
+
+Add your API endpoint details including:
+
+- Headers
+- Query parameters
+- Request body
+
+For advanced transformations, use pre and post scripts under the `Scripts` tab.
+
+<Note>Use variables in the body, query parameters and headers</Note>
+
+![Configure API endpoint details](/images/docs/library/how-to/evaluators/api-evaluator/api-evaluator-editor.png)
+
+</Step>
+
+<Step title="Map Response Fields">
+
+Test your endpoint using the playground. On successful response, map your API response fields to:
+
+- Score (required)
+- Reasoning (optional)
+
+This mapping allows you to keep your API structure unchanged.
+
+![Map API response to evaluator fields](/images/docs/library/how-to/evaluators/api-evaluator/api-evaluator-fields-mapping.png)
+
+</Step>
+</Steps>
+
+## Human Evaluators
+
+Set up human raters to review and assess AI outputs for quality control. Human evaluation is essential for maintaining quality control and oversight of your AI system's outputs.
+
+<Steps>
+<Step title="Navigate to Create Menu">
+
+Select `Human` from the create menu.
+
+![Create human evaluator](/images/docs/library/how-to/evaluators/common/create-evaluator.png)
+
+</Step>
+
+<Step title="Define Reviewer Guidelines">
+
+Write clear guidelines for human reviewers. These instructions appear during the review process and should include:
+
+- What aspects to evaluate
+- How to assign ratings
+- Examples of good and bad responses
+
+![Add reviewer instructions](/images/docs/library/how-to/evaluators/human-evaluator/human-evaluator-instructions.png)
+
+</Step>
+
+<Step title="Choose Rating Format">
+
+Choose between two rating formats:
+
+**Binary (Yes/No)**
+Simple binary evaluation
+
+![Binary config](/images/docs/library/how-to/evaluators/human-evaluator/human-evaluator-binary-type.png)
+
+![Binary config](/images/docs/library/how-to/evaluators/human-evaluator/human-evaluator-binary-type-interface.png)
+
+**Scale**
+Nuanced rating system for detailed quality assessment
+
+![Scale config](/images/docs/library/how-to/evaluators/human-evaluator/human-evaluator-scale-type.png)
+
+![Scale config](/images/docs/library/how-to/evaluators/human-evaluator/human-evaluator-scale-type-interface.png)
+
+</Step>
+</Steps>
+
+## Programmatic Evaluators
+
+Build custom code-based evaluators using Javascript or Python with access to standard libraries.
+
+<Steps>
+<Step title="Navigate to Create Menu">
+
+Select Programmatic from the create menu <Icon icon="plus" className="inline-block size-5"/> to start building
+
+![Create programmatic evaluator](/images/docs/library/how-to/evaluators/common/create-evaluator.png)
+
+</Step>
+
+<Step title="Select Language and Response Type">
+
+Choose your programming language and set the Response type (Number or Boolean) from the top bar
+
+![Evaluation configuration options](/images/docs/library/how-to/evaluators/programmatic-evaluator/config-top-bar.png)
+
+</Step>
+
+<Step title="Implement the Validate Function">
+
+Define a function named `validate` in your chosen language. This function is required as Maxim uses it during execution.
+
+<Note>
+**Code restrictions**
+
+**Javascript**
+- No infinite loops
+- No debugger statements
+- No global objects (window, document, global, process)
+- No require statements
+- No with statements
+- No Function constructor
+- No eval
+- No setTimeout or setInterval
+
+**Python**
+- No infinite loops
+- No recursive functions
+- No global/nonlocal statements
+- No raise, try, or assert statements
+- No disallowed variable assignments
+</Note>
+
+![Code editor for evaluation logic](/images/docs/library/how-to/evaluators/programmatic-evaluator/code-editor.png)
+
+</Step>
+
+<Step title="Debug with Console">
+
+Monitor your evaluator execution with the built-in console. Add console logs for debugging to track what's happening during evaluation. All logs will appear in this view.
+
+![Console showing debug logs during evaluator execution](/images/docs/library/how-to/evaluators/programmatic-evaluator/programmatic-evaluator-console.png)
+
+</Step>
+</Steps>
+
+## Common Configuration Steps
+
+All evaluator types share some common configuration steps:
+
+### Configure Pass Criteria
+
+Configure two types of pass criteria for any evaluator type:
+
+**Pass query**
+Define criteria for individual evaluation metrics
+
+Example: Pass if evaluation score > 0.8
+
+**Pass evaluator (%)**
+Set threshold for overall evaluation across multiple entries
+
+Example: Pass if 80% of entries meet the evaluation criteria
+
+![Pass criteria configuration](/images/docs/library/how-to/evaluators/common/pass-criteria.png)
+
+### Test in Playground
+
+Test your evaluator in the playground before using it in your workflows. The right panel shows input fields for all variables used in your evaluator.
+
+1. Fill in sample values for each variable
+2. Click **Run** to see how your evaluator performs
+3. Iterate and improve your evaluator based on the results
+
+![Testing an evaluator in the playground with input fields for variables](/images/docs/library/how-to/evaluators/common/evaluator-playground.png)

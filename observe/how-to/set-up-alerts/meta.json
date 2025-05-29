@@ -1,9 +1,0 @@
-{
-    "title": "Set up alerts",
-    "pages": [
-        "create-a-slack-integration",
-        "create-a-pagerduty-integration",
-        "set-up-alerts-for-performance-metrics",
-        "set-up-alerts-for-quality-metrics"
-    ]
-}

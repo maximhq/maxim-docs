@@ -1,0 +1,71 @@
+---
+title: Scripts
+description: Customize your API requests and responses using Workflow scripts
+---
+
+Maxim Workflows provide powerful scripting capabilities to modify requests and responses. These scripts help you transform data, add authentication, and handle complex response structures.
+
+<Note>Scripts are optional - you'll only need them when you want to modify your API's behavior.</Note>
+
+## Request Modification
+The `prescript` function runs before sending requests to your API. Use it to modify request parameters, add headers, or transform data.
+
+<CodeGroup>
+```javascript prescript
+function prescript(request) {
+	request.headers["Authorization"] = "Bearer your-token";
+
+	request.data = {
+		...JSON.parse(request.data || "{}"),
+		timestamp: Date.now(),
+	};
+
+	return request;
+}
+```
+</CodeGroup>
+
+## Response Processing
+The `postscriptV2` function processes API responses before displaying them. Use it to transform response data or extract specific fields:
+
+<CodeGroup>
+```javascript postscriptV2
+function postscriptV2(response, request) {
+	return {
+		content: response.data.message,
+		confidence: response.data.metadata?.confidence || 1.0,
+	};
+}
+```
+</CodeGroup>
+
+## Conversation Management
+<Note>Simulation scripts only run for multi-turn conversations. They won't execute for single-turn tests.</Note>
+
+Use these scripts to set up and clean up multi-turn conversation tests:
+
+<CodeGroup>
+```javascript simulation
+function preSimulation() {
+	return {
+		sessionId: generateUUID(),
+		startTime: Date.now(),
+	};
+}
+
+function postSimulation() {
+	return {
+		status: "completed",
+		endTime: Date.now(),
+	};
+}
+```
+</CodeGroup>
+
+## Available Libraries
+
+<Note>
+	You don't need to use `require` or `import` to use these modules in scripts. These are directly available in the script environment.
+</Note>
+
+- `axios`: Axios is a popular HTTP client library for JavaScript. It provides a simple API for making HTTP requests and supports various features like request and response interceptors, request cancellation, and automatic JSON parsing.

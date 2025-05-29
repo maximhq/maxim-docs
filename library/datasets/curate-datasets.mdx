@@ -1,0 +1,74 @@
+---
+title: Curate Datasets
+description: Learn how to curate datasets from production logs and human annotations
+---
+
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
+## Curate from Production Logs
+
+Follow these steps to curate datasets from your production logs:
+
+<Steps>
+    <Step title="Select logs from your repository">
+    Select the logs from your log repository (preferably where you push your production data) and click on the `Add to Dataset` button in the top right corner.
+
+    ![Curate data from production](/images/docs/library/how-to/datasets/curate-data-from-production/select-logs-from-production-for-curation.png)
+    </Step>
+
+    <Step title="Choose or create a Dataset">
+    Next, you'll see a dialog where you can either choose an existing Dataset or create a new one. Let's create a fresh Dataset for this example.
+    You can use one of our templates (we'll use "Dataset testing") or create a custom structure. Click the `Create Dataset` button when ready.
+    
+    ![Add curated logs to dataset dialog](/images/docs/library/how-to/datasets/curate-data-from-production/add-curated-logs-to-dataset-dialog.png)
+    </Step>
+
+    <Step title="Map log columns to Dataset columns">
+    Now it's time to map your log columns to Dataset columns. In this example, we're mapping the Input field to the Dataset's Input column and Output to the Output column. Once you've set up your mappings, click "Add to Dataset".
+
+    ![Add curated entries to dataset](/images/docs/library/how-to/datasets/curate-data-from-production/add-curated-entries-to-dataset.png)
+    </Step>
+
+    <Step title="Access your new Dataset">
+    That's it! You'll receive a notification when your Dataset is ready. Simply click the `Open Dataset` button to start working with your newly created Dataset.
+    
+    ![Open curated Dataset](/images/docs/library/how-to/datasets/curate-data-from-production/open-curated-dataset.png)
+    </Step>
+</Steps>
+
+## Curate from Human Annotations
+
+Creating golden datasets from human annotations is essential for scaling your application effectively. Maxim allows you to curate high-quality datasets directly from human annotations as your application evolves.
+
+<Steps>
+<Step title="Set up a test run">
+Set up a test run on a prompt or workflow and send the results to human raters for annotation. Learn more about human-in-the-loop evaluation in our [evaluation guide](/offline-evals/via-ui/prompts/human-annotation).
+</Step>
+
+<Step title="Access test run report">
+Navigate to the test run report after collecting human ratings.
+</Step>
+
+<Step title="Find human evaluation card">
+Locate the human evaluation card in the summary section, which shows rater emails and completion status.
+</Step>
+
+<Step title="View detailed ratings">
+Click the **"View Details"** button next to completed raters' emails to access their detailed ratings.
+</Step>
+
+<Step title="Review evaluation data">
+Review the ratings, comments, and human-corrected outputs where available.
+</Step>
+
+<Step title="Select entries to preserve">
+Select the entries you want to preserve using the row checkboxes, then click the **"Add to Dataset"** button at the top.
+</Step>
+
+<Step title="Map data to dataset columns">
+Select your target Dataset and map the relevant data to appropriate columns. For example, map human-corrected outputs to ground truth columns in your golden dataset.
+- Uncheck any columns you don't want to include in the dataset.
+</Step>
+</Steps>
+
+<MaximPlayer url="https://drive.google.com/file/d/1UnifOHr0dsM43_amNeQh9fK016CdJgI-/preview" />

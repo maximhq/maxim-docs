@@ -1,0 +1,42 @@
+---
+title: Multi-agent System
+description: Multi-agent systems are a powerful way to build complex applications that can handle a wide variety of tasks.
+---
+
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
+Create an intelligent workflow that can automatically understand and answer user queries related to their accounts, billings, returns or any FAQ.
+
+![Multi agent system workflow](/images/docs/offline-evals/via-ui/agents-via-no-code-builder/multi-agent-system.png)
+
+<Steps>
+<Step title="Set up user query classification agent">
+
+The below prompt would act as our routing agent, classifying the user query into different categories (Account, Billing, Returns & FAQ).
+![Multi agent system routing agent](/images/docs/offline-evals/via-ui/agents-via-no-code-builder/multi-agent-system-routing-agent.png)
+
+</Step>
+
+<Step title="Route data based on category">
+
+Use the code block as a helper to route the data to the corresponding agent based on the category.
+
+![Multi agent system routing helper block](/images/docs/offline-evals/via-ui/agents-via-no-code-builder/multi-agent-system-code.png)
+
+</Step>
+
+<Step title="Create the required sub-agents">
+
+Use the [Prompt](/offline-evals/via-ui/prompts/prompt-playground) feature to create the required individual sub-agents. Make sure to attach the required tools for every sub-agent to process the user query.
+
+Additionally, connect the outputs of all the agents to the `Final output node` to get the final response.
+</Step>
+
+<Step title="Test the agent">
+Here is a video of the agent in action:
+
+<MaximPlayer url="https://drive.google.com/file/d/1ZwFCqCJWGFWMppPBzgWBQymAGcqe2Yrk/preview" />
+
+</Step>
+
+</Steps>

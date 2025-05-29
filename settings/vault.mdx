@@ -1,0 +1,22 @@
+---
+title: Vault
+description: Learn how to set up vault in Maxim.
+---
+
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
+Maxim supports vault to store sensitive information. You can store your API keys, passwords, and other sensitive information in the vault.
+
+- Go to `Settings` → `Vault`.
+- Click on `Add key`, give it a name, description (optional) and enter the value.
+- Click on `Create`
+
+<Note>
+    Value of the key will be encrypted and stored securely. Once encrypted, it cannot be retrieved.
+</Note>
+
+![Vault Setup](/images/docs/settings/vault_setup.png)
+
+You can then use the key using the `{{vault.key_name}}` syntax on the playground or if you want to access this using code, you can use <code>maxim.getVaultVariable</code> in the scripts of your agents, API evaluators etc. The video below shows how to use the vault variables in different ways on the platform.
+
+<MaximPlayer url = "https://www.youtube.com/embed/khm2m4fR4Pw" />

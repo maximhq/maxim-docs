@@ -1,0 +1,33 @@
+---
+title: MCP
+description: Learn how to use MCP to test your prompts
+---
+
+You can use various tools like Composio, Gumloop, etc to set up your MCP server. Please refer to the documentation of the tool you are using for more details.
+For the purposes of this example, we will use an MCP server set up on Composio, and hence use the <code>Composio</code> client.
+
+<Steps>
+<Step title="Add a MCP server on Maxim">
+Once you have set up an MCP server, to add it to Maxim, you can go to <code>Settings</code> → <code>MCP Clients</code> and click <code>Add new client</code>.
+
+![Add MCP client](/images/docs/offline-evals/via-ui/prompts/mcp/add_mcp_server.png)
+</Step>
+
+<Step title="Use MCP to test your prompts">
+Once you have added the MCP client, head over to <code>Prompts</code>. You will find all the tools you have set up under <code>Prompt Tools</code>.
+
+![Prompt Tools](/images/docs/offline-evals/via-ui/prompts/mcp/list_mcp_tools.png)
+</Step>
+
+<Step title="Add a new MCP">
+Once you have added the tools, you will see an Agentic Mode switch. On enabling this, the model will keep executing until it generates a text response, automatically handling tool calls in between. This is optional, and you can choose to use the tool in non-agentic mode as well.
+
+![Execute MCP tools](/images/docs/offline-evals/via-ui/prompts/mcp/execute_mcp_tools.png)
+![Execute MCP tools Response](/images/docs/offline-evals/via-ui/prompts/mcp/execute_mcp_tools_response.png)
+</Step>
+
+</Steps>
+
+
+
+

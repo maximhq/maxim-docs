@@ -1,0 +1,58 @@
+---
+title: Custom Logs Dashboards
+description: Create custom dashboards to analyze and track your AI application logs across repositories using configurable metrics and filters charts
+---
+Logs dashboards helps you visualize key metrics from your production logs. Create custom views by combining data from multiple repositories and applying filters to track what matters most.
+
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
+<MaximPlayer url="https://drive.google.com/file/d/1qDF6asb_rev9SPfykq17Qu1Zv_ImTfzL/preview"/>
+
+## Create your first dashboard
+
+<Steps>
+<Step title="Create a dashboard">
+Go to Dashboards in the left sidebar and click "Create custom logs dashboard"
+![Create dashboard](/images/docs/dashboards/create-dashboard.png)
+</Step>
+
+<Step title="Name your dashboard">
+Enter a descriptive name for your dashboard
+![Name your dashboard](/images/docs/dashboards/name-your-dashboard.png)
+</Step>
+
+<Step title="Configure metrics">
+Add charts to track your key metrics:
+1. Select metrics like trace count, latency, or token usage
+2. Choose one or more repositories to pull data from
+<Tip>
+
+Add multiple repositories to compare metrics across different applications
+</Tip>
+![Add chart to dashboard](/images/docs/dashboards/add-chart-to-dashboard.png)
+</Step>
+
+<Step title="View your dashboard">
+See your metrics visualized over time with automatic updates as new data flows in
+![Log dashboard trace count chart](/images/docs/dashboards/log-dashboard-trace-count-chart.png)
+</Step>
+
+<Step title="Explore logs from the chart">
+Interact with the chart to analyze your data in detail:
+- Hover over the chart to view exact data points
+- Click any point and navigate to the given link to see the corresponding logs in the log repository
+- All selected filters and time ranges will carry over to the logs view, helping you identify the exact logs behind the metrics
+</Step>
+</Steps>
+
+## Advanced configurations
+
+### Add filters to metrics
+
+Refine your charts by adding filters to individual metric lines. Use filters to:
+
+- Monitor particular user segments
+- Focus on high-latency requests
+- Analyze error patterns
+
+![Add filters to metrics](/images/docs/dashboards/add-filters-to-metrics.png)
