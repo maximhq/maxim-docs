@@ -7,9 +7,9 @@ import { MaximPlayer } from "/snippets/maximPlayer.mdx"
 
 ## Evaluators
 
-Evaluators are tools or metrics used to assess the quality, accuracy, and effectiveness of AI model outputs. We have various types of evaluators that can be customized and integrated into workflows and test runs. See below for more details.
+Evaluators are tools or metrics used to assess the quality, accuracy, and effectiveness of AI model outputs. We have various types of evaluators that can be customized and integrated into endpoints and test runs. See below for more details.
 
-You can find more about evaluators [here](/library/how-to/evaluators/use-pre-built-evaluators).
+You can find more about evaluators [here](/library/evaluators/pre-built-evaluators).
 
 <table>
   <thead>
@@ -53,7 +53,7 @@ At Maxim, our pre-built evaluators fall into two categories:
     2. **Statistical Evaluators:** Traditional ML metrics such as BLEU, ROUGE, WER, TER, etc.
     3. **Programmatic Evaluators:** JavaScript functions for common use cases like `validJson`, `validURL`, etc., that help validate your responses.
 
-2. **Third-party Evaluators**: We have also enabled popular third-party libraries for evaluation, such as RAGAS, so you can use them in your evaluation workflows with just a few clicks. If you have any custom integration requests, please feel free to drop us a note.
+2. **Third-party Evaluators**: We have also enabled popular third-party libraries for evaluation, such as RAGAS, so you can use them in your evaluation endpoints with just a few clicks. If you have any custom integration requests, please feel free to drop us a note.
 
 Within the store, you can search for an evaluator or filter by type tags. Simply click the **"Add to workspace"** button to make it available for use by your team.
 
@@ -67,7 +67,7 @@ While we provide many evaluators for common use cases out of the box, we underst
 
 ### AI Evaluators
 
-These evaluators use other LLMs to evaluate your application. You can configure different prompts, models, and scoring strategies depending on your use case. Once tested in the playground, you can start using the evaluators in your workflows.
+These evaluators use other LLMs to evaluate your application. You can configure different prompts, models, and scoring strategies depending on your use case. Once tested in the playground, you can start using the evaluators in your endpoints.
 
 ### Programmatic Evaluators
 
@@ -79,7 +79,7 @@ If you have built your own evaluation model for specific use cases, you can expo
 
 ### Human Evaluators
 
-This allows for the last mile of evaluation with human annotators in the loop. You can create a Human Evaluator for specific criteria that you want annotators to assess. During a test run, simply attach the evaluators, add details of the raters, and choose the sample set for human annotation. Learn more about the human evaluation lifecycle [here](/evaluate/how-to/evaluate-prompts/human-annotation-pipeline).
+This allows for the last mile of evaluation with human annotators in the loop. You can create a Human Evaluator for specific criteria that you want annotators to assess. During a test run, simply attach the evaluators, add details of the raters, and choose the sample set for human annotation. Learn more about the human evaluation lifecycle [here](/offline-evals/via-ui/prompts/human-annotation).
 
 <Note>
 Every evaluator should return a score and reasoning, which are then analyzed and used to summarize results according to your criteria.
@@ -109,7 +109,7 @@ Maxim uses reserved variables with specific meanings:
 - `{{expectedToolCalls}}`: Expected tool calls from the dataset
 - `{{scenario}}`: Scenario from the dataset
 - `{{expectedSteps}}`: Expected steps from the dataset
-- `{{output}}`: Generated output of the workflow/prompt/prompt chain
+- `{{output}}`: Generated output of the endpoint/prompt/no-code agent
 - `{{context}}`: Context to evaluate
 </Note>
 
@@ -129,21 +129,21 @@ In Maxim, datasets can have columns of the following types (entities):
 - **Expected Output:** Data representing the desired response that the application should generate for the corresponding input.
 - **Output:** This is for cases where you have run your queries elsewhere and have the outputs within your CSV that you want to evaluate directly.
 - **Image:** You can upload images or provide an image URL.
-- **Variables:** Any data that you want to dynamically change in prompts/workflows during runtime.
+- **Variables:** Any data that you want to dynamically change in prompts/endpoints during runtime.
 - **Expected Tool Calls:** Prompt tools expected to be triggered for the corresponding input.
 
-Learn about creating multimodal datasets [here](/library/how-to/datasets/use-dataset-templates).
+Learn about creating multimodal datasets [here](/library/datasets/import-or-create-datasets).
 
 ## Data Curation
 
 We understand that having high-quality datasets from the start is challenging and that datasets need to evolve continuously. Maxim's platform ensures data curation possibilities at every stage of the lifecycle, allowing datasets to improve constantly.
 
-Learn more about data curation [here](/library/how-to/datasets/curate-data-from-production).
+Learn more about data curation [here](/library/datasets/curate-datasets).
 
 ## Splits
 
-Dataset splits allow you to create subsets of a larger dataset for different use cases or logical groupings. Creating a split helps manage datasets more easily and facilitates testing of specific prompts or workflows. You can create splits within a dataset, add elements to them, and view them side by side under different tabs. Learn more about dataset splits [here](/library/how-to/datasets/use-splits-within-a-dataset).
+Dataset splits allow you to create subsets of a larger dataset for different use cases or logical groupings. Creating a split helps manage datasets more easily and facilitates testing of specific prompts or endpoints. You can create splits within a dataset, add elements to them, and view them side by side under different tabs. Learn more about dataset splits [here](/offline-evals/via-ui/prompts/human-annotation).
 
 ## Prompt partials
 
-Prompt partials act as reusable snippets that you can include across different Prompts. They help eliminate repetitive content by maintaining common prompt elements in a single place. Learn more about prompt partials [here](/library/how-to/prompt-partials/create-prompt-partial).
+Prompt partials act as reusable snippets that you can include across different Prompts. They help eliminate repetitive content by maintaining common prompt elements in a single place. Learn more about prompt partials [here](/library/prompt-partials/create-prompt-partial).

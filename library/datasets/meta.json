@@ -1,0 +1,9 @@
+{
+    "title": "Datasets",
+    "pages": [
+        "use-local-datasets",
+        "import-or-create-datasets",
+        "curate-datasets",
+        "manage-datasets"
+    ]
+}

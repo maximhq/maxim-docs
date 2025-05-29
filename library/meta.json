@@ -1,8 +1,12 @@
 {
-  "title": "Library",
+ "title": "Library",
   "pages": [
     "overview",
     "concepts",
-    "how-to"
-  ]
+    "evaluators",
+    "datasets",
+    "context-sources",
+    "prompt-tools",
+    "prompt-partials"
+    ]
 }

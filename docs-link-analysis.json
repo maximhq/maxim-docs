@@ -1,0 +1,846 @@
+{
+  "broken_links": {
+    "library/datasets/import-or-create-datasets": [
+      {
+        "file": "apps/maxim/src/app/workspace/[workspaceId]/dataset/page.tsx",
+        "line": 42
+      }
+    ],
+    "library/context-sources/ingest-files-as-a-context-source": [
+      {
+        "file": "apps/maxim/src/app/workspace/[workspaceId]/datasource/[dataSourceId]/(views)/filesDataSourceView.tsx",
+        "line": 448
+      }
+    ],
+    "library/context-sources": [
+      {
+        "file": "apps/maxim/src/app/workspace/[workspaceId]/datasource/page.tsx",
+        "line": 29
+      }
+    ],
+    "library/datasets/manage-datasets#use-variable-columns": [
+      {
+        "file": "apps/maxim/src/app/workspace/[workspaceId]/evaluator/[evaluatorId]/editors/aiEvaluatorEditor.tsx",
+        "line": 99
+      },
+      {
+        "file": "apps/maxim/src/app/workspace/[workspaceId]/evaluator/[evaluatorId]/editors/aiEvaluatorEditorV2.tsx",
+        "line": 323
+      }
+    ],
+    "tracing/overview": [
+      {
+        "file": "apps/maxim/src/app/workspace/[workspaceId]/logs/page.tsx",
+        "line": 292
+      }
+    ],
+    "introduction/overview": [
+      {
+        "file": "apps/maxim/src/components/views/publicTopbar.tsx",
+        "line": 53
+      }
+    ],
+    "introduction/settings/members-and-roles": [
+      {
+        "file": "apps/maxim-docs/introduction/running-your-first-eval.mdx",
+        "line": 17
+      }
+    ],
+    "introduction/offline-evals/via-ui/prompts/prompt-playground": [
+      {
+        "file": "apps/maxim-docs/introduction/running-your-first-eval.mdx",
+        "line": 34
+      },
+      {
+        "file": "apps/maxim-docs/introduction/running-your-first-eval.mdx",
+        "line": 98
+      }
+    ],
+    "introduction/offline-evals/via-ui/agents-via-http-endpoint/quickstart": [
+      {
+        "file": "apps/maxim-docs/introduction/running-your-first-eval.mdx",
+        "line": 45
+      }
+    ],
+    "introduction/library/datasets/import-or-create-datasets": [
+      {
+        "file": "apps/maxim-docs/introduction/running-your-first-eval.mdx",
+        "line": 57
+      }
+    ],
+    "introduction/library/evaluators/use-pre-built-evaluators": [
+      {
+        "file": "apps/maxim-docs/introduction/running-your-first-eval.mdx",
+        "line": 68
+      }
+    ],
+    "introduction/offline-evals/via-ui/agents-via-no-code-builder/quickstart": [
+      {
+        "file": "apps/maxim-docs/introduction/running-your-first-eval.mdx",
+        "line": 100
+      }
+    ],
+    "introduction/library/context-sources/ingest-files-as-a-context-source": [
+      {
+        "file": "apps/maxim-docs/introduction/running-your-first-eval.mdx",
+        "line": 101
+      }
+    ],
+    "introduction/library/prompt-tools": [
+      {
+        "file": "apps/maxim-docs/introduction/running-your-first-eval.mdx",
+        "line": 102
+      }
+    ],
+    "introduction/tracing/overview": [
+      {
+        "file": "apps/maxim-docs/introduction/running-your-first-eval.mdx",
+        "line": 102
+      }
+    ],
+    "library/library/evaluators/pre-built-evaluators": [
+      {
+        "file": "apps/maxim-docs/library/concepts.mdx",
+        "line": 10
+      },
+      {
+        "file": "apps/maxim-docs/library/overview.mdx",
+        "line": 12
+      }
+    ],
+    "library/mailto:contact@getmaxim.ai": [
+      {
+        "file": "apps/maxim-docs/library/concepts.mdx",
+        "line": 60
+      },
+      {
+        "file": "apps/maxim-docs/library/overview.mdx",
+        "line": 28
+      }
+    ],
+    "library/offline-evals/via-ui/prompts/human-annotation": [
+      {
+        "file": "apps/maxim-docs/library/concepts.mdx",
+        "line": 82
+      },
+      {
+        "file": "apps/maxim-docs/library/concepts.mdx",
+        "line": 145
+      }
+    ],
+    "library/library/datasets/import-or-create-datasets": [
+      {
+        "file": "apps/maxim-docs/library/concepts.mdx",
+        "line": 132
+      },
+      {
+        "file": "apps/maxim-docs/library/overview.mdx",
+        "line": 16
+      }
+    ],
+    "library/library/datasets/curate-datasets": [
+      {
+        "file": "apps/maxim-docs/library/concepts.mdx",
+        "line": 139
+      }
+    ],
+    "library/library/prompt-partials/create-prompt-partial": [
+      {
+        "file": "apps/maxim-docs/library/concepts.mdx",
+        "line": 149
+      }
+    ],
+    "library/offline-evals/via-ui/prompts/retrieval": [
+      {
+        "file": "apps/maxim-docs/library/context-sources.mdx",
+        "line": 72
+      }
+    ],
+    "library/datasets/offline-evals/via-ui/prompts/human-annotation": [
+      {
+        "file": "apps/maxim-docs/library/datasets/curate-datasets.mdx",
+        "line": 45
+      }
+    ],
+    "library/evaluators/library/evaluators/pre-built-evaluators": [
+      {
+        "file": "apps/maxim-docs/library/evaluators/custom-evaluators.mdx",
+        "line": 6
+      }
+    ],
+    "library/evaluators/offline-evals/via-ui/prompts/prompt-evals": [
+      {
+        "file": "apps/maxim-docs/library/evaluators/pre-built-evaluators.mdx",
+        "line": 26
+      }
+    ],
+    "library/library/context-sources": [
+      {
+        "file": "apps/maxim-docs/library/overview.mdx",
+        "line": 20
+      }
+    ],
+    "library/library/prompt-tools": [
+      {
+        "file": "apps/maxim-docs/library/overview.mdx",
+        "line": 24
+      }
+    ],
+    "library/offline-evals/via-ui/prompts/prompt-partials": [
+      {
+        "file": "apps/maxim-docs/library/prompt-partials.mdx",
+        "line": 38
+      }
+    ],
+    "library/offline-evals/via-ui/prompts/tool-calls": [
+      {
+        "file": "apps/maxim-docs/library/prompt-tools.mdx",
+        "line": 323
+      }
+    ],
+    "offline-evals/offline-evals/via-ui/prompts/prompt-playground": [
+      {
+        "file": "apps/maxim-docs/offline-evals/concepts.mdx",
+        "line": 43
+      },
+      {
+        "file": "apps/maxim-docs/offline-evals/concepts.mdx",
+        "line": 50
+      }
+    ],
+    "offline-evals/offline-evals/via-ui/agents-via-no-code-builder/quickstart": [
+      {
+        "file": "apps/maxim-docs/offline-evals/concepts.mdx",
+        "line": 55
+      }
+    ],
+    "offline-evals/offline-evals/via-ui/agents-via-http-endpoint/quickstart": [
+      {
+        "file": "apps/maxim-docs/offline-evals/concepts.mdx",
+        "line": 60
+      }
+    ],
+    "offline-evals/library/evaluators/pre-built-evaluators": [
+      {
+        "file": "apps/maxim-docs/offline-evals/concepts.mdx",
+        "line": 70
+      },
+      {
+        "file": "apps/maxim-docs/offline-evals/concepts.mdx",
+        "line": 101
+      }
+    ],
+    "offline-evals/library/evaluators/custom-evaluators": [
+      {
+        "file": "apps/maxim-docs/offline-evals/concepts.mdx",
+        "line": 72
+      }
+    ],
+    "offline-evals/library/datasets/import-or-create-datasets": [
+      {
+        "file": "apps/maxim-docs/offline-evals/concepts.mdx",
+        "line": 109
+      }
+    ],
+    "offline-evals/library/context-sources": [
+      {
+        "file": "apps/maxim-docs/offline-evals/concepts.mdx",
+        "line": 114
+      }
+    ],
+    "offline-evals/library/prompt-tools": [
+      {
+        "file": "apps/maxim-docs/offline-evals/concepts.mdx",
+        "line": 119
+      }
+    ],
+    "offline-evals/guides/offline-evals/via-ui/prompts/prompt-playground": [
+      {
+        "file": "apps/maxim-docs/offline-evals/guides/create-customer-support-agent.mdx",
+        "line": 8
+      },
+      {
+        "file": "apps/maxim-docs/offline-evals/guides/create-product-description-generator.mdx",
+        "line": 10
+      }
+    ],
+    "offline-evals/guides/offline-evals/via-ui/agents-via-http-endpoint/quickstart": [
+      {
+        "file": "apps/maxim-docs/offline-evals/guides/create-customer-support-agent.mdx",
+        "line": 59
+      },
+      {
+        "file": "apps/maxim-docs/offline-evals/guides/create-customer-support-agent.mdx",
+        "line": 89
+      },
+      {
+        "file": "apps/maxim-docs/offline-evals/guides/create-product-description-generator.mdx",
+        "line": 52
+      }
+    ],
+    "offline-evals/guides/offline-evals/via-ui/agents-via-no-code-builder/quickstart": [
+      {
+        "file": "apps/maxim-docs/offline-evals/guides/create-product-description-generator.mdx",
+        "line": 6
+      },
+      {
+        "file": "apps/maxim-docs/offline-evals/guides/create-product-description-generator.mdx",
+        "line": 26
+      }
+    ],
+    "getting-started": [
+      {
+        "file": "apps/maxim-docs/offline-evals/guides/evaluating-the-quality-of-ai-hr-assistants.mdx",
+        "line": 131
+      },
+      {
+        "file": "apps/maxim-docs/offline-evals/guides/evaluating-the-quality-of-healthcare-assistants-using-maxim-ai.mdx",
+        "line": 116
+      }
+    ],
+    "offline-evals/quickstart/offline-evals/via-ui/agents-via-http-endpoint/quickstart": [
+      {
+        "file": "apps/maxim-docs/offline-evals/quickstart/simulate-and-evaluate-multi-turn-conversations.mdx",
+        "line": 6
+      }
+    ],
+    "offline-evals/via-sdk/agents-evals-via-http-endpoint/offline-evals/via-ui/agents-via-http-endpoint/quickstart": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-sdk/agents-evals-via-http-endpoint/create-workflow-for-local-api.mdx",
+        "line": 59
+      }
+    ],
+    "offline-evals/via-ui/advanced/library/evaluators/pre-built-evaluators": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/advanced/dataset-evaluation.mdx",
+        "line": 24
+      }
+    ],
+    "offline-evals/via-ui/advanced/library/context-sources/bring-your-rag-via-an-api-endpoint": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/advanced/dataset-evaluation.mdx",
+        "line": 24
+      }
+    ],
+    "offline-evals/via-ui/advanced/library/datasets/manage-datasets": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/advanced/dataset-evaluation.mdx",
+        "line": 30
+      }
+    ],
+    "offline-evals/via-ui/advanced/observe/how-to/set-up-alerts/create-a-slack-integration": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/advanced/notifications.mdx",
+        "line": 3
+      }
+    ],
+    "offline-evals/via-ui/advanced/observe/how-to/set-up-alerts/create-a-pagerduty-integration": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/advanced/notifications.mdx",
+        "line": 3
+      }
+    ],
+    "offline-evals/via-ui/agents-via-http-endpoint/offline-evals/via-ui/agents-via-http-endpoint/quickstart": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/agents-via-http-endpoint/quickstart.mdx",
+        "line": 6
+      }
+    ],
+    "offline-evals/via-ui/agents-via-http-endpoint/evaluate/concepts": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/agents-via-http-endpoint/quickstart.mdx",
+        "line": 13
+      }
+    ],
+    "offline-evals/via-ui/agents-via-http-endpoint/library/evaluators/pre-built": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/agents-via-http-endpoint/quickstart.mdx",
+        "line": 13
+      }
+    ],
+    "offline-evals/via-ui/agents-via-no-code-builder/evaluate/how-to/evaluate-chains/querying-prompt-chains": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/agents-via-no-code-builder/agent-deployment.mdx",
+        "line": 114
+      }
+    ],
+    "offline-evals/via-ui/agents-via-no-code-builder/library/how-to/datasets/use-dataset-templates": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/agents-via-no-code-builder/agent-evals.mdx",
+        "line": 7
+      },
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/agents-via-no-code-builder/quickstart.mdx",
+        "line": 9
+      }
+    ],
+    "offline-evals/via-ui/agents-via-no-code-builder/library/how-to/evaluators/use-pre-built-evaluators": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/agents-via-no-code-builder/agent-evals.mdx",
+        "line": 28
+      },
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/agents-via-no-code-builder/quickstart.mdx",
+        "line": 11
+      }
+    ],
+    "offline-evals/via-ui/agents-via-no-code-builder/evaluate/concepts": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/agents-via-no-code-builder/agent-evals.mdx",
+        "line": 36
+      }
+    ],
+    "offline-evals/via-ui/prompts/evaluate/how-to/evaluate-prompts/create-prompt-versions": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/folders-and-tags.mdx",
+        "line": 58
+      },
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/prompt-playground.mdx",
+        "line": 117
+      },
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/prompt-sessions.mdx",
+        "line": 20
+      },
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/quickstart.mdx",
+        "line": 9
+      }
+    ],
+    "offline-evals/via-ui/prompts/library/how-to/datasets/curate-golden-dataset-for-human-annotation": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/human-annotation.mdx",
+        "line": 83
+      }
+    ],
+    "offline-evals/via-ui/prompts/evaluate/how-to/evaluate-prompts/querying-prompts": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/prompt-deployment.mdx",
+        "line": 119
+      }
+    ],
+    "offline-evals/via-ui/prompts/analyze/how-to/comparison-reports": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/prompt-evals.mdx",
+        "line": 51
+      }
+    ],
+    "offline-evals/via-ui/prompts/evaluate/how-to/optimize-evaluation-processes/re-use-configuration-via-presets": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/prompt-evals.mdx",
+        "line": 53
+      }
+    ],
+    "offline-evals/via-ui/prompts/introduction/quickstart/setting-up-workspace": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/prompt-playground.mdx",
+        "line": 11
+      }
+    ],
+    "offline-evals/via-ui/prompts/evaluate/how-to/evaluate-prompts/run-prompt-tool-calls": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/prompt-playground.mdx",
+        "line": 27
+      },
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/prompt-playground.mdx",
+        "line": 116
+      }
+    ],
+    "offline-evals/via-ui/prompts/library/how-to/context-sources/bring-your-rag-via-an-api-endpoint": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/prompt-playground.mdx",
+        "line": 54
+      },
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/retrieval.mdx",
+        "line": 8
+      }
+    ],
+    "offline-evals/via-ui/prompts/evaluate/how-to/evaluate-prompts/rag-quality": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/prompt-playground.mdx",
+        "line": 112
+      }
+    ],
+    "offline-evals/via-ui/prompts/evaluate/how-to/evaluate-prompts/bulk-comparisons-across-test-cases": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/prompt-playground.mdx",
+        "line": 118
+      },
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/prompt-sessions.mdx",
+        "line": 22
+      },
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/prompt-versions.mdx",
+        "line": 70
+      }
+    ],
+    "offline-evals/via-ui/prompts/evaluate/how-to/evaluate-prompts/deploy-prompts": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/prompt-versions.mdx",
+        "line": 73
+      }
+    ],
+    "offline-evals/via-ui/prompts/evaluate/how-to/evaluate-prompts/compare-prompt-versions": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/prompt-versions.mdx",
+        "line": 73
+      }
+    ],
+    "offline-evals/via-ui/prompts/evaluate/how-to/evaluate-prompts/experiment-in-prompt-playground": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/quickstart.mdx",
+        "line": 3
+      }
+    ],
+    "offline-evals/via-ui/prompts/library/how-to/datasets/use-dataset-templates": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/quickstart.mdx",
+        "line": 13
+      }
+    ],
+    "offline-evals/via-ui/prompts/library/how-to/evaluators/use-pre-built-evaluators": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/quickstart.mdx",
+        "line": 13
+      }
+    ],
+    "offline-evals/via-ui/prompts/library/how-to/prompt-tools/create-a-code-tool": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-ui/prompts/tool-calls.mdx",
+        "line": 6
+      }
+    ],
+    "online-evals/via-sdk/observe/how-to/log-your-application/setting-up-trace": [
+      {
+        "file": "apps/maxim-docs/online-evals/via-sdk/node-level-evaluation.mdx",
+        "line": 15
+      }
+    ],
+    "online-evals/via-sdk/observe/how-to/evaluate-logs/auto-evaluation": [
+      {
+        "file": "apps/maxim-docs/online-evals/via-sdk/node-level-evaluation.mdx",
+        "line": 113
+      }
+    ],
+    "online-evals/via-ui/observe/how-to/log-your-application/setting-up-trace": [
+      {
+        "file": "apps/maxim-docs/online-evals/via-ui/set-up-auto-evaluation-on-logs.mdx",
+        "line": 18
+      }
+    ],
+    "online-evals/via-ui/observe/how-to/evaluate-logs/human-evaluation": [
+      {
+        "file": "apps/maxim-docs/online-evals/via-ui/set-up-auto-evaluation-on-logs.mdx",
+        "line": 54
+      }
+    ],
+    "online-evals/via-ui/observe/how-to/evaluate-logs/node-level-evaluation": [
+      {
+        "file": "apps/maxim-docs/online-evals/via-ui/set-up-auto-evaluation-on-logs.mdx",
+        "line": 123
+      }
+    ],
+    "online-evals/observe/how-to/log-your-application/setting-up-trace": [
+      {
+        "file": "apps/maxim-docs/online-evals/via-ui.mdx",
+        "line": 15
+      }
+    ],
+    "online-evals/observe/how-to/evaluate-logs/auto-evaluation": [
+      {
+        "file": "apps/maxim-docs/online-evals/via-ui.mdx",
+        "line": 52
+      },
+      {
+        "file": "apps/maxim-docs/online-evals/via-ui.mdx",
+        "line": 116
+      }
+    ],
+    "sdk/python/integrations/openai/\n    name=\"FAQ Agent\",\n    handoff_description=\"A helpful agent that can answer questions about the airline.\",\n    instructions=f\"\"\"{RECOMMENDED_PROMPT_PREFIX}\n    You are an FAQ agent. If you are speaking to a customer, you probably were transferred to from the triage agent.\n    Use the following routine to support the customer.\n    ": [
+      {
+        "file": "apps/maxim-docs/sdk/python/integrations/openai/agents-sdk.mdx",
+        "line": 142
+      }
+    ],
+    "sdk/python/integrations/openai/\n    name=\"Seat Booking Agent\",\n    handoff_description=\"A helpful agent that can update a seat on a flight.\",\n    instructions=f\"\"\"{RECOMMENDED_PROMPT_PREFIX}\n    You are a seat booking agent. If you are speaking to a customer, you probably were transferred to from the triage agent.\n    Use the following routine to support the customer.\n    ": [
+      {
+        "file": "apps/maxim-docs/sdk/python/integrations/openai/agents-sdk.mdx",
+        "line": 157
+      }
+    ],
+    "sdk/python/integrations/openai/\n    name=\"Triage Agent\",\n    handoff_description=\"A triage agent that can delegate a customer's request to the appropriate agent.\",\n    instructions=(\n        f\"{RECOMMENDED_PROMPT_PREFIX} \"\n        \"You are a helpful triaging agent. You can use your tools to delegate questions to other appropriate agents.\"\n    ": [
+      {
+        "file": "apps/maxim-docs/sdk/python/integrations/openai/agents-sdk.mdx",
+        "line": 171
+      }
+    ],
+    "simulations/library/how-to/prompt-tools/create-a-code-tool": [
+      {
+        "file": "apps/maxim-docs/simulations/simulation-runs.mdx",
+        "line": 37
+      }
+    ],
+    "simulations/library/how-to/context-sources/bring-your-rag-via-an-api-endpoint": [
+      {
+        "file": "apps/maxim-docs/simulations/simulation-runs.mdx",
+        "line": 38
+      }
+    ],
+    "support/mailto:contact@getmaxim.ai": [
+      {
+        "file": "apps/maxim-docs/support/raising-an-incident.mdx",
+        "line": 93
+      }
+    ],
+    "tracing/observe/how-to/evaluate-logs/auto-evaluation": [
+      {
+        "file": "apps/maxim-docs/tracing/concepts.mdx",
+        "line": 47
+      }
+    ],
+    "tracing/observe/how-to/log-your-application/setting-up-trace": [
+      {
+        "file": "apps/maxim-docs/tracing/concepts.mdx",
+        "line": 77
+      }
+    ],
+    "tracing/observe/how-to/set-up-alerts/create-a-slack-integration": [
+      {
+        "file": "apps/maxim-docs/tracing/concepts.mdx",
+        "line": 87
+      }
+    ],
+    "tracing/tracing-via-sdk/observe/how-to/log-your-application/adding-llm-call": [
+      {
+        "file": "apps/maxim-docs/tracing/tracing-via-sdk/errors.mdx",
+        "line": 68
+      }
+    ],
+    "tracing/tracing-via-sdk/observe/how-to/log-your-application/track-tool-calls": [
+      {
+        "file": "apps/maxim-docs/tracing/tracing-via-sdk/errors.mdx",
+        "line": 105
+      }
+    ]
+  },
+  "valid_links": {
+    "https://openai.github.io/openai-agents-python/": [
+      {
+        "file": "apps/maxim-docs/integrations/openai-agents-sdk.mdx",
+        "line": 3
+      }
+    ],
+    "https://www.getmaxim.ai/docs/observe/quickstart": [
+      {
+        "file": "apps/maxim-docs/integrations/openai-agents-sdk.mdx",
+        "line": 16
+      }
+    ],
+    "https://getmax.im/openai-agents-language": [
+      {
+        "file": "apps/maxim-docs/integrations/openai-agents-sdk.mdx",
+        "line": 64
+      }
+    ],
+    "https://getmax.im/openai-agents-customer-support": [
+      {
+        "file": "apps/maxim-docs/integrations/openai-agents-sdk.mdx",
+        "line": 73
+      }
+    ],
+    "#performance-metrics-alerts": [
+      {
+        "file": "apps/maxim-docs/library/alerts.mdx",
+        "line": 7
+      }
+    ],
+    "#available-performance-metrics": [
+      {
+        "file": "apps/maxim-docs/library/alerts.mdx",
+        "line": 8
+      }
+    ],
+    "#creating-performance-alerts": [
+      {
+        "file": "apps/maxim-docs/library/alerts.mdx",
+        "line": 9
+      }
+    ],
+    "#performance-alert-examples": [
+      {
+        "file": "apps/maxim-docs/library/alerts.mdx",
+        "line": 10
+      }
+    ],
+    "#quality-metrics-alerts": [
+      {
+        "file": "apps/maxim-docs/library/alerts.mdx",
+        "line": 11
+      }
+    ],
+    "#available-quality-metrics": [
+      {
+        "file": "apps/maxim-docs/library/alerts.mdx",
+        "line": 12
+      }
+    ],
+    "#creating-quality-alerts": [
+      {
+        "file": "apps/maxim-docs/library/alerts.mdx",
+        "line": 13
+      }
+    ],
+    "#quality-alert-examples": [
+      {
+        "file": "apps/maxim-docs/library/alerts.mdx",
+        "line": 14
+      }
+    ],
+    "#managing-alerts": [
+      {
+        "file": "apps/maxim-docs/library/alerts.mdx",
+        "line": 15
+      }
+    ],
+    "#best-practices": [
+      {
+        "file": "apps/maxim-docs/library/alerts.mdx",
+        "line": 16
+      }
+    ],
+    "https://ngrok.com/docs/getting-started": [
+      {
+        "file": "apps/maxim-docs/offline-evals/via-sdk/agents-evals-via-http-endpoint/create-workflow-for-local-api.mdx",
+        "line": 51
+      }
+    ],
+    "https://api.slack.com/messaging/webhooks": [
+      {
+        "file": "apps/maxim-docs/online-evals/set-up-alerts-and-notifications.mdx",
+        "line": 24
+      }
+    ],
+    "#notification-channels": [
+      {
+        "file": "apps/maxim-docs/online-evals/set-up-alerts-and-notifications.mdx",
+        "line": 116
+      },
+      {
+        "file": "apps/maxim-docs/online-evals/set-up-alerts-and-notifications.mdx",
+        "line": 143
+      },
+      {
+        "file": "apps/maxim-docs/online-evals/set-up-alerts-and-notifications.mdx",
+        "line": 191
+      },
+      {
+        "file": "apps/maxim-docs/online-evals/set-up-alerts-and-notifications.mdx",
+        "line": 221
+      }
+    ],
+    "https://pypi.org/project/maxim-py/": [
+      {
+        "file": "apps/maxim-docs/sdk/overview.mdx",
+        "line": 17
+      }
+    ],
+    "https://www.npmjs.com/package/@maximai/maxim-js": [
+      {
+        "file": "apps/maxim-docs/sdk/overview.mdx",
+        "line": 18
+      }
+    ],
+    "https://www.npmjs.com/package/@maximai/maxim-js-langchain": [
+      {
+        "file": "apps/maxim-docs/sdk/overview.mdx",
+        "line": 19
+      }
+    ],
+    "https://github.com/maximhq/maxim-go": [
+      {
+        "file": "apps/maxim-docs/sdk/overview.mdx",
+        "line": 20
+      }
+    ],
+    "https://central.sonatype.com/artifact/ai.getmaxim/sdk": [
+      {
+        "file": "apps/maxim-docs/sdk/overview.mdx",
+        "line": 21
+      }
+    ],
+    "https://www.langchain.com/": [
+      {
+        "file": "apps/maxim-docs/sdk/python/integrations/langchain/langchain.mdx",
+        "line": 1
+      }
+    ],
+    "https://github.com/BerriAI/litellm": [
+      {
+        "file": "apps/maxim-docs/sdk/python/integrations/litellm/litellm-sdk.mdx",
+        "line": 3
+      }
+    ],
+    "https://github.com/openai/openai-agents-python/blob/main/examples/customer_service/main.py": [
+      {
+        "file": "apps/maxim-docs/sdk/python/integrations/openai/agents-sdk.mdx",
+        "line": 15
+      }
+    ],
+    "https://www.getmaxim.ai/docs/observe/concepts#log-repository": [
+      {
+        "file": "apps/maxim-docs/sdk/python/integrations/openai/agents-sdk.mdx",
+        "line": 195
+      }
+    ],
+    "https://www.getmaxim.ai/": [
+      {
+        "file": "apps/maxim-docs/sdk/python/integrations/openai/agents-sdk.mdx",
+        "line": 245
+      }
+    ],
+    "https://ollama.com/": [
+      {
+        "file": "apps/maxim-docs/settings/model-configuration.mdx",
+        "line": 18
+      }
+    ],
+    "https://github.com/ollama/ollama/blob/main/docs/faq.md#how-can-i-use-ollama-with-ngrok": [
+      {
+        "file": "apps/maxim-docs/settings/model-configuration.mdx",
+        "line": 20
+      }
+    ],
+    "https://one.newrelic.com/api-keys": [
+      {
+        "file": "apps/maxim-docs/tracing/otel-compatibility.mdx",
+        "line": 24
+      }
+    ]
+  },
+  "summary": {
+    "total_files_analyzed": 2459,
+    "total_broken_links": 89,
+    "total_valid_links": 30,
+    "file_type_stats": {
+      ".mdx": {
+        "total": 160,
+        "broken": 105,
+        "valid": 33
+      },
+      ".ts": {
+        "total": 1273,
+        "broken": 0,
+        "valid": 0
+      },
+      ".tsx": {
+        "total": 1026,
+        "broken": 7,
+        "valid": 0
+      }
+    }
+  }
+}

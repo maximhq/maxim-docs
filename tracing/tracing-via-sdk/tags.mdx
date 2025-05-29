@@ -1,0 +1,60 @@
+---
+title: Tags
+description: Tag your traces to group and filter endpoint data effectively. Add tags to any node type - spans, generations, retrievals, events, and more.
+---
+
+<div className="w-full flex justify-end -mb-11">
+    <LanguageSwitcher />
+</div>
+
+## Add tags to a trace
+
+<CodeGroup>
+    ```typescript JS/TS
+    const trace = logger.trace({
+        id: "trace-id",
+        name: "user-query",
+        tags: {
+            productId: "instaTravel",
+            experimentId: "fastlane",
+        },
+    });
+    ```
+
+    ```python Python
+    from maxim.logger import TraceConfig
+
+    trace = logger.trace(TraceConfig(
+        id="trace-id",
+        name="user-query",
+        tags={
+            "productId": "instaTravel",
+            "experimentId": "fastlane",
+        },
+    ))
+    ```
+
+    ```go Go
+    trace := logger.Trace(&logging.TraceConfig{
+        Id: "trace-id",
+        Name: "user-query",
+        Tags: {
+            "productId": "instaTravel",
+            "experimentId": "fastlane",
+        },
+    })
+    ```
+
+    ```java Java
+    import ai.getmaxim.sdk.logger.components.Trace;
+    import ai.getmaxim.sdk.logger.components.TraceConfig;
+
+    Trace trace = logger.trace(new TraceConfig(
+        "trace-id",
+        "user-query",
+        Map.of("productId", "instaTravel", "experimentId", "fastlane"),
+    ));
+    ```
+</CodeGroup>
+
+![Tags](/images/docs/tracing/via-sdk/feedback_and_tags.png)

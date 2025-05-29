@@ -1,0 +1,119 @@
+---
+title: Prompt Playground
+description: Learn how to use the Prompt Playground to compare Prompts
+---
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
+Prompts in Maxim provide a powerful way to experiment with prompt structures, models and configurations. Maxim's playground allows you to iterate over prompts, test their effectiveness, and ensure they work well before integrating them into more complex workflows for your application.
+
+## Selecting a model
+
+Maxim supports a wide range of models, including:
+
+- Open-source models
+- Closed models
+- Custom models
+
+Easily experiment across models by [configuring models](/settings/model-configuration) and selecting the relevant model from the dropdown at the top of the prompt playground.
+
+![Model selection interface](/images/docs/evaluate/how-to/evaluate-prompts/experiment-playground/model-selection-interface.png)
+
+## Adding system and user prompts
+
+In the prompt editor, add your system and user prompts. The system prompt sets the context or instructions for the AI, while the user prompt represents the input you want the AI to respond to. Use the `Add message` button to append messages in the conversations before running it. Mimic assistant responses for debugging using the `assistant` type message.
+
+![Prompt editor interface showing system and user prompt fields](/images/docs/evaluate/how-to/evaluate-prompts/experiment-playground/prompt-editor-interface.png)
+
+<Callout type="info" title="Experimenting with tools">
+
+If your prompts require tool usage, you can attach tools and experiment using `tool` type messages. [Learn about using tools in playground](/offline-evals/via-ui/prompts/prompt-tools).
+
+</Callout>
+
+## Configuring parameters
+
+Each prompt has a set of parameters that you can configure to control the behavior of the model. Find details about the different parameters for each model in the model's documentation. Here are some examples of common parameters:
+
+- Temperature
+- Max tokens
+- topP
+- Logit bias
+- Prompt tools (for function calls)
+- Custom stop sequences
+
+![Parameter configuration panel](/images/docs/evaluate/how-to/evaluate-prompts/experiment-playground/parameter-configuration-panel.png)
+
+<Callout type="info" title="Select response formats">
+
+Experiment using the right response format like structured output, or JSON for models that allow it.
+
+</Callout>
+
+## Using variables
+
+Maxim allows you to include variables in your prompts using double curly braces `{{ }}`. You can use this to reference dynamic data and add the values within the variable section on the right side. 
+
+Variable values can be static or dynamic where its connected to a [context source](/library/context-sources#bring-your-rag-via-an-api-endpoint).
+
+![Variables](/images/docs/evaluate/how-to/evaluate-prompts/experiment-playground/variables.png)
+
+### Prompt comparison
+
+Prompt comparison combines multiple single Prompts into one view, enabling a streamlined approach for various workflows:
+
+1. **Model comparison**: Evaluate the performance of different models on the same Prompt.
+2. **Prompt optimization**: Compare different versions of a Prompt to identify the most effective formulation.
+3. **Cross-Model consistency**: Ensure consistent outputs across various models for the same Prompt.
+4. **Performance benchmarking**: Analyze metrics like latency, cost, and token count across different models and Prompts.
+
+<MaximPlayer url="https://www.youtube.com/embed/ms-0zXuo0ks" />
+
+### Create a new comparison
+
+<Steps>
+    <Step title="Access a Prompt">
+Navigate to the a prompt of your choice.
+    </Step>
+    <Step title="Select a Prompt to start a comparison">
+In your prompt page, click on the `+` button located in the header on top.
+    </Step>
+    <Step title="Select Prompts or models">
+Choose Prompts from your existing Prompts or just select a model from the dropdown menu directly.
+        ![Prompt comparison add prompts](/images/docs/offline-evals/via-ui/prompts/prompt-playground/prompt_comparison_add_prompts.png)
+    </Step>
+    <Step title="Add more comparison items">
+Add more Prompts to compare using the "+" icon.
+    </Step>
+    <Step title="Customize Independently">
+Customize each Prompt independently. You can make changes to the prompt, including modify model parameters, add context, or add tool calls.
+    </Step>
+    <Step title="Save and Publish Version">
+To save the changes to the respective prompt, click on `Save Session` button. You can also publish a version of the respective prompt by clicking on `Publish Version` button.
+    </Step>
+</Steps>
+
+### Run your comparison
+
+You can choose to have the `Multi input` option either enabled or disabled.
+
+- If enabled, provide input to each entry in the comparison individually.
+![Prompt comparison with multi input enabled](/images/docs/offline-evals/via-ui/prompts/prompt-playground/prompt_comparison_with_multi_input.png)
+- If disabled, the same input is taken for all the Prompts in the comparison.
+![Prompt comparison with multi input disabled](/images/docs/offline-evals/via-ui/prompts/prompt-playground/prompt_comparison_without_multi_input.png)
+
+
+### Open an existing Prompt Comparison
+
+Whenever you save a session in when comparing Prompts, a session gets saved in the base Prompt. You can access this anytime via the sessions drop down of that Prompt, marked with a `Comparison` badge.
+
+![Prompt comparison session](/images/docs/offline-evals/via-ui/prompts/prompt-playground/prompt_comparison_session.png)
+
+<Callout type="info">
+You can compare up to **five** different Prompts side by side in a single comparison.
+</Callout>
+
+## Next steps
+- For RAG applications using retrieved context, learn about [attaching context to your prompt](/offline-evals/via-ui/prompts/retrieval).
+- For agentic systems in which you want to test out correct tool usage by your prompt, learn about [running a prompt with tool calls](/offline-evals/via-ui/prompts/prompt-tools).
+- For better collaborative management of your prompts, learn about [versioning prompts](/offline-evals/via-ui/prompts/prompt-versions).
+- For comparing results across multiple test cases, learn about [bulk comparisons](/offline-evals/via-ui/prompts/prompt-evals).

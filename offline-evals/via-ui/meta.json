@@ -1,0 +1,4 @@
+{
+	"title": "Via UI",
+	"pages": ["prompts", "agents-via-no-code-builder", "agents-via-http-endpoint", "advanced"]
+}

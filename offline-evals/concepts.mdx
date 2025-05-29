@@ -1,0 +1,121 @@
+---
+title: Concepts
+description: Learn about the key concepts in Maxim
+---
+
+## Prompts
+Prompts are text-based inputs provided to AI models to guide their responses and influence the behaviour of the model. The structure and complexity of prompts can vary based on the specific AI model and the intended use case. Prompts may range from simple questions to detailed instructions or multi-turn conversations. They can be optimised or fine-tuned using a range of configuration options, such as variables and other model parameters like temperature, max tokens, etc, to achieve the desired output.
+
+Here's an example of a multi-turn prompt structure:
+
+<table>
+  <thead>
+    <tr>
+      <th>Turn</th>
+      <th>Content</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Initial prompt</td>
+      <td>You are a helpful AI assistant specialized in geography.</td>
+      <td>Sets the context for the interaction (optional, model-dependent)</td>
+    </tr>
+    <tr>
+      <td>User input</td>
+      <td>What's the capital of France?</td>
+      <td>The first query for the AI to respond to</td>
+    </tr>
+    <tr>
+      <td>Model response</td>
+      <td>The capital of France is Paris.</td>
+      <td>The model's response to the first query</td>
+    </tr>
+    <tr>
+      <td>User input</td>
+      <td>What's its population?</td>
+      <td>A follow-up question, building on the previous context</td>
+    </tr>
+    <tr>
+      <td>Model response</td>
+      <td>As of 2023, the estimated population of Paris is about 2.2 million people in the city proper.</td>
+      <td>The model's response to the follow-up question</td>
+    </tr>
+  </tbody>
+</table>
+You can find more about prompts [here](/offline-evals/via-ui/prompts/prompt-playground).
+
+## Prompt comparisons
+Prompt comparisons help evaluate different prompts side-by-side to determine which ones produce the best results for a given task. They allow for easy comparison of prompt structures, outputs, and performance metrics across multiple models or configurations.
+
+You can find more about prompt comparisons [here](/offline-evals/via-ui/prompts/prompt-playground#prompt-comparison).
+
+## Agents via no-code builder
+Agents are structured sequences of AI interactions designed to tackle complex tasks through a series of interconnected steps. Agents provide a visual representation of the workflow, and allow for code-based and API configuration.
+
+You can find more about agents via no-code builder [here](/offline-evals/via-ui/agents-via-no-code-builder/quickstart).
+
+## Workflows
+Workflows enable end-to-end testing of AI applications via HTTP endpoints. They allow seamless integration of existing AI services without code changes, featuring payload configuration with dynamic variables, playground testing, and output mapping for evaluation.
+
+You can find more about workflows [here](/offline-evals/via-ui/agents-via-http-endpoint/quickstart).
+
+## Test runs
+Test runs are controlled executions of prompts, no-code agents or http endpoints to evaluate their performance, accuracy, and behavior under various conditions. They can be single or comparison runs providing detailed summaries, performance metrics, and debug information for every entry to assess AI model performance.
+
+Tests can be run on prompts, no-code agents, http endpoints or datasets directly.
+
+## Evaluators
+Evaluators are tools or metrics used to assess the quality, accuracy, and effectiveness of AI model outputs. We have various types of evaluators that can be customized and integrated into workflows and test runs. See below for more details.
+
+You can find more about Maxim's [pre-built evaluators](/library/evaluators/pre-built-evaluators) or [create your own](/library/evaluators/custom-evaluators)
+
+<table>
+  <thead>
+    <tr>
+      <th>Evaluator type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>AI</td>
+      <td>Uses AI models to assess outputs</td>
+    </tr>
+    <tr>
+      <td>Programmatic</td>
+      <td>Applies predefined rules or algorithms</td>
+    </tr>
+    <tr>
+      <td>Statistical</td>
+      <td>Utilizes statistical methods for evaluation</td>
+    </tr>
+    <tr>
+      <td>Human</td>
+      <td>Involves human judgment and feedback</td>
+    </tr>
+    <tr>
+      <td>API-based</td>
+      <td>Leverages external APIs for assessment</td>
+    </tr>
+    <tr>
+      <td colspan="2">You can find more about our evaluators [here](/library/evaluators/pre-built-evaluators).</td>
+    </tr>
+  </tbody>
+</table>
+
+## Datasets
+Datasets are collections of data used for training, testing, and evaluating AI models within workflows and evaluations. They allow users to test their prompts and AI systems against their own data, and include features for data structure management, integration with AI workflows, and privacy controls.
+
+You can find more about datasets [here](/library/datasets/import-or-create-datasets).
+
+## Context sources
+Context sources handle and organize contextual information that AI models use to understand and respond to queries more effectively. They support Retrieval-Augmented Generation (RAG) and include API integration, sample input testing, and seamless incorporation into AI workflows. Context sources enable developers to enhance their AI models' performance by providing relevant background information for more accurate and contextually appropriate responses.
+
+You can find more about context sources [here](/library/context-sources#ingest-files-as-a-context-source).
+
+## Prompt tools
+Prompt tools are utilities that assist in creating, refining, and managing prompts, enhancing the efficiency of working with AI prompts. They feature custom function creation, a playground environment, and integration with workflows.
+
+You can find more about prompt tools [here](/library/prompt-tools#create-a-code-tool).

@@ -1,0 +1,211 @@
+---
+title: Third Party Evaluators
+description: A comprehensive guide to supported third-party evaluation metrics for assessing AI model outputs
+---
+
+## Overview
+
+Maxim supports a variety of third-party evaluation metrics to help assess the quality and performance of AI model outputs. These metrics are provided by trusted partners including OpenAI, Ragas, and Google Vertex AI. Third-party evaluators provide specialized metrics for different aspects of AI model evaluation. Each provider brings unique expertise and methodologies to help you assess your models' performance across various dimensions.
+
+## OpenAI Evaluators
+
+### OpenAI Moderation
+A specialized evaluator that identifies potentially harmful content in text outputs. This evaluator helps ensure your model's outputs comply with safety guidelines by categorizing potentially harmful or inappropriate content.
+
+**Categories Monitored:**
+1. Sexual
+2. Sexual/Minors
+3. Harassment
+4. Harassment/Threatening
+5. Hate
+6. Hate/Threatening
+7. Illicit
+8. Illicit/Violent
+9. Self-harm
+10. Self-harm/Intent
+11. Self-harm/Instructions
+12. Violence
+13. Violence/Graphic
+
+> **Required:** Actual Output
+> **Score Range:** 0 (safe) to 1 (flagged)
+
+## Ragas Evaluators
+
+Ragas provides a comprehensive suite of evaluators specifically designed for assessing RAG (Retrieval-Augmented Generation) systems.
+
+### Answer Correctness
+Evaluates the accuracy of generated answers against expected outputs.
+
+**Key Features:**
+- Combines semantic and factual similarity
+- Score range: 0 to 1
+- Higher scores indicate better alignment with expected output
+
+> **Required:** input, output, expected output
+
+### Answer Relevance
+Assesses how pertinent the output is to the given prompt.
+
+**Key Features:**
+- Evaluates completeness and redundancy
+- Higher scores indicate better relevancy
+- Uses cosine similarity for measurement
+
+> **Required:** input, output, retrieved context
+
+### Answer Semantic Similarity
+Measures semantic resemblance between output and expected output.
+
+**Key Features:**
+- Uses cross-encoder model for evaluation
+- Score range: 0 to 1
+- Higher scores indicate better semantic alignment
+
+> **Required:** input, output, expected output
+
+### Context Entities Recall
+Measures entity recall in retrieved context compared to expected output.
+
+**Key Features:**
+- Ideal for fact-based use cases
+- Evaluates retrieval mechanism effectiveness
+- Focuses on entity coverage
+
+> **Required:** input, expected output, retrieved context
+
+### Context Precision
+Evaluates ranking of relevant context chunks.
+
+**Key Features:**
+- Assesses context ranking quality
+- Score range: 0 to 1
+- Higher scores indicate better precision
+
+> **Required:** input, output, expected output, retrieved context
+
+### Context Recall
+Measures alignment between retrieved context and expected output.
+
+**Key Features:**
+- Sentence-level analysis
+- Score range: 0 to 1
+- Higher scores indicate better recall
+
+> **Required:** input, output, expected output, retrieved context
+
+### Context Relevancy
+Evaluates context relevance to the input query.
+
+**Key Features:**
+- Score range: 0 to 1
+- Higher scores indicate better relevancy
+- Sentence-level evaluation
+
+> **Required:** input, retrieved context
+
+### Faithfulness
+Measures factual consistency between output and context.
+
+**Key Features:**
+- Evaluates claim verification
+- Score range: 0 to 1
+- Higher scores indicate better consistency
+
+> **Required:** input, output, retrieved context
+
+## Google Vertex AI Evaluators
+
+Google Vertex AI provides a comprehensive set of evaluators for various AI tasks.
+
+### Question Answering Correctness
+Evaluates factual accuracy of answers.
+
+**Required Parameters:**
+- `prediction`: Generated answer
+- `question`: Original question
+- `context`: Relevant context
+
+### Question Answering Helpfulness
+Assesses answer helpfulness in resolving queries.
+
+**Required Parameters:**
+- `prediction`: Generated answer
+- `question`: Original question
+- `context`: Relevant context
+
+### Question Answering Quality
+Evaluates overall answer quality.
+
+**Required Parameters:**
+- `prediction`: Generated answer
+- `question`: Original question
+- `context`: Relevant context
+
+### Question Answering Relevance
+Measures answer relevance to question.
+
+**Required Parameters:**
+- `prediction`: Generated answer
+- `question`: Original question
+- `context`: Relevant context
+
+### Summarization Helpfulness
+Evaluates summary helpfulness for understanding context.
+
+**Required Parameters:**
+- `prediction`: Summary output
+- `context`: Source content
+
+### Summarization Quality
+Assesses overall summary quality.
+
+**Required Parameters:**
+- `prediction`: Summary output
+- `context`: Source content
+
+### Pairwise Summarization Quality
+Compares candidate and baseline summaries.
+
+**Required Parameters:**
+- `prediction`: Candidate summary
+- `baselinePrediction`: Baseline summary
+- `context`: Source content
+- `instruction`: Prompt
+
+### Vertex Coherence
+Measures logical flow and consistency of ideas.
+
+### Vertex Fluency
+Evaluates grammatical correctness and naturalness.
+
+### Vertex Fulfillment
+Assesses prompt requirement fulfillment.
+
+### Vertex Groundedness
+Evaluates alignment with source information.
+
+### Vertex Safety
+Checks for harmful or unsafe content.
+
+### Vertex BLEU
+Evaluates text quality using n-gram overlap.
+
+### Vertex ROUGE
+Measures summary quality using n-gram overlap.
+
+### Vertex Exact Match
+Performs exact string matching evaluation.
+
+## Using Third-Party Evaluators
+
+To use these evaluators in Maxim:
+
+1. Navigate to the Evaluators section
+2. Select the desired third-party evaluator
+3. Configure the required parameters
+4. Run the evaluation
+
+Each evaluator may require specific API keys or credentials from the respective provider. Make sure to set up the necessary authentication before using these evaluators.
+
+> **Note:** Some evaluators may have usage limits or require specific subscription levels with the respective providers.
