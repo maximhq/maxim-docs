@@ -56,6 +56,8 @@ Each trace/span can contain multiple generations.
     ```
 
     ```go Go
+    // Valid provider names are: openai, azure, bedrock, anthropic.
+    // Please reach out to the support if you are using any other provider here
     generation := trace.AddGeneration(&logging.GenerationConfig{
         Id: "generation-id",
         Name: "customer-support--gather-information",
@@ -147,26 +149,23 @@ Each trace/span can contain multiple generations.
 
     ```go Go
     generation.SetResult(map[string]interface{}{
-        Id: "chatcmpl-123",
-        Object: "chat.completion",
-        Created: time.Now().Unix(),
-        Model: "gpt-4o",
-        Choices: []logging.ChatCompletionChoice{
-            {
-                Index: 0,
-                Message: &logging.ChatCompletionMessage{
-                    Role: "assistant",
-                    Content: "Apologies for the inconvenience. Can you please share your customer id?",
-                },
-                FinishReason: "stop",
-            },
-        },
-        Usage: &logging.Usage{
-            PromptTokens: 100,
-            CompletionTokens: 50,
-            TotalTokens: 150,
-        },
-    })
+		"id": uuid.New().String(),
+		"model": "gpt-4o",
+		"created": time.Now().Unix(),
+		"choices": []map[string]interface{}{
+			{
+				"message": map[string]interface{}{
+					"role": "assistant",
+					"content": "Hello, world!",
+				},
+			},
+		},
+		"usage": map[string]interface{}{
+			"prompt_tokens": 10,
+			"completion_tokens": 10,
+			"total_tokens": 20,
+		},
+	})
     ```
 
     ```java Java
