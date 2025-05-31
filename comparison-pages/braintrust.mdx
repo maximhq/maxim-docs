@@ -1,0 +1,107 @@
+---
+title: "Best Braintrust Alternative: Maxim vs Braintrust"
+description: "Maxim and Braintrust both aim to provide structure and evaluation capabilities for LLM-based systems, but they differ significantly in architecture, intended use cases, and deployment preferences."
+---
+
+This comparison outlines key differences across observability, evaluation, prompt tooling, and enterprise readiness to help you pick the right tool for your workflow.
+
+![maximvsbraintrust.png](/images/maximvsbraintrust.png)
+
+## High-Level Overview
+
+| Category      | Maxim                                                           | Braintrust                                                      |
+| :------------ | :-------------------------------------------------------------- | :-------------------------------------------------------------- |
+| Focus         | End-to-end agent evaluation, observability, compliance          | Lightweight eval and prompt testing for RAG & prompt-first apps |
+| Best For      | Teams building production-ready agents, with humans in the loop | Devs needing fast iteration on prompts, with LLM-as-a-judge     |
+| Deployment    | In-VPC only                                                     | Open Source                                                     |
+| Compliance    | SOC2, HIPAA, GDPR, ISO27001                                     | SOC2                                                            |
+| Pricing Model | Usage \+ Seat-based                                             | Usage-based (\$249/mo for 5GB)                                  |
+
+At Maxim, We have developed the end-to-end evaluation stack for AI development, comprising:
+
+1. **Experimentation suite**, which enables teams to rapidly, systematically, and collaboratively iterate on prompts, models, parameters, and other components of their compound AI systems during the prototype stage and identify the optimal combinations for their use case. This includes prompt CMS, prompt IDE, visual workflow builder, and connectors to external data sources/functions.
+2. **Pre-release evaluation toolkit**, which offers a unified framework for machine and human evaluation, enabling teams to quantitatively determine improvements or regressions for their application on large test suites and deploy confidently. It also comprises Maxim’s evaluator store, offering our proprietary pre-built and custom evaluation models. The framework integrates seamlessly with the development team’s CI/CD workflows.
+3. **Observability suite**, which empowers developers to monitor real-time production logs and run them through automated evaluations to ensure in-production quality and safety, thus helping them optimize their AI systems systematically
+4. **Data engine**, which enables teams to seamlessly tailor multimodal datasets for their RAG, fine-tuning, and evaluation needs.
+
+## Notable Outcomes for Thoughtful with Maxim
+
+1. Maxim has enabled product managers to iterate directly and deploy updates to production without engineering involvement.
+2. Maxim has streamlined Thoughtful's prompt management through an intuitive folder structure, version control, and dataset storage system.
+3. Maxim has reduced errors and improved response consistency by allowing Thoughtful to test prompts against large datasets before deployment.
+
+## Observability & Tracing
+
+| Feature                             | Maxim           | Braintrust      |
+| :---------------------------------- | :-------------- | :-------------- |
+| OpenTelemetry Support               | ✅               | ✅               |
+| Proxy-Based Logging (e.g., LiteLLM) | ✅               | ✅ (coming soon) |
+| First-party LLM Gateway             | ✅ (open-source) | ✅               |
+| Node-level Evaluation               | ✅               | ❌               |
+| Agentic Evaluation (multi-turn)     | ✅               | ✅               |
+| Real-Time Alerts (Slack, PagerDuty) | ✅               | ❌               |
+
+**Key distinction**: Maxim supports fine-grained, per-node decision tracing and alerting, critical for debugging complex agent workflows. Braintrust provides high-level tracing but currently lacks node visibility and alerting.
+
+## Evaluation & Testing
+
+| Feature                                | Maxim | Braintrust |
+| :------------------------------------- | :---- | :--------- |
+| Multi-turn Agent Simulation            | ✅     | ❌          |
+| API Endpoint Testing                   | ✅     | ❌          |
+| Agent Import via API                   | ✅     | ✅          |
+| Human Annotation Queues                | ✅     | ✅          |
+| Third-party Human Evaluation Workflows | ✅     | ❌          |
+| LLM-as-Judge Evaluators                | ✅     | ✅          |
+| Excel-Compatible Datasets              | ✅     | ✅          |
+
+Maxim enables full simulation of agent runs, including API endpoints and human-in-the-loop eval workflows. Braintrust focuses on single-turn evals and lacks support for external annotators and evaluator controls.
+
+Learn about running evaluations in Maxim - https://getmax.im/2szXgsJ
+
+![single_prompt.gif](/images/single_prompt.gif)
+
+## Prompt Management
+
+| Feature                        | Maxim | Braintrust                |
+| :----------------------------- | :---- | :------------------------ |
+| Prompt CMS & Versioning        | ✅     | ✅                         |
+| Visual Prompt Chain Editor     | ✅     | ❌                         |
+| Side-by-side Prompt Comparison | ✅     | ✅                         |
+| Context Source via API / Files | ✅     | ✅ (limited documentation) |
+| Sandboxed Tool Testing         | ✅     | ✅                         |
+
+Prompt tooling in Maxim supports agent-style chains and branching. Braintrust is more minimal, suited for developers managing prompts in code.
+
+Learn about Maxim Prompt Chain Feature - https://getmax.im/ePZSfCB
+
+## Enterprise Readiness
+
+| Feature                        | Maxim           | Braintrust  |
+| :----------------------------- | :-------------- | :---------- |
+| SOC2 / ISO27001 / HIPAA / GDPR | ✅ All           | ✅ SOC2 only |
+| Fine-Grained RBAC              | ✅               | ✅           |
+| SAML / SSO                     | ✅               | ✅           |
+| 2FA                            | ✅ All plans     | ✅           |
+| Self-Hosting                   | ❌ (In-VPC only) | ✅           |
+
+Maxim is designed for security-sensitive teams. Braintrust is better suited for those who prefer running tools internally with full control over deployment.
+
+## Pricing
+
+| Metric             | Maxim            | Braintrust               |
+| :----------------- | :--------------- | :----------------------- |
+| Free Tier          | 10k events/month | 1 GB / 5 users / 14 days |
+| Usage-Based        | \$1/10k events   | \$249/month (5GB)        |
+| Seat-Based Pricing | \$29\+/seat      | ❌                        |
+
+Maxim scales flexibly with usage and team size. Braintrust offers simpler pricing but can become expensive at scale without tiered usage discounts.
+
+Explore Maxim Pricing - https://getmax.im/C9u6TpN
+
+## Summary
+
+- **Use Maxim** if you're deploying agent-based workflows in production, require detailed tracing and simulation, or need enterprise-grade eval tooling and compliance.
+- **Use Braintrust** if you're building prompt-based apps, want to self-host, and need lightweight evaluation and rapid iteration.
+
+Both tools offer strong foundations, but they target different needs in the LLM lifecycle.
