@@ -6,8 +6,8 @@ description: "Learn how to integrate Maxim observability with the Anthropic SDK 
 ## Requirements
 
 ```
-"anthropic>=0.21.0"
-"maxim-py>=3.6.4"
+"anthropic"
+"maxim-py"
 ```
 
 ## Env variables
@@ -28,7 +28,7 @@ logger = Maxim().logger()
 
 ## Initialize MaximAnthropicClient
 
-```python
+```python {4,5}
 from anthropic import Anthropic
 from maxim.logger.anthropic import MaximAnthropicClient
 
@@ -238,17 +238,10 @@ response3 = client.messages.create(
 )
 ```
 
-## Supported Models
+## Resources
 
-- claude-3-5-sonnet-20241022
-- claude-3-5-haiku-20241022
-- claude-3-opus-20240229
-- claude-3-sonnet-20240229
-- claude-3-haiku-20240307
-
-## Additional Features
-
-- **Streaming Support**: MaximAnthropicClient supports streaming responses
-- **Token Usage Tracking**: Automatically tracks input and output tokens
-- **Error Handling**: Comprehensive error logging and handling
-- **Custom Metadata**: Add custom metadata to traces and spans
+<CardGroup cols={2}>
+  <Card title="Anthropic integration cookbook (GitHub)" icon="github" href="https://github.com/maximhq/maxim-cookbooks/blob/main/python/observability-online-eval/anthropic/basic.ipynb">
+    
+  </Card>
+</CardGroup>
