@@ -6,8 +6,8 @@ description: "Learn how to integrate Maxim observability with AWS Bedrock to tra
 ## Requirements
 
 ```
-"boto3>=1.38.25"
-"maxim-py>=3.6.4"
+"boto"
+"maxim-py"
 ```
 
 ## Env variables
@@ -26,7 +26,7 @@ AWS_SECRET_ACCESS_KEY=
 ```python
 from maxim import Maxim, Config
 
-logger = Maxim(Config(raise_exceptions=False)).logger()
+logger = Maxim().logger()
 ```
 
 ## Initialize MaximBedrockClient
@@ -323,11 +323,10 @@ print("Response 2:", response2['output']['message']['content'][0]['text'])
 trace2.end()
 ```
 
-## Additional Features
+## Resources
 
-- **AWS Integration**: Native support for AWS authentication and regions
-- **Token Usage Tracking**: Automatically tracks input, output, and total tokens
-- **Latency Metrics**: Captures response latency for performance monitoring
-- **Error Handling**: Comprehensive error logging and handling with AWS-specific error codes
-- **Custom Metadata**: Add custom metadata to traces and spans
-- **Multi-region Support**: Support for different AWS regions
+<CardGroup cols={2}>
+  <Card title="Amazon Bedrock integration cookbook (GitHub)" icon="github" href="https://github.com/maximhq/maxim-cookbooks/blob/main/python/observability-online-eval/bedrock/single-line-integration.ipynb">
+    
+  </Card>
+</CardGroup>
