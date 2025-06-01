@@ -6,8 +6,8 @@ description: "Learn how to integrate Maxim observability with the Google Gemini 
 ## Requirements
 
 ```
-"google-genai>=0.8.0"
-"maxim-py>=3.6.4"
+"google-genai"
+"maxim-py"
 ```
 
 ## Env variables
@@ -32,7 +32,7 @@ logger = Maxim().logger()
 
 ## Initialize MaximGeminiClient
 
-```python
+```python {4,7}
 from google import genai
 from maxim.logger.gemini import MaximGeminiClient
 
@@ -275,18 +275,10 @@ print("Assistant:", response3.text)
 trace2.end()
 ```
 
-## Supported Models
+## Resources
 
-- gemini-2.0-flash
-- gemini-1.5-pro
-- gemini-1.5-flash
-- gemini-1.0-pro
-
-## Additional Features
-
-- **Function Calling**: Native support for Gemini function calling capabilities
-- **System Instructions**: Support for system-level instructions
-- **Temperature Control**: Fine-tune response creativity with temperature settings
-- **Token Usage Tracking**: Automatically tracks input and output tokens
-- **Error Handling**: Comprehensive error logging and handling
-- **Custom Metadata**: Add custom metadata to traces and spans
+<CardGroup cols={2}>
+  <Card title="Google Gemini integration cookbook (GitHub)" icon="github" href="https://github.com/maximhq/maxim-cookbooks/blob/main/python/observability-online-eval/google/gemini/weather-app.py">
+    
+  </Card>
+</CardGroup>
