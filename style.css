@@ -68,4 +68,19 @@
 #topbar-cta-button svg {
   display: none !important;
 }
-    
+
+
+#header .text-lg{
+  font-size: 16px;
+}
+
+h5#sidebar-title{
+font-weight: 600;
+font-size: 14px;
+color: #505152;
+}
+
+#sidebar-group li:has(a.font-semibold){
+    background-color: #E4E4E7;
+    border-radius: 4px;
+}
