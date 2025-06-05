@@ -281,7 +281,13 @@
                                         "pages": [
                                             "sdk/python/integrations/langgraph/langgraph"                                            
                                         ]
-                                    }
+                                    },
+                                  {
+                                    "group" : "Mistral",
+                                    "pages" : [
+                                      "sdk/python/integrations/mistral/mistral"   
+                                    ]
+                                  }
                                 ]
                             },
                             "sdk/python/upgrading-to-v3"
