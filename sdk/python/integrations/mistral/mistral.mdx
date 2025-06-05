@@ -1,0 +1,106 @@
+---
+title: "Mistral SDK"
+description: "Learn how to integrate Maxim observability with the Mistral SDK in just one line of code."
+---
+
+## Requirements
+
+```
+mistralai
+maxim-py
+```
+
+## Env variables
+
+```
+MAXIM_API_KEY=
+MAXIM_LOG_REPO_ID=
+MISTRAL_API_KEY=
+```
+
+## Initialize logger
+
+```python
+from maxim import Maxim
+
+logger = Maxim().logger()
+```
+
+## Initialize MaximMistralClient
+
+```python {5,7}
+from mistralai import Mistral
+from maxim.logger.mistral import MaximMistralClient
+import os
+
+with MaximMistralClient(Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+), logger) as mistral:
+    # Your Mistral calls go here
+    pass
+```
+
+## Make LLM calls using MaximMistralClient
+
+```python
+from mistralai import Mistral
+from maxim.logger.mistral import MaximMistralClient
+import os
+
+with MaximMistralClient(Mistral(
+    api_key=os.getenv("MISTRAL_API_KEY", ""),
+), logger) as mistral:
+
+    res = mistral.chat.complete(
+        model="mistral-small-latest", 
+        messages=[
+            {
+                "content": "Who is the best French painter? Answer in one short sentence.",
+                "role": "user",
+            },
+        ]
+    )
+
+    # Handle response
+    print(res)
+```
+
+![mistral_traces.gif](/images/mistral_traces.gif)
+
+## Async LLM calls
+
+```python
+async with MaximMistralClient(Mistral(
+    api_key=os.getenv('MISTRAL_API_KEY', ''),
+), logger) as mistral:
+    
+    response = await mistral.chat.complete_async(
+        model='mistral-small-latest',
+        messages=[
+            {
+                'role': 'user',
+                'content': 'Explain the difference between async and sync programming in Python in one sentence.'
+            }
+        ]
+    )    
+    print(response)
+```
+
+## Supported Mistral Models
+
+The MaximMistralClient supports all Mistral models available through the Mistral API, including:
+
+- `mistral-small-latest`
+- `mistral-medium-latest`
+- `open-mistral-7b`
+- And other available Mistral models
+
+## Resources
+
+You can quickly try the Mistral One Line Integration here -
+
+<CardGroup cols={2}>
+  <Card title="Mistral Integration Notebook (Colab)" icon="google" href="https://colab.research.google.com/drive/1gqJkkLQQTtSdUla2oiIg-QyR6i5BpmvV?usp=sharing">
+    
+  </Card>
+</CardGroup>
