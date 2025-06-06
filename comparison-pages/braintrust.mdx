@@ -34,12 +34,12 @@ At Maxim, We have developed the end-to-end evaluation stack for AI development, 
 
 | Feature                             | Maxim           | Braintrust      |
 | :---------------------------------- | :-------------- | :-------------- |
-| OpenTelemetry Support               | ✅               | ✅               |
-| Proxy-Based Logging (e.g., LiteLLM) | ✅               | ✅ (coming soon) |
-| First-party LLM Gateway             | ✅ (open-source) | ✅               |
-| Node-level Evaluation               | ✅               | ❌               |
-| Agentic Evaluation (multi-turn)     | ✅               | ✅               |
-| Real-Time Alerts (Slack, PagerDuty) | ✅               | ❌               |
+| OpenTelemetry Support               | ✅               | ✅              |
+| Proxy-Based Logging (e.g., LiteLLM) | ✅               | ❌              |
+| First-party LLM Gateway             | ✅ (open-source) | ✅              |
+| Node-level Evaluation               | ✅               | ❌              |
+| Agentic Evaluation (multi-turn)     | ✅               | ⛔️ (they only can evaluate output) |
+| Real-Time Alerts (Slack, PagerDuty) | ✅               | ❌              |
 
 **Key distinction**: Maxim supports fine-grained, per-node decision tracing and alerting, critical for debugging complex agent workflows. Braintrust provides high-level tracing but currently lacks node visibility and alerting.
 
@@ -49,11 +49,11 @@ At Maxim, We have developed the end-to-end evaluation stack for AI development, 
 | :------------------------------------- | :---- | :--------- |
 | Multi-turn Agent Simulation            | ✅     | ❌          |
 | API Endpoint Testing                   | ✅     | ❌          |
-| Agent Import via API                   | ✅     | ✅          |
+| Agent Import via API                   | ✅     | ❌          |
 | Human Annotation Queues                | ✅     | ✅          |
 | Third-party Human Evaluation Workflows | ✅     | ❌          |
 | LLM-as-Judge Evaluators                | ✅     | ✅          |
-| Excel-Compatible Datasets              | ✅     | ✅          |
+| Excel-Compatible Datasets              | ✅     | ⛔️ (limited support)          |
 
 Maxim enables full simulation of agent runs, including API endpoints and human-in-the-loop eval workflows. Braintrust focuses on single-turn evals and lacks support for external annotators and evaluator controls.
 
@@ -68,8 +68,8 @@ Learn about running evaluations in Maxim - https://getmax.im/2szXgsJ
 | Prompt CMS & Versioning        | ✅     | ✅                         |
 | Visual Prompt Chain Editor     | ✅     | ❌                         |
 | Side-by-side Prompt Comparison | ✅     | ✅                         |
-| Context Source via API / Files | ✅     | ✅ (limited documentation) |
-| Sandboxed Tool Testing         | ✅     | ✅                         |
+| Context Source via API / Files | ✅     | ❌                         |
+| Sandboxed Tool Testing         | ✅     | ❌                         |
 
 Prompt tooling in Maxim supports agent-style chains and branching. Braintrust is more minimal, suited for developers managing prompts in code.
 
