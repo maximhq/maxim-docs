@@ -258,7 +258,7 @@
                                   {
                                     "group": "Gemini",
                                     "pages": [
-                                        "sdk/python/integrations/gemini/gemini",
+                                        "sdk/python/integrations/gemini/gemini"
                                     ]
                                 },
                                                               
