@@ -249,18 +249,19 @@
                             {
                                 "group": "Tracing",
                                 "pages": [
-                                    {
-                                        "group": "CrewAI",
-                                        "pages": [
-                                            "sdk/python/integrations/crewai/crewai"
-                                        ]
-                                    },
-                                    {
-                                        "group": "Gemini",
-                                        "pages": [
-                                            "sdk/python/integrations/gemini/gemini",
-                                        ]
-                                    },
+                                  {
+                                    "group" : "CrewAI",
+                                    "pages" : [
+                                      "sdk/python/integrations/crewai/crewai"
+                                    ]
+                                  },
+                                  {
+                                    "group": "Gemini",
+                                    "pages": [
+                                        "sdk/python/integrations/gemini/gemini",
+                                    ]
+                                },
+                                                              
                                     {
                                         "group": "OpenAI",
                                         "pages": [
@@ -278,13 +279,13 @@
                                     {
                                         "group": "LangChain",
                                         "pages": [
-                                            "sdk/python/integrations/langchain/langchain"
+                                            "sdk/python/integrations/langchain/langchain"                                            
                                         ]
                                     },
                                     {
                                         "group": "LangGraph",
                                         "pages": [
-                                            "sdk/python/integrations/langgraph/langgraph"
+                                            "sdk/python/integrations/langgraph/langgraph"                                            
                                         ]
                                     }
                                 ]
@@ -415,7 +416,7 @@
         },
         "posthog": {
             "apiKey": "phc_tIH4RrILTB5RdiI22hDijKui0K8c4PNGfaPIoAA5Lcj",
-            "apiHost": "https://ph.getmaxim.ai"
+            "apiHost": "https://ph.getmaxim.ai"            
         }
     },
     "logo": {
@@ -448,11 +449,11 @@
             "href": "https://www.getmaxim.ai/login"
         }
     },
-    "redirects": [
-        {
-            "source": "/api/overview",
-            "destination": "/public-apis/overview"
-        }
+  "redirects": [
+      {
+        "source": "/api/overview",
+        "destination": "/public-apis/overview"
+      }
     ],
     "footer": {
         "socials": {
