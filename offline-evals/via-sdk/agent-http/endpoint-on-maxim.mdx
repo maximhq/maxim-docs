@@ -1,0 +1,78 @@
+---
+title: Endpoint on Maxim
+description: Learn how to test AI agents using workflows stored on the Maxim platform using the Maxim SDK
+---
+
+Test AI agents using workflows that are configured and stored on the Maxim platform. This approach leverages the `With Workflow ID` function to execute pre-configured workflows without needing to handle HTTP calls manually.
+
+<Note>
+  Before using this approach, ensure your workflow is configured on the Maxim platform with "output" and "context" fields configured properly.
+
+This is needed to know how to parse the response from the endpoint to get output and context.
+
+</Note>
+
+## Basic Workflow Testing
+
+Use the `With Workflow ID` function to test agents configured as workflows on the Maxim platform:
+
+<CodeGroup>
+```python Python
+from maxim import Maxim
+
+# Initialize Maxim SDK
+
+maxim = Maxim({"api_key": "your-api-key"})
+
+# Create and run the test using a Maxim workflow
+
+result = (
+    maxim.create_test_run(
+        name="Agent Workflow Test", in_workspace_id="your-workspace-id"
+    )
+    .with_data_structure(
+        {
+            "input": "INPUT",
+            "expected_output": "EXPECTED_OUTPUT",
+            "context": "CONTEXT_TO_EVALUATE",
+        }
+    )
+    .with_data("your-dataset-id")
+    .with_evaluators("Bias")
+    .with_workflow_id("your-workflow-id")
+    .run()
+)
+
+print(f"Test run completed! View results: {result.test_run_result.link}")
+
+````
+
+```typescript JS/TS
+import { Maxim } from '@maximai/maxim-js';
+
+// Initialize Maxim SDK
+const maxim = new Maxim({
+  apiKey: 'your-api-key',
+});
+
+// Create and run the test using a Maxim workflow
+const result = await maxim
+  .createTestRun('Agent Workflow Test', 'your-workspace-id')
+  .withDataStructure({
+    Input: 'INPUT',
+    'Expected Output': 'EXPECTED_OUTPUT',
+  })
+  .withData('your-test-data-id')
+  .withEvaluators('Bias')
+  .withWorkflowId('your-workflow-id')
+  .run();
+
+console.log(`Test run completed! View results: ${result.testRunResult.link}`);
+````
+
+</CodeGroup>
+
+## Next Steps
+
+- [Local Endpoint Testing](/offline-evals/via-sdk/agent-http/local-endpoint) - Test agents with custom HTTP endpoints
+- [CI/CD Integration](/offline-evals/via-sdk/agent-http/ci-cd-integration) - Automate workflow testing in your CI/CD pipeline

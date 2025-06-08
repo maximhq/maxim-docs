@@ -45,9 +45,9 @@ We'll build a RAG-based HR QnA assistant by creating a prompt in Maxim's no-code
    Ensure the response is friendly and polite, adding "please" at the end to maintain a courteous tone.
    </Note>
 
-   <Callout type="info">
+   <Note>
    Using Maxim, we can define [dynamic variables](/offline-evals/via-ui/prompts/prompt-playground#using-variables) in the prompt. Here, we'll attach our context source as the value for the <code>`{{context}}`</code> variable.
-   </Callout>
+   </Note>
 
 3. **Create context source**: This is the knowledge base that our assistant will use to generate its responses. We can bring our context source into Maxim by directly [importing the file](library/how-to/context-sources/ingest-files-as-a-context-source) containing the information or by bringing the retrieval pipeline through an [API endpoint](library/context-sources).
 
@@ -59,9 +59,11 @@ We'll build a RAG-based HR QnA assistant by creating a prompt in Maxim's no-code
 
 4. **Connect the context source** to our prompt in the [Prompt Playground](/offline-evals/via-ui/prompts/prompt-playground), under the "Variables" section. Also, select an LLM of choice (using Gemini 2.0 flash in this example).
 
-   <Callout type="info">
-   We can also use the "Test" button in the top right corner to test the output with a sample query.
-   </Callout>
+5. **To test the output**, we'll pass the following user query to our HR assistant:
+
+<Note>
+👤 What is the reimbursement policy?
+</Note>
 
 Here's what's happening: For the input, we first query the context source to fetch relevant chunks of information (context). This context is then passed to the LLM in the system prompt (via the <code>`{{context}}`</code> variable), and the LLM generates a response for our input query using the information in the retrieved context.
 

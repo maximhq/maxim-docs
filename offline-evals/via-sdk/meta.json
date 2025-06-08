@@ -1,4 +1,4 @@
 {
-	"title": "Via SDK",
-	"pages": ["agents-evals-via-http-endpoint"]
+  "title": "Via SDK",
+  "pages": ["prompts", "agent-http", "agent-no-code"]
 }

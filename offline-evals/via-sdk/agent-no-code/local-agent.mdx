@@ -1,0 +1,310 @@
+---
+title: Local Agent Testing
+description: Learn how to create and evaluate custom AI agents using local execution via Maxim SDK
+---
+
+Evaluate custom AI agents that have been implemented locally. This guide shows you how to evaluate agents built locally and evaluate them with Maxim's testing framework using the `Yields Output` function.
+
+## Overview
+
+While agents provide a no-code solution for simple workflows, complex agents often require custom logic, external API calls, or sophisticated orchestration. The `Yields Output` function allows you to implement custom agent logic while still leveraging Maxim's evaluation infrastructure.
+
+## Using CrewAI / LangChain for Agent Orchestration
+
+CrewAI and LangChain are popular frameworks for building multi-agent systems. Here's how their implementation can be integrated and evaluated with Maxim (using CrewAI as an example for Python and LangChain for TypeScript):
+
+<Warning>
+  Set OPENAI_API_KEY in your environment variables before running the following code as the code uses the OS environment variable to access
+  the OpenAI API key.
+</Warning>
+
+<CodeGroup>
+```python Python
+from maxim import Maxim
+from maxim.models import (
+    LocalData,
+    YieldedOutput,
+    YieldedOutputCost,
+    YieldedOutputMeta,
+    YieldedOutputTokenUsage,
+    Data,
+)
+from crewai import Crew, Agent, Task
+from langchain_openai import ChatOpenAI
+import time
+
+# Initialize Maxim SDK
+
+maxim = Maxim({"api_key": "your-api-key"})
+
+# Initialize LLM for CrewAI
+
+llm = ChatOpenAI(
+    model="gpt-4o",
+)
+
+# Define agents
+
+research_agent = Agent(
+    role="Research Specialist",
+    goal="Gather comprehensive information on given topics",
+    backstory="You are an expert researcher with access to various information sources.",
+    llm=llm,
+    verbose=True,
+)
+
+writer_agent = Agent(
+    role="Content Writer",
+    goal="Create well-structured, engaging content based on research",
+    backstory="You are a skilled writer who can transform research into compelling content.",
+    llm=llm,
+    verbose=True,
+)
+
+# Define agent workflow function
+
+
+def run_crewai_agent(data: LocalData) -> YieldedOutput:
+    """Custom agent function using CrewAI"""
+
+    start_time = time.time()
+
+    user_input = data.get("input", "")
+    topic = data.get("topic", "")
+    content_type = data.get("content_type", "article")
+
+    # Create tasks
+    research_task = Task(
+        description=f"Research the topic: {topic}. Focus on {user_input}",
+        agent=research_agent,
+        expected_output="Comprehensive research findings with key points and insights",
+    )
+
+    writing_task = Task(
+        description=f"Write a {content_type} based on the research findings",
+        agent=writer_agent,
+        expected_output=f"A well-structured {content_type} based on the research",
+    )
+
+    # Create and run crew
+    crew = Crew(
+        agents=[research_agent, writer_agent],
+        tasks=[research_task, writing_task],
+        verbose=True,
+    )
+
+    result = crew.kickoff()
+
+    end_time = time.time()
+    latency = end_time - start_time
+
+    return YieldedOutput(
+        data=result.raw,
+        retrieved_context_to_evaluate=[
+            task.raw for task in result.tasks_output[:-1]
+        ],  # treating all tasks except the last one as context to evaluate
+        meta=YieldedOutputMeta(
+            usage=YieldedOutputTokenUsage(
+                prompt_tokens=result.token_usage.prompt_tokens,
+                completion_tokens=result.token_usage.completion_tokens,
+                total_tokens=result.token_usage.total_tokens,
+                latency=latency,
+            ),
+            cost=YieldedOutputCost(
+                input_cost=result.token_usage.prompt_tokens
+                * 0.0001,  # $0.0001 per token for input
+                output_cost=result.token_usage.completion_tokens
+                * 0.0002,  # $0.0002 per token for output
+                total_cost=(result.token_usage.prompt_tokens * 0.0001)
+                + (result.token_usage.completion_tokens * 0.0002),
+            ),
+        ),
+    )
+
+
+# Test data
+
+test_data: Data = [
+    {
+        "input": "Latest trends in artificial intelligence",
+        "topic": "AI developments in 2024",
+        "content_type": "blog post",
+        "expected_output": "Comprehensive blog post about AI trends with current insights",
+    },
+    {
+        "input": "Sustainable energy solutions",
+        "topic": "Renewable energy technologies",
+        "content_type": "report",
+        "expected_output": "Detailed report on sustainable energy solutions and technologies",
+    },
+]
+
+# Run test with custom agent
+
+result = (
+    maxim.create_test_run(
+        name="CrewAI Agent Evaluation", in_workspace_id="your-workspace-id"
+    )
+    .with_data_structure(
+        {
+            "input": "INPUT",
+            "topic": "VARIABLE",
+            "content_type": "VARIABLE",
+            "expected_output": "EXPECTED_OUTPUT",
+        }
+    )
+    .with_data(test_data)
+    .with_evaluators("Faithfulness", "Clarity", "Output Relevance")
+    .yields_output(run_crewai_agent)
+    .run()
+)
+
+if result:
+    print(f"Test run completed! View results: {result.test_run_result.link}")
+else:
+    print("Test run failed!")
+
+````
+
+```typescript JS/TS
+import {
+  createDataStructure,
+  Maxim,
+  type Data,
+  type YieldedOutput,
+} from '@maximai/maxim-js';
+import { ChatOpenAI } from '@langchain/openai';
+import { HumanMessage, SystemMessage } from '@langchain/core/messages';
+
+// Initialize Maxim SDK
+const maxim = new Maxim({
+  apiKey: 'your-api-key',
+});
+
+const openaiApiKey = process.env.OPENAI_API_KEY;
+
+if (!openaiApiKey) {
+  throw new Error('OPENAI_API_KEY is not set');
+}
+
+// Initialize LLM
+const llm = new ChatOpenAI({
+  modelName: 'gpt-4o',
+  openAIApiKey: openaiApiKey,
+});
+
+const dataStructure = createDataStructure({
+  input: 'INPUT',
+  topic: 'VARIABLE',
+  contentType: 'VARIABLE',
+  expectedOutput: 'EXPECTED_OUTPUT',
+});
+
+// Define agent workflow function
+async function runLangChainAgent(
+  data: Data<typeof dataStructure>
+): Promise<YieldedOutput> {
+  const startTime = Date.now();
+
+  const userInput = data.input;
+  const topic = data.topic;
+  const contentType = data.contentType;
+
+  // Step 1: Research phase
+  const researchMessages = [
+    new SystemMessage(
+      'You are a research specialist. Gather comprehensive information on the given topic.'
+    ),
+    new HumanMessage(
+      `Research the topic: ${topic}. Focus on ${userInput}. Provide key insights and findings.`
+    ),
+  ];
+
+  const researchResponse = await llm.invoke(researchMessages);
+
+  // Step 2: Writing phase
+  const writingMessages = [
+    new SystemMessage(
+      `You are a content writer. Create a well-structured ${contentType} based on the research provided.`
+    ),
+    new HumanMessage(
+      `Based on this research: ${researchResponse.content}\n\nWrite a ${contentType} about ${topic}.`
+    ),
+  ];
+
+  const finalResponse = await llm.invoke(writingMessages);
+
+  return {
+    data:
+      typeof finalResponse.content === 'string'
+        ? finalResponse.content
+        : JSON.stringify(finalResponse.content),
+    retrievedContextToEvaluate:
+      typeof researchResponse.content === 'string'
+        ? researchResponse.content
+        : JSON.stringify(researchResponse.content),
+    meta: {
+      cost: {
+        input: finalResponse.usage_metadata?.input_tokens ?? 0 * 0.0001,
+        output: finalResponse.usage_metadata?.output_tokens ?? 0 * 0.0002,
+        total:
+          (finalResponse.usage_metadata?.input_tokens ?? 0) * 0.0001 +
+          (finalResponse.usage_metadata?.output_tokens ?? 0) * 0.0002,
+      },
+      usage: {
+        completionTokens: finalResponse.usage_metadata?.output_tokens ?? 0,
+        promptTokens: finalResponse.usage_metadata?.input_tokens ?? 0,
+        totalTokens: finalResponse.usage_metadata?.total_tokens ?? 0,
+        latency: Date.now() - startTime,
+      },
+    },
+  };
+}
+
+// Test data
+const testData: Data<typeof dataStructure>[] = [
+  {
+    input: 'Latest trends in artificial intelligence',
+    topic: 'AI developments in 2024',
+    contentType: 'blog post',
+    expectedOutput:
+      'Comprehensive blog post about AI trends with current insights',
+  },
+  {
+    input: 'Sustainable energy solutions',
+    topic: 'Renewable energy technologies',
+    contentType: 'report',
+    expectedOutput:
+      'Detailed report on sustainable energy solutions and technologies',
+  },
+];
+
+// Run test with custom agent
+const result = await maxim
+  .createTestRun('LangChain Agent Evaluation', 'your-workspace-id')
+  .withDataStructure(dataStructure)
+  .withData(testData)
+  .withEvaluators('Faithfulness', 'Clarity', 'Output Relevance')
+  .yieldsOutput(runLangChainAgent)
+  .run();
+
+console.log(`Test run completed! View results: ${result.testRunResult.link}`);
+````
+
+</CodeGroup>
+
+## Best Practices
+
+1. **Modular Design**: Break your agent into smaller, testable functions
+2. **Metadata**: Include useful metadata like timing, token usage, and costs
+3. **Testing**: Create comprehensive test cases covering edge cases
+
+## Next Steps
+
+- [Agent on Maxim](/offline-evals/via-sdk/agent-no-code/agent-on-maxim) - Use no-code agents stored on the Maxim platform
+- [Evaluators Documentation](/library/evaluators/overview) - Learn about different evaluation methods
+
+<Note>
+  For complex multi-agent workflows, consider using the [Maxim observability features](/online-evals/overview) to trace individual steps and
+  debug no-code agent execution.
+</Note>
