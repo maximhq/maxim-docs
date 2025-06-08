@@ -1,0 +1,100 @@
+---
+title: Maxim Prompt Testing
+description: Learn how to test prompts stored on the Maxim platform using the Maxim SDK
+---
+
+Test prompts that are stored and managed on the Maxim platform using the `With Prompt Version ID` function. This approach allows you to evaluate prompts that have been versioned on Maxim.
+
+## Prerequisites
+
+Before testing Maxim prompts, ensure you have:
+
+1. **Created a prompt** on the Maxim platform through the UI
+2. **Created a prompt version** with the configuration you want to test
+3. **Obtained the prompt version ID** from the Maxim UI
+
+## Basic Maxim Prompt Testing
+
+Use the `With Prompt Version ID` function to test a specific prompt version:
+
+<CodeGroup>
+```python Python
+from maxim import Maxim
+
+# Initialize Maxim SDK
+
+maxim = Maxim({"api_key": "your-maxim-api-key"})
+
+# Test a specific prompt version
+
+result = (
+    maxim.create_test_run(
+        name="Maxim Prompt Test - AI Explanations",
+        in_workspace_id="your-workspace-id",
+    )
+    .with_data_structure({"input": "INPUT", "expected_output": "EXPECTED_OUTPUT"})
+    .with_data("dataset-id")
+    .with_evaluators("Bias")
+    .with_prompt_version_id("prompt-version-id")
+    .run()
+)
+
+print(f"Test completed! View results: {result.test_run_result.link}")
+
+````
+
+```typescript JS/TS
+import { Maxim } from '@maximai/maxim-js';
+
+// Initialize Maxim SDK
+const maxim = new Maxim({
+  apiKey: 'your-maxim-api-key',
+});
+
+// Test a specific prompt version
+const result = await maxim
+  .createTestRun(
+    'Maxim Prompt Test - AI Explanations',
+    'your-workspace-id'
+  )
+  .withDataStructure({
+    Input: 'INPUT',
+    'Expected Output': 'EXPECTED_OUTPUT',
+  })
+  .withData('dataset-id')
+  .withEvaluators('Bias', 'Clarity')
+  .withPromptVersionId('prompt-version-id')
+  .run();
+
+console.log(`Test completed! View results: ${result.testRunResult.link}`);
+````
+
+</CodeGroup>
+
+## Important Notes
+
+1. **Variable Mapping**: Ensure that variable names in your testing data match the variable names defined in your Maxim prompt.
+
+2. **Model Settings**: The model, temperature, and other parameters are automatically inherited from the prompt version configuration.
+
+3. **Cost Tracking**: Token usage and costs are automatically tracked when using Maxim prompts.
+
+## Best Practices
+
+- **Version Control**: Use descriptive names for your prompt versions to make testing easier
+- **Consistent Data**: Ensure your test data format matches your prompt's expected input structure (basically, have the variables used in prompts match the columns in your testing data)
+- **Evaluation Metrics**: Choose evaluators that align with your prompt's intended purpose
+- **Regression Testing**: Regularly test new prompt versions against established baselines
+
+## Troubleshooting
+
+If you encounter issues:
+
+1. **Check Prompt Version ID**: Verify the prompt version ID is correct and accessible
+2. **Data Structure**: Confirm your data structure matches the prompt's variable requirements
+
+## Next Steps
+
+- [Querying Prompts](/offline-evals/via-sdk/prompts/querying-prompts) - Learn how to retrieve prompts for production use
+- [CI/CD Integration](/offline-evals/via-sdk/prompts/ci-cd-integration) - Automate testing of your Maxim prompts
+- [Local Prompt Testing](/offline-evals/via-sdk/prompts/local-prompt) - Compare with custom prompt implementations

@@ -1,0 +1,5 @@
+{
+  "title": "Agent Evals via HTTP Endpoint",
+  "description": "Learn how to run offline evaluations for AI agents accessible via HTTP endpoints using the Maxim SDK",
+  "pages": ["quickstart", "local-endpoint", "endpoint-on-maxim", "ci-cd-integration"]
+}

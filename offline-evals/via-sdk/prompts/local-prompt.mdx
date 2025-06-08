@@ -1,0 +1,381 @@
+---
+title: Local Prompt Testing
+description: Learn how to test locally defined prompts using the Maxim SDK
+---
+
+Local prompt testing allows you to evaluate custom prompt implementations using the `Yields Output` function. This approach is ideal when you want to test your own prompt logic, integrate with specific LLM providers, or implement complex prompt workflows.
+
+## Basic Local Prompt Testing
+
+Use the `Yields Output` function to define custom prompt logic that will be executed for each test case:
+
+<CodeGroup>
+```python Python
+from maxim import Maxim
+from maxim.models import (
+    YieldedOutput,
+    YieldedOutputMeta,
+    YieldedOutputTokenUsage,
+    YieldedOutputCost,
+)
+import openai
+import time
+
+# Initialize Maxim and OpenAI
+
+maxim = Maxim({"api_key": "your-maxim-api-key"})
+
+client = openai.OpenAI(api_key="your-openai-api-key")
+
+
+def custom_prompt_function(data):
+    """Custom prompt implementation with OpenAI"""
+
+    # Define your prompt template
+    system_prompt = "You are a helpful assistant that explains complex topics in simple, easy-to-understand language."
+
+    try:
+        # Start timing the API call
+        start_time = time.time()
+
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": data["input"]},
+            ],
+            temperature=0.7,
+            max_tokens=200,
+        )
+
+        # Calculate latency in milliseconds
+        end_time = time.time()
+        latency_ms = (end_time - start_time) * 1000
+
+        return YieldedOutput(
+            data=response.choices[0].message.content,
+            meta=YieldedOutputMeta(
+                cost=YieldedOutputCost(
+                    input_cost=response.usage.prompt_tokens
+                    * 0.0015
+                    / 1000,  # GPT-3.5 pricing
+                    output_cost=response.usage.completion_tokens * 0.002 / 1000,
+                    total_cost=response.usage.total_tokens * 0.0015 / 1000,
+                ),
+                usage=YieldedOutputTokenUsage(
+                    prompt_tokens=response.usage.prompt_tokens,
+                    completion_tokens=response.usage.completion_tokens,
+                    total_tokens=response.usage.total_tokens,
+                    latency=latency_ms,
+                ),
+            ),
+        )
+    except Exception as e:
+        # Handle errors gracefully
+        return YieldedOutput(data=f"Error: {str(e)}")
+
+
+# Run the test
+
+result = (
+    maxim.create_test_run(
+        name="Local Prompt Test - Educational Content",
+        in_workspace_id="your-workspace-id",
+    )
+    .with_data_structure({"input": "INPUT", "expected_output": "EXPECTED_OUTPUT"})
+    .with_data("dataset-id")
+    .with_evaluators("Bias", "Clarity")
+    .yields_output(custom_prompt_function)
+    .run()
+)
+
+print(f"Test completed! View results: {result.test_run_result.link}")
+
+````
+
+```typescript JS/TS
+import {
+  createDataStructure,
+  Maxim,
+  type Data,
+  type YieldedOutput,
+} from '@maximai/maxim-js';
+import OpenAI from 'openai';
+
+// Initialize Maxim and OpenAI
+const maxim = new Maxim({
+  apiKey: 'your-api-key',
+});
+
+const openai = new OpenAI({
+  apiKey: 'your-openai-api-key',
+});
+
+const dataStructure = createDataStructure({
+  Input: 'INPUT',
+  'Expected Output': 'EXPECTED_OUTPUT',
+});
+
+async function customPromptFunction(
+  data: Data<typeof dataStructure>
+): Promise<YieldedOutput> {
+  // Define your prompt template
+  const systemPrompt =
+    'You are a helpful assistant that explains complex topics in simple, easy-to-understand language.';
+
+  const response = await openai.chat.completions.create({
+    model: 'gpt-4o-mini',
+    messages: [
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: data.Input },
+    ],
+    temperature: 0.7,
+    max_tokens: 200,
+  });
+
+  return {
+    data: response.choices[0]?.message.content ?? '',
+    meta: {
+      usage: {
+        completionTokens: response.usage?.completion_tokens || 0,
+        promptTokens: response.usage?.prompt_tokens || 0,
+        totalTokens: response.usage?.total_tokens || 0,
+        latency: 0, // You can measure actual latency if needed
+      },
+      cost: {
+        input: ((response.usage?.prompt_tokens || 0) * 0.0015) / 1000, // GPT-3.5 pricing
+        output: ((response.usage?.completion_tokens || 0) * 0.002) / 1000,
+        total: ((response.usage?.total_tokens || 0) * 0.0015) / 1000,
+      },
+    },
+  };
+}
+
+// Run the test
+const result = await maxim
+  .createTestRun('Local Prompt Test - Educational Content', 'your-workspace-id')
+  .withDataStructure(dataStructure)
+  .withData('dataset-id')
+  .withEvaluators('Bias', 'Clarity')
+  .yieldsOutput(customPromptFunction)
+  .run();
+
+console.log(`Test completed! View results: ${result.testRunResult.link}`);
+````
+
+</CodeGroup>
+
+## Advanced Prompt Testing with Context
+
+You can also test prompts that use additional context or implement RAG (Retrieval-Augmented Generation):
+
+<CodeGroup>
+```python Python
+from maxim import Maxim
+from maxim.models import (
+    YieldedOutput,
+    YieldedOutputMeta,
+    YieldedOutputTokenUsage,
+    YieldedOutputCost,
+)
+import openai
+import time
+
+# Initialize Maxim and OpenAI
+
+maxim = Maxim({"api_key": "your-maxim-api-key"})
+
+client = openai.OpenAI(api_key="your-openai-api-key")
+
+
+def rag_prompt_function(data):
+    """Prompt function with retrieval-augmented generation"""
+
+    # Simulate context retrieval (replace with your actual RAG logic)
+    retrieved_context = f'Context for "{data["input"]}": {data["context_to_evaluate"]}'
+
+    system_prompt = """You are a helpful assistant. Use the provided context to answer the user's question accurately.
+
+Context: {context}
+
+Answer the user's question based on the context provided."""
+
+    try:
+        # Start timing the API call
+        start_time = time.time()
+
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {
+                    "role": "system",
+                    "content": system_prompt.format(context=retrieved_context),
+                },
+                {"role": "user", "content": data["input"]},
+            ],
+            temperature=0.3,
+            max_tokens=200,
+        )
+
+        # Calculate latency in milliseconds
+        end_time = time.time()
+        latency_ms = (end_time - start_time) * 1000
+
+        return YieldedOutput(
+            data=response.choices[0].message.content,
+            retrieved_context_to_evaluate=retrieved_context,  # Important for context evaluation
+            meta=YieldedOutputMeta(
+                cost=YieldedOutputCost(
+                    input_cost=response.usage.prompt_tokens
+                    * 0.0015
+                    / 1000,  # GPT-3.5 pricing
+                    output_cost=response.usage.completion_tokens * 0.002 / 1000,
+                    total_cost=response.usage.total_tokens * 0.0015 / 1000,
+                ),
+                usage=YieldedOutputTokenUsage(
+                    prompt_tokens=response.usage.prompt_tokens,
+                    completion_tokens=response.usage.completion_tokens,
+                    total_tokens=response.usage.total_tokens,
+                    latency=latency_ms,
+                ),
+            ),
+        )
+    except Exception as e:
+        return YieldedOutput(data=f"Error: {str(e)}")
+
+
+# Test data with context evaluation
+
+test_data_with_context = [
+    {
+        "input": "What is the impact of climate change on agriculture?",
+        "expected_output": "Climate change affects agriculture through temperature changes and weather patterns",
+        "context_to_evaluate": "Climate change impacts on farming",
+    }
+]
+
+# Run test with context evaluation
+
+result = (
+    maxim.create_test_run(name="RAG Prompt Test", in_workspace_id="your-workspace-id")
+    .with_data_structure(
+        {
+            "input": "INPUT",
+            "expected_output": "EXPECTED_OUTPUT",
+            "context_to_evaluate": "CONTEXT_TO_EVALUATE",  # This column's data will be used for context evaluation. It will be overwritten in case the yielded data returns back a context to evaluate
+        }
+    )
+    .with_data(test_data_with_context)
+    .with_evaluators("Bias", "Clarity", "Faithfulness")
+    .yields_output(rag_prompt_function)
+    .run()
+)
+
+print(f"Test completed! View results: {result.test_run_result.link}")
+
+````
+
+```typescript JS/TS
+import {
+  createDataStructure,
+  Maxim,
+  type Data,
+  type YieldedOutput,
+} from '@maximai/maxim-js';
+import OpenAI from 'openai';
+
+// Initialize Maxim and OpenAI
+const maxim = new Maxim({
+  apiKey: 'your-api-key',
+});
+
+const openai = new OpenAI({
+  apiKey:
+    'your-openai-api-key',
+});
+
+const dataStructure = createDataStructure({
+  Input: 'INPUT',
+  'Expected Output': 'EXPECTED_OUTPUT',
+  contextToEvaluate: 'CONTEXT_TO_EVALUATE',
+});
+
+async function ragPromptFunction(
+  data: Data<typeof dataStructure>
+): Promise<YieldedOutput> {
+  // Simulate context retrieval (replace with your actual RAG logic)
+  const retrievedContext = `Context for ${data.Input}: ${data.contextToEvaluate}`;
+
+  const systemPrompt = `You are a helpful assistant. Use the provided context to answer the user's question accurately.
+
+Context: ${retrievedContext}
+
+Answer the user's question based on the context provided.`;
+
+  const response = await openai.chat.completions.create({
+    model: 'gpt-4o-mini',
+    messages: [
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: data.Input },
+    ],
+    temperature: 0.3,
+  });
+
+  return {
+    data: response.choices[0]?.message.content ?? '',
+    retrievedContextToEvaluate: retrievedContext, // Important for context evaluation
+    meta: {
+      usage: {
+        completionTokens: response.usage?.completion_tokens || 0,
+        promptTokens: response.usage?.prompt_tokens || 0,
+        totalTokens: response.usage?.total_tokens || 0,
+        latency: 0, // You can measure actual latency if needed
+      },
+      cost: {
+        input: ((response.usage?.prompt_tokens || 0) * 0.0015) / 1000, // GPT-3.5 pricing
+        output: ((response.usage?.completion_tokens || 0) * 0.002) / 1000,
+        total: ((response.usage?.total_tokens || 0) * 0.0015) / 1000,
+      },
+    },
+  };
+}
+
+// Test data with context evaluation
+const testDataWithContext: Data<typeof dataStructure>[] = [
+  {
+    Input: 'What is the impact of climate change on agriculture?',
+    'Expected Output':
+      'Climate change affects agriculture through temperature changes and weather patterns',
+    contextToEvaluate: 'Climate change impacts on farming',
+  },
+];
+
+// Run test with context evaluation
+const result = await maxim
+  .createTestRun('RAG Prompt Test', 'your-workspace-id')
+  .withDataStructure(dataStructure)
+  .withData(testDataWithContext)
+  .withEvaluators('Bias', 'Clarity', 'Faithfulness')
+  .yieldsOutput(ragPromptFunction)
+  .run();
+
+console.log(`Test completed! View results: ${result.testRunResult.link}`);
+````
+
+</CodeGroup>
+
+## Best Practices
+
+1. **Error Handling**: Always include proper error handling in your `Yields Output` function
+2. **Token Tracking**: Include usage and cost metadata when possible for better insights
+3. **Context Management**: Use `Retrieved Context to Evaluate` when evaluating prompts that use RAG systems
+
+## Example Repository
+
+For more complex examples including multi-turn conversations and advanced RAG implementations, check out our cookbooks repository for [python](https://github.com/maximhq/maxim-cookbooks/tree/main/python/test-runs) or [typescript](https://github.com/maximhq/maxim-cookbooks/tree/main/typescript/test-runs).
+
+## Next Steps
+
+- [Testing Maxim Prompts](/offline-evals/via-sdk/prompts/maxim-prompt) - Use prompts stored on the Maxim platform
+- [Querying Prompts](/offline-evals/via-sdk/prompts/querying-prompts) - Retrieve prompts for production use
+- [CI/CD Integration](/offline-evals/via-sdk/prompts/ci-cd-integration) - Automate your prompt testing

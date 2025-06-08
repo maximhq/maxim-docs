@@ -1,0 +1,100 @@
+---
+title: CI/CD Integration
+description: Learn how to integrate prompt evaluations into your CI/CD pipeline using GitHub Actions
+---
+
+Automate your prompt evaluations by integrating them into your CI/CD pipeline. This guide shows you how to use GitHub Actions with the [Maxim Actions repository](https://github.com/maximhq/actions) to run prompt tests automatically.
+
+## GitHub Actions Setup
+
+The Maxim Actions repository provides a pre-built GitHub Action that makes it easy to run test runs in your CI/CD pipeline.
+
+### Prerequisites
+
+Before setting up the GitHub Action, you'll need to setup the following:
+
+1. **GitHub Secrets**: Store your Maxim API key securely
+2. **GitHub Variables**: Configure your workspace and resource IDs
+3. **Prompt Version ID**: The specific prompt version you want to test
+
+### Environment Setup
+
+Add these secrets and variables to your GitHub repository:
+
+**Secrets** (Repository Settings → Secrets and variables → Actions):
+
+- `MAXIM_API_KEY`: Your Maxim API key
+
+**Variables** (Repository Settings → Secrets and variables → Actions):
+
+- `WORKSPACE_ID`: Your Maxim workspace ID
+- `DATASET_ID`: The dataset to use for testing
+- `PROMPT_VERSION_ID`: The prompt version ID to test
+
+### Complete GitHub Actions Workflow
+
+Create a file `.github/workflows/prompt-evaluation.yml` in your repository:
+
+```yaml
+name: Prompt Evaluation with Maxim
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  TEST_RUN_NAME: "Prompt Evaluation - ${{ github.sha }}"
+  CONTEXT_TO_EVALUATE: "context"
+  EVALUATORS: "bias, clarity, faithfulness"
+
+jobs:
+  evaluate-prompt:
+    runs-on: ubuntu-latest
+    name: Run Prompt Evaluation
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run Prompt Test with Maxim
+        id: prompt_test
+        uses: maximhq/actions/test-runs@v1
+        with:
+          api_key: ${{ secrets.MAXIM_API_KEY }}
+          workspace_id: ${{ vars.WORKSPACE_ID }}
+          test_run_name: ${{ env.TEST_RUN_NAME }}
+          dataset_id: ${{ vars.DATASET_ID }}
+          prompt_version_id: ${{ vars.PROMPT_VERSION_ID }}
+          context_to_evaluate: ${{ env.CONTEXT_TO_EVALUATE }}
+          evaluators: ${{ env.EVALUATORS }}
+
+      - name: Display Test Results
+        if: success()
+        run: |
+          echo "Test Run Results:"
+          echo "${{ steps.prompt_test.outputs.test_run_result }}"
+          echo ""
+          echo "Failed Indices: ${{ steps.prompt_test.outputs.test_run_failed_indices }}"
+          echo ""
+          echo "📊 View detailed report: ${{ steps.prompt_test.outputs.test_run_report_url }}"
+
+      - name: Check Test Status
+        if: failure()
+        run: |
+          echo "❌ Prompt evaluation failed. Check the detailed report for more information."
+          exit 1
+
+      - name: Success Notification
+        if: success()
+        run: |
+          echo "✅ Prompt evaluation passed successfully!"
+```
+
+## Next Steps
+
+- [Local Prompt Testing](/offline-evals/via-sdk/prompts/local-prompt) - Test prompts with custom logic locally
+- [Maxim Prompt Testing](/offline-evals/via-sdk/prompts/maxim-prompt) - Use prompts stored on the Maxim platform
+- [Querying Prompts](/offline-evals/via-sdk/prompts/querying-prompts) - Retrieve and use prompts in production

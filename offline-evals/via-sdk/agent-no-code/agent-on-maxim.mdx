@@ -1,0 +1,75 @@
+---
+title: Agent on Maxim
+description: Learn how to test AI agents using no-code agents configured and stored on the Maxim platform
+---
+
+Test AI agents using no-code agents that are configured and stored on the Maxim platform. This approach leverages the `With Prompt Chain Version ID` function to execute pre-configured no-code agents without needing to implement custom logic.
+
+## Basic No-code Agent Testing
+
+Use the `With Prompt Chain Version ID` function to test agents configured as no-code agents on the Maxim platform:
+
+<CodeGroup>
+```python Python
+from maxim import Maxim
+
+# Initialize Maxim SDK
+
+maxim = Maxim({"api_key": "your-api-key"})
+
+# Create and run the test using a Maxim no-code agent
+
+result = (
+    maxim.create_test_run(
+        name="No-code Agent Test", in_workspace_id="your-workspace-id"
+    )
+    .with_data_structure(
+        {
+            "input": "INPUT",
+            "expected_output": "EXPECTED_OUTPUT",
+        }
+    )
+    .with_data("your-dataset-id")
+    .with_evaluators("Bias")
+    .with_prompt_chain_version_id("your-prompt-chain-version-id")
+    .run()
+)
+
+print(f"Test run completed! View results: {result.test_run_result.link}")
+
+````
+
+```typescript JS/TS
+import { Maxim } from '@maximai/maxim-js';
+
+// Initialize Maxim SDK
+const maxim = new Maxim({
+  apiKey: 'your-api-key',
+});
+
+// Create and run the test using a Maxim no-code agent
+const result = await maxim
+  .createTestRun('No-code Agent Test', 'your-workspace-id')
+  .withDataStructure({
+    Input: 'INPUT',
+    'Expected Output': 'EXPECTED_OUTPUT',
+  })
+  .withData('your-dataset-id')
+  .withEvaluators('Bias')
+  .withPromptChainVersionId('your-prompt-chain-version-id')
+  .run();
+
+console.log(`Test run completed! View results: ${result.testRunResult.link}`);
+````
+
+</CodeGroup>
+
+## Next Steps
+
+- [Local Agent Testing](/offline-evals/via-sdk/agent-no-code/local-agent) - Learn how to create custom agents with local logic
+- [No-code agent Builder](/offline-evals/via-ui/agents-via-no-code-builder/quickstart) - Learn how to create no-code agents on the platform
+
+<Note>
+  For complex multi-agent endpoints, consider using the [Maxim observability features](/online-evals/overview) to trace individual steps and
+  debug no-code agent execution.
+</Note>

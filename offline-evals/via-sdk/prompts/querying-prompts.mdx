@@ -1,0 +1,262 @@
+---
+title: Querying Prompts
+description: Learn how to retrieve and use tested prompts from the Maxim platform for your production workflows
+---
+
+After testing and perfecting your prompts, you can query and use them in your production systems. This guide shows how to retrieve prompts from the Maxim platform and integrate them into your applications.
+
+## Prerequisites
+
+To query prompts, you need to:
+
+1. **Enable prompt management** in your Maxim SDK configuration
+2. **Have deployed prompts** on the Maxim platform with deployment rules
+
+## Setup
+
+Initialize the Maxim SDK with prompt management enabled:
+
+<CodeGroup>
+```python Python
+from maxim import Maxim
+from maxim.models import QueryBuilder
+
+# Initialize Maxim with prompt management enabled
+
+maxim = Maxim(
+    {
+        "api_key": "your-maxim-api-key",
+        "prompt_management": True,  # Enable prompt management
+    }
+)
+````
+
+```typescript JS/TS
+import { Maxim, QueryBuilder } from '@maximai/maxim-js';
+
+// Initialize Maxim with prompt management enabled
+const maxim = new Maxim({
+  apiKey: 'your-maxim-api-key',
+  promptManagement: true, // Enable prompt management
+});
+````
+
+</CodeGroup>
+
+## Querying a Single Prompt
+
+Retrieve a specific prompt using deployment variables to match your environment:
+
+<CodeGroup>
+```python Python
+# Query a prompt for production environment
+prompt = maxim.get_prompt(
+    id="your-prompt-id",
+    rule=QueryBuilder()
+    .and_()
+    .deployment_var(
+        "Environment", "prod"
+    )  # make sure to use your deployment variables here
+    .deployment_var("TenantId", 123)
+    .build(),
+)
+
+if prompt:  # Use the prompt in your application
+    response = prompt.run(
+        input="What are the benefits of cloud computing?",
+        variables={"user_level": "beginner", "industry": "healthcare"},
+    )
+    print(f"Response: {response.choices[0].message.content}")
+else:
+    print("No matching prompt found")
+
+````
+
+```typescript JS/TS
+// Query a prompt for production environment
+const prompt = await maxim.getPrompt(
+  'your-prompt-id',
+  new QueryBuilder()
+    .and()
+    .deploymentVar('Environment', 'prod') // make sure to use your deployment variables here
+    .deploymentVar('TenantId', 123)
+    .build()
+);
+
+if (prompt) {
+  // Use the prompt in your application
+  const response = await prompt.run(
+    'What are the benefits of cloud computing?',
+    {
+      variables: {
+        user_level: 'beginner',
+        industry: 'healthcare',
+      },
+    }
+  );
+  console.log(`Response: ${response.choices[0]?.message.content}`);
+} else {
+  console.log('No matching prompt found');
+}
+````
+
+</CodeGroup>
+
+## Querying Multiple Prompts
+
+Retrieve all prompts that match specific deployment criteria:
+
+<CodeGroup>
+```python Python
+from maxim import Maxim
+from maxim.models import QueryBuilder
+
+# Initialize Maxim with prompt management enabled
+
+maxim = Maxim(
+    {
+        "api_key": "your-maxim-api-key",
+        "prompt_management": True,  # Enable prompt management
+    }
+)
+
+# Get all prompts for a specific environment and feature
+prompts = maxim.get_prompts(
+    rule=QueryBuilder().and_().deployment_var("Environment", "prod").build()
+)
+
+print(f"Found {len(prompts)} matching prompts:")
+for prompt in prompts:
+    print(f"- Prompt ID: {prompt.prompt_id}, Version: {prompt.version_id}")
+
+# Use prompts in your application
+
+if prompts:
+    support_prompt = prompts[0]  # Use first matching prompt
+    response = support_prompt.run("How can I reset my password?")
+    print(
+        f"\nResponse from first prompt and version: {response.choices[0].message.content}"
+    )
+else:
+    print("No matching prompts found")
+
+````
+
+```typescript JS/TS
+// Get all prompts for a specific environment and feature
+const prompts = await maxim.getPrompts(
+  new QueryBuilder().and().deploymentVar('Environment', 'prod').build()
+);
+
+if (prompts) {
+  console.log(`Found ${prompts.length} matching prompts:`);
+  prompts.forEach(prompt => {
+    console.log(`- Prompt ID: ${prompt.promptId}, Version: ${prompt.version}`);
+  });
+}
+
+// Use prompts in your application
+if (prompts && prompts.length > 0) {
+  const supportPrompt = prompts[0]; // Use first matching prompt
+  if (supportPrompt) {
+    const response = await supportPrompt.run('How can I reset my password?');
+    console.log(
+      `\nResponse from first prompt and version: ${response.choices[0]?.message.content}`
+    );
+  } else {
+    console.log('No matching prompt found');
+  }
+}
+````
+
+</CodeGroup>
+
+## Using Tags for Fine-Grained Filtering
+
+Query prompts using tags for more specific filtering:
+
+<CodeGroup>
+```python Python
+# Query prompts with specific tags
+prompt = maxim.get_prompt(
+    id="your-prompt-id",
+    rule=QueryBuilder()
+    .and_()
+    .deployment_var("Environment", "production")
+    .tag("Tier", "premium")
+    .tag("Language", "en")
+    .build(),
+)
+
+if prompt:
+    response = prompt.run("Explain our premium features")
+````
+
+```typescript JS/TS
+// Query prompts with specific tags
+const prompt = await maxim.getPrompt(
+    "your-prompt-id",
+    new QueryBuilder()
+        .and()
+        .deploymentVar("Environment", "production")
+        .tag("Tier", "premium")
+        .tag("Language", "en")
+        .build()
+);
+
+if (prompt) {
+    const response = await prompt.run("Explain our premium features");
+}
+````
+
+</CodeGroup>
+
+## Folder-Based Organization
+
+Query prompts from specific folders to organize by team or feature:
+
+<CodeGroup>
+```python Python
+# Query prompts from a specific folder
+prompts = maxim.get_prompts(
+    rule=QueryBuilder()
+    .and_()
+    .folder("folder-id-for-marketing-team")
+    .deployment_var("Environment", "production")
+    .build()
+)
+
+print(f"Found {len(prompts)} marketing production prompts")
+
+````
+
+```typescript JS/TS
+// Query prompts from a specific folder
+const prompts = await maxim.getPrompts(
+    new QueryBuilder()
+        .and()
+        .folder("folder-id-for-marketing-team")
+        .deploymentVar("Environment", "production")
+        .build()
+);
+
+console.log(`Found ${prompts.length} marketing prompts`);
+````
+
+</CodeGroup>
+
+## Caching and Performance
+
+The Maxim SDK automatically caches prompt configurations to improve performance using the cache provided to the constructor.
+
+## Best Practices
+
+1. **Environment Separation**: Use deployment variables to separate dev/staging/production prompts
+2. **Graceful Degradation**: Implement fallback prompts for critical functionality
+3. **Version Management**: Use tags to manage prompt versions and gradual rollouts
+
+## Next Steps
+
+- [CI/CD Integration](/offline-evals/via-sdk/prompts/ci-cd-integration) - Automate prompt testing and deployment
+- [Local Prompt Testing](/offline-evals/via-sdk/prompts/local-prompt) - Test changes before deployment
+- [Maxim Prompt Testing](/offline-evals/via-sdk/prompts/maxim-prompt) - Validate prompt versions

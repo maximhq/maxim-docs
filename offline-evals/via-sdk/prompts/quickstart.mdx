@@ -1,0 +1,134 @@
+---
+title: Quickstart
+description: Learn how to quickly get started with running prompt evaluations using the Maxim SDK
+---
+
+Get started with evaluating prompts using the Maxim SDK. This guide will walk you through setting up the SDK and running your first prompt evaluation test run.
+
+## Installation
+
+First, install the Maxim SDK for your preferred language:
+
+<CodeGroup>
+```bash Python
+pip install maxim-py
+```
+
+```bash JS/TS
+npm install @maximai/maxim-js
+```
+
+</CodeGroup>
+
+## Getting Your API Key
+
+Before you can use the Maxim SDK, you need to obtain an API key from the Maxim platform:
+
+1. **Log in to Maxim**: Go to [app.getmaxim.ai/login](https://app.getmaxim.ai/login) and sign in to your account
+2. **Navigate to Settings**: Click on "Settings" in the left sidebar
+3. **Go to API Keys**: Click on "API keys" under "Organization settings"
+4. **Generate New Key**: Click the "Generate new" button
+5. **Name Your Key**: Enter a descriptive name for your API key (e.g., "Development", "CI/CD", "Local Testing")
+6. **Copy the Key**: Once generated, copy the API key immediately - you won't be able to see it again
+
+<Warning>Store your API key securely! You won't be able to view the complete key value again after closing the generation dialog.</Warning>
+
+## Configuration
+
+Initialize the Maxim SDK with your API key:
+
+<CodeGroup>
+```python Python
+from maxim import Maxim
+
+# Initialize Maxim SDK
+
+maxim = Maxim({"api_key": "your-api-key"})
+
+````
+
+```typescript JS/TS
+import { Maxim } from '@maximai/maxim-js';
+
+// Initialize Maxim SDK
+const maxim = new Maxim({
+  apiKey: 'your-api-key',
+});
+
+````
+
+</CodeGroup>
+
+## Basic Prompt Test Run
+
+Here's how to create and run a basic prompt evaluation test run using a dataset from the platform:
+
+<CodeGroup>
+```python Python
+# Creating a test run
+
+result = (
+    maxim.create_test_run(
+        name="Basic Prompt Evaluation", in_workspace_id="your-workspace-id"
+    )
+    .with_data_structure(
+        {
+            "input": "INPUT",
+            "expected_output": "EXPECTED_OUTPUT",
+        }
+    )
+    .with_data("dataset-id")
+    .with_evaluators("Bias")
+    .with_prompt_version_id("prompt-version-id")
+    .run()
+)
+
+print(f"Test run completed! View results: {result.test_run_result.link}")
+
+````
+
+```typescript JS/TS
+import { Maxim } from '@maximai/maxim-js';
+
+// Initialize Maxim SDK
+const maxim = new Maxim({
+  apiKey: 'your-api-key',
+});
+
+// Create a test run
+const result = await maxim
+  .createTestRun('Basic Prompt Evaluation', 'your-workspace-id')
+  .withDataStructure({
+    Input: 'INPUT',
+    'Expected Output': 'EXPECTED_OUTPUT',
+  })
+  .withData('dataset-id')
+  .withEvaluators('Bias')
+  .withPromptVersionId('prompt-version-id')
+  .run();
+
+console.log(`Test run completed! View results: ${result.testRunResult.link}`);
+````
+
+</CodeGroup>
+
+- <code>createTestRun</code> is the main function that creates a test run. It takes the name of the test run and the workspace id.
+
+- <code>withDataStructure</code> is used to define the data structure of the dataset. It takes an object with the keys as the column names and the values as the column types.
+
+- <code>withData</code> is used to specify the dataset to use for the test run. Can be a datasetId(string), a CSV file, an array of column to value mappings.
+
+- <code>withEvaluators</code> is used to specify the evaluators to use/attach for the test run. You may create an evaluator locally through code or use an evaluator that is installed in your workspace through the name directly
+
+- <code>withPromptVersionId</code> is used to specify the prompt version to use for the test run. It takes the id of the prompt version.
+
+- <code>run</code> is used to execute the test run.
+
+## Next Steps
+
+Now that you've run your first prompt evaluation, explore these guides:
+
+- [Local Prompt Testing](/offline-evals/via-sdk/prompts/local-prompt) - Learn how to test prompts with custom logic
+- [Maxim Prompt Testing](/offline-evals/via-sdk/prompts/maxim-prompt) - Use prompts stored on the Maxim platform
+- [Querying Prompts](/offline-evals/via-sdk/prompts/querying-prompts) - Retrieve and use prompts in production workflows
+- [CI/CD Integration](/offline-evals/via-sdk/prompts/ci-cd-integration) - Automate prompt testing in your CI/CD pipeline
