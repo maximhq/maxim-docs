@@ -25,153 +25,163 @@
                         "group": "Introduction",
                         "pages": [
                             "introduction/overview",
-                            "introduction/quickstart/setting-up-workspace",
-                            "introduction/quickstart/running-first-test"
+                            "introduction/running-your-first-eval"
                         ]
                     },
                     {
-                        "group": "Evaluate",
+                        "group": "Offline Evals",
                         "pages": [
-                            "evaluate/overview",
-                            "evaluate/concepts",
+                            "offline-evals/overview",
+                            "offline-evals/concepts",
                             {
-                                "group": "Quickstart",
-                                "pages": [
-                                    "evaluate/quickstart/run-your-first-test-on-prompt",
-                                    "evaluate/quickstart/run-your-first-test-on-api-workflow",
-                                    "evaluate/quickstart/simulate-and-evaluate-multi-turn-conversations",
-                                    "evaluate/quickstart/run-your-first-test-on-prompt-chains"
-                                ]
-                            },
-                            {
-                                "group": "How To",
+                                "group": "Via UI",
                                 "pages": [
                                     {
-                                        "group": "Evaluate Prompts",
+                                        "group": "Prompts",
                                         "pages": [
-                                            "evaluate/how-to/evaluate-prompts/experiment-in-prompt-playground",
-                                            "evaluate/how-to/evaluate-prompts/run-prompt-tool-calls",
-                                            "evaluate/how-to/evaluate-prompts/use-prompt-partials",
-                                            "evaluate/how-to/evaluate-prompts/rag-quality",
-                                            "evaluate/how-to/evaluate-prompts/create-prompt-versions",
-                                            "evaluate/how-to/evaluate-prompts/compare-prompt-versions",
-                                            "evaluate/how-to/evaluate-prompts/save-prompt-session",
-                                            "evaluate/how-to/evaluate-prompts/compare-prompts-playground",
-                                            "evaluate/how-to/evaluate-prompts/bulk-comparisons-across-test-cases",
-                                            "evaluate/how-to/evaluate-prompts/deploy-prompts",
-                                            "evaluate/how-to/evaluate-prompts/organize-prompts",
-                                            "evaluate/how-to/evaluate-prompts/querying-prompts",
-                                            "evaluate/how-to/evaluate-prompts/automate-via-ci-cd",
-                                            "evaluate/how-to/evaluate-prompts/human-annotation-pipeline"
+                                            "offline-evals/via-ui/prompts/quickstart",
+                                            "offline-evals/via-ui/prompts/prompt-playground",
+                                            "offline-evals/via-ui/prompts/tool-calls",
+                                            "offline-evals/via-ui/prompts/mcp",
+                                            "offline-evals/via-ui/prompts/prompt-partials",
+                                            "offline-evals/via-ui/prompts/retrieval",
+                                            "offline-evals/via-ui/prompts/prompt-versions",
+                                            "offline-evals/via-ui/prompts/prompt-sessions",
+                                            "offline-evals/via-ui/prompts/prompt-evals",
+                                            "offline-evals/via-ui/prompts/prompt-deployment",
+                                            "offline-evals/via-ui/prompts/folders-and-tags",
+                                            "offline-evals/via-ui/prompts/human-annotation"
                                         ]
                                     },
                                     {
-                                        "group": "Evaluate Chains",
+                                        "group": "Agent via No-Code Builder",
                                         "pages": [
-                                            "evaluate/how-to/evaluate-chains/experiment-with-prompt-chains",
-                                            "evaluate/how-to/evaluate-chains/debug-errors-at-every-node",
-                                            "evaluate/how-to/evaluate-chains/use-api-nodes-within-chains",
-                                            "evaluate/how-to/evaluate-chains/deploy-prompt-chains",
-                                            "evaluate/how-to/evaluate-chains/test-prompt-chains",
-                                            "evaluate/how-to/evaluate-chains/create-product-description-generator",
-                                            "evaluate/how-to/evaluate-chains/create-customer-support-agent",
-                                            "evaluate/how-to/evaluate-chains/querying-prompt-chains"
+                                            "offline-evals/via-ui/agents-via-no-code-builder/quickstart",
+                                            "offline-evals/via-ui/agents-via-no-code-builder/types-of-nodes",
+                                            "offline-evals/via-ui/agents-via-no-code-builder/agent-deployment",
+                                            "offline-evals/via-ui/agents-via-no-code-builder/error-debugging",
+                                            "offline-evals/via-ui/agents-via-no-code-builder/loops",
+                                            "offline-evals/via-ui/agents-via-no-code-builder/multi-agent-system",
+                                            "offline-evals/via-ui/agents-via-no-code-builder/agent-evals",
+                                            "offline-evals/via-ui/agents-via-no-code-builder/variables-in-agents"
                                         ]
                                     },
                                     {
-                                        "group": "Evaluate Workflows via API",
+                                        "group": "Agents via HTTP Endpoint",
                                         "pages": [
-                                            "evaluate/how-to/evaluate-workflows-via-api-endpoint/test-your-ai-outputs-using-application-endpoint",
-                                            "evaluate/how-to/evaluate-workflows-via-api-endpoint/test-multi-turn-conversations-manually",
-                                            "evaluate/how-to/evaluate-workflows-via-api-endpoint/simulate-multi-turn-conversations",
-                                            "evaluate/how-to/evaluate-workflows-via-api-endpoint/evaluate-simulated-sessions-for-agents",
-                                            "evaluate/how-to/evaluate-workflows-via-api-endpoint/scripting-to-configure-response-structures",
-                                            "evaluate/how-to/evaluate-workflows-via-api-endpoint/automate-via-ci-cd"
-                                        ]
-                                    },
-                                    "evaluate/how-to/evaluate-datasets",
-                                    "evaluate/how-to/scheduled-test-runs",
-                                    "evaluate/how-to/trigger-test-runs-using-sdk",
-                                    {
-                                        "group": "Optimize Evaluation Processes",
-                                        "pages": [
-                                            "evaluate/how-to/optimize-evaluation-processes/re-use-configuration-via-presets",
-                                            "evaluate/how-to/optimize-evaluation-processes/receive-notifications-test-runs",
-                                            "evaluate/how-to/optimize-evaluation-processes/customize-share-reports"
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "group": "Observe",
-                        "pages": [
-                            "observe/overview",
-                            "observe/concepts",
-                            "observe/quickstart",
-                            {
-                                "group": "How To",
-                                "pages": [
-                                    {
-                                        "group": "Log Your Application",
-                                        "pages": [
-                                            "observe/how-to/log-your-application/setting-up-trace",
-                                            "observe/how-to/log-your-application/add-spans-to-traces",
-                                            "observe/how-to/log-your-application/adding-llm-call",
-                                            "observe/how-to/log-your-application/add-attachments",
-                                            "observe/how-to/log-your-application/logging-rag-pipeline",
-                                            "observe/how-to/log-your-application/log-multiturn-interactions-as-session",
-                                            "observe/how-to/log-your-application/track-tool-calls",
-                                            "observe/how-to/log-your-application/use-tags-on-nodes",
-                                            "observe/how-to/log-your-application/use-events",
-                                            "observe/how-to/log-your-application/send-user-feedback",
-                                            "observe/how-to/log-your-application/track-llm-errors",
-                                            "observe/how-to/log-your-application/track-token-usage-and-cost",
-                                            "observe/how-to/log-your-application/filters-and-saved-views",
-                                            "observe/how-to/log-your-application/use-custom-pricing",
-                                            "observe/how-to/log-your-application/use-data-connectors",
-                                            "observe/how-to/log-your-application/export-logs",
-                                            "observe/how-to/log-your-application/summary-emails"
+                                            "offline-evals/via-ui/agents-via-http-endpoint/quickstart",
+                                            "offline-evals/via-ui/agents-via-http-endpoint/scripts",
+                                            "offline-evals/via-ui/agents-via-http-endpoint/agent-evals"
                                         ]
                                     },
                                     {
-                                        "group": "Evaluate logs",
+                                        "group": "Advanced",
                                         "pages": [
-                                            "observe/how-to/evaluate-logs/auto-evaluation",
-                                            "observe/how-to/evaluate-logs/human-evaluation",
-                                            "observe/how-to/evaluate-logs/node-level-evaluation"
-                                        ]
-                                    },
-                                    {
-                                        "group": "Set Up Alerts",
-                                        "pages": [
-                                            "observe/how-to/set-up-alerts/create-a-slack-integration",
-                                            "observe/how-to/set-up-alerts/create-a-pagerduty-integration",
-                                            "observe/how-to/set-up-alerts/set-up-alerts-for-performance-metrics",
-                                            "observe/how-to/set-up-alerts/set-up-alerts-for-quality-metrics"
+                                            "offline-evals/via-ui/advanced/notifications",
+                                            "offline-evals/via-ui/advanced/presets",
+                                            "offline-evals/via-ui/advanced/scheduled-runs",
+                                            "offline-evals/via-ui/advanced/customized-reports",
+                                            "offline-evals/via-ui/advanced/dataset-evaluation"
                                         ]
                                     }
                                 ]
                             },
                             {
-                                "group": "Integrations",
+                                "group": "Via SDK",
                                 "pages": [
-                                    "observe/integrations/openai-agents-sdk"
+                                    {
+                                        "group": "Prompts",
+                                        "pages": [
+                                            "offline-evals/via-sdk/prompts/quickstart",
+                                            "offline-evals/via-sdk/prompts/local-prompt",
+                                            "offline-evals/via-sdk/prompts/maxim-prompt",
+                                            "offline-evals/via-sdk/prompts/querying-prompts",
+                                            "offline-evals/via-sdk/prompts/ci-cd-integration"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Agent Evals via HTTP Endpoint",
+                                        "pages": [
+                                            "offline-evals/via-sdk/agent-http/quickstart",
+                                            "offline-evals/via-sdk/agent-http/local-endpoint",
+                                            "offline-evals/via-sdk/agent-http/endpoint-on-maxim",
+                                            "offline-evals/via-sdk/agent-http/ci-cd-integration"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Agent Evals via No-Code Builder",
+                                        "pages": [
+                                            "offline-evals/via-sdk/agent-no-code/quickstart",
+                                            "offline-evals/via-sdk/agent-no-code/local-agent",
+                                            "offline-evals/via-sdk/agent-no-code/agent-on-maxim"
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "group": "Guides",
+                                "pages": [
+                                    "offline-evals/guides/create-customer-support-agent",
+                                    "offline-evals/guides/create-product-description-generator",
+                                    "offline-evals/guides/evaluating-the-quality-of-ai-hr-assistants",
+                                    "offline-evals/guides/evaluating-the-quality-of-healthcare-assistants-using-maxim-ai"
                                 ]
                             }
                         ]
                     },
                     {
-                        "group": "Analyze",
+                        "group": "Online Evals",
                         "pages": [
-                            "analyze/overview",
+                            "online-evals/overview",
                             {
-                                "group": "How To",
+                                "group": "Via UI",
                                 "pages": [
-                                    "analyze/how-to/comparison-reports"
+                                    "online-evals/via-ui/set-up-auto-evaluation-on-logs",
+                                    "online-evals/via-ui/set-up-human-annotation-on-logs"
                                 ]
-                            }
+                            },
+                            {
+                                "group": "Via SDK",
+                                "pages": [
+                                    "online-evals/via-sdk/node-level-evaluation"
+                                ]
+                            },
+                            "online-evals/set-up-alerts-and-notifications"
+                        ]
+                    },
+                    {
+                        "group": "Tracing",
+                        "pages": [
+                            "tracing/overview",
+                            "tracing/concepts",
+                            "tracing/quickstart",
+                            {
+                                "group": "Tracing via SDK",
+                                "pages": [
+                                    "tracing/tracing-via-sdk/traces",
+                                    "tracing/tracing-via-sdk/spans",
+                                    "tracing/tracing-via-sdk/generations",
+                                    "tracing/tracing-via-sdk/retrieval",
+                                    "tracing/tracing-via-sdk/attachments",
+                                    "tracing/tracing-via-sdk/sessions",
+                                    "tracing/tracing-via-sdk/tool-calls",
+                                    "tracing/tracing-via-sdk/tags",
+                                    "tracing/tracing-via-sdk/events",
+                                    "tracing/tracing-via-sdk/user-feedback",
+                                    "tracing/tracing-via-sdk/errors"
+                                ]
+                            },
+                            "tracing/dashboard",
+                            "tracing/otel-compatibility",
+                            "tracing/exports",
+                            "tracing/reporting"
+                        ]
+                    },
+                    {
+                        "group": "Simulations",
+                        "pages": [
+                            "simulations/overview",
+                            "simulations/simulation-runs"
                         ]
                     },
                     {
@@ -180,55 +190,51 @@
                             "library/overview",
                             "library/concepts",
                             {
-                                "group": "How To",
+                                "group": "Evaluators",
                                 "pages": [
-                                    {
-                                        "group": "Evaluators",
-                                        "pages": [
-                                            "library/how-to/evaluators/use-pre-built-evaluators",
-                                            "library/how-to/evaluators/create-custom-ai-evaluator",
-                                            "library/how-to/evaluators/create-programmatic-evaluator",
-                                            "library/how-to/evaluators/create-api-evaluators",
-                                            "library/how-to/evaluators/create-human-evaluators"
-                                        ]
-                                    },
-                                    {
-                                        "group": "Datasets",
-                                        "pages": [
-                                            "library/how-to/datasets/use-dataset-templates",
-                                            "library/how-to/datasets/use-variable-columns-in-datasets",
-                                            "library/how-to/datasets/use-splits-within-a-dataset",
-                                            "library/how-to/datasets/curate-data-from-production",
-                                            "library/how-to/datasets/curate-golden-dataset-for-human-annotation",
-                                            "library/how-to/datasets/create-dataset-with-files-and-images",
-                                            "library/how-to/datasets/add-new-entries-using-sdk"
-                                        ]
-                                    },
-                                    {
-                                        "group": "Context Sources",
-                                        "pages": [
-                                            "library/how-to/context-sources/bring-your-rag-via-an-api-endpoint",
-                                            "library/how-to/context-sources/ingest-files-as-a-context-source",
-                                            "library/how-to/context-sources/evaluate-your-context"
-                                        ]
-                                    },
-                                    {
-                                        "group": "Prompt Tools",
-                                        "pages": [
-                                            "library/how-to/prompt-tools/create-a-code-tool",
-                                            "library/how-to/prompt-tools/create-an-api-tool",
-                                            "library/how-to/prompt-tools/create-a-tool-schema",
-                                            "library/how-to/prompt-tools/evaluate-tool-call-accuracy"
-                                        ]
-                                    },
-                                    {
-                                        "group": "Prompt Partials",
-                                        "pages": [
-                                            "library/how-to/prompt-partials/create-prompt-partial"
-                                        ]
-                                    }
+                                    "library/evaluators/pre-built-evaluators",
+                                    "library/evaluators/custom-evaluators",
+                                    "library/evaluators/third-party-evaluators"
                                 ]
-                            }
+                            },
+                            {
+                                "group": "Datasets",
+                                "pages": [
+                                    "library/datasets/use-local-datasets",
+                                    "library/datasets/import-or-create-datasets",
+                                    "library/datasets/curate-datasets",
+                                    "library/datasets/manage-datasets"
+                                ]
+                            },
+                            "library/context-sources",
+                            "library/prompt-tools",
+                            "library/prompt-partials"
+                        ]
+                    },
+                    {
+                        "group": "Dashboards",
+                        "pages": [
+                            "dashboards/test-runs-comparison-dashboard",
+                            "dashboards/custom-logs-dashboard"
+                        ]
+                    },
+                    {
+                        "group": "Integrations",
+                        "pages": [
+                            "integrations/openai-agents-sdk",
+                            "integrations/create-a-pagerduty-integration",
+                            "integrations/create-a-slack-integration"
+                        ]
+                    },
+                    {
+                        "group": "Settings",
+                        "pages": [
+                            "settings/members-and-roles",
+                            "settings/model-configuration",
+                            "settings/maxim-api-keys",
+                            "settings/custom-pricing",
+                            "settings/vault",
+                            "settings/two-factor-authentication"
                         ]
                     }
                 ]
@@ -249,19 +255,18 @@
                             {
                                 "group": "Tracing",
                                 "pages": [
-                                  {
-                                    "group" : "CrewAI",
-                                    "pages" : [
-                                      "sdk/python/integrations/crewai/crewai"
-                                    ]
-                                  },
-                                  {
-                                    "group": "Gemini",
-                                    "pages": [
-                                        "sdk/python/integrations/gemini/gemini"
-                                    ]
-                                },
-                                                              
+                                    {
+                                        "group": "CrewAI",
+                                        "pages": [
+                                            "sdk/python/integrations/crewai/crewai"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Gemini",
+                                        "pages": [
+                                            "sdk/python/integrations/gemini/gemini"
+                                        ]
+                                    },
                                     {
                                         "group": "OpenAI",
                                         "pages": [
@@ -279,21 +284,21 @@
                                     {
                                         "group": "LangChain",
                                         "pages": [
-                                            "sdk/python/integrations/langchain/langchain"                                            
+                                            "sdk/python/integrations/langchain/langchain"
                                         ]
                                     },
                                     {
                                         "group": "LangGraph",
                                         "pages": [
-                                            "sdk/python/integrations/langgraph/langgraph"                                            
+                                            "sdk/python/integrations/langgraph/langgraph"
                                         ]
                                     },
-                                  {
-                                    "group" : "Mistral",
-                                    "pages" : [
-                                      "sdk/python/integrations/mistral/mistral"   
-                                    ]
-                                  }
+                                    {
+                                        "group": "Mistral",
+                                        "pages": [
+                                            "sdk/python/integrations/mistral/mistral"
+                                        ]
+                                    }
                                 ]
                             },
                             "sdk/python/upgrading-to-v3"
@@ -422,7 +427,7 @@
         },
         "posthog": {
             "apiKey": "phc_tIH4RrILTB5RdiI22hDijKui0K8c4PNGfaPIoAA5Lcj",
-            "apiHost": "https://ph.getmaxim.ai"            
+            "apiHost": "https://ph.getmaxim.ai"
         }
     },
     "logo": {
@@ -455,11 +460,215 @@
             "href": "https://www.getmaxim.ai/login"
         }
     },
-  "redirects": [
-      {
-        "source": "/api/overview",
-        "destination": "/public-apis/overview"
-      }
+    "redirects": [
+        {
+            "source": "/api/overview",
+            "destination": "/public-apis/overview"
+        },
+        {
+            "source": "/analyze/how-to/comparison-reports",
+            "destination": "/dashboards/test-runs-comparison-dashboard"
+        },
+        {
+            "source": "/evaluate/concepts#datasets",
+            "destination": "/offline-evals/concepts#datasets"
+        },
+        {
+            "source": "/evaluate/concepts#evaluators",
+            "destination": "/offline-evals/concepts#evaluators"
+        },
+        {
+            "source": "/evaluate/concepts#test-runs",
+            "destination": "/offline-evals/concepts#test-runs"
+        },
+        {
+            "source": "/evaluate/concepts#workflows",
+            "destination": "/offline-evals/concepts#workflows"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-chains/deploy-prompt-chains",
+            "destination": "/offline-evals/via-ui/agents-via-no-code-builder/agent-deployment"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-chains/experiment-with-prompt-chains",
+            "destination": "/offline-evals/via-ui/agents-via-no-code-builder/experiment-with-prompt-chains"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-chains/querying-prompt-chains",
+            "destination": "offline-evals/via-sdk/agent-no-code/quickstart"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-chains/test-prompt-chains",
+            "destination": "offline-evals/via-sdk/agent-http/quickstart"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-chains/use-api-nodes-within-chains",
+            "destination": "offline-evals/via-ui/agents-via-no-code-builder/types-of-nodes"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-prompts/automate-via-ci-cd",
+            "destination": "offline-evals/via-sdk/prompts/ci-cd-integration"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-prompts/automate-via-ci-cd#test-runs-via-cli",
+            "destination": "offline-evals/via-sdk/prompts/maxim-prompt"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-prompts/bulk-comparisons-across-test-cases",
+            "destination": "/offline-evals/via-ui/prompts/prompt-evals"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-prompts/compare-prompts-playground",
+            "destination": "/offline-evals/via-ui/prompts/prompt-playground#prompt-comparison"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-prompts/create-prompt-versions",
+            "destination": "/offline-evals/via-ui/prompts/prompt-versions"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-prompts/deploy-prompts",
+            "destination": "/offline-evals/via-ui/prompts/prompt-deployment"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-prompts/experiment-in-prompt-playground",
+            "destination": "/offline-evals/via-ui/prompts/prompt-playground"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-prompts/human-annotation-pipeline",
+            "destination": "/offline-evals/via-ui/prompts/human-annotation"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-prompts/querying-prompts",
+            "destination": "/offline-evals/via-ui/prompts/querying-prompts"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-prompts/rag-quality",
+            "destination": "/offline-evals/via-ui/prompts/retrieval"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-prompts/run-prompt-tool-calls",
+            "destination": "/offline-evals/via-ui/prompts/tool-calls"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-prompts/use-prompt-partials",
+            "destination": "/offline-evals/via-ui/prompts/prompt-partials"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-workflows-via-api-endpoint/automate-via-ci-cd",
+            "destination": "offline-evals/via-sdk/agent-http/ci-cd-integration"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-workflows-via-api-endpoint/test-your-ai-outputs-using-application-endpoint",
+            "destination": "offline-evals/via-ui/agents-via-http-endpoint/quickstart#test-your-ai-outputs-using-application-endpoint"
+        },
+        {
+            "source": "/evaluate/how-to/optimize-evaluation-processes/re-use-configuration-via-presets",
+            "destination": "/offline-evals/via-ui/advanced/presets"
+        },
+        {
+            "source": "/evaluate/quickstart/simulate-and-evaluate-multi-turn-conversations",
+            "destination": "/offline-evals/quickstart/simulate-and-evaluate-multi-turn-conversations"
+        },
+        {
+            "source": "/introduction/quickstart/setting-up-workspace",
+            "destination": "/settings/maxim-api-keys"
+        },
+        {
+            "source": "/introduction/quickstart/setting-up-workspace#add-model-api-keys",
+            "destination": "/settings/model-configuration"
+        },
+        {
+            "source": "/library/how-to/context-sources/bring-your-rag-via-an-api-endpoint",
+            "destination": "/library/context-sources#bring-your-rag-via-api-endpoint"
+        },
+        {
+            "source": "/library/how-to/context-sources/ingest-files-as-a-context-source",
+            "destination": "/library/context-sources#ingest-files-as-a-context-source"
+        },
+        {
+            "source": "/library/how-to/datasets/curate-data-from-production",
+            "destination": "/library/datasets/curate-datasets"
+        },
+        {
+            "source": "/library/how-to/datasets/curate-golden-dataset-for-human-annotation",
+            "destination": "/library/datasets/curate-datasets#curate-from-human-annotations"
+        },
+        {
+            "source": "/library/how-to/datasets/use-dataset-templates",
+            "destination": "/library/datasets/import-or-create-datasets#create-datasets-using-templates"
+        },
+        {
+            "source": "/library/how-to/datasets/use-splits-within-a-dataset",
+            "destination": "/library/datasets/manage-datasets#use-splits-for-targeted-testing"
+        },
+        {
+            "source": "/library/how-to/evaluators/create-custom-ai-evaluator",
+            "destination": "/library/evaluators/custom-evaluators#ai-based-evaluators"
+        },
+        {
+            "source": "/library/how-to/evaluators/use-pre-built-evaluators",
+            "destination": "/library/evaluators/pre-built-evaluators"
+        },
+        {
+            "source": "/library/how-to/prompt-partials/create-prompt-partial",
+            "destination": "/offline-evals/via-ui/prompts/prompt-partials"
+        },
+        {
+            "source": "/library/how-to/prompt-tools/create-a-code-tool",
+            "destination": "/library/prompt-tools#create-a-code-based-tool"
+        },
+        {
+            "source": "/observe/how-to/evaluate-logs/auto-evaluation",
+            "destination": "/online-evals/via-ui/set-up-auto-evaluation-on-logs"
+        },
+        {
+            "source": "/observe/how-to/evaluate-logs/auto-evaluation#making-sense-of-evaluations-on-logs",
+            "destination": "/online-evals/via-ui/set-up-auto-evaluation-on-logs#making-sense-of-evaluations-on-logs"
+        },
+        {
+            "source": "/observe/how-to/evaluate-logs/human-evaluation",
+            "destination": "/online-evals/via-ui/set-up-auto-evaluation-on-logs#human-evaluation"
+        },
+        {
+            "source": "/observe/how-to/evaluate-logs/node-level-evaluation",
+            "destination": "/online-evals/via-sdk/node-level-evaluation"
+        },
+        {
+            "source": "/observe/how-to/log-your-application/adding-llm-call",
+            "destination": "/tracing/quickstart#7-log-llm-calls"
+        },
+        {
+            "source": "/observe/how-to/log-your-application/setting-up-trace",
+            "destination": "/tracing/tracing-via-sdk/traces"
+        },
+        {
+            "source": "/observe/how-to/log-your-application/track-tool-calls",
+            "destination": "/tracing/tracing-via-sdk/tool-calls"
+        },
+        {
+            "source": "/observe/how-to/log-your-application/use-custom-pricing",
+            "destination": "/settings/custom-pricing"
+        },
+        {
+            "source": "/observe/how-to/set-up-alerts/create-a-pagerduty-integration",
+            "destination": "/online-evals/set-up-alerts-and-notifications#pagerduty-integration"
+        },
+        {
+            "source": "/observe/how-to/set-up-alerts/create-a-slack-integration",
+            "destination": "/online-evals/set-up-alerts-and-notifications#slack-integration"
+        },
+        {
+            "source": "/observe/overview",
+            "destination": "/tracing/overview"
+        },
+        {
+            "source": "/observe/quickstart#2-generate-api-key",
+            "destination": "/settings/maxim-api-keys"
+        },
+        {
+            "source": "/sdk/overview",
+            "destination": "/sdk/overview"
+        }
     ],
     "footer": {
         "socials": {

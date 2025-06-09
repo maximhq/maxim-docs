@@ -25,6 +25,10 @@ function prescript(request) {
 ```
 </CodeGroup>
 
+<Note>
+All script hooks also support asynchronous operation. You can define them as `async` functions, for example: `async function prescript(request) { ... }`.
+</Note>
+
 ## Response Processing
 The `postscriptV2` function processes API responses before displaying them. Use it to transform response data or extract specific fields:
 
@@ -62,6 +66,43 @@ function postSimulation() {
 ```
 </CodeGroup>
 
+## Variable Management
+
+Maxim's scripts flow providers a robust programmatic access to manage variable across the simulation course. Each sandbox has access to 4 methods
+
+### Add a new variable
+
+Adds a variable to the simulation context using the given key and value. The variable remains accessible throughout the entire simulation.
+
+```javascript
+maxim.addVariable("variable-name", "value-to-set")
+```
+
+### Get a variable
+
+Retrieves the value of a variable that was previously added to the simulation context, or provided by the dataset during test runs. Returns `undefined` if the variable is not found in the current context.
+
+```javascript
+// Returns string or undefined
+var test = maxim.getVariable("test-variable")
+```
+
+### Set a variable
+
+Sets the value of an existing variable in the simulation context, or creates it if it doesn't exist. Use this to update the value of a variable at any point during the simulation.
+
+```javascript
+maxim.setVariable("variable-name", "value to set");
+```
+
+### Get a vault variable
+
+This method allows you to securely retrieve a variable stored in the vault. Vault variables are typically used for secrets or sensitive data that should not be exposed in plain text. If the variable does not exist in the vault, this method will return undefined.
+
+```javascript
+var vaultVariable = maxim.getVaultVariable("variable-name");
+```
+
 ## Available Libraries
 
 <Note>
@@ -69,3 +110,9 @@ function postSimulation() {
 </Note>
 
 - `axios`: Axios is a popular HTTP client library for JavaScript. It provides a simple API for making HTTP requests and supports various features like request and response interceptors, request cancellation, and automatic JSON parsing.
+- `fetch`: Fetch is a modern web API for making HTTP requests in JavaScript. It provides a promise-based interface for fetching resources and supports features like streaming, request/response customization, and automatic JSON parsing.
+
+
+<Card title="Need access to more libraries in javascript sandbox?" icon="message-question" href="mailto:akshay@getmaxim.ai?subject=Add%20new%20sandbox%20library"> 
+	Reach out to us if you need access to any other node libraries in the sandbox.
+</Card>
