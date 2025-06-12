@@ -84,7 +84,6 @@ Maxim AI provides comprehensive observability & evaluation for your CrewAI agent
   </Tab>
   <Tab title="Alerting">
     Set thresholds on **error**, **cost, token usage, user feedback, latency** and get real-time alerts via Slack or PagerDuty.
-    
 
     ![maxim_alerts_1.png](/images/maxim_alerts_1.png)
   </Tab>
@@ -143,14 +142,8 @@ from maxim.logger.crewai import instrument_crewai
 ### 3. Initialise Maxim with your API key
 
 ```python {8}
-# Initialize Maxim
-maxim = Maxim(Config(api_key= MAXIM_API_KEY))
-
-# Initialize Maxim logger
-logger = maxim.logger(LoggerConfig(id=MAXIM_LOG_REPO_ID))
-
 # Instrument CrewAI with just one line
-instrument_crewai(logger)
+instrument_crewai(Maxim().logger())
 ```
 
 ### 4. Create and run your CrewAI application as usual
