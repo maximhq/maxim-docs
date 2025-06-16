@@ -50,6 +50,10 @@ We use the `withEvaluators` method to attach evaluators to any component within 
   # example
   generation.evaluate().with_evaluators("clarity", "toxicity")
   ```
+
+  ```go Go
+  generation.Evaluate().WithEvaluators([]string{"clarity","toxicity"})
+  ```
 </CodeGroup>
 
 <Note>
@@ -92,6 +96,13 @@ You also need to specify which evaluators you want these variables to be attache
     ["clarity", "toxicity"],
   )
   ```
+
+  ```go Go
+  component.Evaluate().WithVariables(map[string]string{"var":"value"},[]string["evaluator"])
+
+  // Example
+  retrieval.Evaluate().WithVariables(map[string]string{"output": resp.Choices[0].Message.Content},[]string["clarity","toxicity"])
+  ```
 </CodeGroup>
 
 <Note>
@@ -113,6 +124,12 @@ You can directly chain the `withVariables` method after attaching evaluators to 
           "input": userInput,
       });
   ```
+
+  ```go Go
+  // In go, we do not provide chaining but you can achieve the same with following steps
+  trace.Evaluate().WithEvaluators([]string{"clarity","toxicity"})
+  trace.Evaluate().WithVariables(map[string]string{"input":userInput},[]string{"clarity","toxicity"})
+  ```
 </CodeGroup>
 
 </Note>
@@ -127,7 +144,7 @@ This is very similar to [Making sense of evaluations on logs](/observe/how-to/ev
 
 This example displays how Node level evaluation might fit in a workflow.
 
-<CodeGroup groupId="language" items={["JS/TS", "Python"]} persist>
+<CodeGroup groupId="language" items={["JS/TS", "Python","Go"]} persist>
 
 ```typescript JS/TS
 // ...previous flow
@@ -233,6 +250,46 @@ generation.evaluate.withVariables(
 );
 
 # ...flow continues
+```
+
+```go Go
+
+// ...previous flow
+
+generation := trace.AddGeneration(&logging.GenerationConfig{
+		Id:       uuid.New().String(),
+		Name:     maxim.StrPtr("test generation"),
+		Provider: "openai",
+		Model:    "gpt-4o",
+		Messages: []logging.CompletionRequest{
+			{
+				Role:    "user",
+				Content: userInput,
+			},
+		},
+		ModelParameters: map[string]interface{}{
+			"temperature": 0.5,
+		},
+	})
+
+
+generation.Evaluate().WithVariables(map[string]string{"input":userInput}, []string{"clarity", "toxicity"})
+
+// ...retrieve and process context
+
+generation.Evaluate().WithVariables(map[string]string{ "context": context },[]string{"toxicity"});
+
+# ...generate response
+
+generation.Result(llmResponse);
+
+generation.Evaluate().WithVariables(
+    map[string]string{ output: llm_response.Choices[0].Message.Content },
+    []string{"clarity", "toxicity"}
+);
+
+// ...flow continues
+
 ```
 
 </CodeGroup>
