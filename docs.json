@@ -253,52 +253,47 @@
                         "pages": [
                             "sdk/python/overview",
                             {
-                                "group": "Tracing",
+                                "group": "CrewAI",
                                 "pages": [
-                                    {
-                                        "group": "CrewAI",
-                                        "pages": [
-                                            "sdk/python/integrations/crewai/crewai"
-                                        ]
-                                    },
-                                    {
-                                        "group": "Gemini",
-                                        "pages": [
-                                            "sdk/python/integrations/gemini/gemini"
-                                        ]
-                                    },
-                                    {
-                                        "group": "OpenAI",
-                                        "pages": [
-                                            "sdk/python/integrations/openai/one-line-integration",
-                                            "sdk/python/integrations/openai/agents-sdk"
-                                        ]
-                                    },
-                                    {
-                                        "group": "LiteLLM",
-                                        "pages": [
-                                            "sdk/python/integrations/litellm/litellm-sdk",
-                                            "sdk/python/integrations/litellm/litellm-proxy"
-                                        ]
-                                    },
-                                    {
-                                        "group": "LangChain",
-                                        "pages": [
-                                            "sdk/python/integrations/langchain/langchain"
-                                        ]
-                                    },
-                                    {
-                                        "group": "LangGraph",
-                                        "pages": [
-                                            "sdk/python/integrations/langgraph/langgraph"
-                                        ]
-                                    },
-                                    {
-                                        "group": "Mistral",
-                                        "pages": [
-                                            "sdk/python/integrations/mistral/mistral"
-                                        ]
-                                    }
+                                    "sdk/python/integrations/crewai/crewai"
+                                ]
+                            },
+                            {
+                                "group": "Gemini",
+                                "pages": [
+                                    "sdk/python/integrations/gemini/gemini"
+                                ]
+                            },
+                            {
+                                "group": "OpenAI",
+                                "pages": [
+                                    "sdk/python/integrations/openai/one-line-integration",
+                                    "sdk/python/integrations/openai/agents-sdk"
+                                ]
+                            },
+                            {
+                                "group": "LiteLLM",
+                                "pages": [
+                                    "sdk/python/integrations/litellm/litellm-sdk",
+                                    "sdk/python/integrations/litellm/litellm-proxy"
+                                ]
+                            },
+                            {
+                                "group": "LangChain",
+                                "pages": [
+                                    "sdk/python/integrations/langchain/langchain"
+                                ]
+                            },
+                            {
+                                "group": "LangGraph",
+                                "pages": [
+                                    "sdk/python/integrations/langgraph/langgraph"
+                                ]
+                            },
+                            {
+                                "group": "Mistral",
+                                "pages": [
+                                    "sdk/python/integrations/mistral/mistral"
                                 ]
                             },
                             {
@@ -437,7 +432,78 @@
                             },
                             "sdk/python/upgrading-to-v3"
                         ]
-                    }                   
+                    },
+                    {
+                        "group": "Typescript",
+                        "pages": [
+                            {
+                                "group": "Reference",
+                                "pages": [
+                                    "sdk/typescript/reference/overview",
+                                    "sdk/typescript/reference/modules",
+                                    "sdk/typescript/reference/langchain/overview",
+                                    {
+                                        "group": "LangChain",
+                                        "pages": [
+                                            "sdk/typescript/reference/langchain/classes/MaximLangchainTracer"
+                                        ]
+                                    },
+                                    "sdk/typescript/reference/core/overview",
+                                    {
+                                        "group": "Classes",
+                                        "pages": [
+                                            "sdk/typescript/reference/core/classes/BaseContainer",
+                                            "sdk/typescript/reference/core/classes/CSVFile",
+                                            "sdk/typescript/reference/core/classes/CommitLog",
+                                            "sdk/typescript/reference/core/classes/Error",
+                                            "sdk/typescript/reference/core/classes/EvaluatableBaseContainer",
+                                            "sdk/typescript/reference/core/classes/EvaluateContainer",
+                                            "sdk/typescript/reference/core/classes/EventEmittingBaseContainer",
+                                            "sdk/typescript/reference/core/classes/Generation",
+                                            "sdk/typescript/reference/core/classes/LogWriter",
+                                            "sdk/typescript/reference/core/classes/Maxim",
+                                            "sdk/typescript/reference/core/classes/MaximLogger",
+                                            "sdk/typescript/reference/core/classes/MaximLogsAPI",
+                                            "sdk/typescript/reference/core/classes/QueryBuilder",
+                                            "sdk/typescript/reference/core/classes/Retrieval",
+                                            "sdk/typescript/reference/core/classes/Session",
+                                            "sdk/typescript/reference/core/classes/Span",
+                                            "sdk/typescript/reference/core/classes/ToolCall",
+                                            "sdk/typescript/reference/core/classes/Trace"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Interfaces",
+                                        "pages": [
+                                            "sdk/typescript/reference/core/interfaces/ChatCompletionChoice",
+                                            "sdk/typescript/reference/core/interfaces/ChatCompletionMessage",
+                                            "sdk/typescript/reference/core/interfaces/ChatCompletionResult",
+                                            "sdk/typescript/reference/core/interfaces/ChatCompletionToolCall",
+                                            "sdk/typescript/reference/core/interfaces/CompletionRequest",
+                                            "sdk/typescript/reference/core/interfaces/GenerationError",
+                                            "sdk/typescript/reference/core/interfaces/Logprobs",
+                                            "sdk/typescript/reference/core/interfaces/MaximCache",
+                                            "sdk/typescript/reference/core/interfaces/TestRunLogger",
+                                            "sdk/typescript/reference/core/interfaces/TextCompletionChoice",
+                                            "sdk/typescript/reference/core/interfaces/TextCompletionResult",
+                                            "sdk/typescript/reference/core/interfaces/ToolCallConfig",
+                                            "sdk/typescript/reference/core/interfaces/ToolCallError",
+                                            "sdk/typescript/reference/core/interfaces/ToolCallFunction",
+                                            "sdk/typescript/reference/core/interfaces/Usage"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Enumerations",
+                                        "pages": [
+                                            "sdk/typescript/reference/core/enumerations/Entity",
+                                            "sdk/typescript/reference/core/enumerations/QueryRuleType",
+                                            "sdk/typescript/reference/core/enumerations/VariableType"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
                 ]
             },
             {
