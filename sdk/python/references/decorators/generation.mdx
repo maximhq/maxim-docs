@@ -1,0 +1,87 @@
+# maxim.decorators.generation
+
+#### current\_generation
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/decorators/generation.py#L18)
+
+
+```python
+def current_generation() -> Optional[Generation]
+```
+
+Get the current generation from the context variable.
+
+**Returns**:
+
+- `Optional[[Generation](/sdk/python/references/logger/components/generation)]` - The current generation instance if one exists,
+  otherwise None.
+
+#### generation
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/decorators/generation.py#L28)
+
+
+```python
+def generation(logger: Optional[Logger] = None,
+               id: Optional[Union[Callable, str]] = None,
+               name: Optional[str] = None,
+               maxim_prompt_id: Optional[str] = None,
+               tags: Optional[Dict[str, str]] = None,
+               evaluators: Optional[List[str]] = None,
+               evaluator_variables: Optional[Dict[str, str]] = None)
+```
+
+Decorator for tracking AI model generations with [Maxim](/sdk/python/references/maxim) logging.
+
+This decorator wraps functions to automatically create and manage [Generation](/sdk/python/references/logger/components/generation)
+objects for tracking AI model calls, including inputs, outputs, and metadata.
+The decorated function must be called within a @trace or @span decorated context.
+
+**Arguments**:
+
+- `logger` _Optional[[Logger](/sdk/python/references/logger/logger)]_ - [Maxim](/sdk/python/references/maxim) logger instance. If None, uses the current
+  logger from context.
+- `id` _Optional[Union[Callable, str]]_ - Generation ID. Can be a string or a
+  callable that returns a string. If None, generates a UUID.
+- `name` _Optional[str]_ - Human-readable name for the generation.
+- `maxim_prompt_id` _Optional[str]_ - ID of the Maxim prompt template used.
+- `tags` _Optional[Dict[str, str]]_ - Key-value pairs for tagging the generation.
+- `evaluators` _Optional[List[str]]_ - List of evaluator names to run on this
+  generation.
+- `evaluator_variables` _Optional[Dict[str, str]]_ - Variables to pass to
+  evaluators.
+  
+
+**Returns**:
+
+- `Callable` - The decorator function that wraps the target function.
+  
+
+**Raises**:
+
+- `ValueError` - If no logger is found or if called outside of a trace/span context
+  when raise_exceptions is True.
+  
+
+**Example**:
+
+    ```python
+    import maxim
+
+    logger = maxim.Logger(api_key="your-api-key")
+
+    @logger.trace()
+    def my_ai_workflow():
+        result = generate_text("Hello world")
+        return result
+
+    @generation(
+        name="text_generation",
+        tags={"model": "gpt-4", "temperature": "0.7"},
+        evaluators=["coherence", "relevance"]
+    )
+    def generate_text(prompt: str) -> str:
+        # Your AI generation logic here
+        return "Generated response"
+    ```
+

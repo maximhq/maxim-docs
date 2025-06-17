@@ -1,0 +1,269 @@
+# maxim.tests.test\_connection\_retry\_logic
+
+Test case to simulate RemoteDisconnected connection errors and verify retry logic.
+
+This test demonstrates how the improved connection pool and retry logic in maxim_apis.py
+handles connection issues that users were experiencing.
+
+## [TestConnectionRetryLogic](/sdk/python/references/tests/test_connection_retry_logic)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_connection_retry_logic.py#L32)
+
+
+```python
+class TestConnectionRetryLogic(unittest.TestCase)
+```
+
+Test cases for connection retry logic improvements.
+
+#### setUp
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_connection_retry_logic.py#L1)
+
+
+```python
+def setUp()
+```
+
+Set up test fixtures.
+
+#### test\_connection\_pool\_configuration
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_connection_retry_logic.py#L41)
+
+
+```python
+def test_connection_pool_configuration()
+```
+
+Test that connection pool is configured with improved settings.
+
+#### test\_remote\_disconnected\_retry\_success
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_connection_retry_logic.py#L58)
+
+
+```python
+@patch("maxim.apis.maxim_apis.scribe")
+@patch("time.sleep")
+def test_remote_disconnected_retry_success(mock_sleep, mock_scribe)
+```
+
+Test that RemoteDisconnected errors are retried and eventually succeed.
+
+#### test\_pool\_error\_retry\_logic
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_connection_retry_logic.py#L103)
+
+
+```python
+@patch("maxim.apis.maxim_apis.scribe")
+@patch("time.sleep")
+def test_pool_error_retry_logic(mock_sleep, mock_scribe)
+```
+
+Test that PoolError has separate retry logic with different parameters.
+
+#### test\_http\_error\_no\_retry
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_connection_retry_logic.py#L139)
+
+
+```python
+@patch("maxim.apis.maxim_apis.scribe")
+@patch("time.sleep")
+def test_http_error_no_retry(mock_sleep, mock_scribe)
+```
+
+Test that HTTP errors are not retried (permanent failures).
+
+#### test\_max\_retries\_exhausted
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_connection_retry_logic.py#L167)
+
+
+```python
+@patch("maxim.apis.maxim_apis.scribe")
+@patch("time.sleep")
+def test_max_retries_exhausted(mock_sleep, mock_scribe)
+```
+
+Test behavior when max retries are exhausted.
+
+#### test\_exponential\_backoff\_timing
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_connection_retry_logic.py#L192)
+
+
+```python
+@patch("maxim.apis.maxim_apis.scribe")
+@patch("time.sleep")
+def test_exponential_backoff_timing(mock_sleep, mock_scribe)
+```
+
+Test that exponential backoff timing is correct.
+
+#### test\_file\_upload\_remote\_disconnected\_retry
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_connection_retry_logic.py#L220)
+
+
+```python
+@patch("maxim.apis.maxim_apis.scribe")
+@patch("time.sleep")
+@patch("requests.put")
+def test_file_upload_remote_disconnected_retry(mock_put, mock_sleep,
+                                               mock_scribe)
+```
+
+Test that file upload handles RemoteDisconnected errors with retry logic.
+
+#### test\_file\_upload\_http\_error\_no\_retry
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_connection_retry_logic.py#L261)
+
+
+```python
+@patch("maxim.apis.maxim_apis.scribe")
+@patch("time.sleep")
+@patch("requests.put")
+def test_file_upload_http_error_no_retry(mock_put, mock_sleep, mock_scribe)
+```
+
+Test that file upload HTTP errors are not retried.
+
+#### test\_api\_method\_with\_connection\_error
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_connection_retry_logic.py#L283)
+
+
+```python
+@patch("maxim.apis.maxim_apis.scribe")
+def test_api_method_with_connection_error(mock_scribe)
+```
+
+Test that actual API methods handle connection errors properly.
+
+#### test\_different\_connection\_errors\_are\_caught
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_connection_retry_logic.py#L316)
+
+
+```python
+def test_different_connection_errors_are_caught()
+```
+
+Test that various connection-related errors are properly caught in our exception handling.
+
+#### test\_unexpected\_exception\_handling
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_connection_retry_logic.py#L344)
+
+
+```python
+@patch("maxim.apis.maxim_apis.scribe")
+def test_unexpected_exception_handling(mock_scribe)
+```
+
+Test that unexpected exceptions are properly logged and re-raised.
+
+#### test\_request\_exception\_retry\_logic
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_connection_retry_logic.py#L368)
+
+
+```python
+@patch("maxim.apis.maxim_apis.scribe")
+@patch("time.sleep")
+def test_request_exception_retry_logic(mock_sleep, mock_scribe)
+```
+
+Test that general RequestException errors are retried.
+
+#### test\_custom\_retry\_parameters
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_connection_retry_logic.py#L399)
+
+
+```python
+@patch("maxim.apis.maxim_apis.scribe")
+@patch("time.sleep")
+def test_custom_retry_parameters(mock_sleep, mock_scribe)
+```
+
+Test retry logic with custom parameters.
+
+#### test\_connection\_pool\_session\_context\_manager
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_connection_retry_logic.py#L420)
+
+
+```python
+def test_connection_pool_session_context_manager()
+```
+
+Test that the connection pool context manager works correctly.
+
+#### test\_version\_check\_during\_retry
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_connection_retry_logic.py#L431)
+
+
+```python
+@patch("maxim.apis.maxim_apis.scribe")
+@patch("time.sleep")
+def test_version_check_during_retry(mock_sleep, mock_scribe)
+```
+
+Test that version checking works correctly during retry scenarios.
+
+## [TestFileUploadRetryLogic](/sdk/python/references/tests/test_connection_retry_logic)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_connection_retry_logic.py#L468)
+
+
+```python
+class TestFileUploadRetryLogic(unittest.TestCase)
+```
+
+Separate test class for file upload specific retry logic.
+
+#### setUp
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_connection_retry_logic.py#L1)
+
+
+```python
+def setUp()
+```
+
+Set up test fixtures.
+
+#### test\_file\_upload\_extended\_timeout
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_connection_retry_logic.py#L478)
+
+
+```python
+@patch("requests.put")
+@patch("time.sleep")
+@patch("maxim.apis.maxim_apis.scribe")
+def test_file_upload_extended_timeout(mock_scribe, mock_sleep, mock_put)
+```
+
+Test that file uploads use extended timeouts.
+
+#### test\_file\_upload\_retry\_exhaustion
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_connection_retry_logic.py#L501)
+
+
+```python
+@patch("requests.put")
+@patch("time.sleep")
+@patch("maxim.apis.maxim_apis.scribe")
+def test_file_upload_retry_exhaustion(mock_scribe, mock_sleep, mock_put)
+```
+
+Test file upload behavior when all retries are exhausted.
+

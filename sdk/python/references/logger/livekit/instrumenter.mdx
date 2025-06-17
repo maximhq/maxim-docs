@@ -1,0 +1,22 @@
+# maxim.logger.livekit.instrumenter
+
+#### instrument\_livekit
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/livekit/instrumenter.py#L15)
+
+
+```python
+def instrument_livekit(logger: Logger, callback: MaximLiveKitCallback = None)
+```
+
+Instrument LiveKit classes with logging.
+
+This function adds logging instrumentation to LiveKit classes (Agent, JobContext, LLM)
+by wrapping their methods with logging decorators. It logs method calls with their
+arguments and keyword arguments.
+
+The instrumentation:
+1. Wraps all Agent methods starting with "on_"
+2. Wraps all JobContext methods (except special methods)
+3. Wraps all LLM methods (except special methods)
+

@@ -1,0 +1,82 @@
+---
+title: "ChatCompletionMessage"
+sidebar_position: 1
+---
+
+# Interface: ChatCompletionMessage
+
+Defined in: [src/lib/models/prompt.ts:52](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L52)
+
+Represents a message in a chat completion response from an AI model.
+
+Contains the assistant's response including the content, role, and optional
+function/tool call information. Used in chat-based AI interactions where
+the model responds as an assistant in a conversation.
+
+ ChatCompletionMessage
+
+## Examples
+
+```ts
+// Simple text response
+const message: ChatCompletionMessage = {
+  role: "assistant",
+  content: "Hello! How can I help you today?"
+};
+```
+
+```ts
+// Response with tool calls
+const toolMessage: ChatCompletionMessage = {
+  role: "assistant",
+  content: null,
+  tool_calls: [{
+    id: "call_123",
+    type: "function",
+    function: {
+      name: "get_weather",
+      arguments: '{"location": "San Francisco"}'
+    }
+  }]
+};
+```
+
+## Properties
+
+### content
+
+> **content**: `null` \| `string`
+
+Defined in: [src/lib/models/prompt.ts:54](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L54)
+
+The text content of the response, or null if using function calls
+
+***
+
+### function\_call?
+
+> `optional` **function\_call**: [`ToolCallFunction`](./ToolCallFunction)
+
+Defined in: [src/lib/models/prompt.ts:55](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L55)
+
+Legacy function call information (deprecated in favor of tool_calls)
+
+***
+
+### role
+
+> **role**: `"assistant"`
+
+Defined in: [src/lib/models/prompt.ts:53](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L53)
+
+Always "assistant" for response messages
+
+***
+
+### tool\_calls?
+
+> `optional` **tool\_calls**: [`ChatCompletionToolCall`](./ChatCompletionToolCall)[]
+
+Defined in: [src/lib/models/prompt.ts:56](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L56)
+
+Array of tool/function calls made by the assistant

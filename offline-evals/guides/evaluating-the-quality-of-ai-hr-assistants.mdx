@@ -1,0 +1,129 @@
+---
+title: Evaluating the Quality of AI HR Assistants
+description: Learn how to evaluate the quality of AI HR assistants using Maxim's evaluation suite, ensuring accurate and efficient HR processes.
+---
+
+## Introduction
+
+Use of Artificial Intelligence in Human Resources is reducing administrative load by automating routine tasks such as hiring and resolving employee queries, freeing HR teams to focus on people-centric initiatives. The applications of AI span every stage of the HR workflows, including:
+
+- Sourcing candidates from large talent pools
+- Screening thousands of resumes to identify the best-fit candidates
+- Conducting interviews and assessments using AI-powered tools
+- Onboarding and training new employees with AI-personalized programs
+- Enhancing employee experience through AI-enabled policy guidance, PTO management, and reimbursement support
+
+In high-impact HR scenarios, it's critical to ensure AI systems operate accurately and without bias. A well-known example is Amazon's internal AI recruiting tool, which was found to [show bias against female applicants](https://www.theverge.com/2018/10/10/17958784/ai-recruiting-tool-bias-amazon-report). This high-profile failure highlights the importance of rigorous quality assurance and continuous monitoring to prevent discriminatory outcomes, ensure legal compliance, and maintain trust among candidates and employees.
+
+In this guide, we'll explore how to ensure the reliability of AI-powered HR applications. We'll take the example of an internal HR assistant that improves employee experience by providing answers on company policies such as benefits, PTO, and reimbursements. Our focus will be on evaluating the quality of the responses using Maxim's evaluation suite.
+
+## Evaluation Objectives
+
+We want to ensure:
+
+- Assistant responses are grounded in the knowledge source we provided
+- The responses are unbiased (i.e., check for gender, racial, political, or geographical bias)
+- Assistant is using the most relevant chunks of policy information for a given query
+- The tone of responses is polite and friendly
+- The assistant operates with low latency and predictable cost
+
+## Step-by-Step Evaluation Guide
+
+### Step 1: Prototype an AI HR Assistant in Maxim's Prompt Playground
+
+We'll build a RAG-based HR QnA assistant by creating a prompt in Maxim's no-code UI and using a text file containing company policies as the context source.
+
+1. **Create prompt**: Head to "Single prompts" in the "Evaluate" section and click "+" to create a new prompt. Let's name this: `HR_RAG_Assistant`
+
+2. **Define system message**: We'll use the following prompt to guide our HR assistant to generate helpful answers to employee queries.
+
+   <Note>
+   🤖 You are an HR assistant. Your role is to answer user questions truthfully based on the provided context- <code>`{{context}}`</code>
+
+   Include at least one direct quote from the context, enclosed in quotation marks, and specify the section and page number where the quote can be found.
+
+   Ensure the response is friendly and polite, adding "please" at the end to maintain a courteous tone.
+   </Note>
+
+   <Note>
+   Using Maxim, we can define [dynamic variables](/offline-evals/via-ui/prompts/prompt-playground#using-variables) in the prompt. Here, we'll attach our context source as the value for the <code>`{{context}}`</code> variable.
+   </Note>
+
+3. **Create context source**: This is the knowledge base that our assistant will use to generate its responses. We can bring our context source into Maxim by directly [importing the file](library/how-to/context-sources/ingest-files-as-a-context-source) containing the information or by bringing the retrieval pipeline through an [API endpoint](library/context-sources).
+
+   - We'll use the [HR_policy.txt](https://drive.google.com/file/d/1yXetPoYk4EbDplzZDpJ-vKR1mVhLJG1g/view?usp=sharing) file containing the data of the company policies and upload it to Maxim
+   - To add a context source, go to the "Library" section and select "Context sources"
+   - Click the "+" button to add a new context source and select "Files" as the type
+   - Select "Browse files" to upload our knowledge base (`HR_policy.txt` for our example)
+   - Maxim will automatically convert the file's content into chunks and embeddings using the `text-embedding-ada-002` model. These embeddings enable the retrieval of context that is relevant to the user's query
+
+4. **Connect the context source** to our prompt in the [Prompt Playground](/offline-evals/via-ui/prompts/prompt-playground), under the "Variables" section. Also, select an LLM of choice (using Gemini 2.0 flash in this example).
+
+5. **To test the output**, we'll pass the following user query to our HR assistant:
+
+<Note>
+👤 What is the reimbursement policy?
+</Note>
+
+Here's what's happening: For the input, we first query the context source to fetch relevant chunks of information (context). This context is then passed to the LLM in the system prompt (via the <code>`{{context}}`</code> variable), and the LLM generates a response for our input query using the information in the retrieved context.
+
+To evaluate the performance of our assistant, we'll now create a test [dataset](/library/datasets/import-or-create-datasets). It is a collection of employee queries and corresponding expected responses. We'll use the expected response to evaluate the performance and quality of the response generated by our assistant.
+### Step 2: Create a Dataset
+
+For our example, we'll use the [HR_queries.csv](https://docs.google.com/spreadsheets/d/1nEEWlw7BeGSahJMRk26nNTG_s6y9jJ2HIFAIB79KmkM/edit?usp=sharing) dataset.
+
+1. To upload the dataset to Maxim, go to the "Library" section and select "Datasets"
+2. Click the "+" button and upload a CSV file as a dataset
+3. Map the columns in the following manner:
+   - Set `employee_query` as "Input" type, since these queries will be the input to our HR assistant
+   - Set `expected_response` as "Expected Output" type, since this is the reference for comparison of generated assistant responses
+4. Click "Add to dataset" and your evaluation dataset is ready to use
+
+### Step 3: Evaluating the HR Assistant
+
+Now we'll evaluate the performance of our HR assistant and the quality of the generated responses.
+
+We'll evaluate the performance using the following evaluators from Maxim's [Evaluator Store](/library/evaluators/pre-built-evaluators):
+
+| Evaluator | Type | Purpose |
+|-----------|------|---------|
+| Context Relevance | LLM-as-a-judge | Evaluates how well your RAG pipeline's retriever finds information relevant to the input |
+| Faithfulness | LLM-as-a-judge | Measures whether the output factually aligns with the contents of your context |
+| Context Precision | LLM-as-a-judge | Measures retriever accuracy by assessing the relevance of each node in the retrieved context |
+| Bias | LLM-as-a-judge | Determines whether output contains gender, racial, political, or geographical bias |
+| Semantic Similarity | Statistical | Checks whether the generated output is semantically similar to the expected output |
+| Tone check | Custom eval | Determines whether the output has friendly and polite tone |
+
+**Tone check**: To check the tone of our HR assistant's responses, we'll also create a custom LLM-as-a-Judge evaluator on Maxim. We'll define the following instructions for our judge LLM to evaluate the tone:
+
+<Note>
+🧪 You are a tone-evaluation assistant specifically for an HR chatbot. Given the assistant's reply <code>`{{output}}`</code>, determine if the response is friendly and polite?
+</Note>
+
+**Trigger an evaluation**:
+
+1. Go to the Prompt Playground and click "Test" in the top right corner
+2. Select your test dataset (i.e., `HR_queries` for our example)
+3. To evaluate the quality of our retrieved context, select the context source you're using for the AI assistant under "Context to evaluate" (i.e., `HR_policy` in our example)
+4. Select the evaluators and trigger the test run. For each of the employee queries in our dataset, the assistant will fetch the relevant context from the context source and generate a response
+
+### Step 4: Analyze Evaluation Report
+
+Upon completion of the test run, you'll see a detailed [report](/offline-evals/via-ui/advanced/customized-reports) of your AI HR assistant's performance across chosen quality metrics (i.e., bias, faithfulness, etc.) and model performance metrics such as latency and cost.
+
+Check out the [dynamic evaluation report](https://app.getmaxim.ai/show/f6f2bb89-0e6e-4078-8627-cbc79085dc57?visibleColumns=%7B%22status%22%3Atrue%2C%22latency%22%3Atrue%2C%22input%22%3Atrue%2C%22expectedOutput%22%3Atrue%2C%22output%22%3Atrue%2C%22context%22%3Atrue%2C%22entity%22%3Afalse%7D&columnOrder=%5B%22checkbox-select%22%2C%22status%22%2C%22input%22%2C%22expectedOutput%22%2C%22entity%22%2C%22context%22%2C%22output%22%2C%22latency%22%2C%22cm48ba98v00448kjkuugxklu7%22%2C%22cm48bazj1004d8kjk1jb8swbo%22%2C%22cm6ibhdqs005frv7dm3zocfzp%22%2C%22cm48bajgk004a8kjk3jx8qn01%22%2C%22custom-cmadvva6b00moib8ubva1fux9%22%2C%22cma0pj96w00gso9fsnxu2lp0o%22%2C%22evaluationCost%22%5D&pinnedColumns=%7B%22left%22%3A%5B%22checkbox-select%22%5D%2C%22right%22%3A%5B%5D%7D) generated for our assistant. You can click on any row to inspect the input query, the assistant's response, or the evaluator's scores and reasoning.
+
+**Key insights from our example**:
+
+- The AI HR QnA assistant scored consistently low on the 'Context Relevance' metric, indicating that the retrieved context includes irrelevant information. To address this:
+  - Refine the chunking strategy to break down data into more precise chunks
+  - Introduce a [re-ranking](https://www.getmaxim.ai/blog/reranker-rag/) step to reorder retrieved documents based on contextual relevance
+- The assistant successfully passed the Bias evaluation across all tested queries, confirming no gender, racial, political, or geographical bias
+
+## Conclusion
+
+AI-powered HR assistants can significantly enhance employee experience and operational efficiency. In this guide, we walked through the process of building and evaluating an internal HR assistant using Maxim's no-code evaluation suite. From uploading policy documents as context to testing for faithfulness, bias, and retrieval precision, we demonstrated how to systematically assess the quality of an AI assistant's responses.
+
+As AI continues to transform HR workflows, from resume screening to answering employee queries, rigorous evaluation remains critical to ensure trustworthy and accurate outcomes. [Maxim](https://www.getmaxim.ai/) makes it easier than ever to prototype, test, and refine AI systems, helping organizations deploy reliable assistants with speed.
+
+Ready to evaluate your HR assistant? [Get started with Maxim today](/introduction/overview).

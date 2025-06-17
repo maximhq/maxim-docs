@@ -1,0 +1,13 @@
+{
+    "title": "Tracing",
+    "pages": [
+        "overview",
+        "concepts",
+        "quickstart",
+        "tracing-via-sdk",
+        "dashboard",
+        "otel-compatibility",
+        "exports",
+        "reporting"
+    ]
+}

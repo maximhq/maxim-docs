@@ -1,0 +1,34 @@
+# maxim.logger.portkey.client
+
+This module is a wrapper around the Portkey client that allows for easy integration with [Maxim](/sdk/python/references/maxim).
+
+It instruments the Portkey client to log to [Maxim](/sdk/python/references/maxim).
+
+It also provides a wrapper around the Portkey chat-completions client that allows for easy integration with [Maxim](/sdk/python/references/maxim).
+
+#### instrument\_portkey
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/portkey/client.py#L32)
+
+
+```python
+def instrument_portkey(client: PortkeyClient,
+                       logger: Logger) -> MaximPortkeyClient
+```
+
+Attach [Maxim](/sdk/python/references/maxim) OpenAI wrappers to a Portkey client.
+
+This helper patches the ``openai_client`` attribute of a ``Portkey`` or
+``AsyncPortkey`` instance so that all OpenAI-compatible calls are logged
+via [Maxim](/sdk/python/references/maxim).
+
+**Arguments**:
+
+- `client` - Instance of Portkey or AsyncPortkey client.
+- `logger` - [Maxim](/sdk/python/references/maxim) ``[Logger](/sdk/python/references/logger/logger)`` instance.
+  
+
+**Returns**:
+
+  The same client instance with its ``openai_client`` patched.
+

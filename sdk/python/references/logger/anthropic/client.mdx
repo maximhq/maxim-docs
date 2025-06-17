@@ -1,0 +1,56 @@
+# maxim.logger.anthropic.client
+
+## [MaximAnthropicClient](/sdk/python/references/logger/anthropic/client)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/client.py#L10)
+
+
+```python
+class MaximAnthropicClient()
+```
+
+[Maxim](/sdk/python/references/maxim) Anthropic client wrapper.
+
+This class provides a wrapper around the Anthropic client to integrate
+with [Maxim](/sdk/python/references/maxim)'s logging and monitoring capabilities. It allows tracking
+and logging of Anthropic API interactions through the [Maxim](/sdk/python/references/maxim) platform.
+
+**Attributes**:
+
+- `_client` _Anthropic_ - The underlying Anthropic client instance.
+- `_logger` _[Logger](/sdk/python/references/logger/logger)_ - The [Maxim](/sdk/python/references/maxim) logger instance for tracking interactions.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/client.py#L22)
+
+
+```python
+def __init__(client: Anthropic, logger: Logger)
+```
+
+Initialize the [Maxim](/sdk/python/references/maxim) Anthropic client.
+
+**Arguments**:
+
+- `client` _Anthropic_ - The Anthropic client instance to wrap.
+- `logger` _[Logger](/sdk/python/references/logger/logger)_ - The [Maxim](/sdk/python/references/maxim) logger instance for tracking and
+  logging API interactions.
+
+#### messages
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/client.py#L34)
+
+
+```python
+@property
+def messages() -> MaximAnthropicMessages
+```
+
+Get the messages interface with [Maxim](/sdk/python/references/maxim) logging capabilities.
+
+**Returns**:
+
+- `[MaximAnthropicMessages](/sdk/python/references/logger/anthropic/message)` - A wrapped messages interface that provides
+  logging and monitoring capabilities for Anthropic message operations.
+

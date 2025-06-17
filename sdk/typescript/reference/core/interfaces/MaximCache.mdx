@@ -1,0 +1,190 @@
+---
+title: "MaximCache"
+sidebar_position: 1
+---
+
+# Interface: MaximCache
+
+Defined in: [src/lib/cache/cache.ts:41](https://github.com/maximhq/maxim-js/blob/main/src/lib/cache/cache.ts#L41)
+
+Cache interface for the Maxim SDK.
+
+This interface defines the contract for cache implementations used by the Maxim SDK
+to store and retrieve cache across distributed systems. Implementations can use
+in-memory storage, Redis, file systems, or any other persistence mechanism.
+
+ MaximCache
+
+## Examples
+
+```ts
+// Custom Redis-based cache implementation
+import { createClient } from 'redis';
+
+class RedisCacheImplementation implements MaximCache {
+  private client = createClient();
+
+  async getAllKeys(): Promise<string[]> {
+    return await this.client.keys('*');
+  }
+
+  async get(key: string): Promise<string | null> {
+    return await this.client.get(key);
+  }
+
+  async set(key: string, value: string): Promise<void> {
+    await this.client.set(key, value);
+  }
+
+  async delete(key: string): Promise<void> {
+    await this.client.del(key);
+  }
+}
+```
+
+```ts
+// Using with Maxim SDK
+const maxim = new Maxim({
+  apiKey: 'your-api-key',
+  cache: new RedisCacheImplementation()
+});
+```
+
+## Methods
+
+### delete()
+
+> **delete**(`key`): `Promise`\<`void`\>
+
+Defined in: [src/lib/cache/cache.ts:89](https://github.com/maximhq/maxim-js/blob/main/src/lib/cache/cache.ts#L89)
+
+Removes a key and its associated value from the cache.
+
+#### Parameters
+
+##### key
+
+`string`
+
+The cache key to delete. Must be a non-empty string.
+
+#### Returns
+
+`Promise`\<`void`\>
+
+A promise that resolves when the key is successfully deleted.
+
+#### Throws
+
+When the cache operation fails or is inaccessible.
+
+#### Example
+
+```ts
+await cache.delete('user:123');
+// Key 'user:123' and its value are now removed from cache
+```
+
+***
+
+### get()
+
+> **get**(`key`): `Promise`\<`null` \| `string`\>
+
+Defined in: [src/lib/cache/cache.ts:65](https://github.com/maximhq/maxim-js/blob/main/src/lib/cache/cache.ts#L65)
+
+Retrieves a value from the cache for the given key.
+
+#### Parameters
+
+##### key
+
+`string`
+
+The cache key to retrieve. Must be a non-empty string.
+
+#### Returns
+
+`Promise`\<`null` \| `string`\>
+
+The cached value as a string, or null if the key doesn't exist.
+
+#### Throws
+
+When the cache operation fails or is inaccessible.
+
+#### Example
+
+```ts
+const value = await cache.get('user:123');
+if (value !== null) {
+  const userData = JSON.parse(value);
+}
+```
+
+***
+
+### getAllKeys()
+
+> **getAllKeys**(): `Promise`\<`string`[]\>
+
+Defined in: [src/lib/cache/cache.ts:51](https://github.com/maximhq/maxim-js/blob/main/src/lib/cache/cache.ts#L51)
+
+Retrieves all keys currently stored in the cache.
+
+#### Returns
+
+`Promise`\<`string`[]\>
+
+An array of all cache keys.
+
+#### Throws
+
+When the cache operation fails or is inaccessible.
+
+#### Example
+
+```ts
+const keys = await cache.getAllKeys();
+console.log('Cache contains keys:', keys);
+```
+
+***
+
+### set()
+
+> **set**(`key`, `value`): `Promise`\<`void`\>
+
+Defined in: [src/lib/cache/cache.ts:77](https://github.com/maximhq/maxim-js/blob/main/src/lib/cache/cache.ts#L77)
+
+Stores a value in the cache with the specified key.
+
+#### Parameters
+
+##### key
+
+`string`
+
+The cache key to store under. Must be a non-empty string.
+
+##### value
+
+`string`
+
+The string value to cache. Will be stored as-is.
+
+#### Returns
+
+`Promise`\<`void`\>
+
+A promise that resolves when the value is successfully stored.
+
+#### Throws
+
+When the cache operation fails or is inaccessible.
+
+#### Example
+
+```ts
+await cache.set('user:123', JSON.stringify({ name: 'John', id: 123 }));
+```

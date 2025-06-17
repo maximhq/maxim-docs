@@ -1,0 +1,82 @@
+---
+title: Agent Evals
+---
+
+## Test your Endpoint
+
+Send messages to your API from the **Messages** panel to test your endpoint with a conversational experience. See this demonstrated at the end of the video above.
+
+## Map the output for evaluation
+
+Before running tests, tell us what part of your response to evaluate by mapping an `output` from the response payload.
+
+Click the `Test` button in the top right corner to open the **Test run** configuration panel. Select your **Output** from the dropdown of mappable response fields. View the full response payload by clicking `Show response`. Optionally, map the **Context to Evaluate** field using the **Context field** selector.
+
+See how to map outputs for evaluation:
+
+<MaximPlayer url="https://drive.google.com/file/d/1gQz4zF_Mmy-l10pyOStM-8wuxTbW6ms4/preview" />
+
+<Warning>
+
+**Important**
+
+- The `Test` button remains disabled until you send messages to your endpoint. The system requires a response payload structure for `output` mapping.
+- When mapping without triggering a test run, save your endpoint explicitly. Map in the configuration sheet, click outside to close it, then click **Save endpoint**
+
+</Warning>
+
+## Test multi-turn conversations
+
+Real conversations create fascinating puzzles because:
+
+- Testing single responses doesn't reveal the complete interaction pattern
+- Just like human conversations, AI chats can take unexpected turns
+- When something goes wrong, you need to replay the conversation - but what if you could change history?
+
+These intriguing challenges make it crucial to test your AI's conversational abilities thoroughly before it faces real users. 
+Maxim solves this with an interactive Messages panel that lets you simulate, manipulate, and debug multi-turn conversations in real-time. Bring your application endpoint to create and test multi-turn conversations without any code integration.
+
+### Configure your endpoint for conversations
+
+Before testing conversations, you need to configure your endpoint:
+
+1. Enter your AI endpoint URL (e.g., `https://astronomy-ai.example.com/chat`)
+2. Configure the request body
+   ```json
+   {
+     "query": "{{input}}"
+   }
+   ```
+   Your application receives and processes messages correctly with this configuration.
+
+### Start a conversation
+
+1. Type your initial message in the input field
+2. Click Send to start the conversation
+
+### Edit and modify conversations
+
+You can manipulate the conversation to test different scenarios:
+
+- **Delete Messages**: Remove any message from the conversation history to test how your AI handles modified contexts
+- **Edit History**: Change previous messages to simulate different conversation paths
+
+![Manual simulation](/images/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/test-multi-turn-conversations-manually/manual-multi-turn-simulation.png)
+
+### Example usage
+
+Here's a typical endpoint for testing multi-turn conversations:
+
+1. Start with a simple query:
+   ```
+   User: "How old is the universe?"
+   AI: "The universe is estimated to be around 13.8 billion years old..."
+   ```
+
+2. Follow up with related questions:
+   ```
+   User: "What's the Big Bang theory?"
+   AI: "The Big Bang theory explains the origin of the universe..."
+   ```
+
+By using the Messages panel effectively, you can ensure your AI endpoint handles multi-turn conversations reliably and maintains appropriate context throughout the interaction.

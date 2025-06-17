@@ -1,0 +1,99 @@
+---
+title: CI/CD Integration
+description: Learn how to integrate HTTP endpoint evaluations into your CI/CD pipeline using GitHub Actions
+---
+
+Automate your agent evaluations by integrating them into your CI/CD pipeline. This guide shows you how to use GitHub Actions with the [Maxim Actions repository](https://github.com/maximhq/actions) to test workflows automatically.
+
+## GitHub Actions Setup
+
+The Maxim Actions repository provides pre-built GitHub Actions that make it easy to run agent tests in your CI/CD pipeline.
+
+### Prerequisites
+
+Before setting up the GitHub Action, you'll need to setup the following:
+
+1. **GitHub Secrets**: Store your Maxim API key securely
+2. **GitHub Variables**: Configure your workspace and resource IDs
+3. **Workflow ID**: The specific workflow ID from the Maxim platform
+
+### Environment Setup
+
+Add these secrets and variables to your GitHub repository:
+
+**Secrets** (Repository Settings → Secrets and variables → Actions):
+
+- `MAXIM_API_KEY`: Your Maxim API key
+
+**Variables** (Repository Settings → Secrets and variables → Actions):
+
+- `WORKSPACE_ID`: Your Maxim workspace ID
+- `DATASET_ID`: The dataset to use for testing
+- `WORKFLOW_ID`: The workflow ID to test
+
+### Complete GitHub Actions Workflow
+
+Create a file `.github/workflows/agent-evaluation.yml` in your repository:
+
+```yaml
+name: Workflow Evaluation with Maxim
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  TEST_RUN_NAME: "Workflow Evaluation - ${{ github.sha }}"
+  CONTEXT_TO_EVALUATE: "context"
+  EVALUATORS: "bias, clarity, faithfulness"
+
+jobs:
+  evaluate-agent:
+    runs-on: ubuntu-latest
+    name: Run Workflow Evaluation
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run Workflow Test with Maxim
+        id: workflow_test
+        uses: maximhq/actions/test-runs@v1
+        with:
+          api_key: ${{ secrets.MAXIM_API_KEY }}
+          workspace_id: ${{ vars.WORKSPACE_ID }}
+          test_run_name: ${{ env.TEST_RUN_NAME }}
+          dataset_id: ${{ vars.DATASET_ID }}
+          workflow_id: ${{ vars.WORKFLOW_ID }}
+          context_to_evaluate: ${{ env.CONTEXT_TO_EVALUATE }}
+          evaluators: ${{ env.EVALUATORS }}
+
+      - name: Display Test Results
+        if: always()
+        run: |
+          echo "Workflow Test Results:"
+          echo "${{ steps.workflow_test.outputs.test_run_result }}"
+          echo ""
+          echo "Failed Indices: ${{ steps.workflow_test.outputs.test_run_failed_indices }}"
+          echo ""
+          echo "📊 View detailed report: ${{ steps.agent_test.outputs.test_run_report_url }}"
+
+      - name: Check Test Status
+        if: failure()
+        run: |
+          echo "❌ Workflow evaluation failed. Check the detailed report for more information."
+          exit 1
+
+      - name: Success Notification
+        if: success()
+        run: |
+          echo "✅ Workflow evaluation passed successfully!"
+```
+
+## Next Steps
+
+- [Local Endpoint Testing](/offline-evals/via-sdk/agent-http/local-endpoint) - Test agents with custom HTTP endpoints
+- [Endpoint on Maxim](/offline-evals/via-sdk/agent-http/endpoint-on-maxim) - Use workflows stored on the Maxim platform

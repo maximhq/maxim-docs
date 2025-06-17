@@ -1,0 +1,108 @@
+---
+title: Quickstart
+description: Learn how to quickly get started with running agent evaluations via HTTP endpoints using the Maxim SDK
+---
+
+Get started with evaluating AI agents accessible via HTTP endpoints using the Maxim SDK. This guide will walk you through setting up the SDK and running your first agent evaluation test run.
+
+## Installation
+
+First, install the Maxim SDK for your preferred language:
+
+<CodeGroup>
+```bash Python
+pip install maxim-py
+```
+
+```bash JS/TS
+npm install @maximai/maxim-js
+```
+
+</CodeGroup>
+
+## Getting Your API Key
+
+Before you can use the Maxim SDK, you need to obtain an API key from the Maxim platform:
+
+1. **Log in to Maxim**: Go to [app.getmaxim.ai/login](https://app.getmaxim.ai/login) and sign in to your account
+2. **Navigate to Settings**: Click on "Settings" in the left sidebar
+3. **Go to API Keys**: Click on "API keys" under "Organization settings"
+4. **Generate New Key**: Click the "Generate new" button
+5. **Name Your Key**: Enter a descriptive name for your API key (e.g., "Development", "CI/CD", "Local Testing")
+6. **Copy the Key**: Once generated, copy the API key immediately - you won't be able to see it again
+
+<Warning>Store your API key securely! You won't be able to view the complete key value again after closing the generation dialog.</Warning>
+
+## Configuration
+
+Initialize the Maxim SDK with your API key and workspace information:
+
+<CodeGroup>
+```python Python
+from maxim import Maxim
+
+# Initialize Maxim SDK
+
+maxim = Maxim({"api_key": "your-api-key"})
+
+````
+
+```typescript JS/TS
+import { Maxim } from '@maximai/maxim-js';
+
+// Initialize Maxim SDK
+const maxim = new Maxim({
+  apiKey: 'your-api-key',
+});
+````
+
+</CodeGroup>
+
+## Basic HTTP Agent Test Run
+
+Here's how to create and run a basic agent evaluation test run using a workflow stored on the Maxim platform:
+
+<CodeGroup>
+```python Python
+# Create a test run using a workflow
+
+result = (
+    maxim.create_test_run(
+        name="Basic Agent HTTP Evaluation", in_workspace_id="your-workspace-id"
+    )
+    .with_data_structure({"input": "INPUT", "expected_output": "EXPECTED_OUTPUT"})
+    .with_data("your-dataset-id")
+    .with_evaluators("Bias")
+    .with_workflow_id("your-workflow-id")  # Your agent workflow ID on Maxim platform
+    .run()
+)
+
+print(f"Test run completed! View results: {result.test_run_result.link}")
+
+````
+
+```typescript JS/TS
+// Create a test run using a workflow
+const result = await maxim
+  .createTestRun('Basic Agent HTTP Evaluation', 'your-workspace-id')
+  .withDataStructure({
+    Input: 'INPUT',
+    'Expected Output': 'EXPECTED_OUTPUT',
+  })
+  .withData('your-dataset-id')
+  .withEvaluators('Bias')
+  .withWorkflowId('your-workflow-id') // Your agent workflow ID on Maxim platform
+  .run();
+
+console.log(`Test run completed! View results: ${result.testRunResult.link}`);
+````
+
+</CodeGroup>
+
+## Next Steps
+
+Now that you've run your first agent evaluation, explore these guides:
+
+- [Local Endpoint Testing](/offline-evals/via-sdk/agent-http/local-endpoint) - Test agents running on your local endpoints
+- [Endpoint on Maxim](/offline-evals/via-sdk/agent-http/endpoint-on-maxim) - Use workflows stored on the Maxim platform
+- [CI/CD Integration](/offline-evals/via-sdk/agent-http/ci-cd-integration) - Automate agent testing in your CI/CD pipeline

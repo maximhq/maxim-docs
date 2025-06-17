@@ -1,0 +1,118 @@
+---
+title: Evaluating AI Healthcare Assistants
+description: Learn how to evaluate the quality and reliability of AI healthcare assistants using Maxim's evaluation suite, ensuring patient safety and clinical reliability.
+---
+
+## Introduction
+
+Healthcare assistants are changing the way patients and clinicians interact. For patients, these tools offer easy access to timely advice and guidance, improving overall care and satisfaction. For clinicians, they reduce administrative tasks, allowing more time for patient care while providing real-time knowledge and data to support informed decision-making.
+
+In high-stakes healthcare environments, ensuring the reliability of AI assistants is crucial for patient safety and trust in clinical workflows. Unreliable or inaccurate output from AI assistants can lead to:
+
+- Diagnostic errors
+- Inappropriate treatment decisions
+- Adverse patient outcomes
+- Reduced user confidence
+- Potential legal and regulatory challenges
+
+Therefore, it becomes critical to rigorously evaluate assistant quality to catch issues such as hallucinations, factual inaccuracies, or unclear responses before they impact users.
+
+## Example Use Case
+
+For our example, we'll use an AI clinical assistant that helps patients with:
+
+- Symptom-related medical guidance 💬
+- Assistance in ordering safe medications and in the correct quantities 💊
+
+## Evaluation Objectives
+
+We want to ensure that our assistant:
+
+- Responds to medical queries in a clear, helpful, and coherent manner
+- Only approves drug orders that are relevant to the patient query
+- Avoids incorrect or misleading information
+- Operates with low latency and predictable cost
+
+We'll leverage Maxim's evaluation suite by directly bringing our AI assistant via an API endpoint, and use Maxim's built-in and 3rd-party evals (such as Google Vertex evals) to assess the quality of our AI clinical assistant's responses.
+
+## Step-by-Step Evaluation Guide
+
+### Step 1: Set up a Workflow
+
+1. Navigate to the "Workflows" section in the Maxim AI dashboard and click on "+" to create a new workflow.
+2. Bring your clinical assistant via an API endpoint:
+   - Enter your AI assistant's API URL
+   - Select the appropriate HTTP method
+   - Define your API's input key in the body (i.e., content, in our example)
+   - Define the variables (key-value pairs) for your endpoint in JSON format in the body section
+3. Test your workflow setup by passing a query to your API endpoint and checking if your AI assistant is successfully returning a response.
+
+### Step 2: Create a Dataset
+
+We'll create a golden dataset, which is a collection of patient queries and expected medication suggestions.
+
+1. Go to the "Library" section and select "Datasets"
+2. Click the "+" button and upload a CSV file as a dataset
+3. Map the columns:
+   - Set the column you wish to pass to the API endpoint as "Input" type (e.g., "query" column)
+   - Set the column you wish to compare with your AI assistant's response as "Expected Output" type (e.g., "expected_output" column)
+
+<Note>
+The name of the column marked "Input" type should match the name of the field we're referencing in the body of the API endpoint in Workflows. For example, "query" is the name of the column defined as "Input" type and has to be referenced in the body as <code>`{{query}}`</code>.
+</Note>
+
+4. Click "Add to dataset" to complete the setup
+
+### Step 3: Evaluating the AI Assistant
+
+We'll evaluate the performance of our clinical assistant using the following evaluators from Maxim's Evaluator Store:
+
+| Evaluator | Type | Purpose |
+|-----------|------|---------|
+| Output Relevance | LLM-as-a-judge | Validates that the generated output is relevant to the input |
+| Clarity | LLM-as-a-judge | Validates that the generated output is clear and easily understandable |
+| Vertex Question Answering Helpfulness | LLM-as-a-judge (3rd-Party) | Assesses how helpful the answer is in addressing the question |
+| Vertex Question Answering Relevance | LLM-as-a-judge (3rd-Party) | Determines how relevant the answer is to the posed question |
+| Correctness | Human eval | Collects human annotation on the correctness of the information |
+| Semantic Similarity | Statistical | Validates that the generated output is semantically similar to expected output |
+
+To maintain human-in-the-loop evaluation:
+- Add a "Human Evaluator" for domain experts or QA reviewers
+- Enable direct annotation of results in the final report
+- Add a layer of human supervision for sensitive healthcare domains
+
+To trigger an evaluation:
+
+1. Go to the Workflow and click "Test" in the top right corner
+2. Select your golden dataset
+3. Select the output field (e.g., "content" in the API response)
+4. Choose evaluation methods:
+   - **Annotate on report**: Add a column to the run report for direct scoring
+   - **Send via email**: Send secure links to external evaluators
+
+### Step 4: Analyze Evaluation Report
+
+The test run generates a detailed report showing:
+
+- Performance across quality metrics (clarity, output relevance, etc.)
+- Model performance metrics (latency and cost)
+- Interactive inspection of input queries and responses
+- Evaluator scores and reasoning
+- Human evaluator feedback and suggestions
+
+## Conclusion
+
+Evaluating AI clinical assistants is more than a box to check; it's a critical safeguard for:
+
+- Patient safety
+- Clinical reliability
+- Long-term trust in healthcare AI
+
+With tools like Maxim, teams can:
+- Build robust evaluation workflows
+- Integrate human feedback
+- Systematically measure quality and performance
+
+Whether you're validating a symptom checker or a medication-ordering agent, rigorous testing ensures your assistant is safe, helpful, and reliable before reaching real patients and doctors.
+
+Ready to assess your AI assistant? [Set up your first evaluation on Maxim today](/introduction/overview).

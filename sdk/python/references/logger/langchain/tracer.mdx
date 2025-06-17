@@ -1,0 +1,118 @@
+# maxim.logger.langchain.tracer
+
+## [MaximLangchainTracer](/sdk/python/references/logger/langchain/tracer)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/tracer.py#L38)
+
+
+```python
+class MaximLangchainTracer(BaseCallbackHandler)
+```
+
+A callback handler that logs langchain outputs to [Maxim](/sdk/python/references/maxim) logger
+
+**Arguments**:
+
+- `logger` - [[Logger](/sdk/python/references/logger/logger)](/sdk/python/references/logger/logger): [Maxim](/sdk/python/references/maxim) Logger instance to log outputs
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/tracer.py#L46)
+
+
+```python
+def __init__(logger: Logger,
+             metadata: Optional[Dict[str, Any]] = None,
+             eval_config: Optional[Dict[str, List[str]]] = None) -> None
+```
+
+Initializes the Langchain Tracer
+
+**Arguments**:
+
+- `logger` - [[Logger](/sdk/python/references/logger/logger)](/sdk/python/references/logger/logger): [Maxim](/sdk/python/references/maxim) Logger instance to log outputs
+
+#### on\_llm\_start
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/tracer.py#L217)
+
+
+```python
+def on_llm_start(serialized: dict[str, Any],
+                 prompts: list[str],
+                 *,
+                 run_id: UUID,
+                 parent_run_id: Optional[UUID] = None,
+                 tags: Optional[list[str]] = None,
+                 metadata: Optional[dict[str, Any]] = None,
+                 **kwargs: Any) -> Any
+```
+
+Runs when LLM starts
+
+#### on\_chat\_model\_start
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/tracer.py#L269)
+
+
+```python
+def on_chat_model_start(serialized: Dict[str, Any],
+                        messages: List[List[BaseMessage]],
+                        metadata: Optional[Dict[str, Any]] = None,
+                        **kwargs: Any) -> Any
+```
+
+Runs when a chat model call starts
+
+#### on\_llm\_new\_token
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/tracer.py#L347)
+
+
+```python
+def on_llm_new_token(token: str, **kwargs: Any) -> Any
+```
+
+Run on new LLM token. Only available when streaming is enabled.
+
+#### on\_llm\_end
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/tracer.py#L350)
+
+
+```python
+def on_llm_end(response: LLMResult, **kwargs: Any) -> Any
+```
+
+Run when LLM ends running.
+
+#### on\_llm\_error
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/tracer.py#L420)
+
+
+```python
+def on_llm_error(error: Union[Exception, BaseException, KeyboardInterrupt],
+                 **kwargs: Any) -> Any
+```
+
+Run when LLM errors.
+
+#### on\_retriever\_start
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/tracer.py#L449)
+
+
+```python
+def on_retriever_start(serialized: dict[str, Any],
+                       query: str,
+                       *,
+                       run_id: UUID,
+                       parent_run_id: Optional[UUID] = None,
+                       tags: Optional[list[str]] = None,
+                       metadata: Optional[dict[str, Any]] = None,
+                       **kwargs: Any) -> Any
+```
+
+Run when Retriever starts running.
+

@@ -1,0 +1,4 @@
+{
+	"title": "Settings",
+	"pages": ["members-and-roles", "model-configuration", "maxim-api-keys", "custom-pricing"]
+}

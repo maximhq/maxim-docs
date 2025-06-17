@@ -1,0 +1,8 @@
+{
+	"title": "Evaluators",
+	"pages": [
+		"pre-built-evaluators",
+		"custom-evaluators",
+		"third-party-evaluators"
+	]
+}

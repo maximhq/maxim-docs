@@ -1,0 +1,26 @@
+# maxim.logger.components.utils
+
+This module contains utility functions for parsing attachments from messages.
+
+#### parse\_attachments\_from\_messages
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/utils.py#L22)
+
+
+```python
+def parse_attachments_from_messages(
+    messages: list["GenerationRequestMessage"]
+) -> Tuple[list["GenerationRequestMessage"], list["Attachment"]]
+```
+
+Parses the attachment from the result.
+
+**Arguments**:
+
+- `messages` _List[[GenerationRequestMessage](/sdk/python/references/logger/components/generation)]_ - The messages to parse attachments from.
+  
+
+**Returns**:
+
+- `tuple` - A tuple containing the modified messages and the list of attachments.
+

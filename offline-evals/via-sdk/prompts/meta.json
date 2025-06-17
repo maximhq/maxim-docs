@@ -1,0 +1,5 @@
+{
+  "title": "Prompts",
+  "description": "Learn how to run offline evaluations for prompts using the Maxim SDK",
+  "pages": ["quickstart", "local-prompt", "maxim-prompt", "querying-prompts", "ci-cd-integration"]
+}

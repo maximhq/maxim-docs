@@ -1,0 +1,123 @@
+---
+title: "CommitLog"
+sidebar_position: 1
+---
+
+# Class: CommitLog
+
+Defined in: [src/lib/logger/components/types.ts:41](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/types.ts#L41)
+
+Represents a log action within the Maxim system.
+
+CommitLog instances are used to record all changes to components,
+they are used by the log writer to persist data to the backend.
+
+ CommitLog
+
+## Constructors
+
+### Constructor
+
+> **new CommitLog**(`entity`, `entityId`, `action`, `data`): `CommitLog`
+
+Defined in: [src/lib/logger/components/types.ts:55](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/types.ts#L55)
+
+Creates a new commit log entry.
+
+#### Parameters
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The type of entity being logged
+
+##### entityId
+
+`string`
+
+Unique identifier for the entity instance
+
+##### action
+
+`string`
+
+The action being performed (e.g., 'create', 'update', 'end')
+
+##### data
+
+`Record`\<`string`, `any`\>
+
+Data associated with the action
+
+#### Returns
+
+`CommitLog`
+
+## Properties
+
+### action
+
+> `readonly` **action**: `string`
+
+Defined in: [src/lib/logger/components/types.ts:44](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/types.ts#L44)
+
+***
+
+### data
+
+> `readonly` **data**: `Record`\<`string`, `any`\>
+
+Defined in: [src/lib/logger/components/types.ts:45](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/types.ts#L45)
+
+## Accessors
+
+### id
+
+#### Get Signature
+
+> **get** **id**(): `string`
+
+Defined in: [src/lib/logger/components/types.ts:67](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/types.ts#L67)
+
+Gets the unique identifier for the entity associated with this log entry.
+
+##### Returns
+
+`string`
+
+The entity's unique ID
+
+***
+
+### type
+
+#### Get Signature
+
+> **get** **type**(): [`Entity`](../enumerations/Entity)
+
+Defined in: [src/lib/logger/components/types.ts:76](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/types.ts#L76)
+
+Gets the entity type for this log entry.
+
+##### Returns
+
+[`Entity`](../enumerations/Entity)
+
+The entity type enum value
+
+## Methods
+
+### serialize()
+
+> **serialize**(): `string`
+
+Defined in: [src/lib/logger/components/types.ts:85](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/types.ts#L85)
+
+Serializes the commit log to a formatted string representation for logging.
+
+#### Returns
+
+`string`
+
+A string representation of the log entry with entity, ID, action, and data

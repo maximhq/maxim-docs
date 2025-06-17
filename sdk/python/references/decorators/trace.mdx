@@ -1,0 +1,45 @@
+# maxim.decorators.trace
+
+#### current\_logger
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/decorators/trace.py#L19)
+
+
+```python
+def current_logger() -> Optional[Logger]
+```
+
+Get the current logger from the context variable.
+
+#### current\_trace
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/decorators/trace.py#L27)
+
+
+```python
+def current_trace() -> Optional[Trace]
+```
+
+Get the current trace from the context variable.
+
+#### trace
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/decorators/trace.py#L35)
+
+
+```python
+def trace(logger: Logger,
+          id: Optional[Union[str, Callable]] = None,
+          sessionId: Optional[Union[str, Callable]] = None,
+          name: Optional[str] = None,
+          tags: Optional[dict] = None,
+          evaluators: Optional[List[str]] = None,
+          evaluator_variables: Optional[Dict[str, str]] = None)
+```
+
+Decorator for tracking traces.
+
+This decorator wraps functions to automatically create and manage [Trace](/sdk/python/references/logger/components/trace)
+objects for tracking trace operations, including inputs, outputs, and metadata.
+The decorated function must be called within a @trace or @span decorated context.
+

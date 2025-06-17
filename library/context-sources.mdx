@@ -1,0 +1,72 @@
+---
+title: Context Sources
+description: Learn how to create, use, and evaluate context sources for your AI applications
+---
+
+Context sources in Maxim allow you to expose your RAG pipeline via a simple endpoint irrespective of the complex steps within it. This context source can then be linked as a variable in your prompt or endpoints and selected for evaluation.
+
+## Bring Your RAG via API Endpoint
+
+Connect your existing RAG system to Maxim by exposing it via an API endpoint.
+
+<MaximPlayer url="https://www.youtube.com/embed/VXdRMXyKfYw" />
+
+<Steps>
+<Step title="Create a new context source">
+You can create a new context source by clicking on the left navigation and then the plus icon.
+</Step>
+
+<Step title="Name your context source">
+Provide a name for the context source.
+</Step>
+
+<Step title="Configure API endpoint">
+Enter the API endpoint. When we pass a query to this endpoint, it should return the retrieved context for that query as would be the real world scenario.
+</Step>
+
+<Step title="Set up request configuration">
+Add necessary headers and parameters to your request and save the context source
+</Step>
+
+<Step title="Implement in prompts and endpoints">
+You can now use this in prompts and endpoints.
+</Step>
+</Steps>
+
+<MaximPlayer url="https://drive.google.com/file/d/10K4-9SmTLUxv4ORD4qtbsxu_sOc2YqSM/preview" />
+
+## Ingest Files as Context Source
+
+Maxim allows you to upload various document formats and automatically creates embeddings for use as context in your applications.
+
+<Steps>
+<Step title="Navigate to Context Sources">
+Navigate to the Context Sources section in your workspace and click on the Plus icon.
+</Step>
+
+<Step title="Select Files source type">
+Select "Files" as your context source type.
+</Step>
+
+<Step title="Upload your documents">
+Drag and drop your files or click "Browse files" and select files from your system.
+Supported formats:
+- PDF documents (.pdf)
+- Word documents (.docx)
+- CSV files (.csv)
+- Text files (.txt)
+- Markdown files (.md)
+</Step>
+
+<Step title="Wait for processing">
+Wait for the files to upload and for embeddings to be generated. The status indicator will show progress.
+</Step>
+
+<Step title="Use your context source">
+Once processing is complete, your files are ready to be used as context. You can now reference this context source in agent simulation.
+</Step>
+</Steps>
+
+## Evaluate Your Context
+
+Context sources in Maxim allow you to expose your RAG pipeline via a simple endpoint irrespective of the complex steps within it. This context source can then be linked as a variable in your prompt or workflow and selected for evaluation [here](/offline-evals/via-ui/prompts/retrieval).

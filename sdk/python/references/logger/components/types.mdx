@@ -1,0 +1,131 @@
+# maxim.logger.components.types
+
+## [Entity](/sdk/python/references/logger/components/types)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/types.py#L13)
+
+
+```python
+class Entity(Enum)
+```
+
+[Entity](/sdk/python/references/logger/components/types).
+
+This class represents an entity.
+
+## [DateTimeEncoder](/sdk/python/references/logger/components/types)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/types.py#L29)
+
+
+```python
+class DateTimeEncoder(json.JSONEncoder)
+```
+
+DateTime encoder.
+
+This class represents a date time encoder.
+
+## [CommitLog](/sdk/python/references/logger/components/types)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/types.py#L41)
+
+
+```python
+class CommitLog()
+```
+
+Commit log.
+
+This class represents a commit log.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/types.py#L47)
+
+
+```python
+def __init__(entity: Entity,
+             entity_id: str,
+             action: str,
+             data: Optional[Dict[str, Any]] = None)
+```
+
+Initialize a commit log.
+
+**Arguments**:
+
+- `entity` - The entity of the commit log.
+- `entity_id` - The id of the entity.
+- `action` - The action of the commit log.
+- `data` - The data of the commit log.
+
+#### serialize
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/types.py#L67)
+
+
+```python
+def serialize(custom_data: Optional[Dict[str, Any]] = None) -> str
+```
+
+Serialize the commit log.
+
+**Arguments**:
+
+- `custom_data` - The custom data to serialize.
+  
+
+**Returns**:
+
+- `str` - The serialized commit log.
+
+#### object\_to\_dict
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/types.py#L113)
+
+
+```python
+def object_to_dict(obj: Any) -> Union[Dict, List, str, int, float, bool, None]
+```
+
+Convert a complex object structure to a dictionary, handling nested custom objects.
+
+**Arguments**:
+
+- `obj` - Any Python object to convert
+  
+
+**Returns**:
+
+  A dictionary representation of the object
+
+## [GenerationErrorTypedDict](/sdk/python/references/logger/components/types)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/types.py#L163)
+
+
+```python
+class GenerationErrorTypedDict(TypedDict)
+```
+
+[Generation](/sdk/python/references/logger/components/generation) error typed dict.
+
+This class represents a generation error typed dict.
+
+## [GenerationError](/sdk/python/references/logger/components/types)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/types.py#L178)
+
+
+```python
+@deprecated(
+    "This class is deprecated and will be removed in a future version. Use GenerationErrorTypedDict instead."
+)
+
+@dataclass
+class GenerationError()
+```
+
+@deprecated: This class is deprecated and will be removed in a future version. Use [GenerationErrorTypedDict](/sdk/python/references/logger/components/types) instead.
+

@@ -1,0 +1,411 @@
+# maxim.logger.components.base
+
+## [EvaluateContainerWithVariables](/sdk/python/references/logger/components/base)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L41)
+
+
+```python
+class EvaluateContainerWithVariables()
+```
+
+Evaluate container with variables.
+
+This class provides functionality to manage evaluators with variables.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L47)
+
+
+```python
+def __init__(id: str, entity: Entity, log_writer: LogWriter,
+             for_evaluators: List[str]) -> None
+```
+
+Initialize the evaluate container with variables.
+
+**Arguments**:
+
+- `id` _str_ - The ID of the evaluate container.
+- `entity` _[Entity](/sdk/python/references/logger/components/types)_ - The entity of the evaluate container.
+- `log_writer` _[LogWriter](/sdk/python/references/logger/writer)_ - The log writer of the evaluate container.
+- `for_evaluators` _List[str]_ - The evaluators of the evaluate container.
+
+#### with\_variables
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L63)
+
+
+```python
+def with_variables(variables: Dict[str, str])
+```
+
+With variables.
+
+**Arguments**:
+
+- `variables` _Dict[str, str]_ - The variables to use for the evaluate container.
+
+## [EvaluateContainer](/sdk/python/references/logger/components/base)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L86)
+
+
+```python
+class EvaluateContainer()
+```
+
+Evaluate container.
+
+This class provides functionality to manage evaluators for a specific entity.
+
+**Attributes**:
+
+- `entity` _[Entity](/sdk/python/references/logger/components/types)_ - The entity associated with these evaluators.
+- `writer` _[LogWriter](/sdk/python/references/logger/writer)_ - The log writer used for committing evaluator actions.
+- `evaluators` _List[str]_ - A list of evaluator identifiers.
+- `id` _str_ - A unique identifier for this set of evaluators.
+  
+
+**Methods**:
+
+- `with_variables` - Allows adding variables to be used by the evaluators.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L47)
+
+
+```python
+def __init__(id: str, entity: Entity, log_writer: LogWriter) -> None
+```
+
+Initialize the evaluate container.
+
+**Arguments**:
+
+- `id` _str_ - The ID of the evaluate container.
+- `entity` _[Entity](/sdk/python/references/logger/components/types)_ - The entity of the evaluate container.
+- `log_writer` _[LogWriter](/sdk/python/references/logger/writer)_ - The log writer of the evaluate container.
+
+#### with\_variables
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L63)
+
+
+```python
+def with_variables(variables: Dict[str, str], for_evaluators: List[str])
+```
+
+With variables.
+
+**Arguments**:
+
+- `variables` _Dict[str, str]_ - The variables to use for the evaluate container.
+- `for_evaluators` _List[str]_ - The evaluators of the evaluate container.
+
+#### with\_evaluators
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L137)
+
+
+```python
+def with_evaluators(*evaluators: str) -> EvaluateContainerWithVariables
+```
+
+With evaluators.
+
+**Arguments**:
+
+- `*evaluators` _str_ - The evaluators to use for the evaluate container.
+  
+
+**Returns**:
+
+- `[EvaluateContainerWithVariables](/sdk/python/references/logger/components/base)` - The evaluate container with variables.
+
+## [BaseContainer](/sdk/python/references/logger/components/base)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L167)
+
+
+```python
+class BaseContainer()
+```
+
+Base container.
+
+This class provides functionality to manage containers for a specific entity.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L47)
+
+
+```python
+def __init__(entity: Entity, config: BaseConfig, writer: LogWriter)
+```
+
+Initialize the base container.
+
+**Arguments**:
+
+- `entity` _[Entity](/sdk/python/references/logger/components/types)_ - The entity of the base container.
+- `config` _BaseConfig_ - The config of the base container.
+- `writer` _[LogWriter](/sdk/python/references/logger/writer)_ - The writer of the base container.
+
+#### id
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L217)
+
+
+```python
+@property
+def id() -> str
+```
+
+Get the ID of the base container.
+
+**Returns**:
+
+- `str` - The ID of the base container.
+
+#### evaluate
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L225)
+
+
+```python
+def evaluate() -> EvaluateContainer
+```
+
+Evaluate the base container.
+
+**Returns**:
+
+- `[EvaluateContainer](/sdk/python/references/logger/components/base)` - The evaluate container.
+
+#### \_evaluate\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L234)
+
+
+```python
+@staticmethod
+def _evaluate_(writer: LogWriter, entity: Entity,
+               id: str) -> EvaluateContainer
+```
+
+Evaluate the base container.
+
+**Arguments**:
+
+- `writer` _[LogWriter](/sdk/python/references/logger/writer)_ - The writer of the base container.
+- `entity` _[Entity](/sdk/python/references/logger/components/types)_ - The entity of the base container.
+- `id` _str_ - The ID of the base container.
+
+#### add\_metadata
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L244)
+
+
+```python
+def add_metadata(metadata: Dict[str, Any]) -> None
+```
+
+Add metadata to the base container.
+
+**Arguments**:
+
+- `metadata` _Dict[str, Any]_ - The metadata to add to the base container.
+
+#### add\_metadata\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L254)
+
+
+```python
+@staticmethod
+def add_metadata_(writer: LogWriter, entity: Entity, id: str,
+                  metadata: Dict[str, Any]) -> None
+```
+
+Add metadata to the base container.
+
+**Arguments**:
+
+- `writer` _[LogWriter](/sdk/python/references/logger/writer)_ - The writer of the base container.
+- `entity` _[Entity](/sdk/python/references/logger/components/types)_ - The entity of the base container.
+- `id` _str_ - The ID of the base container.
+- `metadata` _Dict[str, Any]_ - The metadata to add to the base container.
+
+#### add\_tag
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L268)
+
+
+```python
+def add_tag(key: str, value: str)
+```
+
+Add a tag to the base container.
+
+**Arguments**:
+
+- `key` _str_ - The key of the tag.
+- `value` _str_ - The value of the tag.
+
+#### \_add\_tag\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L287)
+
+
+```python
+@staticmethod
+def _add_tag_(writer: LogWriter, entity: Entity, id: str, key: str,
+              value: str)
+```
+
+Add a tag to the base container.
+
+**Arguments**:
+
+- `writer` _[LogWriter](/sdk/python/references/logger/writer)_ - The writer of the base container.
+- `entity` _[Entity](/sdk/python/references/logger/components/types)_ - The entity of the base container.
+- `id` _str_ - The ID of the base container.
+- `key` _str_ - The key of the tag.
+- `value` _str_ - The value of the tag.
+
+#### end
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L299)
+
+
+```python
+def end()
+```
+
+End the base container.
+
+This method is used to end the base container.
+
+#### \_end\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L308)
+
+
+```python
+@staticmethod
+def _end_(writer: LogWriter,
+          entity: Entity,
+          id: str,
+          data: Optional[Dict[str, Any]] = None)
+```
+
+End the base container.
+
+**Arguments**:
+
+- `writer` _[LogWriter](/sdk/python/references/logger/writer)_ - The writer of the base container.
+- `entity` _[Entity](/sdk/python/references/logger/components/types)_ - The entity of the base container.
+- `id` _str_ - The ID of the base container.
+- `data` _Optional[Dict[str, Any]]_ - The data to add to the base container.
+
+#### data
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L327)
+
+
+```python
+def data() -> Dict[str, Any]
+```
+
+Get the data of the base container.
+
+**Returns**:
+
+  Dict[str, Any]: The data of the base container.
+
+#### \_commit\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L345)
+
+
+```python
+@staticmethod
+def _commit_(writer: LogWriter,
+             entity: Entity,
+             id: str,
+             action: str,
+             data: Optional[Dict[str, Any]] = None)
+```
+
+Commit the base container.
+
+**Arguments**:
+
+- `writer` _[LogWriter](/sdk/python/references/logger/writer)_ - The writer of the base container.
+- `entity` _[Entity](/sdk/python/references/logger/components/types)_ - The entity of the base container.
+- `id` _str_ - The ID of the base container.
+- `action` _str_ - The action to commit.
+- `data` _Optional[Dict[str, Any]]_ - The data to commit.
+
+## [EventEmittingBaseContainer](/sdk/python/references/logger/components/base)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L380)
+
+
+```python
+class EventEmittingBaseContainer(BaseContainer)
+```
+
+#### \_event\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L382)
+
+
+```python
+@staticmethod
+def _event_(writer: LogWriter,
+            entity: Entity,
+            entity_id: str,
+            id: str,
+            name: str,
+            tags: Optional[Dict[str, str]] = None,
+            metadata: Optional[Dict[str, Any]] = None)
+```
+
+Add an event to the base container.
+
+**Arguments**:
+
+- `writer` _[LogWriter](/sdk/python/references/logger/writer)_ - The writer of the base container.
+- `entity` _[Entity](/sdk/python/references/logger/components/types)_ - The entity of the base container.
+- `entity_id` _str_ - The ID of the entity.
+- `id` _str_ - The ID of the event.
+- `name` _str_ - The name of the event.
+- `tags` _Optional[Dict[str, str]]_ - The tags of the event.
+- `metadata` _Optional[Dict[str, Any]]_ - The metadata of the event.
+
+#### event
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/base.py#L431)
+
+
+```python
+def event(id: str,
+          name: str,
+          tags: Optional[Dict[str, str]] = None,
+          metadata: Optional[Dict[str, Any]] = None)
+```
+
+Add an event to the base container.
+
+**Arguments**:
+
+- `id` _str_ - The ID of the event.
+- `name` _str_ - The name of the event.
+- `tags` _Optional[Dict[str, str]]_ - The tags of the event.
+- `metadata` _Optional[Dict[str, Any]]_ - The metadata of the event.
+

@@ -1,0 +1,228 @@
+# maxim.logger.anthropic.stream\_manager
+
+## [TextStreamWrapper](/sdk/python/references/logger/anthropic/stream_manager)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py#L10)
+
+
+```python
+class TextStreamWrapper()
+```
+
+Wrapper for text stream events with callback support.
+
+This class wraps a text stream to provide callback functionality
+for processing text events. It implements the iterator protocol
+to allow for seamless iteration over text content.
+
+**Attributes**:
+
+- `_wrapper` - The underlying stream wrapper.
+- `_callback` - Callback function to process stream events.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py#L22)
+
+
+```python
+def __init__(wrapper, callback)
+```
+
+Initialize the text stream wrapper.
+
+**Arguments**:
+
+- `wrapper` - The underlying stream wrapper to delegate to.
+- `callback` - Callback function to be called for each event.
+
+#### \_\_iter\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py#L32)
+
+
+```python
+def __iter__()
+```
+
+Return the iterator object.
+
+**Returns**:
+
+- `[TextStreamWrapper](/sdk/python/references/logger/anthropic/stream_manager)` - Self as the iterator.
+
+#### \_\_next\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py#L40)
+
+
+```python
+def __next__()
+```
+
+Get the next text content from the stream.
+
+This method processes the next event from the stream, calls the
+callback function, and returns the text content if available.
+
+**Returns**:
+
+- `str` - The text content from the event, or empty string if no text.
+  
+
+**Raises**:
+
+- `StopIteration` - When the stream is exhausted.
+
+## [StreamWrapper](/sdk/python/references/logger/anthropic/stream_manager)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py#L61)
+
+
+```python
+class StreamWrapper(MessageStreamManager)
+```
+
+Wrapper for Anthropic MessageStreamManager with callback support.
+
+This class wraps the Anthropic MessageStreamManager to provide callback
+functionality for processing stream events. It maintains compatibility
+with the original API while adding the ability to execute custom callbacks
+for each stream event.
+
+The wrapper implements the context manager protocol and iterator protocol
+to provide seamless integration with existing code.
+
+**Attributes**:
+
+- `_mgr` _MessageStreamManager_ - The underlying stream manager.
+- `_callback` _Callable_ - Callback function for processing events.
+- `_stream` _MessageStream_ - The active stream instance.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py#L22)
+
+
+```python
+def __init__(mgr: MessageStreamManager,
+             callback: Callable[[MessageStreamEvent], None]) -> None
+```
+
+Initialize the stream wrapper.
+
+**Arguments**:
+
+- `mgr` _MessageStreamManager_ - The underlying stream manager to wrap.
+- `callback` _Callable[[MessageStreamEvent], None]_ - Callback function
+  to be called for each stream event.
+  
+
+**Notes**:
+
+  Does not call super().__init__() since we're wrapping another manager.
+
+#### \_\_enter\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py#L98)
+
+
+```python
+def __enter__() -> MessageStream
+```
+
+Enter the stream context and return a callback-enabled stream.
+
+This method creates a custom MessageStream that wraps the original
+stream to add callback functionality for each event.
+
+**Returns**:
+
+- `MessageStream` - A stream instance with callback support.
+
+#### \_\_exit\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py#L166)
+
+
+```python
+def __exit__(exc_type: Union[type[BaseException], None],
+             exc: Union[BaseException, None], exc_tb: Union[TracebackType,
+                                                            None]) -> None
+```
+
+Exit the stream context.
+
+This method delegates the context exit to the underlying stream manager
+to ensure proper cleanup and resource management.
+
+**Arguments**:
+
+- `exc_type` - The exception type if an exception occurred.
+- `exc` - The exception instance if an exception occurred.
+- `exc_tb` - The traceback if an exception occurred.
+
+#### \_\_iter\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py#L32)
+
+
+```python
+def __iter__()
+```
+
+Return the iterator object.
+
+If no stream is active, this method will automatically enter
+the context to create one.
+
+**Returns**:
+
+- `[StreamWrapper](/sdk/python/references/logger/anthropic/stream_manager)` - Self as the iterator.
+
+#### \_\_next\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py#L40)
+
+
+```python
+def __next__()
+```
+
+Get the next event from the stream.
+
+If no stream is active, this method will automatically enter
+the context to create one.
+
+**Returns**:
+
+- `MessageStreamEvent` - The next event from the stream.
+  
+
+**Raises**:
+
+- `StopIteration` - When the stream is exhausted.
+
+#### \_\_getattr\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py#L213)
+
+
+```python
+def __getattr__(name: str)
+```
+
+Delegate attribute access to the wrapped manager.
+
+This method ensures that any attributes or methods not explicitly
+defined in this wrapper are delegated to the underlying stream manager.
+
+**Arguments**:
+
+- `name` _str_ - The attribute name to access.
+  
+
+**Returns**:
+
+- `Any` - The attribute value from the underlying manager.
+

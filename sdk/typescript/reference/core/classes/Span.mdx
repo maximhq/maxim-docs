@@ -1,0 +1,1006 @@
+---
+title: "Span"
+sidebar_position: 1
+---
+
+# Class: Span
+
+Defined in: [src/lib/logger/components/span.ts:60](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/span.ts#L60)
+
+Represents a hierarchical span within a trace for grouping.
+
+Spans provide fine-grained instrumentation within traces, allowing you to
+organize sections of complex operations. They can contain
+all kinds of components within them apart from trace or session (nested spans are allowed).
+
+ Span
+
+## Examples
+
+```ts
+const span = container.span({
+  id: 'authentication-span',
+  name: 'User Authentication Process',
+});
+
+// Add operations to the span
+const generation = span.generation({
+  id: 'token-validation',
+  provider: 'internal',
+  model: 'auth-validator',
+  messages: [{ role: 'system', content: 'Validate token' }],
+  modelParameters: {}
+});
+```
+
+```ts
+// Nested spans for complex operations
+const parentSpan = container.span({
+  id: 'document-processing',
+  name: 'Document Analysis Pipeline'
+});
+
+const childSpan = parentSpan.span({
+  id: 'text-extraction',
+  name: 'Text Extraction Phase'
+});
+
+const retrieval = childSpan.retrieval({
+  id: 'knowledge-lookup',
+  name: 'Knowledge Base Lookup'
+});
+```
+
+## Extends
+
+- [`EventEmittingBaseContainer`](./EventEmittingBaseContainer)
+
+## Constructors
+
+### Constructor
+
+> **new Span**(`config`, `writer`): `Span`
+
+Defined in: [src/lib/logger/components/span.ts:72](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/span.ts#L72)
+
+Creates a new span log entry.
+
+#### Parameters
+
+##### config
+
+[`SpanConfig`](../overview#spanconfig)
+
+Configuration object defining the span
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+Log writer instance for persisting span data
+
+#### Returns
+
+`Span`
+
+#### Example
+
+```ts
+const span = container.span({
+  id: 'data-validation-span',
+  name: 'Input Data Validation',
+});
+```
+
+#### Overrides
+
+[`EventEmittingBaseContainer`](./EventEmittingBaseContainer).[`constructor`](./EventEmittingBaseContainer#constructor)
+
+## Accessors
+
+### evaluate
+
+#### Get Signature
+
+> **get** **evaluate**(): [`EvaluateContainer`](./EvaluateContainer)
+
+Defined in: [src/lib/logger/components/base.ts:248](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L248)
+
+Gets the evaluation methods for this container.
+
+##### Example
+
+```ts
+container.evaluate.withEvaluators('bias', 'toxicity');
+```
+
+##### Returns
+
+[`EvaluateContainer`](./EvaluateContainer)
+
+Evaluation methods for configuring and triggering evaluations
+
+#### Inherited from
+
+[`EventEmittingBaseContainer`](./EventEmittingBaseContainer).[`evaluate`](./EventEmittingBaseContainer#evaluate)
+
+***
+
+### id
+
+#### Get Signature
+
+> **get** **id**(): `string`
+
+Defined in: [src/lib/logger/components/base.ts:80](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L80)
+
+Gets the unique identifier for this container.
+
+##### Returns
+
+`string`
+
+The container's unique ID
+
+#### Inherited from
+
+[`EventEmittingBaseContainer`](./EventEmittingBaseContainer).[`id`](./EventEmittingBaseContainer#id)
+
+## Methods
+
+### addAttachment()
+
+> **addAttachment**(`attachment`): `void`
+
+Defined in: [src/lib/logger/components/span.ts:289](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/span.ts#L289)
+
+Adds an attachment to this span.
+
+#### Parameters
+
+##### attachment
+
+[`Attachment`](../overview#attachment)
+
+The attachment to add (file, data, or URL)
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+span.addAttachment({
+  id: 'processing-result',
+  type: 'file',
+  path: './output/processed_data.json',
+  name: 'Processing Results'
+});
+```
+
+***
+
+### addMetadata()
+
+> **addMetadata**(`metadata`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:124](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L124)
+
+Adds metadata to this container for additional context and debugging. Any data type could be added as the value in the metadata record.
+
+#### Parameters
+
+##### metadata
+
+`Record`\<`string`, `unknown`\>
+
+Key-value pairs of metadata
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+container.addMetadata({
+  requestId: 'req-123',
+  userAgent: 'Mozilla/5.0...',
+  processingTime: 1500
+});
+```
+
+#### Inherited from
+
+[`EventEmittingBaseContainer`](./EventEmittingBaseContainer).[`addMetadata`](./EventEmittingBaseContainer#addmetadata)
+
+***
+
+### addTag()
+
+> **addTag**(`key`, `value`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:94](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L94)
+
+Adds a tag to this container for categorization and filtering.
+
+#### Parameters
+
+##### key
+
+`string`
+
+The tag key
+
+##### value
+
+`string`
+
+The tag value
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+container.addTag('environment', 'production');
+container.addTag('user_type', 'premium');
+```
+
+#### Inherited from
+
+[`EventEmittingBaseContainer`](./EventEmittingBaseContainer).[`addTag`](./EventEmittingBaseContainer#addtag)
+
+***
+
+### data()
+
+> **data**(): `any`
+
+Defined in: [src/lib/logger/components/base.ts:191](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L191)
+
+Returns the current data state of this container.
+
+#### Returns
+
+`any`
+
+The container's data.
+
+#### Inherited from
+
+[`EventEmittingBaseContainer`](./EventEmittingBaseContainer).[`data`](./EventEmittingBaseContainer#data)
+
+***
+
+### end()
+
+> **end**(): `void`
+
+Defined in: [src/lib/logger/components/base.ts:163](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L163)
+
+Marks this container as ended and records the end timestamp.
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+// End a container when processing is complete
+container.end();
+```
+
+#### Inherited from
+
+[`EventEmittingBaseContainer`](./EventEmittingBaseContainer).[`end`](./EventEmittingBaseContainer#end)
+
+***
+
+### error()
+
+> **error**(`config`): [`Error`](./Error)
+
+Defined in: [src/lib/logger/components/span.ts:169](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/span.ts#L169)
+
+Creates an error within this span.
+
+#### Parameters
+
+##### config
+
+[`ErrorConfig`](../overview#errorconfig)
+
+Configuration for the error
+
+#### Returns
+
+[`Error`](./Error)
+
+A new error instance associated with this span
+
+#### Example
+
+```ts
+const error = span.error({
+  id: 'validation-error',
+  message: 'Input validation failed',
+  code: 'INVALID_INPUT',
+  type: 'ValidationError'
+});
+```
+
+***
+
+### event()
+
+> **event**(`id`, `name`, `tags?`, `metadata?`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:291](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L291)
+
+Emits a custom event within this container.
+
+#### Parameters
+
+##### id
+
+`string`
+
+Unique identifier for the event
+
+##### name
+
+`string`
+
+Human-readable name for the event
+
+##### tags?
+
+`Record`\<`string`, `string`\>
+
+Optional tags for categorizing the event
+
+##### metadata?
+
+`Record`\<`string`, `unknown`\>
+
+Optional metadata for additional context
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+container.event(
+  'checkpoint-1',
+  'Processing Milestone',
+  { phase: 'preprocessing', status: 'complete' },
+  { itemsProcessed: 1000, timeElapsed: 5.2 }
+);
+```
+
+#### Inherited from
+
+[`EventEmittingBaseContainer`](./EventEmittingBaseContainer).[`event`](./EventEmittingBaseContainer#event)
+
+***
+
+### generation()
+
+> **generation**(`config`): [`Generation`](./Generation)
+
+Defined in: [src/lib/logger/components/span.ts:91](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/span.ts#L91)
+
+Creates a new generation (LLM call) within this span.
+
+#### Parameters
+
+##### config
+
+[`GenerationConfig`](../overview#generationconfig)
+
+Configuration for the generation
+
+#### Returns
+
+[`Generation`](./Generation)
+
+A new generation instance associated with this span
+
+#### Example
+
+```ts
+const generation = span.generation({
+  id: 'validation-check',
+  provider: 'openai',
+  model: 'gpt-4',
+  messages: [{ role: 'user', content: 'Validate this input' }],
+  modelParameters: { temperature: 0.1 }
+});
+```
+
+***
+
+### retrieval()
+
+> **retrieval**(`config`): [`Retrieval`](./Retrieval)
+
+Defined in: [src/lib/logger/components/span.ts:209](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/span.ts#L209)
+
+Creates a retrieval within this span.
+
+#### Parameters
+
+##### config
+
+[`RetrievalConfig`](../overview#retrievalconfig)
+
+Configuration for the retrieval
+
+#### Returns
+
+[`Retrieval`](./Retrieval)
+
+A new retrieval instance associated with this span
+
+#### Example
+
+```ts
+const retrieval = span.retrieval({
+  id: 'context-lookup',
+  name: 'Context Database Lookup',
+});
+
+retrieval.input('user query context');
+retrieval.output(['relevant context 1', 'relevant context 2']);
+```
+
+***
+
+### span()
+
+> **span**(`config`): `Span`
+
+Defined in: [src/lib/logger/components/span.ts:130](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/span.ts#L130)
+
+Creates a nested span within this span for hierarchical organization.
+
+#### Parameters
+
+##### config
+
+[`SpanConfig`](../overview#spanconfig)
+
+Configuration for the nested span
+
+#### Returns
+
+`Span`
+
+A new nested span instance
+
+#### Example
+
+```ts
+const childSpan = parentSpan.span({
+  id: 'preprocessing-step',
+  name: 'Data Preprocessing',
+});
+```
+
+***
+
+### toolCall()
+
+> **toolCall**(`config`): [`ToolCall`](./ToolCall)
+
+Defined in: [src/lib/logger/components/span.ts:250](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/span.ts#L250)
+
+Creates a tool call within this span.
+
+#### Parameters
+
+##### config
+
+[`ToolCallConfig`](../interfaces/ToolCallConfig)
+
+Configuration for the tool call
+
+#### Returns
+
+[`ToolCall`](./ToolCall)
+
+A new tool call instance associated with this span
+
+#### Example
+
+```ts
+const toolCall = span.toolCall({
+  id: 'api-call',
+  name: 'external_api_call',
+  description: 'Fetch data from external service',
+  args: JSON.stringify({ endpoint: '/users', id: 123 })
+});
+
+toolCall.result('{"name": "John", "email": "john@example.com"}');
+```
+
+***
+
+### addAttachment\_()
+
+> `static` **addAttachment\_**(`writer`, `id`, `attachment`): `void`
+
+Defined in: [src/lib/logger/components/span.ts:301](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/span.ts#L301)
+
+Static method to add an attachment to any span by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### id
+
+`string`
+
+The span ID
+
+##### attachment
+
+[`Attachment`](../overview#attachment)
+
+The attachment to add
+
+#### Returns
+
+`void`
+
+void
+
+***
+
+### addMetadata\_()
+
+> `static` **addMetadata\_**(`writer`, `entity`, `id`, `metadata`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:144](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L144)
+
+Static method to add metadata to any container by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type
+
+##### id
+
+`string`
+
+The container ID
+
+##### metadata
+
+`Record`\<`string`, `unknown`\>
+
+The metadata to add
+
+#### Returns
+
+`void`
+
+void
+
+#### Inherited from
+
+[`EventEmittingBaseContainer`](./EventEmittingBaseContainer).[`addMetadata_`](./EventEmittingBaseContainer#addmetadata_)
+
+***
+
+### addTag\_()
+
+> `static` **addTag\_**(`writer`, `entity`, `id`, `key`, `value`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:108](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L108)
+
+Static method to add a tag to any container by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type
+
+##### id
+
+`string`
+
+The container ID
+
+##### key
+
+`string`
+
+The tag key
+
+##### value
+
+`string`
+
+The tag value
+
+#### Returns
+
+`void`
+
+void
+
+#### Inherited from
+
+[`EventEmittingBaseContainer`](./EventEmittingBaseContainer).[`addTag_`](./EventEmittingBaseContainer#addtag_)
+
+***
+
+### end\_()
+
+> `static` **end\_**(`writer`, `entity`, `id`, `data?`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:177](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L177)
+
+Static method to end any container by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type
+
+##### id
+
+`string`
+
+The container ID
+
+##### data?
+
+`any`
+
+Optional additional data to include with the end event
+
+#### Returns
+
+`void`
+
+void
+
+#### Inherited from
+
+[`EventEmittingBaseContainer`](./EventEmittingBaseContainer).[`end_`](./EventEmittingBaseContainer#end_)
+
+***
+
+### error\_()
+
+> `static` **error\_**(`writer`, `id`, `config`): [`Error`](./Error)
+
+Defined in: [src/lib/logger/components/span.ts:186](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/span.ts#L186)
+
+Static method to create an error associated with any span by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### id
+
+`string`
+
+The span ID
+
+##### config
+
+[`ErrorConfig`](../overview#errorconfig)
+
+Configuration for the error
+
+#### Returns
+
+[`Error`](./Error)
+
+A new error instance
+
+***
+
+### evaluate\_()
+
+> `static` **evaluate\_**(`writer`, `entity`, `id`): [`EvaluateContainer`](./EvaluateContainer)
+
+Defined in: [src/lib/logger/components/base.ts:260](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L260)
+
+Static method to get evaluation methods for any evaluatable container by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type
+
+##### id
+
+`string`
+
+The container ID
+
+#### Returns
+
+[`EvaluateContainer`](./EvaluateContainer)
+
+Evaluation methods for configuring and triggering evaluations
+
+#### Inherited from
+
+[`EventEmittingBaseContainer`](./EventEmittingBaseContainer).[`evaluate_`](./EventEmittingBaseContainer#evaluate_)
+
+***
+
+### event\_()
+
+> `static` **event\_**(`writer`, `entity`, `id`, `eventId`, `name`, `tags?`, `metadata?`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:318](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L318)
+
+Static method to emit an event for any event-emitting container by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type
+
+##### id
+
+`string`
+
+The container ID
+
+##### eventId
+
+`string`
+
+Unique identifier for the event
+
+##### name
+
+`string`
+
+Human-readable name for the event
+
+##### tags?
+
+`Record`\<`string`, `string`\>
+
+Optional tags for categorizing the event
+
+##### metadata?
+
+`Record`\<`string`, `unknown`\>
+
+Optional metadata for additional context
+
+#### Returns
+
+`void`
+
+void
+
+#### Inherited from
+
+[`EventEmittingBaseContainer`](./EventEmittingBaseContainer).[`event_`](./EventEmittingBaseContainer#event_)
+
+***
+
+### generation\_()
+
+> `static` **generation\_**(`writer`, `id`, `config`): [`Generation`](./Generation)
+
+Defined in: [src/lib/logger/components/span.ts:109](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/span.ts#L109)
+
+Static method to create a generation associated with any span by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### id
+
+`string`
+
+The span ID
+
+##### config
+
+[`GenerationConfig`](../overview#generationconfig)
+
+Configuration for the generation
+
+#### Returns
+
+[`Generation`](./Generation)
+
+A new generation instance
+
+***
+
+### retrieval\_()
+
+> `static` **retrieval\_**(`writer`, `id`, `config`): [`Retrieval`](./Retrieval)
+
+Defined in: [src/lib/logger/components/span.ts:226](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/span.ts#L226)
+
+Static method to create a retrieval associated with any span by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### id
+
+`string`
+
+The span ID
+
+##### config
+
+[`RetrievalConfig`](../overview#retrievalconfig)
+
+Configuration for the retrieval
+
+#### Returns
+
+[`Retrieval`](./Retrieval)
+
+A new retrieval instance
+
+***
+
+### span\_()
+
+> `static` **span\_**(`writer`, `id`, `config`): `Span`
+
+Defined in: [src/lib/logger/components/span.ts:147](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/span.ts#L147)
+
+Static method to create a nested span associated with any span by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### id
+
+`string`
+
+The parent span ID
+
+##### config
+
+[`SpanConfig`](../overview#spanconfig)
+
+Configuration for the nested span
+
+#### Returns
+
+`Span`
+
+A new nested span instance
+
+***
+
+### toolCall\_()
+
+> `static` **toolCall\_**(`writer`, `id`, `config`): [`ToolCall`](./ToolCall)
+
+Defined in: [src/lib/logger/components/span.ts:267](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/span.ts#L267)
+
+Static method to create a tool call associated with any span by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### id
+
+`string`
+
+The span ID
+
+##### config
+
+[`ToolCallConfig`](../interfaces/ToolCallConfig)
+
+Configuration for the tool call
+
+#### Returns
+
+[`ToolCall`](./ToolCall)
+
+A new tool call instance

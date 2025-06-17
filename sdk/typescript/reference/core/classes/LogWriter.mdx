@@ -1,0 +1,124 @@
+---
+title: "LogWriter"
+sidebar_position: 1
+---
+
+# Class: LogWriter
+
+Defined in: [src/lib/logger/writer.ts:29](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/writer.ts#L29)
+
+## Constructors
+
+### Constructor
+
+> **new LogWriter**(`config`): `LogWriter`
+
+Defined in: [src/lib/logger/writer.ts:44](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/writer.ts#L44)
+
+#### Parameters
+
+##### config
+
+[`LogWriterConfig`](../overview#logwriterconfig) & `object`
+
+#### Returns
+
+`LogWriter`
+
+## Accessors
+
+### raiseExceptions
+
+#### Get Signature
+
+> **get** **raiseExceptions**(): `boolean`
+
+Defined in: [src/lib/logger/writer.ts:70](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/writer.ts#L70)
+
+##### Returns
+
+`boolean`
+
+***
+
+### writerCache
+
+#### Get Signature
+
+> **get** **writerCache**(): [`MaximCache`](../interfaces/MaximCache)
+
+Defined in: [src/lib/logger/writer.ts:78](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/writer.ts#L78)
+
+##### Returns
+
+[`MaximCache`](../interfaces/MaximCache)
+
+***
+
+### writerConfig
+
+#### Get Signature
+
+> **get** **writerConfig**(): [`LogWriterConfig`](../overview#logwriterconfig)
+
+Defined in: [src/lib/logger/writer.ts:66](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/writer.ts#L66)
+
+##### Returns
+
+[`LogWriterConfig`](../overview#logwriterconfig)
+
+***
+
+### writerLogsAPIService
+
+#### Get Signature
+
+> **get** **writerLogsAPIService**(): [`MaximLogsAPI`](./MaximLogsAPI)
+
+Defined in: [src/lib/logger/writer.ts:74](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/writer.ts#L74)
+
+##### Returns
+
+[`MaximLogsAPI`](./MaximLogsAPI)
+
+## Methods
+
+### cleanup()
+
+> **cleanup**(): `Promise`\<`void`\>
+
+Defined in: [src/lib/logger/writer.ts:420](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/writer.ts#L420)
+
+#### Returns
+
+`Promise`\<`void`\>
+
+***
+
+### commit()
+
+> **commit**(`log`): `void`
+
+Defined in: [src/lib/logger/writer.ts:323](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/writer.ts#L323)
+
+#### Parameters
+
+##### log
+
+[`CommitLog`](./CommitLog)
+
+#### Returns
+
+`void`
+
+***
+
+### flush()
+
+> **flush**(): `Promise`\<`void`\>
+
+Defined in: [src/lib/logger/writer.ts:369](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/writer.ts#L369)
+
+#### Returns
+
+`Promise`\<`void`\>
