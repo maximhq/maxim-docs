@@ -253,49 +253,188 @@
                         "pages": [
                             "sdk/python/overview",
                             {
-                                "group": "CrewAI",
+                                "group": "Tracing",
                                 "pages": [
-                                    "sdk/python/integrations/crewai/crewai"
+                                    {
+                                        "group": "CrewAI",
+                                        "pages": [
+                                            "sdk/python/integrations/crewai/crewai"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Gemini",
+                                        "pages": [
+                                            "sdk/python/integrations/gemini/gemini"
+                                        ]
+                                    },
+                                    {
+                                        "group": "OpenAI",
+                                        "pages": [
+                                            "sdk/python/integrations/openai/one-line-integration",
+                                            "sdk/python/integrations/openai/agents-sdk"
+                                        ]
+                                    },
+                                    {
+                                        "group": "LiteLLM",
+                                        "pages": [
+                                            "sdk/python/integrations/litellm/litellm-sdk",
+                                            "sdk/python/integrations/litellm/litellm-proxy"
+                                        ]
+                                    },
+                                    {
+                                        "group": "LangChain",
+                                        "pages": [
+                                            "sdk/python/integrations/langchain/langchain"
+                                        ]
+                                    },
+                                    {
+                                        "group": "LangGraph",
+                                        "pages": [
+                                            "sdk/python/integrations/langgraph/langgraph"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Mistral",
+                                        "pages": [
+                                            "sdk/python/integrations/mistral/mistral"
+                                        ]
+                                    }
                                 ]
                             },
                             {
-                                "group": "Gemini",
+                                "group": "Reference",
                                 "pages": [
-                                    "sdk/python/integrations/gemini/gemini"
+                                    {
+                                        "group": "Apis",
+                                        "pages": [
+                                            "sdk/python/references/apis/maxim_apis"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Cache",
+                                        "pages": [
+                                            "sdk/python/references/cache/cache",
+                                            "sdk/python/references/cache/inMemory"
+                                        ]
+                                    },
+                                    "sdk/python/references/maxim",
+                                    "sdk/python/references/expiring_key_value_store",
+                                    "sdk/python/references/scribe",
+                                    "sdk/python/references/filter_objects",
+                                    {
+                                        "group": "Dataset",
+                                        "pages": [
+                                            "sdk/python/references/dataset/dataset"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Decorators",
+                                        "pages": [
+                                            "sdk/python/references/decorators/generation",
+                                            "sdk/python/references/decorators/retrieval",
+                                            "sdk/python/references/decorators/span",
+                                            "sdk/python/references/decorators/tool_call",
+                                            "sdk/python/references/decorators/trace"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Evaluators",
+                                        "pages": [
+                                            "sdk/python/references/evaluators/base_evaluator",
+                                            "sdk/python/references/evaluators/utils"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Logger",
+                                        "pages": [
+                                            "sdk/python/references/logger/anthropic/client",
+                                            "sdk/python/references/logger/anthropic/message",
+                                            "sdk/python/references/logger/anthropic/stream_manager",
+                                            "sdk/python/references/logger/anthropic/utils",
+                                            "sdk/python/references/logger/bedrock/async_client",
+                                            "sdk/python/references/logger/bedrock/client",
+                                            "sdk/python/references/logger/bedrock/utils",
+                                            "sdk/python/references/logger/components/attachment",
+                                            "sdk/python/references/logger/components/base",
+                                            "sdk/python/references/logger/components/error",
+                                            "sdk/python/references/logger/components/feedback",
+                                            "sdk/python/references/logger/components/generation",
+                                            "sdk/python/references/logger/components/retrieval",
+                                            "sdk/python/references/logger/components/session",
+                                            "sdk/python/references/logger/components/span",
+                                            "sdk/python/references/logger/components/tool_call",
+                                            "sdk/python/references/logger/components/trace",
+                                            "sdk/python/references/logger/components/types",
+                                            "sdk/python/references/logger/components/utils",
+                                            "sdk/python/references/logger/crewai/client",
+                                            "sdk/python/references/logger/crewai/utils",
+                                            "sdk/python/references/logger/gemini/async_client",
+                                            "sdk/python/references/logger/gemini/client",
+                                            "sdk/python/references/logger/gemini/utils",
+                                            "sdk/python/references/logger/langchain/tracer",
+                                            "sdk/python/references/logger/langchain/utils",
+                                            "sdk/python/references/logger/litellm/tracer",
+                                            "sdk/python/references/logger/litellm_proxy/tracer",
+                                            "sdk/python/references/logger/livekit/agent_session",
+                                            "sdk/python/references/logger/livekit/gemini/gemini_realtime_session",
+                                            "sdk/python/references/logger/livekit/instrumenter",
+                                            "sdk/python/references/logger/livekit/openai/realtime/handler",
+                                            "sdk/python/references/logger/livekit/realtime_session",
+                                            "sdk/python/references/logger/livekit/store",
+                                            "sdk/python/references/logger/livekit/utils",
+                                            "sdk/python/references/logger/logger",
+                                            "sdk/python/references/logger/mistral/utils",
+                                            "sdk/python/references/logger/models/container",
+                                            "sdk/python/references/logger/openai/async_chat",
+                                            "sdk/python/references/logger/openai/async_client",
+                                            "sdk/python/references/logger/openai/async_completions",
+                                            "sdk/python/references/logger/openai/chat",
+                                            "sdk/python/references/logger/openai/utils",
+                                            "sdk/python/references/logger/parsers/generation_parser",
+                                            "sdk/python/references/logger/parsers/tags_parser",
+                                            "sdk/python/references/logger/portkey",
+                                            "sdk/python/references/logger/portkey/client",
+                                            "sdk/python/references/logger/portkey/portkey",
+                                            "sdk/python/references/logger/utils",
+                                            "sdk/python/references/logger/writer"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Models",
+                                        "pages": [
+                                            "sdk/python/references/models/attachment",
+                                            "sdk/python/references/models/dataset",
+                                            "sdk/python/references/models/evaluator",
+                                            "sdk/python/references/models/folder",
+                                            "sdk/python/references/models/metadata",
+                                            "sdk/python/references/models/prompt",
+                                            "sdk/python/references/models/prompt_chain",
+                                            "sdk/python/references/models/query_builder",
+                                            "sdk/python/references/models/test_run"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Test_Runs",
+                                        "pages": [
+                                            "sdk/python/references/test_runs/test_run_builder",
+                                            "sdk/python/references/test_runs/utils"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Tests",
+                                        "pages": [
+                                            "sdk/python/references/tests/mock_writer",
+                                            "sdk/python/references/tests/test_anthropic",
+                                            "sdk/python/references/tests/test_connection_retry_logic",
+                                            "sdk/python/references/tests/test_logger_langchain_03x",
+                                            "sdk/python/references/tests/test_maxim_core_simple",
+                                            "sdk/python/references/tests/test_portkey",
+                                            "sdk/python/references/tests/test_retry_for_maxim_api",
+                                            "sdk/python/references/tests/test_test_runs"
+                                        ]
+                                    }
                                 ]
                             },
-                            {
-                                "group": "OpenAI",
-                                "pages": [
-                                    "sdk/python/integrations/openai/one-line-integration",
-                                    "sdk/python/integrations/openai/agents-sdk"
-                                ]
-                            },
-                            {
-                                "group": "LiteLLM",
-                                "pages": [
-                                    "sdk/python/integrations/litellm/litellm-sdk",
-                                    "sdk/python/integrations/litellm/litellm-proxy"
-                                ]
-                            },
-                            {
-                                "group": "LangChain",
-                                "pages": [
-                                    "sdk/python/integrations/langchain/langchain"
-                                ]
-                            },
-                            {
-                                "group": "LangGraph",
-                                "pages": [
-                                    "sdk/python/integrations/langgraph/langgraph"
-                                ]
-                            },
-                            {
-                                "group": "Mistral",
-                                "pages": [
-                                    "sdk/python/integrations/mistral/mistral"
-                                ]
-                            },                            
                             "sdk/python/upgrading-to-v3"
                         ]
                     },
