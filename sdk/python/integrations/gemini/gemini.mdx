@@ -1,0 +1,286 @@
+---
+title: "Google Gemini"
+description: "Learn how to integrate Maxim observability with the Google Gemini SDK in just one line of code."
+---
+
+## Requirements
+
+```
+"google-genai"
+"maxim-py"
+```
+
+## Env variables
+
+```
+MAXIM_API_KEY=
+MAXIM_LOG_REPO_ID=
+GEMINI_API_KEY=
+```
+
+## Initialize logger
+
+```
+python
+```
+
+```
+from maxim import Maxim
+
+logger = Maxim().logger()
+```
+
+## Initialize MaximGeminiClient
+
+```python {4,7}
+from google import genai
+from maxim.logger.gemini import MaximGeminiClient
+
+client = MaximGeminiClient(
+    client=genai.Client(api_key=GEMINI_API_KEY), 
+    logger=logger
+)
+```
+
+## Make LLM calls using MaximGeminiClient
+
+```python
+from google import genai
+from maxim.logger.gemini import MaximGeminiClient
+
+client = MaximGeminiClient(
+    client=genai.Client(api_key=GEMINI_API_KEY), 
+    logger=logger
+)
+
+# Create a generation request
+response = client.models.generate_content(
+    model="gemini-2.0-flash",
+    contents="Write a haiku about recursion in programming.",
+    config={
+        "temperature": 0.8,
+        "system_instruction": "You are a helpful assistant."
+    }
+)
+
+# Extract response text
+response_text = response.text
+print(response_text)
+```
+
+## Advanced use-cases
+
+### Function Calling Support
+
+```python
+import os
+import dotenv
+from google import genai
+from maxim import Maxim
+from maxim.logger.gemini import MaximGeminiClient
+
+# Load environment variables
+dotenv.load_dotenv()
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+# Initialize Maxim logger
+logger = Maxim().logger()
+
+# Initialize MaximGeminiClient
+client = MaximGeminiClient(
+    client=genai.Client(api_key=GEMINI_API_KEY), 
+    logger=logger
+)
+```
+
+### **Define function tools**
+
+```python
+def get_current_weather(location: str) -> str:
+    """Get the current weather in a given location.
+    Args:
+        location: required, The city and state, e.g. San Francisco, CA
+    """
+    print(f"Called with: {location=}")
+    return "23°C, sunny"
+```
+
+### **Make calls with function tools**
+
+```python
+response = client.models.generate_content(
+    model="gemini-2.0-flash",
+    contents="What's the weather like in San Francisco?",
+    config={
+        "tools": [get_current_weather],
+        "system_instruction": "You are a helpful assistant",
+        "temperature": 0.8,
+    }
+)
+
+print(response.text)
+```
+
+## Capture multiple LLM calls in one trace
+
+**Initialize Maxim SDK and Gemini Client**
+
+```python
+from google import genai
+from maxim import Maxim
+from maxim.logger.gemini import MaximGeminiClient
+
+# Make sure MAXIM_API_KEY and MAXIM_LOG_REPO_ID are set in env variables
+logger = Maxim().logger()
+
+# Initialize MaximGeminiClient
+client = MaximGeminiClient(
+    client=genai.Client(api_key=GEMINI_API_KEY), 
+    logger=logger
+)
+```
+
+**Create a new trace externally**
+
+```python
+from uuid import uuid4
+from maxim.logger import TraceConfig
+
+trace_id = str(uuid4())
+
+trace = logger.trace(TraceConfig(
+    id=trace_id,
+    name="Trace name"
+))
+```
+
+**Make LLM calls and use this trace id**
+
+```python
+response = client.models.generate_content(
+    model="gemini-2.0-flash",
+    contents="What was the capital of France in 1800s?",
+    config={
+        "temperature": 0.8,
+        "system_instruction": "You are a helpful assistant"
+    },
+    trace_id=trace_id
+)
+
+# Extract response text
+response_text = response.text
+print(response_text)
+
+# End the trace when done
+trace.end()
+```
+
+**Keep adding LLM calls** All LLM calls with the same `trace_id` parameter will be added to the declared trace.
+
+## Capture multi-turn conversations
+
+**Initialize Maxim SDK and Gemini Client**
+
+```python
+from google import genai
+from maxim import Maxim
+from maxim.logger.gemini import MaximGeminiClient
+
+# Make sure MAXIM_API_KEY and MAXIM_LOG_REPO_ID are set in env variables
+logger = Maxim().logger()
+
+# Initialize MaximGeminiClient
+client = MaximGeminiClient(
+    client=genai.Client(api_key=GEMINI_API_KEY), 
+    logger=logger
+)
+```
+
+**Create a new trace externally and add it to a session**
+
+```python
+from uuid import uuid4
+from maxim.logger import TraceConfig
+
+# use this session id to add multiple traces in one session
+session_id = str(uuid4())
+trace_id = str(uuid4())
+
+trace = logger.trace(TraceConfig(
+    id=trace_id,
+    name="Trace name",
+    session_id=session_id
+))
+```
+
+**Make LLM calls and use this trace id**
+
+```python
+# First message in the conversation
+response1 = client.models.generate_content(
+    model="gemini-2.0-flash",
+    contents="Hello, can you help me with Python programming?",
+    config={
+        "temperature": 0.8,
+        "system_instruction": "You are a helpful Python programming assistant"
+    },
+    trace_id=trace_id
+)
+
+response_text1 = response1.text
+print("Assistant:", response_text1)
+
+# Continue the conversation with follow-up question
+response2 = client.models.generate_content(
+    model="gemini-2.0-flash",
+    contents="Can you write a simple Python function to calculate fibonacci numbers?",
+    config={
+        "temperature": 0.8,
+        "system_instruction": "You are a helpful Python programming assistant"
+    },
+    trace_id=trace_id
+)
+
+response_text2 = response2.text
+print("Assistant:", response_text2)
+
+# End the trace when conversation is complete
+trace.end()
+```
+
+**Create additional traces in the same session** To add more conversations to the same session, create new traces with the same `session_id`:
+
+```python
+# Create another trace in the same session
+trace_id_2 = str(uuid4())
+
+trace2 = logger.trace(TraceConfig(
+    id=trace_id_2,
+    name="Second conversation",
+    session_id=session_id  # Same session_id to group conversations
+))
+
+# Make calls with the new trace_id
+response3 = client.models.generate_content(
+    model="gemini-2.0-flash",
+    contents="Tell me about machine learning basics",
+    config={
+        "temperature": 0.8,
+        "system_instruction": "You are a helpful ML tutor"
+    },
+    trace_id=trace_id_2
+)
+
+print("Assistant:", response3.text)
+trace2.end()
+```
+
+![Gif](/images/gemini_traces.gif)
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card title="Google Gemini integration Notebook (Colab)" icon="google" href="https://colab.research.google.com/drive/1qtjxlIIlOInQcRhXRP5eJvrWenXmJfSS?usp=sharing">
+    
+  </Card>
+</CardGroup>

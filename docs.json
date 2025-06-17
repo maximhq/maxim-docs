@@ -255,6 +255,12 @@
                                       "sdk/python/integrations/crewai/crewai"
                                     ]
                                   },
+                                  {
+                                    "group": "Gemini",
+                                    "pages": [
+                                        "sdk/python/integrations/gemini/gemini"
+                                    ]
+                                },
                                                               
                                     {
                                         "group": "OpenAI",
