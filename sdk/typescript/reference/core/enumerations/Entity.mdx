@@ -1,0 +1,101 @@
+---
+title: "Entity"
+sidebar_position: 1
+---
+
+# Enumeration: Entity
+
+Defined in: [src/lib/logger/components/types.ts:14](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/types.ts#L14)
+
+Enumeration of all entity types supported by the Maxim logging system.
+
+These entities represent different types of components
+that can be logged and tracked within the Maxim observability platform.
+
+## Example
+
+```ts
+// Entity types are used internally by container classes
+const session = new Session(config, writer); // Uses Entity.SESSION
+const trace = new Trace(config, writer); // Uses Entity.TRACE
+```
+
+## Enumeration Members
+
+### ERROR
+
+> **ERROR**: `"error"`
+
+Defined in: [src/lib/logger/components/types.ts:30](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/types.ts#L30)
+
+Error or exception occurrence
+
+***
+
+### FEEDBACK
+
+> **FEEDBACK**: `"feedback"`
+
+Defined in: [src/lib/logger/components/types.ts:24](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/types.ts#L24)
+
+User or system feedback on operations
+
+***
+
+### GENERATION
+
+> **GENERATION**: `"generation"`
+
+Defined in: [src/lib/logger/components/types.ts:22](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/types.ts#L22)
+
+LLM generation or completion operation
+
+***
+
+### RETRIEVAL
+
+> **RETRIEVAL**: `"retrieval"`
+
+Defined in: [src/lib/logger/components/types.ts:26](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/types.ts#L26)
+
+Document or information retrieval operation
+
+***
+
+### SESSION
+
+> **SESSION**: `"session"`
+
+Defined in: [src/lib/logger/components/types.ts:16](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/types.ts#L16)
+
+User or system session containing multiple traces
+
+***
+
+### SPAN
+
+> **SPAN**: `"span"`
+
+Defined in: [src/lib/logger/components/types.ts:20](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/types.ts#L20)
+
+Hierarchical span within a trace for grouping operations
+
+***
+
+### TOOL\_CALL
+
+> **TOOL\_CALL**: `"tool_call"`
+
+Defined in: [src/lib/logger/components/types.ts:28](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/types.ts#L28)
+
+Function or tool call execution
+
+***
+
+### TRACE
+
+> **TRACE**: `"trace"`
+
+Defined in: [src/lib/logger/components/types.ts:18](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/types.ts#L18)
+
+Individual execution trace containing spans and operations

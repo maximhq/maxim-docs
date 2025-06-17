@@ -1,0 +1,582 @@
+---
+title: "Retrieval"
+sidebar_position: 1
+---
+
+# Class: Retrieval
+
+Defined in: [src/lib/logger/components/retrieval.ts:40](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/retrieval.ts#L40)
+
+Represents a retrieval.
+
+Retrieval operations capture the process of searching, querying, or fetching
+relevant information from databases, vector stores, knowledge bases, or other
+data sources. Essential for RAG (Retrieval-Augmented Generation) applications.
+
+ Retrieval
+
+## Example
+
+```ts
+const retrieval = container.retrieval({
+  id: 'faq-search-001',
+  name: 'FAQ Knowledge Search',
+});
+
+// Set the search query
+retrieval.input('How do I reset my password?');
+
+// Record the retrieved documents
+retrieval.output([
+  'To reset your password, go to Settings > Security...',
+  'Password requirements: minimum 8 characters...',
+  'If you forgot your password, click "Forgot Password"...'
+]);
+```
+
+## Extends
+
+- [`EvaluatableBaseContainer`](./EvaluatableBaseContainer)
+
+## Constructors
+
+### Constructor
+
+> **new Retrieval**(`config`, `writer`): `Retrieval`
+
+Defined in: [src/lib/logger/components/retrieval.ts:52](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/retrieval.ts#L52)
+
+Creates a new retrieval log entry.
+
+#### Parameters
+
+##### config
+
+[`RetrievalConfig`](../overview#retrievalconfig)
+
+Configuration object defining the retrieval
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+Log writer instance for persisting retrieval data
+
+#### Returns
+
+`Retrieval`
+
+#### Example
+
+```ts
+const retrieval = container.retrieval({
+  id: 'knowledge-search-001',
+  name: 'Product Knowledge Base Search',
+});
+```
+
+#### Overrides
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`constructor`](./EvaluatableBaseContainer#constructor)
+
+## Accessors
+
+### evaluate
+
+#### Get Signature
+
+> **get** **evaluate**(): [`EvaluateContainer`](./EvaluateContainer)
+
+Defined in: [src/lib/logger/components/base.ts:248](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L248)
+
+Gets the evaluation methods for this container.
+
+##### Example
+
+```ts
+container.evaluate.withEvaluators('bias', 'toxicity');
+```
+
+##### Returns
+
+[`EvaluateContainer`](./EvaluateContainer)
+
+Evaluation methods for configuring and triggering evaluations
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`evaluate`](./EvaluatableBaseContainer#evaluate)
+
+***
+
+### id
+
+#### Get Signature
+
+> **get** **id**(): `string`
+
+Defined in: [src/lib/logger/components/base.ts:80](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L80)
+
+Gets the unique identifier for this container.
+
+##### Returns
+
+`string`
+
+The container's unique ID
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`id`](./EvaluatableBaseContainer#id)
+
+## Methods
+
+### addMetadata()
+
+> **addMetadata**(`metadata`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:124](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L124)
+
+Adds metadata to this container for additional context and debugging. Any data type could be added as the value in the metadata record.
+
+#### Parameters
+
+##### metadata
+
+`Record`\<`string`, `unknown`\>
+
+Key-value pairs of metadata
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+container.addMetadata({
+  requestId: 'req-123',
+  userAgent: 'Mozilla/5.0...',
+  processingTime: 1500
+});
+```
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`addMetadata`](./EvaluatableBaseContainer#addmetadata)
+
+***
+
+### addTag()
+
+> **addTag**(`key`, `value`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:94](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L94)
+
+Adds a tag to this container for categorization and filtering.
+
+#### Parameters
+
+##### key
+
+`string`
+
+The tag key
+
+##### value
+
+`string`
+
+The tag value
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+container.addTag('environment', 'production');
+container.addTag('user_type', 'premium');
+```
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`addTag`](./EvaluatableBaseContainer#addtag)
+
+***
+
+### data()
+
+> **data**(): `any`
+
+Defined in: [src/lib/logger/components/base.ts:191](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L191)
+
+Returns the current data state of this container.
+
+#### Returns
+
+`any`
+
+The container's data.
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`data`](./EvaluatableBaseContainer#data)
+
+***
+
+### end()
+
+> **end**(): `void`
+
+Defined in: [src/lib/logger/components/base.ts:163](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L163)
+
+Marks this container as ended and records the end timestamp.
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+// End a container when processing is complete
+container.end();
+```
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`end`](./EvaluatableBaseContainer#end)
+
+***
+
+### input()
+
+> **input**(`query`): `void`
+
+Defined in: [src/lib/logger/components/retrieval.ts:64](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/retrieval.ts#L64)
+
+Sets the input query for this retrieval operation.
+
+#### Parameters
+
+##### query
+
+`string`
+
+The search query or input text
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+retrieval.input('How do I troubleshoot connection issues?');
+```
+
+***
+
+### output()
+
+> **output**(`docs`): `void`
+
+Defined in: [src/lib/logger/components/retrieval.ts:97](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/retrieval.ts#L97)
+
+Sets the output results for this retrieval operation and ends it.
+
+#### Parameters
+
+##### docs
+
+Retrieved documents as a single string or array
+
+`string` | `string`[]
+
+#### Returns
+
+`void`
+
+void
+
+#### Examples
+
+```ts
+// Single result
+retrieval.output('Connection troubleshooting guide: First, check cables...');
+```
+
+```ts
+// Multiple results
+retrieval.output([
+  'Document 1: Basic troubleshooting steps...',
+  'Document 2: Advanced network diagnostics...',
+  'Document 3: Common error codes and solutions...'
+]);
+```
+
+***
+
+### addMetadata\_()
+
+> `static` **addMetadata\_**(`writer`, `entity`, `id`, `metadata`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:144](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L144)
+
+Static method to add metadata to any container by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type
+
+##### id
+
+`string`
+
+The container ID
+
+##### metadata
+
+`Record`\<`string`, `unknown`\>
+
+The metadata to add
+
+#### Returns
+
+`void`
+
+void
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`addMetadata_`](./EvaluatableBaseContainer#addmetadata_)
+
+***
+
+### addTag\_()
+
+> `static` **addTag\_**(`writer`, `entity`, `id`, `key`, `value`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:108](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L108)
+
+Static method to add a tag to any container by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type
+
+##### id
+
+`string`
+
+The container ID
+
+##### key
+
+`string`
+
+The tag key
+
+##### value
+
+`string`
+
+The tag value
+
+#### Returns
+
+`void`
+
+void
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`addTag_`](./EvaluatableBaseContainer#addtag_)
+
+***
+
+### end\_()
+
+> `static` **end\_**(`writer`, `entity`, `id`, `data?`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:177](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L177)
+
+Static method to end any container by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type
+
+##### id
+
+`string`
+
+The container ID
+
+##### data?
+
+`any`
+
+Optional additional data to include with the end event
+
+#### Returns
+
+`void`
+
+void
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`end_`](./EvaluatableBaseContainer#end_)
+
+***
+
+### evaluate\_()
+
+> `static` **evaluate\_**(`writer`, `entity`, `id`): [`EvaluateContainer`](./EvaluateContainer)
+
+Defined in: [src/lib/logger/components/base.ts:260](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L260)
+
+Static method to get evaluation methods for any evaluatable container by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type
+
+##### id
+
+`string`
+
+The container ID
+
+#### Returns
+
+[`EvaluateContainer`](./EvaluateContainer)
+
+Evaluation methods for configuring and triggering evaluations
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`evaluate_`](./EvaluatableBaseContainer#evaluate_)
+
+***
+
+### input\_()
+
+> `static` **input\_**(`writer`, `id`, `query`): `void`
+
+Defined in: [src/lib/logger/components/retrieval.ts:76](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/retrieval.ts#L76)
+
+Static method to set input for any retrieval by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### id
+
+`string`
+
+The retrieval ID
+
+##### query
+
+`string`
+
+The search query or input text
+
+#### Returns
+
+`void`
+
+void
+
+***
+
+### output\_()
+
+> `static` **output\_**(`writer`, `id`, `docs`): `void`
+
+Defined in: [src/lib/logger/components/retrieval.ts:113](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/retrieval.ts#L113)
+
+Static method to set output for any retrieval by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### id
+
+`string`
+
+The retrieval ID
+
+##### docs
+
+Retrieved documents as a single string or array
+
+`string` | `string`[]
+
+#### Returns
+
+`void`
+
+void

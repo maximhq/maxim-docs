@@ -1,0 +1,889 @@
+---
+title: "Generation"
+sidebar_position: 1
+---
+
+# Class: Generation
+
+Defined in: [src/lib/logger/components/generation.ts:124](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L124)
+
+Represents an LLM generation or completion.
+
+The Generation class tracks the complete lifecycle of LLM requests,
+including input messages, model parameters, results, and any errors.
+It supports both chat and text completion formats.
+
+ Generation
+
+## Example
+
+```ts
+const generation = container.generation({
+  id: 'gen-001',
+  name: 'User Query Response',
+  provider: 'openai',
+  model: 'gpt-4',
+  messages: [
+    { role: 'system', content: 'You are a helpful assistant.' },
+    { role: 'user', content: 'What is the capital of France?' }
+  ],
+  modelParameters: { temperature: 0.7, max_tokens: 150 }
+});
+
+// Record the result
+generation.result({
+  id: 'cmpl-123',
+  object: 'chat.completion',
+  created: Date.now(),
+  model: 'gpt-4',
+  choices: [{
+    index: 0,
+    message: { role: 'assistant', content: 'The capital of France is Paris.' },
+    finish_reason: 'stop',
+    logprobs: null
+  }],
+  usage: { prompt_tokens: 25, completion_tokens: 8, total_tokens: 33 }
+});
+```
+
+## Extends
+
+- [`EvaluatableBaseContainer`](./EvaluatableBaseContainer)
+
+## Constructors
+
+### Constructor
+
+> **new Generation**(`config`, `writer`): `Generation`
+
+Defined in: [src/lib/logger/components/generation.ts:148](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L148)
+
+Creates a new generation log entry.
+
+#### Parameters
+
+##### config
+
+[`GenerationConfig`](../overview#generationconfig)
+
+Configuration object defining the generation
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+Log writer instance for persisting generation data
+
+#### Returns
+
+`Generation`
+
+#### Example
+
+```ts
+const generation = container.generation({
+  id: 'response-gen-001',
+  name: 'Customer Query Response',
+  provider: 'openai',
+  model: 'gpt-4',
+  messages: [
+    { role: 'system', content: 'You are a helpful assistant.' },
+    { role: 'user', content: 'How do I reset my password?' }
+  ],
+  modelParameters: { temperature: 0.7, max_tokens: 200 }
+});
+```
+
+#### Overrides
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`constructor`](./EvaluatableBaseContainer#constructor)
+
+## Accessors
+
+### evaluate
+
+#### Get Signature
+
+> **get** **evaluate**(): [`EvaluateContainer`](./EvaluateContainer)
+
+Defined in: [src/lib/logger/components/base.ts:248](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L248)
+
+Gets the evaluation methods for this container.
+
+##### Example
+
+```ts
+container.evaluate.withEvaluators('bias', 'toxicity');
+```
+
+##### Returns
+
+[`EvaluateContainer`](./EvaluateContainer)
+
+Evaluation methods for configuring and triggering evaluations
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`evaluate`](./EvaluatableBaseContainer#evaluate)
+
+***
+
+### id
+
+#### Get Signature
+
+> **get** **id**(): `string`
+
+Defined in: [src/lib/logger/components/base.ts:80](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L80)
+
+Gets the unique identifier for this container.
+
+##### Returns
+
+`string`
+
+The container's unique ID
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`id`](./EvaluatableBaseContainer#id)
+
+## Methods
+
+### addAttachment()
+
+> **addAttachment**(`attachment`): `void`
+
+Defined in: [src/lib/logger/components/generation.ts:349](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L349)
+
+Adds an attachment to this generation (can be of type `file`, `data`, or `url`).
+
+#### Parameters
+
+##### attachment
+
+[`Attachment`](../overview#attachment)
+
+The attachment to add (file, data, or URL)
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+generation.addAttachment({
+  id: 'input-document',
+  type: 'file',
+  path: './uploads/user_document.pdf',
+  name: 'User Document'
+});
+```
+
+***
+
+### addMessages()
+
+> **addMessages**(`messages`): `void`
+
+Defined in: [src/lib/logger/components/generation.ts:205](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L205)
+
+Adds additional messages to this generation's conversation.
+
+#### Parameters
+
+##### messages
+
+([`ChatCompletionMessage`](../interfaces/ChatCompletionMessage) \| [`CompletionRequest`](../interfaces/CompletionRequest))[]
+
+Array of messages to add
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+generation.addMessages([
+  { role: 'user', content: 'Can you clarify that?' },
+]);
+```
+
+***
+
+### addMetadata()
+
+> **addMetadata**(`metadata`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:124](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L124)
+
+Adds metadata to this container for additional context and debugging. Any data type could be added as the value in the metadata record.
+
+#### Parameters
+
+##### metadata
+
+`Record`\<`string`, `unknown`\>
+
+Key-value pairs of metadata
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+container.addMetadata({
+  requestId: 'req-123',
+  userAgent: 'Mozilla/5.0...',
+  processingTime: 1500
+});
+```
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`addMetadata`](./EvaluatableBaseContainer#addmetadata)
+
+***
+
+### addTag()
+
+> **addTag**(`key`, `value`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:94](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L94)
+
+Adds a tag to this container for categorization and filtering.
+
+#### Parameters
+
+##### key
+
+`string`
+
+The tag key
+
+##### value
+
+`string`
+
+The tag value
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+container.addTag('environment', 'production');
+container.addTag('user_type', 'premium');
+```
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`addTag`](./EvaluatableBaseContainer#addtag)
+
+***
+
+### data()
+
+> **data**(): `any`
+
+Defined in: [src/lib/logger/components/generation.ts:372](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L372)
+
+Returns the complete data representation of this generation.
+
+#### Returns
+
+`any`
+
+Generation data.
+
+#### Example
+
+```ts
+const genData = generation.data();
+```
+
+#### Overrides
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`data`](./EvaluatableBaseContainer#data)
+
+***
+
+### end()
+
+> **end**(): `void`
+
+Defined in: [src/lib/logger/components/base.ts:163](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L163)
+
+Marks this container as ended and records the end timestamp.
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+// End a container when processing is complete
+container.end();
+```
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`end`](./EvaluatableBaseContainer#end)
+
+***
+
+### error()
+
+> **error**(`error`): `void`
+
+Defined in: [src/lib/logger/components/generation.ts:318](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L318)
+
+Records an error that occurred during this generation.
+
+#### Parameters
+
+##### error
+
+[`GenerationError`](../interfaces/GenerationError)
+
+Error information including message, code, and type
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+generation.error({
+  message: 'API request timed out',
+  code: 'TIMEOUT_ERROR',
+  type: 'NetworkError'
+});
+```
+
+***
+
+### result()
+
+> **result**(`result`): `void`
+
+Defined in: [src/lib/logger/components/generation.ts:288](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L288)
+
+Records the successful result of this generation and ends it.
+
+#### Parameters
+
+##### result
+
+The completion result from the LLM
+
+[`ChatCompletionResult`](../interfaces/ChatCompletionResult) | [`TextCompletionResult`](../interfaces/TextCompletionResult)
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+generation.result({
+  id: 'cmpl-123',
+  object: 'chat.completion',
+  created: Date.now(),
+  model: 'gpt-4',
+  choices: [{
+    index: 0,
+    message: { role: 'assistant', content: 'Here is the answer...' },
+    finish_reason: 'stop',
+    logprobs: null
+  }],
+  usage: { prompt_tokens: 50, completion_tokens: 25, total_tokens: 75 }
+});
+```
+
+***
+
+### setModel()
+
+> **setModel**(`model`): `void`
+
+Defined in: [src/lib/logger/components/generation.ts:178](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L178)
+
+Updates the model being used for this generation.
+
+#### Parameters
+
+##### model
+
+`string`
+
+The new model name or identifier
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+generation.setModel('gpt-4-turbo');
+```
+
+***
+
+### setModelParameters()
+
+> **setModelParameters**(`modelParameters`): `void`
+
+Defined in: [src/lib/logger/components/generation.ts:252](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L252)
+
+Updates the model parameters for this generation.
+
+#### Parameters
+
+##### modelParameters
+
+`Record`\<`string`, `any`\>
+
+Object containing model-specific parameters
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+generation.setModelParameters({
+  temperature: 0.9,
+  max_tokens: 500,
+  top_p: 0.95,
+  frequency_penalty: 0.2
+});
+```
+
+***
+
+### addAttachment\_()
+
+> `static` **addAttachment\_**(`writer`, `id`, `attachment`): `void`
+
+Defined in: [src/lib/logger/components/generation.ts:361](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L361)
+
+Static method to add an attachment to any generation by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### id
+
+`string`
+
+The generation ID
+
+##### attachment
+
+[`Attachment`](../overview#attachment)
+
+The attachment to add
+
+#### Returns
+
+`void`
+
+void
+
+***
+
+### addMessages\_()
+
+> `static` **addMessages\_**(`writer`, `id`, `messages`): `void`
+
+Defined in: [src/lib/logger/components/generation.ts:226](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L226)
+
+Static method to add messages to any generation by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### id
+
+`string`
+
+The generation ID
+
+##### messages
+
+([`ChatCompletionMessage`](../interfaces/ChatCompletionMessage) \| [`CompletionRequest`](../interfaces/CompletionRequest))[]
+
+Array of messages to add
+
+#### Returns
+
+`void`
+
+void
+
+***
+
+### addMetadata\_()
+
+> `static` **addMetadata\_**(`writer`, `entity`, `id`, `metadata`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:144](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L144)
+
+Static method to add metadata to any container by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type
+
+##### id
+
+`string`
+
+The container ID
+
+##### metadata
+
+`Record`\<`string`, `unknown`\>
+
+The metadata to add
+
+#### Returns
+
+`void`
+
+void
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`addMetadata_`](./EvaluatableBaseContainer#addmetadata_)
+
+***
+
+### addTag\_()
+
+> `static` **addTag\_**(`writer`, `entity`, `id`, `key`, `value`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:108](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L108)
+
+Static method to add a tag to any container by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type
+
+##### id
+
+`string`
+
+The container ID
+
+##### key
+
+`string`
+
+The tag key
+
+##### value
+
+`string`
+
+The tag value
+
+#### Returns
+
+`void`
+
+void
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`addTag_`](./EvaluatableBaseContainer#addtag_)
+
+***
+
+### end\_()
+
+> `static` **end\_**(`writer`, `entity`, `id`, `data?`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:177](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L177)
+
+Static method to end any container by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type
+
+##### id
+
+`string`
+
+The container ID
+
+##### data?
+
+`any`
+
+Optional additional data to include with the end event
+
+#### Returns
+
+`void`
+
+void
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`end_`](./EvaluatableBaseContainer#end_)
+
+***
+
+### error\_()
+
+> `static` **error\_**(`writer`, `id`, `error`): `void`
+
+Defined in: [src/lib/logger/components/generation.ts:331](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L331)
+
+Static method to record an error for any generation by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### id
+
+`string`
+
+The generation ID
+
+##### error
+
+[`GenerationError`](../interfaces/GenerationError)
+
+Error information
+
+#### Returns
+
+`void`
+
+void
+
+***
+
+### evaluate\_()
+
+> `static` **evaluate\_**(`writer`, `entity`, `id`): [`EvaluateContainer`](./EvaluateContainer)
+
+Defined in: [src/lib/logger/components/base.ts:260](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L260)
+
+Static method to get evaluation methods for any evaluatable container by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type
+
+##### id
+
+`string`
+
+The container ID
+
+#### Returns
+
+[`EvaluateContainer`](./EvaluateContainer)
+
+Evaluation methods for configuring and triggering evaluations
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`evaluate_`](./EvaluatableBaseContainer#evaluate_)
+
+***
+
+### result\_()
+
+> `static` **result\_**(`writer`, `id`, `result`): `void`
+
+Defined in: [src/lib/logger/components/generation.ts:301](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L301)
+
+Static method to record a result for any generation by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### id
+
+`string`
+
+The generation ID
+
+##### result
+
+The completion result
+
+[`ChatCompletionResult`](../interfaces/ChatCompletionResult) | [`TextCompletionResult`](../interfaces/TextCompletionResult)
+
+#### Returns
+
+`void`
+
+void
+
+***
+
+### setModel\_()
+
+> `static` **setModel\_**(`writer`, `id`, `model`): `void`
+
+Defined in: [src/lib/logger/components/generation.ts:191](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L191)
+
+Static method to update the model for any generation by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### id
+
+`string`
+
+The generation ID
+
+##### model
+
+`string`
+
+The new model name
+
+#### Returns
+
+`void`
+
+void
+
+***
+
+### setModelParameters\_()
+
+> `static` **setModelParameters\_**(`writer`, `id`, `modelParameters`): `void`
+
+Defined in: [src/lib/logger/components/generation.ts:264](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L264)
+
+Static method to update model parameters for any generation by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### id
+
+`string`
+
+The generation ID
+
+##### modelParameters
+
+`Record`\<`string`, `any`\>
+
+Model parameters to update
+
+#### Returns
+
+`void`
+
+void

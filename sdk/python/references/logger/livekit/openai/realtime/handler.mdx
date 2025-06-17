@@ -1,0 +1,38 @@
+# maxim.logger.livekit.openai.realtime.handler
+
+#### handle\_session\_created
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/livekit/openai/realtime/handler.py#L21)
+
+
+```python
+def handle_session_created(session_info: SessionStoreEntry,
+                           event: SessionCreatedEvent)
+```
+
+This function is called when the realtime session receives an event from the OpenAI server.
+
+#### handle\_openai\_client\_event\_queued
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/livekit/openai/realtime/handler.py#L54)
+
+
+```python
+def handle_openai_client_event_queued(session_info: SessionStoreEntry,
+                                      event: dict)
+```
+
+This function is called when the realtime session receives an event from the OpenAI client.
+
+#### handle\_openai\_server\_event\_received
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/livekit/openai/realtime/handler.py#L147)
+
+
+```python
+def handle_openai_server_event_received(session_info: SessionStoreEntry,
+                                        event: Any)
+```
+
+This function is called when the realtime session receives an event from the OpenAI server.
+

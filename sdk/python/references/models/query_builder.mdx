@@ -1,0 +1,146 @@
+# maxim.models.query\_builder
+
+## [QueryBuilder](/sdk/python/references/models/query_builder)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/query_builder.py#L18)
+
+
+```python
+class QueryBuilder()
+```
+
+This class represents a query builder. Users can use this class to build a query rule for fetching prompts, agents or workflow from [Maxim](/sdk/python/references/maxim) server.
+
+#### and\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/query_builder.py#L29)
+
+
+```python
+def and_() -> 'QueryBuilder'
+```
+
+Sets the operator for combining query rules to 'AND'.
+
+**Returns**:
+
+- `[QueryBuilder](/sdk/python/references/models/query_builder)` - The current QueryBuilder instance for method chaining.
+
+#### or\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/query_builder.py#L39)
+
+
+```python
+def or_() -> 'QueryBuilder'
+```
+
+Sets the operator for combining query rules to 'OR'.
+
+**Returns**:
+
+- `[QueryBuilder](/sdk/python/references/models/query_builder)` - The current QueryBuilder instance for method chaining.
+
+#### folder
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/query_builder.py#L49)
+
+
+```python
+def folder(folderId: str) -> 'QueryBuilder'
+```
+
+Sets the folder scope for the query.
+
+**Arguments**:
+
+- `folderId` _str_ - The ID of the folder to set as the scope.
+  
+
+**Returns**:
+
+- `[QueryBuilder](/sdk/python/references/models/query_builder)` - The current QueryBuilder instance for method chaining.
+
+#### exact\_match
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/query_builder.py#L62)
+
+
+```python
+def exact_match() -> 'QueryBuilder'
+```
+
+Sets the exact match flag to True.
+
+**Returns**:
+
+- `[QueryBuilder](/sdk/python/references/models/query_builder)` - The current QueryBuilder instance for method chaining.
+
+#### deployment\_var
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/query_builder.py#L72)
+
+
+```python
+def deployment_var(key: str,
+                   value: Union[str, int, bool],
+                   enforce: bool = True) -> 'QueryBuilder'
+```
+
+Adds a deployment variable rule to the query.
+
+**Arguments**:
+
+- `key` _str_ - The key of the deployment variable.
+- `value` _Union[str, int, bool]_ - The value of the deployment variable.
+- `enforce` _bool, optional_ - Whether to enforce the deployment variable. Defaults to True.
+  
+
+**Returns**:
+
+- `[QueryBuilder](/sdk/python/references/models/query_builder)` - The current QueryBuilder instance for method chaining.
+
+#### tag
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/query_builder.py#L90)
+
+
+```python
+def tag(key: str,
+        value: Union[str, int, bool],
+        enforce: bool = False) -> 'QueryBuilder'
+```
+
+Adds a tag rule to the query.
+
+**Arguments**:
+
+- `key` _str_ - The key of the tag.
+- `value` _Union[str, int, bool]_ - The value of the tag.
+- `enforce` _bool, optional_ - Whether to enforce the tag. Defaults to False.
+  
+
+**Returns**:
+
+- `[QueryBuilder](/sdk/python/references/models/query_builder)` - The current QueryBuilder instance for method chaining.
+
+#### build
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/query_builder.py#L107)
+
+
+```python
+def build() -> QueryRule
+```
+
+Builds the final query rule.
+
+**Raises**:
+
+- `ValueError` - If the query is empty after trimming.
+  
+
+**Returns**:
+
+- `QueryRule` - A QueryRule instance with the built query.
+

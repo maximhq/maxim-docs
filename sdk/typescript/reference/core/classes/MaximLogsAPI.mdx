@@ -1,0 +1,118 @@
+---
+title: "MaximLogsAPI"
+sidebar_position: 1
+---
+
+# Class: MaximLogsAPI
+
+Defined in: [src/lib/apis/logs.ts:5](https://github.com/maximhq/maxim-js/blob/main/src/lib/apis/logs.ts#L5)
+
+## Extends
+
+- `MaximAPI`
+
+## Constructors
+
+### Constructor
+
+> **new MaximLogsAPI**(`baseUrl`, `apiKey`): `MaximLogsAPI`
+
+Defined in: [src/lib/apis/logs.ts:6](https://github.com/maximhq/maxim-js/blob/main/src/lib/apis/logs.ts#L6)
+
+#### Parameters
+
+##### baseUrl
+
+`string`
+
+##### apiKey
+
+`string`
+
+#### Returns
+
+`MaximLogsAPI`
+
+#### Overrides
+
+`MaximAPI.constructor`
+
+## Methods
+
+### checkAttachEvaluators()
+
+> **checkAttachEvaluators**(`repositoryId`, `evaluatorNames`): `Promise`\<\{ `canAttach`: `boolean`; `evaluatorsToIgnore?`: `string`[]; `message?`: `string`; \}\>
+
+Defined in: [src/lib/apis/logs.ts:26](https://github.com/maximhq/maxim-js/blob/main/src/lib/apis/logs.ts#L26)
+
+#### Parameters
+
+##### repositoryId
+
+`string`
+
+##### evaluatorNames
+
+`string`[]
+
+#### Returns
+
+`Promise`\<\{ `canAttach`: `boolean`; `evaluatorsToIgnore?`: `string`[]; `message?`: `string`; \}\>
+
+***
+
+### destroyAgents()
+
+> **destroyAgents**(): `void`
+
+Defined in: [src/lib/apis/maxim.ts:98](https://github.com/maximhq/maxim-js/blob/main/src/lib/apis/maxim.ts#L98)
+
+Destroys the HTTP and HTTPS agents, closing all sockets
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+`MaximAPI.destroyAgents`
+
+***
+
+### doesLogRepositoryExist()
+
+> **doesLogRepositoryExist**(`loggerId`): `Promise`\<`boolean`\>
+
+Defined in: [src/lib/apis/logs.ts:10](https://github.com/maximhq/maxim-js/blob/main/src/lib/apis/logs.ts#L10)
+
+#### Parameters
+
+##### loggerId
+
+`string`
+
+#### Returns
+
+`Promise`\<`boolean`\>
+
+***
+
+### pushLogs()
+
+> **pushLogs**(`repositoryId`, `logs`): `Promise`\<`void`\>
+
+Defined in: [src/lib/apis/logs.ts:55](https://github.com/maximhq/maxim-js/blob/main/src/lib/apis/logs.ts#L55)
+
+#### Parameters
+
+##### repositoryId
+
+`string`
+
+##### logs
+
+`string`
+
+#### Returns
+
+`Promise`\<`void`\>

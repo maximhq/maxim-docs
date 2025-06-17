@@ -1,0 +1,254 @@
+# maxim.logger.components.tool\_call
+
+## [ToolCallConfig](/sdk/python/references/logger/components/tool_call)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/tool_call.py#L16)
+
+
+```python
+@deprecated(
+    "This class will be removed in a future version. Use {} which is TypedDict."
+)
+
+@dataclass
+class ToolCallConfig()
+```
+
+[Tool](/sdk/python/references/models/prompt) call config.
+
+This class represents a tool call config.
+
+## [ToolCallConfigDict](/sdk/python/references/logger/components/tool_call)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/tool_call.py#L29)
+
+
+```python
+class ToolCallConfigDict(TypedDict)
+```
+
+[Tool](/sdk/python/references/models/prompt) call config dict.
+
+This class represents a tool call config dictionary.
+
+#### get\_tool\_call\_config\_dict
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/tool_call.py#L43)
+
+
+```python
+def get_tool_call_config_dict(
+        config: Union[ToolCallConfig,
+                      ToolCallConfigDict]) -> ToolCallConfigDict
+```
+
+Convert a tool call config to a tool call config dict else return the config.
+
+**Arguments**:
+
+- `config` - The config to convert.
+  
+
+**Returns**:
+
+- `[ToolCallConfigDict](/sdk/python/references/logger/components/tool_call)` - The tool call config dict.
+
+## [ToolCallError](/sdk/python/references/logger/components/tool_call)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/tool_call.py#L71)
+
+
+```python
+@deprecated(
+    "This class will be removed in a future version. Use {} which is TypedDict instead."
+)
+
+@dataclass
+class ToolCallError()
+```
+
+[Tool](/sdk/python/references/models/prompt) call error.
+
+This class represents a tool call error.
+
+#### get\_tool\_call\_error\_dict
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/tool_call.py#L88)
+
+
+```python
+def get_tool_call_error_dict(
+        error: Union[ToolCallError, ToolCallErrorDict]) -> dict[str, Any]
+```
+
+Convert a tool call error to a tool call error dict else return the error.
+
+**Arguments**:
+
+- `error` - The error to convert.
+  
+
+**Returns**:
+
+  dict[str, Any]: The tool call error dict.
+
+## [ToolCall](/sdk/python/references/models/prompt)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/tool_call.py#L110)
+
+
+```python
+class ToolCall(BaseContainer)
+```
+
+[Tool](/sdk/python/references/models/prompt) call.
+
+This class represents a tool call.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/tool_call.py#L116)
+
+
+```python
+def __init__(config: Union[ToolCallConfig, ToolCallConfigDict],
+             writer: LogWriter)
+```
+
+Initialize a tool call.
+
+**Arguments**:
+
+- `config` - The config to initialize the tool call with.
+- `writer` - The writer to use.
+
+#### update
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/tool_call.py#L136)
+
+
+```python
+def update(data: Dict[str, Any])
+```
+
+Update the tool call.
+
+**Arguments**:
+
+- `data` - The data to update the tool call with.
+
+#### update\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/tool_call.py#L146)
+
+
+```python
+@staticmethod
+def update_(writer: LogWriter, id: str, data: Dict[str, Any])
+```
+
+Update the tool call.
+
+**Arguments**:
+
+- `writer` - The writer to use.
+- `id` - The id of the tool call to update.
+- `data` - The data to update the tool call with.
+
+#### result\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/tool_call.py#L158)
+
+
+```python
+@staticmethod
+def result_(writer: LogWriter, id: str, result: str)
+```
+
+Update the tool call.
+
+**Arguments**:
+
+- `writer` - The writer to use.
+- `id` - The id of the tool call to update.
+- `result` - The result to update the tool call with.
+
+#### attach\_evaluators
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/tool_call.py#L179)
+
+
+```python
+def attach_evaluators(evaluators: List[str])
+```
+
+Attach evaluators to the tool call.
+
+**Arguments**:
+
+- `evaluators` - The evaluators to attach to the tool call.
+
+#### result
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/tool_call.py#L191)
+
+
+```python
+def result(result: str)
+```
+
+Update the tool call.
+
+**Arguments**:
+
+- `result` - The result to update the tool call with.
+
+#### error
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/tool_call.py#L201)
+
+
+```python
+def error(error: ToolCallError)
+```
+
+Add an error to the tool call.
+
+**Arguments**:
+
+- `error` - The tool call error.
+
+#### error\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/tool_call.py#L212)
+
+
+```python
+@staticmethod
+def error_(writer: LogWriter, id: str, error: Union[ToolCallError,
+                                                    ToolCallErrorDict])
+```
+
+Add an error to the tool call.
+
+**Arguments**:
+
+- `writer` - The writer to use.
+- `id` - The id of the tool call to add the error to.
+- `error` - The tool call error.
+
+#### data
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/tool_call.py#L236)
+
+
+```python
+def data() -> Dict[str, Any]
+```
+
+Get the data for the tool call.
+
+**Returns**:
+
+  Dict[str, Any]: The data for the tool call.
+

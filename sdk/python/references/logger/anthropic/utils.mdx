@@ -1,0 +1,179 @@
+# maxim.logger.anthropic.utils
+
+## [AnthropicUtils](/sdk/python/references/logger/anthropic/utils)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/utils.py#L10)
+
+
+```python
+class AnthropicUtils()
+```
+
+Utility class for Anthropic API integration with [Maxim](/sdk/python/references/maxim).
+
+This class provides static utility methods for parsing and processing
+Anthropic API requests and responses to integrate with [Maxim](/sdk/python/references/maxim)'s logging
+and monitoring system. It handles message format conversion, parameter
+extraction, and response standardization.
+
+All methods are static and can be called directly on the class without
+instantiation.
+
+#### parse\_message\_param
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/utils.py#L23)
+
+
+```python
+@staticmethod
+def parse_message_param(
+        message: Iterable[MessageParam],
+        override_role: Optional[str] = None) -> List[GenerationRequestMessage]
+```
+
+Parse Anthropic message parameters into [Maxim](/sdk/python/references/maxim) format.
+
+This method converts Anthropic MessageParam objects into [Maxim](/sdk/python/references/maxim)'s
+[GenerationRequestMessage](/sdk/python/references/logger/components/generation) format for consistent logging and tracking.
+It handles various message formats including string content and
+structured content blocks.
+
+**Arguments**:
+
+- `message` _Iterable[MessageParam]_ - Iterable of Anthropic message parameters
+  to be parsed. Can contain strings, dicts, or MessageParam objects.
+- `override_role` _Optional[str]_ - Optional role to override the message role.
+  If provided, all messages will use this role instead of their original role.
+  
+
+**Returns**:
+
+- `List[[GenerationRequestMessage](/sdk/python/references/logger/components/generation)]` - List of parsed messages in [Maxim](/sdk/python/references/maxim) format,
+  with role and content extracted and standardized.
+  
+
+**Notes**:
+
+  - String messages are treated as user messages by default
+  - Dict messages should have 'role' and 'content' keys
+  - Content blocks are flattened into text content
+  - Complex content structures are converted to string representation
+
+#### get\_model\_params
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/utils.py#L86)
+
+
+```python
+@staticmethod
+def get_model_params(max_tokens: int, **kwargs: Any) -> Dict[str, Any]
+```
+
+Extract and normalize model parameters for [Maxim](/sdk/python/references/maxim) logging.
+
+This method extracts relevant model parameters from Anthropic API
+calls and formats them for consistent logging in [Maxim](/sdk/python/references/maxim). It handles
+common parameters like temperature, top_p, and other generation settings.
+
+**Arguments**:
+
+- `max_tokens` _int_ - Maximum number of tokens to generate.
+- `**kwargs` _Any_ - Additional keyword arguments that may contain
+  model parameters such as temperature, top_p, top_k, system, etc.
+  
+
+**Returns**:
+
+  Dict[str, Any]: Dictionary containing normalized model parameters
+  with non-None values only. Common parameters are extracted
+  explicitly while additional parameters are included as-is.
+  
+
+**Notes**:
+
+  - Only non-None parameters are included in the result
+  - System, metadata, temperature, top_p, and top_k are handled explicitly
+  - Additional parameters from kwargs are included if they have values
+
+#### parse\_message\_stream
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/utils.py#L131)
+
+
+```python
+@staticmethod
+def parse_message_stream(stream: List[MessageStreamEvent]) -> Dict[str, Any]
+```
+
+Parse a list of Anthropic stream events into standardized format.
+
+This method processes a complete stream of MessageStreamEvent objects
+and converts them into a standardized response format compatible with
+OpenAI-style responses for consistent logging and processing.
+
+**Arguments**:
+
+- `stream` _List[MessageStreamEvent]_ - List of stream events from
+  Anthropic's streaming API response.
+  
+
+**Returns**:
+
+  Dict[str, Any]: Standardized response dictionary with the following structure:
+  - id: Unique identifier for the response
+  - created: Unix timestamp of creation
+  - choices: List with single choice containing message and finish_reason
+  - usage: Token usage statistics (prompt, completion, total)
+  
+
+**Raises**:
+
+- `ValueError` - If the stream list is empty.
+  
+
+**Notes**:
+
+  - Text content is extracted from content_block_delta events
+  - Token usage is extracted from message_start events
+  - The response format mimics OpenAI's API for compatibility
+  - Finish reason is set to "stop" by default (Anthropic doesn't provide this directly)
+
+#### parse\_message
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/utils.py#L195)
+
+
+```python
+@staticmethod
+def parse_message(message: Any) -> Dict[str, Any]
+```
+
+Parse an Anthropic [Message](/sdk/python/references/models/prompt) response into standardized format.
+
+This method converts an Anthropic [Message](/sdk/python/references/models/prompt) object into a standardized
+response format compatible with OpenAI-style responses for consistent
+logging and processing across different AI providers.
+
+**Arguments**:
+
+- `message` _Any_ - Anthropic [Message](/sdk/python/references/models/prompt) object containing the API response
+  with content, usage statistics, and metadata.
+  
+
+**Returns**:
+
+  Dict[str, Any]: Standardized response dictionary with the following structure:
+  - id: [Message](/sdk/python/references/models/prompt) ID from Anthropic
+  - created: Unix timestamp of parsing time
+  - choices: List with single choice containing message and finish_reason
+  - usage: Token usage statistics (input, output, total tokens)
+  
+
+**Notes**:
+
+  - Content blocks are flattened into a single text string
+  - Both structured content blocks and dict-based content are supported
+  - Token usage is extracted from the message's usage attribute
+  - Stop reason is mapped from Anthropic's stop_reason or defaults to "stop"
+  - The response format mimics OpenAI's API for cross-provider compatibility
+

@@ -1,0 +1,220 @@
+# maxim.models.evaluator
+
+## [Evaluator](/sdk/python/references/models/evaluator)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/evaluator.py#L17)
+
+
+```python
+@dataclass
+class Evaluator()
+```
+
+This class represents an evaluator.
+
+## [LocalEvaluatorReturn](/sdk/python/references/models/evaluator)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/evaluator.py#L69)
+
+
+```python
+@dataclass
+class LocalEvaluatorReturn()
+```
+
+This class represents the return value of a local evaluator.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/evaluator.py#L77)
+
+
+```python
+def __init__(score: Union[int, bool, str], reasoning: Optional[str] = None)
+```
+
+This class represents the return value of a local evaluator.
+
+**Arguments**:
+
+- `score` - The score of the evaluator.
+- `reasoning` - The reasoning of the evaluator.
+
+## [PassFailCriteriaOnEachEntry](/sdk/python/references/models/evaluator)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/evaluator.py#L122)
+
+
+```python
+@dataclass
+class PassFailCriteriaOnEachEntry()
+```
+
+This class represents the pass fail criteria on each entry.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/evaluator.py#L77)
+
+
+```python
+def __init__(score_should_be: OperatorType, value: Union[bool, int, float,
+                                                         None])
+```
+
+This class represents the pass fail criteria on each entry.
+
+**Arguments**:
+
+- `score_should_be` - The score should be.
+- `value` - The value of the pass fail criteria.
+
+## [PassFailCriteriaForTestrunOverall](/sdk/python/references/models/evaluator)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/evaluator.py#L177)
+
+
+```python
+@dataclass
+class PassFailCriteriaForTestrunOverall()
+```
+
+This class represents the pass fail criteria for the overall testrun.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/evaluator.py#L77)
+
+
+```python
+def __init__(overall_should_be: OperatorType, value: int,
+             for_result: Literal["average", "percentageOfPassedResults"])
+```
+
+This class represents the pass fail criteria for the overall testrun.
+
+**Arguments**:
+
+- `overall_should_be` - The overall should be.
+- `value` - The value of the pass fail criteria.
+- `for_result` - The for result.
+
+## [PassFailCriteria](/sdk/python/references/models/evaluator)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/evaluator.py#L243)
+
+
+```python
+@dataclass
+class PassFailCriteria()
+```
+
+This class represents the pass fail criteria.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/evaluator.py#L77)
+
+
+```python
+def __init__(on_each_entry_pass_if: PassFailCriteriaOnEachEntry,
+             for_testrun_overall_pass_if: PassFailCriteriaForTestrunOverall)
+```
+
+This class represents the pass fail criteria.
+
+**Arguments**:
+
+- `on_each_entry_pass_if` - The pass fail criteria on each entry.
+- `for_testrun_overall_pass_if` - The pass fail criteria for the overall testrun.
+
+## [LocalEvaluatorResultParameter](/sdk/python/references/models/evaluator)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/evaluator.py#L304)
+
+
+```python
+@dataclass
+class LocalEvaluatorResultParameter()
+```
+
+This class represents the result parameter of a local evaluator.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/evaluator.py#L77)
+
+
+```python
+def __init__(output: str, context_to_evaluate: Optional[Union[str,
+                                                              List[str]]])
+```
+
+This class represents the result parameter of a local evaluator.
+
+**Arguments**:
+
+- `output` - The output of the local evaluator.
+- `context_to_evaluate` - The context to evaluate.
+
+## [LocalEvaluationResult](/sdk/python/references/models/evaluator)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/evaluator.py#L359)
+
+
+```python
+@dataclass
+class LocalEvaluationResult()
+```
+
+This class represents the result of a local evaluation.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/evaluator.py#L77)
+
+
+```python
+def __init__(result: LocalEvaluatorReturn, name: str,
+             pass_fail_criteria: PassFailCriteria)
+```
+
+This class represents the result of a local evaluation.
+
+**Arguments**:
+
+- `result` - The result of the local evaluation.
+- `name` - The name of the local evaluation.
+- `pass_fail_criteria` - The pass fail criteria of the local evaluation.
+
+## [LocalEvaluationResultWithId](/sdk/python/references/models/evaluator)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/evaluator.py#L423)
+
+
+```python
+@dataclass
+class LocalEvaluationResultWithId(LocalEvaluationResult)
+```
+
+This class represents the result of a local evaluation with an id.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/evaluator.py#L77)
+
+
+```python
+def __init__(result: LocalEvaluatorReturn, name: str,
+             pass_fail_criteria: PassFailCriteria, id: str)
+```
+
+This class represents the result of a local evaluation with an id.
+
+**Arguments**:
+
+- `result` - The result of the local evaluation.
+- `name` - The name of the local evaluation.
+- `pass_fail_criteria` - The pass fail criteria of the local evaluation.
+- `id` - The id of the local evaluation.
+

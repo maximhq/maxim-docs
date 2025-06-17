@@ -1,0 +1,273 @@
+# maxim.models.test\_run
+
+## [YieldedOutputTokenUsage](/sdk/python/references/models/test_run)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/test_run.py#L16)
+
+
+```python
+@dataclass
+class YieldedOutputTokenUsage()
+```
+
+This class represents the token usage of a yielded output. Users can pass custom token usage to the `yieldsOutput` function.
+
+## [YieldedOutputCost](/sdk/python/references/models/test_run)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/test_run.py#L66)
+
+
+```python
+@dataclass
+class YieldedOutputCost()
+```
+
+This class represents the cost of a yielded output. Users can pass custom cost to the `yieldsOutput` function.
+
+## [YieldedOutputMeta](/sdk/python/references/models/test_run)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/test_run.py#L104)
+
+
+```python
+@dataclass
+class YieldedOutputMeta()
+```
+
+This class represents the meta of a yielded output. Users can pass custom meta to the `yieldsOutput` function.
+
+## [YieldedOutput](/sdk/python/references/models/test_run)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/test_run.py#L151)
+
+
+```python
+@dataclass
+class YieldedOutput()
+```
+
+Yielded output represents the output of `yieldsOutput` function.
+
+## [EvaluatorArgs](/sdk/python/references/models/test_run)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/test_run.py#L162)
+
+
+```python
+@dataclass
+class EvaluatorArgs()
+```
+
+This class represents the arguments of an evaluator.
+
+## [EvaluatorConfig](/sdk/python/references/models/test_run)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/test_run.py#L214)
+
+
+```python
+@dataclass
+class EvaluatorConfig()
+```
+
+This class represents the config of an evaluator.
+
+## [TestRun](/sdk/python/references/models/test_run)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/test_run.py#L252)
+
+
+```python
+@dataclass
+class TestRun()
+```
+
+This class represents a test run.
+
+## [TestRunEntry](/sdk/python/references/models/test_run)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/test_run.py#L324)
+
+
+```python
+@dataclass
+class TestRunEntry()
+```
+
+This class represents an entry of a test run.
+
+## [TestRunWithDatasetEntry](/sdk/python/references/models/test_run)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/test_run.py#L423)
+
+
+```python
+@dataclass
+class TestRunWithDatasetEntry(TestRun)
+```
+
+This class represents a test run with a dataset entry.
+
+## [TestRunStatus](/sdk/python/references/models/test_run)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/test_run.py#L491)
+
+
+```python
+@dataclass
+class TestRunStatus()
+```
+
+This class represents the status of a test run.
+
+## [EvaluatorMeanScore](/sdk/python/references/models/test_run)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/test_run.py#L534)
+
+
+```python
+@dataclass
+class EvaluatorMeanScore()
+```
+
+This class represents the mean score of an evaluator. This helps users to specify the score of an custom evaluator.
+
+## [TestRunTokenUsage](/sdk/python/references/models/test_run)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/test_run.py#L559)
+
+
+```python
+@dataclass
+class TestRunTokenUsage()
+```
+
+This class represents the token usage of a test run.
+
+## [TestRunCost](/sdk/python/references/models/test_run)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/test_run.py#L590)
+
+
+```python
+@dataclass
+class TestRunCost()
+```
+
+This class represents the cost of a test run.
+
+## [TestRunLatency](/sdk/python/references/models/test_run)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/test_run.py#L621)
+
+
+```python
+@dataclass
+class TestRunLatency()
+```
+
+This class represents the latency of a test run.
+
+## [TestRunResultObj](/sdk/python/references/models/test_run)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/test_run.py#L670)
+
+
+```python
+@dataclass
+class TestRunResultObj()
+```
+
+Object representing a result of a test run.
+
+## [TestRunResult](/sdk/python/references/models/test_run)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/test_run.py#L722)
+
+
+```python
+@dataclass
+class TestRunResult()
+```
+
+This class represents the result of a test run.
+
+## [RunResult](/sdk/python/references/models/test_run)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/test_run.py#L747)
+
+
+```python
+@dataclass
+class RunResult()
+```
+
+This class represents the result of a comparison test run.
+
+## [TestRunLogger](/sdk/python/references/models/test_run)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/test_run.py#L756)
+
+
+```python
+class TestRunLogger(ABC)
+```
+
+#### info
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/test_run.py#L758)
+
+
+```python
+@abstractmethod
+def info(message: str) -> None
+```
+
+Log an informational message.
+
+**Arguments**:
+
+- `message` _str_ - The message to be logged.
+
+#### error
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/test_run.py#L768)
+
+
+```python
+@abstractmethod
+def error(message: str, e: Optional[Exception] = None) -> None
+```
+
+Log an error message.
+
+**Arguments**:
+
+- `message` _str_ - The error message to be logged.
+
+## [TestRunConfig](/sdk/python/references/models/test_run)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/test_run.py#L859)
+
+
+```python
+@dataclass
+class TestRunConfig(Generic[T])
+```
+
+Configuration for a test run.
+
+**Attributes**:
+
+- `base_url` _str_ - The base URL for the API.
+- `api_key` _str_ - The API key for authentication.
+- `in_workspace_id` _str_ - The ID of the workspace.
+- `workflow_id` _Optional[str]_ - The ID of the workflow.
+- `prompt_version_id` _Optional[str]_ - The ID of the prompt version.
+- `prompt_chain_version_id` _Optional[str]_ - The ID of the prompt chain version.
+- `name` _str_ - The name of the test run.
+- `data_structure` _Optional[T]_ - The structure of the test data.
+- `data` _Optional[Union[str, DataValue[T], Callable[[int], Optional[DataValue[T]]]]]_ - The test data or a function to retrieve it.
+- `test_config_id` _Optional[str]_ - The ID of the test configuration.
+- `platform_evaluators` _List[PlatformEvaluatorType[T]]_ - List of platform evaluators to use.
+

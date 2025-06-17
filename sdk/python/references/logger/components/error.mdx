@@ -1,0 +1,59 @@
+# maxim.logger.components.error
+
+## [ErrorConfig](/sdk/python/references/logger/components/error)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/error.py#L10)
+
+
+```python
+class ErrorConfig(TypedDict)
+```
+
+[Error](/sdk/python/references/models/prompt) config.
+
+This class provides functionality to manage error configurations.
+
+## [Error](/sdk/python/references/models/prompt)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/error.py#L25)
+
+
+```python
+class Error(BaseContainer)
+```
+
+[Error](/sdk/python/references/models/prompt).
+
+This class represents an error event.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/error.py#L31)
+
+
+```python
+def __init__(config: ErrorConfig, writer: LogWriter)
+```
+
+Initialize the error.
+
+**Arguments**:
+
+- `config` _[ErrorConfig](/sdk/python/references/logger/components/error)_ - The config of the error.
+- `writer` _[LogWriter](/sdk/python/references/logger/writer)_ - The writer of the error.
+
+#### data
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/error.py#L46)
+
+
+```python
+def data() -> Dict[str, Any]
+```
+
+Get the data of the error.
+
+**Returns**:
+
+  Dict[str, Any]: The data of the error.
+

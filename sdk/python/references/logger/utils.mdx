@@ -1,0 +1,69 @@
+# maxim.logger.utils
+
+#### is\_silence
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/utils.py#L15)
+
+
+```python
+def is_silence(pcm_bytes, threshold=500, min_silence_ratio=0.95)
+```
+
+Detects if the given PCM16 byte buffer is mostly silence.
+
+**Arguments**:
+
+- `pcm_bytes` _bytes_ - PCM16LE audio data.
+- `threshold` _int_ - Max absolute value to consider as silence.
+- `min_silence_ratio` _float_ - Minimum ratio of silent samples to consider the buffer as silence.
+  
+
+**Returns**:
+
+- `bool` - True if buffer is mostly silence, False otherwise.
+
+#### pcm16\_to\_wav\_bytes
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/utils.py#L43)
+
+
+```python
+def pcm16_to_wav_bytes(pcm_bytes: bytes,
+                       num_channels: int = 1,
+                       sample_rate: int = 24000) -> bytes
+```
+
+Convert PCM-16 audio data to WAV format bytes.
+
+**Arguments**:
+
+- `pcm_bytes` _bytes_ - Raw PCM-16 audio data
+- `num_channels` _int_ - Number of audio channels (default: 1)
+- `sample_rate` _int_ - Sample rate in Hz (default: 24000)
+  
+
+**Returns**:
+
+- `bytes` - WAV format audio data
+
+#### make\_object\_serializable
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/utils.py#L72)
+
+
+```python
+def make_object_serializable(obj: Any) -> Any
+```
+
+Convert any Python object into a JSON-serializable format while preserving
+as much information as possible about the original object.
+
+**Arguments**:
+
+- `obj` - Any Python object
+  
+
+**Returns**:
+
+  A JSON-serializable representation of the object
+

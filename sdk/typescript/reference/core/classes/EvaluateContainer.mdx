@@ -1,0 +1,200 @@
+---
+title: "EvaluateContainer"
+sidebar_position: 1
+---
+
+# Class: EvaluateContainer
+
+Defined in: [src/lib/logger/components/base.ts:362](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L362)
+
+Container for configuring and triggering evaluations on containers.
+
+Provides an interface for setting up evaluations with variables.
+Used to assess the quality and performance of different operations
+for your application.
+
+ EvaluateContainer
+
+## Examples
+
+```ts
+// Attaching evaluators to a container
+container.evaluate
+  .withEvaluators('bias', 'toxicity')
+   // Optionally, directly chain variables for the evaluators mentioned above
+  .withVariables({ context: 'user_query', expected: 'gold_standard' });
+```
+
+```ts
+// Attaching variables at a later stage to specific evaluators
+container.evaluate
+  .withVariables({ context: 'user_query', expected: 'gold_standard' }, ['bias']);
+```
+
+## Constructors
+
+### Constructor
+
+> **new EvaluateContainer**(`writer`, `entity`, `id`): `EvaluateContainer`
+
+Defined in: [src/lib/logger/components/base.ts:377](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L377)
+
+Creates a new evaluation container instance.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance for committing evaluations
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type being evaluated
+
+##### id
+
+`string`
+
+The unique identifier of the entity being evaluated
+
+#### Returns
+
+`EvaluateContainer`
+
+#### Example
+
+```ts
+// Usually created through container.evaluate getter
+const evaluator = new EvaluateContainer(writer, Entity.GENERATION, 'gen-123');
+```
+
+## Methods
+
+### withEvaluators()
+
+> **withEvaluators**\<`T`\>(...`evaluators`): `object`
+
+Defined in: [src/lib/logger/components/base.ts:439](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L439)
+
+Specifies which evaluators should be attached for evaluation to this container.
+
+#### Type Parameters
+
+##### T
+
+`T` *extends* `string` = `string`
+
+String literal type for evaluator names
+
+#### Parameters
+
+##### evaluators
+
+...`string`[]
+
+Names of evaluators to be used for evaluation once all variables are available to them
+
+#### Returns
+
+`object`
+
+##### withVariables()
+
+> **withVariables**: \<`U`\>(`variables`) => `void`
+
+###### Type Parameters
+
+###### U
+
+`U` *extends* `string` = `T`
+
+###### Parameters
+
+###### variables
+
+`Record`\<`U`, `string`\>
+
+###### Returns
+
+`void`
+
+#### Examples
+
+```ts
+// Use built-in evaluators
+container.evaluate
+  .withEvaluators('bias', 'toxicity');
+```
+
+```ts
+// Mix of built-in and custom evaluators
+container.evaluate
+  .withEvaluators(
+    'bias',
+    'custom_domain_knowledge',
+    'brand_compliance'
+  );
+```
+
+***
+
+### withVariables()
+
+> **withVariables**\<`T`\>(`variables`, `forEvaluators`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:408](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L408)
+
+Configures variables for specific evaluators in the evaluation.
+
+Variables provide the values needed by the evaluators to
+execute; such as expected outputs, retrieved contexts, or input queries.
+
+#### Type Parameters
+
+##### T
+
+`T` *extends* `string` = `string`
+
+String literal type for variable names
+
+#### Parameters
+
+##### variables
+
+`Record`\<`T`, `string`\>
+
+Key-value pairs mapping variables to their values
+
+##### forEvaluators
+
+`string`[]
+
+Array of evaluator names that should receive these variables
+
+#### Returns
+
+`void`
+
+#### Examples
+
+```ts
+// Provide expected output for `accuracy` evaluator
+container.evaluate
+  .withVariables(
+    { expected_output: 'The correct answer is 42' },
+    ['bias']
+  )
+```
+
+```ts
+// Multiple variables for different evaluators
+container.evaluate
+  .withVariables(
+    { context: 'Retrieved documents...', user_query: 'What is AI?' },
+    ['bias', 'toxicity']
+  );
+```

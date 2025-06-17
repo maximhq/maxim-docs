@@ -1,0 +1,90 @@
+---
+title: "CompletionRequest"
+sidebar_position: 1
+---
+
+# Interface: CompletionRequest
+
+Defined in: [src/lib/models/prompt.ts:131](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L131)
+
+Represents a message in a completion request to an AI model.
+
+Defines the structure for input messages sent to AI models, supporting
+different roles (user, system, tool, function) and content types including
+text and images for vision-enabled models.
+
+ CompletionRequest
+
+## Examples
+
+```ts
+// Simple user message
+const userMessage: CompletionRequest = {
+  role: "user",
+  content: "What's the weather like today?"
+};
+```
+
+```ts
+// System message with instructions
+const systemMessage: CompletionRequest = {
+  role: "system",
+  content: "You are a helpful weather assistant. Provide accurate forecasts."
+};
+```
+
+```ts
+// Multimodal message with text and image
+const visionMessage: CompletionRequest = {
+  role: "user",
+  content: [
+    { type: "text", text: "What do you see in this image?" },
+    {
+      type: "image_url",
+      image_url: {
+        url: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEA...", // Base64 encoded image data
+        detail: "high"
+      }
+    }
+  ]
+};
+```
+
+```ts
+// Tool response message
+const toolResponse: CompletionRequest = {
+  role: "tool",
+  content: '{"temperature": 72, "condition": "sunny"}',
+  tool_call_id: "call_123"
+};
+```
+
+## Properties
+
+### content
+
+> **content**: `string` \| [`CompletionRequestContent`](../overview#completionrequestcontent)[]
+
+Defined in: [src/lib/models/prompt.ts:133](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L133)
+
+Message content as text or multimodal array
+
+***
+
+### role
+
+> **role**: `"function"` \| `"user"` \| `"system"` \| `"tool"`
+
+Defined in: [src/lib/models/prompt.ts:132](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L132)
+
+The role of the message sender
+
+***
+
+### tool\_call\_id?
+
+> `optional` **tool\_call\_id**: `string`
+
+Defined in: [src/lib/models/prompt.ts:134](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L134)
+
+ID of the tool call this message responds to (for tool/function roles)

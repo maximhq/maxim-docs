@@ -1,0 +1,318 @@
+# maxim.logger.writer
+
+Module for handling log writing operations in the [Maxim](/sdk/python/references/maxim) SDK.
+
+This module provides classes for configuring and managing log writing,
+including automatic flushing, file-based persistence, and API integration.
+
+## [LogWriterConfig](/sdk/python/references/logger/writer)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L36)
+
+
+```python
+class LogWriterConfig()
+```
+
+Configuration class for the [LogWriter](/sdk/python/references/logger/writer).
+
+**Attributes**:
+
+- `base_url` - Base URL for the [Maxim](/sdk/python/references/maxim) API.
+- `api_key` - API key for authentication.
+- `repository_id` - ID of the repository to write logs to.
+- `auto_flush` - Whether to automatically flush logs periodically.
+- `flush_interval` - Time interval in seconds between automatic flushes.
+- `is_debug` - Whether to enable debug logging.
+- `raise_exceptions` - Whether to raise exceptions or handle them silently.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L50)
+
+
+```python
+def __init__(base_url,
+             api_key,
+             repository_id,
+             auto_flush=True,
+             flush_interval: Optional[int] = 10,
+             is_debug=False,
+             raise_exceptions=False)
+```
+
+Initialize a [LogWriterConfig](/sdk/python/references/logger/writer) instance.
+
+**Arguments**:
+
+- `base_url` - Base URL for the [Maxim](/sdk/python/references/maxim) API.
+- `api_key` - API key for authentication.
+- `repository_id` - ID of the repository to write logs to.
+- `auto_flush` - Whether to automatically flush logs periodically.
+- `flush_interval` - Time interval in seconds between automatic flushes.
+- `is_debug` - Whether to enable debug logging.
+- `raise_exceptions` - Whether to raise exceptions or handle them silently.
+
+## [LogWriter](/sdk/python/references/logger/writer)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L81)
+
+
+```python
+class LogWriter()
+```
+
+Handles writing logs to the [Maxim](/sdk/python/references/maxim) API and local filesystem.
+
+This class manages a queue of logs, periodically flushes them to the API,
+and provides fallback to local filesystem storage when API calls fail.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L50)
+
+
+```python
+def __init__(config: LogWriterConfig)
+```
+
+Initialize a [LogWriter](/sdk/python/references/logger/writer) instance.
+
+**Arguments**:
+
+- `config` - Configuration for the [LogWriter](/sdk/python/references/logger/writer).
+  
+
+**Raises**:
+
+- `ValueError` - If auto_flush is enabled but flush_interval is None.
+
+#### repository\_id
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L134)
+
+
+```python
+@property
+def repository_id()
+```
+
+Get the repository ID.
+
+**Returns**:
+
+- `str` - The repository ID.
+
+#### upload\_file\_data
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L160)
+
+
+```python
+def upload_file_data(add_attachment_log: CommitLog)
+```
+
+Upload a file attachment to the [Maxim](/sdk/python/references/maxim) API.
+
+#### upload\_file
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L208)
+
+
+```python
+def upload_file(add_attachment_log: CommitLog)
+```
+
+Upload a file data attachment to the [Maxim](/sdk/python/references/maxim) API.
+
+#### upload\_attachments
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L282)
+
+
+```python
+def upload_attachments(attachment_logs: list[CommitLog])
+```
+
+Upload all attachments to the [Maxim](/sdk/python/references/maxim) API.
+
+#### upload\_attachment
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L289)
+
+
+```python
+def upload_attachment(add_attachment_log: CommitLog)
+```
+
+Upload an attachment to the [Maxim](/sdk/python/references/maxim) API.
+
+**Arguments**:
+
+- `attachment` - Attachment object to upload.
+
+#### is\_running\_on\_lambda
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L322)
+
+
+```python
+def is_running_on_lambda()
+```
+
+Check if the code is running in an AWS Lambda environment.
+
+**Returns**:
+
+- `bool` - True if running in AWS Lambda, False otherwise.
+
+#### write\_to\_file
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L331)
+
+
+```python
+def write_to_file(logs)
+```
+
+Write logs to a local file.
+
+**Arguments**:
+
+- `logs` - List of [CommitLog](/sdk/python/references/logger/components/types) objects to write.
+  
+
+**Returns**:
+
+  str or None: Path to the file if successful, None otherwise.
+  
+
+**Raises**:
+
+- `Exception` - If raise_exceptions is True and writing fails.
+
+#### flush\_log\_files
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L360)
+
+
+```python
+def flush_log_files()
+```
+
+Flush logs from files to the [Maxim](/sdk/python/references/maxim) API.
+
+This method reads log files from the logs directory, sends them to the API,
+and deletes the files if successful.
+
+**Raises**:
+
+- `Exception` - If raise_exceptions is True and an error occurs.
+
+#### can\_access\_filesystem
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L387)
+
+
+```python
+def can_access_filesystem()
+```
+
+Check if the filesystem is accessible for writing.
+
+**Returns**:
+
+- `bool` - True if filesystem is accessible, False otherwise.
+
+#### flush\_logs
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L399)
+
+
+```python
+def flush_logs(logs: list[CommitLog])
+```
+
+Flush logs to the [Maxim](/sdk/python/references/maxim) API.
+
+This method attempts to send logs to the API, with fallback mechanisms
+for handling failures based on the environment.
+
+**Arguments**:
+
+- `logs` - List of [CommitLog](/sdk/python/references/logger/components/types) objects to flush.
+
+#### commit
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L484)
+
+
+```python
+def commit(log: CommitLog)
+```
+
+Add a log to the queue for later flushing.
+
+**Arguments**:
+
+- `log` - [CommitLog](/sdk/python/references/logger/components/types) object to add to the queue.
+  
+
+**Raises**:
+
+- `ValueError` - If the entity_id is invalid and raise_exceptions is True.
+
+#### flush\_upload\_attachment\_logs
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L522)
+
+
+```python
+def flush_upload_attachment_logs(is_sync=False)
+```
+
+Flush all queued attachments to the [Maxim](/sdk/python/references/maxim) API.
+
+
+This method empties the queue and sends all logs to the API,
+with special handling for AWS Lambda environments.
+
+#### flush\_commit\_logs
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L556)
+
+
+```python
+def flush_commit_logs(is_sync=False)
+```
+
+Flush all queued commit logs to the [Maxim](/sdk/python/references/maxim) API.
+
+This method empties the queue and sends all logs to the API,
+with special handling for AWS Lambda environments.
+
+#### flush
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L589)
+
+
+```python
+def flush(is_sync=False)
+```
+
+Flush all queued logs to the [Maxim](/sdk/python/references/maxim) API.
+
+#### cleanup
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L596)
+
+
+```python
+def cleanup(is_sync=False)
+```
+
+Clean up resources used by the [LogWriter](/sdk/python/references/logger/writer).
+
+This method stops the flush thread, flushes any remaining logs,
+and shuts down the executor.
+

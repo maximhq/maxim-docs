@@ -1,0 +1,463 @@
+# maxim.logger.gemini.client
+
+## [MaximGeminiChatSession](/sdk/python/references/logger/gemini/client)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L33)
+
+
+```python
+class MaximGeminiChatSession(Chat)
+```
+
+[Maxim](/sdk/python/references/maxim) Gemini chat session.
+
+This class represents a [Maxim](/sdk/python/references/maxim) wrapped Gemini chat session.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L39)
+
+
+```python
+def __init__(chat: Chat,
+             logger: Logger,
+             trace_id: Optional[str] = None,
+             is_local_trace: Optional[bool] = False)
+```
+
+Initialize a [Maxim](/sdk/python/references/maxim) wrapped Gemini chat session.
+
+**Arguments**:
+
+- `chat` - The chat.
+- `logger` - The logger.
+- `trace_id` - The trace id.
+- `is_local_trace` - Whether the trace is local.
+
+#### send\_message
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L60)
+
+
+```python
+@override
+def send_message(
+        message: Union[list[PartUnionDict], PartUnionDict],
+        generation_name: Optional[str] = None) -> GenerateContentResponse
+```
+
+Send a message to the [Maxim](/sdk/python/references/maxim) wrapped Gemini chat session.
+
+**Arguments**:
+
+- `message` - The message to send.
+- `generation_name` - The name of the generation.
+  
+
+**Returns**:
+
+- `GenerateContentResponse` - The response from the [Maxim](/sdk/python/references/maxim) wrapped Gemini chat session.
+
+#### send\_message\_stream
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L127)
+
+
+```python
+@override
+def send_message_stream(message: Union[list[PartUnionDict], PartUnionDict],
+                        generation_name: Optional[str] = None)
+```
+
+Send a message to the [Maxim](/sdk/python/references/maxim) wrapped Gemini chat session stream.
+
+**Arguments**:
+
+- `message` - The message to send.
+- `generation_name` - The name of the generation.
+
+#### \_\_getattr\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L188)
+
+
+```python
+def __getattr__(name: str) -> Any
+```
+
+Get an attribute from the chat session.
+
+**Arguments**:
+
+- `name` - The name of the attribute.
+  
+
+**Returns**:
+
+- `Any` - The attribute.
+
+#### \_\_setattr\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L199)
+
+
+```python
+def __setattr__(name: str, value: Any) -> None
+```
+
+Set an attribute on the chat session.
+
+**Arguments**:
+
+- `name` - The name of the attribute.
+- `value` - The value of the attribute.
+
+#### end\_trace
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L211)
+
+
+```python
+def end_trace()
+```
+
+End the trace of the chat session.
+
+This method will end the trace of the chat session if the trace id is not None and the trace is local.
+
+## [MaximGeminiChats](/sdk/python/references/logger/gemini/client)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L221)
+
+
+```python
+class MaximGeminiChats(Chats)
+```
+
+[Maxim](/sdk/python/references/maxim) Gemini chats.
+
+This class represents a [Maxim](/sdk/python/references/maxim) wrapped Gemini chats.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L39)
+
+
+```python
+def __init__(chats: Chats, logger: Logger)
+```
+
+Initialize a [Maxim](/sdk/python/references/maxim) wrapped Gemini chats.
+
+**Arguments**:
+
+- `chats` - The chats.
+- `logger` - The logger.
+
+#### create
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L240)
+
+
+```python
+@override
+def create(*,
+           model: str,
+           config: GenerateContentConfigOrDict = None,
+           history: Optional[list[Content]] = None,
+           trace_id: Optional[str] = None,
+           session_id: Optional[str] = None) -> Chat
+```
+
+Create a [Maxim](/sdk/python/references/maxim) wrapped Gemini chat session.
+
+**Arguments**:
+
+- `model` - The model to use.
+- `config` - The config to use.
+- `history` - The history to use.
+- `trace_id` - The trace id.
+- `session_id` - The session id.
+  
+
+**Returns**:
+
+- `Chat` - The [Maxim](/sdk/python/references/maxim) wrapped Gemini chat session.
+
+#### \_\_getattr\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L188)
+
+
+```python
+def __getattr__(name: str) -> Any
+```
+
+Get an attribute from the chats.
+
+**Arguments**:
+
+- `name` - The name of the attribute.
+  
+
+**Returns**:
+
+- `Any` - The attribute.
+
+#### \_\_setattr\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L199)
+
+
+```python
+def __setattr__(name: str, value: Any) -> None
+```
+
+Set an attribute on the chats.
+
+**Arguments**:
+
+- `name` - The name of the attribute.
+- `value` - The value of the attribute.
+
+## [MaximGeminiModels](/sdk/python/references/logger/gemini/client)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L317)
+
+
+```python
+class MaximGeminiModels(Models)
+```
+
+[Maxim](/sdk/python/references/maxim) Gemini models.
+
+This class represents a [Maxim](/sdk/python/references/maxim) wrapped Gemini models.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L39)
+
+
+```python
+def __init__(models: Models, logger: Logger)
+```
+
+Initialize a [Maxim](/sdk/python/references/maxim) wrapped Gemini models.
+
+**Arguments**:
+
+- `models` - The models.
+- `logger` - The logger.
+
+#### generate\_content\_stream
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L334)
+
+
+```python
+@override
+def generate_content_stream(
+    *,
+    model: str,
+    contents: Union[ContentListUnion, ContentListUnionDict],
+    config: Optional[GenerateContentConfigOrDict] = None,
+    trace_id: Optional[str] = None,
+    generation_name: Optional[str] = None
+) -> Iterator[GenerateContentResponse]
+```
+
+Generate content stream.
+
+**Arguments**:
+
+- `model` - The model to use.
+- `contents` - The contents to use.
+- `config` - The config to use.
+- `trace_id` - The trace id.
+- `generation_name` - The generation name.
+  
+
+**Returns**:
+
+- `Iterator[GenerateContentResponse]` - The content stream.
+
+#### generate\_content
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L417)
+
+
+```python
+@override
+def generate_content(
+        *,
+        model: str,
+        contents: Union[ContentListUnion, ContentListUnionDict],
+        config: Optional[GenerateContentConfigOrDict] = None,
+        trace_id: Optional[str] = None,
+        generation_name: Optional[str] = None) -> GenerateContentResponse
+```
+
+Generate content.
+
+**Arguments**:
+
+- `model` - The model to use.
+- `contents` - The contents to use.
+- `config` - The config to use.
+- `trace_id` - The trace id.
+- `generation_name` - The generation name.
+  
+
+**Returns**:
+
+- `GenerateContentResponse` - The content.
+
+#### \_\_getattr\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L188)
+
+
+```python
+def __getattr__(name: str) -> Any
+```
+
+Get an attribute from the models.
+
+**Arguments**:
+
+- `name` - The name of the attribute.
+  
+
+**Returns**:
+
+- `Any` - The attribute.
+
+#### \_\_setattr\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L199)
+
+
+```python
+def __setattr__(name: str, value: Any) -> None
+```
+
+Set an attribute on the models.
+
+**Arguments**:
+
+- `name` - The name of the attribute.
+- `value` - The value of the attribute.
+
+## [MaximGeminiClient](/sdk/python/references/logger/gemini/client)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L518)
+
+
+```python
+class MaximGeminiClient(Client)
+```
+
+[Maxim](/sdk/python/references/maxim) Gemini client.
+
+This class represents a [Maxim](/sdk/python/references/maxim) wrapped Gemini client.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L39)
+
+
+```python
+def __init__(client: Client, logger: Logger)
+```
+
+Initialize a [Maxim](/sdk/python/references/maxim) wrapped Gemini client.
+
+**Arguments**:
+
+- `client` - The client.
+- `logger` - The logger.
+
+#### chats
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L538)
+
+
+```python
+@property
+def chats() -> MaximGeminiChats
+```
+
+Get the [Maxim](/sdk/python/references/maxim) wrapped Gemini chats.
+
+**Returns**:
+
+- `[MaximGeminiChats](/sdk/python/references/logger/gemini/client)` - The [Maxim](/sdk/python/references/maxim) wrapped Gemini chats.
+
+#### aio
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L547)
+
+
+```python
+@property
+def aio() -> MaximGeminiAsyncClient
+```
+
+Get the [Maxim](/sdk/python/references/maxim) wrapped Gemini async client.
+
+**Returns**:
+
+- `[MaximGeminiAsyncClient](/sdk/python/references/logger/gemini/async_client)` - The [Maxim](/sdk/python/references/maxim) wrapped Gemini async client.
+
+#### models
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L556)
+
+
+```python
+@property
+def models() -> MaximGeminiModels
+```
+
+Get the [Maxim](/sdk/python/references/maxim) wrapped Gemini models.
+
+**Returns**:
+
+- `[MaximGeminiModels](/sdk/python/references/logger/gemini/client)` - The [Maxim](/sdk/python/references/maxim) wrapped Gemini models.
+
+#### \_\_getattr\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L188)
+
+
+```python
+def __getattr__(name: str) -> Any
+```
+
+Get an attribute from the client.
+
+**Arguments**:
+
+- `name` - The name of the attribute.
+  
+
+**Returns**:
+
+- `Any` - The attribute.
+
+#### \_\_setattr\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py#L199)
+
+
+```python
+def __setattr__(name: str, value: Any) -> None
+```
+
+Set an attribute on the client.
+
+**Arguments**:
+
+- `name` - The name of the attribute.
+- `value` - The value of the attribute.
+

@@ -1,0 +1,170 @@
+---
+title: "TestRunLogger"
+sidebar_position: 1
+---
+
+# Interface: TestRunLogger\<T\>
+
+Defined in: [src/lib/models/testRun.ts:35](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L35)
+
+Logger interface for capturing test run execution events and progress.
+
+Provides methods for logging informational messages, errors, and processing
+events during test run execution. Users can implement custom loggers to
+integrate with their logging infrastructure or customize output formatting.
+
+## Examples
+
+```ts
+import { TestRunLogger } from '@maximai/maxim-js';
+
+const customLogger: TestRunLogger = {
+  info: (message) => console.log(`[INFO] ${message}`),
+  error: (message) => console.error(`[ERROR] ${message}`),
+  processed: (message) => console.log(`[PROCESSED] ${message}`),
+};
+```
+
+```ts
+// Using custom logger with test run
+maxim.createTestRun("my-test", "workspace-id")
+  .withLogger(customLogger)
+  .withData(testData)
+  .run();
+```
+
+## Type Parameters
+
+### T
+
+`T` *extends* [`DataStructure`](../overview#datastructure) \| `undefined` = `undefined`
+
+The data structure type for the test run
+ TestRunLogger
+
+## Properties
+
+### error()
+
+> **error**: (`message`) => `void`
+
+Defined in: [src/lib/models/testRun.ts:58](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L58)
+
+Logs error messages when issues occur during test run execution.
+
+#### Parameters
+
+##### message
+
+`string`
+
+The error message to log
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+// Called automatically when errors occur
+logger.error("Failed to evaluate entry 42: timeout");
+logger.error("API rate limit exceeded, retrying...");
+```
+
+***
+
+### info()
+
+> **info**: (`message`) => `void`
+
+Defined in: [src/lib/models/testRun.ts:46](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L46)
+
+Logs informational messages during test run execution.
+
+#### Parameters
+
+##### message
+
+`string`
+
+The informational message to log
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+// Called automatically during test run
+logger.info("Starting test run with 100 entries");
+logger.info("Test run completed successfully");
+```
+
+***
+
+### processed()
+
+> **processed**: (`message`, `data`) => `void`
+
+Defined in: [src/lib/models/testRun.ts:83](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L83)
+
+Logs processing completion for individual test run entries.
+
+Called after each dataset entry has been processed, including output
+generation and evaluation. Provides detailed information about the
+processing results for monitoring and debugging.
+
+#### Parameters
+
+##### message
+
+`string`
+
+The processing completion message
+
+##### data
+
+Detailed processing data
+
+###### datasetEntry
+
+[`Data`](../overview#data)\<`T`\>
+
+The dataset entry that was processed
+
+###### evaluationResults?
+
+[`LocalEvaluationResult`](../overview#localevaluationresult)[]
+
+Evaluation results (if any)
+
+###### output?
+
+[`YieldedOutput`](../overview#yieldedoutput)
+
+The generated output (if successful)
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+// Called automatically after each entry
+logger.processed("Entry 1 processed successfully", {
+  datasetEntry: { input: "Hello", expectedOutput: "Hi there!" },
+  output: { data: "Hi there!" },
+  evaluationResults: [
+    { name: "accuracy", result: { score: 0.95, reasoning: "Excellent match" } }
+  ]
+});
+```

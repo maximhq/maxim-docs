@@ -1,0 +1,195 @@
+# maxim.logger.anthropic.message
+
+## [MaximAnthropicMessages](/sdk/python/references/logger/anthropic/message)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/message.py#L29)
+
+
+```python
+class MaximAnthropicMessages(Messages)
+```
+
+[Maxim](/sdk/python/references/maxim)-enhanced Anthropic Messages client.
+
+This class extends the Anthropic Messages resource to integrate with [Maxim](/sdk/python/references/maxim)'s
+logging and monitoring capabilities. It automatically tracks message creation,
+both streaming and non-streaming, and logs them through the [Maxim](/sdk/python/references/maxim) platform.
+
+The class handles trace management, generation logging, and error handling
+while maintaining compatibility with the original Anthropic Messages API.
+
+**Attributes**:
+
+- `_logger` _[Logger](/sdk/python/references/logger/logger)_ - The [Maxim](/sdk/python/references/maxim) logger instance for tracking interactions.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/message.py#L43)
+
+
+```python
+def __init__(client: Anthropic, logger: Logger)
+```
+
+Initialize the [Maxim](/sdk/python/references/maxim) Anthropic Messages client.
+
+**Arguments**:
+
+- `client` _Anthropic_ - The Anthropic client instance.
+- `logger` _[Logger](/sdk/python/references/logger/logger)_ - The [Maxim](/sdk/python/references/maxim) logger instance for tracking and
+  logging message interactions.
+
+#### create\_non\_stream
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/message.py#L54)
+
+
+```python
+def create_non_stream(*args, **kwargs) -> Any
+```
+
+Create a non-streaming message with [Maxim](/sdk/python/references/maxim) logging.
+
+This method handles non-streaming message creation while automatically
+logging the interaction through [Maxim](/sdk/python/references/maxim). It manages trace creation,
+generation tracking, and error handling.
+
+**Arguments**:
+
+- `*args` - [Variable](/sdk/python/references/models/dataset) length argument list passed to the parent create method.
+- `**kwargs` - Arbitrary keyword arguments passed to the parent create method.
+  Special headers:
+  - x-maxim-trace-id: Optional trace ID for associating with existing trace.
+  - x-maxim-generation-name: Optional name for the generation.
+  
+
+**Returns**:
+
+- `Any` - The response from the Anthropic API create method.
+  
+
+**Notes**:
+
+  If logging fails, the method will still return the API response
+  but will log a warning message.
+
+#### create\_stream
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/message.py#L136)
+
+
+```python
+def create_stream(*args, **kwargs) -> Any
+```
+
+Create a streaming message with [Maxim](/sdk/python/references/maxim) logging.
+
+This method handles streaming message creation while automatically
+logging the interaction through [Maxim](/sdk/python/references/maxim). It manages trace creation,
+generation tracking, and processes streaming events.
+
+**Arguments**:
+
+- `*args` - [Variable](/sdk/python/references/models/dataset) length argument list passed to the parent stream method.
+- `**kwargs` - Arbitrary keyword arguments passed to the parent stream method.
+  Special headers:
+  - x-maxim-trace-id: Optional trace ID for associating with existing trace.
+  - x-maxim-generation-name: Optional name for the generation.
+  
+
+**Returns**:
+
+- `[StreamWrapper](/sdk/python/references/logger/anthropic/stream_manager)` - A wrapped stream manager that processes chunks and
+  handles logging of streaming events.
+  
+
+**Notes**:
+
+  The method returns a [StreamWrapper](/sdk/python/references/logger/anthropic/stream_manager) that automatically processes
+  stream chunks and logs the final result when the stream ends.
+
+#### create
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/message.py#L229)
+
+
+```python
+def create(*args,
+           max_tokens: int,
+           messages: Iterable[MessageParam],
+           model: str,
+           metadata: MetadataParam | NotGiven = NOT_GIVEN,
+           stop_sequences: List[str] | NotGiven = NOT_GIVEN,
+           system: Union[str, Iterable[TextBlockParam]] | NotGiven = NOT_GIVEN,
+           temperature: float | NotGiven = NOT_GIVEN,
+           tool_choice: dict | NotGiven = NOT_GIVEN,
+           tools: Iterable[ToolParam] | NotGiven = NOT_GIVEN,
+           top_k: int | NotGiven = NOT_GIVEN,
+           top_p: float | NotGiven = NOT_GIVEN,
+           extra_headers: Headers | None = None,
+           extra_query: Query | None = None,
+           extra_body: Body | None = None,
+           timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+           **kwargs) -> Any
+```
+
+Create a message with automatic streaming detection and [Maxim](/sdk/python/references/maxim) logging.
+
+This is the main entry point for message creation. It automatically
+detects whether streaming is requested and routes to the appropriate
+handler while ensuring all interactions are logged through [Maxim](/sdk/python/references/maxim).
+
+**Arguments**:
+
+- `max_tokens` _int_ - The maximum number of tokens to generate.
+- `messages` _Iterable[MessageParam]_ - The conversation messages.
+- `model` _str_ - The model to use for generation.
+- `metadata` _MetadataParam | NotGiven_ - Additional metadata for the request.
+- `stop_sequences` _List[str] | NotGiven_ - Sequences that will stop generation.
+- `system` _Union[str, Iterable[TextBlockParam]] | NotGiven_ - System message.
+- `temperature` _float | NotGiven_ - Sampling temperature (0-1).
+- `tool_choice` _dict | NotGiven_ - How the model should use tools.
+- `tools` _Iterable[ToolParam] | NotGiven_ - Available tools for the model.
+- `top_k` _int | NotGiven_ - Top-k sampling parameter.
+- `top_p` _float | NotGiven_ - Top-p (nucleus) sampling parameter.
+- `extra_headers` _Headers | None_ - Additional HTTP headers.
+- `extra_query` _Query | None_ - Additional query parameters.
+- `extra_body` _Body | None_ - Additional request body data.
+- `timeout` _float | httpx.Timeout | None | NotGiven_ - Request timeout.
+- `**kwargs` - Additional arguments, including 'stream' for streaming mode.
+  
+
+**Returns**:
+
+- `Any` - Either a direct message response or a [StreamWrapper](/sdk/python/references/logger/anthropic/stream_manager) for streaming.
+  
+
+**Notes**:
+
+  The method automatically detects streaming mode via the 'stream' parameter
+  in kwargs and routes accordingly.
+
+#### stream
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/message.py#L319)
+
+
+```python
+def stream(*args, **kwargs) -> Any
+```
+
+Create a streaming message with [Maxim](/sdk/python/references/maxim) logging.
+
+This method is a direct alias for create_stream, providing compatibility
+with the standard Anthropic Messages API while adding [Maxim](/sdk/python/references/maxim) logging.
+
+**Arguments**:
+
+- `*args` - [Variable](/sdk/python/references/models/dataset) length argument list passed to create_stream.
+- `**kwargs` - Arbitrary keyword arguments passed to create_stream.
+  
+
+**Returns**:
+
+- `[StreamWrapper](/sdk/python/references/logger/anthropic/stream_manager)` - A wrapped stream manager with logging capabilities.
+
