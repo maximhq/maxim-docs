@@ -1,0 +1,71 @@
+# maxim.cache.inMemory
+
+## [MaximInMemoryCache](/sdk/python/references/cache/inMemory)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/cache/inMemory.py#L4)
+
+
+```python
+class MaximInMemoryCache()
+```
+
+In-memory cache implementation for [Maxim](/sdk/python/references/maxim).
+
+This class provides a simple in-memory cache implementation
+that stores key-value pairs in a dictionary.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/cache/inMemory.py#L12)
+
+
+```python
+def __init__()
+```
+
+Initialize the in-memory cache.
+
+#### get\_all\_keys
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/cache/inMemory.py#L18)
+
+
+```python
+def get_all_keys() -> List[str]
+```
+
+Get all keys currently stored in the cache.
+
+#### get
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/cache/inMemory.py#L24)
+
+
+```python
+def get(key: str) -> Optional[str]
+```
+
+Get a value from the cache by its key.
+
+#### set
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/cache/inMemory.py#L30)
+
+
+```python
+def set(key: str, value: str) -> None
+```
+
+Store a key-value pair in the cache.
+
+#### delete
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/cache/inMemory.py#L36)
+
+
+```python
+def delete(key: str) -> None
+```
+
+Remove a key-value pair from the cache.
+

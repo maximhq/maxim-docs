@@ -1,0 +1,616 @@
+---
+title: "MaximLangchainTracer"
+sidebar_position: 1
+---
+
+# Class: MaximLangchainTracer
+
+Defined in: [src/lib/logger/langchain/tracer.ts:65](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/langchain/tracer.ts#L65)
+
+LangChain callback handler for automatic observability with the Maxim platform.
+
+Extends LangChain's BaseCallbackHandler to automatically trace and log
+LangChain application executions including LLM calls, chains, tools, and
+retrievers. Seamlessly integrates with existing LangChain applications
+to provide comprehensive observability without code changes.
+
+ MaximLangchainTracer
+
+## Example
+
+```ts
+import { MaximLangchainTracer } from '@maximai/maxim-js';
+import { ChatOpenAI } from '@langchain/openai';
+
+// Basic setup
+const maxim = new Maxim({ apiKey: 'your-api-key' });
+const logger = await maxim.logger({ id: 'langchain-app' });
+const tracer = new MaximLangchainTracer(logger);
+
+// Use with LangChain models
+const model = new ChatOpenAI({
+  openAIApiKey: process.env.OPENAI_API_KEY,
+  modelName: "gpt-4o-mini",
+  callbacks: [tracer],
+  metadata: {
+    maxim: {
+      generationName: "basic-openai-chat",
+      generationTags: { testType: "basic", model: "openai" }
+    },
+  },
+});
+
+const response = await model.invoke("Hello world");
+// Automatically logged to Maxim
+```
+
+## Extends
+
+- `BaseCallbackHandler`
+
+## Constructors
+
+### Constructor
+
+> **new MaximLangchainTracer**(`logger`, `input?`): `MaximLangchainTracer`
+
+Defined in: [src/lib/logger/langchain/tracer.ts:87](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/langchain/tracer.ts#L87)
+
+Creates a new MaximLangchainTracer instance.
+
+#### Parameters
+
+##### logger
+
+[`MaximLogger`](./core/classes/MaximLogger)
+
+The Maxim logger instance to use for tracing
+
+##### input?
+
+`BaseCallbackHandlerInput`
+
+Optional LangChain callback handler configuration
+
+#### Returns
+
+`MaximLangchainTracer`
+
+#### Examples
+
+```ts
+const maxim = new Maxim({ apiKey: 'your-api-key' });
+const logger = await maxim.logger({ id: 'my-app' });
+const tracer = new MaximLangchainTracer(logger);
+```
+
+```ts
+// With custom callback configuration
+const tracer = new MaximLangchainTracer(logger, {
+  ignoreLLM: false,
+  ignoreChain: false,
+  ignoreAgent: false
+});
+```
+
+#### Overrides
+
+`BaseCallbackHandler.constructor`
+
+## Properties
+
+### name
+
+> `readonly` **name**: `"MaximLangchainTracer"` = `"MaximLangchainTracer"`
+
+Defined in: [src/lib/logger/langchain/tracer.ts:66](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/langchain/tracer.ts#L66)
+
+#### Overrides
+
+`BaseCallbackHandler.name`
+
+## Methods
+
+### handleChainEnd()
+
+> **handleChainEnd**(`outputs`, `runId`, `_parentRunId?`, `tags?`, `_kwargs?`): `void`
+
+Defined in: [src/lib/logger/langchain/tracer.ts:226](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/langchain/tracer.ts#L226)
+
+Called at the end of a Chain run, with the outputs and the run ID.
+
+#### Parameters
+
+##### outputs
+
+`ChainValues`
+
+##### runId
+
+`string`
+
+##### \_parentRunId?
+
+`string`
+
+##### tags?
+
+`string`[]
+
+##### \_kwargs?
+
+#### Returns
+
+`void`
+
+#### Overrides
+
+`BaseCallbackHandler.handleChainEnd`
+
+***
+
+### handleChainError()
+
+> **handleChainError**(`err`, `runId`, `_parentRunId?`, `tags?`): `void`
+
+Defined in: [src/lib/logger/langchain/tracer.ts:252](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/langchain/tracer.ts#L252)
+
+Called if a Chain run encounters an error
+
+#### Parameters
+
+##### err
+
+`any`
+
+##### runId
+
+`string`
+
+##### \_parentRunId?
+
+`string`
+
+##### tags?
+
+`string`[]
+
+#### Returns
+
+`void`
+
+#### Overrides
+
+`BaseCallbackHandler.handleChainError`
+
+***
+
+### handleChainStart()
+
+> **handleChainStart**(`_chain`, `inputs`, `runId`, `parentRunId?`, `tags?`, `metadata?`, `_runType?`, `runName?`): `void`
+
+Defined in: [src/lib/logger/langchain/tracer.ts:156](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/langchain/tracer.ts#L156)
+
+Called at the start of a Chain run, with the chain name and inputs
+and the run ID.
+
+#### Parameters
+
+##### \_chain
+
+`Serialized`
+
+##### inputs
+
+`ChainValues`
+
+##### runId
+
+`string`
+
+##### parentRunId?
+
+`string`
+
+##### tags?
+
+`string`[]
+
+##### metadata?
+
+`Record`\<`string`, `unknown`\>
+
+##### \_runType?
+
+`string`
+
+##### runName?
+
+`string`
+
+#### Returns
+
+`void`
+
+#### Overrides
+
+`BaseCallbackHandler.handleChainStart`
+
+***
+
+### handleChatModelStart()
+
+> **handleChatModelStart**(`llm`, `messages`, `runId`, `parentRunId?`, `extraParams?`, `tags?`, `metadata?`, `runName?`): `Promise`\<`void`\>
+
+Defined in: [src/lib/logger/langchain/tracer.ts:412](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/langchain/tracer.ts#L412)
+
+Called at the start of a Chat Model run, with the prompt(s)
+and the run ID.
+
+#### Parameters
+
+##### llm
+
+`Serialized`
+
+##### messages
+
+`BaseMessage`[][]
+
+##### runId
+
+`string`
+
+##### parentRunId?
+
+`string`
+
+##### extraParams?
+
+`Record`\<`string`, `unknown`\>
+
+##### tags?
+
+`string`[]
+
+##### metadata?
+
+`Record`\<`string`, `unknown`\>
+
+##### runName?
+
+`string`
+
+#### Returns
+
+`Promise`\<`void`\>
+
+#### Overrides
+
+`BaseCallbackHandler.handleChatModelStart`
+
+***
+
+### handleLLMEnd()
+
+> **handleLLMEnd**(`output`, `runId`, `parentRunId?`, `tags?`): `void`
+
+Defined in: [src/lib/logger/langchain/tracer.ts:353](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/langchain/tracer.ts#L353)
+
+Called at the end of an LLM/ChatModel run, with the output and the run ID.
+
+#### Parameters
+
+##### output
+
+`LLMResult`
+
+##### runId
+
+`string`
+
+##### parentRunId?
+
+`string`
+
+##### tags?
+
+`string`[]
+
+#### Returns
+
+`void`
+
+#### Overrides
+
+`BaseCallbackHandler.handleLLMEnd`
+
+***
+
+### handleLLMError()
+
+> **handleLLMError**(`err`, `runId`, `parentRunId?`, `tags?`): `void`
+
+Defined in: [src/lib/logger/langchain/tracer.ts:383](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/langchain/tracer.ts#L383)
+
+Called if an LLM/ChatModel run encounters an error
+
+#### Parameters
+
+##### err
+
+`any`
+
+##### runId
+
+`string`
+
+##### parentRunId?
+
+`string`
+
+##### tags?
+
+`string`[]
+
+#### Returns
+
+`void`
+
+#### Overrides
+
+`BaseCallbackHandler.handleLLMError`
+
+***
+
+### handleLLMStart()
+
+> **handleLLMStart**(`llm`, `prompts`, `runId`, `parentRunId?`, `extraParams?`, `tags?`, `metadata?`, `name?`): `Promise`\<`void`\>
+
+Defined in: [src/lib/logger/langchain/tracer.ts:277](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/langchain/tracer.ts#L277)
+
+Called at the start of an LLM or Chat Model run, with the prompt(s)
+and the run ID.
+
+#### Parameters
+
+##### llm
+
+`Serialized`
+
+##### prompts
+
+`string`[]
+
+##### runId
+
+`string`
+
+##### parentRunId?
+
+`string`
+
+##### extraParams?
+
+`Record`\<`string`, `unknown`\>
+
+##### tags?
+
+`string`[]
+
+##### metadata?
+
+`Record`\<`string`, `unknown`\>
+
+##### name?
+
+`string`
+
+#### Returns
+
+`Promise`\<`void`\>
+
+#### Overrides
+
+`BaseCallbackHandler.handleLLMStart`
+
+***
+
+### handleRetrieverEnd()
+
+> **handleRetrieverEnd**(`documents`, `runId`, `parentRunId?`, `tags?`): `void`
+
+Defined in: [src/lib/logger/langchain/tracer.ts:534](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/langchain/tracer.ts#L534)
+
+#### Parameters
+
+##### documents
+
+`DocumentInterface`\<`Record`\<`string`, `any`\>\>[]
+
+##### runId
+
+`string`
+
+##### parentRunId?
+
+`string`
+
+##### tags?
+
+`string`[]
+
+#### Returns
+
+`void`
+
+#### Overrides
+
+`BaseCallbackHandler.handleRetrieverEnd`
+
+***
+
+### handleRetrieverStart()
+
+> **handleRetrieverStart**(`_retriever`, `query`, `runId`, `parentRunId?`, `tags?`, `metadata?`, `name?`): `void`
+
+Defined in: [src/lib/logger/langchain/tracer.ts:488](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/langchain/tracer.ts#L488)
+
+#### Parameters
+
+##### \_retriever
+
+`Serialized`
+
+##### query
+
+`string`
+
+##### runId
+
+`string`
+
+##### parentRunId?
+
+`string`
+
+##### tags?
+
+`string`[]
+
+##### metadata?
+
+`Record`\<`string`, `unknown`\>
+
+##### name?
+
+`string`
+
+#### Returns
+
+`void`
+
+#### Overrides
+
+`BaseCallbackHandler.handleRetrieverStart`
+
+***
+
+### handleToolEnd()
+
+> **handleToolEnd**(`output`, `runId`, `parentRunId?`, `tags?`): `void`
+
+Defined in: [src/lib/logger/langchain/tracer.ts:609](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/langchain/tracer.ts#L609)
+
+Called at the end of a Tool run, with the tool output and the run ID.
+
+#### Parameters
+
+##### output
+
+`any`
+
+##### runId
+
+`string`
+
+##### parentRunId?
+
+`string`
+
+##### tags?
+
+`string`[]
+
+#### Returns
+
+`void`
+
+#### Overrides
+
+`BaseCallbackHandler.handleToolEnd`
+
+***
+
+### handleToolError()
+
+> **handleToolError**(`error`, `runId`, `parentRunId?`, `tags?`): `void`
+
+Defined in: [src/lib/logger/langchain/tracer.ts:665](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/langchain/tracer.ts#L665)
+
+Called if a Tool run encounters an error
+
+#### Parameters
+
+##### error
+
+`any`
+
+##### runId
+
+`string`
+
+##### parentRunId?
+
+`string`
+
+##### tags?
+
+`string`[]
+
+#### Returns
+
+`void`
+
+#### Overrides
+
+`BaseCallbackHandler.handleToolError`
+
+***
+
+### handleToolStart()
+
+> **handleToolStart**(`tool`, `input`, `runId`, `parentRunId?`, `tags?`, `metadata?`, `runName?`): `void`
+
+Defined in: [src/lib/logger/langchain/tracer.ts:562](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/langchain/tracer.ts#L562)
+
+Called at the start of a Tool run, with the tool name and input
+and the run ID.
+
+#### Parameters
+
+##### tool
+
+`Serialized`
+
+##### input
+
+`string`
+
+##### runId
+
+`string`
+
+##### parentRunId?
+
+`string`
+
+##### tags?
+
+`string`[]
+
+##### metadata?
+
+`Record`\<`string`, `unknown`\>
+
+##### runName?
+
+`string`
+
+#### Returns
+
+`void`
+
+#### Overrides
+
+`BaseCallbackHandler.handleToolStart`

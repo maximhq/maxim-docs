@@ -1,0 +1,315 @@
+# maxim.maxim
+
+## [ConfigDict](/sdk/python/references/maxim)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/maxim.py#L50)
+
+
+```python
+class ConfigDict(TypedDict)
+```
+
+A class representing the configuration for the [Maxim](/sdk/python/references/maxim) SDK.
+
+**Attributes**:
+
+- `api_key` _Optional[str], optional_ - The API key for the [Maxim](/sdk/python/references/maxim) instance. Defaults to None.
+- `base_url` _Optional[str], optional_ - The base URL for the [Maxim](/sdk/python/references/maxim) instance. Defaults to None.
+- `cache` _Optional[[MaximCache](/sdk/python/references/cache/cache)], optional_ - The cache to use for the [Maxim](/sdk/python/references/maxim) instance. Defaults to None.
+- `debug` _Optional[bool], optional_ - Whether to enable debug logging. Defaults to False.
+- `raise_exceptions` _Optional[bool], optional_ - Whether to raise exceptions during logging operations. Defaults to False.
+- `prompt_management` _Optional[bool], optional_ - Whether to enable prompt management. Defaults to False.
+
+## [Config](/sdk/python/references/maxim)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/maxim.py#L75)
+
+
+```python
+@deprecated(
+    "This class will be removed in a future version. Use {} which is TypedDict."
+)
+
+@dataclass
+class Config()
+```
+
+A class representing the configuration for the [Maxim](/sdk/python/references/maxim) SDK.
+
+**Attributes**:
+
+- `api_key` _str_ - The API key for the [Maxim](/sdk/python/references/maxim) instance.
+- `base_url` _Optional[str], optional_ - The base URL for the [Maxim](/sdk/python/references/maxim) instance. Defaults to "https://app.getmaxim.ai".
+- `cache` _Optional[[MaximCache](/sdk/python/references/cache/cache)], optional_ - The cache to use for the [Maxim](/sdk/python/references/maxim) instance. Defaults to None.
+- `debug` _Optional[bool], optional_ - Whether to enable debug logging. Defaults to False.
+- `raise_exceptions` _Optional[bool], optional_ - Whether to raise exceptions during logging operations. Defaults to False.
+- `prompt_management` _Optional[bool], optional_ - Whether to enable prompt management. Defaults to False.
+
+#### get\_config\_dict
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/maxim.py#L99)
+
+
+```python
+def get_config_dict(config: Union[Config, ConfigDict]) -> dict[str, Any]
+```
+
+Converts a [Config](/sdk/python/references/maxim) or [ConfigDict](/sdk/python/references/maxim) to a dictionary with default values.
+
+**Arguments**:
+
+- `config` _Union[[Config](/sdk/python/references/maxim), [ConfigDict](/sdk/python/references/maxim)]_ - The configuration object to convert.
+  
+
+**Returns**:
+
+  dict[str, Any]: A dictionary containing the configuration parameters with defaults applied.
+
+## [Maxim](/sdk/python/references/maxim)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/maxim.py#L123)
+
+
+```python
+class Maxim()
+```
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/maxim.py#L131)
+
+
+```python
+def __init__(config: Union[Config, ConfigDict, None] = None)
+```
+
+Initializes a new instance of the [Maxim](/sdk/python/references/maxim) class.
+
+**Arguments**:
+
+- `config` _[Config](/sdk/python/references/maxim)_ - The configuration for the [Maxim](/sdk/python/references/maxim) instance.
+
+#### enable\_prompt\_management
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/maxim.py#L183)
+
+
+```python
+def enable_prompt_management(cache: Optional[MaximCache] = None) -> "Maxim"
+```
+
+Enables prompt management functionality with optional cache configuration.
+
+**Arguments**:
+
+- `cache` _Optional[[MaximCache](/sdk/python/references/cache/cache)], optional_ - Custom cache implementation to use.
+  Defaults to None (uses existing cache).
+  
+
+**Returns**:
+
+- `[Maxim](/sdk/python/references/maxim)` - The current Maxim instance for method chaining.
+
+#### enable\_exceptions
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/maxim.py#L203)
+
+
+```python
+def enable_exceptions(val: bool) -> "Maxim"
+```
+
+Enables or disables exception raising during logging operations.
+
+**Arguments**:
+
+- `val` _bool_ - True to enable exception raising, False to disable.
+  
+
+**Returns**:
+
+- `[Maxim](/sdk/python/references/maxim)` - The current Maxim instance for method chaining.
+
+#### get\_prompt
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/maxim.py#L732)
+
+
+```python
+def get_prompt(id: str, rule: QueryRule) -> Optional[RunnablePrompt]
+```
+
+Retrieves a prompt based on the provided id and rule.
+
+**Arguments**:
+
+- `id` _str_ - The id of the prompt.
+- `rule` _QueryRule_ - The rule to match the prompt against.
+  
+
+**Returns**:
+
+- `Optional[[Prompt](/sdk/python/references/models/prompt)]` - The prompt object if found, otherwise None.
+
+#### get\_prompts
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/maxim.py#L770)
+
+
+```python
+def get_prompts(rule: QueryRule) -> List[RunnablePrompt]
+```
+
+Retrieves all prompts that match the given rule.
+
+**Arguments**:
+
+- `rule` _QueryRule_ - The rule to match the prompts against.
+  
+
+**Returns**:
+
+- `List[[Prompt](/sdk/python/references/models/prompt)]` - A list of prompts that match the given rule.
+
+#### get\_prompt\_chain
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/maxim.py#L805)
+
+
+```python
+def get_prompt_chain(id: str,
+                     rule: QueryRule) -> Optional[RunnablePromptChain]
+```
+
+Retrieves a prompt chain based on the provided id and rule.
+
+**Arguments**:
+
+- `id` _str_ - The id of the prompt chain.
+- `rule` _QueryRule_ - The rule to match the prompt chain against.
+  
+
+**Returns**:
+
+- `Optional[[PromptChain](/sdk/python/references/models/prompt_chain)]` - The prompt chain object if found, otherwise None.
+
+#### get\_folder\_by\_id
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/maxim.py#L845)
+
+
+```python
+def get_folder_by_id(id: str) -> Optional[Folder]
+```
+
+Retrieves a folder based on the provided id.
+
+**Arguments**:
+
+- `id` _str_ - The id of the folder.
+  
+
+**Returns**:
+
+- `Optional[[Folder](/sdk/python/references/models/folder)]` - The folder object if found, otherwise None.
+
+#### get\_folders
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/maxim.py#L871)
+
+
+```python
+def get_folders(rule: QueryRule) -> List[Folder]
+```
+
+Retrieves all folders that match the given rule.
+
+**Arguments**:
+
+- `rule` _QueryRule_ - The rule to match the folders against.
+  
+
+**Returns**:
+
+- `List[[Folder](/sdk/python/references/models/folder)]` - A list of folders that match the given rule.
+
+#### logger
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/maxim.py#L893)
+
+
+```python
+def logger(
+        config: Optional[Union[LoggerConfig,
+                               LoggerConfigDict]] = None) -> Logger
+```
+
+Creates a logger based on the provided configuration.
+
+**Arguments**:
+
+- `config` _[LoggerConfig](/sdk/python/references/logger/logger)_ - The configuration for the logger.
+  
+
+**Returns**:
+
+- `[Logger](/sdk/python/references/logger/logger)` - The logger object.
+
+#### create\_test\_run
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/maxim.py#L963)
+
+
+```python
+def create_test_run(name: str, in_workspace_id: str) -> TestRunBuilder
+```
+
+Creates a test run builder based on the provided name and workspace id.
+
+**Arguments**:
+
+- `name` _str_ - The name of the test run.
+- `in_workspace_id` _str_ - The workspace id to create the test run in.
+  
+
+**Returns**:
+
+- `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)` - The test run builder object.
+
+#### chat\_completion
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/maxim.py#L982)
+
+
+```python
+def chat_completion(model: str,
+                    messages: List[ChatCompletionMessage],
+                    tools: Optional[List[Tool]] = None,
+                    **kwargs) -> Optional[PromptResponse]
+```
+
+Performs a chat completion request using the specified model and messages.
+
+**Arguments**:
+
+- `model` _str_ - The model name to use for completion. The expected format is "provider/model_name". Example "openai/gpt-3.5-turbo".
+- `messages` _List[[ChatCompletionMessage](/sdk/python/references/models/prompt)]_ - List of chat messages in the conversation
+- `tools` _Optional[List[[Tool](/sdk/python/references/models/prompt)]], optional_ - List of tools available to the model. Defaults to None.
+- `**kwargs` - Additional model parameters to pass to the completion request
+  
+
+**Returns**:
+
+- `Optional[[PromptResponse](/sdk/python/references/models/prompt)]` - The completion response if successful, None otherwise
+
+#### cleanup
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/maxim.py#L1019)
+
+
+```python
+def cleanup()
+```
+
+Cleans up the [Maxim](/sdk/python/references/maxim) sync thread.
+

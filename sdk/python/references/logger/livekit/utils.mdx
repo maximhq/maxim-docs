@@ -1,0 +1,62 @@
+# maxim.logger.livekit.utils
+
+## [SameThreadExecutor](/sdk/python/references/logger/livekit/utils)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/livekit/utils.py#L17)
+
+
+```python
+class SameThreadExecutor(Executor)
+```
+
+A mock executor that runs submitted callables on the same thread, synchronously.
+Mimics the interface of concurrent.futures.Executor.
+
+#### get\_thread\_pool\_executor
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/livekit/utils.py#L59)
+
+
+```python
+def get_thread_pool_executor() -> ThreadPoolExecutor
+```
+
+Get the global thread pool executor for processing.
+
+#### shutdown\_thread\_pool\_executor
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/livekit/utils.py#L66)
+
+
+```python
+def shutdown_thread_pool_executor(wait=True)
+```
+
+Shutdown the global thread pool executor.
+
+#### start\_new\_turn
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/livekit/utils.py#L75)
+
+
+```python
+def start_new_turn(session_info: SessionStoreEntry)
+```
+
+This function will start a new turn and return the current turn.
+If the current turn is interrupted or empty, it will return None.
+If the current turn is not interrupted and not empty, it will return the current turn.
+If the current turn is interrupted and not empty, it will return None.
+If the current turn is empty, it will return None.
+If the current turn is not interrupted and empty, it will return None.
+If the current turn is interrupted and empty, it will return None.
+
+**Arguments**:
+
+- `session_info` - The session information.
+  
+
+**Returns**:
+
+  The new turn or None if the current turn is interrupted or empty.
+

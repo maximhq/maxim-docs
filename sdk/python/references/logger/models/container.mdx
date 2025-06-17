@@ -1,0 +1,344 @@
+# maxim.logger.models.container
+
+Models for LangChain logging and tracing functionality.
+
+This module contains data models used for tracking and logging LangChain operations,
+including metadata storage and run information.
+
+## [Metadata](/sdk/python/references/models/metadata)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L28)
+
+
+```python
+@dataclass
+class Metadata()
+```
+
+RunMetadata class to holds the metadata info associated with a run
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L46)
+
+
+```python
+def __init__(metadata: Optional[Dict[str, Any]])
+```
+
+Initializes the RunMetadata object
+
+**Arguments**:
+
+- `metadata` _Optional[Dict[str,Any]]_ - [Metadata](/sdk/python/references/models/metadata) to initialize from
+
+## [Container](/sdk/python/references/logger/models/container)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L78)
+
+
+```python
+class Container()
+```
+
+[Container](/sdk/python/references/logger/models/container) class to hold the container id, type and name for logging
+
+#### create
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L109)
+
+
+```python
+def create(tags: Optional[Dict[str, str]] = None) -> None
+```
+
+Creates the container in the logger
+
+#### id
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L114)
+
+
+```python
+def id() -> str
+```
+
+**Returns**:
+
+- `str` - id of the container
+
+#### type
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L121)
+
+
+```python
+def type() -> str
+```
+
+**Returns**:
+
+- `str` - type of the container
+
+#### is\_created
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L128)
+
+
+```python
+def is_created() -> bool
+```
+
+Checks if the container has been created
+
+**Returns**:
+
+- `bool` - True if the container has been created, False otherwise
+
+#### parent
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L136)
+
+
+```python
+def parent() -> Optional[str]
+```
+
+**Returns**:
+
+- `[Container](/sdk/python/references/logger/models/container)` - parent container
+
+#### add\_generation
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L144)
+
+
+```python
+@abstractmethod
+def add_generation(config: GenerationConfig) -> Generation
+```
+
+Adds a generation to the container
+
+**Returns**:
+
+- `[Generation](/sdk/python/references/logger/components/generation)` - Generation object
+
+#### add\_tool\_call
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L153)
+
+
+```python
+@abstractmethod
+def add_tool_call(config: ToolCallConfig) -> ToolCall
+```
+
+Adds a tool call to the container
+
+**Returns**:
+
+- `[ToolCall](/sdk/python/references/models/prompt)` - ToolCall object
+
+#### add\_event
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L161)
+
+
+```python
+def add_event(event_id: str,
+              name: str,
+              tags: Dict[str, str],
+              metadata: Optional[Dict[str, Any]] = None) -> None
+```
+
+Adds an event to the container.
+
+**Arguments**:
+
+- `event_id` _str_ - Unique identifier for the event.
+- `name` _str_ - Name of the event.
+- `tags` _Dict[str, str]_ - Additional key-value pairs to associate with the event.
+  
+
+**Returns**:
+
+  None
+
+#### add\_span
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L175)
+
+
+```python
+@abstractmethod
+def add_span(config: SpanConfig) -> Span
+```
+
+Adds a span to the container
+
+**Returns**:
+
+- `[Span](/sdk/python/references/logger/components/span)` - Span object
+
+#### add\_retrieval
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L184)
+
+
+```python
+@abstractmethod
+def add_retrieval(config: RetrievalConfig) -> Retrieval
+```
+
+Adds a retrieval to the container
+
+**Returns**:
+
+- `[Retrieval](/sdk/python/references/logger/components/retrieval)` - Retrieval object
+
+#### add\_tags
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L192)
+
+
+```python
+def add_tags(tags: Dict[str, str]) -> None
+```
+
+Adds tags to the container
+
+**Arguments**:
+
+- `tags` _Optional[Dict[str,str]]_ - Tags to add
+
+#### add\_error
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L199)
+
+
+```python
+def add_error(error: ErrorConfig) -> None
+```
+
+Adds an error to the container
+
+**Arguments**:
+
+- `error` _[GenerationError](/sdk/python/references/logger/components/types)_ - [Error](/sdk/python/references/models/prompt) to add
+
+#### set\_input
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L207)
+
+
+```python
+def set_input(input: str) -> None
+```
+
+Sets the input to the container
+
+**Arguments**:
+
+- `input` _str_ - Input to set
+
+#### set\_output
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L214)
+
+
+```python
+def set_output(output) -> None
+```
+
+Sets the output to the container
+
+**Arguments**:
+
+- `output` _str_ - Output to set
+
+#### add\_metadata
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L221)
+
+
+```python
+def add_metadata(metadata: Dict[str, str]) -> None
+```
+
+Adds metadata to the container
+
+**Arguments**:
+
+- `metadata` _Optional[Dict[str,str]]_ - [Metadata](/sdk/python/references/models/metadata) to add
+
+#### end
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L229)
+
+
+```python
+def end() -> None
+```
+
+Ends the container
+
+## [TraceContainer](/sdk/python/references/logger/models/container)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L235)
+
+
+```python
+class TraceContainer(Container)
+```
+
+A trace in the logger
+
+#### add\_generation
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L144)
+
+
+```python
+def add_generation(config: GenerationConfig) -> Generation
+```
+
+Adds a generation to the container
+
+**Returns**:
+
+- `[Generation](/sdk/python/references/logger/components/generation)` - Generation object
+
+#### end
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L229)
+
+
+```python
+def end() -> None
+```
+
+Ends the container
+
+## [SpanContainer](/sdk/python/references/logger/models/container)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L307)
+
+
+```python
+class SpanContainer(Container)
+```
+
+A span in the logger
+
+#### end
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py#L229)
+
+
+```python
+def end() -> None
+```
+
+Ends the container
+

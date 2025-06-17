@@ -1,0 +1,400 @@
+---
+title: "CSVFile"
+sidebar_position: 1
+---
+
+# Class: CSVFile\<T\>
+
+Defined in: [src/lib/utils/csvParser.ts:105](https://github.com/maximhq/maxim-js/blob/main/src/lib/utils/csvParser.ts#L105)
+
+Represents a CSV file with optional type information for its columns.
+
+Provides methods for reading, parsing, and manipulating CSV data with
+optional type safety through column structure definitions. Supports
+both streaming and batch operations for efficient processing of large files.
+
+## Examples
+
+```ts
+// Basic usage without column structure
+const csvFile = new CSVFile("data.csv");
+const rowCount = await csvFile.getRowCount();
+const firstRow = await csvFile.getRow(0);
+```
+
+```ts
+// With typed column structure
+const typedCSV = new CSVFile("users.csv", {
+  name: 0,
+  email: 1,
+  age: 2
+});
+
+const user = await typedCSV.getRow(0);
+console.log(user.name, user.email, user.age); // Type-safe access
+```
+
+```ts
+// Filtering and mapping
+const adults = await csvFile.filter(row => parseInt(row.age) >= 18);
+const names = await csvFile.map(row => row.name.toUpperCase());
+```
+
+```ts
+// Writing data to CSV
+await CSVFile.writeToFile(
+  [{ name: "John", email: "john@example.com" }],
+  "output.csv",
+  { name: 0, email: 1 }
+);
+```
+
+## Type Parameters
+
+### T
+
+`T` *extends* [`ColumnStructure`](../overview#columnstructure) \| `undefined` = `undefined`
+
+Optional column structure type for typed access
+ CSVFile
+
+## Constructors
+
+### Constructor
+
+> **new CSVFile**\<`T`\>(`filePath`, `columnStructure?`, `options?`): `CSVFile`\<`T`\>
+
+Defined in: [src/lib/utils/csvParser.ts:141](https://github.com/maximhq/maxim-js/blob/main/src/lib/utils/csvParser.ts#L141)
+
+Creates a new CSVFile instance.
+
+#### Parameters
+
+##### filePath
+
+`string`
+
+The path to the CSV file
+
+##### columnStructure?
+
+`T`
+
+Optional column structure mapping column names to indices
+
+##### options?
+
+[`CSVParseOptions`](../overview#csvparseoptions) = `{}`
+
+Optional parsing configuration
+
+#### Returns
+
+`CSVFile`\<`T`\>
+
+#### Throws
+
+When column structure is provided but doesn't match the file headers
+
+#### Examples
+
+```ts
+// Simple CSV file
+const csv = new CSVFile("data.csv");
+```
+
+```ts
+// With column structure for type safety
+const csv = new CSVFile("users.csv", {
+  id: 0,
+  name: 1,
+  email: 2
+});
+```
+
+```ts
+// With custom parsing options
+const csv = new CSVFile("data.tsv", undefined, {
+  delimiter: "\t",
+  hasHeader: false,
+  quoteChar: "'"
+});
+```
+
+## Methods
+
+### filter()
+
+> **filter**(`predicate`): `Promise`\<`T` *extends* [`ColumnStructure`](../overview#columnstructure) ? \{ \[K in string \| number \| symbol\]: string \} : `string`[][]\>
+
+Defined in: [src/lib/utils/csvParser.ts:417](https://github.com/maximhq/maxim-js/blob/main/src/lib/utils/csvParser.ts#L417)
+
+Filters rows of the CSV file based on a predicate function.
+
+#### Parameters
+
+##### predicate
+
+(`row`) => `boolean`
+
+A function that takes a row and returns true if the row should be included in the result.
+
+#### Returns
+
+`Promise`\<`T` *extends* [`ColumnStructure`](../overview#columnstructure) ? \{ \[K in string \| number \| symbol\]: string \} : `string`[][]\>
+
+A promise that resolves to an array of filtered rows.
+
+***
+
+### getColumnCount()
+
+> **getColumnCount**(): `Promise`\<`number`\>
+
+Defined in: [src/lib/utils/csvParser.ts:270](https://github.com/maximhq/maxim-js/blob/main/src/lib/utils/csvParser.ts#L270)
+
+Gets the number of columns in the CSV file.
+
+#### Returns
+
+`Promise`\<`number`\>
+
+The number of columns
+
+#### Async
+
+#### Throws
+
+When unable to read the header row
+
+#### Example
+
+```ts
+const columnCount = await csv.getColumnCount();
+console.log(`CSV has ${columnCount} columns`);
+```
+
+***
+
+### getHeader()
+
+> **getHeader**(): `Promise`\<`null` \| `string`[]\>
+
+Defined in: [src/lib/utils/csvParser.ts:291](https://github.com/maximhq/maxim-js/blob/main/src/lib/utils/csvParser.ts#L291)
+
+Gets the header row of the CSV file.
+
+#### Returns
+
+`Promise`\<`null` \| `string`[]\>
+
+Array of header field names, or null if no header
+
+#### Async
+
+#### Throws
+
+When unable to read the header row
+
+#### Example
+
+```ts
+const headers = await csv.getHeader();
+console.log("Columns:", headers); // ["name", "email", "age"]
+```
+
+***
+
+### getRow()
+
+> **getRow**(`index`): `Promise`\<`null` \| `T` *extends* [`ColumnStructure`](../overview#columnstructure) ? \{ \[K in string \| number \| symbol\]: string \} : `string`[]\>
+
+Defined in: [src/lib/utils/csvParser.ts:336](https://github.com/maximhq/maxim-js/blob/main/src/lib/utils/csvParser.ts#L336)
+
+Gets a specific row from the CSV file.
+
+#### Parameters
+
+##### index
+
+`number`
+
+The zero-based index of the row to retrieve.
+
+#### Returns
+
+`Promise`\<`null` \| `T` *extends* [`ColumnStructure`](../overview#columnstructure) ? \{ \[K in string \| number \| symbol\]: string \} : `string`[]\>
+
+A promise that resolves to the row data, either as an object (if column structure is provided) or as an array of strings.
+
+#### Throws
+
+if the row index is out of bounds.
+
+#### Example
+
+```ts
+const row = await csvFile.getRow(0);
+console.log(row);
+// { column1: "value1", column2: "value2" } (if column structure is provided)
+// OR
+// ["value1", "value2"] (if column structure is not provided)
+```
+
+***
+
+### getRowCount()
+
+> **getRowCount**(): `Promise`\<`number`\>
+
+Defined in: [src/lib/utils/csvParser.ts:249](https://github.com/maximhq/maxim-js/blob/main/src/lib/utils/csvParser.ts#L249)
+
+Gets the total number of rows in the CSV file.
+
+#### Returns
+
+`Promise`\<`number`\>
+
+The total number of rows (excluding header if present)
+
+#### Async
+
+#### Example
+
+```ts
+const csv = new CSVFile("large-dataset.csv");
+const totalRows = await csv.getRowCount();
+console.log(`Dataset contains ${totalRows} records`);
+```
+
+***
+
+### map()
+
+> **map**\<`U`\>(`mapper`): `Promise`\<`U`[]\>
+
+Defined in: [src/lib/utils/csvParser.ts:437](https://github.com/maximhq/maxim-js/blob/main/src/lib/utils/csvParser.ts#L437)
+
+Maps each row of the CSV file using a mapper function.
+
+#### Type Parameters
+
+##### U
+
+`U`
+
+#### Parameters
+
+##### mapper
+
+(`row`) => `U`
+
+A function that takes a row and returns a transformed value.
+
+#### Returns
+
+`Promise`\<`U`[]\>
+
+A promise that resolves to an array of mapped values.
+
+***
+
+### restructure()
+
+> `static` **restructure**\<`U`\>(`csvFile`, `newColumnStructure`): `Promise`\<`CSVFile`\<`U`\>\>
+
+Defined in: [src/lib/utils/csvParser.ts:502](https://github.com/maximhq/maxim-js/blob/main/src/lib/utils/csvParser.ts#L502)
+
+Restructures a CSVFile object with a new column structure.
+
+#### Type Parameters
+
+##### U
+
+`U` *extends* [`ColumnStructure`](../overview#columnstructure)
+
+#### Parameters
+
+##### csvFile
+
+`CSVFile`\<`undefined` \| [`ColumnStructure`](../overview#columnstructure)\>
+
+The original CSVFile object.
+
+##### newColumnStructure
+
+`U`
+
+The new column structure to apply.
+
+#### Returns
+
+`Promise`\<`CSVFile`\<`U`\>\>
+
+A new CSVFile object with the updated column structure.
+
+#### Throws
+
+if the new column structure doesn't match the CSV file headers.
+
+***
+
+### writeToFile()
+
+> `static` **writeToFile**\<`T`\>(`data`, `outputPath`, `columnStructure?`, `options?`): `Promise`\<`void`\>
+
+Defined in: [src/lib/utils/csvParser.ts:542](https://github.com/maximhq/maxim-js/blob/main/src/lib/utils/csvParser.ts#L542)
+
+Writes data to a CSV file.
+
+#### Type Parameters
+
+##### T
+
+`T` *extends* `undefined` \| [`ColumnStructure`](../overview#columnstructure) = `undefined`
+
+#### Parameters
+
+##### data
+
+`T` *extends* [`ColumnStructure`](../overview#columnstructure) ? \{ \[K in string \| number \| symbol\]: string \} : `string`[][]
+
+The data to write, either as an array of objects or an array of arrays.
+
+##### outputPath
+
+`string`
+
+The path where the CSV file should be written.
+
+##### columnStructure?
+
+`T`
+
+Optional column structure for typed data.
+
+##### options?
+
+[`CSVWriteOptions`](../overview#csvwriteoptions) = `{}`
+
+Optional writing options.
+
+#### Returns
+
+`Promise`\<`void`\>
+
+A promise that resolves when the file has been written.
+
+#### Example
+
+```ts
+const data = [
+    { column1: "value1", column2: "value2" },
+    { column1: "value3", column2: "value4" },
+];
+await CSVFile.writeToFile(
+    data,
+    "path/to/output.csv",
+    { column1: 0, column2: 1 }
+);
+```

@@ -1,0 +1,243 @@
+# maxim.logger.parsers.generation\_parser
+
+#### parse\_function\_call
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/parsers/generation_parser.py#L14)
+
+
+```python
+def parse_function_call(function_call_data)
+```
+
+Parse function call from a dictionary.
+
+**Arguments**:
+
+- `function_call_data` - The dictionary to parse.
+  
+
+**Returns**:
+
+  The parsed function call.
+
+#### parse\_tool\_calls
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/parsers/generation_parser.py#L29)
+
+
+```python
+def parse_tool_calls(tool_calls_data)
+```
+
+Parse tool calls from a dictionary.
+
+**Arguments**:
+
+- `tool_calls_data` - The dictionary to parse.
+  
+
+**Returns**:
+
+  The parsed tool calls.
+
+#### parse\_content\_list
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/parsers/generation_parser.py#L45)
+
+
+```python
+def parse_content_list(content_list_data)
+```
+
+Parse content list from a dictionary.
+
+**Arguments**:
+
+- `content_list_data` - The dictionary to parse.
+  
+
+**Returns**:
+
+  The parsed content list.
+
+#### parse\_chat\_completion\_choice
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/parsers/generation_parser.py#L71)
+
+
+```python
+def parse_chat_completion_choice(messages_data)
+```
+
+Parse chat completion choice from a dictionary.
+
+**Arguments**:
+
+- `messages_data` - The dictionary to parse.
+  
+
+**Returns**:
+
+  The parsed chat completion choice.
+
+#### parse\_choice
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/parsers/generation_parser.py#L99)
+
+
+```python
+def parse_choice(choice_data)
+```
+
+Parse choice from a dictionary.
+
+**Arguments**:
+
+- `choice_data` - The dictionary to parse.
+  
+
+**Returns**:
+
+  The parsed choice.
+
+#### parse\_usage
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/parsers/generation_parser.py#L124)
+
+
+```python
+def parse_usage(usage_data)
+```
+
+Parse usage from a dictionary.
+
+**Arguments**:
+
+- `usage_data` - The dictionary to parse.
+  
+
+**Returns**:
+
+  The parsed usage.
+
+#### parse\_generation\_error
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/parsers/generation_parser.py#L142)
+
+
+```python
+def parse_generation_error(error_data)
+```
+
+Parse generation error from a dictionary.
+
+**Arguments**:
+
+- `error_data` - The dictionary to parse.
+  
+
+**Returns**:
+
+  The parsed generation error.
+
+#### default\_json\_serializer
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/parsers/generation_parser.py#L160)
+
+
+```python
+def default_json_serializer(o: Any) -> Any
+```
+
+Default JSON serializer for objects.
+
+**Arguments**:
+
+- `o` - The object to serialize.
+  
+
+**Returns**:
+
+  The serialized object.
+
+#### parse\_result
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/parsers/generation_parser.py#L183)
+
+
+```python
+def parse_result(data: Any) -> Dict[str, Any]
+```
+
+Parse result from a dictionary.
+
+**Arguments**:
+
+- `data` - The dictionary to parse.
+  
+
+**Returns**:
+
+  The parsed result.
+
+#### parse\_message
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/parsers/generation_parser.py#L220)
+
+
+```python
+def parse_message(message: Any) -> Any
+```
+
+Parse message from a dictionary.
+
+**Arguments**:
+
+- `message` - The dictionary to parse.
+  
+
+**Returns**:
+
+  The parsed message.
+
+#### parse\_messages
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/parsers/generation_parser.py#L253)
+
+
+```python
+def parse_messages(messages: List[Any]) -> List[Any]
+```
+
+Parse messages from a list.
+
+**Arguments**:
+
+- `messages` - The list to parse.
+  
+
+**Returns**:
+
+  The parsed messages.
+
+#### parse\_model\_parameters
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/parsers/generation_parser.py#L268)
+
+
+```python
+def parse_model_parameters(
+        parameters: Optional[Dict[str, Any]]) -> Dict[str, Any]
+```
+
+Parse model parameters from a dictionary.
+
+**Arguments**:
+
+- `parameters` - The dictionary to parse.
+  
+
+**Returns**:
+
+  The parsed model parameters.
+

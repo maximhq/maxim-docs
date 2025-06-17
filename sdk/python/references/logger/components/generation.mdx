@@ -1,0 +1,582 @@
+# maxim.logger.components.generation
+
+## [GenerationRequestTextMessageContent](/sdk/python/references/logger/components/generation)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L17)
+
+
+```python
+class GenerationRequestTextMessageContent(TypedDict)
+```
+
+This class is used to represent a text message in a generation request.
+
+## [GenerationRequestImageMessageContent](/sdk/python/references/logger/components/generation)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L26)
+
+
+```python
+class GenerationRequestImageMessageContent(TypedDict)
+```
+
+This class is used to represent an image message in a generation request.
+
+## [GenerationRequestMessage](/sdk/python/references/logger/components/generation)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L35)
+
+
+```python
+class GenerationRequestMessage(TypedDict)
+```
+
+This class is used to represent a message in a generation request.
+
+## [GenerationConfigDict](/sdk/python/references/logger/components/generation)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L79)
+
+
+```python
+class GenerationConfigDict(TypedDict)
+```
+
+[Generation](/sdk/python/references/logger/components/generation) config dict.
+
+This class represents a generation config dictionary.
+
+#### get\_generation\_config\_dict
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L96)
+
+
+```python
+def get_generation_config_dict(
+        config: Union[GenerationConfig,
+                      GenerationConfigDict]) -> dict[str, Any]
+```
+
+Convert a generation config to a generation config dict else return the config.
+
+**Arguments**:
+
+- `config` _Union[GenerationConfig, [GenerationConfigDict](/sdk/python/references/logger/components/generation)]_ - The config to get the dict from.
+  
+
+**Returns**:
+
+  dict[str, Any]: The generation config dict.
+
+## [GenerationToolCallFunction](/sdk/python/references/logger/components/generation)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L139)
+
+
+```python
+class GenerationToolCallFunction(TypedDict)
+```
+
+[Generation](/sdk/python/references/logger/components/generation) tool call function.
+
+This class represents a tool call function.
+
+## [GenerationToolCall](/sdk/python/references/logger/components/generation)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L149)
+
+
+```python
+class GenerationToolCall(TypedDict)
+```
+
+[Generation](/sdk/python/references/logger/components/generation) tool call.
+
+This class represents a tool call.
+
+## [TextContent](/sdk/python/references/logger/components/generation)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L160)
+
+
+```python
+class TextContent(TypedDict)
+```
+
+Text content.
+
+This class represents a text content.
+
+## [ImageContent](/sdk/python/references/logger/components/generation)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L170)
+
+
+```python
+class ImageContent(TypedDict)
+```
+
+Image content.
+
+This class represents an image content.
+
+## [AudioContent](/sdk/python/references/logger/components/generation)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L180)
+
+
+```python
+class AudioContent(TypedDict)
+```
+
+Audio content.
+
+This class represents an audio content.
+
+## [GenerationResultMessage](/sdk/python/references/logger/components/generation)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L190)
+
+
+```python
+class GenerationResultMessage(TypedDict)
+```
+
+[Generation](/sdk/python/references/logger/components/generation) result message.
+
+This class represents a generation result message.
+
+## [GenerationResultChoice](/sdk/python/references/logger/components/generation)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L201)
+
+
+```python
+class GenerationResultChoice(TypedDict)
+```
+
+[Generation](/sdk/python/references/logger/components/generation) result choice.
+
+This class represents a generation result choice.
+
+## [TokenDetails](/sdk/python/references/logger/components/generation)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L213)
+
+
+```python
+class TokenDetails(TypedDict)
+```
+
+Token details.
+
+This class represents token details.
+
+## [GenerationUsage](/sdk/python/references/logger/components/generation)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L224)
+
+
+```python
+class GenerationUsage(TypedDict)
+```
+
+[Generation](/sdk/python/references/logger/components/generation) usage.
+
+This class represents generation usage.
+
+## [GenerationResult](/sdk/python/references/logger/components/generation)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L238)
+
+
+```python
+class GenerationResult(TypedDict)
+```
+
+[Generation](/sdk/python/references/logger/components/generation) result.
+
+This class represents a generation result.
+
+#### get\_generation\_error\_config\_dict
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L252)
+
+
+```python
+def get_generation_error_config_dict(
+    config: Union[GenerationError, GenerationErrorTypedDict]
+) -> GenerationErrorTypedDict
+```
+
+Convert a generation error to a generation error dict else return the error.
+
+**Arguments**:
+
+- `config` - Either a [TraceConfig](/sdk/python/references/logger/components/trace) object or a [TraceConfigDict](/sdk/python/references/logger/components/trace) dictionary.
+  
+
+**Returns**:
+
+  A [TraceConfigDict](/sdk/python/references/logger/components/trace) dictionary representation of the config.
+
+## [Generation](/sdk/python/references/logger/components/generation)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L274)
+
+
+```python
+class Generation(BaseContainer)
+```
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L275)
+
+
+```python
+def __init__(config: Union[GenerationConfig, GenerationConfigDict],
+             writer: LogWriter)
+```
+
+Initialize a generation.
+
+**Arguments**:
+
+- `config` - The config to initialize the generation with.
+- `writer` - The writer to use.
+
+#### set\_provider\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L307)
+
+
+```python
+@staticmethod
+def set_provider_(writer: LogWriter, id: str, provider: str)
+```
+
+Static method to set the provider for a trace.
+
+**Arguments**:
+
+- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
+- `id` - The ID of the trace to set the provider for.
+- `provider` - The provider to set.
+
+#### set\_provider
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L324)
+
+
+```python
+def set_provider(provider: str)
+```
+
+Set the provider for this trace.
+
+**Arguments**:
+
+- `provider` - The provider to set.
+
+#### set\_model\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L338)
+
+
+```python
+@staticmethod
+def set_model_(writer: LogWriter, id: str, model: str)
+```
+
+Static method to set the model for a trace.
+
+**Arguments**:
+
+- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
+- `id` - The ID of the trace to set the model for.
+- `model` - The model to set.
+
+#### set\_model
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L351)
+
+
+```python
+def set_model(model: str)
+```
+
+Set the model for this trace.
+
+**Arguments**:
+
+- `model` - The model to set.
+
+#### add\_message\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L362)
+
+
+```python
+@staticmethod
+def add_message_(writer: LogWriter, id: str,
+                 message: GenerationRequestMessage)
+```
+
+Static method to add a message to a trace.
+
+**Arguments**:
+
+- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
+- `id` - The ID of the trace to add the message to.
+- `message` - The message to add.
+
+#### add\_message
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L384)
+
+
+```python
+def add_message(message: GenerationRequestMessage) -> None
+```
+
+Add a message to this trace.
+
+**Arguments**:
+
+- `message` - The message to add.
+
+#### set\_model\_parameters\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L398)
+
+
+```python
+@staticmethod
+def set_model_parameters_(writer: LogWriter, id: str,
+                          model_parameters: Dict[str, Any])
+```
+
+Static method to set the model parameters for a trace.
+
+**Arguments**:
+
+- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
+- `id` - The ID of the trace to set the model parameters for.
+- `model_parameters` - The model parameters to set.
+
+#### set\_model\_parameters
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L418)
+
+
+```python
+def set_model_parameters(model_parameters: Dict[str, Any])
+```
+
+Set the model parameters for this trace.
+
+**Arguments**:
+
+- `model_parameters` - The model parameters to set.
+
+#### add\_attachment
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L429)
+
+
+```python
+def add_attachment(attachment: Union[FileAttachment, FileDataAttachment,
+                                     UrlAttachment])
+```
+
+Add an attachment to this trace.
+
+**Arguments**:
+
+- `attachment` - The attachment to add.
+
+#### add\_attachment\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L441)
+
+
+```python
+@staticmethod
+def add_attachment_(writer: LogWriter, generation_id: str,
+                    attachment: Union[FileAttachment, FileDataAttachment,
+                                      UrlAttachment])
+```
+
+Static method to add an attachment to a trace.
+
+**Arguments**:
+
+- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
+- `generation_id` - The ID of the generation to add the attachment to.
+- `attachment` - The attachment to add.
+
+#### result\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L463)
+
+
+```python
+@staticmethod
+def result_(writer: LogWriter, id: str, result: Union[GenerationResult,
+                                                      Dict[str, Any]])
+```
+
+Static method to add a result to a trace.
+
+**Arguments**:
+
+- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
+- `id` - The ID of the trace to add the result to.
+- `result` - The result to add.
+
+#### end\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L499)
+
+
+```python
+@staticmethod
+def end_(writer: LogWriter, id: str, data: Optional[Dict[str, Any]] = None)
+```
+
+Static method to end a trace.
+
+**Arguments**:
+
+- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
+- `id` - The ID of the trace to end.
+- `data` - The data to add to the trace.
+
+#### add\_tag\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L521)
+
+
+```python
+@staticmethod
+def add_tag_(writer: LogWriter, id: str, key: str, value: str)
+```
+
+Static method to add a tag to a trace.
+
+**Arguments**:
+
+- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
+- `id` - The ID of the trace to add the tag to.
+- `key` - The key of the tag to add.
+- `value` - The value of the tag to add.
+
+#### convert\_chat\_completion
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L534)
+
+
+```python
+@staticmethod
+def convert_chat_completion(chat_completion: Dict[str, Any])
+```
+
+Convert a chat completion to a generation result.
+
+**Arguments**:
+
+- `chat_completion` - The chat completion to convert.
+  
+
+**Returns**:
+
+  A generation result.
+
+#### convert\_result
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L567)
+
+
+```python
+@staticmethod
+def convert_result(
+    result: Union[Any, GenerationResult, Dict[str, Any]]
+) -> Union[Any, GenerationResult, Dict[str, Any]]
+```
+
+Convert a result to a generation result.
+
+**Arguments**:
+
+- `result` - The result to convert.
+  
+
+**Returns**:
+
+  A generation result.
+
+#### result
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L676)
+
+
+```python
+def result(result: Any)
+```
+
+Add a result to this trace.
+
+**Arguments**:
+
+- `result` - The result to add.
+
+#### error
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L699)
+
+
+```python
+def error(error: Union[GenerationError, GenerationErrorTypedDict])
+```
+
+Add an error to this trace.
+
+**Arguments**:
+
+- `error` - The error to add.
+
+#### error\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L727)
+
+
+```python
+@staticmethod
+def error_(writer: LogWriter, id: str, error: Union[GenerationError,
+                                                    GenerationErrorTypedDict])
+```
+
+Static method to add an error to a trace.
+
+**Arguments**:
+
+- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
+- `id` - The ID of the trace to add the error to.
+- `error` - The error to add.
+
+#### data
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py#L770)
+
+
+```python
+def data() -> Dict[str, Any]
+```
+
+Get the data for this trace.
+
+**Returns**:
+
+  A dictionary containing the data for this trace.
+

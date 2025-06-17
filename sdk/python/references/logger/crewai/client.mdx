@@ -1,0 +1,100 @@
+# maxim.logger.crewai.client
+
+#### get\_log\_level
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/crewai/client.py#L43)
+
+
+```python
+def get_log_level(debug: bool) -> int
+```
+
+Set logging level based on debug flag.
+debug=False: Only WARNING and ERROR logs
+debug=True: INFO and DEBUG logs
+
+## [MaximUsageCallback](/sdk/python/references/logger/crewai/client)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/crewai/client.py#L52)
+
+
+```python
+class MaximUsageCallback()
+```
+
+[Maxim](/sdk/python/references/maxim) usage callback.
+
+This class represents a usage callback.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/crewai/client.py#L58)
+
+
+```python
+def __init__(generation_id: str)
+```
+
+Initialize a usage callback.
+
+#### log\_success\_event
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/crewai/client.py#L62)
+
+
+```python
+def log_success_event(kwargs, response_obj, start_time, end_time)
+```
+
+Log a success event.
+
+**Arguments**:
+
+- `kwargs` - The kwargs.
+- `response_obj` - The response object.
+- `start_time` - The start time.
+- `end_time` - The end time.
+
+#### make\_handle\_non\_streaming\_wrapper
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/crewai/client.py#L95)
+
+
+```python
+def make_handle_non_streaming_wrapper(original_method)
+```
+
+Make a handle non streaming wrapper.
+
+This function wraps the original method to capture usage.
+
+#### instrument\_crewai
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/crewai/client.py#L133)
+
+
+```python
+def instrument_crewai(maxim_logger: Logger, debug: bool = False)
+```
+
+Patches CrewAI's core components (Crew, Agent, Task, Flow, LLM) to add comprehensive logging and tracing.
+
+This wrapper enhances CrewAI with:
+- Detailed operation tracing for Crew, Flow, and Task executions
+- Token usage tracking for LLM calls
+- [Tool](/sdk/python/references/models/prompt) execution monitoring
+- [Span](/sdk/python/references/logger/components/span)-based operation tracking
+- [Error](/sdk/python/references/models/prompt) handling and reporting
+
+The patching is done by wrapping key methods like:
+- Crew.kickoff
+- Agent.execute_task
+- Task.execute_sync
+- LLM.call and _handle_non_streaming_response
+- [Tool](/sdk/python/references/models/prompt)._run methods
+
+**Arguments**:
+
+- `maxim_logger` _[Logger](/sdk/python/references/logger/logger)_ - A [Maxim](/sdk/python/references/maxim) [Logger](/sdk/python/references/logger/logger) instance for handling the tracing and logging operations.
+- `debug` _bool_ - If True, show INFO and DEBUG logs. If False, show only WARNING and ERROR logs.
+

@@ -1,0 +1,159 @@
+# maxim.scribe
+
+## [Scribe](/sdk/python/references/scribe)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/scribe.py#L10)
+
+
+```python
+class Scribe()
+```
+
+[Scribe](/sdk/python/references/scribe) logger wrapper for maxim.
+Log level is managed externally via set_level or the standard logging API.
+By default, the logger uses the global logging configuration.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/scribe.py#L17)
+
+
+```python
+def __init__(name)
+```
+
+Initialize a scribe logger.
+
+**Arguments**:
+
+- `name` - The name of the logger.
+
+#### debug
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/scribe.py#L42)
+
+
+```python
+def debug(msg, *args, **kwargs)
+```
+
+Log a debug message.
+
+**Arguments**:
+
+- `msg` - The message to log.
+- `*args` - The arguments to log.
+- `**kwargs` - The keyword arguments to log.
+
+#### warning
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/scribe.py#L54)
+
+
+```python
+def warning(msg, *args, **kwargs)
+```
+
+Log a warning message.
+
+**Arguments**:
+
+- `msg` - The message to log.
+- `*args` - The arguments to log.
+- `**kwargs` - The keyword arguments to log.
+
+#### log
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/scribe.py#L66)
+
+
+```python
+def log(level, msg, *args, **kwargs)
+```
+
+Log a message.
+
+**Arguments**:
+
+- `level` - The level of the message.
+- `msg` - The message to log.
+- `*args` - The arguments to log.
+- `**kwargs` - The keyword arguments to log.
+
+#### silence
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/scribe.py#L79)
+
+
+```python
+def silence()
+```
+
+Silence the logger.
+
+This method sets the logger level to CRITICAL + 1.
+
+#### error
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/scribe.py#L86)
+
+
+```python
+def error(msg, *args, **kwargs)
+```
+
+Log an error message.
+
+**Arguments**:
+
+- `msg` - The message to log.
+- `*args` - The arguments to log.
+- `**kwargs` - The keyword arguments to log.
+
+#### info
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/scribe.py#L96)
+
+
+```python
+def info(msg, *args, **kwargs)
+```
+
+Log an info message.
+
+**Arguments**:
+
+- `msg` - The message to log.
+- `*args` - The arguments to log.
+- `**kwargs` - The keyword arguments to log.
+
+#### get\_level
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/scribe.py#L110)
+
+
+```python
+def get_level()
+```
+
+Get the level of the logger.
+
+**Returns**:
+
+- `int` - The level of the logger.
+
+#### set\_level
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/scribe.py#L118)
+
+
+```python
+def set_level(level)
+```
+
+Set the level of the logger.
+
+**Arguments**:
+
+- `level` - The level to set.
+

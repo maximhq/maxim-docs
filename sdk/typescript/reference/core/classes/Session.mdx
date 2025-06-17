@@ -1,0 +1,610 @@
+---
+title: "Session"
+sidebar_position: 1
+---
+
+# Class: Session
+
+Defined in: [src/lib/logger/components/session.ts:46](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/session.ts#L46)
+
+Represents a user or system session containing multiple traces (back and forth interactions).
+
+Sessions provide a high-level grouping mechanism for related activities,
+typically representing a user interaction session, conversation, etc.
+Sessions can contain multiple traces and support feedback collection.
+
+ Session
+
+## Examples
+
+```ts
+const session = logger.session({
+  id: 'chat-session-001',
+  name: 'Customer Support Session',
+});
+
+// Add traces to the session
+const trace = session.trace({
+  id: 'query-trace-001',
+  name: 'User Query Processing'
+});
+```
+
+```ts
+// Adding feedback and ending session
+session.feedback({
+  score: 5,
+  comment: 'Very helpful and quick response'
+});
+
+session.addTag('resolution', 'solved');
+session.end();
+```
+
+## Extends
+
+- [`EvaluatableBaseContainer`](./EvaluatableBaseContainer)
+
+## Constructors
+
+### Constructor
+
+> **new Session**(`config`, `writer`): `Session`
+
+Defined in: [src/lib/logger/components/session.ts:60](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/session.ts#L60)
+
+Creates a new session log entry.
+
+#### Parameters
+
+##### config
+
+[`SessionConfig`](../overview#sessionconfig)
+
+Configuration object defining the session
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+Log writer instance for persisting session data
+
+#### Returns
+
+`Session`
+
+#### Example
+
+```ts
+const session = logger.session({
+  id: 'support-session-789',
+  name: 'Technical Support Call',
+});
+```
+
+#### Overrides
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`constructor`](./EvaluatableBaseContainer#constructor)
+
+## Accessors
+
+### evaluate
+
+#### Get Signature
+
+> **get** **evaluate**(): [`EvaluateContainer`](./EvaluateContainer)
+
+Defined in: [src/lib/logger/components/base.ts:248](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L248)
+
+Gets the evaluation methods for this container.
+
+##### Example
+
+```ts
+container.evaluate.withEvaluators('bias', 'toxicity');
+```
+
+##### Returns
+
+[`EvaluateContainer`](./EvaluateContainer)
+
+Evaluation methods for configuring and triggering evaluations
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`evaluate`](./EvaluatableBaseContainer#evaluate)
+
+***
+
+### id
+
+#### Get Signature
+
+> **get** **id**(): `string`
+
+Defined in: [src/lib/logger/components/base.ts:80](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L80)
+
+Gets the unique identifier for this container.
+
+##### Returns
+
+`string`
+
+The container's unique ID
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`id`](./EvaluatableBaseContainer#id)
+
+## Methods
+
+### addMetadata()
+
+> **addMetadata**(`metadata`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:124](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L124)
+
+Adds metadata to this container for additional context and debugging. Any data type could be added as the value in the metadata record.
+
+#### Parameters
+
+##### metadata
+
+`Record`\<`string`, `unknown`\>
+
+Key-value pairs of metadata
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+container.addMetadata({
+  requestId: 'req-123',
+  userAgent: 'Mozilla/5.0...',
+  processingTime: 1500
+});
+```
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`addMetadata`](./EvaluatableBaseContainer#addmetadata)
+
+***
+
+### addTag()
+
+> **addTag**(`key`, `value`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:94](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L94)
+
+Adds a tag to this container for categorization and filtering.
+
+#### Parameters
+
+##### key
+
+`string`
+
+The tag key
+
+##### value
+
+`string`
+
+The tag value
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+container.addTag('environment', 'production');
+container.addTag('user_type', 'premium');
+```
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`addTag`](./EvaluatableBaseContainer#addtag)
+
+***
+
+### data()
+
+> **data**(): `any`
+
+Defined in: [src/lib/logger/components/base.ts:191](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L191)
+
+Returns the current data state of this container.
+
+#### Returns
+
+`any`
+
+The container's data.
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`data`](./EvaluatableBaseContainer#data)
+
+***
+
+### end()
+
+> **end**(): `void`
+
+Defined in: [src/lib/logger/components/base.ts:163](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L163)
+
+Marks this container as ended and records the end timestamp.
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+// End a container when processing is complete
+container.end();
+```
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`end`](./EvaluatableBaseContainer#end)
+
+***
+
+### feedback()
+
+> **feedback**(`feedback`): `void`
+
+Defined in: [src/lib/logger/components/session.ts:82](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/session.ts#L82)
+
+Adds feedback to this session from users.
+
+#### Parameters
+
+##### feedback
+
+Feedback object containing score and optional comment
+
+###### comment?
+
+`string`
+
+Optional textual feedback or comments
+
+###### score
+
+`number`
+
+Numerical score for the session (1-5)
+
+#### Returns
+
+`void`
+
+void
+
+#### Examples
+
+```ts
+session.feedback({
+  score: 4,
+  comment: 'Good service but response time could be improved'
+});
+```
+
+```ts
+// Score only
+session.feedback({ score: 5 });
+```
+
+***
+
+### trace()
+
+> **trace**(`config`): [`Trace`](./Trace)
+
+Defined in: [src/lib/logger/components/session.ts:111](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/session.ts#L111)
+
+Creates a new trace within this session.
+
+#### Parameters
+
+##### config
+
+[`TraceConfig`](../overview#traceconfig)
+
+Configuration for the new trace
+
+#### Returns
+
+[`Trace`](./Trace)
+
+A new trace instance associated with this session
+
+#### Example
+
+```ts
+const trace = session.trace({
+  id: 'authentication-trace',
+  name: 'User Authentication Flow',
+});
+```
+
+***
+
+### addMetadata\_()
+
+> `static` **addMetadata\_**(`writer`, `entity`, `id`, `metadata`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:144](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L144)
+
+Static method to add metadata to any container by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type
+
+##### id
+
+`string`
+
+The container ID
+
+##### metadata
+
+`Record`\<`string`, `unknown`\>
+
+The metadata to add
+
+#### Returns
+
+`void`
+
+void
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`addMetadata_`](./EvaluatableBaseContainer#addmetadata_)
+
+***
+
+### addTag\_()
+
+> `static` **addTag\_**(`writer`, `entity`, `id`, `key`, `value`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:108](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L108)
+
+Static method to add a tag to any container by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type
+
+##### id
+
+`string`
+
+The container ID
+
+##### key
+
+`string`
+
+The tag key
+
+##### value
+
+`string`
+
+The tag value
+
+#### Returns
+
+`void`
+
+void
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`addTag_`](./EvaluatableBaseContainer#addtag_)
+
+***
+
+### end\_()
+
+> `static` **end\_**(`writer`, `entity`, `id`, `data?`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:177](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L177)
+
+Static method to end any container by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type
+
+##### id
+
+`string`
+
+The container ID
+
+##### data?
+
+`any`
+
+Optional additional data to include with the end event
+
+#### Returns
+
+`void`
+
+void
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`end_`](./EvaluatableBaseContainer#end_)
+
+***
+
+### evaluate\_()
+
+> `static` **evaluate\_**(`writer`, `entity`, `id`): [`EvaluateContainer`](./EvaluateContainer)
+
+Defined in: [src/lib/logger/components/base.ts:260](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L260)
+
+Static method to get evaluation methods for any evaluatable container by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type
+
+##### id
+
+`string`
+
+The container ID
+
+#### Returns
+
+[`EvaluateContainer`](./EvaluateContainer)
+
+Evaluation methods for configuring and triggering evaluations
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`evaluate_`](./EvaluatableBaseContainer#evaluate_)
+
+***
+
+### feedback\_()
+
+> `static` **feedback\_**(`writer`, `id`, `feedback`): `void`
+
+Defined in: [src/lib/logger/components/session.ts:96](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/session.ts#L96)
+
+Static method to add feedback to any session by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### id
+
+`string`
+
+The session ID
+
+##### feedback
+
+Feedback object containing score and optional comment
+
+###### comment?
+
+`string`
+
+Optional textual feedback
+
+###### score
+
+`number`
+
+Numerical score for the session
+
+#### Returns
+
+`void`
+
+void
+
+***
+
+### trace\_()
+
+> `static` **trace\_**(`writer`, `id`, `config`): [`Trace`](./Trace)
+
+Defined in: [src/lib/logger/components/session.ts:129](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/session.ts#L129)
+
+Static method to create a trace associated with any session by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### id
+
+`string`
+
+The session ID
+
+##### config
+
+[`TraceConfig`](../overview#traceconfig)
+
+Configuration for the new trace
+
+#### Returns
+
+[`Trace`](./Trace)
+
+A new trace instance

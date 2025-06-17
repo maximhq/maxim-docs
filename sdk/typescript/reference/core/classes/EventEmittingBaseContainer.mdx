@@ -1,0 +1,538 @@
+---
+title: "EventEmittingBaseContainer"
+sidebar_position: 1
+---
+
+# Class: `abstract` EventEmittingBaseContainer
+
+Defined in: [src/lib/logger/components/base.ts:274](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L274)
+
+Extended evaluatable container that supports event emission.
+
+Provides capabilities for containers that can emit events. Used by traces and spans.
+
+ EventEmittingBaseContainer
+
+## Extends
+
+- [`EvaluatableBaseContainer`](./EvaluatableBaseContainer)
+
+## Extended by
+
+- [`Span`](./Span)
+- [`Trace`](./Trace)
+
+## Constructors
+
+### Constructor
+
+> **new EventEmittingBaseContainer**(`entity`, `config`, `writer`): `EventEmittingBaseContainer`
+
+Defined in: [src/lib/logger/components/base.ts:48](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L48)
+
+Creates a new base container instance.
+
+#### Parameters
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type this container represents
+
+##### config
+
+[`BaseConfig`](../overview#baseconfig)
+
+Configuration for the container
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+Log writer instance for committing changes
+
+#### Returns
+
+`EventEmittingBaseContainer`
+
+#### Throws
+
+When the provided ID contains invalid characters (only alphanumeric, hyphens, and underscores allowed; only throws if you have `raiseExceptions` config set to true)
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`constructor`](./EvaluatableBaseContainer#constructor)
+
+## Accessors
+
+### evaluate
+
+#### Get Signature
+
+> **get** **evaluate**(): [`EvaluateContainer`](./EvaluateContainer)
+
+Defined in: [src/lib/logger/components/base.ts:248](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L248)
+
+Gets the evaluation methods for this container.
+
+##### Example
+
+```ts
+container.evaluate.withEvaluators('bias', 'toxicity');
+```
+
+##### Returns
+
+[`EvaluateContainer`](./EvaluateContainer)
+
+Evaluation methods for configuring and triggering evaluations
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`evaluate`](./EvaluatableBaseContainer#evaluate)
+
+***
+
+### id
+
+#### Get Signature
+
+> **get** **id**(): `string`
+
+Defined in: [src/lib/logger/components/base.ts:80](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L80)
+
+Gets the unique identifier for this container.
+
+##### Returns
+
+`string`
+
+The container's unique ID
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`id`](./EvaluatableBaseContainer#id)
+
+## Methods
+
+### addMetadata()
+
+> **addMetadata**(`metadata`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:124](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L124)
+
+Adds metadata to this container for additional context and debugging. Any data type could be added as the value in the metadata record.
+
+#### Parameters
+
+##### metadata
+
+`Record`\<`string`, `unknown`\>
+
+Key-value pairs of metadata
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+container.addMetadata({
+  requestId: 'req-123',
+  userAgent: 'Mozilla/5.0...',
+  processingTime: 1500
+});
+```
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`addMetadata`](./EvaluatableBaseContainer#addmetadata)
+
+***
+
+### addTag()
+
+> **addTag**(`key`, `value`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:94](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L94)
+
+Adds a tag to this container for categorization and filtering.
+
+#### Parameters
+
+##### key
+
+`string`
+
+The tag key
+
+##### value
+
+`string`
+
+The tag value
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+container.addTag('environment', 'production');
+container.addTag('user_type', 'premium');
+```
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`addTag`](./EvaluatableBaseContainer#addtag)
+
+***
+
+### data()
+
+> **data**(): `any`
+
+Defined in: [src/lib/logger/components/base.ts:191](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L191)
+
+Returns the current data state of this container.
+
+#### Returns
+
+`any`
+
+The container's data.
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`data`](./EvaluatableBaseContainer#data)
+
+***
+
+### end()
+
+> **end**(): `void`
+
+Defined in: [src/lib/logger/components/base.ts:163](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L163)
+
+Marks this container as ended and records the end timestamp.
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+// End a container when processing is complete
+container.end();
+```
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`end`](./EvaluatableBaseContainer#end)
+
+***
+
+### event()
+
+> **event**(`id`, `name`, `tags?`, `metadata?`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:291](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L291)
+
+Emits a custom event within this container.
+
+#### Parameters
+
+##### id
+
+`string`
+
+Unique identifier for the event
+
+##### name
+
+`string`
+
+Human-readable name for the event
+
+##### tags?
+
+`Record`\<`string`, `string`\>
+
+Optional tags for categorizing the event
+
+##### metadata?
+
+`Record`\<`string`, `unknown`\>
+
+Optional metadata for additional context
+
+#### Returns
+
+`void`
+
+void
+
+#### Example
+
+```ts
+container.event(
+  'checkpoint-1',
+  'Processing Milestone',
+  { phase: 'preprocessing', status: 'complete' },
+  { itemsProcessed: 1000, timeElapsed: 5.2 }
+);
+```
+
+***
+
+### addMetadata\_()
+
+> `static` **addMetadata\_**(`writer`, `entity`, `id`, `metadata`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:144](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L144)
+
+Static method to add metadata to any container by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type
+
+##### id
+
+`string`
+
+The container ID
+
+##### metadata
+
+`Record`\<`string`, `unknown`\>
+
+The metadata to add
+
+#### Returns
+
+`void`
+
+void
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`addMetadata_`](./EvaluatableBaseContainer#addmetadata_)
+
+***
+
+### addTag\_()
+
+> `static` **addTag\_**(`writer`, `entity`, `id`, `key`, `value`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:108](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L108)
+
+Static method to add a tag to any container by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type
+
+##### id
+
+`string`
+
+The container ID
+
+##### key
+
+`string`
+
+The tag key
+
+##### value
+
+`string`
+
+The tag value
+
+#### Returns
+
+`void`
+
+void
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`addTag_`](./EvaluatableBaseContainer#addtag_)
+
+***
+
+### end\_()
+
+> `static` **end\_**(`writer`, `entity`, `id`, `data?`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:177](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L177)
+
+Static method to end any container by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type
+
+##### id
+
+`string`
+
+The container ID
+
+##### data?
+
+`any`
+
+Optional additional data to include with the end event
+
+#### Returns
+
+`void`
+
+void
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`end_`](./EvaluatableBaseContainer#end_)
+
+***
+
+### evaluate\_()
+
+> `static` **evaluate\_**(`writer`, `entity`, `id`): [`EvaluateContainer`](./EvaluateContainer)
+
+Defined in: [src/lib/logger/components/base.ts:260](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L260)
+
+Static method to get evaluation methods for any evaluatable container by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type
+
+##### id
+
+`string`
+
+The container ID
+
+#### Returns
+
+[`EvaluateContainer`](./EvaluateContainer)
+
+Evaluation methods for configuring and triggering evaluations
+
+#### Inherited from
+
+[`EvaluatableBaseContainer`](./EvaluatableBaseContainer).[`evaluate_`](./EvaluatableBaseContainer#evaluate_)
+
+***
+
+### event\_()
+
+> `static` **event\_**(`writer`, `entity`, `id`, `eventId`, `name`, `tags?`, `metadata?`): `void`
+
+Defined in: [src/lib/logger/components/base.ts:318](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L318)
+
+Static method to emit an event for any event-emitting container by ID.
+
+#### Parameters
+
+##### writer
+
+[`LogWriter`](./LogWriter)
+
+The log writer instance
+
+##### entity
+
+[`Entity`](../enumerations/Entity)
+
+The entity type
+
+##### id
+
+`string`
+
+The container ID
+
+##### eventId
+
+`string`
+
+Unique identifier for the event
+
+##### name
+
+`string`
+
+Human-readable name for the event
+
+##### tags?
+
+`Record`\<`string`, `string`\>
+
+Optional tags for categorizing the event
+
+##### metadata?
+
+`Record`\<`string`, `unknown`\>
+
+Optional metadata for additional context
+
+#### Returns
+
+`void`
+
+void

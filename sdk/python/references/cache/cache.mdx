@@ -1,0 +1,84 @@
+# maxim.cache.cache
+
+## [MaximCache](/sdk/python/references/cache/cache)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/cache/cache.py#L4)
+
+
+```python
+class MaximCache()
+```
+
+Abstract base class for caching implementations in [Maxim](/sdk/python/references/maxim).
+
+This class defines the interface for cache operations including
+getting, setting, deleting cache entries, and retrieving all keys.
+Concrete implementations should inherit from this class and provide
+actual storage mechanisms.
+
+#### get\_all\_keys
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/cache/cache.py#L14)
+
+
+```python
+def get_all_keys() -> List[str]
+```
+
+Retrieve all keys currently stored in the cache.
+
+**Returns**:
+
+- `List[str]` - A list of all cache keys. Returns empty list if no keys exist.
+
+#### get
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/cache/cache.py#L23)
+
+
+```python
+def get(key: str) -> Optional[str]
+```
+
+Retrieve a value from the cache by its key.
+
+**Arguments**:
+
+- `key` _str_ - The cache key to look up.
+  
+
+**Returns**:
+
+- `Optional[str]` - The cached value if the key exists, None otherwise.
+
+#### set
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/cache/cache.py#L35)
+
+
+```python
+def set(key: str, value: str) -> None
+```
+
+Store a key-value pair in the cache.
+
+**Arguments**:
+
+- `key` _str_ - The cache key to store the value under.
+- `value` _str_ - The value to cache.
+
+#### delete
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/cache/cache.py#L45)
+
+
+```python
+def delete(key: str) -> None
+```
+
+Remove a key-value pair from the cache.
+
+**Arguments**:
+
+- `key` _str_ - The cache key to remove.
+

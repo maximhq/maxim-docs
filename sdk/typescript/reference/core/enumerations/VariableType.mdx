@@ -1,0 +1,61 @@
+---
+title: "VariableType"
+sidebar_position: 1
+---
+
+# Enumeration: VariableType
+
+Defined in: [src/lib/models/dataset.ts:23](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/dataset.ts#L23)
+
+Enumeration of supported variable types for dataset entries.
+
+Defines the data types that can be stored in dataset variables, affecting
+how the data is processed and validated during test runs and evaluations.
+
+## Example
+
+```ts
+import { VariableType } from '@maximai/maxim-js';
+
+const textVariable = {
+  type: VariableType.TEXT,
+  payload: "Hello world"
+};
+
+const jsonVariable = {
+  type: VariableType.JSON,
+  payload: JSON.stringify({ key: "value", number: 42 })
+};
+```
+
+## Enumeration Members
+
+### JSON
+
+> **JSON**: `"json"`
+
+Defined in: [src/lib/models/dataset.ts:34](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/dataset.ts#L34)
+
+JSON data type for structured data stored as serialized JSON.
+
+#### Example
+
+```ts
+'{"name": "John", "age": 30}', '[1, 2, 3]', '{"metadata": {...}}'
+```
+
+***
+
+### TEXT
+
+> **TEXT**: `"text"`
+
+Defined in: [src/lib/models/dataset.ts:28](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/dataset.ts#L28)
+
+Plain text data type for simple string values.
+
+#### Example
+
+```ts
+"Hello world", "user input text", "response content"
+```

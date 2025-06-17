@@ -1,0 +1,54 @@
+# maxim.logger.components.feedback
+
+## [FeedbackDict](/sdk/python/references/logger/components/feedback)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/feedback.py#L7)
+
+
+```python
+class FeedbackDict(TypedDict)
+```
+
+[Feedback](/sdk/python/references/logger/components/feedback) dict.
+
+This class provides functionality to manage feedback dictionaries.
+
+## [Feedback](/sdk/python/references/logger/components/feedback)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/feedback.py#L21)
+
+
+```python
+@deprecated(
+    "This class will be removed in a future version. Use {} which is TypedDict."
+)
+
+@dataclass
+class Feedback()
+```
+
+[Feedback](/sdk/python/references/logger/components/feedback).
+
+This class represents a feedback event.
+
+#### get\_feedback\_dict
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/feedback.py#L31)
+
+
+```python
+def get_feedback_dict(
+        feedback: Union[Feedback, FeedbackDict]) -> dict[str, Any]
+```
+
+Get the feedback dict.
+
+**Arguments**:
+
+- `feedback` _Union[[Feedback](/sdk/python/references/logger/components/feedback), [FeedbackDict](/sdk/python/references/logger/components/feedback)]_ - The feedback to get the dict from.
+  
+
+**Returns**:
+
+  dict[str, Any]: The feedback dict.
+

@@ -1,0 +1,207 @@
+# maxim.logger.langchain.utils
+
+#### parse\_langchain\_provider
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/utils.py#L23)
+
+
+```python
+def parse_langchain_provider(serialized: Dict[str, Any])
+```
+
+Parses langchain provider from serialized data
+
+**Arguments**:
+
+- `serialized` - Dict[str, Any]: Serialized data to parse provider from
+
+**Returns**:
+
+- `str` - Parsed provider
+
+#### parse\_langchain\_llm\_error
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/utils.py#L53)
+
+
+```python
+def parse_langchain_llm_error(
+    error: Union[Exception, BaseException,
+                 KeyboardInterrupt]) -> GenerationError
+```
+
+Parses langchain LLM error into a format that is accepted by [Maxim](/sdk/python/references/maxim) logger
+
+**Arguments**:
+
+- `error` - Union[Exception, KeyboardInterrupt]: [Error](/sdk/python/references/models/prompt) to be parsed
+
+**Returns**:
+
+- `[GenerationError](/sdk/python/references/logger/components/types)` - Parsed LLM error
+
+#### parse\_langchain\_model\_parameters
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/utils.py#L73)
+
+
+```python
+def parse_langchain_model_parameters(**kwargs: Any
+                                     ) -> Tuple[str, Dict[str, Any]]
+```
+
+Parses langchain kwargs into model and model parameters. You can use this function with any langchain _start callback function
+
+**Arguments**:
+
+- `kwargs` - Dict[str, Any]: Kwargs to be parsed
+
+**Returns**:
+
+  Tuple[str, Dict[str, Any]]: Model and model parameters
+
+**Raises**:
+
+- `Exception` - If model_name is not found in kwargs
+
+#### parse\_base\_message\_to\_maxim\_generation
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/utils.py#L98)
+
+
+```python
+def parse_base_message_to_maxim_generation(message: BaseMessage)
+```
+
+Parses langchain BaseMessage into a format that is accepted by [Maxim](/sdk/python/references/maxim) logger
+
+**Arguments**:
+
+- `message` - BaseMessage
+
+**Returns**:
+
+  Dict[str, Any]: Parsed message
+
+#### parse\_langchain\_message
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/utils.py#L121)
+
+
+```python
+def parse_langchain_message(message: BaseMessage)
+```
+
+Parses langchain BaseMessage into a choice of openai message
+
+**Arguments**:
+
+- `message` - BaseMessage
+
+**Returns**:
+
+  Dict[str, Any]: Parsed message
+
+#### parse\_langchain\_generation
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/utils.py#L319)
+
+
+```python
+def parse_langchain_generation(generation: Generation)
+```
+
+Parses langchain generation into a format that is accepted by [Maxim](/sdk/python/references/maxim) logger
+
+**Arguments**:
+
+- `generation` - [[Generation](/sdk/python/references/logger/components/generation)](/sdk/python/references/logger/components/generation): Generation to be parsed
+
+**Returns**:
+
+  Dict[str, Any]: Parsed generation
+
+#### parse\_token\_usage\_for\_result
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/utils.py#L341)
+
+
+```python
+def parse_token_usage_for_result(result: LLMResult)
+```
+
+Parses token usage for a given LLM result
+
+#### parse\_langchain\_chat\_result
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/utils.py#L451)
+
+
+```python
+def parse_langchain_chat_result(result: ChatResult) -> Dict[str, Any]
+```
+
+Parses langchain Chat result into a format that is accepted by [Maxim](/sdk/python/references/maxim) logger
+
+**Arguments**:
+
+- `result` - ChatResult: Chat result to be parsed
+
+**Returns**:
+
+  Dict[str, Any]: Parsed Chat result
+
+**Raises**:
+
+- `Exception` - If error parsing Chat result
+
+#### parse\_langchain\_llm\_result
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/utils.py#L486)
+
+
+```python
+def parse_langchain_llm_result(result: LLMResult) -> Dict[str, Any]
+```
+
+Parses langchain LLM result into a format that is accepted by [Maxim](/sdk/python/references/maxim) logger
+
+**Arguments**:
+
+- `result` - LLMResult: LLM result to be parsed
+
+**Returns**:
+
+  Dict[str, Any]: Parsed LLM result
+
+**Raises**:
+
+- `Exception` - If error parsing LLM result
+
+#### parse\_langchain\_messages
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/utils.py#L521)
+
+
+```python
+def parse_langchain_messages(input: Union[List[str], List[List[Any]]],
+                             default_role="user")
+```
+
+Parses langchain messages into messages that are accepted by [Maxim](/sdk/python/references/maxim) logger
+
+**Arguments**:
+
+- `input` - List[str] or List[List[Any]]: List of messages to be parsed
+- `default_role` - str: Default role to assign to messages without a role
+
+**Returns**:
+
+  List[Dict[str, str]]: List of messages with role and content
+
+**Raises**:
+
+- `Exception` - If input is not List[str] or List[List[Any]]
+- `Exception` - If message type is not str or list
+- `Exception` - If message type is not recognized
+

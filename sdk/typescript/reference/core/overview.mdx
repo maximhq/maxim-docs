@@ -1,0 +1,3345 @@
+---
+title: "core"
+sidebar_position: 1
+---
+
+# index
+
+## Enumerations
+
+- [Entity](./enumerations/Entity)
+- [QueryRuleType](./enumerations/QueryRuleType)
+- [VariableType](./enumerations/VariableType)
+
+## Classes
+
+- [BaseContainer](./classes/BaseContainer)
+- [CommitLog](./classes/CommitLog)
+- [CSVFile](./classes/CSVFile)
+- [Error](./classes/Error)
+- [EvaluatableBaseContainer](./classes/EvaluatableBaseContainer)
+- [EvaluateContainer](./classes/EvaluateContainer)
+- [EventEmittingBaseContainer](./classes/EventEmittingBaseContainer)
+- [Generation](./classes/Generation)
+- [LogWriter](./classes/LogWriter)
+- [Maxim](./classes/Maxim)
+- [MaximLogger](./classes/MaximLogger)
+- [MaximLogsAPI](./classes/MaximLogsAPI)
+- [QueryBuilder](./classes/QueryBuilder)
+- [Retrieval](./classes/Retrieval)
+- [Session](./classes/Session)
+- [Span](./classes/Span)
+- [ToolCall](./classes/ToolCall)
+- [Trace](./classes/Trace)
+
+## Interfaces
+
+- [ChatCompletionChoice](./interfaces/ChatCompletionChoice)
+- [ChatCompletionMessage](./interfaces/ChatCompletionMessage)
+- [ChatCompletionResult](./interfaces/ChatCompletionResult)
+- [ChatCompletionToolCall](./interfaces/ChatCompletionToolCall)
+- [CompletionRequest](./interfaces/CompletionRequest)
+- [GenerationError](./interfaces/GenerationError)
+- [Logprobs](./interfaces/Logprobs)
+- [MaximCache](./interfaces/MaximCache)
+- [TestRunLogger](./interfaces/TestRunLogger)
+- [TextCompletionChoice](./interfaces/TextCompletionChoice)
+- [TextCompletionResult](./interfaces/TextCompletionResult)
+- [ToolCallConfig](./interfaces/ToolCallConfig)
+- [ToolCallError](./interfaces/ToolCallError)
+- [ToolCallFunction](./interfaces/ToolCallFunction)
+- [Usage](./interfaces/Usage)
+
+## Type Aliases
+
+### AgentResponse
+
+> **AgentResponse** = `object`
+
+Defined in: [src/lib/models/promptChain.ts:23](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/promptChain.ts#L23)
+
+#### Properties
+
+##### meta
+
+> **meta**: [`AgentResponseMeta`](./overview#agentresponsemeta-1)
+
+Defined in: [src/lib/models/promptChain.ts:25](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/promptChain.ts#L25)
+
+##### response
+
+> **response**: `string`
+
+Defined in: [src/lib/models/promptChain.ts:24](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/promptChain.ts#L24)
+
+***
+
+### AgentResponseMeta
+
+> **AgentResponseMeta** = `object`
+
+Defined in: [src/lib/models/promptChain.ts:16](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/promptChain.ts#L16)
+
+#### Properties
+
+##### boundVariableResponses?
+
+> `optional` **boundVariableResponses**: `object`
+
+Defined in: [src/lib/models/promptChain.ts:19](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/promptChain.ts#L19)
+
+###### Index Signature
+
+\[`key`: `string`\]: `any`
+
+##### cost
+
+> **cost**: `AgentCost`
+
+Defined in: [src/lib/models/promptChain.ts:17](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/promptChain.ts#L17)
+
+##### retrievedContext?
+
+> `optional` **retrievedContext**: `string`
+
+Defined in: [src/lib/models/promptChain.ts:20](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/promptChain.ts#L20)
+
+##### usage
+
+> **usage**: `AgentUsage`
+
+Defined in: [src/lib/models/promptChain.ts:18](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/promptChain.ts#L18)
+
+***
+
+### Attachment
+
+> **Attachment** = [`FileAttachment`](./overview#fileattachment) \| [`FileDataAttachment`](./overview#filedataattachment) \| [`UrlAttachment`](./overview#urlattachment)
+
+Defined in: [src/lib/logger/components/attachment.ts:60](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/attachment.ts#L60)
+
+Discriminated union type representing all possible attachment types.
+
+***
+
+### BaseAttachmentProps
+
+> **BaseAttachmentProps** = `object`
+
+Defined in: [src/lib/logger/components/attachment.ts:9](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/attachment.ts#L9)
+
+Base properties shared by all attachment types in the Maxim logging system.
+
+#### Properties
+
+##### id
+
+> **id**: `string`
+
+Defined in: [src/lib/logger/components/attachment.ts:10](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/attachment.ts#L10)
+
+##### metadata?
+
+> `optional` **metadata**: `Record`\<`string`, `string`\>
+
+Defined in: [src/lib/logger/components/attachment.ts:15](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/attachment.ts#L15)
+
+##### mimeType?
+
+> `optional` **mimeType**: `string`
+
+Defined in: [src/lib/logger/components/attachment.ts:12](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/attachment.ts#L12)
+
+##### name?
+
+> `optional` **name**: `string`
+
+Defined in: [src/lib/logger/components/attachment.ts:11](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/attachment.ts#L11)
+
+##### size?
+
+> `optional` **size**: `number`
+
+Defined in: [src/lib/logger/components/attachment.ts:13](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/attachment.ts#L13)
+
+##### tags?
+
+> `optional` **tags**: `Record`\<`string`, `string`\>
+
+Defined in: [src/lib/logger/components/attachment.ts:14](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/attachment.ts#L14)
+
+***
+
+### BaseConfig
+
+> **BaseConfig** = `object`
+
+Defined in: [src/lib/logger/components/base.ts:9](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L9)
+
+Configuration object for base container initialization.
+
+#### Properties
+
+##### id
+
+> **id**: `string`
+
+Defined in: [src/lib/logger/components/base.ts:10](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L10)
+
+##### name?
+
+> `optional` **name**: `string`
+
+Defined in: [src/lib/logger/components/base.ts:12](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L12)
+
+##### spanId?
+
+> `optional` **spanId**: `string`
+
+Defined in: [src/lib/logger/components/base.ts:11](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L11)
+
+##### tags?
+
+> `optional` **tags**: `Record`\<`string`, `string`\>
+
+Defined in: [src/lib/logger/components/base.ts:13](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/base.ts#L13)
+
+***
+
+### CacheEntry
+
+> **CacheEntry** = [`PromptVersionsAndRules`](./overview#promptversionsandrules)
+
+Defined in: [src/lib/models/cache.ts:12](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/cache.ts#L12)
+
+Type alias representing an entry stored in the Maxim cache.
+
+Currently aliases PromptVersionsAndRules, which contains prompt configurations,
+deployment rules, and version information. This type may be extended in the
+future to support additional cache entry types.
+
+#### See
+
+[PromptVersionsAndRules](./overview#promptversionsandrules) For the full structure of cached prompt data
+
+***
+
+### Choice
+
+> **Choice** = `object`
+
+Defined in: [src/lib/models/prompt.ts:163](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L163)
+
+Represents a single choice/response option from an AI model completion.
+
+Contains the generated message, its position in the response array, and
+the reason why generation finished (e.g., natural stop, length limit).
+
+#### Example
+
+```ts
+const choice: Choice = {
+  index: 0,
+  message: {
+    role: "assistant",
+    content: "The weather in San Francisco is sunny and 72°F."
+  },
+  finishReason: "stop"
+};
+```
+
+#### Properties
+
+##### finishReason
+
+> **finishReason**: `string`
+
+Defined in: [src/lib/models/prompt.ts:166](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L166)
+
+Reason generation stopped ("stop", "length", "function_call", "tool_calls", etc.)
+
+##### index
+
+> **index**: `number`
+
+Defined in: [src/lib/models/prompt.ts:164](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L164)
+
+Zero-based index of this choice in the response array
+
+##### message
+
+> **message**: [`ChatCompletionMessage`](./interfaces/ChatCompletionMessage)
+
+Defined in: [src/lib/models/prompt.ts:165](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L165)
+
+The generated assistant message
+
+***
+
+### ColumnStructure
+
+> **ColumnStructure** = `Record`\<`string`, `number`\>
+
+Defined in: [src/lib/utils/csvParser.ts:64](https://github.com/maximhq/maxim-js/blob/main/src/lib/utils/csvParser.ts#L64)
+
+Type representing the structure of columns in a CSV file.
+Maps column names to their zero-based index positions.
+
+#### Example
+
+```ts
+const structure: ColumnStructure = {
+  "firstName": 0,
+  "lastName": 1,
+  "email": 2,
+  "age": 3
+};
+```
+
+***
+
+### CombinedLocalEvaluatorType\<T, U\>
+
+> **CombinedLocalEvaluatorType**\<`T`, `U`\> = `object`
+
+Defined in: [src/lib/models/evaluator.ts:31](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/evaluator.ts#L31)
+
+#### Type Parameters
+
+##### T
+
+`T` *extends* [`DataStructure`](./overview#datastructure) \| `undefined`
+
+##### U
+
+`U` *extends* `Record`\<`string`, [`PassFailCriteriaType`](./overview#passfailcriteriatype)\>
+
+#### Properties
+
+##### evaluationFunction()
+
+> **evaluationFunction**: (`result`, `data`) => `Promise`\<`Record`\<keyof `U`, `LocalEvaluatorReturnType`\>\> \| `Record`\<keyof `U`, `LocalEvaluatorReturnType`\>
+
+Defined in: [src/lib/models/evaluator.ts:33](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/evaluator.ts#L33)
+
+###### Parameters
+
+###### result
+
+###### contextToEvaluate?
+
+`string` \| `string`[]
+
+###### output
+
+`string`
+
+###### data
+
+[`Data`](./overview#data)\<`T`\>
+
+###### Returns
+
+`Promise`\<`Record`\<keyof `U`, `LocalEvaluatorReturnType`\>\> \| `Record`\<keyof `U`, `LocalEvaluatorReturnType`\>
+
+##### names
+
+> **names**: keyof `U`[]
+
+Defined in: [src/lib/models/evaluator.ts:32](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/evaluator.ts#L32)
+
+##### passFailCriteria
+
+> **passFailCriteria**: `U`
+
+Defined in: [src/lib/models/evaluator.ts:37](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/evaluator.ts#L37)
+
+***
+
+### CompletionRequestContent
+
+> **CompletionRequestContent** = [`CompletionRequestTextContent`](./overview#completionrequesttextcontent) \| [`CompletionRequestImageUrlContent`](./overview#completionrequestimageurlcontent)
+
+Defined in: [src/lib/models/prompt.ts:80](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L80)
+
+***
+
+### CompletionRequestImageUrlContent
+
+> **CompletionRequestImageUrlContent** = `object`
+
+Defined in: [src/lib/models/prompt.ts:72](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L72)
+
+Represents an image URL with optional detail level for vision-enabled models.
+
+#### Properties
+
+##### image\_url
+
+> **image\_url**: `object`
+
+Defined in: [src/lib/models/prompt.ts:74](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L74)
+
+Image URL configuration
+
+###### detail?
+
+> `optional` **detail**: `string`
+
+###### url
+
+> **url**: `string`
+
+##### type
+
+> **type**: `"image_url"`
+
+Defined in: [src/lib/models/prompt.ts:73](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L73)
+
+Content type identifier
+
+***
+
+### CompletionRequestTextContent
+
+> **CompletionRequestTextContent** = `object`
+
+Defined in: [src/lib/models/prompt.ts:59](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L59)
+
+#### Properties
+
+##### text
+
+> **text**: `string`
+
+Defined in: [src/lib/models/prompt.ts:61](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L61)
+
+##### type
+
+> **type**: `"text"`
+
+Defined in: [src/lib/models/prompt.ts:60](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L60)
+
+***
+
+### Config
+
+> **Config** = `object`
+
+Defined in: [src/lib/maxim.ts:26](https://github.com/maximhq/maxim-js/blob/main/src/lib/maxim.ts#L26)
+
+Configuration object for initializing the Maxim SDK.
+
+#### Properties
+
+##### apiKey
+
+> **apiKey**: `string`
+
+Defined in: [src/lib/maxim.ts:38](https://github.com/maximhq/maxim-js/blob/main/src/lib/maxim.ts#L38)
+
+API key for authenticating requests to the Maxim API.
+Required for all API calls.
+
+###### See
+
+https://app.getmaxim.ai/workspace?redirect=/settings/api-keys to generate your API key
+
+##### baseUrl?
+
+> `optional` **baseUrl**: `string`
+
+Defined in: [src/lib/maxim.ts:31](https://github.com/maximhq/maxim-js/blob/main/src/lib/maxim.ts#L31)
+
+Base URL for the Maxim API.
+
+###### Default
+
+```ts
+"https://app.getmaxim.ai"
+```
+
+##### cache?
+
+> `optional` **cache**: [`MaximCache`](./interfaces/MaximCache)
+
+Defined in: [src/lib/maxim.ts:51](https://github.com/maximhq/maxim-js/blob/main/src/lib/maxim.ts#L51)
+
+Custom cache implementation for storing and retrieving data.
+
+###### Default
+
+```ts
+InMemoryCache - Uses a simple in-memory caching mechanism
+```
+
+##### debug?
+
+> `optional` **debug**: `boolean`
+
+Defined in: [src/lib/maxim.ts:58](https://github.com/maximhq/maxim-js/blob/main/src/lib/maxim.ts#L58)
+
+Enable debug mode for additional logging and troubleshooting information.
+Useful during development and integration.
+
+###### Default
+
+```ts
+false
+```
+
+##### promptManagement?
+
+> `optional` **promptManagement**: `boolean`
+
+Defined in: [src/lib/maxim.ts:45](https://github.com/maximhq/maxim-js/blob/main/src/lib/maxim.ts#L45)
+
+Enable prompt management features.
+When enabled, allows synchronization of prompts, prompt chains, and folders from Maxim.
+
+###### Default
+
+```ts
+false
+```
+
+##### raiseExceptions?
+
+> `optional` **raiseExceptions**: `boolean`
+
+Defined in: [src/lib/maxim.ts:64](https://github.com/maximhq/maxim-js/blob/main/src/lib/maxim.ts#L64)
+
+Raise exceptions instead of logging them.
+
+###### Default
+
+```ts
+false
+```
+
+***
+
+### ContextToEvaluateColumn
+
+> **ContextToEvaluateColumn** = `"CONTEXT_TO_EVALUATE"`
+
+Defined in: [src/lib/models/dataset.ts:82](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/dataset.ts#L82)
+
+***
+
+### CSVParseOptions
+
+> **CSVParseOptions** = `object`
+
+Defined in: [src/lib/utils/csvParser.ts:30](https://github.com/maximhq/maxim-js/blob/main/src/lib/utils/csvParser.ts#L30)
+
+Configuration options for parsing CSV files.
+
+#### Examples
+
+```ts
+// Default CSV parsing
+const options: CSVParseOptions = {
+  delimiter: ",",
+  hasHeader: true,
+  quoteChar: '"',
+  escapeChar: '"'
+};
+```
+
+```ts
+// Tab-separated values without headers
+const tsvOptions: CSVParseOptions = {
+  delimiter: "\t",
+  hasHeader: false,
+  quoteChar: "'",
+  escapeChar: "\\"
+};
+```
+
+#### Properties
+
+##### delimiter?
+
+> `optional` **delimiter**: `string`
+
+Defined in: [src/lib/utils/csvParser.ts:31](https://github.com/maximhq/maxim-js/blob/main/src/lib/utils/csvParser.ts#L31)
+
+Character used to separate fields in the CSV
+
+##### escapeChar?
+
+> `optional` **escapeChar**: `string`
+
+Defined in: [src/lib/utils/csvParser.ts:34](https://github.com/maximhq/maxim-js/blob/main/src/lib/utils/csvParser.ts#L34)
+
+Character used to escape quote characters within quoted fields
+
+##### hasHeader?
+
+> `optional` **hasHeader**: `boolean`
+
+Defined in: [src/lib/utils/csvParser.ts:32](https://github.com/maximhq/maxim-js/blob/main/src/lib/utils/csvParser.ts#L32)
+
+Whether the first row contains column headers
+
+##### quoteChar?
+
+> `optional` **quoteChar**: `string`
+
+Defined in: [src/lib/utils/csvParser.ts:33](https://github.com/maximhq/maxim-js/blob/main/src/lib/utils/csvParser.ts#L33)
+
+Character used to quote fields containing special characters
+
+***
+
+### CSVWriteOptions
+
+> **CSVWriteOptions** = `object`
+
+Defined in: [src/lib/utils/csvParser.ts:45](https://github.com/maximhq/maxim-js/blob/main/src/lib/utils/csvParser.ts#L45)
+
+Configuration options for writing CSV files.
+
+#### Properties
+
+##### delimiter?
+
+> `optional` **delimiter**: `string`
+
+Defined in: [src/lib/utils/csvParser.ts:46](https://github.com/maximhq/maxim-js/blob/main/src/lib/utils/csvParser.ts#L46)
+
+Character used to separate fields
+
+##### escapeChar?
+
+> `optional` **escapeChar**: `string`
+
+Defined in: [src/lib/utils/csvParser.ts:49](https://github.com/maximhq/maxim-js/blob/main/src/lib/utils/csvParser.ts#L49)
+
+Character used to escape quote characters within quoted fields
+
+##### includeHeader?
+
+> `optional` **includeHeader**: `boolean`
+
+Defined in: [src/lib/utils/csvParser.ts:47](https://github.com/maximhq/maxim-js/blob/main/src/lib/utils/csvParser.ts#L47)
+
+Whether to include column headers in the output
+
+##### quoteChar?
+
+> `optional` **quoteChar**: `string`
+
+Defined in: [src/lib/utils/csvParser.ts:48](https://github.com/maximhq/maxim-js/blob/main/src/lib/utils/csvParser.ts#L48)
+
+Character used to quote fields containing special characters
+
+***
+
+### Data\<T\>
+
+> **Data**\<`T`\> = `T` *extends* [`DataStructure`](./overview#datastructure) ? \{ \[K in keyof T as (undefined \| null) extends MapDataStructureToValue\<T\[K\]\> ? never : K\]: MapDataStructureToValue\<T\[K\]\> \} & \{ \[K in keyof T as (undefined \| null) extends MapDataStructureToValue\<T\[K\]\> ? K : never\]?: MapDataStructureToValue\<T\[K\]\> \} : `Record`\<`string`, [`MapDataStructureToValue`](./overview#mapdatastructuretovalue)\<[`DataStructure`](./overview#datastructure)\[`string`\]\> \| `undefined`\>
+
+Defined in: [src/lib/models/dataset.ts:131](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/dataset.ts#L131)
+
+Type representing a data entry that conforms to a specific data structure.
+
+Provides type-safe access to dataset columns based on the defined data structure.
+The type automatically handles required vs optional fields based on column types,
+with nullable variable columns being optional and others being required.
+
+#### Type Parameters
+
+##### T
+
+`T` *extends* [`DataStructure`](./overview#datastructure) \| `undefined`
+
+The data structure type defining column names and types
+
+#### Example
+
+```ts
+import { Data, createDataStructure } from '@maximai/maxim-js';
+
+// Define a data structure
+const structure = createDataStructure({
+  userInput: "INPUT",
+  expectedResponse: "EXPECTED_OUTPUT",
+  context: "CONTEXT_TO_EVALUATE",
+  metadata: "NULLABLE_VARIABLE"
+});
+
+// Data type is automatically inferred
+const dataEntry: Data<typeof structure> = {
+  userInput: "What is the weather?",         // Required
+  expectedResponse: "Sunny, 72°F",           // Required
+  context: ["weather data", "location"],     // Required
+  metadata: undefined                        // Optional (nullable)
+};
+```
+
+***
+
+### DatasetEntry
+
+> **DatasetEntry** = `object`
+
+Defined in: [src/lib/models/dataset.ts:42](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/dataset.ts#L42)
+
+#### Properties
+
+##### context?
+
+> `optional` **context**: [`Variable`](./overview#variable)
+
+Defined in: [src/lib/models/dataset.ts:44](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/dataset.ts#L44)
+
+##### expectedOutput?
+
+> `optional` **expectedOutput**: [`Variable`](./overview#variable)
+
+Defined in: [src/lib/models/dataset.ts:45](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/dataset.ts#L45)
+
+##### input
+
+> **input**: [`Variable`](./overview#variable)
+
+Defined in: [src/lib/models/dataset.ts:43](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/dataset.ts#L43)
+
+***
+
+### DataStructure
+
+> **DataStructure** = `Record`\<`string`, [`InputColumn`](./overview#inputcolumn) \| [`ExpectedOutputColumn`](./overview#expectedoutputcolumn) \| [`ContextToEvaluateColumn`](./overview#contexttoevaluatecolumn) \| [`VariableColumn`](./overview#variablecolumn) \| [`NullableVariableColumn`](./overview#nullablevariablecolumn)\>
+
+Defined in: [src/lib/models/dataset.ts:87](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/dataset.ts#L87)
+
+***
+
+### DataValue\<T\>
+
+> **DataValue**\<`T`\> = `T` *extends* [`DataStructure`](./overview#datastructure) ? [`Data`](./overview#data)\<`T`\>[] \| `string` \| [`CSVFile`](./classes/CSVFile)\<`Record`\<keyof `T`, `number`\>\> \| (`page`) => `Promise`\<[`Data`](./overview#data)\<`T`\>[] \| `null` \| `undefined`\> \| [`Data`](./overview#data)\<`T`\>[] \| `null` \| `undefined` : `string`
+
+Defined in: [src/lib/models/dataset.ts:137](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/dataset.ts#L137)
+
+#### Type Parameters
+
+##### T
+
+`T` *extends* [`DataStructure`](./overview#datastructure) \| `undefined`
+
+***
+
+### DeploymentVersionDeploymentConfig
+
+> **DeploymentVersionDeploymentConfig** = `object`
+
+Defined in: [src/lib/models/deployment.ts:27](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/deployment.ts#L27)
+
+#### Index Signature
+
+\[`key`: `string`\]: [`VersionSpecificDeploymentConfig`](./overview#versionspecificdeploymentconfig)[]
+
+***
+
+### ErrorConfig
+
+> **ErrorConfig** = `object`
+
+Defined in: [src/lib/logger/components/error.ts:8](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/error.ts#L8)
+
+Configuration object for error.
+
+#### Properties
+
+##### code?
+
+> `optional` **code**: `string`
+
+Defined in: [src/lib/logger/components/error.ts:11](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/error.ts#L11)
+
+##### id
+
+> **id**: `string`
+
+Defined in: [src/lib/logger/components/error.ts:9](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/error.ts#L9)
+
+##### message
+
+> **message**: `string`
+
+Defined in: [src/lib/logger/components/error.ts:10](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/error.ts#L10)
+
+##### metadata?
+
+> `optional` **metadata**: `Record`\<`string`, `any`\>
+
+Defined in: [src/lib/logger/components/error.ts:15](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/error.ts#L15)
+
+##### name?
+
+> `optional` **name**: `string`
+
+Defined in: [src/lib/logger/components/error.ts:12](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/error.ts#L12)
+
+##### tags?
+
+> `optional` **tags**: `Record`\<`string`, `string`\>
+
+Defined in: [src/lib/logger/components/error.ts:14](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/error.ts#L14)
+
+##### type?
+
+> `optional` **type**: `string`
+
+Defined in: [src/lib/logger/components/error.ts:13](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/error.ts#L13)
+
+***
+
+### ExpectedOutputColumn
+
+> **ExpectedOutputColumn** = `"EXPECTED_OUTPUT"`
+
+Defined in: [src/lib/models/dataset.ts:81](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/dataset.ts#L81)
+
+***
+
+### FileAttachment
+
+> **FileAttachment** = [`BaseAttachmentProps`](./overview#baseattachmentprops) & `object`
+
+Defined in: [src/lib/logger/components/attachment.ts:21](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/attachment.ts#L21)
+
+File attachment type for referencing files on the local filesystem.
+
+#### Type declaration
+
+##### path
+
+> **path**: `string`
+
+##### type
+
+> **type**: `"file"`
+
+***
+
+### FileDataAttachment
+
+> **FileDataAttachment** = [`BaseAttachmentProps`](./overview#baseattachmentprops) & `object`
+
+Defined in: [src/lib/logger/components/attachment.ts:34](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/attachment.ts#L34)
+
+File data attachment type for directly embedding binary data.
+
+#### Type declaration
+
+##### data
+
+> **data**: `Buffer`
+
+##### type
+
+> **type**: `"fileData"`
+
+***
+
+### Folder
+
+> **Folder** = `object`
+
+Defined in: [src/lib/models/folder.ts:3](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/folder.ts#L3)
+
+#### Properties
+
+##### id
+
+> **id**: `string`
+
+Defined in: [src/lib/models/folder.ts:4](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/folder.ts#L4)
+
+##### name
+
+> **name**: `string`
+
+Defined in: [src/lib/models/folder.ts:5](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/folder.ts#L5)
+
+##### parentFolderId
+
+> **parentFolderId**: `string`
+
+Defined in: [src/lib/models/folder.ts:6](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/folder.ts#L6)
+
+##### tags
+
+> **tags**: [`PromptTags`](./overview#prompttags-1)
+
+Defined in: [src/lib/models/folder.ts:7](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/folder.ts#L7)
+
+***
+
+### GenerationConfig
+
+> **GenerationConfig** = `object`
+
+Defined in: [src/lib/logger/components/generation.ts:76](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L76)
+
+Configuration object for generation.
+
+#### Properties
+
+##### id
+
+> **id**: `string`
+
+Defined in: [src/lib/logger/components/generation.ts:77](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L77)
+
+##### maximPromptId?
+
+> `optional` **maximPromptId**: `string`
+
+Defined in: [src/lib/logger/components/generation.ts:81](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L81)
+
+##### messages
+
+> **messages**: ([`CompletionRequest`](./interfaces/CompletionRequest) \| [`ChatCompletionMessage`](./interfaces/ChatCompletionMessage))[]
+
+Defined in: [src/lib/logger/components/generation.ts:82](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L82)
+
+##### model
+
+> **model**: `string`
+
+Defined in: [src/lib/logger/components/generation.ts:80](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L80)
+
+##### modelParameters
+
+> **modelParameters**: `Record`\<`string`, `any`\>
+
+Defined in: [src/lib/logger/components/generation.ts:83](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L83)
+
+##### name?
+
+> `optional` **name**: `string`
+
+Defined in: [src/lib/logger/components/generation.ts:78](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L78)
+
+##### provider
+
+> **provider**: `"openai"` \| `"bedrock"` \| `"anthropic"` \| `"huggingface"` \| `"azure"` \| `"together"` \| `"groq"` \| `"google"`
+
+Defined in: [src/lib/logger/components/generation.ts:79](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L79)
+
+##### tags?
+
+> `optional` **tags**: `Record`\<`string`, `string`\>
+
+Defined in: [src/lib/logger/components/generation.ts:84](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/generation.ts#L84)
+
+***
+
+### HumanEvaluationConfig
+
+> **HumanEvaluationConfig** = `object`
+
+Defined in: [src/lib/models/evaluator.ts:98](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/evaluator.ts#L98)
+
+#### Properties
+
+##### emails
+
+> **emails**: `string`[]
+
+Defined in: [src/lib/models/evaluator.ts:99](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/evaluator.ts#L99)
+
+##### instructions?
+
+> `optional` **instructions**: `string`
+
+Defined in: [src/lib/models/evaluator.ts:100](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/evaluator.ts#L100)
+
+***
+
+### ImageUrl
+
+> **ImageUrl** = [`CompletionRequestImageUrlContent`](./overview#completionrequestimageurlcontent)\[`"image_url"`\]
+
+Defined in: [src/lib/models/prompt.ts:142](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L142)
+
+Type alias for image URL configuration used in vision requests.
+
+#### See
+
+[CompletionRequestImageUrlContent](./overview#completionrequestimageurlcontent) For the full image content structure
+
+***
+
+### InputColumn
+
+> **InputColumn** = `"INPUT"`
+
+Defined in: [src/lib/models/dataset.ts:80](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/dataset.ts#L80)
+
+***
+
+### LocalEvaluationResult
+
+> **LocalEvaluationResult** = `object`
+
+Defined in: [src/lib/models/evaluator.ts:92](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/evaluator.ts#L92)
+
+Result object containing the outcome of a local evaluator execution.
+
+Represents the complete evaluation result from running a local evaluator
+on a single test run entry, including the score, reasoning, evaluator name,
+and the pass/fail criteria used for assessment.
+
+#### Examples
+
+```ts
+// Example result from a custom evaluator
+const evaluationResult: LocalEvaluationResult = {
+  result: {
+    score: 0.85,
+    reasoning: "Response demonstrates good accuracy with minor factual errors"
+  },
+  name: "accuracy-checker",
+  passFailCriteria: {
+    onEachEntry: {
+      scoreShouldBe: ">=",
+      value: 0.7
+    },
+    forTestrunOverall: {
+      overallShouldBe: ">=",
+      value: 80,
+      for: "percentageOfPassedResults"
+    }
+  }
+};
+```
+
+```ts
+// Boolean evaluation result
+const booleanResult: LocalEvaluationResult = {
+  result: {
+    score: true,
+    reasoning: "Output contains required keywords"
+  },
+  name: "keyword-validator",
+  passFailCriteria: {
+    onEachEntry: {
+      scoreShouldBe: "=",
+      value: true
+    },
+    forTestrunOverall: {
+      overallShouldBe: ">=",
+      value: 90,
+      for: "percentageOfPassedResults"
+    }
+  }
+};
+```
+
+#### Properties
+
+##### name
+
+> **name**: `string`
+
+Defined in: [src/lib/models/evaluator.ts:94](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/evaluator.ts#L94)
+
+The name of the evaluator that produced this result
+
+##### passFailCriteria
+
+> **passFailCriteria**: [`PassFailCriteriaType`](./overview#passfailcriteriatype)
+
+Defined in: [src/lib/models/evaluator.ts:95](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/evaluator.ts#L95)
+
+The criteria used to determine pass/fail status
+
+##### result
+
+> **result**: `LocalEvaluatorReturnType`
+
+Defined in: [src/lib/models/evaluator.ts:93](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/evaluator.ts#L93)
+
+The evaluation result containing score and optional reasoning
+
+***
+
+### LocalEvaluatorType\<T\>
+
+> **LocalEvaluatorType**\<`T`\> = `object`
+
+Defined in: [src/lib/models/evaluator.ts:22](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/evaluator.ts#L22)
+
+#### Type Parameters
+
+##### T
+
+`T` *extends* [`DataStructure`](./overview#datastructure) \| `undefined` = `undefined`
+
+#### Properties
+
+##### evaluationFunction()
+
+> **evaluationFunction**: (`result`, `data`) => `Promise`\<`LocalEvaluatorReturnType`\> \| `LocalEvaluatorReturnType`
+
+Defined in: [src/lib/models/evaluator.ts:24](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/evaluator.ts#L24)
+
+###### Parameters
+
+###### result
+
+###### contextToEvaluate?
+
+`string` \| `string`[]
+
+###### output
+
+`string`
+
+###### data
+
+[`Data`](./overview#data)\<`T`\>
+
+###### Returns
+
+`Promise`\<`LocalEvaluatorReturnType`\> \| `LocalEvaluatorReturnType`
+
+##### name
+
+> **name**: `string`
+
+Defined in: [src/lib/models/evaluator.ts:23](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/evaluator.ts#L23)
+
+##### passFailCriteria
+
+> **passFailCriteria**: [`PassFailCriteriaType`](./overview#passfailcriteriatype)
+
+Defined in: [src/lib/models/evaluator.ts:28](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/evaluator.ts#L28)
+
+***
+
+### LoggerConfig
+
+> **LoggerConfig** = `object`
+
+Defined in: [src/lib/logger/logger.ts:17](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/logger.ts#L17)
+
+Configuration object for initializing a MaximLogger instance.
+
+#### Properties
+
+##### autoFlush?
+
+> `optional` **autoFlush**: `boolean`
+
+Defined in: [src/lib/logger/logger.ts:19](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/logger.ts#L19)
+
+##### flushIntervalSeconds?
+
+> `optional` **flushIntervalSeconds**: `number`
+
+Defined in: [src/lib/logger/logger.ts:20](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/logger.ts#L20)
+
+##### id
+
+> **id**: `string`
+
+Defined in: [src/lib/logger/logger.ts:18](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/logger.ts#L18)
+
+***
+
+### LogWriterConfig
+
+> **LogWriterConfig** = `object`
+
+Defined in: [src/lib/logger/writer.ts:19](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/writer.ts#L19)
+
+#### Properties
+
+##### apiKey
+
+> **apiKey**: `string`
+
+Defined in: [src/lib/logger/writer.ts:21](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/writer.ts#L21)
+
+##### autoFlush?
+
+> `optional` **autoFlush**: `boolean`
+
+Defined in: [src/lib/logger/writer.ts:23](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/writer.ts#L23)
+
+##### baseUrl
+
+> **baseUrl**: `string`
+
+Defined in: [src/lib/logger/writer.ts:20](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/writer.ts#L20)
+
+##### flushInterval?
+
+> `optional` **flushInterval**: `number`
+
+Defined in: [src/lib/logger/writer.ts:24](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/writer.ts#L24)
+
+##### isDebug?
+
+> `optional` **isDebug**: `boolean`
+
+Defined in: [src/lib/logger/writer.ts:25](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/writer.ts#L25)
+
+##### maxInMemoryLogs?
+
+> `optional` **maxInMemoryLogs**: `number`
+
+Defined in: [src/lib/logger/writer.ts:26](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/writer.ts#L26)
+
+##### repositoryId
+
+> **repositoryId**: `string`
+
+Defined in: [src/lib/logger/writer.ts:22](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/writer.ts#L22)
+
+***
+
+### MapDataStructureToValue\<T\>
+
+> **MapDataStructureToValue**\<`T`\> = `T` *extends* [`InputColumn`](./overview#inputcolumn) ? `string` : `T` *extends* [`ExpectedOutputColumn`](./overview#expectedoutputcolumn) ? `string` : `T` *extends* [`ContextToEvaluateColumn`](./overview#contexttoevaluatecolumn) ? `string` \| `string`[] : `T` *extends* [`VariableColumn`](./overview#variablecolumn) ? `string` \| `string`[] : `T` *extends* [`NullableVariableColumn`](./overview#nullablevariablecolumn) ? `string` \| `string`[] \| `undefined` \| `null` : `never`
+
+Defined in: [src/lib/models/dataset.ts:92](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/dataset.ts#L92)
+
+#### Type Parameters
+
+##### T
+
+`T`
+
+***
+
+### NullableVariableColumn
+
+> **NullableVariableColumn** = `"NULLABLE_VARIABLE"`
+
+Defined in: [src/lib/models/dataset.ts:84](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/dataset.ts#L84)
+
+***
+
+### OperatorType
+
+> **OperatorType** = `">="` \| `"<"` \| `"<="` \| `">"` \| `"="` \| `"!="`
+
+Defined in: [src/lib/models/evaluator.ts:8](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/evaluator.ts#L8)
+
+***
+
+### PassFailCriteriaType
+
+> **PassFailCriteriaType** = `object`
+
+Defined in: [src/lib/models/evaluator.ts:9](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/evaluator.ts#L9)
+
+#### Properties
+
+##### forTestrunOverall
+
+> **forTestrunOverall**: `object`
+
+Defined in: [src/lib/models/evaluator.ts:19](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/evaluator.ts#L19)
+
+###### for
+
+> **for**: `"average"` \| `"percentageOfPassedResults"`
+
+###### overallShouldBe
+
+> **overallShouldBe**: [`OperatorType`](./overview#operatortype)
+
+###### value
+
+> **value**: `number`
+
+##### onEachEntry
+
+> **onEachEntry**: \{ `scoreShouldBe`: `"="` \| `"!="`; `value`: `boolean`; \} \| \{ `scoreShouldBe`: [`OperatorType`](./overview#operatortype); `value`: `number`; \}
+
+Defined in: [src/lib/models/evaluator.ts:10](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/evaluator.ts#L10)
+
+***
+
+### Prompt
+
+> **Prompt** = `object`
+
+Defined in: [src/lib/models/prompt.ts:230](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L230)
+
+#### Properties
+
+##### messages
+
+> **messages**: ([`CompletionRequest`](./interfaces/CompletionRequest) \| [`ChatCompletionMessage`](./interfaces/ChatCompletionMessage))[]
+
+Defined in: [src/lib/models/prompt.ts:234](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L234)
+
+##### model
+
+> **model**: `string`
+
+Defined in: [src/lib/models/prompt.ts:236](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L236)
+
+##### modelParameters
+
+> **modelParameters**: `object`
+
+Defined in: [src/lib/models/prompt.ts:235](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L235)
+
+###### Index Signature
+
+\[`key`: `string`\]: `any`
+
+##### promptId
+
+> **promptId**: `string`
+
+Defined in: [src/lib/models/prompt.ts:231](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L231)
+
+##### provider
+
+> **provider**: `string`
+
+Defined in: [src/lib/models/prompt.ts:237](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L237)
+
+##### run()
+
+> **run**: (`input`, `options?`) => `Promise`\<[`PromptResponse`](./overview#promptresponse)\>
+
+Defined in: [src/lib/models/prompt.ts:239](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L239)
+
+###### Parameters
+
+###### input
+
+`string`
+
+###### options?
+
+###### imageUrls?
+
+[`ImageUrl`](./overview#imageurl)[]
+
+###### variables?
+
+\{[`key`: `string`]: `string`; \}
+
+###### Returns
+
+`Promise`\<[`PromptResponse`](./overview#promptresponse)\>
+
+##### tags
+
+> **tags**: [`PromptTags`](./overview#prompttags-1)
+
+Defined in: [src/lib/models/prompt.ts:238](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L238)
+
+##### version
+
+> **version**: `number`
+
+Defined in: [src/lib/models/prompt.ts:232](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L232)
+
+##### versionId
+
+> **versionId**: `string`
+
+Defined in: [src/lib/models/prompt.ts:233](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L233)
+
+***
+
+### PromptChain
+
+> **PromptChain** = `object`
+
+Defined in: [src/lib/models/promptChain.ts:28](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/promptChain.ts#L28)
+
+#### Properties
+
+##### nodes
+
+> **nodes**: `object` & [`PromptNode`](./overview#promptnode)[]
+
+Defined in: [src/lib/models/promptChain.ts:32](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/promptChain.ts#L32)
+
+##### promptChainId
+
+> **promptChainId**: `string`
+
+Defined in: [src/lib/models/promptChain.ts:29](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/promptChain.ts#L29)
+
+##### run()
+
+> **run**: (`input`, `options?`) => `Promise`\<[`AgentResponse`](./overview#agentresponse)\>
+
+Defined in: [src/lib/models/promptChain.ts:33](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/promptChain.ts#L33)
+
+###### Parameters
+
+###### input
+
+`string`
+
+###### options?
+
+###### variables?
+
+\{[`key`: `string`]: `string`; \}
+
+###### Returns
+
+`Promise`\<[`AgentResponse`](./overview#agentresponse)\>
+
+##### version
+
+> **version**: `number`
+
+Defined in: [src/lib/models/promptChain.ts:30](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/promptChain.ts#L30)
+
+##### versionId
+
+> **versionId**: `string`
+
+Defined in: [src/lib/models/promptChain.ts:31](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/promptChain.ts#L31)
+
+***
+
+### PromptNode
+
+> **PromptNode** = `object`
+
+Defined in: [src/lib/models/promptChain.ts:36](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/promptChain.ts#L36)
+
+#### Properties
+
+##### prompt
+
+> **prompt**: [`Prompt`](./overview#prompt)
+
+Defined in: [src/lib/models/promptChain.ts:37](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/promptChain.ts#L37)
+
+***
+
+### PromptResponse
+
+> **PromptResponse** = `object`
+
+Defined in: [src/lib/models/prompt.ts:221](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L221)
+
+Complete response object from a prompt execution.
+
+Contains the full response from an AI model including all generated choices,
+usage statistics, model information, and configuration parameters used.
+This is the primary response format returned by prompt execution methods.
+
+#### Examples
+
+```ts
+// Typical prompt response
+const response: PromptResponse = {
+  id: "chatcmpl-123",
+  provider: "openai",
+  model: "gpt-4",
+  choices: [{
+    index: 0,
+    message: {
+      role: "assistant",
+      content: "Hello! How can I help you today?"
+    },
+    finishReason: "stop"
+  }],
+  usage: {
+    promptTokens: 12,
+    completionTokens: 9,
+    totalTokens: 21,
+    latency: 1200
+  },
+  modelParams: {
+    temperature: 0.7,
+    max_tokens: 1000
+  }
+};
+```
+
+```ts
+// Using the response
+const content = response.choices[0].message.content;
+console.log(`Generated: ${content}`);
+console.log(`Used ${response.usage.totalTokens} tokens`);
+```
+
+#### Properties
+
+##### choices
+
+> **choices**: [`Choice`](./overview#choice)[]
+
+Defined in: [src/lib/models/prompt.ts:225](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L225)
+
+Array of generated response choices
+
+##### id
+
+> **id**: `string`
+
+Defined in: [src/lib/models/prompt.ts:222](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L222)
+
+Unique identifier for this response
+
+##### model
+
+> **model**: `string`
+
+Defined in: [src/lib/models/prompt.ts:224](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L224)
+
+Specific model used (e.g., "gpt-4", "claude-3-sonnet")
+
+##### modelParams
+
+> **modelParams**: `object`
+
+Defined in: [src/lib/models/prompt.ts:227](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L227)
+
+Model parameters used for generation
+
+###### Index Signature
+
+\[`key`: `string`\]: `any`
+
+##### provider
+
+> **provider**: `string`
+
+Defined in: [src/lib/models/prompt.ts:223](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L223)
+
+AI provider name (e.g., "openai", "anthropic", "azure")
+
+##### usage
+
+> **usage**: [`PromptUsage`](./overview#promptusage)
+
+Defined in: [src/lib/models/prompt.ts:226](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L226)
+
+Token usage and latency information
+
+***
+
+### PromptTags
+
+> **PromptTags** = `object`
+
+Defined in: [src/lib/models/prompt.ts:3](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L3)
+
+#### Index Signature
+
+\[`key`: `string`\]: `undefined` \| `string` \| `number` \| `boolean`
+
+***
+
+### PromptTagValues
+
+> **PromptTagValues** = `object`
+
+Defined in: [src/lib/models/prompt.ts:242](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L242)
+
+#### Index Signature
+
+\[`key`: `string`\]: `undefined` \| `string` \| `number` \| `boolean`
+
+***
+
+### PromptUsage
+
+> **PromptUsage** = `object`
+
+Defined in: [src/lib/models/prompt.ts:169](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L169)
+
+#### Properties
+
+##### completionTokens
+
+> **completionTokens**: `number`
+
+Defined in: [src/lib/models/prompt.ts:171](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L171)
+
+##### latency
+
+> **latency**: `number`
+
+Defined in: [src/lib/models/prompt.ts:173](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L173)
+
+##### promptTokens
+
+> **promptTokens**: `number`
+
+Defined in: [src/lib/models/prompt.ts:170](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L170)
+
+##### totalTokens
+
+> **totalTokens**: `number`
+
+Defined in: [src/lib/models/prompt.ts:172](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L172)
+
+***
+
+### PromptVersion
+
+> **PromptVersion** = `object`
+
+Defined in: [src/lib/models/prompt.ts:255](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L255)
+
+#### Properties
+
+##### config?
+
+> `optional` **config**: [`PromptVersionConfig`](./overview#promptversionconfig-1)
+
+Defined in: [src/lib/models/prompt.ts:260](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L260)
+
+##### createdAt
+
+> **createdAt**: `string`
+
+Defined in: [src/lib/models/prompt.ts:261](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L261)
+
+##### description?
+
+> `optional` **description**: `string`
+
+Defined in: [src/lib/models/prompt.ts:259](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L259)
+
+##### id
+
+> **id**: `string`
+
+Defined in: [src/lib/models/prompt.ts:256](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L256)
+
+##### promptId
+
+> **promptId**: `string`
+
+Defined in: [src/lib/models/prompt.ts:258](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L258)
+
+##### updatedAt
+
+> **updatedAt**: `string`
+
+Defined in: [src/lib/models/prompt.ts:262](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L262)
+
+##### version
+
+> **version**: `number`
+
+Defined in: [src/lib/models/prompt.ts:257](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L257)
+
+***
+
+### PromptVersionConfig
+
+> **PromptVersionConfig** = `object`
+
+Defined in: [src/lib/models/prompt.ts:246](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L246)
+
+#### Properties
+
+##### id
+
+> **id**: `string`
+
+Defined in: [src/lib/models/prompt.ts:247](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L247)
+
+##### messages
+
+> **messages**: `object`[]
+
+Defined in: [src/lib/models/prompt.ts:248](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L248)
+
+###### content
+
+> **content**: `string`
+
+###### role
+
+> **role**: `string`
+
+##### model
+
+> **model**: `string`
+
+Defined in: [src/lib/models/prompt.ts:250](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L250)
+
+##### modelParameters
+
+> **modelParameters**: `object`
+
+Defined in: [src/lib/models/prompt.ts:249](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L249)
+
+###### Index Signature
+
+\[`key`: `string`\]: `any`
+
+##### provider
+
+> **provider**: `string`
+
+Defined in: [src/lib/models/prompt.ts:251](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L251)
+
+##### tags?
+
+> `optional` **tags**: [`PromptTagValues`](./overview#prompttagvalues)
+
+Defined in: [src/lib/models/prompt.ts:252](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L252)
+
+***
+
+### PromptVersionsAndRules
+
+> **PromptVersionsAndRules** = `object`
+
+Defined in: [src/lib/models/prompt.ts:265](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L265)
+
+#### Properties
+
+##### fallbackVersion
+
+> **fallbackVersion**: [`PromptVersion`](./overview#promptversion-1) \| `undefined`
+
+Defined in: [src/lib/models/prompt.ts:269](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L269)
+
+##### folderId
+
+> **folderId**: `string`
+
+Defined in: [src/lib/models/prompt.ts:266](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L266)
+
+##### rules
+
+> **rules**: [`DeploymentVersionDeploymentConfig`](./overview#deploymentversiondeploymentconfig)
+
+Defined in: [src/lib/models/prompt.ts:267](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L267)
+
+##### versions
+
+> **versions**: [`PromptVersion`](./overview#promptversion-1)[]
+
+Defined in: [src/lib/models/prompt.ts:268](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/prompt.ts#L268)
+
+***
+
+### QueryRule
+
+> **QueryRule** = `object`
+
+Defined in: [src/lib/models/queryBuilder.ts:27](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/queryBuilder.ts#L27)
+
+Configuration object for prompt and prompt chain queries.
+
+Defines the parameters used to filter and select specific versions of prompts
+or prompt chains based on deployment variables, tags, and matching criteria.
+Used internally by the QueryBuilder to construct queries for the Maxim API.
+
+#### See
+
+[QueryBuilder](./classes/QueryBuilder) For constructing QueryRule objects
+
+#### Example
+
+```ts
+// Example QueryRule structure
+const rule: QueryRule = {
+  query: "environment=production,version=v2.0",
+  operator: "AND",
+  exactMatch: true,
+  scopes: { folder: "folder-123" }
+};
+```
+
+#### Properties
+
+##### exactMatch
+
+> **exactMatch**: `boolean`
+
+Defined in: [src/lib/models/queryBuilder.ts:30](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/queryBuilder.ts#L30)
+
+Whether to require exact matching of all criteria
+
+##### operator
+
+> **operator**: `"AND"` \| `"OR"`
+
+Defined in: [src/lib/models/queryBuilder.ts:29](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/queryBuilder.ts#L29)
+
+Logical operator for combining multiple criteria
+
+##### query
+
+> **query**: `string`
+
+Defined in: [src/lib/models/queryBuilder.ts:28](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/queryBuilder.ts#L28)
+
+The query string containing comma-separated key=value pairs
+
+##### scopes
+
+> **scopes**: [`Scopes`](./overview#scopes-1)
+
+Defined in: [src/lib/models/queryBuilder.ts:31](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/queryBuilder.ts#L31)
+
+Additional scope filters like folder restrictions
+
+***
+
+### RetrievalConfig
+
+> **RetrievalConfig** = `object`
+
+Defined in: [src/lib/logger/components/retrieval.ts:9](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/retrieval.ts#L9)
+
+Configuration object for retrieval.
+
+#### Properties
+
+##### id
+
+> **id**: `string`
+
+Defined in: [src/lib/logger/components/retrieval.ts:10](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/retrieval.ts#L10)
+
+##### name?
+
+> `optional` **name**: `string`
+
+Defined in: [src/lib/logger/components/retrieval.ts:11](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/retrieval.ts#L11)
+
+##### tags?
+
+> `optional` **tags**: `Record`\<`string`, `string`\>
+
+Defined in: [src/lib/logger/components/retrieval.ts:12](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/retrieval.ts#L12)
+
+***
+
+### Scopes
+
+> **Scopes** = `object`
+
+Defined in: [src/lib/models/queryBuilder.ts:34](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/queryBuilder.ts#L34)
+
+#### Index Signature
+
+\[`key`: `string`\]: `string`
+
+***
+
+### SessionConfig
+
+> **SessionConfig** = `object`
+
+Defined in: [src/lib/logger/components/session.ts:9](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/session.ts#L9)
+
+Configuration object for session.
+
+#### Properties
+
+##### id
+
+> **id**: `string`
+
+Defined in: [src/lib/logger/components/session.ts:10](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/session.ts#L10)
+
+##### name?
+
+> `optional` **name**: `string`
+
+Defined in: [src/lib/logger/components/session.ts:11](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/session.ts#L11)
+
+##### tags?
+
+> `optional` **tags**: `Record`\<`string`, `string`\>
+
+Defined in: [src/lib/logger/components/session.ts:12](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/session.ts#L12)
+
+***
+
+### SpanConfig
+
+> **SpanConfig** = `object`
+
+Defined in: [src/lib/logger/components/span.ts:13](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/span.ts#L13)
+
+Configuration object for span.
+
+#### Properties
+
+##### id
+
+> **id**: `string`
+
+Defined in: [src/lib/logger/components/span.ts:14](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/span.ts#L14)
+
+##### name?
+
+> `optional` **name**: `string`
+
+Defined in: [src/lib/logger/components/span.ts:15](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/span.ts#L15)
+
+##### tags?
+
+> `optional` **tags**: `Record`\<`string`, `string`\>
+
+Defined in: [src/lib/logger/components/span.ts:16](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/span.ts#L16)
+
+***
+
+### TestRunBuilder\<T\>
+
+> **TestRunBuilder**\<`T`\> = `object`
+
+Defined in: [src/lib/models/testRun.ts:293](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L293)
+
+#### Type Parameters
+
+##### T
+
+`T` *extends* [`DataStructure`](./overview#datastructure) \| `undefined` = `undefined`
+
+#### Properties
+
+##### getConfig()
+
+> **getConfig**: () => [`TestRunConfig`](./overview#testrunconfig)\<`T`\>
+
+Defined in: [src/lib/models/testRun.ts:555](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L555)
+
+Gets the current TestRunConfig.
+
+###### Returns
+
+[`TestRunConfig`](./overview#testrunconfig)\<`T`\>
+
+The current TestRunConfig.
+
+##### run()
+
+> **run**: (`timeoutInMinutes?`) => `Promise`\<\{ `failedEntryIndices`: `number`[]; `testRunResult`: [`TestRunResult`](./overview#testrunresult); \}\>
+
+Defined in: [src/lib/models/testRun.ts:598](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L598)
+
+Runs the test run with the configured configuration.
+
+###### Parameters
+
+###### timeoutInMinutes?
+
+`number`
+
+The timeout in minutes for the test run. Will be rounded to the nearest whole number if given a floating value (optional, defaults to 15 minutes)
+
+###### Returns
+
+`Promise`\<\{ `failedEntryIndices`: `number`[]; `testRunResult`: [`TestRunResult`](./overview#testrunresult); \}\>
+
+The test run result.
+
+###### Async
+
+###### Throws
+
+for any of the following reasons:
+- If the test run is not configured properly (sanitization error)
+- If the test run is taking too long to complete, i.e., passed the timeout limit (you can still view the report on our web portal though)
+- If the test run itself fails due to any reason.
+
+###### Example
+
+```ts
+const testRunResult = await maxim.createTestRun("testRunName", "workspaceId")
+    .withDataStructure({
+        myInputCol: "INPUT",
+        myExp: "EXPECTED_OUTPUT",
+        context: "CONTEXT_TO_EVALUATE",
+        additionalData: "NULLABLE_VARIABLE",
+    })
+    .withData(
+        "datasetId"
+    )
+    .withEvaluators(
+        "Faithfulness",
+        "HumanValidation",
+    )
+    .withHumanEvaluationConfig({
+        emails: ["user@example.com"],
+        instructions: "Please provide a brief reasoning behind the scoring.",
+    })
+    .yieldsOutput(async (data) => {
+        const output = await runModel(data.myInputCol, data.context);
+        return {
+            data: output.text,
+            retrievedContext: output.retrievedContext,
+            meta: output.meta,
+        };
+    })
+    .run(60 * 2); // while waiting for the test run to finish
+    // once all entries are pushed; wait for 2 hours before
+    // timing out and throwing an error (test run can still
+    // be viewed on our web portal)
+```
+
+##### withConcurrency()
+
+> **withConcurrency**: (`concurrency`) => [`TestRunBuilder`](./overview#testrunbuilder)\<`T`\>
+
+Defined in: [src/lib/models/testRun.ts:549](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L549)
+
+Sets the concurrency for the test run. (optional, defaults to 10).
+
+###### Parameters
+
+###### concurrency
+
+[`TestRunConfig`](./overview#testrunconfig)\<`T`\>\[`"concurrency"`\]
+
+The concurrency to set.
+
+###### Returns
+
+[`TestRunBuilder`](./overview#testrunbuilder)\<`T`\>
+
+The TestRunBuilder with the concurrency set.
+
+###### Example
+
+```ts
+maxim
+    .createTestRun("name", "workspaceId")
+    .withConcurrency(10); // defaults to 10
+```
+
+##### withData()
+
+> **withData**: (`data`) => [`TestRunBuilder`](./overview#testrunbuilder)\<`T`\>
+
+Defined in: [src/lib/models/testRun.ts:358](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L358)
+
+Sets the data for the test run.
+
+###### Parameters
+
+###### data
+
+[`TestRunConfig`](./overview#testrunconfig)\<`T`\>\[`"data"`\]
+
+The data to set. Can be a datasetId(string), a CSV file, an array of column to value mappings, or a function that returns the data in the format of the data structure. (if the data structure is not provided, only datasetId would be a valid type)
+Note: If the data is a function, you will need to return null or undefined to indicate the end of the data.
+
+###### Returns
+
+[`TestRunBuilder`](./overview#testrunbuilder)\<`T`\>
+
+The TestRunBuilder with the data set.
+
+###### See
+
+[withDataStructure](./overview#testrunbuilder#withdatastructure)
+
+###### Throws
+
+for any of the following reasons:
+- if the data argument is not a datasetId (when the data structure is not provided)
+- if the data does not match the data structure. (The data structure can differ from the remote data structure but the keys/column names shouldn't)
+- if the data is a CSVFile and it does not exist.
+
+###### Example
+
+```ts
+maxim
+    .createTestRun("name", "workspaceId")
+    .withDataStructure({
+        myInputCol: "INPUT",
+        myExp: "EXPECTED_OUTPUT",
+        context: "CONTEXT_TO_EVALUATE",
+        additionalData: "NULLABLE_VARIABLE",
+    })
+    .withData(
+        new maxim.CSVFile("path/to/file.csv")
+        // OR
+        "datasetId"
+        // OR
+        [
+            {
+                myInputCol: "input",
+                myExp: "",
+                context: "",
+            },
+            {
+                myInputCol: "hello",
+                myExp: "hi!",
+                context: ["chunk1"],
+            },
+        ]
+        // OR
+        async (page) => {
+            // Get the data from the page
+            const data = await getDataFromPage(page);
+            return data; // returning null or undefined will be treated as the end of the data
+        }
+    );
+```
+
+##### withDataStructure()
+
+> **withDataStructure**: \<`U`\>(`dataStructure`) => [`TestRunBuilder`](./overview#testrunbuilder)\<`U`\>
+
+Defined in: [src/lib/models/testRun.ts:312](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L312)
+
+Sets the data structure for the data being used in the test run.
+Note: Data structure is necessary for manual / CSV data as column types cannot be inferred without it.
+
+###### Type Parameters
+
+###### U
+
+`U` *extends* [`DataStructure`](./overview#datastructure)
+
+###### Parameters
+
+###### dataStructure
+
+`U`
+
+The data structure to set.
+
+###### Returns
+
+[`TestRunBuilder`](./overview#testrunbuilder)\<`U`\>
+
+The TestRunBuilder with the data structure set.
+
+###### See
+
+[withData](./overview#testrunbuilder#withdata)
+
+###### Throws
+
+if the data structure contains more than one input, expectedOutput or contextToEvaluate column. (there can be multiple variable columns)
+
+###### Example
+
+```ts
+maxim
+	.createTestRun("name", "workspaceId")
+	.withDataStructure({
+		myInputCol: "INPUT",
+		myExp: "EXPECTED_OUTPUT",
+		context: "CONTEXT_TO_EVALUATE",
+		additionalData: "VARIABLE", // or "NULLABLE_VARIABLE"
+	});
+```
+
+##### withEvaluators()
+
+> **withEvaluators**: (...`evaluators`) => [`TestRunBuilder`](./overview#testrunbuilder)\<`T`\>
+
+Defined in: [src/lib/models/testRun.ts:420](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L420)
+
+Sets the evaluators from the platform to be used in the test run.
+
+Note:
+- You may create an evaluator locally through code or use an evaluator that is installed in your workspace through the name directly.
+- If the evaluators contain a human evaluator, you will need to set the human evaluation config or the test run will fail.
+
+###### Parameters
+
+###### evaluators
+
+...[`TestRunConfig`](./overview#testrunconfig)\<`T`\>\[`"evaluators"`\]
+
+The evaluators to execute.
+
+###### Returns
+
+[`TestRunBuilder`](./overview#testrunbuilder)\<`T`\>
+
+The TestRunBuilder with the evaluators set.
+
+###### See
+
+ - [createCustomEvaluator](./overview#createcustomevaluator)
+ - [createCustomCombinedEvaluatorsFor](./overview#createcustomcombinedevaluatorsfor)
+ - [withHumanEvaluationConfig](./overview#testrunbuilder#withhumanevaluationconfig)
+
+###### Throws
+
+for any of the following reasons:
+- if multiple evaluators have the same name
+
+###### Example
+
+```ts
+import {
+createCustomEvaluator,
+createCustomCombinedEvaluatorsFor,
+} from "@maximai/maxim-js";
+
+const dataStructure = createDataStructure({
+   *  Input: 'INPUT',
+   *  'Expected Output': 'EXPECTED_OUTPUT',
+   *  Context: 'VARIABLE',
+   * });
+   *
+   * const customApostropheChecker = createCustomEvaluator<typeof dataStructure>(
+   *  'apostrophe-checker',
+   *  (result, data) => { // data contains the current data entry on which the output was obtained
+   *      if (result.output.includes("'")) {
+   *          return {
+   *              score: true,
+   *              reasoning: 'The output contains an apostrophe',
+   *          };
+   *      } else {
+   *          return {
+   *              score: false,
+   *              reasoning: 'The output does not contain an apostrophe',
+   *          };
+   *      }
+   *  },
+   *  {
+   *      onEachEntry: {
+   *          scoreShouldBe: '=',
+   *          value: true,
+   *      },
+   *      forTestrunOverall: {
+   *          overallShouldBe: '>=',
+   *          value: 80,
+   *          for: 'percentageOfPassedResults',
+   *      },
+   *  },
+   * );
+   *
+maxim
+    .createTestRun("name", "workspaceId")
+    .withEvaluators(
+        "Faithfulness",
+        customApostropheChecker,
+    );
+```
+
+##### withHumanEvaluationConfig()
+
+> **withHumanEvaluationConfig**: (`humanEvaluationConfig`) => [`TestRunBuilder`](./overview#testrunbuilder)\<`T`\>
+
+Defined in: [src/lib/models/testRun.ts:436](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L436)
+
+Sets the human evaluation config for the test run.
+
+###### Parameters
+
+###### humanEvaluationConfig
+
+[`HumanEvaluationConfig`](./overview#humanevaluationconfig)
+
+The human evaluation config.
+
+###### Returns
+
+[`TestRunBuilder`](./overview#testrunbuilder)\<`T`\>
+
+The ComparisonTestRunBuilder with the human evaluation config set.
+
+###### Throws
+
+if the emails passed are not valid
+
+###### Example
+
+```ts
+maxim
+    .createTestRun("name", "workspaceId")
+    .withEvaluators("HumanEvaluator")
+    .withHumanEvaluationConfig({
+        emails: ["user@example.com"],
+        instructions: "Please provide a brief reasoning behind the scoring.",
+    });
+```
+
+##### withLogger()
+
+> **withLogger**: (`logger`) => [`TestRunBuilder`](./overview#testrunbuilder)\<`T`\>
+
+Defined in: [src/lib/models/testRun.ts:538](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L538)
+
+Sets the logger for the test run. (optional, we have a default logger implemented already).
+
+###### Parameters
+
+###### logger
+
+[`TestRunConfig`](./overview#testrunconfig)\<`T`\>\[`"logger"`\]
+
+The logger satisfying TestRunLogger interface.
+
+###### Returns
+
+[`TestRunBuilder`](./overview#testrunbuilder)\<`T`\>
+
+The TestRunBuilder with the logger set.
+
+###### See
+
+[TestRunLogger](./interfaces/TestRunLogger)
+
+###### Example
+
+```ts
+maxim
+    .createTestRun("name", "workspaceId")
+    .withLogger({
+         info(message) {
+            console.info(message);
+        },
+        error(message) {
+            console.error(message);
+        },
+        processed(message, data) {
+            console.info(message);
+            // OR
+            // console.log("ran entry =>", data.datasetEntry, data.output, data.evaluationResults);
+        },
+    })
+```
+
+##### withPromptChainVersionId()
+
+> **withPromptChainVersionId**: (`id`, `contextToEvaluate?`) => [`TestRunBuilder`](./overview#testrunbuilder)\<`T`\>
+
+Defined in: [src/lib/models/testRun.ts:501](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L501)
+
+Sets the prompt chain version ID for the test run. Optionally, you can also set the context to evaluate for the prompt chain. (Note: setting the context to evaluate will end up overriding the CONTEXT_TO_EVALUATE dataset column value)
+
+###### Parameters
+
+###### id
+
+`string`
+
+The prompt chain version ID to set.
+
+###### contextToEvaluate?
+
+`string`
+
+The context to evaluate for the prompt chain (variable name essentially).
+
+###### Returns
+
+[`TestRunBuilder`](./overview#testrunbuilder)\<`T`\>
+
+The TestRunBuilder with the prompt chain version set.
+
+###### Example
+
+```ts
+maxim
+    .createTestRun("name", "workspaceId")
+    .withPromptChainVersionId("promptChainVersionId", "contextVariableName");
+```
+
+##### withPromptVersionId()
+
+> **withPromptVersionId**: (`id`, `contextToEvaluate?`) => [`TestRunBuilder`](./overview#testrunbuilder)\<`T`\>
+
+Defined in: [src/lib/models/testRun.ts:489](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L489)
+
+Sets the prompt version ID for the test run. Optionally, you can also set the context to evaluate for the prompt. (Note: setting the context to evaluate will end up overriding the CONTEXT_TO_EVALUATE dataset column value)
+
+###### Parameters
+
+###### id
+
+`string`
+
+The prompt version ID to set.
+
+###### contextToEvaluate?
+
+`string`
+
+The context to evaluate for the prompt (variable name essentially).
+
+###### Returns
+
+[`TestRunBuilder`](./overview#testrunbuilder)\<`T`\>
+
+The TestRunBuilder with the prompt version set.
+
+###### Example
+
+```ts
+maxim
+    .createTestRun("name", "workspaceId")
+    .withPromptVersionId("promptVersionId", "contextVariableName");
+```
+
+##### withWorkflowId()
+
+> **withWorkflowId**: (`id`, `contextToEvaluate?`) => [`TestRunBuilder`](./overview#testrunbuilder)\<`T`\>
+
+Defined in: [src/lib/models/testRun.ts:513](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L513)
+
+Sets the workflow ID for the test run. Optionally, you can also set the context to evaluate for the workflow. (Note: setting the context to evaluate will end up overriding the CONTEXT_TO_EVALUATE dataset column value)
+
+###### Parameters
+
+###### id
+
+`string`
+
+The workflow ID to set.
+
+###### contextToEvaluate?
+
+`string`
+
+The context to evaluate for the workflow (variable name essentially).
+
+###### Returns
+
+[`TestRunBuilder`](./overview#testrunbuilder)\<`T`\>
+
+The TestRunBuilder with the workflow set.
+
+###### Example
+
+```ts
+maxim
+    .createTestRun("name", "workspaceId")
+    .withWorkflowId("workflowId", "contextVariableName");
+```
+
+##### yieldsOutput()
+
+> **yieldsOutput**: (`outputFunction`) => [`TestRunBuilder`](./overview#testrunbuilder)\<`T`\>
+
+Defined in: [src/lib/models/testRun.ts:477](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L477)
+
+Sets the output retrieval function for the test run.
+
+Note: Throwing from this function will cause the test run entry being executed to fail and not added to the test run on the server. You will still get back the indices of all the failed entries once the run is finished.
+
+###### Parameters
+
+###### outputFunction
+
+[`TestRunConfig`](./overview#testrunconfig)\<`T`\>\[`"outputFunction"`\]
+
+The output retrieval function.
+
+###### Returns
+
+[`TestRunBuilder`](./overview#testrunbuilder)\<`T`\>
+
+The TestRunBuilder with the output retrieval function set.
+
+###### Example
+
+```ts
+maxim
+    .createTestRun("name", "workspaceId")
+    .yieldsOutput((data) => {
+        // This is just an example, you can use
+        // the columns from the dataset to
+        // retrieve the output anyway you want
+        const output = await modelCall(
+            data.myInputCol,
+            data.context,
+        );
+        return {
+            // The actual output
+            data: output.text,
+            // Retrieved context (if any)
+            retrievedContext: output.retrievedContext,
+            // Additional metadata (if any)
+            meta: {
+                usage: {
+                    promptTokens: output.usage.promptTokens,
+                    completionTokens: output.usage.completionTokens,
+                    totalTokens: output.usage.totalTokens,
+                    latency: output.usage.latency,
+                },
+                cost: {
+                    input: output.cost.input,
+                    output: output.cost.output,
+                    total: output.cost.input + output.cost.output,
+                },
+            },
+        };
+    });
+```
+
+***
+
+### TestRunConfig\<T\>
+
+> **TestRunConfig**\<`T`\> = `object`
+
+Defined in: [src/lib/models/testRun.ts:266](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L266)
+
+Configuration for a test run.
+
+#### Type Parameters
+
+##### T
+
+`T` *extends* [`DataStructure`](./overview#datastructure) \| `undefined` = `undefined`
+
+#### Properties
+
+##### apiKey
+
+> **apiKey**: `string`
+
+Defined in: [src/lib/models/testRun.ts:268](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L268)
+
+##### baseUrl
+
+> **baseUrl**: `string`
+
+Defined in: [src/lib/models/testRun.ts:267](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L267)
+
+##### concurrency?
+
+> `optional` **concurrency**: `number`
+
+Defined in: [src/lib/models/testRun.ts:290](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L290)
+
+##### data?
+
+> `optional` **data**: [`DataValue`](./overview#datavalue)\<`T`\>
+
+Defined in: [src/lib/models/testRun.ts:273](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L273)
+
+##### dataStructure?
+
+> `optional` **dataStructure**: `T`
+
+Defined in: [src/lib/models/testRun.ts:272](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L272)
+
+##### evaluators
+
+> **evaluators**: ([`LocalEvaluatorType`](./overview#localevaluatortype)\<`T`\> \| [`CombinedLocalEvaluatorType`](./overview#combinedlocalevaluatortype)\<`T`, `Record`\<`string`, [`PassFailCriteriaType`](./overview#passfailcriteriatype)\>\> \| `string`)[]
+
+Defined in: [src/lib/models/testRun.ts:274](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L274)
+
+##### humanEvaluationConfig?
+
+> `optional` **humanEvaluationConfig**: [`HumanEvaluationConfig`](./overview#humanevaluationconfig)
+
+Defined in: [src/lib/models/testRun.ts:275](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L275)
+
+##### logger?
+
+> `optional` **logger**: [`TestRunLogger`](./interfaces/TestRunLogger)\<`T`\>
+
+Defined in: [src/lib/models/testRun.ts:289](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L289)
+
+##### name
+
+> **name**: `string`
+
+Defined in: [src/lib/models/testRun.ts:270](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L270)
+
+##### outputFunction()?
+
+> `optional` **outputFunction**: (`data`) => [`YieldedOutput`](./overview#yieldedoutput) \| `Promise`\<[`YieldedOutput`](./overview#yieldedoutput)\>
+
+Defined in: [src/lib/models/testRun.ts:276](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L276)
+
+###### Parameters
+
+###### data
+
+[`Data`](./overview#data)\<`T`\>
+
+###### Returns
+
+[`YieldedOutput`](./overview#yieldedoutput) \| `Promise`\<[`YieldedOutput`](./overview#yieldedoutput)\>
+
+##### promptChainVersion?
+
+> `optional` **promptChainVersion**: `object`
+
+Defined in: [src/lib/models/testRun.ts:281](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L281)
+
+###### contextToEvaluate?
+
+> `optional` **contextToEvaluate**: `string`
+
+###### id
+
+> **id**: `string`
+
+##### promptVersion?
+
+> `optional` **promptVersion**: `object`
+
+Defined in: [src/lib/models/testRun.ts:277](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L277)
+
+###### contextToEvaluate?
+
+> `optional` **contextToEvaluate**: `string`
+
+###### id
+
+> **id**: `string`
+
+##### testConfigId?
+
+> `optional` **testConfigId**: `string`
+
+Defined in: [src/lib/models/testRun.ts:271](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L271)
+
+##### workflow?
+
+> `optional` **workflow**: `object`
+
+Defined in: [src/lib/models/testRun.ts:285](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L285)
+
+###### contextToEvaluate?
+
+> `optional` **contextToEvaluate**: `string`
+
+###### id
+
+> **id**: `string`
+
+##### workspaceId
+
+> **workspaceId**: `string`
+
+Defined in: [src/lib/models/testRun.ts:269](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L269)
+
+***
+
+### TestRunResult
+
+> **TestRunResult** = `object`
+
+Defined in: [src/lib/models/testRun.ts:226](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L226)
+
+Complete results and metrics from a test run execution.
+
+Contains comprehensive information about test run performance including
+individual evaluator scores, aggregated metrics, token usage, costs,
+and latency statistics. Provides both detailed results and a link to
+view the full report in the Maxim web interface.
+
+#### Examples
+
+```ts
+// Example test run result
+const testResult: TestRunResult = {
+  link: "https://app.getmaxim.ai/workspace/123/test-runs/456",
+  result: [{
+    name: "Accuracy Test Run",
+    individualEvaluatorMeanScore: {
+      "bias": { score: 0.87, pass: true, outOf: 1.0 },
+      "toxicity": { score: 0.92, pass: true, outOf: 1.0 },
+      "custom-programmatic-evaluator": { score: 1.0, pass: true }
+    },
+    usage: {
+      total: 15420,
+      input: 12300,
+      completion: 3120
+    },
+    cost: {
+      total: 0.0234,
+      input: 0.0123,
+      completion: 0.0111
+    },
+    latency: {
+      min: 890,
+      max: 2340,
+      p50: 1200,
+      p90: 1800,
+      p95: 2100,
+      p99: 2300,
+      mean: 1350,
+      standardDeviation: 320,
+      total: 135000
+    }
+  }]
+};
+```
+
+```ts
+// Using test run results
+const { testRunResult } = await maxim.createTestRun("my-test", "workspace")
+  .withData(dataset)
+  .withEvaluators("accuracy", "relevance")
+  .yieldsOutput(generateOutput)
+  .run();
+
+console.log(`View report: ${testRunResult.link}`);
+
+const scores = testRunResult.result[0].individualEvaluatorMeanScore;
+for (const [evaluator, result] of Object.entries(scores)) {
+  console.log(`${evaluator}: ${result.score} (${result.pass ? 'PASS' : 'FAIL'})`);
+}
+```
+
+#### Properties
+
+##### link
+
+> **link**: `string`
+
+Defined in: [src/lib/models/testRun.ts:227](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L227)
+
+URL to view the detailed test run report in Maxim
+
+##### result
+
+> **result**: `object`[]
+
+Defined in: [src/lib/models/testRun.ts:228](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L228)
+
+Array of test run result objects (typically one)
+
+###### cost?
+
+> `optional` **cost**: `object`
+
+###### cost.completion
+
+> **completion**: `number`
+
+###### cost.input
+
+> **input**: `number`
+
+###### cost.total
+
+> **total**: `number`
+
+###### individualEvaluatorMeanScore
+
+> **individualEvaluatorMeanScore**: `object`
+
+###### Index Signature
+
+\[`key`: `string`\]: `object` & \{ `outOf?`: `number`; `score`: `number`; \} \| \{ `score`: `boolean` \| `string`; \}
+
+###### latency?
+
+> `optional` **latency**: `object`
+
+###### latency.max
+
+> **max**: `number`
+
+###### latency.mean
+
+> **mean**: `number`
+
+###### latency.min
+
+> **min**: `number`
+
+###### latency.p50
+
+> **p50**: `number`
+
+###### latency.p90
+
+> **p90**: `number`
+
+###### latency.p95
+
+> **p95**: `number`
+
+###### latency.p99
+
+> **p99**: `number`
+
+###### latency.standardDeviation
+
+> **standardDeviation**: `number`
+
+###### latency.total
+
+> **total**: `number`
+
+###### name
+
+> **name**: `string`
+
+###### usage?
+
+> `optional` **usage**: `object`
+
+###### usage.completion
+
+> **completion**: `number`
+
+###### usage.input
+
+> **input**: `number`
+
+###### usage.total
+
+> **total**: `number`
+
+***
+
+### TraceConfig
+
+> **TraceConfig** = `object`
+
+Defined in: [src/lib/logger/components/trace.ts:14](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/trace.ts#L14)
+
+Configuration object for trace.
+
+#### Properties
+
+##### id
+
+> **id**: `string`
+
+Defined in: [src/lib/logger/components/trace.ts:15](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/trace.ts#L15)
+
+##### name?
+
+> `optional` **name**: `string`
+
+Defined in: [src/lib/logger/components/trace.ts:16](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/trace.ts#L16)
+
+##### sessionId?
+
+> `optional` **sessionId**: `string`
+
+Defined in: [src/lib/logger/components/trace.ts:17](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/trace.ts#L17)
+
+##### tags?
+
+> `optional` **tags**: `Record`\<`string`, `string`\>
+
+Defined in: [src/lib/logger/components/trace.ts:18](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/trace.ts#L18)
+
+***
+
+### UrlAttachment
+
+> **UrlAttachment** = [`BaseAttachmentProps`](./overview#baseattachmentprops) & `object`
+
+Defined in: [src/lib/logger/components/attachment.ts:47](https://github.com/maximhq/maxim-js/blob/main/src/lib/logger/components/attachment.ts#L47)
+
+URL attachment type for referencing external resources.
+
+#### Type declaration
+
+##### type
+
+> **type**: `"url"`
+
+##### url
+
+> **url**: `string`
+
+***
+
+### Variable
+
+> **Variable** = `object`
+
+Defined in: [src/lib/models/dataset.ts:37](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/dataset.ts#L37)
+
+#### Properties
+
+##### payload
+
+> **payload**: `string`
+
+Defined in: [src/lib/models/dataset.ts:39](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/dataset.ts#L39)
+
+##### type
+
+> **type**: [`VariableType`](./enumerations/VariableType)
+
+Defined in: [src/lib/models/dataset.ts:38](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/dataset.ts#L38)
+
+***
+
+### VariableColumn
+
+> **VariableColumn** = `"VARIABLE"`
+
+Defined in: [src/lib/models/dataset.ts:83](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/dataset.ts#L83)
+
+***
+
+### VersionSpecificDeploymentConfig
+
+> **VersionSpecificDeploymentConfig** = `object`
+
+Defined in: [src/lib/models/deployment.ts:20](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/deployment.ts#L20)
+
+#### Properties
+
+##### id
+
+> **id**: `string`
+
+Defined in: [src/lib/models/deployment.ts:21](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/deployment.ts#L21)
+
+##### isFallback
+
+> **isFallback**: `boolean`
+
+Defined in: [src/lib/models/deployment.ts:24](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/deployment.ts#L24)
+
+##### rules
+
+> **rules**: `DeploymentRules`
+
+Defined in: [src/lib/models/deployment.ts:23](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/deployment.ts#L23)
+
+##### timestamp
+
+> **timestamp**: `Date`
+
+Defined in: [src/lib/models/deployment.ts:22](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/deployment.ts#L22)
+
+***
+
+### YieldedOutput
+
+> **YieldedOutput** = `object`
+
+Defined in: [src/lib/models/testRun.ts:144](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L144)
+
+Output data structure returned by test run output functions.
+
+Contains the generated output data along with optional metadata about
+the generation process including token usage, costs, and retrieved context.
+This is the expected return type for functions passed to `yieldsOutput()`.
+
+#### Examples
+
+```ts
+// Simple output
+const output: YieldedOutput = {
+  data: "The weather in San Francisco is sunny and 72°F"
+};
+```
+
+```ts
+// Output with full metadata
+const output: YieldedOutput = {
+  data: "Based on the provided documents, the answer is...",
+  retrievedContextToEvaluate: [
+    "Document 1: Weather data shows...",
+    "Document 2: Historical trends indicate..."
+  ],
+  meta: {
+    usage: {
+      promptTokens: 150,
+      completionTokens: 45,
+      totalTokens: 195,
+      latency: 1200
+    },
+    cost: {
+      input: 0.0015,
+      output: 0.0045,
+      total: 0.006
+    }
+  }
+};
+```
+
+```ts
+// Using in yieldsOutput function
+maxim.createTestRun("accuracy-test", "workspace-id")
+  .yieldsOutput(async (data) => {
+    const response = await callLLM(data.input);
+    return {
+      data: response.text,
+      meta: {
+        usage: response.usage,
+        cost: response.cost
+      }
+    };
+  });
+```
+
+#### Properties
+
+##### data
+
+> **data**: `string`
+
+Defined in: [src/lib/models/testRun.ts:145](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L145)
+
+The main generated output text
+
+##### meta?
+
+> `optional` **meta**: `object`
+
+Defined in: [src/lib/models/testRun.ts:147](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L147)
+
+Optional metadata about the generation process
+
+###### cost?
+
+> `optional` **cost**: `object`
+
+###### cost.input
+
+> **input**: `number`
+
+###### cost.output
+
+> **output**: `number`
+
+###### cost.total
+
+> **total**: `number`
+
+###### usage?
+
+> `optional` **usage**: \{ `completionTokens`: `number`; `latency?`: `number`; `promptTokens`: `number`; `totalTokens`: `number`; \} \| \{ `latency`: `number`; \}
+
+##### retrievedContextToEvaluate?
+
+> `optional` **retrievedContextToEvaluate**: `string` \| `string`[]
+
+Defined in: [src/lib/models/testRun.ts:146](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/testRun.ts#L146)
+
+Context retrieved during generation for evaluation
+
+## Functions
+
+### createCustomCombinedEvaluatorsFor()
+
+> **createCustomCombinedEvaluatorsFor**\<`U`\>(...`names`): `object`
+
+Defined in: [src/lib/evaluators/evaluators.ts:134](https://github.com/maximhq/maxim-js/blob/main/src/lib/evaluators/evaluators.ts#L134)
+
+Creates a builder for combined evaluators that can output multiple evaluator scores under the same evaluation function.
+
+Combined evaluators allow a single evaluation function to return multiple named scores,
+useful when one analysis can produce several metrics. Each named score must have
+corresponding pass/fail criteria.
+
+#### Type Parameters
+
+##### U
+
+`U` *extends* `string`[]
+
+String literal array type containing evaluator names
+
+#### Parameters
+
+##### names
+
+...`U`
+
+Array of evaluator names that will be returned by the evaluation function
+
+#### Returns
+
+Builder object with a `build` method to create the combined evaluator
+
+##### build()
+
+> **build**: \<`T`\>(`evaluationFunction`, `passFailCriteria`) => [`CombinedLocalEvaluatorType`](./overview#combinedlocalevaluatortype)\<`T`, `Record`\<`U`\[`number`\], [`PassFailCriteriaType`](./overview#passfailcriteriatype)\>\>
+
+Builds the combined evaluator with evaluation function and pass/fail criteria.
+
+###### Type Parameters
+
+###### T
+
+`T` *extends* `undefined` \| [`DataStructure`](./overview#datastructure) = `undefined`
+
+The data structure type for the evaluator
+
+###### Parameters
+
+###### evaluationFunction
+
+(`result`, `data`) => `Record`\<`U`\[`number`\], `LocalEvaluatorReturnType`\> \| `Promise`\<`Record`\<`U`\[`number`\], `LocalEvaluatorReturnType`\>\>
+
+Function returning multiple named scores
+
+###### passFailCriteria
+
+`Record`\<`U`\[`number`\], [`PassFailCriteriaType`](./overview#passfailcriteriatype)\>
+
+Criteria for each named evaluator
+
+###### Returns
+
+[`CombinedLocalEvaluatorType`](./overview#combinedlocalevaluatortype)\<`T`, `Record`\<`U`\[`number`\], [`PassFailCriteriaType`](./overview#passfailcriteriatype)\>\>
+
+The configured combined evaluator
+
+###### Throws
+
+When passFailCriteria is missing or contains invalid criteria
+
+###### Throws
+
+When passFailCriteria contains evaluator names not in the names array
+
+#### Example
+
+```ts
+import { createCustomCombinedEvaluatorsFor, createDataStructure } from '@maximai/maxim-js';
+
+const dataStructure = createDataStructure({
+  input: "INPUT",
+  expectedOutput: "EXPECTED_OUTPUT"
+});
+
+const qualityEvaluator = createCustomCombinedEvaluatorsFor("accuracy", "relevance", "fluency")
+  .build<typeof dataStructure>(
+    (result, data) => {
+      // Single function returns multiple scores
+      const analysis = analyzeText(result.output);
+      return {
+        accuracy: { score: analysis.factualScore, reasoning: "Fact-checked against sources" },
+        relevance: { score: analysis.topicScore, reasoning: "Relevance to user query" },
+        fluency: { score: analysis.grammarScore, reasoning: "Grammar and readability" }
+      };
+    },
+    {
+      accuracy: {
+        onEachEntry: { scoreShouldBe: ">=", value: 0.8 },
+        forTestrunOverall: { overallShouldBe: ">=", value: 85, for: "average" }
+      },
+      relevance: {
+        onEachEntry: { scoreShouldBe: ">=", value: 0.7 },
+        forTestrunOverall: { overallShouldBe: ">=", value: 80, for: "average" }
+      },
+      fluency: {
+        onEachEntry: { scoreShouldBe: ">=", value: 0.9 },
+        forTestrunOverall: { overallShouldBe: ">=", value: 90, for: "percentageOfPassedResults" }
+      }
+    }
+  );
+
+// Usage in a test run
+maxim.createTestRun("quality-test", "workspace-id")
+  .withEvaluators(qualityEvaluator)
+  .run();
+```
+
+***
+
+### createCustomEvaluator()
+
+> **createCustomEvaluator**\<`T`\>(`name`, `evaluationFunction`, `passFailCriteria`): [`LocalEvaluatorType`](./overview#localevaluatortype)\<`T`\>
+
+Defined in: [src/lib/evaluators/evaluators.ts:67](https://github.com/maximhq/maxim-js/blob/main/src/lib/evaluators/evaluators.ts#L67)
+
+Creates a custom evaluator for local evaluation of test run outputs.
+
+Local evaluators run client-side during test runs to score each executed row (with output and retrieved context).
+They must define both an evaluation function and pass/fail criteria to determine success.
+
+#### Type Parameters
+
+##### T
+
+`T` *extends* `undefined` \| [`DataStructure`](./overview#datastructure) = `undefined`
+
+The data structure type for the evaluator, extending DataStructure or undefined
+
+#### Parameters
+
+##### name
+
+`string`
+
+Unique name for the evaluator. Must be unique within a test run.
+
+##### evaluationFunction
+
+(`result`, `data`) => `LocalEvaluatorReturnType` \| `Promise`\<`LocalEvaluatorReturnType`\>
+
+Function that scores outputs
+
+##### passFailCriteria
+
+[`PassFailCriteriaType`](./overview#passfailcriteriatype)
+
+Criteria defining pass/fail thresholds
+
+#### Returns
+
+[`LocalEvaluatorType`](./overview#localevaluatortype)\<`T`\>
+
+A configured local evaluator ready for use in test runs
+
+#### Throws
+
+When passFailCriteria is null, undefined, or invalid
+
+#### Examples
+
+```ts
+import { createCustomEvaluator, createDataStructure } from '@maximai/maxim-js';
+
+const dataStructure = createDataStructure({
+  input: "INPUT",
+  expectedOutput: "EXPECTED_OUTPUT"
+});
+
+const lengthEvaluator = createCustomEvaluator<typeof dataStructure>(
+  "response-length",
+  (result, data) => {
+    const wordCount = result.output.split(' ').length;
+    return {
+      score: wordCount,
+      reasoning: `Response contains ${wordCount} words`
+    };
+  },
+  {
+    onEachEntry: {
+      scoreShouldBe: ">=",
+      value: 10
+    },
+    forTestrunOverall: {
+      overallShouldBe: ">=",
+      value: 80,
+      for: "percentageOfPassedResults"
+    }
+  }
+);
+```
+
+```ts
+// Boolean evaluator example
+const containsKeywordEvaluator = createCustomEvaluator<typeof dataStructure>(
+  "keyword-checker",
+  (result, data) => ({
+    score: result.output.toLowerCase().includes("important"),
+    reasoning: result.output.includes("important") ? "Contains keyword" : "Missing keyword"
+  }),
+  {
+    onEachEntry: {
+      scoreShouldBe: "=",
+      value: true
+    },
+    forTestrunOverall: {
+      overallShouldBe: ">=",
+      value: 75,
+      for: "percentageOfPassedResults"
+    }
+  }
+);
+```
+
+***
+
+### createDataStructure()
+
+> **createDataStructure**\<`T`\>(`dataStructure`): `T`
+
+Defined in: [src/lib/dataset/dataset.ts:24](https://github.com/maximhq/maxim-js/blob/main/src/lib/dataset/dataset.ts#L24)
+
+Creates and validates a data structure definition for test run.
+
+Data structures define the schema and column types for datasets used in test runs
+and evaluations within. This function ensures the structure is valid and returns
+it for use within test runs.
+
+#### Type Parameters
+
+##### T
+
+`T` *extends* `undefined` \| [`DataStructure`](./overview#datastructure) = `undefined`
+
+The data structure type, extending the type DataStructure or undefined
+
+#### Parameters
+
+##### dataStructure
+
+`T`
+
+The data structure definition to create and validate
+
+#### Returns
+
+`T`
+
+The validated data structure, unchanged if valid
+
+#### Throws
+
+When the data structure contains multiple INPUT, EXPECTED_OUTPUT, or CONTEXT_TO_EVALUATE columns
+
+#### Example
+
+```ts
+import { createDataStructure } from '@maximai/maxim-js';
+
+const dataStructure = createDataStructure({
+  userInput: "INPUT",
+  expectedResponse: "EXPECTED_OUTPUT",
+  context: "CONTEXT_TO_EVALUATE",
+  metadata: "VARIABLE"
+});
+```
+
+***
+
+### sanitizeDataStructure()
+
+> **sanitizeDataStructure**(`dataStructure`): `void`
+
+Defined in: [src/lib/dataset/dataset.ts:29](https://github.com/maximhq/maxim-js/blob/main/src/lib/dataset/dataset.ts#L29)
+
+#### Parameters
+
+##### dataStructure
+
+`undefined` | [`DataStructure`](./overview#datastructure)
+
+#### Returns
+
+`void`
+
+***
+
+### validateDataStructure()
+
+> **validateDataStructure**(`dataStructure`, `againstDataStructure`): `void`
+
+Defined in: [src/lib/dataset/dataset.ts:52](https://github.com/maximhq/maxim-js/blob/main/src/lib/dataset/dataset.ts#L52)
+
+#### Parameters
+
+##### dataStructure
+
+[`DataStructure`](./overview#datastructure)
+
+##### againstDataStructure
+
+[`DataStructure`](./overview#datastructure)
+
+#### Returns
+
+`void`

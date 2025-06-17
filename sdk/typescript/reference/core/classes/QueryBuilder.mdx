@@ -1,0 +1,334 @@
+---
+title: "QueryBuilder"
+sidebar_position: 1
+---
+
+# Class: QueryBuilder
+
+Defined in: [src/lib/models/queryBuilder.ts:66](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/queryBuilder.ts#L66)
+
+Builder class for constructing queries to filter prompts and prompt chains.
+
+Provides an interface for building complex query rules that determine
+which version of a prompt or prompt chain should be retrieved based on
+deployment variables, tags, and other criteria. Essential for implementing
+deployment strategies and A/B testing with prompts.
+
+ QueryBuilder
+
+## Examples
+
+```ts
+import { QueryBuilder } from '@maximai/maxim-js';
+
+// Basic deployment query
+const rule = new QueryBuilder()
+  .deploymentVar('environment', 'production')
+  .deploymentVar('region', 'us-east-1')
+  .build();
+
+const prompt = await maxim.getPrompt('prompt-id', rule);
+```
+
+```ts
+// Complex query with tags and exact matching
+const rule = new QueryBuilder()
+  .exactMatch()
+  .and()
+  .deploymentVar('stage', 'prod', true) // enforced
+  .tag('version', 'v2.0')
+  .folder('marketing-prompts')
+  .build();
+```
+
+## Constructors
+
+### Constructor
+
+> **new QueryBuilder**(): `QueryBuilder`
+
+Defined in: [src/lib/models/queryBuilder.ts:78](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/queryBuilder.ts#L78)
+
+Creates a new QueryBuilder instance with default settings.
+
+Initializes with AND operator and exact matching disabled.
+Use the class methods to configure the query before calling build().
+
+#### Returns
+
+`QueryBuilder`
+
+## Methods
+
+### and()
+
+> **and**(): `QueryBuilder`
+
+Defined in: [src/lib/models/queryBuilder.ts:97](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/queryBuilder.ts#L97)
+
+Sets the logical operator to AND for combining query criteria.
+
+With AND logic, all specified criteria must match for a prompt version
+to be selected. This is the default behavior.
+
+#### Returns
+
+`QueryBuilder`
+
+This QueryBuilder instance for method chaining
+
+#### Example
+
+```ts
+const rule = new QueryBuilder()
+  .and() // All conditions must match
+  .deploymentVar('env', 'prod')
+  .deploymentVar('region', 'us-east')
+  .build();
+```
+
+***
+
+### build()
+
+> **build**(): [`QueryRule`](../overview#queryrule)
+
+Defined in: [src/lib/models/queryBuilder.ts:239](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/queryBuilder.ts#L239)
+
+Builds and returns the final QueryRule object.
+
+Validates that at least one constraint has been added and constructs
+the final QueryRule with all specified criteria, operators, and scopes.
+
+#### Returns
+
+[`QueryRule`](../overview#queryrule)
+
+The constructed query rule ready for use with Maxim API methods
+
+#### Throws
+
+When no constraints have been added to the query
+
+#### Example
+
+```ts
+const rule = new QueryBuilder()
+  .deploymentVar('env', 'prod')
+  .tag('version', 'stable')
+  .build();
+
+// Use with Maxim methods
+const prompt = await maxim.getPrompt('prompt-id', rule);
+const prompts = await maxim.getPrompts(rule);
+```
+
+***
+
+### deploymentVar()
+
+> **deploymentVar**(`key`, `value`, `enforce`): `QueryBuilder`
+
+Defined in: [src/lib/models/queryBuilder.ts:184](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/queryBuilder.ts#L184)
+
+Adds a deployment variable constraint to the query.
+
+Deployment variables are used to control which version of a prompt is
+served based on runtime conditions like environment, user segments,
+feature flags, etc.
+
+#### Parameters
+
+##### key
+
+`string`
+
+The deployment variable name
+
+##### value
+
+The required value for the variable
+
+`string` | `number` | `boolean`
+
+##### enforce
+
+`boolean` = `true`
+
+Whether this variable must be present (defaults to true)
+
+#### Returns
+
+`QueryBuilder`
+
+This QueryBuilder instance for method chaining
+
+#### Examples
+
+```ts
+const rule = new QueryBuilder()
+  .deploymentVar('environment', 'production') // Must match
+  .deploymentVar('feature_flag', true, false) // Optional match
+  .build();
+```
+
+```ts
+// Different data types
+new QueryBuilder()
+  .deploymentVar('region', 'us-west-2')      // string
+  .deploymentVar('max_users', 1000)          // number
+  .deploymentVar('beta_enabled', true)       // boolean
+  .build();
+```
+
+***
+
+### exactMatch()
+
+> **exactMatch**(): `QueryBuilder`
+
+Defined in: [src/lib/models/queryBuilder.ts:154](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/queryBuilder.ts#L154)
+
+Enables exact matching mode for the query.
+
+When exact matching is enabled, prompt versions must have deployment
+configurations that exactly match the query criteria. No partial or
+fuzzy matching is performed.
+
+#### Returns
+
+`QueryBuilder`
+
+This QueryBuilder instance for method chaining
+
+#### Example
+
+```ts
+const rule = new QueryBuilder()
+  .exactMatch() // Require exact match
+  .deploymentVar('environment', 'production')
+  .build();
+```
+
+***
+
+### folder()
+
+> **folder**(`folderId`): `QueryBuilder`
+
+Defined in: [src/lib/models/queryBuilder.ts:135](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/queryBuilder.ts#L135)
+
+Restricts the query to a specific folder.
+
+Only prompts and prompt chains within the specified folder will be
+considered when evaluating the query criteria.
+
+#### Parameters
+
+##### folderId
+
+`string`
+
+The ID of the folder to restrict the query to
+
+#### Returns
+
+`QueryBuilder`
+
+This QueryBuilder instance for method chaining
+
+#### Example
+
+```ts
+const rule = new QueryBuilder()
+  .folder('marketing-folder-123')
+  .deploymentVar('campaign', 'summer-2024')
+  .build();
+```
+
+***
+
+### or()
+
+> **or**(): `QueryBuilder`
+
+Defined in: [src/lib/models/queryBuilder.ts:116](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/queryBuilder.ts#L116)
+
+Sets the logical operator to OR for combining query criteria.
+
+With OR logic, any of the specified criteria can match for a prompt version
+to be selected. Useful for fallback scenarios and flexible matching.
+
+#### Returns
+
+`QueryBuilder`
+
+This QueryBuilder instance for method chaining
+
+#### Example
+
+```ts
+const rule = new QueryBuilder()
+  .or() // Any condition can match
+  .deploymentVar('feature_beta', true)
+  .deploymentVar('user_type', 'premium')
+  .build();
+```
+
+***
+
+### tag()
+
+> **tag**(`key`, `value`, `enforce`): `QueryBuilder`
+
+Defined in: [src/lib/models/queryBuilder.ts:215](https://github.com/maximhq/maxim-js/blob/main/src/lib/models/queryBuilder.ts#L215)
+
+Adds a tag constraint to the query.
+
+Tags provide additional metadata for organizing and filtering prompts.
+Unlike deployment variables, tags are typically used for categorization
+and organization rather than runtime deployment logic.
+
+#### Parameters
+
+##### key
+
+`string`
+
+The tag name
+
+##### value
+
+The required value for the tag
+
+`string` | `number` | `boolean`
+
+##### enforce
+
+`boolean` = `false`
+
+Whether this tag must be present (defaults to false)
+
+#### Returns
+
+`QueryBuilder`
+
+This QueryBuilder instance for method chaining
+
+#### Examples
+
+```ts
+const rule = new QueryBuilder()
+  .tag('category', 'customer-service')
+  .tag('version', 'v2.1', true) // Enforced tag
+  .build();
+```
+
+```ts
+// Organizing by team and purpose
+new QueryBuilder()
+  .tag('team', 'marketing')
+  .tag('purpose', 'email-generation')
+  .tag('priority', 'high')
+  .build();
+```

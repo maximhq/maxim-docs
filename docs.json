@@ -253,55 +253,242 @@
                         "pages": [
                             "sdk/python/overview",
                             {
-                                "group": "Tracing",
+                                "group": "CrewAI",
+                                "pages": [
+                                    "sdk/python/integrations/crewai/crewai"
+                                ]
+                            },
+                            {
+                                "group": "Gemini",
+                                "pages": [
+                                    "sdk/python/integrations/gemini/gemini"
+                                ]
+                            },
+                            {
+                                "group": "OpenAI",
+                                "pages": [
+                                    "sdk/python/integrations/openai/one-line-integration",
+                                    "sdk/python/integrations/openai/agents-sdk"
+                                ]
+                            },
+                            {
+                                "group": "LiteLLM",
+                                "pages": [
+                                    "sdk/python/integrations/litellm/litellm-sdk",
+                                    "sdk/python/integrations/litellm/litellm-proxy"
+                                ]
+                            },
+                            {
+                                "group": "LangChain",
+                                "pages": [
+                                    "sdk/python/integrations/langchain/langchain"
+                                ]
+                            },
+                            {
+                                "group": "LangGraph",
+                                "pages": [
+                                    "sdk/python/integrations/langgraph/langgraph"
+                                ]
+                            },
+                            {
+                                "group": "Mistral",
+                                "pages": [
+                                    "sdk/python/integrations/mistral/mistral"
+                                ]
+                            },
+                            {
+                                "group": "Reference",
                                 "pages": [
                                     {
-                                        "group": "CrewAI",
+                                        "group": "Apis",
                                         "pages": [
-                                            "sdk/python/integrations/crewai/crewai"
+                                            "sdk/python/references/apis/maxim_apis"
                                         ]
                                     },
                                     {
-                                        "group": "Gemini",
+                                        "group": "Cache",
                                         "pages": [
-                                            "sdk/python/integrations/gemini/gemini"
+                                            "sdk/python/references/cache/cache",
+                                            "sdk/python/references/cache/inMemory"
+                                        ]
+                                    },
+                                    "sdk/python/references/maxim",
+                                    "sdk/python/references/expiring_key_value_store",
+                                    "sdk/python/references/scribe",
+                                    "sdk/python/references/filter_objects",                                    
+                                    {
+                                        "group": "Dataset",
+                                        "pages": [
+                                            "sdk/python/references/dataset/dataset"
                                         ]
                                     },
                                     {
-                                        "group": "OpenAI",
+                                        "group": "Decorators",
                                         "pages": [
-                                            "sdk/python/integrations/openai/one-line-integration",
-                                            "sdk/python/integrations/openai/agents-sdk"
+                                            "sdk/python/references/decorators/generation",
+                                            "sdk/python/references/decorators/retrieval",
+                                            "sdk/python/references/decorators/span",
+                                            "sdk/python/references/decorators/tool_call",
+                                            "sdk/python/references/decorators/trace"
                                         ]
                                     },
                                     {
-                                        "group": "LiteLLM",
+                                        "group": "Evaluators",
                                         "pages": [
-                                            "sdk/python/integrations/litellm/litellm-sdk",
-                                            "sdk/python/integrations/litellm/litellm-proxy"
+                                            "sdk/python/references/evaluators/base_evaluator",
+                                            "sdk/python/references/evaluators/utils"
                                         ]
                                     },
                                     {
-                                        "group": "LangChain",
+                                        "group": "Logger",
                                         "pages": [
-                                            "sdk/python/integrations/langchain/langchain"
+                                            "sdk/python/references/logger/anthropic/client",
+                                            "sdk/python/references/logger/anthropic/message",
+                                            "sdk/python/references/logger/anthropic/stream_manager",
+                                            "sdk/python/references/logger/anthropic/utils",
+                                            "sdk/python/references/logger/bedrock/async_client",
+                                            "sdk/python/references/logger/bedrock/client",
+                                            "sdk/python/references/logger/bedrock/utils",
+                                            "sdk/python/references/logger/components/attachment",
+                                            "sdk/python/references/logger/components/base",
+                                            "sdk/python/references/logger/components/error",
+                                            "sdk/python/references/logger/components/feedback",
+                                            "sdk/python/references/logger/components/generation",
+                                            "sdk/python/references/logger/components/retrieval",
+                                            "sdk/python/references/logger/components/session",
+                                            "sdk/python/references/logger/components/span",
+                                            "sdk/python/references/logger/components/tool_call",
+                                            "sdk/python/references/logger/components/trace",
+                                            "sdk/python/references/logger/components/types",
+                                            "sdk/python/references/logger/components/utils",
+                                            "sdk/python/references/logger/crewai/client",
+                                            "sdk/python/references/logger/crewai/utils",
+                                            "sdk/python/references/logger/gemini/async_client",
+                                            "sdk/python/references/logger/gemini/client",
+                                            "sdk/python/references/logger/gemini/utils",
+                                            "sdk/python/references/logger/langchain/tracer",
+                                            "sdk/python/references/logger/langchain/utils",
+                                            "sdk/python/references/logger/litellm/tracer",
+                                            "sdk/python/references/logger/litellm_proxy/tracer",
+                                            "sdk/python/references/logger/livekit/agent_session",
+                                            "sdk/python/references/logger/livekit/gemini/gemini_realtime_session",
+                                            "sdk/python/references/logger/livekit/instrumenter",
+                                            "sdk/python/references/logger/livekit/openai/realtime/handler",
+                                            "sdk/python/references/logger/livekit/realtime_session",
+                                            "sdk/python/references/logger/livekit/store",
+                                            "sdk/python/references/logger/livekit/utils",
+                                            "sdk/python/references/logger/logger",
+                                            "sdk/python/references/logger/mistral/utils",
+                                            "sdk/python/references/logger/models/container",
+                                            "sdk/python/references/logger/openai/async_chat",
+                                            "sdk/python/references/logger/openai/async_client",
+                                            "sdk/python/references/logger/openai/async_completions",
+                                            "sdk/python/references/logger/openai/chat",
+                                            "sdk/python/references/logger/openai/utils",
+                                            "sdk/python/references/logger/parsers/generation_parser",
+                                            "sdk/python/references/logger/parsers/tags_parser",
+                                            "sdk/python/references/logger/portkey",
+                                            "sdk/python/references/logger/portkey/client",
+                                            "sdk/python/references/logger/portkey/portkey",
+                                            "sdk/python/references/logger/utils",
+                                            "sdk/python/references/logger/writer"
                                         ]
                                     },
                                     {
-                                        "group": "LangGraph",
+                                        "group": "Models",
                                         "pages": [
-                                            "sdk/python/integrations/langgraph/langgraph"
+                                            "sdk/python/references/models/attachment",
+                                            "sdk/python/references/models/dataset",
+                                            "sdk/python/references/models/evaluator",
+                                            "sdk/python/references/models/folder",
+                                            "sdk/python/references/models/metadata",
+                                            "sdk/python/references/models/prompt",
+                                            "sdk/python/references/models/prompt_chain",
+                                            "sdk/python/references/models/query_builder",
+                                            "sdk/python/references/models/test_run"
                                         ]
                                     },
                                     {
-                                        "group": "Mistral",
+                                        "group": "Test_Runs",
                                         "pages": [
-                                            "sdk/python/integrations/mistral/mistral"
+                                            "sdk/python/references/test_runs/test_run_builder",
+                                            "sdk/python/references/test_runs/utils"
                                         ]
-                                    }
+                                    }                                    
                                 ]
                             },
                             "sdk/python/upgrading-to-v3"
+                        ]
+                    },
+                    {
+                        "group": "Typescript",
+                        "pages": [
+                            {
+                                "group": "Reference",
+                                "pages": [
+                                    "sdk/typescript/reference/overview",
+                                    "sdk/typescript/reference/modules",
+                                    "sdk/typescript/reference/langchain/overview",
+                                    {
+                                        "group": "LangChain",
+                                        "pages": [
+                                            "sdk/typescript/reference/langchain/classes/MaximLangchainTracer"
+                                        ]
+                                    },
+                                    "sdk/typescript/reference/core/overview",
+                                    {
+                                        "group": "Classes",
+                                        "pages": [
+                                            "sdk/typescript/reference/core/classes/BaseContainer",
+                                            "sdk/typescript/reference/core/classes/CSVFile",
+                                            "sdk/typescript/reference/core/classes/CommitLog",
+                                            "sdk/typescript/reference/core/classes/Error",
+                                            "sdk/typescript/reference/core/classes/EvaluatableBaseContainer",
+                                            "sdk/typescript/reference/core/classes/EvaluateContainer",
+                                            "sdk/typescript/reference/core/classes/EventEmittingBaseContainer",
+                                            "sdk/typescript/reference/core/classes/Generation",
+                                            "sdk/typescript/reference/core/classes/LogWriter",
+                                            "sdk/typescript/reference/core/classes/Maxim",
+                                            "sdk/typescript/reference/core/classes/MaximLogger",
+                                            "sdk/typescript/reference/core/classes/MaximLogsAPI",
+                                            "sdk/typescript/reference/core/classes/QueryBuilder",
+                                            "sdk/typescript/reference/core/classes/Retrieval",
+                                            "sdk/typescript/reference/core/classes/Session",
+                                            "sdk/typescript/reference/core/classes/Span",
+                                            "sdk/typescript/reference/core/classes/ToolCall",
+                                            "sdk/typescript/reference/core/classes/Trace"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Interfaces",
+                                        "pages": [
+                                            "sdk/typescript/reference/core/interfaces/ChatCompletionChoice",
+                                            "sdk/typescript/reference/core/interfaces/ChatCompletionMessage",
+                                            "sdk/typescript/reference/core/interfaces/ChatCompletionResult",
+                                            "sdk/typescript/reference/core/interfaces/ChatCompletionToolCall",
+                                            "sdk/typescript/reference/core/interfaces/CompletionRequest",
+                                            "sdk/typescript/reference/core/interfaces/GenerationError",
+                                            "sdk/typescript/reference/core/interfaces/Logprobs",
+                                            "sdk/typescript/reference/core/interfaces/MaximCache",
+                                            "sdk/typescript/reference/core/interfaces/TestRunLogger",
+                                            "sdk/typescript/reference/core/interfaces/TextCompletionChoice",
+                                            "sdk/typescript/reference/core/interfaces/TextCompletionResult",
+                                            "sdk/typescript/reference/core/interfaces/ToolCallConfig",
+                                            "sdk/typescript/reference/core/interfaces/ToolCallError",
+                                            "sdk/typescript/reference/core/interfaces/ToolCallFunction",
+                                            "sdk/typescript/reference/core/interfaces/Usage"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Enumerations",
+                                        "pages": [
+                                            "sdk/typescript/reference/core/enumerations/Entity",
+                                            "sdk/typescript/reference/core/enumerations/QueryRuleType",
+                                            "sdk/typescript/reference/core/enumerations/VariableType"
+                                        ]
+                                    }
+                                ]
+                            }
                         ]
                     }
                 ]

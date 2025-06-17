@@ -1,0 +1,61 @@
+# maxim.logger.bedrock.utils
+
+## [BedrockUtils](/sdk/python/references/logger/bedrock/utils)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/bedrock/utils.py#L11)
+
+
+```python
+class BedrockUtils()
+```
+
+#### parse\_message\_param
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/bedrock/utils.py#L13)
+
+
+```python
+@staticmethod
+def parse_message_param(
+        messages: Iterable[BedrockMessageParam]
+) -> List[GenerationRequestMessage]
+```
+
+Parses Bedrock Converse API message format into [GenerationRequestMessage](/sdk/python/references/logger/components/generation) format.
+
+#### get\_model\_parameters
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/bedrock/utils.py#L50)
+
+
+```python
+@staticmethod
+def get_model_parameters(**kwargs: Any) -> Dict[str, Any]
+```
+
+Extracts model parameters for logging.
+
+#### parse\_message
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/bedrock/utils.py#L56)
+
+
+```python
+@staticmethod
+def parse_message(response: BedrockMessage) -> Dict[str, Any]
+```
+
+Parse the [Message](/sdk/python/references/models/prompt) response from Bedrock Converse API into a standardized format.
+
+#### get\_model\_name
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/bedrock/utils.py#L95)
+
+
+```python
+@staticmethod
+def get_model_name(model_id: str) -> str
+```
+
+Extracts the model name from the model ID or ARN.
+

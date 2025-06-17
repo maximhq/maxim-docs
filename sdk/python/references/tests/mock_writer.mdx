@@ -1,0 +1,280 @@
+# maxim.tests.mock\_writer
+
+Mock writer for testing purposes.
+
+This module provides a mock implementation of [LogWriter](/sdk/python/references/logger/writer) that captures
+logs in memory for testing purposes.
+
+## [MockLogWriter](/sdk/python/references/tests/mock_writer)
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L16)
+
+
+```python
+class MockLogWriter()
+```
+
+Mock implementation of [LogWriter](/sdk/python/references/logger/writer) for testing.
+
+This class captures all logs and commands in memory, allowing tests
+to verify what was logged without making actual API calls.
+
+#### \_\_init\_\_
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L24)
+
+
+```python
+def __init__(config: LogWriterConfig)
+```
+
+Initialize a [MockLogWriter](/sdk/python/references/tests/mock_writer) instance.
+
+**Arguments**:
+
+- `config` - Configuration for the [LogWriter](/sdk/python/references/logger/writer).
+
+#### repository\_id
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L53)
+
+
+```python
+@property
+def repository_id()
+```
+
+Get the repository ID.
+
+#### commit
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L57)
+
+
+```python
+def commit(log: CommitLog)
+```
+
+Mock commit that stores the log instead of queuing it.
+
+**Arguments**:
+
+- `log` - [CommitLog](/sdk/python/references/logger/components/types) object to store.
+
+#### flush
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L80)
+
+
+```python
+def flush(is_sync=False)
+```
+
+Mock flush that moves queued logs to flushed logs.
+
+**Arguments**:
+
+- `is_sync` - Whether to flush synchronously (ignored in mock).
+
+#### flush\_commit\_logs
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L100)
+
+
+```python
+def flush_commit_logs(is_sync=False)
+```
+
+Mock flush for commit logs only.
+
+#### flush\_upload\_attachment\_logs
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L107)
+
+
+```python
+def flush_upload_attachment_logs(is_sync=False)
+```
+
+Mock flush for upload attachment logs only.
+
+#### cleanup
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L114)
+
+
+```python
+def cleanup(is_sync=False)
+```
+
+Mock cleanup that flushes remaining logs.
+
+**Arguments**:
+
+- `is_sync` - Whether to cleanup synchronously (ignored in mock).
+
+#### get\_all\_logs
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L127)
+
+
+```python
+def get_all_logs() -> list[CommitLog]
+```
+
+Get all logs (committed, flushed, and uploaded).
+
+#### get\_committed\_logs
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L132)
+
+
+```python
+def get_committed_logs()
+```
+
+Get only committed logs.
+
+#### get\_flushed\_logs
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L137)
+
+
+```python
+def get_flushed_logs()
+```
+
+Get only flushed logs.
+
+#### get\_uploaded\_attachments
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L142)
+
+
+```python
+def get_uploaded_attachments()
+```
+
+Get only uploaded attachment logs.
+
+#### get\_logs\_by\_action
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L147)
+
+
+```python
+def get_logs_by_action(action)
+```
+
+Get logs filtered by action type.
+
+#### get\_logs\_by\_entity\_action
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L152)
+
+
+```python
+def get_logs_by_entity_action(entity, action)
+```
+
+Get logs filtered by entity and action type.
+
+#### get\_logs\_by\_entity
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L161)
+
+
+```python
+def get_logs_by_entity(entity)
+```
+
+Get logs filtered by entity type.
+
+#### get\_logs\_by\_entity\_and\_action
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L166)
+
+
+```python
+def get_logs_by_entity_and_action(entity, action)
+```
+
+Get logs filtered by entity and action type.
+
+#### get\_logs\_by\_entity\_id
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L175)
+
+
+```python
+def get_logs_by_entity_id(entity_id)
+```
+
+Get logs filtered by entity ID.
+
+#### clear\_logs
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L180)
+
+
+```python
+def clear_logs()
+```
+
+Clear all stored logs.
+
+#### assert\_log\_count
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L190)
+
+
+```python
+def assert_log_count(expected_count)
+```
+
+Assert the total number of logs.
+
+#### assert\_entity\_action\_count
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L197)
+
+
+```python
+def assert_entity_action_count(entity, action, expected_count)
+```
+
+Assert the number of logs for a specific entity and action.
+
+#### assert\_action\_count
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L205)
+
+
+```python
+def assert_action_count(action, expected_count)
+```
+
+Assert the number of logs for a specific action.
+
+#### assert\_entity\_count
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L213)
+
+
+```python
+def assert_entity_count(entity, expected_count)
+```
+
+Assert the number of logs for a specific entity.
+
+#### print\_logs\_summary
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py#L221)
+
+
+```python
+def print_logs_summary()
+```
+
+Print a summary of all captured logs for debugging.
+

@@ -1,0 +1,59 @@
+# maxim.logger.livekit.agent\_session
+
+#### intercept\_session\_start
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/livekit/agent_session.py#L25)
+
+
+```python
+def intercept_session_start(self: AgentSession, room, room_name, agent: Agent)
+```
+
+This function is called when a session starts.
+This is the point where we create a new session for [Maxim](/sdk/python/references/maxim).
+The session info along with room_id, agent_id, etc is stored in the thread-local store.
+
+#### intercept\_update\_agent\_state
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/livekit/agent_session.py#L119)
+
+
+```python
+def intercept_update_agent_state(self, new_state)
+```
+
+This function is called when the agent state is updated.
+
+#### intercept\_generate\_reply
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/livekit/agent_session.py#L134)
+
+
+```python
+def intercept_generate_reply(self, instructions)
+```
+
+This function is called when the agent generates a reply.
+
+#### intercept\_user\_state\_changed
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/livekit/agent_session.py#L148)
+
+
+```python
+def intercept_user_state_changed(self, new_state)
+```
+
+This function is called when the user state is changed.
+
+#### handle\_tool\_call\_executed
+
+[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/livekit/agent_session.py#L166)
+
+
+```python
+def handle_tool_call_executed(self, event: FunctionToolsExecutedEvent)
+```
+
+This function is called when the agent executes a tool call.
+
