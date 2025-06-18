@@ -864,11 +864,7 @@
         {
             "source": "/observe/quickstart#2-generate-api-key",
             "destination": "/settings/maxim-api-keys"
-        },
-        {
-            "source": "/sdk/overview",
-            "destination": "/sdk/overview"
-        }
+        }    
     ],
     "footer": {
         "socials": {
