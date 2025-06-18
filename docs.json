@@ -432,6 +432,23 @@
                         "group": "Typescript",
                         "pages": [
                             {
+                                "group": "Integrations",
+                                "pages": [
+                                    {
+                                        "group": "LangChain",
+                                        "pages": [
+                                            "sdk/typescript/integrations/langchain/langchain"
+                                        ]
+                                    },
+                                    {
+                                        "group": "LangGraph",
+                                        "pages": [
+                                            "sdk/typescript/integrations/langgraph/langgraph"
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
                                 "group": "Reference",
                                 "pages": [
                                     "sdk/typescript/reference/overview",
