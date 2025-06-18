@@ -10,11 +10,6 @@
         "default": "light",
         "strict": true
     },
-    "fonts": {
-        "heading": {
-            "family": "Bricolage Grotesque, sans-serif"
-        }
-    },
     "favicon": "/favicon.svg",
     "navigation": {
         "tabs": [
