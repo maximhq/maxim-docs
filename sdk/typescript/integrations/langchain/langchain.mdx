@@ -1,0 +1,632 @@
+---
+title: "LangChain Integration"
+description: "Complete guide to integrating Maxim observability with LangChain applications in TypeScript/JavaScript"
+---
+
+# LangChain Integration with Maxim
+
+[LangChain](https://www.langchain.com/) is a powerful framework for developing applications powered by language models. This comprehensive guide shows you how to integrate Maxim's observability capabilities with your LangChain applications in TypeScript/JavaScript.
+
+## What You'll Get
+
+With Maxim's LangChain integration, you can automatically track:
+
+- **🔍 LLM Calls**: All interactions with language models including prompts, responses, and metadata
+- **⛓️ Chain Executions**: Complex workflows and their execution flows
+- **🛠️ Tool Calls**: Function calls and their results
+- **📚 Retrievals**: Vector store searches and document retrievals
+- **❌ Errors**: Failed operations with detailed error information
+- **📊 Performance**: Latency, token usage, and costs
+
+## Prerequisites
+
+Before getting started, make sure you have:
+
+- Node.js 16+ installed
+- A Maxim account with API access
+- Your preferred LLM provider API keys (OpenAI, Anthropic, etc.)
+
+## Installation
+
+Install the required packages:
+
+<CodeGroup>
+```bash npm
+npm install @maximai/maxim-js @langchain/core
+```
+
+```bash yarn
+yarn add @maximai/maxim-js @langchain/core
+```
+
+```bash pnpm
+pnpm add @maximai/maxim-js @langchain/core
+```
+
+```bash bun
+bun add @maximai/maxim-js @langchain/core
+```
+
+</CodeGroup>
+
+For specific LLM providers, install their respective packages:
+
+<CodeGroup>
+
+```bash npm
+# For OpenAI
+npm install @langchain/openai
+
+# For Anthropic
+npm install @langchain/anthropic
+
+# For other integrations
+npm install @langchain/community
+```
+
+```bash yarn
+# For OpenAI
+yarn add @langchain/openai
+
+# For Anthropic
+yarn add @langchain/anthropic
+
+# For other integrations
+yarn add @langchain/community
+```
+
+```bash pnpm
+# For OpenAI
+pnpm add @langchain/openai
+
+# For Anthropic
+pnpm add @langchain/anthropic
+
+# For other integrations
+pnpm add @langchain/community
+```
+
+```bash bun
+# For OpenAI
+bun add @langchain/openai
+
+# For Anthropic
+bun add @langchain/anthropic
+
+# For other integrations
+bun add @langchain/community
+```
+
+</CodeGroup>
+
+For tool calling examples (used in the complete example), you'll also need:
+
+<CodeGroup>
+
+```bash npm
+npm install zod
+```
+
+```bash yarn
+yarn add zod
+```
+
+```bash pnpm
+pnpm add zod
+```
+
+```bash bun
+bun add zod
+```
+
+</CodeGroup>
+
+## Environment Setup
+
+Create a `.env` file in your project root:
+
+```env title=".env" icon="gear" lines
+# Maxim Configuration
+MAXIM_API_KEY=your_maxim_api_key_here
+MAXIM_LOG_REPO_ID=your_log_repository_id
+
+# LLM Provider Keys
+OPENAI_API_KEY=your_openai_api_key
+ANTHROPIC_API_KEY=your_anthropic_api_key
+```
+
+## Quick Start
+
+Here's a minimal example to get you started:
+
+```typescript title="quickstart.ts - Basic LangChain Integration" icon="js" lines highlight={7-16,19,30}
+import { ChatPromptTemplate } from "@langchain/core/prompts";
+import { ChatOpenAI } from "@langchain/openai";
+import { Maxim } from "@maximai/maxim-js";
+import { MaximLangchainTracer } from "@maximai/maxim-js/langchain";
+
+// Initialize Maxim
+const maxim = new Maxim({
+  apiKey: process.env.MAXIM_API_KEY,
+});
+const logger = await maxim.logger({
+  id: process.env.MAXIM_LOG_REPO_ID,
+});
+
+if (!logger) {
+  throw new Error("logger is not available");
+}
+
+// Create the tracer
+const maximTracer = new MaximLangchainTracer(logger);
+
+// Create your LangChain components
+const prompt = ChatPromptTemplate.fromTemplate("What is {topic}?");
+const model = new ChatOpenAI({
+  openAIApiKey: process.env.OPENAI_API_KEY,
+  modelName: "gpt-4o-mini",
+});
+const chain = prompt.pipe(model);
+
+// Use with automatic tracing
+const result = await chain.invoke({ topic: "artificial intelligence" }, { callbacks: [maximTracer] });
+
+console.log(result.content);
+
+// Clean up resources
+await maxim.cleanup();
+```
+
+## Core Integration Patterns
+
+### 1. Runtime Integration
+
+Add tracing to individual calls:
+
+```typescript title="Runtime Integration Pattern" icon="play" lines highlight={2,5}
+// For single calls
+const result = await chain.invoke(input, { callbacks: [maximTracer] });
+
+// For streaming
+const stream = await chain.stream(input, { callbacks: [maximTracer] });
+for await (const chunk of stream) {
+  console.log(chunk);
+}
+```
+
+### 2. Permanent Integration
+
+Attach the tracer to chains permanently:
+
+```typescript title="Permanent Integration Pattern" icon="link" lines highlight={1}
+const tracedChain = chain.withConfig({ callbacks: [maximTracer] });
+
+// Now all calls are automatically traced
+const result1 = await tracedChain.invoke({ topic: "AI" });
+const result2 = await tracedChain.invoke({ topic: "ML" });
+```
+
+## Basic Example
+
+Simple chat model with tracing:
+
+```typescript title="basic-example.ts - Simple Chat Model" icon="message" lines expandable highlight={6-15,18,27}
+import { ChatOpenAI } from "@langchain/openai";
+import { Maxim } from "@maximai/maxim-js";
+import { MaximLangchainTracer } from "@maximai/maxim-js/langchain";
+
+// Initialize Maxim
+const maxim = new Maxim({
+  apiKey: process.env.MAXIM_API_KEY,
+});
+const logger = await maxim.logger({
+  id: process.env.MAXIM_LOG_REPO_ID,
+});
+
+if (!logger) {
+  throw new Error("logger is not available");
+}
+
+// Create the tracer
+const maximTracer = new MaximLangchainTracer(logger);
+
+const model = new ChatOpenAI({
+  openAIApiKey: process.env.OPENAI_API_KEY,
+  modelName: "gpt-4o-mini",
+  temperature: 0,
+});
+
+const response = await model.invoke("Who is Diego Maradona?", {
+  callbacks: [maximTracer],
+});
+
+console.log(response.content);
+
+// Clean up resources
+await maxim.cleanup();
+```
+
+## Custom Metadata
+
+Customize how your operations appear in Maxim by providing metadata:
+
+### Trace-Level Metadata
+
+```typescript title="Trace-Level Metadata Configuration" lines highlight={4-12}
+const result = await chain.invoke(input, {
+  callbacks: [maximTracer],
+  metadata: {
+    maxim: {
+      traceName: "Customer Support Chat",
+      sessionId: "user_123_session",
+      traceTags: {
+        category: "support",
+        priority: "high",
+        version: "v2.1",
+      },
+    },
+    // Non-Maxim metadata
+    user_id: "user_123",
+    request_id: "req_456",
+  },
+});
+```
+
+### Component-Specific Metadata
+
+```typescript title="Component-Specific Metadata Examples" lines highlight={5-12,20-27,35-42,50-57}
+// For chains
+const chainResult = await chain.invoke(input, {
+  callbacks: [maximTracer],
+  metadata: {
+    maxim: {
+      chainName: "Content Processing Chain",
+      chainTags: {
+        type: "sequential",
+        complexity: "medium",
+        steps: "3",
+      },
+    },
+  },
+});
+
+// For LLM generations
+const llmResult = await model.invoke(prompt, {
+  callbacks: [maximTracer],
+  metadata: {
+    maxim: {
+      generationName: "Content Generation",
+      generationTags: {
+        topic: "technology",
+        difficulty: "beginner",
+        model: "gpt-4",
+      },
+    },
+  },
+});
+
+// For retrievals
+const docs = await retriever.invoke(query, {
+  callbacks: [maximTracer],
+  metadata: {
+    maxim: {
+      retrievalName: "Knowledge Base Search",
+      retrievalTags: {
+        index_name: "kb_documents",
+        search_type: "semantic",
+        top_k: "5",
+      },
+    },
+  },
+});
+
+// For tool calls
+const toolResult = await tool.invoke(args, {
+  callbacks: [maximTracer],
+  metadata: {
+    maxim: {
+      toolCallName: "API Integration",
+      toolCallTags: {
+        api: "external_service",
+        version: "v1",
+        timeout: "30s",
+      },
+    },
+  },
+});
+```
+
+## Error Handling
+
+The tracer automatically captures and logs all errors from LangChain operations. No additional error handling code is required - simply use the tracer and all failures will be tracked with full context and stack traces.
+
+## Supported Providers
+
+The tracer automatically detects and supports major LLM providers:
+
+- **OpenAI** (including Azure OpenAI)
+- **Anthropic**
+- **Google** (Vertex AI, Gemini)
+- **Amazon Bedrock**
+- **Hugging Face**
+- **Together AI**
+- **Groq**
+- **Local models**
+
+## Best Practices
+
+### 1. Meaningful Names and Tags
+
+```typescript title="Best Practice - Meaningful Metadata" icon="thumbs-up" lines
+// Good: Descriptive names and relevant tags
+metadata: {
+  maxim: {
+    generationName: "Product Description Generator",
+    generationTags: {
+      product_category: "electronics",
+      tone: "professional",
+      length: "short"
+    }
+  }
+}
+
+// Avoid: Generic names without context
+metadata: {
+  maxim: {
+    generationName: "LLM Call",
+    generationTags: { test: "true" }
+  }
+}
+```
+
+### 2. Session Management
+
+```typescript title="Best Practice - Session Management" icon="users" lines
+// Group related interactions under sessions
+await chain.invoke(input, {
+  callbacks: [maximTracer],
+  metadata: {
+    maxim: {
+      sessionId: userSessionId,
+      traceName: "User Query",
+      traceTags: { user_type: "premium" },
+    },
+  },
+});
+```
+
+### 3. Environment-Specific Tagging
+
+```typescript title="Best Practice - Environment Tagging" icon="server" lines
+const environmentTags = {
+  environment: process.env.NODE_ENV || "development",
+  version: process.env.APP_VERSION || "unknown",
+  region: process.env.AWS_REGION || "us-east-1",
+};
+
+await chain.invoke(input, {
+  callbacks: [maximTracer],
+  metadata: {
+    maxim: {
+      traceTags: {
+        ...environmentTags,
+        feature: "chat_completion",
+      },
+    },
+  },
+});
+```
+
+### 4. Cleanup
+
+```typescript title="Critical - Resource Cleanup" icon="triangle-exclamation" lines highlight={1-6}
+/**
+ * Always call `cleanup()` before your application
+ * exits. Failure to do so may result in memory leaks, unflushed data, or
+ * hanging processes. This is especially important in production environments
+ * and long-running applications.
+ */
+await maxim.cleanup();
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**1. Missing API Keys or API key not found**
+
+Solution: Ensure all required environment variables are set.
+
+**2. Import Error for @langchain/core**
+
+Solution: Install the required LangChain packages.
+
+**3. Tracer Not Working or No Traces Appearing on Maxim**
+
+Solution: Verify your `MAXIM_LOG_REPO_ID` is correct and the tracer is properly passed to callbacks.
+
+## Complete Example: Calculator Tool Chain
+
+Here's a comprehensive example demonstrating a complete tool calling workflow that executes tools and gets the final response:
+
+```typescript title="calculator-chain.ts - Complete Tool Chain Example" icon="calculator" lines expandable highlight={10-13,16-24,68-74,129-136,145,148-157}
+import { AIMessage, HumanMessage, ToolMessage } from "@langchain/core/messages";
+import { ChatPromptTemplate } from "@langchain/core/prompts";
+import { RunnableLambda } from "@langchain/core/runnables";
+import { tool } from "@langchain/core/tools";
+import { ChatOpenAI } from "@langchain/openai";
+import { Maxim } from "@maximai/maxim-js";
+import { MaximLangchainTracer } from "@maximai/maxim-js/langchain";
+import { z } from "zod";
+
+// Initialize Maxim
+const maxim = new Maxim({
+  apiKey: process.env.MAXIM_API_KEY,
+});
+
+async function calculatorChainExample() {
+  const logger = await maxim.logger({
+    id: process.env.MAXIM_LOG_REPO_ID,
+  });
+
+  if (!logger) {
+    throw new Error("logger is not available");
+  }
+
+  const maximTracer = new MaximLangchainTracer(logger);
+
+  // Step 1: Define a calculator tool that can perform basic operations
+  const calculatorTool = tool(
+    async ({ operation, a, b }) => {
+      switch (operation) {
+        case "add":
+          return a + b;
+        case "multiply":
+          return a * b;
+        case "subtract":
+          return a - b;
+        case "divide":
+          return a / b;
+        default:
+          throw new Error(`Unknown operation: ${operation}`);
+      }
+    },
+    {
+      name: "calculator",
+      schema: z.object({
+        operation: z.enum(["add", "multiply", "subtract", "divide"]),
+        a: z.number(),
+        b: z.number(),
+      }),
+      description: "Performs basic arithmetic operations",
+    }
+  );
+
+  // Step 2: Create a system prompt for the tool calling chain
+  const prompt = ChatPromptTemplate.fromMessages([
+    [
+      "system",
+      "You are a helpful assistant that can perform calculations using tools. Execute tools step by step and provide the final answer.",
+    ],
+    ["placeholder", "{messages}"],
+  ]);
+
+  // Step 3: Create the LLM and bind tools to it
+  const llm = new ChatOpenAI({
+    openAIApiKey: process.env.OPENAI_API_KEY,
+    modelName: "gpt-4o",
+    temperature: 0,
+    metadata: {
+      maxim: {
+        generationName: "calculator-model",
+        generationTags: {
+          testType: "tool-execution",
+          complexity: "sequential",
+        },
+      },
+    },
+  });
+
+  const llmWithTools = llm.bindTools([calculatorTool]);
+  const chain = prompt.pipe(llmWithTools);
+
+  // Step 4: Create a complete tool calling chain that executes tools and gets final response
+  const toolChain = RunnableLambda.from(async (userInput: string, config) => {
+    // Initialize the conversation with the user's question
+    const messages: (HumanMessage | AIMessage | ToolMessage)[] = [new HumanMessage(userInput)];
+
+    // Continue until no more tool calls are needed (max 5 iterations for safety)
+    const maxIterations = 5;
+    let iteration = 0;
+
+    while (iteration < maxIterations) {
+      // Get response from LLM (this may include tool calls)
+      const aiMsg = await chain.invoke({ messages }, config);
+      messages.push(aiMsg);
+
+      // Check if there are tool calls to execute
+      if (!aiMsg.tool_calls || aiMsg.tool_calls.length === 0) {
+        // No more tool calls needed - return the final response
+        return aiMsg;
+      }
+
+      // Execute each tool call and add results to conversation
+      for (const toolCall of aiMsg.tool_calls) {
+        try {
+          // Execute the tool with proper tracing
+          const toolResult = await calculatorTool.invoke(toolCall, config);
+
+          // Add tool result to conversation
+          if (toolResult instanceof ToolMessage) {
+            messages.push(toolResult);
+          } else {
+            // Create a ToolMessage if needed
+            messages.push(new ToolMessage(String(toolResult), toolCall.id || "unknown"));
+          }
+        } catch (error) {
+          // Handle tool execution errors
+          const errorMsg = new ToolMessage(`Error executing ${toolCall.name}: ${(error as Error).message}`, toolCall.id || "unknown");
+          messages.push(errorMsg);
+        }
+      }
+
+      iteration++;
+    }
+
+    // If we reach max iterations, return the last AI message
+    return messages[messages.length - 1];
+  }).withConfig({
+    // Add metadata for the entire workflow
+    metadata: {
+      maxim: {
+        chainName: "calculator-tool-workflow",
+        chainTags: {
+          type: "tool-execution",
+          workflow: "multi-step-calculation",
+          version: "1.0",
+        },
+      },
+    },
+  });
+
+  // Step 5: Execute the chain with a complex calculation
+  const query = "Calculate 15 * 4 and then add 100 to the result";
+
+  const result = await toolChain.invoke(query, {
+    // Add the tracer to capture all operations
+    callbacks: [maximTracer],
+    // Add comprehensive metadata for this execution
+    metadata: {
+      maxim: {
+        traceName: "Multi-Step Calculation",
+        sessionId: "calc_session_001",
+        traceTags: {
+          category: "mathematics",
+          complexity: "multi-step",
+          operation_type: "mixed_arithmetic",
+          user_type: "demo",
+        },
+      },
+      // Non-Maxim metadata
+      query_type: "calculation",
+      timestamp: new Date().toISOString(),
+    },
+  });
+
+  return result;
+}
+
+// Execute the example
+const calcResult = await calculatorChainExample();
+console.log("Calculator Result:", calcResult.content);
+
+// Clean up resources
+await maxim.cleanup();
+```
+
+## Next Steps
+
+- Explore [LangGraph integration](/sdk/typescript/integrations/langgraph/langgraph) for complex agent workflows
+- Check out the [API reference](/sdk/typescript/reference/langchain/classes/MaximLangchainTracer) for detailed documentation
+- Learn about [evaluation workflows](/online-evals/overview) to assess your LLM applications
+- Set up [dashboards](/tracing/dashboard) to monitor your applications in production
