@@ -282,6 +282,12 @@
                                             "sdk/python/integrations/langchain/langchain"
                                         ]
                                     },
+                                  {
+                                    "group" : "LiveKit",
+                                    "pages" : [
+                                      "sdk/python/integrations/livekit/livekit"
+                                    ]
+                                  },
                                     {
                                         "group": "LangGraph",
                                         "pages": [
