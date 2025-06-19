@@ -1,9 +1,10 @@
-# maxim.logger.langchain.tracer
+---
+title: langchain.Tracer
+---
+
+[View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/tracer.py)
 
 ## [MaximLangchainTracer](/sdk/python/references/logger/langchain/tracer)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/tracer.py#L38)
-
 
 ```python
 class MaximLangchainTracer(BaseCallbackHandler)
@@ -16,9 +17,6 @@ A callback handler that logs langchain outputs to [Maxim](/sdk/python/references
 - `logger` - [[Logger](/sdk/python/references/logger/logger)](/sdk/python/references/logger/logger): [Maxim](/sdk/python/references/maxim) Logger instance to log outputs
 
 #### \_\_init\_\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/tracer.py#L46)
-
 
 ```python
 def __init__(logger: Logger,
@@ -33,9 +31,6 @@ Initializes the Langchain Tracer
 - `logger` - [[Logger](/sdk/python/references/logger/logger)](/sdk/python/references/logger/logger): [Maxim](/sdk/python/references/maxim) Logger instance to log outputs
 
 #### on\_llm\_start
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/tracer.py#L217)
-
 
 ```python
 def on_llm_start(serialized: dict[str, Any],
@@ -52,9 +47,6 @@ Runs when LLM starts
 
 #### on\_chat\_model\_start
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/tracer.py#L269)
-
-
 ```python
 def on_chat_model_start(serialized: Dict[str, Any],
                         messages: List[List[BaseMessage]],
@@ -66,9 +58,6 @@ Runs when a chat model call starts
 
 #### on\_llm\_new\_token
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/tracer.py#L347)
-
-
 ```python
 def on_llm_new_token(token: str, **kwargs: Any) -> Any
 ```
@@ -76,9 +65,6 @@ def on_llm_new_token(token: str, **kwargs: Any) -> Any
 Run on new LLM token. Only available when streaming is enabled.
 
 #### on\_llm\_end
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/tracer.py#L350)
-
 
 ```python
 def on_llm_end(response: LLMResult, **kwargs: Any) -> Any
@@ -88,9 +74,6 @@ Run when LLM ends running.
 
 #### on\_llm\_error
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/tracer.py#L420)
-
-
 ```python
 def on_llm_error(error: Union[Exception, BaseException, KeyboardInterrupt],
                  **kwargs: Any) -> Any
@@ -99,9 +82,6 @@ def on_llm_error(error: Union[Exception, BaseException, KeyboardInterrupt],
 Run when LLM errors.
 
 #### on\_retriever\_start
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/tracer.py#L449)
-
 
 ```python
 def on_retriever_start(serialized: dict[str, Any],

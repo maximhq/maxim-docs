@@ -1,4 +1,8 @@
-# maxim.logger.writer
+---
+title: Writer
+---
+
+[View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py)
 
 Module for handling log writing operations in the [Maxim](/sdk/python/references/maxim) SDK.
 
@@ -6,9 +10,6 @@ This module provides classes for configuring and managing log writing,
 including automatic flushing, file-based persistence, and API integration.
 
 ## [LogWriterConfig](/sdk/python/references/logger/writer)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L36)
-
 
 ```python
 class LogWriterConfig()
@@ -27,9 +28,6 @@ Configuration class for the [LogWriter](/sdk/python/references/logger/writer).
 - `raise_exceptions` - Whether to raise exceptions or handle them silently.
 
 #### \_\_init\_\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L50)
-
 
 ```python
 def __init__(base_url,
@@ -55,9 +53,6 @@ Initialize a [LogWriterConfig](/sdk/python/references/logger/writer) instance.
 
 ## [LogWriter](/sdk/python/references/logger/writer)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L81)
-
-
 ```python
 class LogWriter()
 ```
@@ -68,9 +63,6 @@ This class manages a queue of logs, periodically flushes them to the API,
 and provides fallback to local filesystem storage when API calls fail.
 
 #### \_\_init\_\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L50)
-
 
 ```python
 def __init__(config: LogWriterConfig)
@@ -89,9 +81,6 @@ Initialize a [LogWriter](/sdk/python/references/logger/writer) instance.
 
 #### repository\_id
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L134)
-
-
 ```python
 @property
 def repository_id()
@@ -105,9 +94,6 @@ Get the repository ID.
 
 #### upload\_file\_data
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L160)
-
-
 ```python
 def upload_file_data(add_attachment_log: CommitLog)
 ```
@@ -115,9 +101,6 @@ def upload_file_data(add_attachment_log: CommitLog)
 Upload a file attachment to the [Maxim](/sdk/python/references/maxim) API.
 
 #### upload\_file
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L208)
-
 
 ```python
 def upload_file(add_attachment_log: CommitLog)
@@ -127,9 +110,6 @@ Upload a file data attachment to the [Maxim](/sdk/python/references/maxim) API.
 
 #### upload\_attachments
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L282)
-
-
 ```python
 def upload_attachments(attachment_logs: list[CommitLog])
 ```
@@ -137,9 +117,6 @@ def upload_attachments(attachment_logs: list[CommitLog])
 Upload all attachments to the [Maxim](/sdk/python/references/maxim) API.
 
 #### upload\_attachment
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L289)
-
 
 ```python
 def upload_attachment(add_attachment_log: CommitLog)
@@ -153,9 +130,6 @@ Upload an attachment to the [Maxim](/sdk/python/references/maxim) API.
 
 #### is\_running\_on\_lambda
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L322)
-
-
 ```python
 def is_running_on_lambda()
 ```
@@ -167,9 +141,6 @@ Check if the code is running in an AWS Lambda environment.
 - `bool` - True if running in AWS Lambda, False otherwise.
 
 #### write\_to\_file
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L331)
-
 
 ```python
 def write_to_file(logs)
@@ -193,9 +164,6 @@ Write logs to a local file.
 
 #### flush\_log\_files
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L360)
-
-
 ```python
 def flush_log_files()
 ```
@@ -211,9 +179,6 @@ and deletes the files if successful.
 
 #### can\_access\_filesystem
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L387)
-
-
 ```python
 def can_access_filesystem()
 ```
@@ -225,9 +190,6 @@ Check if the filesystem is accessible for writing.
 - `bool` - True if filesystem is accessible, False otherwise.
 
 #### flush\_logs
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L399)
-
 
 ```python
 def flush_logs(logs: list[CommitLog])
@@ -243,9 +205,6 @@ for handling failures based on the environment.
 - `logs` - List of [CommitLog](/sdk/python/references/logger/components/types) objects to flush.
 
 #### commit
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L484)
-
 
 ```python
 def commit(log: CommitLog)
@@ -264,9 +223,6 @@ Add a log to the queue for later flushing.
 
 #### flush\_upload\_attachment\_logs
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L522)
-
-
 ```python
 def flush_upload_attachment_logs(is_sync=False)
 ```
@@ -279,9 +235,6 @@ with special handling for AWS Lambda environments.
 
 #### flush\_commit\_logs
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L556)
-
-
 ```python
 def flush_commit_logs(is_sync=False)
 ```
@@ -293,9 +246,6 @@ with special handling for AWS Lambda environments.
 
 #### flush
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L589)
-
-
 ```python
 def flush(is_sync=False)
 ```
@@ -303,9 +253,6 @@ def flush(is_sync=False)
 Flush all queued logs to the [Maxim](/sdk/python/references/maxim) API.
 
 #### cleanup
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py#L596)
-
 
 ```python
 def cleanup(is_sync=False)

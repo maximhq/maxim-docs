@@ -1,9 +1,10 @@
-# maxim.logger.components.span
+---
+title: components.Span
+---
+
+[View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py)
 
 ## [SpanConfig](/sdk/python/references/logger/components/span)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py#L37)
-
 
 ```python
 @deprecated(
@@ -20,9 +21,6 @@ This class represents a span config.
 
 ## [SpanConfigDict](/sdk/python/references/logger/components/span)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py#L48)
-
-
 ```python
 class SpanConfigDict(TypedDict)
 ```
@@ -32,9 +30,6 @@ class SpanConfigDict(TypedDict)
 This class represents a span config dictionary.
 
 #### get\_span\_config\_dict
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py#L59)
-
 
 ```python
 def get_span_config_dict(
@@ -54,9 +49,6 @@ Convert a span config to a span config dict else return the config.
 
 ## [Span](/sdk/python/references/logger/components/span)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py#L81)
-
-
 ```python
 class Span(EventEmittingBaseContainer)
 ```
@@ -66,9 +58,6 @@ class Span(EventEmittingBaseContainer)
 This class represents a span.
 
 #### \_\_init\_\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py#L89)
-
 
 ```python
 def __init__(config: Union[SpanConfig, SpanConfigDict], writer: LogWriter)
@@ -83,9 +72,6 @@ Initialize a span.
 
 #### span
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py#L101)
-
-
 ```python
 def span(config: Union[SpanConfig, SpanConfigDict])
 ```
@@ -98,9 +84,6 @@ Add a span to this span.
 
 #### input
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py#L120)
-
-
 ```python
 def input(input: str)
 ```
@@ -112,9 +95,6 @@ Set the input for this span.
 - `input` - The input to set for this span.
 
 #### input\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py#L130)
-
 
 ```python
 @staticmethod
@@ -130,9 +110,6 @@ Set the input for this span.
 - `input` - The input to set for this span.
 
 #### add\_error
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py#L147)
-
 
 ```python
 def add_error(config: ErrorConfig) -> Error
@@ -150,9 +127,6 @@ Add an error to this span.
 - `[Error](/sdk/python/references/models/prompt)` - The error that was added.
 
 #### error\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py#L162)
-
 
 ```python
 @staticmethod
@@ -173,9 +147,6 @@ Add an error to this span.
 - `[Error](/sdk/python/references/models/prompt)` - The error that was added.
 
 #### span\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py#L185)
-
 
 ```python
 @staticmethod
@@ -198,9 +169,6 @@ Add a span to this span.
 
 #### generation
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py#L214)
-
-
 ```python
 def generation(
         config: Union[GenerationConfig, GenerationConfigDict]) -> Generation
@@ -219,9 +187,6 @@ Add a generation to this span.
 
 #### tool\_call
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py#L239)
-
-
 ```python
 def tool_call(config: Union[ToolCallConfig, ToolCallConfigDict]) -> ToolCall
 ```
@@ -238,9 +203,6 @@ Add a tool call to this span.
 - `[ToolCall](/sdk/python/references/models/prompt)` - The tool call that was added.
 
 #### tool\_call\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py#L261)
-
 
 ```python
 @staticmethod
@@ -262,9 +224,6 @@ Add a tool call to this span.
 - `[ToolCall](/sdk/python/references/models/prompt)` - The tool call that was added.
 
 #### generation\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py#L292)
-
 
 ```python
 @staticmethod
@@ -288,9 +247,6 @@ Add a generation to this span.
 
 #### add\_attachment
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py#L322)
-
-
 ```python
 def add_attachment(attachment: Union[FileAttachment, FileDataAttachment,
                                      UrlAttachment])
@@ -303,9 +259,6 @@ Add an attachment to this span.
 - `attachment` - The attachment to add.
 
 #### add\_attachment\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py#L334)
-
 
 ```python
 @staticmethod
@@ -324,9 +277,6 @@ Static method to add an attachment to a span.
 
 #### retrieval
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py#L355)
-
-
 ```python
 def retrieval(config: Union[RetrievalConfig, RetrievalConfigDict])
 ```
@@ -343,9 +293,6 @@ Add a retrieval to this span.
 - `[Retrieval](/sdk/python/references/logger/components/retrieval)` - The retrieval that was added.
 
 #### retrieval\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py#L377)
-
 
 ```python
 @staticmethod
@@ -368,9 +315,6 @@ Add a retrieval to this span.
 
 #### end\_
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py#L407)
-
-
 ```python
 @staticmethod
 def end_(writer: LogWriter,
@@ -388,9 +332,6 @@ End this span.
 
 #### add\_tag\_
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py#L426)
-
-
 ```python
 @staticmethod
 def add_tag_(writer: LogWriter, span_id: str, key: str, value: str)
@@ -406,9 +347,6 @@ Add a tag to this span.
 - `value` - The value of the tag.
 
 #### event\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py#L441)
-
 
 ```python
 @staticmethod

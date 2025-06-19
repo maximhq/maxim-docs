@@ -1,9 +1,10 @@
-# maxim.logger.anthropic.message
+---
+title: Message
+---
+
+[View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/message.py)
 
 ## [MaximAnthropicMessages](/sdk/python/references/logger/anthropic/message)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/message.py#L29)
-
 
 ```python
 class MaximAnthropicMessages(Messages)
@@ -24,9 +25,6 @@ while maintaining compatibility with the original Anthropic Messages API.
 
 #### \_\_init\_\_
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/message.py#L43)
-
-
 ```python
 def __init__(client: Anthropic, logger: Logger)
 ```
@@ -40,9 +38,6 @@ Initialize the [Maxim](/sdk/python/references/maxim) Anthropic Messages client.
   logging message interactions.
 
 #### create\_non\_stream
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/message.py#L54)
-
 
 ```python
 def create_non_stream(*args, **kwargs) -> Any
@@ -75,9 +70,6 @@ generation tracking, and error handling.
 
 #### create\_stream
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/message.py#L136)
-
-
 ```python
 def create_stream(*args, **kwargs) -> Any
 ```
@@ -109,9 +101,6 @@ generation tracking, and processes streaming events.
   stream chunks and logs the final result when the stream ends.
 
 #### create
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/message.py#L229)
-
 
 ```python
 def create(*args,
@@ -170,9 +159,6 @@ handler while ensuring all interactions are logged through [Maxim](/sdk/python/r
   in kwargs and routes accordingly.
 
 #### stream
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/message.py#L319)
-
 
 ```python
 def stream(*args, **kwargs) -> Any

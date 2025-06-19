@@ -1,9 +1,10 @@
-# maxim.tests.test\_maxim\_core\_simple
+---
+title: TestMaximCoreSimple
+---
+
+[View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_maxim_core_simple.py)
 
 ## [FalsyCache](/sdk/python/references/tests/test_maxim_core_simple)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_maxim_core_simple.py#L10)
-
 
 ```python
 class FalsyCache(MaximCache)
@@ -13,9 +14,6 @@ A cache that evaluates to False but is not None - used to test the 'cache is not
 
 ## [TestMaximCacheHandling](/sdk/python/references/tests/test_maxim_core_simple)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_maxim_core_simple.py#L35)
-
-
 ```python
 class TestMaximCacheHandling(unittest.TestCase)
 ```
@@ -23,9 +21,6 @@ class TestMaximCacheHandling(unittest.TestCase)
 Test the cache handling changes, specifically the 'if cache is not None:' fix.
 
 #### setUp
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_maxim_core_simple.py#L26)
-
 
 ```python
 def setUp()
@@ -35,9 +30,6 @@ Set up test fixtures.
 
 #### tearDown
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_maxim_core_simple.py#L1)
-
-
 ```python
 def tearDown()
 ```
@@ -46,9 +38,6 @@ Clean up after tests.
 
 #### test\_enable\_prompt\_management\_with\_none\_cache
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_maxim_core_simple.py#L51)
-
-
 ```python
 def test_enable_prompt_management_with_none_cache()
 ```
@@ -56,9 +45,6 @@ def test_enable_prompt_management_with_none_cache()
 Test enable_prompt_management with cache=None.
 
 #### test\_enable\_prompt\_management\_with\_falsy\_cache
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_maxim_core_simple.py#L66)
-
 
 ```python
 def test_enable_prompt_management_with_falsy_cache()
@@ -71,9 +57,6 @@ Previously, a falsy cache would not be used even if it was a valid cache object.
 
 #### test\_enable\_prompt\_management\_with\_valid\_cache
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_maxim_core_simple.py#L85)
-
-
 ```python
 def test_enable_prompt_management_with_valid_cache()
 ```
@@ -81,9 +64,6 @@ def test_enable_prompt_management_with_valid_cache()
 Test enable_prompt_management with a normal valid cache.
 
 #### test\_enable\_prompt\_management\_starts\_sync\_thread
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_maxim_core_simple.py#L99)
-
 
 ```python
 def test_enable_prompt_management_starts_sync_thread()
@@ -93,9 +73,6 @@ Test that enable_prompt_management starts the sync thread.
 
 #### test\_enable\_exceptions\_method\_chaining
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_maxim_core_simple.py#L111)
-
-
 ```python
 def test_enable_exceptions_method_chaining()
 ```
@@ -103,9 +80,6 @@ def test_enable_exceptions_method_chaining()
 Test enable_exceptions method returns self for chaining.
 
 ## [TestMaximInitialization](/sdk/python/references/tests/test_maxim_core_simple)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_maxim_core_simple.py#L126)
-
 
 ```python
 class TestMaximInitialization(unittest.TestCase)
@@ -115,9 +89,6 @@ Test [Maxim](/sdk/python/references/maxim) initialization and configuration.
 
 #### setUp
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_maxim_core_simple.py#L26)
-
-
 ```python
 def setUp()
 ```
@@ -125,9 +96,6 @@ def setUp()
 Set up test fixtures.
 
 #### tearDown
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_maxim_core_simple.py#L1)
-
 
 ```python
 def tearDown()
@@ -137,9 +105,6 @@ Clean up after tests.
 
 #### test\_maxim\_requires\_api\_key
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_maxim_core_simple.py#L141)
-
-
 ```python
 def test_maxim_requires_api_key()
 ```
@@ -147,9 +112,6 @@ def test_maxim_requires_api_key()
 Test that [Maxim](/sdk/python/references/maxim) requires an API key.
 
 #### test\_maxim\_uses\_env\_api\_key
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_maxim_core_simple.py#L148)
-
 
 ```python
 def test_maxim_uses_env_api_key()
@@ -159,9 +121,6 @@ Test that [Maxim](/sdk/python/references/maxim) uses environment variable for AP
 
 #### test\_maxim\_singleton\_pattern
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_maxim_core_simple.py#L156)
-
-
 ```python
 def test_maxim_singleton_pattern()
 ```
@@ -169,9 +128,6 @@ def test_maxim_singleton_pattern()
 Test that [Maxim](/sdk/python/references/maxim) follows singleton pattern.
 
 #### test\_maxim\_default\_cache\_creation
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_maxim_core_simple.py#L167)
-
 
 ```python
 def test_maxim_default_cache_creation()
@@ -181,9 +137,6 @@ Test that [Maxim](/sdk/python/references/maxim) creates default cache when none 
 
 #### test\_cleanup\_method\_stops\_running
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_maxim_core_simple.py#L174)
-
-
 ```python
 def test_cleanup_method_stops_running()
 ```
@@ -191,9 +144,6 @@ def test_cleanup_method_stops_running()
 Test that cleanup method properly sets is_running to False.
 
 #### test\_cleanup\_prevents\_double\_execution
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_maxim_core_simple.py#L186)
-
 
 ```python
 def test_cleanup_prevents_double_execution()
@@ -203,9 +153,6 @@ Test that cleanup method can be called multiple times safely.
 
 ## [TestGetConfigDict](/sdk/python/references/tests/test_maxim_core_simple)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_maxim_core_simple.py#L204)
-
-
 ```python
 class TestGetConfigDict(unittest.TestCase)
 ```
@@ -214,9 +161,6 @@ Test the get_config_dict function.
 
 #### test\_get\_config\_dict\_with\_config\_object
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_maxim_core_simple.py#L207)
-
-
 ```python
 def test_get_config_dict_with_config_object()
 ```
@@ -224,9 +168,6 @@ def test_get_config_dict_with_config_object()
 Test get_config_dict function with [Config](/sdk/python/references/maxim) object.
 
 #### test\_get\_config\_dict\_with\_dict
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/test_maxim_core_simple.py#L228)
-
 
 ```python
 def test_get_config_dict_with_dict()

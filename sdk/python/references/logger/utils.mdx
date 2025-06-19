@@ -1,9 +1,10 @@
-# maxim.logger.utils
+---
+title: logger.Utils
+---
+
+[View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/utils.py)
 
 #### is\_silence
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/utils.py#L15)
-
 
 ```python
 def is_silence(pcm_bytes, threshold=500, min_silence_ratio=0.95)
@@ -23,9 +24,6 @@ Detects if the given PCM16 byte buffer is mostly silence.
 - `bool` - True if buffer is mostly silence, False otherwise.
 
 #### pcm16\_to\_wav\_bytes
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/utils.py#L43)
-
 
 ```python
 def pcm16_to_wav_bytes(pcm_bytes: bytes,
@@ -47,9 +45,6 @@ Convert PCM-16 audio data to WAV format bytes.
 - `bytes` - WAV format audio data
 
 #### make\_object\_serializable
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/utils.py#L72)
-
 
 ```python
 def make_object_serializable(obj: Any) -> Any

@@ -1,9 +1,10 @@
-# maxim.logger.components.session
+---
+title: Session
+---
+
+[View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/session.py)
 
 ## [SessionConfig](/sdk/python/references/logger/components/session)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/session.py#L23)
-
 
 ```python
 @deprecated(
@@ -20,9 +21,6 @@ This class represents a session config.
 
 ## [SessionConfigDict](/sdk/python/references/logger/components/session)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/session.py#L33)
-
-
 ```python
 class SessionConfigDict(TypedDict)
 ```
@@ -32,9 +30,6 @@ class SessionConfigDict(TypedDict)
 This class represents a session config dictionary.
 
 #### get\_session\_config\_dict
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/session.py#L44)
-
 
 ```python
 def get_session_config_dict(
@@ -54,9 +49,6 @@ Convert a session config to a session config dict else return the config.
 
 ## [Session](/sdk/python/references/logger/components/session)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/session.py#L68)
-
-
 ```python
 class Session(EventEmittingBaseContainer)
 ```
@@ -68,9 +60,6 @@ A session is created when a new session is started.
 A session is ended when the session is stopped.
 
 #### \_\_init\_\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/session.py#L78)
-
 
 ```python
 def __init__(config: Union[SessionConfig, SessionConfigDict],
@@ -84,9 +73,6 @@ Create a new session.
 - `config` - The configuration for the session.
 
 #### trace
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/session.py#L91)
-
 
 ```python
 def trace(config: Union[TraceConfig, TraceConfigDict]) -> Trace
@@ -104,9 +90,6 @@ Create a new trace for this session.
   A new [Trace](/sdk/python/references/logger/components/trace) instance.
 
 #### trace\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/session.py#L106)
-
 
 ```python
 @staticmethod
@@ -129,9 +112,6 @@ Create a new trace for this session.
 
 #### feedback
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/session.py#L124)
-
-
 ```python
 def feedback(feedback: Union[Feedback, FeedbackDict])
 ```
@@ -143,9 +123,6 @@ Add feedback to this session.
 - `feedback` - The feedback to add.
 
 #### add\_attachment
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/session.py#L133)
-
 
 ```python
 def add_attachment(attachment: Union[FileAttachment, FileDataAttachment,
@@ -159,9 +136,6 @@ Add an attachment to this session.
 - `attachment` - The attachment to add.
 
 #### add\_attachment\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/session.py#L143)
-
 
 ```python
 @staticmethod
@@ -180,9 +154,6 @@ Add an attachment to this session.
 
 #### add\_tag\_
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/session.py#L173)
-
-
 ```python
 @staticmethod
 def add_tag_(writer: LogWriter, session_id: str, key: str, value: str)
@@ -198,9 +169,6 @@ Add a tag to this session.
 - `value` - The tag value.
 
 #### end\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/session.py#L186)
-
 
 ```python
 @staticmethod
@@ -218,9 +186,6 @@ End this session.
 - `data` - Optional data to add to the session.
 
 #### event\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/session.py#L203)
-
 
 ```python
 @staticmethod

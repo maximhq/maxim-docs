@@ -1,9 +1,10 @@
-# maxim.logger.bedrock.client
+---
+title: bedrock.Client
+---
+
+[View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/bedrock/client.py)
 
 ## [MaximBedrockClient](/sdk/python/references/logger/bedrock/client)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/bedrock/client.py#L17)
-
 
 ```python
 class MaximBedrockClient()
@@ -17,9 +18,6 @@ and logging of Bedrock API interactions through the [Maxim](/sdk/python/referenc
 
 #### \_\_init\_\_
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/bedrock/client.py#L25)
-
-
 ```python
 def __init__(logger: Logger, client: BaseClient)
 ```
@@ -32,9 +30,6 @@ Initialize the [Maxim](/sdk/python/references/maxim) Bedrock client.
 - `client` _BaseClient_ - The Bedrock client instance to wrap.
 
 #### converse\_stream
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/bedrock/client.py#L40)
-
 
 ```python
 def converse_stream(messages: Iterable[BedrockMessageParam],
@@ -76,9 +71,6 @@ Converse with the Bedrock client.
 
 #### converse
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/bedrock/client.py#L189)
-
-
 ```python
 def converse(messages: Iterable[BedrockMessageParam],
              system: Optional[Union[str, List[Dict[str, str]]]] = None,
@@ -117,9 +109,6 @@ Converse with the Bedrock client.
 - `BedrockMessage` - The response from the Bedrock client.
 
 #### async\_client
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/bedrock/client.py#L288)
-
 
 ```python
 @property

@@ -1,4 +1,8 @@
-# maxim.logger.portkey.portkey
+---
+title: Portkey
+---
+
+[View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/portkey/portkey.py)
 
 This module is a wrapper around the Portkey client that allows for easy integration with [Maxim](/sdk/python/references/maxim).
 
@@ -8,9 +12,6 @@ It also provides a wrapper around the Portkey chat-completions client that allow
 
 ## [MaximPortkeyClient](/sdk/python/references/logger/portkey/portkey)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/portkey/portkey.py#L28)
-
-
 ```python
 class MaximPortkeyClient()
 ```
@@ -18,9 +19,6 @@ class MaximPortkeyClient()
 [Maxim](/sdk/python/references/maxim) instrumenter for Portkey client that directly handles chat.completion method.
 
 #### \_\_getattr\_\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/portkey/portkey.py#L45)
-
 
 ```python
 def __getattr__(name)
@@ -30,9 +28,6 @@ Delegate all other attributes to the underlying Portkey client.
 
 ## [MaximPortkeyChat](/sdk/python/references/logger/portkey/portkey)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/portkey/portkey.py#L50)
-
-
 ```python
 class MaximPortkeyChat()
 ```
@@ -40,9 +35,6 @@ class MaximPortkeyChat()
 [Maxim](/sdk/python/references/maxim) instrumenter for Portkey chat functionality.
 
 #### \_\_getattr\_\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/portkey/portkey.py#L45)
-
 
 ```python
 def __getattr__(name)
@@ -52,9 +44,6 @@ Delegate all other attributes to the underlying chat client.
 
 ## [MaximAsyncPortkeyChat](/sdk/python/references/logger/portkey/portkey)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/portkey/portkey.py#L67)
-
-
 ```python
 class MaximAsyncPortkeyChat()
 ```
@@ -62,9 +51,6 @@ class MaximAsyncPortkeyChat()
 [Maxim](/sdk/python/references/maxim) instrumenter for async Portkey chat functionality.
 
 #### \_\_getattr\_\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/portkey/portkey.py#L45)
-
 
 ```python
 def __getattr__(name)
@@ -74,9 +60,6 @@ Delegate all other attributes to the underlying chat client.
 
 ## [MaximPortkeyChatCompletions](/sdk/python/references/logger/portkey/portkey)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/portkey/portkey.py#L84)
-
-
 ```python
 class MaximPortkeyChatCompletions()
 ```
@@ -84,9 +67,6 @@ class MaximPortkeyChatCompletions()
 [Maxim](/sdk/python/references/maxim) instrumenter for Portkey chat completions.
 
 #### create
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/portkey/portkey.py#L91)
-
 
 ```python
 def create(*args, **kwargs)
@@ -96,9 +76,6 @@ Instrumented create method that logs to [Maxim](/sdk/python/references/maxim).
 
 #### \_\_getattr\_\_
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/portkey/portkey.py#L45)
-
-
 ```python
 def __getattr__(name)
 ```
@@ -106,9 +83,6 @@ def __getattr__(name)
 Delegate all other attributes to the underlying completions client.
 
 ## [MaximAsyncPortkeyChatCompletions](/sdk/python/references/logger/portkey/portkey)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/portkey/portkey.py#L150)
-
 
 ```python
 class MaximAsyncPortkeyChatCompletions()
@@ -118,9 +92,6 @@ class MaximAsyncPortkeyChatCompletions()
 
 #### create
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/portkey/portkey.py#L91)
-
-
 ```python
 async def create(*args, **kwargs)
 ```
@@ -128,9 +99,6 @@ async def create(*args, **kwargs)
 Instrumented async create method that logs to [Maxim](/sdk/python/references/maxim).
 
 #### \_\_getattr\_\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/portkey/portkey.py#L45)
-
 
 ```python
 def __getattr__(name)

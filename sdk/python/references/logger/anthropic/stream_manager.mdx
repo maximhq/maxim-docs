@@ -1,9 +1,10 @@
-# maxim.logger.anthropic.stream\_manager
+---
+title: StreamManager
+---
+
+[View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py)
 
 ## [TextStreamWrapper](/sdk/python/references/logger/anthropic/stream_manager)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py#L10)
-
 
 ```python
 class TextStreamWrapper()
@@ -22,9 +23,6 @@ to allow for seamless iteration over text content.
 
 #### \_\_init\_\_
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py#L22)
-
-
 ```python
 def __init__(wrapper, callback)
 ```
@@ -38,9 +36,6 @@ Initialize the text stream wrapper.
 
 #### \_\_iter\_\_
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py#L32)
-
-
 ```python
 def __iter__()
 ```
@@ -52,9 +47,6 @@ Return the iterator object.
 - `[TextStreamWrapper](/sdk/python/references/logger/anthropic/stream_manager)` - Self as the iterator.
 
 #### \_\_next\_\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py#L40)
-
 
 ```python
 def __next__()
@@ -75,9 +67,6 @@ callback function, and returns the text content if available.
 - `StopIteration` - When the stream is exhausted.
 
 ## [StreamWrapper](/sdk/python/references/logger/anthropic/stream_manager)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py#L61)
-
 
 ```python
 class StreamWrapper(MessageStreamManager)
@@ -101,9 +90,6 @@ to provide seamless integration with existing code.
 
 #### \_\_init\_\_
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py#L22)
-
-
 ```python
 def __init__(mgr: MessageStreamManager,
              callback: Callable[[MessageStreamEvent], None]) -> None
@@ -124,9 +110,6 @@ Initialize the stream wrapper.
 
 #### \_\_enter\_\_
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py#L98)
-
-
 ```python
 def __enter__() -> MessageStream
 ```
@@ -141,9 +124,6 @@ stream to add callback functionality for each event.
 - `MessageStream` - A stream instance with callback support.
 
 #### \_\_exit\_\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py#L166)
-
 
 ```python
 def __exit__(exc_type: Union[type[BaseException], None],
@@ -164,9 +144,6 @@ to ensure proper cleanup and resource management.
 
 #### \_\_iter\_\_
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py#L32)
-
-
 ```python
 def __iter__()
 ```
@@ -181,9 +158,6 @@ the context to create one.
 - `[StreamWrapper](/sdk/python/references/logger/anthropic/stream_manager)` - Self as the iterator.
 
 #### \_\_next\_\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py#L40)
-
 
 ```python
 def __next__()
@@ -204,9 +178,6 @@ the context to create one.
 - `StopIteration` - When the stream is exhausted.
 
 #### \_\_getattr\_\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py#L213)
-
 
 ```python
 def __getattr__(name: str)

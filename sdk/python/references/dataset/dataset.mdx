@@ -1,9 +1,10 @@
-# maxim.dataset.dataset
+---
+title: dataset.Dataset
+---
+
+[View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/dataset/dataset.py)
 
 #### create\_data\_structure
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/dataset/dataset.py#L12)
-
 
 ```python
 def create_data_structure(data_structure: DataStructure) -> DataStructure
@@ -32,9 +33,6 @@ and returns the sanitized data structure.
 
 #### sanitize\_data\_structure
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/dataset/dataset.py#L33)
-
-
 ```python
 def sanitize_data_structure(data_structure: Optional[DataStructure]) -> None
 ```
@@ -60,9 +58,6 @@ Ensures that the data structure contains at most one of each required column typ
   for debugging purposes.
 
 #### validate\_data\_structure
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/dataset/dataset.py#L82)
-
 
 ```python
 def validate_data_structure(data_structure: Dict[str, Any],

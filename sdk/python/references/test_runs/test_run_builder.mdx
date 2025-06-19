@@ -1,9 +1,10 @@
-# maxim.test\_runs.test\_run\_builder
+---
+title: TestRunBuilder
+---
+
+[View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/test_runs/test_run_builder.py)
 
 ## [TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/test_runs/test_run_builder.py#L107)
-
 
 ```python
 @final
@@ -14,9 +15,6 @@ Builder for test runs.
 
 #### \_\_init\_\_
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/test_runs/test_run_builder.py#L112)
-
-
 ```python
 def __init__(base_url: str, api_key: str, name: str, workspace_id: str,
              evaluators: List[Union[str, BaseEvaluator]])
@@ -25,9 +23,6 @@ def __init__(base_url: str, api_key: str, name: str, workspace_id: str,
 Constructor
 
 #### with\_data\_structure
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/test_runs/test_run_builder.py#L305)
-
 
 ```python
 def with_data_structure(data: T) -> "TestRunBuilder[T]"
@@ -46,9 +41,6 @@ Set the data structure for the test run
 
 #### with\_data
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/test_runs/test_run_builder.py#L319)
-
-
 ```python
 def with_data(data: Data) -> "TestRunBuilder[T]"
 ```
@@ -65,9 +57,6 @@ Set the data for the test run
 - `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` - The current TestRunBuilder instance for method chaining
 
 #### with\_evaluators
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/test_runs/test_run_builder.py#L334)
-
 
 ```python
 def with_evaluators(
@@ -87,9 +76,6 @@ Add evaluators to the test run
 
 #### with\_human\_evaluation\_config
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/test_runs/test_run_builder.py#L353)
-
-
 ```python
 def with_human_evaluation_config(
         config: HumanEvaluationConfig) -> "TestRunBuilder[T]"
@@ -107,9 +93,6 @@ Set the human evaluation configuration for the test run
 - `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` - The current TestRunBuilder instance for method chaining
 
 #### with\_workflow\_id
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/test_runs/test_run_builder.py#L377)
-
 
 ```python
 def with_workflow_id(
@@ -136,9 +119,6 @@ Set the workflow ID for the test run. Optionally, you can also set the context t
 
 #### with\_prompt\_version\_id
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/test_runs/test_run_builder.py#L411)
-
-
 ```python
 def with_prompt_version_id(
         prompt_version_id: str,
@@ -163,9 +143,6 @@ Set the prompt version ID for the test run. Optionally, you can also set the con
 - `ValueError` - If a workflow ID, prompt chain version ID or output function is already set for this run builder
 
 #### with\_prompt\_chain\_version\_id
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/test_runs/test_run_builder.py#L445)
-
 
 ```python
 def with_prompt_chain_version_id(
@@ -192,9 +169,6 @@ Set the prompt chain version ID for the test run. Optionally, you can also set t
 
 #### yields\_output
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/test_runs/test_run_builder.py#L479)
-
-
 ```python
 def yields_output(
     output_function: Callable[[LocalData], Union[YieldedOutput,
@@ -220,9 +194,6 @@ Set the output function for the test run
 
 #### with\_concurrency
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/test_runs/test_run_builder.py#L512)
-
-
 ```python
 def with_concurrency(concurrency: int) -> "TestRunBuilder[T]"
 ```
@@ -240,9 +211,6 @@ Set the concurrency level for the test run
 
 #### with\_logger
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/test_runs/test_run_builder.py#L525)
-
-
 ```python
 def with_logger(logger: TestRunLogger) -> "TestRunBuilder[T]"
 ```
@@ -259,9 +227,6 @@ Set the logger for the test run
 - `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` - The current TestRunBuilder instance for method chaining
 
 #### run
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/test_runs/test_run_builder.py#L863)
-
 
 ```python
 def run(timeout_in_minutes: Optional[int] = 10) -> Optional[RunResult]

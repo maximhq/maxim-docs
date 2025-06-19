@@ -1,9 +1,10 @@
-# maxim.logger.crewai.utils
+---
+title: crewai.Utils
+---
+
+[View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/crewai/utils.py)
 
 #### is\_primitive
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/crewai/utils.py#L13)
-
 
 ```python
 def is_primitive(obj: Any) -> bool
@@ -12,9 +13,6 @@ def is_primitive(obj: Any) -> bool
 Check if an object is a known primitive type.
 
 #### dictify
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/crewai/utils.py#L18)
-
 
 ```python
 def dictify(obj: Any,
@@ -27,9 +25,6 @@ Recursively compute a dictionary representation of an object.
 
 #### stringify
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/crewai/utils.py#L126)
-
-
 ```python
 def stringify(obj: Any, limit: int = MAX_STR_LEN) -> str
 ```
@@ -37,9 +32,6 @@ def stringify(obj: Any, limit: int = MAX_STR_LEN) -> str
 This is a fallback for objects that we don't have a better way to serialize.
 
 #### serialize\_crewai\_objects
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/crewai/utils.py#L142)
-
 
 ```python
 def serialize_crewai_objects(obj: Any) -> Any
@@ -49,9 +41,6 @@ Safely serialize CrewAI objects to prevent recursion.
 
 #### crewai\_postprocess\_inputs
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/crewai/utils.py#L224)
-
-
 ```python
 def crewai_postprocess_inputs(inputs: dict[str, Any]) -> dict[str, Any]
 ```
@@ -59,9 +48,6 @@ def crewai_postprocess_inputs(inputs: dict[str, Any]) -> dict[str, Any]
 Process CrewAI inputs to prevent recursion.
 
 #### crew\_kickoff\_postprocess\_inputs
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/crewai/utils.py#L229)
-
 
 ```python
 def crew_kickoff_postprocess_inputs(inputs: dict[str, Any]) -> dict[str, Any]
