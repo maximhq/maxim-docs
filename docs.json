@@ -248,47 +248,52 @@
                         "pages": [
                             "sdk/python/overview",
                             {
-                                "group": "CrewAI",
+                                "group": "Integrations",
                                 "pages": [
-                                    "sdk/python/integrations/crewai/crewai"
-                                ]
-                            },
-                            {
-                                "group": "Gemini",
-                                "pages": [
-                                    "sdk/python/integrations/gemini/gemini"
-                                ]
-                            },
-                            {
-                                "group": "OpenAI",
-                                "pages": [
-                                    "sdk/python/integrations/openai/one-line-integration",
-                                    "sdk/python/integrations/openai/agents-sdk"
-                                ]
-                            },
-                            {
-                                "group": "LiteLLM",
-                                "pages": [
-                                    "sdk/python/integrations/litellm/litellm-sdk",
-                                    "sdk/python/integrations/litellm/litellm-proxy"
-                                ]
-                            },
-                            {
-                                "group": "LangChain",
-                                "pages": [
-                                    "sdk/python/integrations/langchain/langchain"
-                                ]
-                            },
-                            {
-                                "group": "LangGraph",
-                                "pages": [
-                                    "sdk/python/integrations/langgraph/langgraph"
-                                ]
-                            },
-                            {
-                                "group": "Mistral",
-                                "pages": [
-                                    "sdk/python/integrations/mistral/mistral"
+                                    {
+                                        "group": "CrewAI",
+                                        "pages": [
+                                            "sdk/python/integrations/crewai/crewai"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Gemini",
+                                        "pages": [
+                                            "sdk/python/integrations/gemini/gemini"
+                                        ]
+                                    },
+                                    {
+                                        "group": "OpenAI",
+                                        "pages": [
+                                            "sdk/python/integrations/openai/one-line-integration",
+                                            "sdk/python/integrations/openai/agents-sdk"
+                                        ]
+                                    },
+                                    {
+                                        "group": "LiteLLM",
+                                        "pages": [
+                                            "sdk/python/integrations/litellm/litellm-sdk",
+                                            "sdk/python/integrations/litellm/litellm-proxy"
+                                        ]
+                                    },
+                                    {
+                                        "group": "LangChain",
+                                        "pages": [
+                                            "sdk/python/integrations/langchain/langchain"
+                                        ]
+                                    },
+                                    {
+                                        "group": "LangGraph",
+                                        "pages": [
+                                            "sdk/python/integrations/langgraph/langgraph"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Mistral",
+                                        "pages": [
+                                            "sdk/python/integrations/mistral/mistral"
+                                        ]
+                                    }                                    
                                 ]
                             },
                             {
@@ -431,6 +436,23 @@
                     {
                         "group": "Typescript",
                         "pages": [
+                            {
+                                "group": "Integrations",
+                                "pages": [
+                                    {
+                                        "group": "LangChain",
+                                        "pages": [
+                                            "sdk/typescript/integrations/langchain/langchain"
+                                        ]
+                                    },
+                                    {
+                                        "group": "LangGraph",
+                                        "pages": [
+                                            "sdk/typescript/integrations/langgraph/langgraph"
+                                        ]
+                                    }
+                                ]
+                            },
                             {
                                 "group": "Reference",
                                 "pages": [
@@ -657,6 +679,10 @@
     },
     "redirects": [
         {
+            "source": "/",
+            "destination": "/introduction/overview"
+        },
+        {
             "source": "/api/overview",
             "destination": "/public-apis/overview"
         },
@@ -859,7 +885,7 @@
         {
             "source": "/observe/quickstart#2-generate-api-key",
             "destination": "/settings/maxim-api-keys"
-        }    
+        }
     ],
     "footer": {
         "socials": {

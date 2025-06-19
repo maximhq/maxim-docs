@@ -1,0 +1,728 @@
+---
+title: "LangGraph Integration"
+description: "Complete guide to integrating Maxim observability with LangGraph applications in TypeScript/JavaScript"
+---
+
+# LangGraph Integration with Maxim
+
+[LangGraph](https://langchain-ai.github.io/langgraph/) is a library for building stateful, multi-actor applications with language models. This comprehensive guide shows you how to integrate Maxim's observability capabilities with your LangGraph applications in TypeScript/JavaScript.
+
+## What You'll Get
+
+With Maxim's LangGraph integration, you can automatically track:
+
+- **🔍 LLM Calls**: All interactions with language models including prompts, responses, and metadata
+- **🤖 Agent Executions**: Complex agent workflows and their execution flows
+- **🛠️ Tool Calls**: Function calls and their results
+- **📚 Retrievals**: Vector store searches and document retrievals
+- **❌ Errors**: Failed operations with detailed error information
+- **📊 Performance**: Latency, token usage, and costs
+
+## Prerequisites
+
+Before getting started, make sure you have:
+
+- Node.js 16+ installed
+- A Maxim account with API access
+- LangChain and LangGraph packages installed
+- External tool API keys (e.g., Tavily for search)
+- Your preferred LLM provider API keys (OpenAI, Anthropic, etc.)
+- A Tavily API key for search functionality (optional - get one at [tavily.com](https://tavily.com))
+
+## Installation
+
+Install the required packages:
+
+<CodeGroup>
+
+```bash npm
+npm install @maximai/maxim-js @langchain/core @langchain/langgraph
+```
+
+```bash yarn
+yarn add @maximai/maxim-js @langchain/core @langchain/langgraph
+```
+
+```bash pnpm
+pnpm add @maximai/maxim-js @langchain/core @langchain/langgraph
+```
+
+```bash bun
+bun add @maximai/maxim-js @langchain/core @langchain/langgraph
+```
+
+</CodeGroup>
+
+For specific LLM providers, install their respective packages:
+
+<CodeGroup>
+
+```bash npm
+# For OpenAI
+npm install @langchain/openai
+
+# For Anthropic
+npm install @langchain/anthropic
+
+# For other integrations
+npm install @langchain/community
+```
+
+```bash yarn
+# For OpenAI
+yarn add @langchain/openai
+
+# For Anthropic
+yarn add @langchain/anthropic
+
+# For other integrations
+yarn add @langchain/community
+```
+
+```bash pnpm
+# For OpenAI
+pnpm add @langchain/openai
+
+# For Anthropic
+pnpm add @langchain/anthropic
+
+# For other integrations
+pnpm add @langchain/community
+```
+
+```bash bun
+# For OpenAI
+bun add @langchain/openai
+
+# For Anthropic
+bun add @langchain/anthropic
+
+# For other integrations
+bun add @langchain/community
+```
+
+</CodeGroup>
+
+For tool calling examples (used in the complete example), you'll also need:
+
+<CodeGroup>
+
+```bash npm
+npm install zod
+```
+
+```bash yarn
+yarn add zod
+```
+
+```bash pnpm
+pnpm add zod
+```
+
+```bash bun
+bun add zod
+```
+
+</CodeGroup>
+
+## Environment Setup
+
+Create a `.env` file in your project root:
+
+```env title=".env" icon="gear" lines
+# Maxim Configuration
+MAXIM_API_KEY=your_maxim_api_key_here
+MAXIM_LOG_REPO_ID=your_log_repository_id
+
+# LLM Provider Keys
+OPENAI_API_KEY=your_openai_api_key
+ANTHROPIC_API_KEY=your_anthropic_api_key
+
+# External Tool APIs (optional)
+TAVILY_API_KEY=your_tavily_api_key
+```
+
+## Quick Start
+
+Here's a minimal example to get you started:
+
+```typescript title="quickstart.ts - Basic LangGraph Agent" icon="js" lines highlight={10-19,22,66}
+import { tool } from "@langchain/core/tools";
+import { MemorySaver } from "@langchain/langgraph";
+import { createReactAgent } from "@langchain/langgraph/prebuilt";
+import { ChatOpenAI } from "@langchain/openai";
+import { Maxim } from "@maximai/maxim-js";
+import { MaximLangchainTracer } from "@maximai/maxim-js/langchain";
+import { z } from "zod";
+
+// Initialize Maxim
+const maxim = new Maxim({
+  apiKey: process.env.MAXIM_API_KEY,
+});
+const logger = await maxim.logger({
+  id: process.env.MAXIM_LOG_REPO_ID,
+});
+
+if (!logger) {
+  throw new Error("logger is not available");
+}
+
+// Create the tracer
+const maximTracer = new MaximLangchainTracer(logger);
+
+// Create a simple tool
+const calculatorTool = tool(
+  async ({ operation, a, b }) => {
+    switch (operation) {
+      case "add":
+        return a + b;
+      case "multiply":
+        return a * b;
+      case "subtract":
+        return a - b;
+      case "divide":
+        return b !== 0 ? a / b : "Cannot divide by zero";
+      default:
+        return "Unknown operation";
+    }
+  },
+  {
+    name: "calculator",
+    schema: z.object({
+      operation: z.enum(["add", "multiply", "subtract", "divide"]),
+      a: z.number(),
+      b: z.number(),
+    }),
+    description: "Performs basic arithmetic operations",
+  }
+);
+
+// Create your LangGraph components
+const model = new ChatOpenAI({
+  openAIApiKey: process.env.OPENAI_API_KEY,
+  modelName: "gpt-4o-mini",
+});
+const agent = createReactAgent({
+  llm: model,
+  tools: [calculatorTool],
+  checkpointSaver: new MemorySaver(),
+});
+
+// Use with automatic tracing
+const result = await agent.invoke(
+  { messages: [{ role: "user", content: "What's 25 * 4 + 10?" }] },
+  {
+    callbacks: [maximTracer],
+    configurable: { thread_id: "quick-start-example" },
+  }
+);
+
+console.log(result.messages[result.messages.length - 1].content);
+
+// Clean up resources
+await maxim.cleanup();
+```
+
+## Core Integration Patterns
+
+### 1. Runtime Integration
+
+Add tracing to individual calls:
+
+```typescript title="Runtime Integration Pattern" icon="play" lines highlight={3,9}
+// For single calls
+const result = await agent.invoke(input, {
+  callbacks: [maximTracer],
+  configurable: { thread_id: "session_123" },
+});
+
+// For streaming
+const stream = await agent.astream(input, {
+  callbacks: [maximTracer],
+  configurable: { thread_id: "session_123" },
+});
+for await (const chunk of stream) {
+  console.log(chunk);
+}
+```
+
+### 2. Permanent Integration
+
+Attach the tracer to agents permanently:
+
+```typescript title="Permanent Integration Pattern" icon="link" lines highlight={1}
+const tracedAgent = agent.withConfig({ callbacks: [maximTracer] });
+
+// Now all calls are automatically traced (still need thread_id for memory)
+const result1 = await tracedAgent.invoke(
+  { messages: [{ role: "user", content: "Hello" }] },
+  { configurable: { thread_id: "session_456" } }
+);
+const result2 = await tracedAgent.invoke(
+  { messages: [{ role: "user", content: "How are you?" }] },
+  { configurable: { thread_id: "session_456" } }
+);
+```
+
+## Basic Example
+
+Simple ReAct agent with Tavily search:
+
+```typescript title="basic-agent.ts - ReAct Agent with Search" icon="magnifying-glass" lines expandable highlight={9-18,21,50}
+import { TavilySearchResults } from "@langchain/community/tools/tavily_search";
+import { MemorySaver } from "@langchain/langgraph";
+import { createReactAgent } from "@langchain/langgraph/prebuilt";
+import { ChatOpenAI } from "@langchain/openai";
+import { Maxim } from "@maximai/maxim-js";
+import { MaximLangchainTracer } from "@maximai/maxim-js/langchain";
+
+// Initialize Maxim
+const maxim = new Maxim({
+  apiKey: process.env.MAXIM_API_KEY,
+});
+const logger = await maxim.logger({
+  id: process.env.MAXIM_LOG_REPO_ID,
+});
+
+if (!logger) {
+  throw new Error("logger is not available");
+}
+
+// Create the tracer
+const maximTracer = new MaximLangchainTracer(logger);
+
+const searchTool = new TavilySearchResults({
+  maxResults: 3,
+  apiKey: process.env.TAVILY_API_KEY,
+});
+
+const model = new ChatOpenAI({
+  openAIApiKey: process.env.OPENAI_API_KEY,
+  modelName: "gpt-4o-mini",
+  temperature: 0,
+});
+
+const agent = createReactAgent({
+  llm: model,
+  tools: [searchTool],
+  checkpointSaver: new MemorySaver(),
+});
+
+const response = await agent.invoke(
+  {
+    messages: [
+      {
+        role: "user",
+        content: "What is the current weather in San Francisco?",
+      },
+    ],
+  },
+  {
+    callbacks: [maximTracer],
+    configurable: { thread_id: "weather_search_example" },
+  }
+);
+
+console.log(response.messages[response.messages.length - 1].content);
+
+// Clean up resources
+await maxim.cleanup();
+```
+
+## Custom Metadata
+
+Customize how your operations appear in Maxim by providing metadata:
+
+### Trace-Level Metadata
+
+```typescript title="Trace-Level Metadata Configuration" lines highlight={5-13}
+const result = await agent.invoke(input, {
+  callbacks: [maximTracer],
+  configurable: { thread_id: "user_123_session" },
+  metadata: {
+    maxim: {
+      traceName: "Customer Support Chat",
+      sessionId: "user_123_session",
+      traceTags: {
+        category: "support",
+        priority: "high",
+        version: "v2.1",
+      },
+    },
+    // Non-Maxim metadata
+    user_id: "user_123",
+    request_id: "req_456",
+  },
+});
+```
+
+### Component-Specific Metadata
+
+```typescript title="Component-Specific Metadata Examples" lines highlight={6-13,21-28,36-43,51-58}
+// For agents
+const agentResult = await agent.invoke(input, {
+  callbacks: [maximTracer],
+  configurable: { thread_id: "agent_session" },
+  metadata: {
+    maxim: {
+      chainName: "Customer Support Agent",
+      chainTags: {
+        type: "react",
+        complexity: "medium",
+        tools: "3",
+      },
+    },
+  },
+});
+
+// For LLM generations
+const llmResult = await model.invoke(prompt, {
+  callbacks: [maximTracer],
+  metadata: {
+    maxim: {
+      generationName: "Agent Reasoning",
+      generationTags: {
+        topic: "customer_support",
+        difficulty: "beginner",
+        model: "gpt-4",
+      },
+    },
+  },
+});
+
+// For retrievals
+const docs = await retriever.invoke(query, {
+  callbacks: [maximTracer],
+  metadata: {
+    maxim: {
+      retrievalName: "Knowledge Base Search",
+      retrievalTags: {
+        index_name: "kb_documents",
+        search_type: "semantic",
+        top_k: "5",
+      },
+    },
+  },
+});
+
+// For tool calls
+const toolResult = await tool.invoke(args, {
+  callbacks: [maximTracer],
+  metadata: {
+    maxim: {
+      toolCallName: "API Integration",
+      toolCallTags: {
+        api: "external_service",
+        version: "v1",
+        timeout: "30s",
+      },
+    },
+  },
+});
+```
+
+## Error Handling
+
+The tracer automatically captures and logs all errors from LangGraph operations. No additional error handling code is required - simply use the tracer and all failures will be tracked with full context and stack traces.
+
+## Supported Providers
+
+The tracer automatically detects and supports major LLM providers:
+
+- **OpenAI** (including Azure OpenAI)
+- **Anthropic**
+- **Google** (Vertex AI, Gemini)
+- **Amazon Bedrock**
+- **Hugging Face**
+- **Together AI**
+- **Groq**
+- **Local models**
+
+## Best Practices
+
+### 1. Meaningful Names and Tags
+
+```typescript title="Best Practice - Meaningful Metadata" icon="thumbs-up" lines
+// Good: Descriptive names and relevant tags
+metadata: {
+  maxim: {
+    generationName: "Customer Support Agent",
+    generationTags: {
+      agent_type: "customer_support",
+      tone: "professional",
+      complexity: "medium"
+    }
+  }
+}
+
+// Avoid: Generic names without context
+metadata: {
+  maxim: {
+    generationName: "Agent Call",
+    generationTags: { test: "true" }
+  }
+}
+```
+
+### 2. Session Management
+
+```typescript title="Best Practice - Session Management" icon="users" lines
+// Group related interactions under sessions
+await agent.invoke(input, {
+  callbacks: [maximTracer],
+  configurable: { thread_id: userSessionId },
+  metadata: {
+    maxim: {
+      sessionId: userSessionId,
+      traceName: "User Query",
+      traceTags: { user_type: "premium" },
+    },
+  },
+});
+```
+
+### 3. Environment-Specific Tagging
+
+```typescript title="Best Practice - Environment Tagging" icon="server" lines
+const environmentTags = {
+  environment: process.env.NODE_ENV || "development",
+  version: process.env.APP_VERSION || "unknown",
+  region: process.env.AWS_REGION || "us-east-1",
+};
+
+await agent.invoke(input, {
+  callbacks: [maximTracer],
+  configurable: { thread_id: "env_demo_session" },
+  metadata: {
+    maxim: {
+      traceTags: {
+        ...environmentTags,
+        feature: "agent_completion",
+      },
+    },
+  },
+});
+```
+
+### 4. Cleanup
+
+```typescript title="Critical - Resource Cleanup" icon="triangle-exclamation" lines highlight={1-6}
+/**
+ * Always call `cleanup()` before your application
+ * exits. Failure to do so may result in memory leaks, unflushed data, or
+ * hanging processes. This is especially important in production environments
+ * and long-running applications.
+ */
+await maxim.cleanup();
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**1. Missing API Keys or API key not found**
+
+Solution: Ensure all required environment variables are set.
+
+**2. Import Error for @langchain/core**
+
+Solution: Install the required LangChain packages.
+
+**3. Tracer Not Working or No Traces Appearing on Maxim**
+
+Solution: Verify your `MAXIM_LOG_REPO_ID` is correct and the tracer is properly passed to callbacks.
+
+## Complete Example: Multi-Agent Customer Service System
+
+Here's a comprehensive example demonstrating multiple LangGraph features with detailed tracing:
+
+```typescript title="customer-service-agent.ts - Multi-Agent System" icon="headset" lines expandable highlight={12-14,17-25,60-67,149,153-164}
+import { BaseMessage, HumanMessage, SystemMessage } from "@langchain/core/messages";
+import { RunnableConfig } from "@langchain/core/runnables";
+import { tool } from "@langchain/core/tools";
+import { MemorySaver } from "@langchain/langgraph";
+import { createReactAgent } from "@langchain/langgraph/prebuilt";
+import { ChatOpenAI } from "@langchain/openai";
+import { Maxim } from "@maximai/maxim-js";
+import { MaximLangchainTracer } from "@maximai/maxim-js/langchain";
+import { z } from "zod";
+
+// Initialize Maxim
+const maxim = new Maxim({
+  apiKey: process.env.MAXIM_API_KEY,
+});
+
+async function comprehensiveAgentExample() {
+  const logger = await maxim.logger({
+    id: process.env.MAXIM_LOG_REPO_ID,
+  });
+
+  if (!logger) {
+    throw new Error("logger is not available");
+  }
+
+  const maximTracer = new MaximLangchainTracer(logger);
+
+  // Step 1: Create a knowledge base search tool
+  const knowledgeBaseTool = tool(
+    async ({ query }) => {
+      // Simulate knowledge base search (in real app, this might call an API)
+      const knowledgeBase = {
+        billing: "For billing issues: Check your account dashboard or contact billing@company.com",
+        technical: "For technical problems: Try restarting the app and check our troubleshooting guide",
+        account: "For account issues: Verify your email/password or contact support@company.com",
+        product: "For product questions: Visit our product documentation at docs.company.com",
+      };
+
+      for (const [category, response] of Object.entries(knowledgeBase)) {
+        if (query.toLowerCase().includes(category)) {
+          return `${response} (Source: ${category} knowledge base)`;
+        }
+      }
+
+      return "No specific answer found. Escalate to human agent.";
+    },
+    {
+      name: "knowledge_base_search",
+      schema: z.object({ query: z.string() }),
+      description: "Searches the knowledge base for answers",
+    }
+  );
+
+  // Step 2: Create the main agent with tools
+  const model = new ChatOpenAI({
+    openAIApiKey: process.env.OPENAI_API_KEY,
+    modelName: "gpt-4o",
+    temperature: 0.1,
+    // Add custom metadata for this specific model
+    metadata: {
+      maxim: {
+        generationName: "customer-service-agent",
+        generationTags: {
+          model: "gpt-4o",
+          task: "customer-support",
+          temperature: "0.1",
+        },
+      },
+    },
+  });
+
+  const customerServiceAgent = createReactAgent({
+    llm: model,
+    tools: [knowledgeBaseTool],
+    checkpointSaver: new MemorySaver(),
+  });
+
+  // Step 3: Create a workflow orchestrator
+  interface WorkflowState {
+    messages: BaseMessage[];
+    customerInfo: Record<string, unknown>;
+    issueCategory: string;
+    resolutionAttempts: number;
+  }
+
+  // Step 4: Create preprocessing step
+  async function categorizeIssue(state: WorkflowState) {
+    const lastMessage = state.messages[state.messages.length - 1];
+    const content = lastMessage.content as string;
+
+    console.log(`Categorizing issue: ${content.substring(0, 100)}...`);
+
+    // Simple categorization logic
+    let category = "general";
+    if (content.toLowerCase().includes("bill") || content.toLowerCase().includes("payment")) {
+      category = "billing";
+    } else if (content.toLowerCase().includes("technical") || content.toLowerCase().includes("app")) {
+      category = "technical";
+    }
+
+    return {
+      ...state,
+      issueCategory: category,
+      resolutionAttempts: 0,
+    };
+  }
+
+  // Step 5: Create the main workflow
+  async function handleCustomerQuery(state: WorkflowState, config: RunnableConfig) {
+    // Run categorization first
+    const categorized = await categorizeIssue(state);
+
+    // Run customer service agent
+    const agentResult = await customerServiceAgent.invoke({ messages: categorized.messages }, config);
+
+    // Combine results
+    return {
+      ...categorized,
+      messages: agentResult.messages,
+      resolutionAttempts: categorized.resolutionAttempts + 1,
+      processing_complete: true,
+    };
+  }
+
+  // Step 6: Execute the workflow with full tracing
+  const customerQuery = `
+    Hi, I'm having trouble with my billing. The app charged me twice this month
+    and I can't access my account to check the details. I've tried resetting my
+    password but it's not working. This is really frustrating and I need this
+    resolved quickly.
+  `;
+
+  const customerId = "CUSTOMER_12345";
+  const sessionId = `support_${customerId}_${Date.now()}`;
+
+  const result = await handleCustomerQuery(
+    {
+      messages: [
+        new SystemMessage(
+          "You are a helpful customer service agent. Be empathetic, professional, and thorough. Use the knowledge base search tool to find relevant information."
+        ),
+        new HumanMessage(customerQuery),
+      ],
+      customerInfo: { id: customerId, tier: "premium" },
+      issueCategory: "",
+      resolutionAttempts: 0,
+    },
+    {
+      // Add the tracer to capture all operations
+      callbacks: [maximTracer],
+      configurable: { thread_id: sessionId },
+      // Add comprehensive metadata for this specific execution
+      metadata: {
+        maxim: {
+          traceName: "Customer Service Agent Demo",
+          sessionId: sessionId,
+          traceTags: {
+            category: "demo",
+            customer_id: customerId,
+            customer_tier: "premium",
+            priority: "high",
+            environment: process.env.NODE_ENV || "development",
+            user_type: "demo_user",
+          },
+        },
+        // Non-Maxim metadata
+        experiment_id: "customer_service_001",
+        user_id: "demo_user",
+        request_timestamp: new Date().toISOString(),
+      },
+    }
+  );
+
+  return result;
+}
+
+// Execute the example
+const agentResult = await comprehensiveAgentExample();
+console.log("Agent Result:", JSON.stringify(agentResult, null, 2));
+
+// Clean up resources
+await maxim.cleanup();
+```
+
+## Next Steps
+
+- Explore [LangChain integration](/sdk/typescript/integrations/langchain/langchain) for simpler workflows
+- Check out the [API reference](/sdk/typescript/reference/langchain/classes/MaximLangchainTracer) for detailed documentation
+- Learn about [evaluation workflows](/online-evals/overview) to assess your LLM applications
+- Set up [dashboards](/tracing/dashboard) to monitor your applications in production
