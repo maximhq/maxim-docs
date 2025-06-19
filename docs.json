@@ -772,6 +772,10 @@
             "destination": "/dashboards/test-runs-comparison-dashboard"
         },
         {
+            "source": "/analyze/overview",
+            "destination": "/dashboards/test-runs-comparison-dashboard"
+        },
+        {
             "source": "/evaluate/concepts#datasets",
             "destination": "/offline-evals/concepts#datasets"
         },
@@ -788,12 +792,48 @@
             "destination": "/offline-evals/concepts#workflows"
         },
         {
+            "source": "/evaluate/overview",
+            "destination": "/offline-evals/overview"
+        },
+        {
+            "source": "/evaluate/quickstart/run-your-first-test-on-prompt",
+            "destination": "/offline-evals/via-ui/prompts/quickstart"
+        },
+        {
+            "source": "/evaluate/quickstart/run-your-first-test-on-api-workflow",
+            "destination": "/offline-evals/via-ui/agents-via-http-endpoint/quickstart"
+        },
+        {
+            "source": "/evaluate/quickstart/run-your-first-test-on-prompt-chains",
+            "destination": "/offline-evals/via-ui/agents-via-no-code-builder/quickstart"
+        },
+        {
+            "source": "/evaluate/quickstart/simulate-and-evaluate-multi-turn-conversations",
+            "destination": "/offline-evals/quickstart/simulate-and-evaluate-multi-turn-conversations"
+        },
+        {
             "source": "/evaluate/how-to/evaluate-chains/deploy-prompt-chains",
             "destination": "/offline-evals/via-ui/agents-via-no-code-builder/agent-deployment"
         },
         {
             "source": "/evaluate/how-to/evaluate-chains/experiment-with-prompt-chains",
             "destination": "/offline-evals/via-ui/agents-via-no-code-builder/experiment-with-prompt-chains"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-chains/debug-errors-at-every-node",
+            "destination": "/offline-evals/via-ui/agents-via-no-code-builder/error-debugging"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-chains/use-api-nodes-within-chains",
+            "destination": "/offline-evals/via-ui/agents-via-no-code-builder/types-of-nodes"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-chains/create-product-description-generator",
+            "destination": "/offline-evals/guides/create-product-description-generator"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-chains/create-customer-support-agent",
+            "destination": "/offline-evals/guides/create-customer-support-agent"
         },
         {
             "source": "/evaluate/how-to/evaluate-chains/querying-prompt-chains",
@@ -804,8 +844,20 @@
             "destination": "offline-evals/via-sdk/agent-http/quickstart"
         },
         {
-            "source": "/evaluate/how-to/evaluate-chains/use-api-nodes-within-chains",
-            "destination": "offline-evals/via-ui/agents-via-no-code-builder/types-of-nodes"
+            "source": "/evaluate/how-to/evaluate-prompts/experiment-in-prompt-playground",
+            "destination": "/offline-evals/via-ui/prompts/prompt-playground"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-prompts/compare-prompt-versions",
+            "destination": "/offline-evals/via-ui/prompts/prompt-versions"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-prompts/save-prompt-session",
+            "destination": "/offline-evals/via-ui/prompts/prompt-sessions"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-prompts/organize-prompts",
+            "destination": "/offline-evals/via-ui/prompts/folders-and-tags"
         },
         {
             "source": "/evaluate/how-to/evaluate-prompts/automate-via-ci-cd",
@@ -830,10 +882,6 @@
         {
             "source": "/evaluate/how-to/evaluate-prompts/deploy-prompts",
             "destination": "/offline-evals/via-ui/prompts/prompt-deployment"
-        },
-        {
-            "source": "/evaluate/how-to/evaluate-prompts/experiment-in-prompt-playground",
-            "destination": "/offline-evals/via-ui/prompts/prompt-playground"
         },
         {
             "source": "/evaluate/how-to/evaluate-prompts/human-annotation-pipeline",
@@ -864,12 +912,48 @@
             "destination": "offline-evals/via-ui/agents-via-http-endpoint/quickstart#test-your-ai-outputs-using-application-endpoint"
         },
         {
+            "source": "/evaluate/how-to/evaluate-workflows-via-api-endpoint/test-multi-turn-conversations-manually",
+            "destination": "/offline-evals/via-ui/agents-via-http-endpoint/quickstart#test-multi-turn-conversations"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-workflows-via-api-endpoint/simulate-multi-turn-conversations",
+            "destination": "/simulations/overview"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-workflows-via-api-endpoint/evaluate-simulated-sessions-for-agents",
+            "destination": "/simulations/simulation-runs"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-workflows-via-api-endpoint/scripting-to-configure-response-structures",
+            "destination": "/offline-evals/via-ui/agents-via-http-endpoint/scripts"
+        },
+        {
+            "source": "/evaluate/how-to/evaluate-datasets",
+            "destination": "/offline-evals/via-ui/advanced/dataset-evaluation"
+        },
+        {
+            "source": "/evaluate/how-to/scheduled-test-runs",
+            "destination": "/offline-evals/via-ui/advanced/scheduled-runs"
+        },
+        {
+            "source": "/evaluate/how-to/trigger-test-runs-using-sdk",
+            "destination": "/offline-evals/via-sdk/prompts/quickstart"
+        },
+        {
             "source": "/evaluate/how-to/optimize-evaluation-processes/re-use-configuration-via-presets",
             "destination": "/offline-evals/via-ui/advanced/presets"
         },
         {
-            "source": "/evaluate/quickstart/simulate-and-evaluate-multi-turn-conversations",
-            "destination": "/offline-evals/quickstart/simulate-and-evaluate-multi-turn-conversations"
+            "source": "/evaluate/how-to/optimize-evaluation-processes/receive-notifications-test-runs",
+            "destination": "/offline-evals/via-ui/advanced/notifications"
+        },
+        {
+            "source": "/evaluate/how-to/optimize-evaluation-processes/customize-share-reports",
+            "destination": "/offline-evals/via-ui/advanced/customized-reports"
+        },
+        {
+            "source": "/introduction/quickstart/running-first-test",
+            "destination": "/introduction/running-your-first-eval"
         },
         {
             "source": "/introduction/quickstart/setting-up-workspace",
@@ -888,6 +972,10 @@
             "destination": "/library/context-sources#ingest-files-as-a-context-source"
         },
         {
+            "source": "/library/how-to/context-sources/evaluate-your-context",
+            "destination": "/library/context-sources"
+        },
+        {
             "source": "/library/how-to/datasets/curate-data-from-production",
             "destination": "/library/datasets/curate-datasets"
         },
@@ -904,6 +992,18 @@
             "destination": "/library/datasets/manage-datasets#use-splits-for-targeted-testing"
         },
         {
+            "source": "/library/how-to/datasets/use-variable-columns-in-datasets",
+            "destination": "/library/datasets/manage-datasets"
+        },
+        {
+            "source": "/library/how-to/datasets/create-dataset-with-files-and-images",
+            "destination": "/library/datasets/import-or-create-datasets"
+        },
+        {
+            "source": "/library/how-to/datasets/add-new-entries-using-sdk",
+            "destination": "/sdk/typescript/reference/core/classes/Maxim#adddatasetentries"
+        },
+        {
             "source": "/library/how-to/evaluators/create-custom-ai-evaluator",
             "destination": "/library/evaluators/custom-evaluators#ai-based-evaluators"
         },
@@ -912,12 +1012,44 @@
             "destination": "/library/evaluators/pre-built-evaluators"
         },
         {
+            "source": "/library/how-to/evaluators/create-programmatic-evaluator",
+            "destination": "/library/evaluators/custom-evaluators#programmatic-evaluators"
+        },
+        {
+            "source": "/library/how-to/evaluators/create-api-evaluators",
+            "destination": "/evaluators/custom-evaluators#api-based-evaluators"
+        },
+        {
+            "source": "/library/how-to/evaluators/create-human-evaluators",
+            "destination": "/evaluators/custom-evaluators#human-evaluators"
+        },
+        {
             "source": "/library/how-to/prompt-partials/create-prompt-partial",
             "destination": "/offline-evals/via-ui/prompts/prompt-partials"
         },
         {
             "source": "/library/how-to/prompt-tools/create-a-code-tool",
             "destination": "/library/prompt-tools#create-a-code-based-tool"
+        },
+        {
+            "source": "/library/how-to/prompt-tools/create-an-api-tool",
+            "destination": "/library/prompt-tools#create-an-api-based-tool"
+        },
+        {
+            "source": "/library/how-to/prompt-tools/create-a-tool-schema",
+            "destination": "/library/prompt-tools#creating-a-schema-tool"
+        },
+        {
+            "source": "/library/how-to/prompt-tools/evaluate-tool-call-accuracy",
+            "destination": "/library/prompt-tools#evaluate-tool-call-accuracy"
+        },
+        {
+            "source": "/observe/concepts",
+            "destination": "/tracing/concepts"
+        },
+        {
+            "source": "/observe/quickstart",
+            "destination": "/tracing/quickstart"
         },
         {
             "source": "/observe/how-to/evaluate-logs/auto-evaluation",
@@ -944,12 +1076,64 @@
             "destination": "/tracing/tracing-via-sdk/traces"
         },
         {
+            "source": "/observe/how-to/log-your-application/add-spans-to-traces",
+            "destination": "/tracing/tracing-via-sdk/spans"
+        },
+        {
+            "source": "/observe/how-to/log-your-application/add-attachments",
+            "destination": "/tracing/tracing-via-sdk/attachments"
+        },
+        {
+            "source": "/observe/how-to/log-your-application/logging-rag-pipeline",
+            "destination": "/tracing/tracing-via-sdk/retrieval"
+        },
+        {
+            "source": "/observe/how-to/log-your-application/log-multiturn-interactions-as-session",
+            "destination": "/tracing/tracing-via-sdk/sessions"
+        },
+        {
             "source": "/observe/how-to/log-your-application/track-tool-calls",
             "destination": "/tracing/tracing-via-sdk/tool-calls"
         },
         {
+            "source": "/observe/how-to/log-your-application/use-tags-on-nodes",
+            "destination": "/tracing/tracing-via-sdk/tags"
+        },
+        {
+            "source": "/observe/how-to/log-your-application/use-events",
+            "destination": "/tracing/tracing-via-sdk/events"
+        },
+        {
+            "source": "/observe/how-to/log-your-application/send-user-feedback",
+            "destination": "/tracing/tracing-via-sdk/user-feedback"
+        },
+        {
+            "source": "/observe/how-to/log-your-application/track-llm-errors",
+            "destination": "/tracing/tracing-via-sdk/errors"
+        },
+        {
+            "source": "/observe/how-to/log-your-application/track-token-usage-and-cost",
+            "destination": "/tracing/dashboard"
+        },
+        {
+            "source": "/observe/how-to/log-your-application/filters-and-saved-views",
+            "destination": "/tracing/dashboard#create-filters-and-saved-views"
+        },
+        {
             "source": "/observe/how-to/log-your-application/use-custom-pricing",
             "destination": "/settings/custom-pricing"
+        },
+        {
+            "source": "/observe/how-to/log-your-application/use-data-connectors",
+            "destination": "/tracing/otel-compatibility"
+        },
+        {
+            "source": "/observe/how-to/log-your-application/export-logs",
+            "destination": "/tracing/exports"
+        },
+        {
+            "source": "/observe/how-to/log-your-application/summary-emails",
+            "destination": "/tracing/reporting"
         },
         {
             "source": "/observe/how-to/set-up-alerts/create-a-pagerduty-integration",
@@ -960,12 +1144,80 @@
             "destination": "/online-evals/set-up-alerts-and-notifications#slack-integration"
         },
         {
+            "source": "/observe/how-to/set-up-alerts/set-up-alerts-for-performance-metrics",
+            "destination": "/online-evals/set-up-alerts-and-notifications"
+        },
+        {
+            "source": "/observe/how-to/set-up-alerts/set-up-alerts-for-quality-metrics",
+            "destination": "/online-evals/set-up-alerts-and-notifications"
+        },
+        {
+            "source": "/observe/integrations/openai-agents-sdk",
+            "destination": "/integrations/openai-agents-sdk"
+        },
+        {
             "source": "/observe/overview",
             "destination": "/tracing/overview"
         },
         {
             "source": "/observe/quickstart#2-generate-api-key",
             "destination": "/settings/maxim-api-keys"
+        },
+        {
+            "source": "/evaluate/concepts",
+            "destination": "/offline-evals/concepts"
+        },
+        {
+            "source": "/library/data-management/overview",
+            "destination": "/library/datasets/manage-datasets"
+        },
+        {
+            "source": "/observability/overview",
+            "destination": "/tracing/overview"
+        },
+        {
+            "source": "/observability/quickstart/python-agentic-evaluation",
+            "destination": "/tracing/quickstart"
+        },
+        {
+            "source": "/observability/custom-pricing-structures",
+            "destination": "/settings/custom-pricing"
+        },
+        {
+            "source": "/sdk/observability/python/overview",
+            "destination": "/sdk/python/overview"
+        },
+        {
+            "source": "/sdk/observability/python/quickstart/litellm",
+            "destination": "/sdk/python/integrations/litellm/litellm-sdk"
+        },
+        {
+            "source": "/evaluation/prompts/prompt-overview",
+            "destination": "/offline-evals/via-ui/prompts/quickstart"
+        },
+        {
+            "source": "/cicd/cicdintroduction",
+            "destination": "/offline-evals/via-sdk/prompts/ci-cd-integration"
+        },
+        {
+            "source": "/api/alerts/put",
+            "destination": "/alerts/alert/update-alert"
+        },
+        {
+            "source": "/api/datasets/columns/post",
+            "destination": "/datasets/dataset-column/create-dataset-columns"
+        },
+        {
+            "source": "/api/evaluators/get",
+            "destination": "/evaluators/evaluator/get-evaluators"
+        },
+        {
+            "source": "/api/folders/post",
+            "destination": "/folders/folder/create-folder"
+        },
+        {
+            "source": "/api/log-repositories/get",
+            "destination": "/log-repositories/log-repository/get-log-repositories"
         }
     ],
     "footer": {
