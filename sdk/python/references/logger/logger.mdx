@@ -1,4 +1,8 @@
-# maxim.logger.logger
+---
+title: Logger
+---
+
+[View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py)
 
 Configuration class for [Maxim](/sdk/python/references/maxim) [Logger](/sdk/python/references/logger/logger).
 
@@ -12,9 +16,6 @@ the logger ID, auto-flush setting, and flush interval.
 - `flush_interval` _int_ - The interval (in seconds) at which to flush logs when auto_flush is True. Defaults to 10 seconds.
 
 ## [LoggerConfig](/sdk/python/references/logger/logger)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L58)
-
 
 ```python
 @deprecated(
@@ -36,9 +37,6 @@ the logger ID, auto-flush setting, and flush interval.
 
 ## [Logger](/sdk/python/references/logger/logger)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L96)
-
-
 ```python
 class Logger()
 ```
@@ -57,9 +55,6 @@ actual logging operations.
 - `writer` _[LogWriter](/sdk/python/references/logger/writer)_ - The [LogWriter](/sdk/python/references/logger/writer) instance used for actual logging operations.
 
 #### \_\_init\_\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L71)
-
 
 ```python
 def __init__(config: LoggerConfigDict,
@@ -81,9 +76,6 @@ Initializes the logger with the given configuration.
 
 #### session
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L149)
-
-
 ```python
 def session(config: Union[SessionConfig, SessionConfigDict]) -> Session
 ```
@@ -100,9 +92,6 @@ Creates a new session with the given configuration.
 - `[Session](/sdk/python/references/logger/components/session)` - The newly created session.
 
 #### trace
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L161)
-
 
 ```python
 def trace(config: Union[TraceConfig, TraceConfigDict]) -> Trace
@@ -121,9 +110,6 @@ Creates a new trace with the given configuration.
 
 #### session\_add\_tag
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L174)
-
-
 ```python
 def session_add_tag(session_id: str, key: str, value: str)
 ```
@@ -138,9 +124,6 @@ Adds a tag to the session.
 
 #### session\_end
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L185)
-
-
 ```python
 def session_end(session_id: str)
 ```
@@ -152,9 +135,6 @@ Ends the session.
 - `session_id` _str_ - The ID of the session.
 
 #### session\_event
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L194)
-
 
 ```python
 def session_event(session_id: str, event_id: str, event: str, data: Any)
@@ -170,9 +150,6 @@ Adds an event to the session.
 - `data` _Any_ - The data associated with the event.
 
 #### session\_feedback
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L209)
-
 
 ```python
 @deprecated(
@@ -190,9 +167,6 @@ Adds a feedback to the session.
 
 #### session\_add\_attachment
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L221)
-
-
 ```python
 def session_add_attachment(session_id: str,
                            attachment: Union[FileAttachment,
@@ -204,9 +178,6 @@ Adds an attachment to the session.
 
 #### session\_add\_feedback
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L227)
-
-
 ```python
 def session_add_feedback(session_id: str, feedback: FeedbackDict)
 ```
@@ -214,9 +185,6 @@ def session_add_feedback(session_id: str, feedback: FeedbackDict)
 Adds a feedback to the session.
 
 #### session\_trace
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L236)
-
 
 ```python
 @deprecated(
@@ -239,9 +207,6 @@ Adds a trace to the session.
 
 #### session\_add\_trace
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L249)
-
-
 ```python
 def session_add_trace(session_id: str,
                       config: Union[TraceConfig, TraceConfigDict]) -> Trace
@@ -260,9 +225,6 @@ Adds a trace to the session.
 - `[Trace](/sdk/python/references/logger/components/trace)` - The newly created trace.
 
 #### trace\_generation
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L268)
-
 
 ```python
 @deprecated(
@@ -285,9 +247,6 @@ Adds a generation to the trace.
 
 #### trace\_add\_generation
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L281)
-
-
 ```python
 def trace_add_generation(
         trace_id: str, config: Union[GenerationConfig,
@@ -307,9 +266,6 @@ Adds a generation to the trace.
 - `[Generation](/sdk/python/references/logger/components/generation)` - The newly created generation.
 
 #### trace\_retrieval
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L299)
-
 
 ```python
 @deprecated(
@@ -334,9 +290,6 @@ Adds a retrieval to the trace.
 
 #### trace\_add\_retrieval
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L314)
-
-
 ```python
 def trace_add_retrieval(
         trace_id: str, config: Union[RetrievalConfig,
@@ -356,9 +309,6 @@ Adds a retrieval to the trace.
 - `[Retrieval](/sdk/python/references/logger/components/retrieval)` - The newly created retrieval.
 
 #### trace\_span
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L332)
-
 
 ```python
 @deprecated(
@@ -382,9 +332,6 @@ Adds a span to the trace.
 
 #### trace\_add\_span
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L347)
-
-
 ```python
 def trace_add_span(trace_id: str, config: Union[SpanConfig,
                                                 SpanConfigDict]) -> Span
@@ -404,9 +351,6 @@ Adds a span to the trace.
 
 #### trace\_add\_error
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L362)
-
-
 ```python
 def trace_add_error(trace_id: str, config: ErrorConfig) -> Error
 ```
@@ -414,9 +358,6 @@ def trace_add_error(trace_id: str, config: ErrorConfig) -> Error
 Adds an error to the trace.
 
 #### trace\_add\_tag
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L368)
-
 
 ```python
 def trace_add_tag(trace_id: str, key: str, value: str)
@@ -431,9 +372,6 @@ Adds a tag to the trace.
 - `value` _str_ - The value of the tag.
 
 #### trace\_add\_tool\_call
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L379)
-
 
 ```python
 def trace_add_tool_call(
@@ -454,9 +392,6 @@ Adds a tool call to the trace.
 - `[ToolCall](/sdk/python/references/models/prompt)` - The newly created tool call.
 
 #### trace\_event
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L400)
-
 
 ```python
 @deprecated(
@@ -480,9 +415,6 @@ Adds an event to the trace.
 
 #### trace\_add\_event
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L419)
-
-
 ```python
 def trace_add_event(trace_id: str,
                     event_id: str,
@@ -494,9 +426,6 @@ def trace_add_event(trace_id: str,
 Adds an event to the trace.
 
 #### trace\_set\_input
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L432)
-
 
 ```python
 def trace_set_input(trace_id: str, input: str)
@@ -511,9 +440,6 @@ Sets the input for the trace.
 
 #### trace\_set\_output
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L442)
-
-
 ```python
 def trace_set_output(trace_id: str, output: str)
 ```
@@ -526,9 +452,6 @@ Sets the output for the trace.
 - `output` _str_ - The output for the trace.
 
 #### trace\_feedback
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L455)
-
 
 ```python
 @deprecated(
@@ -546,9 +469,6 @@ Adds a feedback to the trace.
 
 #### trace\_add\_feedback
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L465)
-
-
 ```python
 def trace_add_feedback(trace_id: str, feedback: FeedbackDict)
 ```
@@ -556,9 +476,6 @@ def trace_add_feedback(trace_id: str, feedback: FeedbackDict)
 Adds a feedback to the trace.
 
 #### trace\_add\_metadata
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L471)
-
 
 ```python
 def trace_add_metadata(trace_id: str, metadata: Dict[str, Any])
@@ -573,9 +490,6 @@ Adds metadata to the trace.
 
 #### trace\_add\_attachment
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L481)
-
-
 ```python
 def trace_add_attachment(trace_id: str,
                          attachment: Union[FileAttachment, FileDataAttachment,
@@ -585,9 +499,6 @@ def trace_add_attachment(trace_id: str,
 Adds an attachment to the trace.
 
 #### trace\_end
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L491)
-
 
 ```python
 def trace_end(trace_id: str)
@@ -600,9 +511,6 @@ Ends the trace.
 - `trace_id` _str_ - The ID of the trace.
 
 #### generation\_set\_model
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L501)
-
 
 ```python
 def generation_set_model(generation_id: str, model: str)
@@ -617,9 +525,6 @@ Sets the model for the generation.
 
 #### generation\_set\_provider
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L511)
-
-
 ```python
 def generation_set_provider(generation_id: str, provider: str)
 ```
@@ -627,9 +532,6 @@ def generation_set_provider(generation_id: str, provider: str)
 Sets the provider for the generation.
 
 #### generation\_add\_message
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L517)
-
 
 ```python
 def generation_add_message(generation_id: str,
@@ -645,9 +547,6 @@ Adds a message to the generation.
 
 #### generation\_set\_model\_parameters
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L529)
-
-
 ```python
 def generation_set_model_parameters(generation_id: str,
                                     model_parameters: Dict[str, Any])
@@ -662,9 +561,6 @@ Sets the model parameters for the generation.
 
 #### generation\_result
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L541)
-
-
 ```python
 def generation_result(generation_id: str, result: Any)
 ```
@@ -678,9 +574,6 @@ Sets the result for the generation.
 
 #### generation\_add\_attachment
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L551)
-
-
 ```python
 def generation_add_attachment(generation_id: str,
                               attachment: Union[FileAttachment,
@@ -691,9 +584,6 @@ def generation_add_attachment(generation_id: str,
 Adds an attachment to the generation.
 
 #### generation\_end
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L561)
-
 
 ```python
 def generation_end(generation_id: str)
@@ -707,9 +597,6 @@ Ends the generation.
 
 #### generation\_error
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L570)
-
-
 ```python
 def generation_error(generation_id: str, error: GenerationError)
 ```
@@ -722,9 +609,6 @@ Sets the error for the generation.
 - `error` _[GenerationError](/sdk/python/references/logger/components/types)_ - The error for the generation.
 
 #### span\_generation
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L592)
-
 
 ```python
 @deprecated(
@@ -749,9 +633,6 @@ Adds a generation to the span.
 
 #### span\_add\_generation
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L607)
-
-
 ```python
 def span_add_generation(
         span_id: str, config: Union[GenerationConfig,
@@ -772,9 +653,6 @@ Adds a generation to the span.
 
 #### span\_add\_error
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L622)
-
-
 ```python
 def span_add_error(span_id: str, config: ErrorConfig) -> Error
 ```
@@ -782,9 +660,6 @@ def span_add_error(span_id: str, config: ErrorConfig) -> Error
 Adds an error to the span.
 
 #### span\_retrieval
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L631)
-
 
 ```python
 @deprecated(
@@ -809,9 +684,6 @@ Adds a retrieval to the span.
 
 #### span\_add\_retrieval
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L646)
-
-
 ```python
 def span_add_retrieval(
         span_id: str, config: Union[RetrievalConfig,
@@ -831,9 +703,6 @@ Adds a retrieval to the span.
 - `[Retrieval](/sdk/python/references/logger/components/retrieval)` - The newly created retrieval.
 
 #### span\_add\_tool\_call
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L661)
-
 
 ```python
 def span_add_tool_call(
@@ -855,9 +724,6 @@ Adds a tool call to the span.
 
 #### span\_end
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L676)
-
-
 ```python
 def span_end(span_id: str)
 ```
@@ -869,9 +735,6 @@ Ends the span.
 - `span_id` _str_ - The ID of the span.
 
 #### span\_add\_tag
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L685)
-
 
 ```python
 def span_add_tag(span_id: str, key: str, value: str)
@@ -886,9 +749,6 @@ Adds a tag to the span.
 - `value` _str_ - The value of the tag.
 
 #### span\_event
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L696)
-
 
 ```python
 def span_event(span_id: str,
@@ -909,9 +769,6 @@ Adds an event to the span.
 
 #### span\_add\_metadata
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L715)
-
-
 ```python
 def span_add_metadata(span_id: str, metadata: Dict[str, Any])
 ```
@@ -925,9 +782,6 @@ Adds metadata to the span.
 
 #### span\_add\_attachment
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L725)
-
-
 ```python
 def span_add_attachment(span_id: str,
                         attachment: Union[FileAttachment, FileDataAttachment,
@@ -937,9 +791,6 @@ def span_add_attachment(span_id: str,
 Adds an attachment to the span.
 
 #### span\_span
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L738)
-
 
 ```python
 @deprecated(
@@ -962,9 +813,6 @@ Adds a span to the span.
 
 #### span\_add\_sub\_span
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L753)
-
-
 ```python
 def span_add_sub_span(span_id: str, config: Union[SpanConfig,
                                                   SpanConfigDict]) -> Span
@@ -984,9 +832,6 @@ Adds a sub-span to the span.
 
 #### retrieval\_end
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L772)
-
-
 ```python
 def retrieval_end(retrieval_id: str)
 ```
@@ -998,9 +843,6 @@ Ends the retrieval.
 - `retrieval_id` _str_ - The ID of the retrieval.
 
 #### retrieval\_input
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L781)
-
 
 ```python
 def retrieval_input(retrieval_id: str, query: Any)
@@ -1015,9 +857,6 @@ Sets the input for the retrieval.
 
 #### retrieval\_output
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L791)
-
-
 ```python
 def retrieval_output(retrieval_id: str, docs: Any)
 ```
@@ -1030,9 +869,6 @@ Sets the output for the retrieval.
 - `docs` _Any_ - The output for the retrieval.
 
 #### retrieval\_add\_tag
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L801)
-
 
 ```python
 def retrieval_add_tag(retrieval_id: str, key: str, value: str)
@@ -1048,9 +884,6 @@ Adds a tag to the retrieval.
 
 #### retrieval\_add\_attachment
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L818)
-
-
 ```python
 def retrieval_add_attachment(retrieval_id: str,
                              attachment: Union[FileAttachment,
@@ -1061,9 +894,6 @@ def retrieval_add_attachment(retrieval_id: str,
 Adds an attachment to the retrieval.
 
 #### tool\_call\_update
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L829)
-
 
 ```python
 def tool_call_update(tool_call_id: str, data: Dict[str, Any])
@@ -1078,9 +908,6 @@ Updates the tool call.
 
 #### tool\_call\_result
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L839)
-
-
 ```python
 def tool_call_result(tool_call_id: str, result: Any)
 ```
@@ -1093,9 +920,6 @@ Sets the result for the tool call.
 - `result` _Any_ - The result for the tool call.
 
 #### tool\_call\_error
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L849)
-
 
 ```python
 def tool_call_error(tool_call_id: str, error: Union[ToolCallError,
@@ -1111,9 +935,6 @@ Sets the error for the tool call.
 
 #### tool\_call\_add\_metadata
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L861)
-
-
 ```python
 def tool_call_add_metadata(tool_call_id: str, metadata: Dict[str, Any])
 ```
@@ -1127,9 +948,6 @@ Adds metadata to the tool call.
 
 #### id
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L872)
-
-
 ```python
 @property
 def id()
@@ -1139,9 +957,6 @@ Returns the ID of the logger.
 
 #### flush
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L878)
-
-
 ```python
 def flush()
 ```
@@ -1149,9 +964,6 @@ def flush()
 Flushes the writer.
 
 #### cleanup
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py#L884)
-
 
 ```python
 def cleanup(is_sync=False)

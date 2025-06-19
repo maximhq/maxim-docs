@@ -1,9 +1,10 @@
-# maxim.models.dataset
+---
+title: models.Dataset
+---
+
+[View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/dataset.py)
 
 ## [VariableType](/sdk/python/references/models/dataset)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/dataset.py#L5)
-
 
 ```python
 class VariableType(str)
@@ -12,9 +13,6 @@ class VariableType(str)
 This class represents the type of a variable.
 
 ## [DatasetRow](/sdk/python/references/models/dataset)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/dataset.py#L15)
-
 
 ```python
 @dataclass
@@ -25,9 +23,6 @@ This class represents a row of a dataset.
 
 ## [Variable](/sdk/python/references/models/dataset)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/dataset.py#L34)
-
-
 ```python
 class Variable()
 ```
@@ -35,9 +30,6 @@ class Variable()
 This class represents a variable.
 
 #### \_\_init\_\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/dataset.py#L39)
-
 
 ```python
 def __init__(type_: str, payload: Dict[str, Union[str, int, bool, float,
@@ -53,9 +45,6 @@ This class represents a variable.
 
 ## [DatasetEntry](/sdk/python/references/models/dataset)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/dataset.py#L61)
-
-
 ```python
 class DatasetEntry()
 ```
@@ -63,9 +52,6 @@ class DatasetEntry()
 This class represents a dataset entry.
 
 #### \_\_init\_\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/dataset.py#L39)
-
 
 ```python
 def __init__(input: Variable,

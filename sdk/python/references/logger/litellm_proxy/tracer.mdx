@@ -1,9 +1,10 @@
-# maxim.logger.litellm\_proxy.tracer
+---
+title: litellm_proxy.Tracer
+---
+
+[View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/litellm_proxy/tracer.py)
 
 ## [MaximLiteLLMProxyTracer](/sdk/python/references/logger/litellm_proxy/tracer)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/litellm_proxy/tracer.py#L10)
-
 
 ```python
 class MaximLiteLLMProxyTracer(CustomLogger)
@@ -13,9 +14,6 @@ Custom logger for Litellm Proxy.
 
 #### log\_pre\_api\_call
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/litellm_proxy/tracer.py#L28)
-
-
 ```python
 def log_pre_api_call(model, messages, kwargs)
 ```
@@ -23,9 +21,6 @@ def log_pre_api_call(model, messages, kwargs)
 Runs when a LLM call starts.
 
 #### log\_success\_event
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/litellm_proxy/tracer.py#L34)
-
 
 ```python
 def log_success_event(kwargs, response_obj, start_time, end_time)
@@ -35,9 +30,6 @@ Runs when a LLM call succeeds.
 
 #### log\_failure\_event
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/litellm_proxy/tracer.py#L42)
-
-
 ```python
 def log_failure_event(kwargs, response_obj, start_time, end_time)
 ```
@@ -45,9 +37,6 @@ def log_failure_event(kwargs, response_obj, start_time, end_time)
 Runs when a LLM call fails.
 
 #### async\_log\_pre\_api\_call
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/litellm_proxy/tracer.py#L50)
-
 
 ```python
 async def async_log_pre_api_call(model, messages, kwargs)
@@ -57,9 +46,6 @@ Runs when a LLM call starts.
 
 #### async\_log\_success\_event
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/litellm_proxy/tracer.py#L56)
-
-
 ```python
 async def async_log_success_event(kwargs, response_obj, start_time, end_time)
 ```
@@ -67,9 +53,6 @@ async def async_log_success_event(kwargs, response_obj, start_time, end_time)
 Runs when a LLM call succeeds.
 
 #### async\_log\_failure\_event
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/litellm_proxy/tracer.py#L64)
-
 
 ```python
 async def async_log_failure_event(kwargs, response_obj, start_time, end_time)

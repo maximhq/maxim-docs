@@ -1,9 +1,10 @@
-# maxim.models.prompt\_chain
+---
+title: PromptChain
+---
+
+[View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py)
 
 ## [AgentCost](/sdk/python/references/models/prompt_chain)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L9)
-
 
 ```python
 class AgentCost(TypedDict)
@@ -19,9 +20,6 @@ Type definition for agent execution costs.
 
 ## [AgentUsage](/sdk/python/references/models/prompt_chain)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L23)
-
-
 ```python
 class AgentUsage(TypedDict)
 ```
@@ -35,9 +33,6 @@ Type definition for agent token usage statistics.
 - `total_tokens` - Total number of tokens used
 
 ## [AgentResponseMeta](/sdk/python/references/models/prompt_chain)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L37)
-
 
 ```python
 class AgentResponseMeta(TypedDict)
@@ -53,9 +48,6 @@ Type definition for agent response metadata.
 - `retrieved_context` - Optional retrieved context string
 
 ## [AgentResponse](/sdk/python/references/models/prompt_chain)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L54)
-
 
 ```python
 @dataclass
@@ -73,9 +65,6 @@ metadata including cost, usage statistics, and contextual information.
 - `meta` - [Metadata](/sdk/python/references/models/metadata) about the response including costs and usage
 
 #### from\_dict
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L69)
-
 
 ```python
 @staticmethod
@@ -95,9 +84,6 @@ Create an [AgentResponse](/sdk/python/references/models/prompt_chain) instance f
 
 ## [PromptNode](/sdk/python/references/models/prompt_chain)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L91)
-
-
 ```python
 @dataclass
 class PromptNode()
@@ -113,9 +99,6 @@ that executes a prompt.
 - `prompt` - The [Prompt](/sdk/python/references/models/prompt) object to be executed
 
 ## [CodeBlockNode](/sdk/python/references/models/prompt_chain)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L105)
-
 
 ```python
 @dataclass
@@ -133,9 +116,6 @@ prompt chain workflow.
 
 ## [ApiParams](/sdk/python/references/models/prompt_chain)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L119)
-
-
 ```python
 @dataclass
 class ApiParams()
@@ -150,9 +130,6 @@ Parameters for API node configuration.
 - `value` - Parameter value
 
 ## [ApiNode](/sdk/python/references/models/prompt_chain)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L134)
-
 
 ```python
 @dataclass
@@ -169,9 +146,6 @@ that makes an API call.
 - `api` - Dictionary containing API configuration
 
 ## [Node](/sdk/python/references/models/prompt_chain)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L148)
-
 
 ```python
 @dataclass
@@ -190,9 +164,6 @@ different types of content (prompt, code, or API configuration).
 
 #### from\_dict
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L69)
-
-
 ```python
 @staticmethod
 def from_dict(data: Dict[str, Any]) -> "Node"
@@ -210,9 +181,6 @@ Create a [Node](/sdk/python/references/models/prompt_chain) instance from a dict
 - `[Node](/sdk/python/references/models/prompt_chain)` - New instance created from the dictionary data
 
 ## [PromptChain](/sdk/python/references/models/prompt_chain)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L186)
-
 
 ```python
 @dataclass
@@ -234,9 +202,6 @@ information for tracking changes over time.
 
 #### from\_dict
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L69)
-
-
 ```python
 @staticmethod
 def from_dict(data: Dict[str, Any]) -> "PromptChain"
@@ -255,9 +220,6 @@ Create a [PromptChain](/sdk/python/references/models/prompt_chain) instance from
 
 ## [PromptChainVersionConfig](/sdk/python/references/models/prompt_chain)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L225)
-
-
 ```python
 @dataclass
 class PromptChainVersionConfig()
@@ -273,9 +235,6 @@ version of a prompt chain.
 - `nodes` - List of nodes in this version configuration
 
 #### from\_dict
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L69)
-
 
 ```python
 @staticmethod
@@ -294,9 +253,6 @@ Create a [PromptChainVersionConfig](/sdk/python/references/models/prompt_chain) 
 - `[PromptChainVersionConfig](/sdk/python/references/models/prompt_chain)` - New instance created from the dictionary data
 
 ## [PromptChainVersion](/sdk/python/references/models/prompt_chain)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L254)
-
 
 ```python
 @dataclass
@@ -320,9 +276,6 @@ its configuration, description, and timestamps.
 
 #### from\_dict
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L69)
-
-
 ```python
 @staticmethod
 def from_dict(data: Dict[str, Any]) -> "PromptChainVersion"
@@ -340,9 +293,6 @@ Create a [PromptChainVersion](/sdk/python/references/models/prompt_chain) instan
 - `[PromptChainVersion](/sdk/python/references/models/prompt_chain)` - New instance created from the dictionary data
 
 ## [PromptChainRuleType](/sdk/python/references/models/prompt_chain)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L305)
-
 
 ```python
 @dataclass
@@ -364,15 +314,9 @@ of a prompt chain should be deployed based on various conditions.
 
 #### value
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L1)
-
-
 adding None here
 
 #### from\_dict
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L69)
-
 
 ```python
 @staticmethod
@@ -392,9 +336,6 @@ Create a [PromptChainRuleType](/sdk/python/references/models/prompt_chain) insta
 
 ## [PromptChainRuleGroupType](/sdk/python/references/models/prompt_chain)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L346)
-
-
 ```python
 @dataclass
 class PromptChainRuleGroupType()
@@ -411,9 +352,6 @@ Allows grouping multiple rules together with logical operators
 - `combinator` - Logical operator to combine rules ("and" or "or")
 
 #### from\_dict
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L69)
-
 
 ```python
 @staticmethod
@@ -433,9 +371,6 @@ Create a [PromptChainRuleGroupType](/sdk/python/references/models/prompt_chain) 
 
 ## [PromptChainDeploymentRules](/sdk/python/references/models/prompt_chain)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L381)
-
-
 ```python
 @dataclass
 class PromptChainDeploymentRules()
@@ -452,9 +387,6 @@ prompt chain should be deployed or used.
 - `query` - Optional rule group that defines the deployment conditions
 
 #### from\_dict
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L69)
-
 
 ```python
 @staticmethod
@@ -473,9 +405,6 @@ Create a [PromptChainDeploymentRules](/sdk/python/references/models/prompt_chain
 - `[PromptChainDeploymentRules](/sdk/python/references/models/prompt_chain)` - New instance created from the dictionary data
 
 ## [VersionSpecificDeploymentConfig](/sdk/python/references/models/prompt)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L413)
-
 
 ```python
 @dataclass
@@ -496,9 +425,6 @@ and fallback information for a particular version.
 
 #### from\_dict
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L69)
-
-
 ```python
 @staticmethod
 def from_dict(obj: Dict[str, Any])
@@ -516,9 +442,6 @@ Create a [VersionSpecificDeploymentConfig](/sdk/python/references/models/prompt)
 - `[VersionSpecificDeploymentConfig](/sdk/python/references/models/prompt)` - New instance created from the dictionary data
 
 ## [PromptChainVersionsAndRules](/sdk/python/references/models/prompt_chain)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L452)
-
 
 ```python
 @dataclass
@@ -539,9 +462,6 @@ deployment rules and folder organization.
 
 #### from\_dict
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L69)
-
-
 ```python
 @staticmethod
 def from_dict(obj: Dict[str, Any])
@@ -560,9 +480,6 @@ Create a [PromptChainVersionsAndRules](/sdk/python/references/models/prompt_chai
 
 ## [VersionAndRulesWithPromptChainId](/sdk/python/references/models/prompt_chain)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L502)
-
-
 ```python
 @dataclass
 class VersionAndRulesWithPromptChainId(PromptChainVersionsAndRules)
@@ -579,9 +496,6 @@ includes the prompt chain identifier for complete context.
   Inherits all attributes from [PromptChainVersionsAndRules](/sdk/python/references/models/prompt_chain)
 
 #### from\_dict
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L69)
-
 
 ```python
 @staticmethod
@@ -601,9 +515,6 @@ Create a [VersionAndRulesWithPromptChainId](/sdk/python/references/models/prompt
 
 ## [MaximApiPromptChainResponse](/sdk/python/references/models/prompt_chain)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L551)
-
-
 ```python
 @dataclass
 class MaximApiPromptChainResponse()
@@ -620,9 +531,6 @@ about a single prompt chain, including error handling.
 - `error` - Optional error information if the API call failed
 
 #### from\_dict
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L69)
-
 
 ```python
 @staticmethod
@@ -642,9 +550,6 @@ Create a [MaximApiPromptChainResponse](/sdk/python/references/models/prompt_chai
 
 ## [PromptChainWithId](/sdk/python/references/models/prompt_chain)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L583)
-
-
 ```python
 @dataclass
 class PromptChainWithId(PromptChainVersionsAndRules)
@@ -661,9 +566,6 @@ Contains all version and rule information along with the prompt chain identifier
   Inherits all attributes from [PromptChainVersionsAndRules](/sdk/python/references/models/prompt_chain)
 
 #### from\_dict
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L69)
-
 
 ```python
 @staticmethod
@@ -683,9 +585,6 @@ Create a [PromptChainWithId](/sdk/python/references/models/prompt_chain) instanc
 
 ## [VersionAndRulesWithPromptChainIdEncoder](/sdk/python/references/models/prompt_chain)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L628)
-
-
 ```python
 class VersionAndRulesWithPromptChainIdEncoder(json.JSONEncoder)
 ```
@@ -696,9 +595,6 @@ Provides serialization support for [VersionAndRulesWithPromptChainId](/sdk/pytho
 instances by converting them to dictionaries.
 
 #### default
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L635)
-
 
 ```python
 def default(o)
@@ -717,9 +613,6 @@ Convert [VersionAndRulesWithPromptChainId](/sdk/python/references/models/prompt_
 
 ## [MaximApiPromptChainsResponse](/sdk/python/references/models/prompt_chain)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L651)
-
-
 ```python
 @dataclass
 class MaximApiPromptChainsResponse()
@@ -736,9 +629,6 @@ about multiple prompt chains, including error handling.
 - `error` - Optional error information if the API call failed
 
 #### from\_dict
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py#L69)
-
 
 ```python
 @staticmethod

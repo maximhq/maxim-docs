@@ -1,9 +1,10 @@
-# maxim.logger.components.trace
+---
+title: components.Trace
+---
+
+[View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py)
 
 ## [TraceConfig](/sdk/python/references/logger/components/trace)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L45)
-
 
 ```python
 @deprecated(
@@ -20,9 +21,6 @@ This class represents a trace config.
 
 ## [TraceConfigDict](/sdk/python/references/logger/components/trace)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L58)
-
-
 ```python
 class TraceConfigDict(TypedDict)
 ```
@@ -32,9 +30,6 @@ class TraceConfigDict(TypedDict)
 This class represents a trace config dictionary.
 
 #### get\_trace\_config\_dict
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L71)
-
 
 ```python
 def get_trace_config_dict(
@@ -54,9 +49,6 @@ Convert a [TraceConfig](/sdk/python/references/logger/components/trace) object t
 
 ## [Trace](/sdk/python/references/logger/components/trace)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L96)
-
-
 ```python
 class Trace(EventEmittingBaseContainer)
 ```
@@ -66,9 +58,6 @@ A class representing a trace in the logging system.
 A trace is a high-level container for tracking a complete operation or workflow.
 
 #### \_\_init\_\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L103)
-
 
 ```python
 def __init__(config: Union[TraceConfig, TraceConfigDict], writer: LogWriter)
@@ -83,9 +72,6 @@ Initialize a new [Trace](/sdk/python/references/logger/components/trace) instanc
 
 #### set\_input
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L122)
-
-
 ```python
 def set_input(input: str)
 ```
@@ -97,9 +83,6 @@ Set the input for this trace.
 - `input` - The input string to set.
 
 #### set\_input\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L137)
-
 
 ```python
 @staticmethod
@@ -116,9 +99,6 @@ Static method to set the input for a trace.
 
 #### set\_output
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L153)
-
-
 ```python
 def set_output(output: str)
 ```
@@ -130,9 +110,6 @@ Set the output for this trace.
 - `output` - The output string to set.
 
 #### set\_output\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L169)
-
 
 ```python
 @staticmethod
@@ -148,9 +125,6 @@ Static method to set the output for a trace.
 - `output` - The output string to set.
 
 #### generation
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L185)
-
 
 ```python
 def generation(
@@ -170,9 +144,6 @@ Add a generation to this trace.
 
 #### tool\_call
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L207)
-
-
 ```python
 def tool_call(config: Union[ToolCallConfig, ToolCallConfigDict]) -> ToolCall
 ```
@@ -189,9 +160,6 @@ Add a tool call to this trace.
   A new [ToolCall](/sdk/python/references/models/prompt) instance.
 
 #### tool\_call\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L229)
-
 
 ```python
 @staticmethod
@@ -213,9 +181,6 @@ Static method to add a tool call to a trace.
   A new [ToolCall](/sdk/python/references/models/prompt) instance.
 
 #### generation\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L260)
-
 
 ```python
 @staticmethod
@@ -239,9 +204,6 @@ Static method to add a generation to a trace.
 
 #### add\_error
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L289)
-
-
 ```python
 def add_error(config: ErrorConfig) -> Error
 ```
@@ -258,9 +220,6 @@ Add an error to this trace.
   A new [Error](/sdk/python/references/models/prompt) instance.
 
 #### error\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L304)
-
 
 ```python
 @staticmethod
@@ -282,9 +241,6 @@ Static method to add an error to a trace.
 
 #### retrieval
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L326)
-
-
 ```python
 def retrieval(config: Union[RetrievalConfig, RetrievalConfigDict])
 ```
@@ -301,9 +257,6 @@ Add a retrieval to this trace.
   A new [Retrieval](/sdk/python/references/logger/components/retrieval) instance.
 
 #### retrieval\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L348)
-
 
 ```python
 @staticmethod
@@ -326,9 +279,6 @@ Static method to add a retrieval to a trace.
 
 #### span
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L378)
-
-
 ```python
 def span(config: Union["SpanConfig", "SpanConfigDict"]) -> "Span"
 ```
@@ -345,9 +295,6 @@ Add a span to this trace.
   A new [Span](/sdk/python/references/logger/components/span) instance.
 
 #### span\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L402)
-
 
 ```python
 @staticmethod
@@ -370,9 +317,6 @@ Static method to add a span to a trace.
 
 #### feedback
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L435)
-
-
 ```python
 def feedback(feedback: Union[Feedback, FeedbackDict])
 ```
@@ -384,9 +328,6 @@ Add feedback to this trace.
 - `feedback` - The feedback to add.
 
 #### feedback\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L445)
-
 
 ```python
 @staticmethod
@@ -404,9 +345,6 @@ Static method to add feedback to a trace.
 
 #### add\_tag\_
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L465)
-
-
 ```python
 @staticmethod
 def add_tag_(writer: LogWriter, id: str, key: str, value: str)
@@ -423,9 +361,6 @@ Static method to add a tag to a trace.
 
 #### add\_attachment
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L477)
-
-
 ```python
 def add_attachment(attachment: Union[FileAttachment, FileDataAttachment,
                                      UrlAttachment])
@@ -438,9 +373,6 @@ Add an attachment to this trace.
 - `attachment` - The attachment to add.
 
 #### add\_attachment\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L489)
-
 
 ```python
 @staticmethod
@@ -458,9 +390,6 @@ Static method to add an attachment to a trace.
 - `attachment` - The attachment to add.
 
 #### end\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L511)
-
 
 ```python
 @staticmethod
@@ -483,9 +412,6 @@ Static method to end a trace.
   The result of the end operation.
 
 #### event\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L536)
-
 
 ```python
 @staticmethod
@@ -514,9 +440,6 @@ Static method to add a custom event to a trace.
   The result of the event operation.
 
 #### data
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py#L562)
-
 
 ```python
 def data() -> Dict[str, Any]

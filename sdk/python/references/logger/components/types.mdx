@@ -1,9 +1,10 @@
-# maxim.logger.components.types
+---
+title: Types
+---
+
+[View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/types.py)
 
 ## [Entity](/sdk/python/references/logger/components/types)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/types.py#L13)
-
 
 ```python
 class Entity(Enum)
@@ -15,9 +16,6 @@ This class represents an entity.
 
 ## [DateTimeEncoder](/sdk/python/references/logger/components/types)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/types.py#L29)
-
-
 ```python
 class DateTimeEncoder(json.JSONEncoder)
 ```
@@ -28,9 +26,6 @@ This class represents a date time encoder.
 
 ## [CommitLog](/sdk/python/references/logger/components/types)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/types.py#L41)
-
-
 ```python
 class CommitLog()
 ```
@@ -40,9 +35,6 @@ Commit log.
 This class represents a commit log.
 
 #### \_\_init\_\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/types.py#L47)
-
 
 ```python
 def __init__(entity: Entity,
@@ -62,9 +54,6 @@ Initialize a commit log.
 
 #### serialize
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/types.py#L67)
-
-
 ```python
 def serialize(custom_data: Optional[Dict[str, Any]] = None) -> str
 ```
@@ -81,9 +70,6 @@ Serialize the commit log.
 - `str` - The serialized commit log.
 
 #### object\_to\_dict
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/types.py#L113)
-
 
 ```python
 def object_to_dict(obj: Any) -> Union[Dict, List, str, int, float, bool, None]
@@ -102,9 +88,6 @@ Convert a complex object structure to a dictionary, handling nested custom objec
 
 ## [GenerationErrorTypedDict](/sdk/python/references/logger/components/types)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/types.py#L163)
-
-
 ```python
 class GenerationErrorTypedDict(TypedDict)
 ```
@@ -114,9 +97,6 @@ class GenerationErrorTypedDict(TypedDict)
 This class represents a generation error typed dict.
 
 ## [GenerationError](/sdk/python/references/logger/components/types)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/types.py#L178)
-
 
 ```python
 @deprecated(

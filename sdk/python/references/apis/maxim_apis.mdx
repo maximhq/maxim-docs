@@ -1,9 +1,10 @@
-# maxim.apis.maxim\_apis
+---
+title: MaximApis
+---
+
+[View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py)
 
 ## [ConnectionPool](/sdk/python/references/apis/maxim_apis)
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L54)
-
 
 ```python
 class ConnectionPool()
@@ -16,9 +17,6 @@ for handling transient network errors.
 
 #### \_\_init\_\_
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L62)
-
-
 ```python
 def __init__()
 ```
@@ -26,9 +24,6 @@ def __init__()
 Initialize a new session with retry configuration.
 
 #### get\_session
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L89)
-
 
 ```python
 @contextlib.contextmanager
@@ -43,9 +38,6 @@ Context manager that yields the session and ensures it's closed after use.
 
 ## [MaximAPI](/sdk/python/references/apis/maxim_apis)
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L99)
-
-
 ```python
 class MaximAPI()
 ```
@@ -56,9 +48,6 @@ This class provides methods for all available [Maxim](/sdk/python/references/max
 handling authentication, request formatting, and error handling.
 
 #### \_\_init\_\_
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L62)
-
 
 ```python
 def __init__(base_url: str, api_key: str)
@@ -72,9 +61,6 @@ Initialize a new [Maxim](/sdk/python/references/maxim) API client.
 - `api_key` - The API key for authentication
 
 #### get\_prompt
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L302)
-
 
 ```python
 def get_prompt(id: str) -> VersionAndRulesWithPromptId
@@ -98,9 +84,6 @@ Get a prompt by ID.
 
 #### get\_prompts
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L329)
-
-
 ```python
 def get_prompts() -> List[VersionAndRulesWithPromptId]
 ```
@@ -117,9 +100,6 @@ Get all prompts.
 - `Exception` - If the request fails
 
 #### getPromptChain
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L1)
-
 
 ```python
 def getPromptChain(id: str) -> VersionAndRulesWithPromptChainId
@@ -143,9 +123,6 @@ Get a prompt chain by ID.
 
 #### get\_prompt\_chains
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L380)
-
-
 ```python
 def get_prompt_chains() -> List[VersionAndRulesWithPromptChainId]
 ```
@@ -162,9 +139,6 @@ Get all prompt chains.
 - `Exception` - If the request fails
 
 #### run\_prompt
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L407)
-
 
 ```python
 def run_prompt(model: str,
@@ -194,9 +168,6 @@ Run a custom prompt with the specified model and messages.
 
 #### run\_prompt\_version
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L458)
-
-
 ```python
 def run_prompt_version(
         prompt_version_id: str, input: str,
@@ -225,9 +196,6 @@ Run a specific prompt version with the given input.
 
 #### run\_prompt\_chain\_version
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L506)
-
-
 ```python
 def run_prompt_chain_version(
         prompt_chain_version_id: str, input: str,
@@ -254,9 +222,6 @@ Run a specific prompt chain version with the given input.
 
 #### get\_folder
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L550)
-
-
 ```python
 def get_folder(id: str) -> Folder
 ```
@@ -279,9 +244,6 @@ Get a folder by ID.
 
 #### get\_folders
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L579)
-
-
 ```python
 def get_folders() -> List[Folder]
 ```
@@ -298,9 +260,6 @@ Get all folders.
 - `Exception` - If the request fails
 
 #### add\_dataset\_entries
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L604)
-
 
 ```python
 def add_dataset_entries(dataset_id: str,
@@ -326,9 +285,6 @@ Add entries to a dataset.
 
 #### get\_dataset\_total\_rows
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L640)
-
-
 ```python
 def get_dataset_total_rows(dataset_id: str) -> int
 ```
@@ -350,9 +306,6 @@ Get the total number of rows in a dataset.
 - `Exception` - If the request fails
 
 #### get\_dataset\_row
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L670)
-
 
 ```python
 def get_dataset_row(dataset_id: str, row_index: int) -> Optional[DatasetRow]
@@ -377,9 +330,6 @@ Get a specific row from a dataset.
 
 #### get\_dataset\_structure
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L699)
-
-
 ```python
 def get_dataset_structure(dataset_id: str) -> Dict[str, str]
 ```
@@ -402,9 +352,6 @@ Get the structure of a dataset.
 
 #### does\_log\_repository\_exist
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L729)
-
-
 ```python
 def does_log_repository_exist(logger_id: str) -> bool
 ```
@@ -421,9 +368,6 @@ Check if a log repository exists.
 - `bool` - True if the repository exists, False otherwise
 
 #### push\_logs
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L751)
-
 
 ```python
 def push_logs(repository_id: str, logs: str) -> None
@@ -442,9 +386,6 @@ Push logs to a repository.
 - `Exception` - If the request fails
 
 #### fetch\_platform\_evaluator
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L779)
-
 
 ```python
 def fetch_platform_evaluator(name: str, in_workspace_id: str) -> Evaluator
@@ -468,9 +409,6 @@ Fetch a platform evaluator by name.
 - `Exception` - If the request fails
 
 #### create\_test\_run
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L810)
-
 
 ```python
 def create_test_run(
@@ -512,9 +450,6 @@ Create a new test run.
 
 #### attach\_dataset\_to\_test\_run
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L892)
-
-
 ```python
 def attach_dataset_to_test_run(test_run_id: str, dataset_id: str) -> None
 ```
@@ -532,9 +467,6 @@ Attach a dataset to a test run.
 - `Exception` - If the request fails
 
 #### push\_test\_run\_entry
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L921)
-
 
 ```python
 def push_test_run_entry(test_run: Union[TestRun, TestRunWithDatasetEntry],
@@ -557,9 +489,6 @@ Push an entry to a test run.
 
 #### mark\_test\_run\_processed
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L965)
-
-
 ```python
 def mark_test_run_processed(test_run_id: str) -> None
 ```
@@ -577,9 +506,6 @@ Mark a test run as processed.
 
 #### mark\_test\_run\_failed
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L993)
-
-
 ```python
 def mark_test_run_failed(test_run_id: str) -> None
 ```
@@ -596,9 +522,6 @@ Mark a test run as failed.
 - `Exception` - If the request fails
 
 #### get\_test\_run\_status
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L1021)
-
 
 ```python
 def get_test_run_status(test_run_id: str) -> TestRunStatus
@@ -622,9 +545,6 @@ Get the status of a test run.
 
 #### get\_test\_run\_final\_result
 
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L1054)
-
-
 ```python
 def get_test_run_final_result(test_run_id: str) -> TestRunResult
 ```
@@ -646,9 +566,6 @@ Get the final result of a test run.
 - `Exception` - If the request fails
 
 #### get\_upload\_url
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L1196)
-
 
 ```python
 def get_upload_url(key: str, mime_type: str, size: int) -> SignedURLResponse
@@ -673,9 +590,6 @@ Get a signed URL for uploading a file.
 - `Exception` - If the request fails
 
 #### upload\_to\_signed\_url
-
-[View source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py#L1226)
-
 
 ```python
 def upload_to_signed_url(url: str, data: bytes, mime_type: str) -> bool
