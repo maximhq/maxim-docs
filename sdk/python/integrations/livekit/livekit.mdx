@@ -11,13 +11,11 @@ This integration allows you to:
 
 - Monitor voice agent conversations in real-time
 - Trace function tool calls and their performance
-- Capture detailed session analytics
 - Debug and optimize your voice AI applications
 
 ## Requirements
 
 ```bash
-"ipykernel",
 "livekit",
 "livekit-agents[google,openai]~=1.0",
 "livekit-api",
@@ -37,7 +35,6 @@ LIVEKIT_API_SECRET=
 OPENAI_API_KEY=
 MAXIM_API_KEY=
 MAXIM_LOG_REPO_ID=
-GOOGLE_API_KEY=
 ```
 
 ## Getting Started
@@ -65,11 +62,10 @@ GOOGLE_API_KEY=
   style={{ width:"32%" }}
 />
 
-#### Google AI API Key (for Gemini models)
+#### OpenAI API Key
 
-1. Go to [Google AI Studio](https://aistudio.google.com/)
-2. Create an API key for Gemini models
-3. Set the `GOOGLE_API_KEY` environment variable
+1. Go to OpenAI Platform & create an API Key [OpenAI Platform](https://platform.openai.com/api-keys)
+2. Set the `OPENAI_API_KEY` environment variable
 
 ### Step 2: Initialize Maxim Logger
 
@@ -80,6 +76,7 @@ from maxim.logger.livekit import instrument_livekit
 
 # Initialize Maxim logger
 logger = Maxim().logger()
+# Automatically fetches MAXIM_API_KEY and MAXIM_LOG_REPO_ID from environment variables
 
 # Optional: Set up event handling for trace lifecycle
 def on_event(event: str, data: dict):
@@ -96,7 +93,7 @@ def on_event(event: str, data: dict):
 instrument_livekit(logger, on_event)
 ```
 
-`instrument_livekit`: A specialized function that automatically wraps LiveKit components to capture traces
+`instrument_livekit`:  This function integrates Maxim's observability features with LiveKit Agents . It allows you to automatically capture and send trace data to the platform:
 
 `logger = Maxim().logger()` :  This creates a Maxim logger instance that:
 
@@ -172,10 +169,7 @@ async def entrypoint(ctx: agents.JobContext):
         
         # Create agent session with Gemini model
         session = AgentSession(
-            llm=google.beta.realtime.RealtimeModel(
-                model="gemini-2.0-flash-exp", 
-                voice="Puck"
-            ),
+           llm=openai.realtime.RealtimeModel(voice="coral"),
         )
         
         # Start the session
@@ -315,10 +309,7 @@ async def entrypoint(ctx: agents.JobContext):
         print(f"Room created: {room.name}")
         
         session = AgentSession(
-            llm=google.beta.realtime.RealtimeModel(
-                model="gemini-2.0-flash-exp", 
-                voice="Puck"
-            ),
+            llm=openai.realtime.RealtimeModel(voice="coral"),
         )
         
         await session.start(room=room, agent=Assistant())
@@ -338,20 +329,9 @@ if __name__ == "__main__":
 
 ## What Gets Traced
 
-With Maxim's LiveKit integration, you automatically get visibility into:
-
 ### Agent Conversations
 
-- **User Messages**: All incoming audio transcriptions and user inputs
-- **Agent Responses**: Generated responses and their metadata
-- **Message Timestamps**: Precise timing of each interaction
-
-### Function Tool Calls
-
-- **Tool Invocations**: Which tools were called and when
-- **Parameters**: Input parameters passed to each tool
-- **Results**: Return values and execution times
-- **Errors**: Any exceptions or failures during tool execution
+Transcript containing System Instructions, User and Assistant Messages are pushed to Maxim
 
 ## Running Your Agent
 
@@ -363,10 +343,6 @@ With Maxim's LiveKit integration, you automatically get visibility into:
    uv sync
    uv run livekit-gemini.py console
    ```
-4. **Monitor in Maxim Console**:
-   - View real-time traces as conversations happen
-   - Analyze function call performance
-   - Monitor session analytics and user engagement
 
 ![livekit.gif](/images/livekit.gif)
 
