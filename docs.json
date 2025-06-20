@@ -940,11 +940,11 @@
         },
         {
             "source": "/library/how-to/evaluators/create-api-evaluators",
-            "destination": "/evaluators/custom-evaluators#api-based-evaluators"
+            "destination": "/library/evaluators/custom-evaluators#api-based-evaluators"
         },
         {
             "source": "/library/how-to/evaluators/create-human-evaluators",
-            "destination": "/evaluators/custom-evaluators#human-evaluators"
+            "destination": "/library/evaluators/custom-evaluators#human-evaluators"
         },
         {
             "source": "/library/how-to/prompt-partials/create-prompt-partial",
@@ -1132,7 +1132,7 @@
         },
         {
             "source": "/api/evaluators/get",
-            "destination": "/evaluators/evaluator/get-evaluators"
+            "destination": "/library/evaluators/evaluator/get-evaluators"
         },
         {
             "source": "/api/folders/post",
