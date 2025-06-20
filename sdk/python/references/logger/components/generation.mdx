@@ -1,5 +1,6 @@
 ---
 title: components.Generation
+description: Generation functionality for Components integration.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/generation.py)
@@ -50,8 +51,9 @@ Convert a generation config to a generation config dict else return the config.
 
 **Arguments**:
 
-- `config` _Union[GenerationConfig, [GenerationConfigDict](/sdk/python/references/logger/components/generation)]_ - The config to get the dict from.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `config` | _Union[GenerationConfig, [GenerationConfigDict](/sdk/python/references/logger/components/generation)]_ | The config to get the dict from. |
 
 **Returns**:
 
@@ -169,8 +171,9 @@ Convert a generation error to a generation error dict else return the error.
 
 **Arguments**:
 
-- `config` - Either a [TraceConfig](/sdk/python/references/logger/components/trace) object or a [TraceConfigDict](/sdk/python/references/logger/components/trace) dictionary.
-  
+| Name | Description |
+|------|-------------|
+| `config` | Either a [TraceConfig](/sdk/python/references/logger/components/trace) object or a [TraceConfigDict](/sdk/python/references/logger/components/trace) dictionary. |
 
 **Returns**:
 
@@ -193,8 +196,10 @@ Initialize a generation.
 
 **Arguments**:
 
-- `config` - The config to initialize the generation with.
-- `writer` - The writer to use.
+| Name | Description |
+|------|-------------|
+| `config` | The config to initialize the generation with. |
+| `writer` | The writer to use. |
 
 #### set\_provider\_
 
@@ -207,9 +212,11 @@ Static method to set the provider for a trace.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `id` - The ID of the trace to set the provider for.
-- `provider` - The provider to set.
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `id` | The ID of the trace to set the provider for. |
+| `provider` | The provider to set. |
 
 #### set\_provider
 
@@ -221,7 +228,9 @@ Set the provider for this trace.
 
 **Arguments**:
 
-- `provider` - The provider to set.
+| Name | Description |
+|------|-------------|
+| `provider` | The provider to set. |
 
 #### set\_model\_
 
@@ -234,9 +243,11 @@ Static method to set the model for a trace.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `id` - The ID of the trace to set the model for.
-- `model` - The model to set.
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `id` | The ID of the trace to set the model for. |
+| `model` | The model to set. |
 
 #### set\_model
 
@@ -248,7 +259,9 @@ Set the model for this trace.
 
 **Arguments**:
 
-- `model` - The model to set.
+| Name | Description |
+|------|-------------|
+| `model` | The model to set. |
 
 #### add\_message\_
 
@@ -262,9 +275,11 @@ Static method to add a message to a trace.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `id` - The ID of the trace to add the message to.
-- `message` - The message to add.
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `id` | The ID of the trace to add the message to. |
+| `message` | The message to add. |
 
 #### add\_message
 
@@ -276,7 +291,9 @@ Add a message to this trace.
 
 **Arguments**:
 
-- `message` - The message to add.
+| Name | Description |
+|------|-------------|
+| `message` | The message to add. |
 
 #### set\_model\_parameters\_
 
@@ -290,9 +307,11 @@ Static method to set the model parameters for a trace.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `id` - The ID of the trace to set the model parameters for.
-- `model_parameters` - The model parameters to set.
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `id` | The ID of the trace to set the model parameters for. |
+| `model_parameters` | The model parameters to set. |
 
 #### set\_model\_parameters
 
@@ -304,7 +323,9 @@ Set the model parameters for this trace.
 
 **Arguments**:
 
-- `model_parameters` - The model parameters to set.
+| Name | Description |
+|------|-------------|
+| `model_parameters` | The model parameters to set. |
 
 #### add\_attachment
 
@@ -317,7 +338,9 @@ Add an attachment to this trace.
 
 **Arguments**:
 
-- `attachment` - The attachment to add.
+| Name | Description |
+|------|-------------|
+| `attachment` | The attachment to add. |
 
 #### add\_attachment\_
 
@@ -332,9 +355,11 @@ Static method to add an attachment to a trace.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `generation_id` - The ID of the generation to add the attachment to.
-- `attachment` - The attachment to add.
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `generation_id` | The ID of the generation to add the attachment to. |
+| `attachment` | The attachment to add. |
 
 #### result\_
 
@@ -348,9 +373,11 @@ Static method to add a result to a trace.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `id` - The ID of the trace to add the result to.
-- `result` - The result to add.
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `id` | The ID of the trace to add the result to. |
+| `result` | The result to add. |
 
 #### end\_
 
@@ -363,9 +390,11 @@ Static method to end a trace.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `id` - The ID of the trace to end.
-- `data` - The data to add to the trace.
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `id` | The ID of the trace to end. |
+| `data` | The data to add to the trace. |
 
 #### add\_tag\_
 
@@ -378,10 +407,12 @@ Static method to add a tag to a trace.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `id` - The ID of the trace to add the tag to.
-- `key` - The key of the tag to add.
-- `value` - The value of the tag to add.
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `id` | The ID of the trace to add the tag to. |
+| `key` | The key of the tag to add. |
+| `value` | The value of the tag to add. |
 
 #### convert\_chat\_completion
 
@@ -394,8 +425,9 @@ Convert a chat completion to a generation result.
 
 **Arguments**:
 
-- `chat_completion` - The chat completion to convert.
-  
+| Name | Description |
+|------|-------------|
+| `chat_completion` | The chat completion to convert. |
 
 **Returns**:
 
@@ -414,8 +446,9 @@ Convert a result to a generation result.
 
 **Arguments**:
 
-- `result` - The result to convert.
-  
+| Name | Description |
+|------|-------------|
+| `result` | The result to convert. |
 
 **Returns**:
 
@@ -431,7 +464,9 @@ Add a result to this trace.
 
 **Arguments**:
 
-- `result` - The result to add.
+| Name | Description |
+|------|-------------|
+| `result` | The result to add. |
 
 #### error
 
@@ -443,7 +478,9 @@ Add an error to this trace.
 
 **Arguments**:
 
-- `error` - The error to add.
+| Name | Description |
+|------|-------------|
+| `error` | The error to add. |
 
 #### error\_
 
@@ -457,9 +494,11 @@ Static method to add an error to a trace.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `id` - The ID of the trace to add the error to.
-- `error` - The error to add.
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `id` | The ID of the trace to add the error to. |
+| `error` | The error to add. |
 
 #### data
 

@@ -1,5 +1,6 @@
 ---
 title: Cache
+description: Cache utilities for caching mechanisms and utilities for optimizing performance.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/cache/cache.py)
@@ -27,7 +28,9 @@ Retrieve all keys currently stored in the cache.
 
 **Returns**:
 
-- `List[str]` - A list of all cache keys. Returns empty list if no keys exist.
+| Name | Description |
+|------|-------------|
+| `List[str]` | A list of all cache keys. Returns empty list if no keys exist. |
 
 #### get
 
@@ -39,12 +42,15 @@ Retrieve a value from the cache by its key.
 
 **Arguments**:
 
-- `key` _str_ - The cache key to look up.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `key` | _str_ | The cache key to look up. |
 
 **Returns**:
 
-- `Optional[str]` - The cached value if the key exists, None otherwise.
+| Name | Description |
+|------|-------------|
+| `Optional[str]` | The cached value if the key exists, None otherwise. |
 
 #### set
 
@@ -56,8 +62,10 @@ Store a key-value pair in the cache.
 
 **Arguments**:
 
-- `key` _str_ - The cache key to store the value under.
-- `value` _str_ - The value to cache.
+| Name | Type | Description |
+|------|------|-------------|
+| `key` | _str_ | The cache key to store the value under. |
+| `value` | _str_ | The value to cache. |
 
 #### delete
 
@@ -69,5 +77,6 @@ Remove a key-value pair from the cache.
 
 **Arguments**:
 
-- `key` _str_ - The cache key to remove.
-
+| Name | Type | Description |
+|------|------|-------------|
+| `key` | _str_ | The cache key to remove. |

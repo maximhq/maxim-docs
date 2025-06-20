@@ -1,5 +1,6 @@
 ---
 title: gemini.Client
+description: Gemini client implementation for API interactions and model integration.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/client.py)
@@ -27,10 +28,12 @@ Initialize a [Maxim](/sdk/python/references/maxim) wrapped Gemini chat session.
 
 **Arguments**:
 
-- `chat` - The chat.
-- `logger` - The logger.
-- `trace_id` - The trace id.
-- `is_local_trace` - Whether the trace is local.
+| Name | Description |
+|------|-------------|
+| `chat` | The chat. |
+| `logger` | The logger. |
+| `trace_id` | The trace id. |
+| `is_local_trace` | Whether the trace is local. |
 
 #### send\_message
 
@@ -45,13 +48,16 @@ Send a message to the [Maxim](/sdk/python/references/maxim) wrapped Gemini chat 
 
 **Arguments**:
 
-- `message` - The message to send.
-- `generation_name` - The name of the generation.
-  
+| Name | Description |
+|------|-------------|
+| `message` | The message to send. |
+| `generation_name` | The name of the generation. |
 
 **Returns**:
 
-- `GenerateContentResponse` - The response from the [Maxim](/sdk/python/references/maxim) wrapped Gemini chat session.
+| Name | Description |
+|------|-------------|
+| `GenerateContentResponse` | The response from the [Maxim](/sdk/python/references/maxim) wrapped Gemini chat session. |
 
 #### send\_message\_stream
 
@@ -65,8 +71,10 @@ Send a message to the [Maxim](/sdk/python/references/maxim) wrapped Gemini chat 
 
 **Arguments**:
 
-- `message` - The message to send.
-- `generation_name` - The name of the generation.
+| Name | Description |
+|------|-------------|
+| `message` | The message to send. |
+| `generation_name` | The name of the generation. |
 
 #### \_\_getattr\_\_
 
@@ -78,12 +86,15 @@ Get an attribute from the chat session.
 
 **Arguments**:
 
-- `name` - The name of the attribute.
-  
+| Name | Description |
+|------|-------------|
+| `name` | The name of the attribute. |
 
 **Returns**:
 
-- `Any` - The attribute.
+| Name | Description |
+|------|-------------|
+| `Any` | The attribute. |
 
 #### \_\_setattr\_\_
 
@@ -95,8 +106,10 @@ Set an attribute on the chat session.
 
 **Arguments**:
 
-- `name` - The name of the attribute.
-- `value` - The value of the attribute.
+| Name | Description |
+|------|-------------|
+| `name` | The name of the attribute. |
+| `value` | The value of the attribute. |
 
 #### end\_trace
 
@@ -128,8 +141,10 @@ Initialize a [Maxim](/sdk/python/references/maxim) wrapped Gemini chats.
 
 **Arguments**:
 
-- `chats` - The chats.
-- `logger` - The logger.
+| Name | Description |
+|------|-------------|
+| `chats` | The chats. |
+| `logger` | The logger. |
 
 #### create
 
@@ -147,16 +162,19 @@ Create a [Maxim](/sdk/python/references/maxim) wrapped Gemini chat session.
 
 **Arguments**:
 
-- `model` - The model to use.
-- `config` - The config to use.
-- `history` - The history to use.
-- `trace_id` - The trace id.
-- `session_id` - The session id.
-  
+| Name | Description |
+|------|-------------|
+| `model` | The model to use. |
+| `config` | The config to use. |
+| `history` | The history to use. |
+| `trace_id` | The trace id. |
+| `session_id` | The session id. |
 
 **Returns**:
 
-- `Chat` - The [Maxim](/sdk/python/references/maxim) wrapped Gemini chat session.
+| Name | Description |
+|------|-------------|
+| `Chat` | The [Maxim](/sdk/python/references/maxim) wrapped Gemini chat session. |
 
 #### \_\_getattr\_\_
 
@@ -168,12 +186,15 @@ Get an attribute from the chats.
 
 **Arguments**:
 
-- `name` - The name of the attribute.
-  
+| Name | Description |
+|------|-------------|
+| `name` | The name of the attribute. |
 
 **Returns**:
 
-- `Any` - The attribute.
+| Name | Description |
+|------|-------------|
+| `Any` | The attribute. |
 
 #### \_\_setattr\_\_
 
@@ -185,8 +206,10 @@ Set an attribute on the chats.
 
 **Arguments**:
 
-- `name` - The name of the attribute.
-- `value` - The value of the attribute.
+| Name | Description |
+|------|-------------|
+| `name` | The name of the attribute. |
+| `value` | The value of the attribute. |
 
 ## [MaximGeminiModels](/sdk/python/references/logger/gemini/client)
 
@@ -208,8 +231,10 @@ Initialize a [Maxim](/sdk/python/references/maxim) wrapped Gemini models.
 
 **Arguments**:
 
-- `models` - The models.
-- `logger` - The logger.
+| Name | Description |
+|------|-------------|
+| `models` | The models. |
+| `logger` | The logger. |
 
 #### generate\_content\_stream
 
@@ -229,16 +254,19 @@ Generate content stream.
 
 **Arguments**:
 
-- `model` - The model to use.
-- `contents` - The contents to use.
-- `config` - The config to use.
-- `trace_id` - The trace id.
-- `generation_name` - The generation name.
-  
+| Name | Description |
+|------|-------------|
+| `model` | The model to use. |
+| `contents` | The contents to use. |
+| `config` | The config to use. |
+| `trace_id` | The trace id. |
+| `generation_name` | The generation name. |
 
 **Returns**:
 
-- `Iterator[GenerateContentResponse]` - The content stream.
+| Name | Description |
+|------|-------------|
+| `Iterator[GenerateContentResponse]` | The content stream. |
 
 #### generate\_content
 
@@ -257,16 +285,19 @@ Generate content.
 
 **Arguments**:
 
-- `model` - The model to use.
-- `contents` - The contents to use.
-- `config` - The config to use.
-- `trace_id` - The trace id.
-- `generation_name` - The generation name.
-  
+| Name | Description |
+|------|-------------|
+| `model` | The model to use. |
+| `contents` | The contents to use. |
+| `config` | The config to use. |
+| `trace_id` | The trace id. |
+| `generation_name` | The generation name. |
 
 **Returns**:
 
-- `GenerateContentResponse` - The content.
+| Name | Description |
+|------|-------------|
+| `GenerateContentResponse` | The content. |
 
 #### \_\_getattr\_\_
 
@@ -278,12 +309,15 @@ Get an attribute from the models.
 
 **Arguments**:
 
-- `name` - The name of the attribute.
-  
+| Name | Description |
+|------|-------------|
+| `name` | The name of the attribute. |
 
 **Returns**:
 
-- `Any` - The attribute.
+| Name | Description |
+|------|-------------|
+| `Any` | The attribute. |
 
 #### \_\_setattr\_\_
 
@@ -295,8 +329,10 @@ Set an attribute on the models.
 
 **Arguments**:
 
-- `name` - The name of the attribute.
-- `value` - The value of the attribute.
+| Name | Description |
+|------|-------------|
+| `name` | The name of the attribute. |
+| `value` | The value of the attribute. |
 
 ## [MaximGeminiClient](/sdk/python/references/logger/gemini/client)
 
@@ -318,8 +354,10 @@ Initialize a [Maxim](/sdk/python/references/maxim) wrapped Gemini client.
 
 **Arguments**:
 
-- `client` - The client.
-- `logger` - The logger.
+| Name | Description |
+|------|-------------|
+| `client` | The client. |
+| `logger` | The logger. |
 
 #### chats
 
@@ -332,7 +370,9 @@ Get the [Maxim](/sdk/python/references/maxim) wrapped Gemini chats.
 
 **Returns**:
 
-- `[MaximGeminiChats](/sdk/python/references/logger/gemini/client)` - The [Maxim](/sdk/python/references/maxim) wrapped Gemini chats.
+| Name | Description |
+|------|-------------|
+| `[MaximGeminiChats](/sdk/python/references/logger/gemini/client)` | The [Maxim](/sdk/python/references/maxim) wrapped Gemini chats. |
 
 #### aio
 
@@ -345,7 +385,9 @@ Get the [Maxim](/sdk/python/references/maxim) wrapped Gemini async client.
 
 **Returns**:
 
-- `[MaximGeminiAsyncClient](/sdk/python/references/logger/gemini/async_client)` - The [Maxim](/sdk/python/references/maxim) wrapped Gemini async client.
+| Name | Description |
+|------|-------------|
+| `[MaximGeminiAsyncClient](/sdk/python/references/logger/gemini/async_client)` | The [Maxim](/sdk/python/references/maxim) wrapped Gemini async client. |
 
 #### models
 
@@ -358,7 +400,9 @@ Get the [Maxim](/sdk/python/references/maxim) wrapped Gemini models.
 
 **Returns**:
 
-- `[MaximGeminiModels](/sdk/python/references/logger/gemini/client)` - The [Maxim](/sdk/python/references/maxim) wrapped Gemini models.
+| Name | Description |
+|------|-------------|
+| `[MaximGeminiModels](/sdk/python/references/logger/gemini/client)` | The [Maxim](/sdk/python/references/maxim) wrapped Gemini models. |
 
 #### \_\_getattr\_\_
 
@@ -370,12 +414,15 @@ Get an attribute from the client.
 
 **Arguments**:
 
-- `name` - The name of the attribute.
-  
+| Name | Description |
+|------|-------------|
+| `name` | The name of the attribute. |
 
 **Returns**:
 
-- `Any` - The attribute.
+| Name | Description |
+|------|-------------|
+| `Any` | The attribute. |
 
 #### \_\_setattr\_\_
 
@@ -387,6 +434,7 @@ Set an attribute on the client.
 
 **Arguments**:
 
-- `name` - The name of the attribute.
-- `value` - The value of the attribute.
-
+| Name | Description |
+|------|-------------|
+| `name` | The name of the attribute. |
+| `value` | The value of the attribute. |

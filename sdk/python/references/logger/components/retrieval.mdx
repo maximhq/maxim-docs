@@ -1,5 +1,6 @@
 ---
 title: components.Retrieval
+description: Retrieval functionality for Components integration.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/retrieval.py)
@@ -40,8 +41,9 @@ Get the retrieval config dict.
 
 **Arguments**:
 
-- `config` _Union[[RetrievalConfig](/sdk/python/references/logger/components/retrieval), [RetrievalConfigDict](/sdk/python/references/logger/components/retrieval)]_ - The config to get the dict from.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `config` | _Union[[RetrievalConfig](/sdk/python/references/logger/components/retrieval), [RetrievalConfigDict](/sdk/python/references/logger/components/retrieval)]_ | The config to get the dict from. |
 
 **Returns**:
 
@@ -68,8 +70,10 @@ Initialize a retrieval.
 
 **Arguments**:
 
-- `config` - The config to initialize the retrieval with.
-- `writer` - The writer to use.
+| Name | Description |
+|------|-------------|
+| `config` | The config to initialize the retrieval with. |
+| `writer` | The writer to use. |
 
 #### input
 
@@ -81,7 +85,9 @@ Set the input for the retrieval.
 
 **Arguments**:
 
-- `query` - The query to set for the retrieval.
+| Name | Description |
+|------|-------------|
+| `query` | The query to set for the retrieval. |
 
 #### input\_
 
@@ -94,9 +100,11 @@ Set the input for the retrieval.
 
 **Arguments**:
 
-- `writer` - The writer to use.
-- `id` - The id of the retrieval.
-- `query` - The query to set for the retrieval.
+| Name | Description |
+|------|-------------|
+| `writer` | The writer to use. |
+| `id` | The id of the retrieval. |
+| `query` | The query to set for the retrieval. |
 
 #### output
 
@@ -108,7 +116,9 @@ Set the output for the retrieval.
 
 **Arguments**:
 
-- `docs` - The docs to set for the retrieval.
+| Name | Description |
+|------|-------------|
+| `docs` | The docs to set for the retrieval. |
 
 #### add\_attachment
 
@@ -121,7 +131,9 @@ Add an attachment to the retrieval.
 
 **Arguments**:
 
-- `attachment` - The attachment to add to the retrieval.
+| Name | Description |
+|------|-------------|
+| `attachment` | The attachment to add to the retrieval. |
 
 #### add\_attachment\_
 
@@ -136,9 +148,11 @@ Add an attachment to the retrieval.
 
 **Arguments**:
 
-- `writer` - The writer to use.
-- `id` - The id of the retrieval.
-- `attachment` - The attachment to add to the retrieval.
+| Name | Description |
+|------|-------------|
+| `writer` | The writer to use. |
+| `id` | The id of the retrieval. |
+| `attachment` | The attachment to add to the retrieval. |
 
 #### output\_
 
@@ -151,9 +165,11 @@ Set the output for the retrieval.
 
 **Arguments**:
 
-- `writer` - The writer to use.
-- `id` - The id of the retrieval.
-- `docs` - The docs to set for the retrieval.
+| Name | Description |
+|------|-------------|
+| `writer` | The writer to use. |
+| `id` | The id of the retrieval. |
+| `docs` | The docs to set for the retrieval. |
 
 #### end\_
 
@@ -166,9 +182,11 @@ End the retrieval.
 
 **Arguments**:
 
-- `writer` - The writer to use.
-- `id` - The id of the retrieval.
-- `data` - The data to set for the retrieval.
+| Name | Description |
+|------|-------------|
+| `writer` | The writer to use. |
+| `id` | The id of the retrieval. |
+| `data` | The data to set for the retrieval. |
 
 #### add\_tag\_
 
@@ -181,8 +199,9 @@ Add a tag to the retrieval.
 
 **Arguments**:
 
-- `writer` - The writer to use.
-- `id` - The id of the retrieval.
-- `key` - The key of the tag.
-- `value` - The value of the tag.
-
+| Name | Description |
+|------|-------------|
+| `writer` | The writer to use. |
+| `id` | The id of the retrieval. |
+| `key` | The key of the tag. |
+| `value` | The value of the tag. |

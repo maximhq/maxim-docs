@@ -1,5 +1,6 @@
 ---
 title: QueryBuilder
+description: Query_Builder utilities for data models and type definitions used throughout the maxim sdk.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/query_builder.py)
@@ -22,7 +23,9 @@ Sets the operator for combining query rules to 'AND'.
 
 **Returns**:
 
-- `[QueryBuilder](/sdk/python/references/models/query_builder)` - The current QueryBuilder instance for method chaining.
+| Name | Description |
+|------|-------------|
+| `[QueryBuilder](/sdk/python/references/models/query_builder)` | The current QueryBuilder instance for method chaining. |
 
 #### or\_
 
@@ -34,7 +37,9 @@ Sets the operator for combining query rules to 'OR'.
 
 **Returns**:
 
-- `[QueryBuilder](/sdk/python/references/models/query_builder)` - The current QueryBuilder instance for method chaining.
+| Name | Description |
+|------|-------------|
+| `[QueryBuilder](/sdk/python/references/models/query_builder)` | The current QueryBuilder instance for method chaining. |
 
 #### folder
 
@@ -46,12 +51,15 @@ Sets the folder scope for the query.
 
 **Arguments**:
 
-- `folderId` _str_ - The ID of the folder to set as the scope.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `folderId` | _str_ | The ID of the folder to set as the scope. |
 
 **Returns**:
 
-- `[QueryBuilder](/sdk/python/references/models/query_builder)` - The current QueryBuilder instance for method chaining.
+| Name | Description |
+|------|-------------|
+| `[QueryBuilder](/sdk/python/references/models/query_builder)` | The current QueryBuilder instance for method chaining. |
 
 #### exact\_match
 
@@ -63,7 +71,9 @@ Sets the exact match flag to True.
 
 **Returns**:
 
-- `[QueryBuilder](/sdk/python/references/models/query_builder)` - The current QueryBuilder instance for method chaining.
+| Name | Description |
+|------|-------------|
+| `[QueryBuilder](/sdk/python/references/models/query_builder)` | The current QueryBuilder instance for method chaining. |
 
 #### deployment\_var
 
@@ -77,14 +87,17 @@ Adds a deployment variable rule to the query.
 
 **Arguments**:
 
-- `key` _str_ - The key of the deployment variable.
-- `value` _Union[str, int, bool]_ - The value of the deployment variable.
-- `enforce` _bool, optional_ - Whether to enforce the deployment variable. Defaults to True.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `key` | _str_ | The key of the deployment variable. |
+| `value` | _Union[str, int, bool]_ | The value of the deployment variable. |
+| `enforce` | _bool, optional_ | Whether to enforce the deployment variable. Defaults to True. |
 
 **Returns**:
 
-- `[QueryBuilder](/sdk/python/references/models/query_builder)` - The current QueryBuilder instance for method chaining.
+| Name | Description |
+|------|-------------|
+| `[QueryBuilder](/sdk/python/references/models/query_builder)` | The current QueryBuilder instance for method chaining. |
 
 #### tag
 
@@ -98,14 +111,17 @@ Adds a tag rule to the query.
 
 **Arguments**:
 
-- `key` _str_ - The key of the tag.
-- `value` _Union[str, int, bool]_ - The value of the tag.
-- `enforce` _bool, optional_ - Whether to enforce the tag. Defaults to False.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `key` | _str_ | The key of the tag. |
+| `value` | _Union[str, int, bool]_ | The value of the tag. |
+| `enforce` | _bool, optional_ | Whether to enforce the tag. Defaults to False. |
 
 **Returns**:
 
-- `[QueryBuilder](/sdk/python/references/models/query_builder)` - The current QueryBuilder instance for method chaining.
+| Name | Description |
+|------|-------------|
+| `[QueryBuilder](/sdk/python/references/models/query_builder)` | The current QueryBuilder instance for method chaining. |
 
 #### build
 
@@ -122,5 +138,6 @@ Builds the final query rule.
 
 **Returns**:
 
-- `QueryRule` - A QueryRule instance with the built query.
-
+| Name | Description |
+|------|-------------|
+| `QueryRule` | A QueryRule instance with the built query. |

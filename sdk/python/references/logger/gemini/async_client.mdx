@@ -1,5 +1,6 @@
 ---
 title: gemini.AsyncClient
+description: Async_Client utilities for google gemini model integration and logging utilities.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/gemini/async_client.py)
@@ -27,10 +28,12 @@ Initialize a maxim gemini async chat session.
 
 **Arguments**:
 
-- `chat` - The chat.
-- `logger` - The logger.
-- `trace_id` - The trace id.
-- `is_local_trace` - Whether the trace is local.
+| Name | Description |
+|------|-------------|
+| `chat` | The chat. |
+| `logger` | The logger. |
+| `trace_id` | The trace id. |
+| `is_local_trace` | Whether the trace is local. |
 
 #### send\_message
 
@@ -45,13 +48,16 @@ Send a message to the chat.
 
 **Arguments**:
 
-- `message` - The message to send.
-- `generation_name` - The name of the generation.
-  
+| Name | Description |
+|------|-------------|
+| `message` | The message to send. |
+| `generation_name` | The name of the generation. |
 
 **Returns**:
 
-- `GenerateContentResponse` - The response from the chat.
+| Name | Description |
+|------|-------------|
+| `GenerateContentResponse` | The response from the chat. |
 
 #### send\_message\_stream
 
@@ -67,13 +73,16 @@ Send a message to the chat stream.
 
 **Arguments**:
 
-- `message` - The message to send.
-- `generation_name` - The name of the generation.
-  
+| Name | Description |
+|------|-------------|
+| `message` | The message to send. |
+| `generation_name` | The name of the generation. |
 
 **Returns**:
 
-- `Awaitable[AsyncIterator[GenerateContentResponse]]` - The response from the chat.
+| Name | Description |
+|------|-------------|
+| `Awaitable[AsyncIterator[GenerateContentResponse]]` | The response from the chat. |
 
 #### \_\_getattr\_\_
 
@@ -85,12 +94,15 @@ Get an attribute from the chat.
 
 **Arguments**:
 
-- `name` - The name of the attribute.
-  
+| Name | Description |
+|------|-------------|
+| `name` | The name of the attribute. |
 
 **Returns**:
 
-- `Any` - The attribute.
+| Name | Description |
+|------|-------------|
+| `Any` | The attribute. |
 
 #### \_\_setattr\_\_
 
@@ -102,8 +114,10 @@ Set an attribute on the chat.
 
 **Arguments**:
 
-- `name` - The name of the attribute.
-- `value` - The value of the attribute.
+| Name | Description |
+|------|-------------|
+| `name` | The name of the attribute. |
+| `value` | The value of the attribute. |
 
 #### end\_trace
 
@@ -148,15 +162,18 @@ Create a chat session.
 
 **Arguments**:
 
-- `model` - The model to use.
-- `config` - The config to use.
-- `history` - The history to use.
-- `trace_id` - The trace id.
-  
+| Name | Description |
+|------|-------------|
+| `model` | The model to use. |
+| `config` | The config to use. |
+| `history` | The history to use. |
+| `trace_id` | The trace id. |
 
 **Returns**:
 
-- `AsyncChat` - The chat session.
+| Name | Description |
+|------|-------------|
+| `AsyncChat` | The chat session. |
 
 #### \_\_getattr\_\_
 
@@ -168,12 +185,15 @@ Get an attribute from the chats.
 
 **Arguments**:
 
-- `name` - The name of the attribute.
-  
+| Name | Description |
+|------|-------------|
+| `name` | The name of the attribute. |
 
 **Returns**:
 
-- `Any` - The attribute.
+| Name | Description |
+|------|-------------|
+| `Any` | The attribute. |
 
 #### \_\_setattr\_\_
 
@@ -185,8 +205,10 @@ Set an attribute on the chats.
 
 **Arguments**:
 
-- `name` - The name of the attribute.
-- `value` - The value of the attribute.
+| Name | Description |
+|------|-------------|
+| `name` | The name of the attribute. |
+| `value` | The value of the attribute. |
 
 ## [MaximGeminiAsyncModels](/sdk/python/references/logger/gemini/async_client)
 
@@ -208,8 +230,10 @@ Initialize a maxim gemini async models.
 
 **Arguments**:
 
-- `models` - The models.
-- `logger` - The logger.
+| Name | Description |
+|------|-------------|
+| `models` | The models. |
+| `logger` | The logger. |
 
 #### generate\_content\_stream
 
@@ -229,16 +253,19 @@ Generate content stream.
 
 **Arguments**:
 
-- `model` - The model to use.
-- `contents` - The contents to use.
-- `config` - The config to use.
-- `trace_id` - The trace id.
-- `generation_name` - The generation name.
-  
+| Name | Description |
+|------|-------------|
+| `model` | The model to use. |
+| `contents` | The contents to use. |
+| `config` | The config to use. |
+| `trace_id` | The trace id. |
+| `generation_name` | The generation name. |
 
 **Returns**:
 
-- `Awaitable[AsyncIterator[GenerateContentResponse]]` - The response from the models.
+| Name | Description |
+|------|-------------|
+| `Awaitable[AsyncIterator[GenerateContentResponse]]` | The response from the models. |
 
 #### generate\_content
 
@@ -257,16 +284,19 @@ Generate content.
 
 **Arguments**:
 
-- `model` - The model to use.
-- `contents` - The contents to use.
-- `config` - The config to use.
-- `trace_id` - The trace id.
-- `generation_name` - The generation name.
-  
+| Name | Description |
+|------|-------------|
+| `model` | The model to use. |
+| `contents` | The contents to use. |
+| `config` | The config to use. |
+| `trace_id` | The trace id. |
+| `generation_name` | The generation name. |
 
 **Returns**:
 
-- `GenerateContentResponse` - The response from the models.
+| Name | Description |
+|------|-------------|
+| `GenerateContentResponse` | The response from the models. |
 
 #### \_\_getattr\_\_
 
@@ -278,12 +308,15 @@ Get an attribute from the models.
 
 **Arguments**:
 
-- `name` - The name of the attribute.
-  
+| Name | Description |
+|------|-------------|
+| `name` | The name of the attribute. |
 
 **Returns**:
 
-- `Any` - The attribute.
+| Name | Description |
+|------|-------------|
+| `Any` | The attribute. |
 
 #### \_\_setattr\_\_
 
@@ -295,8 +328,10 @@ Set an attribute on the models.
 
 **Arguments**:
 
-- `name` - The name of the attribute.
-- `value` - The value of the attribute.
+| Name | Description |
+|------|-------------|
+| `name` | The name of the attribute. |
+| `value` | The value of the attribute. |
 
 ## [MaximGeminiAsyncClient](/sdk/python/references/logger/gemini/async_client)
 
@@ -318,8 +353,10 @@ Initialize a maxim gemini async client.
 
 **Arguments**:
 
-- `client` - The client.
-- `logger` - The logger.
+| Name | Description |
+|------|-------------|
+| `client` | The client. |
+| `logger` | The logger. |
 
 #### \_\_getattr\_\_
 
@@ -331,12 +368,15 @@ Get an attribute from the client.
 
 **Arguments**:
 
-- `name` - The name of the attribute.
-  
+| Name | Description |
+|------|-------------|
+| `name` | The name of the attribute. |
 
 **Returns**:
 
-- `Any` - The attribute.
+| Name | Description |
+|------|-------------|
+| `Any` | The attribute. |
 
 #### \_\_setattr\_\_
 
@@ -348,6 +388,7 @@ Set an attribute on the client.
 
 **Arguments**:
 
-- `name` - The name of the attribute.
-- `value` - The value of the attribute.
-
+| Name | Description |
+|------|-------------|
+| `name` | The name of the attribute. |
+| `value` | The value of the attribute. |

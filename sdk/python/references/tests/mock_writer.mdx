@@ -1,5 +1,6 @@
 ---
 title: MockWriter
+description: Mock Writer functionality for Tests integration.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/tests/mock_writer.py)
@@ -30,7 +31,9 @@ Initialize a [MockLogWriter](/sdk/python/references/tests/mock_writer) instance.
 
 **Arguments**:
 
-- `config` - Configuration for the [LogWriter](/sdk/python/references/logger/writer).
+| Name | Description |
+|------|-------------|
+| `config` | Configuration for the [LogWriter](/sdk/python/references/logger/writer). |
 
 #### repository\_id
 
@@ -51,7 +54,9 @@ Mock commit that stores the log instead of queuing it.
 
 **Arguments**:
 
-- `log` - [CommitLog](/sdk/python/references/logger/components/types) object to store.
+| Name | Description |
+|------|-------------|
+| `log` | [CommitLog](/sdk/python/references/logger/components/types) object to store. |
 
 #### flush
 
@@ -63,7 +68,9 @@ Mock flush that moves queued logs to flushed logs.
 
 **Arguments**:
 
-- `is_sync` - Whether to flush synchronously (ignored in mock).
+| Name | Description |
+|------|-------------|
+| `is_sync` | Whether to flush synchronously (ignored in mock). |
 
 #### flush\_commit\_logs
 
@@ -91,7 +98,9 @@ Mock cleanup that flushes remaining logs.
 
 **Arguments**:
 
-- `is_sync` - Whether to cleanup synchronously (ignored in mock).
+| Name | Description |
+|------|-------------|
+| `is_sync` | Whether to cleanup synchronously (ignored in mock). |
 
 #### get\_all\_logs
 

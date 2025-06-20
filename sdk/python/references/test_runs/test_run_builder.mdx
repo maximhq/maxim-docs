@@ -1,5 +1,6 @@
 ---
 title: TestRunBuilder
+description: Test_Run_Builder utilities for test execution and management utilities.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/test_runs/test_run_builder.py)
@@ -32,12 +33,15 @@ Set the data structure for the test run
 
 **Arguments**:
 
-- `data` _T_ - The data structure to use
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | _T_ | The data structure to use |
 
 **Returns**:
 
-- `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` - The current TestRunBuilder instance for method chaining
+| Name | Description |
+|------|-------------|
+| `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` | The current TestRunBuilder instance for method chaining |
 
 #### with\_data
 
@@ -49,12 +53,15 @@ Set the data for the test run
 
 **Arguments**:
 
-- `data` _DataValue[T]_ - The data to use
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | _DataValue[T]_ | The data to use |
 
 **Returns**:
 
-- `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` - The current TestRunBuilder instance for method chaining
+| Name | Description |
+|------|-------------|
+| `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` | The current TestRunBuilder instance for method chaining |
 
 #### with\_evaluators
 
@@ -67,12 +74,15 @@ Add evaluators to the test run
 
 **Arguments**:
 
-- `*evaluators` _str_ - The evaluators to add
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `*evaluators` | _str_ | The evaluators to add |
 
 **Returns**:
 
-- `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` - The current TestRunBuilder instance for method chaining
+| Name | Description |
+|------|-------------|
+| `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` | The current TestRunBuilder instance for method chaining |
 
 #### with\_human\_evaluation\_config
 
@@ -85,12 +95,15 @@ Set the human evaluation configuration for the test run
 
 **Arguments**:
 
-- `config` _HumanEvaluationConfig_ - The human evaluation configuration to use
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `config` | _HumanEvaluationConfig_ | The human evaluation configuration to use |
 
 **Returns**:
 
-- `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` - The current TestRunBuilder instance for method chaining
+| Name | Description |
+|------|-------------|
+| `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` | The current TestRunBuilder instance for method chaining |
 
 #### with\_workflow\_id
 
@@ -104,14 +117,16 @@ Set the workflow ID for the test run. Optionally, you can also set the context t
 
 **Arguments**:
 
-- `workflow_id` _str_ - The ID of the workflow to use
-- `context_to_evaluate` _Optional[str]_ - The context to evaluate for the workflow (variable name essentially).
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `workflow_id` | _str_ | The ID of the workflow to use |
+| `context_to_evaluate` | _Optional[str]_ | The context to evaluate for the workflow (variable name essentially). |
 
 **Returns**:
 
-- `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` - The current TestRunBuilder instance for method chaining
-  
+| Name | Description |
+|------|-------------|
+| `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` | The current TestRunBuilder instance for method chaining |
 
 **Raises**:
 
@@ -129,14 +144,16 @@ Set the prompt version ID for the test run. Optionally, you can also set the con
 
 **Arguments**:
 
-- `prompt_version_id` _str_ - The ID of the prompt version to use
-- `context_to_evaluate` _Optional[str]_ - The context to evaluate for the prompt (variable name essentially).
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `prompt_version_id` | _str_ | The ID of the prompt version to use |
+| `context_to_evaluate` | _Optional[str]_ | The context to evaluate for the prompt (variable name essentially). |
 
 **Returns**:
 
-- `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` - The current TestRunBuilder instance for method chaining
-  
+| Name | Description |
+|------|-------------|
+| `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` | The current TestRunBuilder instance for method chaining |
 
 **Raises**:
 
@@ -154,14 +171,16 @@ Set the prompt chain version ID for the test run. Optionally, you can also set t
 
 **Arguments**:
 
-- `prompt_chain_version_id` _str_ - The ID of the prompt chain version to use
-- `context_to_evaluate` _Optional[str]_ - The context to evaluate for the prompt chain (variable name essentially).
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `prompt_chain_version_id` | _str_ | The ID of the prompt chain version to use |
+| `context_to_evaluate` | _Optional[str]_ | The context to evaluate for the prompt chain (variable name essentially). |
 
 **Returns**:
 
-- `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` - The current TestRunBuilder instance for method chaining
-  
+| Name | Description |
+|------|-------------|
+| `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` | The current TestRunBuilder instance for method chaining |
 
 **Raises**:
 
@@ -180,13 +199,15 @@ Set the output function for the test run
 
 **Arguments**:
 
-- `output_function` _Callable[[T], Union[[[YieldedOutput](/sdk/python/references/models/test_run)](/sdk/python/references/models/test_run), Awaitable[YieldedOutput]]]_ - The output function to use
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `output_function` | _Callable[[T], Union[[[YieldedOutput](/sdk/python/references/models/test_run)](/sdk/python/references/models/test_run), Awaitable[YieldedOutput]]]_ | The output function to use |
 
 **Returns**:
 
-- `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` - The current TestRunBuilder instance for method chaining
-  
+| Name | Description |
+|------|-------------|
+| `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` | The current TestRunBuilder instance for method chaining |
 
 **Raises**:
 
@@ -202,12 +223,15 @@ Set the concurrency level for the test run
 
 **Arguments**:
 
-- `concurrency` _int_ - The concurrency level to use
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `concurrency` | _int_ | The concurrency level to use |
 
 **Returns**:
 
-- `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` - The current TestRunBuilder instance for method chaining
+| Name | Description |
+|------|-------------|
+| `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` | The current TestRunBuilder instance for method chaining |
 
 #### with\_logger
 
@@ -219,12 +243,15 @@ Set the logger for the test run
 
 **Arguments**:
 
-- `logger` _[TestRunLogger](/sdk/python/references/models/test_run)_ - The logger to use
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `logger` | _[TestRunLogger](/sdk/python/references/models/test_run)_ | The logger to use |
 
 **Returns**:
 
-- `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` - The current TestRunBuilder instance for method chaining
+| Name | Description |
+|------|-------------|
+| `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` | The current TestRunBuilder instance for method chaining |
 
 #### run
 
@@ -236,10 +263,12 @@ Run the test
 
 **Arguments**:
 
-- `timeout_in_minutes` _Optional[int]_ - The timeout in minutes. Defaults to 10.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `timeout_in_minutes` | _Optional[int]_ | The timeout in minutes. Defaults to 10. |
 
 **Returns**:
 
-- `[RunResult](/sdk/python/references/models/test_run)` - The result of the test run
-
+| Name | Description |
+|------|-------------|
+| `[RunResult](/sdk/python/references/models/test_run)` | The result of the test run |

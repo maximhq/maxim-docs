@@ -1,5 +1,6 @@
 ---
 title: components.ToolCall
+description: Tool Call functionality for Components integration.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/tool_call.py)
@@ -41,12 +42,15 @@ Convert a tool call config to a tool call config dict else return the config.
 
 **Arguments**:
 
-- `config` - The config to convert.
-  
+| Name | Description |
+|------|-------------|
+| `config` | The config to convert. |
 
 **Returns**:
 
-- `[ToolCallConfigDict](/sdk/python/references/logger/components/tool_call)` - The tool call config dict.
+| Name | Description |
+|------|-------------|
+| `[ToolCallConfigDict](/sdk/python/references/logger/components/tool_call)` | The tool call config dict. |
 
 ## [ToolCallError](/sdk/python/references/logger/components/tool_call)
 
@@ -74,8 +78,9 @@ Convert a tool call error to a tool call error dict else return the error.
 
 **Arguments**:
 
-- `error` - The error to convert.
-  
+| Name | Description |
+|------|-------------|
+| `error` | The error to convert. |
 
 **Returns**:
 
@@ -102,8 +107,10 @@ Initialize a tool call.
 
 **Arguments**:
 
-- `config` - The config to initialize the tool call with.
-- `writer` - The writer to use.
+| Name | Description |
+|------|-------------|
+| `config` | The config to initialize the tool call with. |
+| `writer` | The writer to use. |
 
 #### update
 
@@ -115,7 +122,9 @@ Update the tool call.
 
 **Arguments**:
 
-- `data` - The data to update the tool call with.
+| Name | Description |
+|------|-------------|
+| `data` | The data to update the tool call with. |
 
 #### update\_
 
@@ -128,9 +137,11 @@ Update the tool call.
 
 **Arguments**:
 
-- `writer` - The writer to use.
-- `id` - The id of the tool call to update.
-- `data` - The data to update the tool call with.
+| Name | Description |
+|------|-------------|
+| `writer` | The writer to use. |
+| `id` | The id of the tool call to update. |
+| `data` | The data to update the tool call with. |
 
 #### result\_
 
@@ -143,9 +154,11 @@ Update the tool call.
 
 **Arguments**:
 
-- `writer` - The writer to use.
-- `id` - The id of the tool call to update.
-- `result` - The result to update the tool call with.
+| Name | Description |
+|------|-------------|
+| `writer` | The writer to use. |
+| `id` | The id of the tool call to update. |
+| `result` | The result to update the tool call with. |
 
 #### attach\_evaluators
 
@@ -157,7 +170,9 @@ Attach evaluators to the tool call.
 
 **Arguments**:
 
-- `evaluators` - The evaluators to attach to the tool call.
+| Name | Description |
+|------|-------------|
+| `evaluators` | The evaluators to attach to the tool call. |
 
 #### result
 
@@ -169,7 +184,9 @@ Update the tool call.
 
 **Arguments**:
 
-- `result` - The result to update the tool call with.
+| Name | Description |
+|------|-------------|
+| `result` | The result to update the tool call with. |
 
 #### error
 
@@ -181,7 +198,9 @@ Add an error to the tool call.
 
 **Arguments**:
 
-- `error` - The tool call error.
+| Name | Description |
+|------|-------------|
+| `error` | The tool call error. |
 
 #### error\_
 
@@ -195,9 +214,11 @@ Add an error to the tool call.
 
 **Arguments**:
 
-- `writer` - The writer to use.
-- `id` - The id of the tool call to add the error to.
-- `error` - The tool call error.
+| Name | Description |
+|------|-------------|
+| `writer` | The writer to use. |
+| `id` | The id of the tool call to add the error to. |
+| `error` | The tool call error. |
 
 #### data
 

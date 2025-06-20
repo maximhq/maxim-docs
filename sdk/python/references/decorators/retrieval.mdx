@@ -1,5 +1,6 @@
 ---
 title: decorators.Retrieval
+description: Retrieval utilities for decorators for automatic logging and instrumentation of functions and methods.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/decorators/retrieval.py)
@@ -14,7 +15,10 @@ Get the current retrieval from the context variable.
 
 **Returns**:
 
-- `Optional[[Retrieval](/sdk/python/references/logger/components/retrieval)]` - The current retrieval instance if one exists,
+| Name | Description |
+|------|-------------|
+| `Optional[[Retrieval](/sdk/python/references/logger/components/retrieval)]` | The current retrieval instance if one exists, |
+
   otherwise None.
 
 #### retrieval
@@ -37,7 +41,10 @@ The decorated function must be called within a @trace or @span decorated context
 
 **Arguments**:
 
-- `logger` _Optional[[Logger](/sdk/python/references/logger/logger)]_ - [Maxim](/sdk/python/references/maxim) logger instance. If None, uses the current
+| Name | Type | Description |
+|------|------|-------------|
+| `logger` | _Optional[[Logger](/sdk/python/references/logger/logger)]_ | [Maxim](/sdk/python/references/maxim) logger instance. If None, uses the current |
+
   logger from context.
 - `id` _Optional[str] or Optional[Callable], optional_ - The ID for the retrieval. If callable, it will be called to generate the ID. Defaults to None.
 - `input` _Optional[str] or Optional[Callable], optional_ - The input for the retrieval. If callable, it will be called to generate the input. Defaults to None.

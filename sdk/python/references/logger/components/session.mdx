@@ -1,5 +1,6 @@
 ---
 title: Session
+description: Session functionality for Components integration.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/session.py)
@@ -40,8 +41,9 @@ Convert a session config to a session config dict else return the config.
 
 **Arguments**:
 
-- `config` - The config to convert.
-  
+| Name | Description |
+|------|-------------|
+| `config` | The config to convert. |
 
 **Returns**:
 
@@ -70,7 +72,9 @@ Create a new session.
 
 **Arguments**:
 
-- `config` - The configuration for the session.
+| Name | Description |
+|------|-------------|
+| `config` | The configuration for the session. |
 
 #### trace
 
@@ -82,8 +86,9 @@ Create a new trace for this session.
 
 **Arguments**:
 
-- `config` - The configuration for the trace.
-  
+| Name | Description |
+|------|-------------|
+| `config` | The configuration for the trace. |
 
 **Returns**:
 
@@ -101,10 +106,11 @@ Create a new trace for this session.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `session_id` - The ID of the session to create the trace for.
-- `config` - The configuration for the trace.
-  
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `session_id` | The ID of the session to create the trace for. |
+| `config` | The configuration for the trace. |
 
 **Returns**:
 
@@ -120,7 +126,9 @@ Add feedback to this session.
 
 **Arguments**:
 
-- `feedback` - The feedback to add.
+| Name | Description |
+|------|-------------|
+| `feedback` | The feedback to add. |
 
 #### add\_attachment
 
@@ -133,7 +141,9 @@ Add an attachment to this session.
 
 **Arguments**:
 
-- `attachment` - The attachment to add.
+| Name | Description |
+|------|-------------|
+| `attachment` | The attachment to add. |
 
 #### add\_attachment\_
 
@@ -148,9 +158,11 @@ Add an attachment to this session.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `session_id` - The ID of the session to add the attachment to.
-- `attachment` - The attachment to add.
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `session_id` | The ID of the session to add the attachment to. |
+| `attachment` | The attachment to add. |
 
 #### add\_tag\_
 
@@ -163,10 +175,12 @@ Add a tag to this session.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `session_id` - The ID of the session to add the tag to.
-- `key` - The tag key.
-- `value` - The tag value.
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `session_id` | The ID of the session to add the tag to. |
+| `key` | The tag key. |
+| `value` | The tag value. |
 
 #### end\_
 
@@ -181,9 +195,11 @@ End this session.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `session_id` - The ID of the session to end.
-- `data` - Optional data to add to the session.
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `session_id` | The ID of the session to end. |
+| `data` | Optional data to add to the session. |
 
 #### event\_
 
@@ -197,9 +213,10 @@ Add an event to this session.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `session_id` - The ID of the session to add the event to.
-- `id` - The ID of the event.
-- `event` - The event.
-- `data` - Optional data to add to the event.
-
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `session_id` | The ID of the session to add the event to. |
+| `id` | The ID of the event. |
+| `event` | The event. |
+| `data` | Optional data to add to the event. |

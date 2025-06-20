@@ -1,5 +1,6 @@
 ---
 title: dataset.Dataset
+description: Dataset utilities for dataset management and manipulation utilities.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/dataset/dataset.py)
@@ -17,13 +18,15 @@ and returns the sanitized data structure.
 
 **Arguments**:
 
-- `data_structure` _DataStructure_ - The data structure to create and validate.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `data_structure` | _DataStructure_ | The data structure to create and validate. |
 
 **Returns**:
 
-- `DataStructure` - The validated data structure.
-  
+| Name | Description |
+|------|-------------|
+| `DataStructure` | The validated data structure. |
 
 **Raises**:
 
@@ -46,7 +49,10 @@ Ensures that the data structure contains at most one of each required column typ
 
 **Arguments**:
 
-- `data_structure` _Optional[DataStructure]_ - The data structure to sanitize.
+| Name | Type | Description |
+|------|------|-------------|
+| `data_structure` | _Optional[DataStructure]_ | The data structure to sanitize. |
+
   Can be None, in which case no validation is performed.
   
 
@@ -72,8 +78,11 @@ This prevents attempting to use columns that don't exist in the target dataset.
 
 **Arguments**:
 
-- `data_structure` _Dict[str, Any]_ - The data structure to validate.
-- `against_data_structure` _Dict[str, Any]_ - The reference data structure
+| Name | Type | Description |
+|------|------|-------------|
+| `data_structure` | _Dict[str, Any]_ | The data structure to validate. |
+| `against_data_structure` | _Dict[str, Any]_ | The reference data structure |
+
   to validate against (e.g., from the platform dataset).
   
 

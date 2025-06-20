@@ -1,5 +1,6 @@
 ---
 title: langchain.Utils
+description: Utility functions and helpers for Langchain integration.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/langchain/utils.py)
@@ -14,11 +15,15 @@ Parses langchain provider from serialized data
 
 **Arguments**:
 
-- `serialized` - Dict[str, Any]: Serialized data to parse provider from
+| Name | Description |
+|------|-------------|
+| `serialized` | Dict[str, Any]: Serialized data to parse provider from |
 
 **Returns**:
 
-- `str` - Parsed provider
+| Name | Description |
+|------|-------------|
+| `str` | Parsed provider |
 
 #### parse\_langchain\_llm\_error
 
@@ -32,11 +37,15 @@ Parses langchain LLM error into a format that is accepted by [Maxim](/sdk/python
 
 **Arguments**:
 
-- `error` - Union[Exception, KeyboardInterrupt]: [Error](/sdk/python/references/models/prompt) to be parsed
+| Name | Description |
+|------|-------------|
+| `error` | Union[Exception, KeyboardInterrupt]: [Error](/sdk/python/references/models/prompt) to be parsed |
 
 **Returns**:
 
-- `[GenerationError](/sdk/python/references/logger/components/types)` - Parsed LLM error
+| Name | Description |
+|------|-------------|
+| `[GenerationError](/sdk/python/references/logger/components/types)` | Parsed LLM error |
 
 #### parse\_langchain\_model\_parameters
 
@@ -49,7 +58,9 @@ Parses langchain kwargs into model and model parameters. You can use this functi
 
 **Arguments**:
 
-- `kwargs` - Dict[str, Any]: Kwargs to be parsed
+| Name | Description |
+|------|-------------|
+| `kwargs` | Dict[str, Any]: Kwargs to be parsed |
 
 **Returns**:
 
@@ -69,7 +80,9 @@ Parses langchain BaseMessage into a format that is accepted by [Maxim](/sdk/pyth
 
 **Arguments**:
 
-- `message` - BaseMessage
+| Name | Description |
+|------|-------------|
+| `message` | BaseMessage |
 
 **Returns**:
 
@@ -85,7 +98,9 @@ Parses langchain BaseMessage into a choice of openai message
 
 **Arguments**:
 
-- `message` - BaseMessage
+| Name | Description |
+|------|-------------|
+| `message` | BaseMessage |
 
 **Returns**:
 
@@ -101,7 +116,9 @@ Parses langchain generation into a format that is accepted by [Maxim](/sdk/pytho
 
 **Arguments**:
 
-- `generation` - [[Generation](/sdk/python/references/logger/components/generation)](/sdk/python/references/logger/components/generation): Generation to be parsed
+| Name | Description |
+|------|-------------|
+| `generation` | [[Generation](/sdk/python/references/logger/components/generation)](/sdk/python/references/logger/components/generation): Generation to be parsed |
 
 **Returns**:
 
@@ -125,7 +142,9 @@ Parses langchain Chat result into a format that is accepted by [Maxim](/sdk/pyth
 
 **Arguments**:
 
-- `result` - ChatResult: Chat result to be parsed
+| Name | Description |
+|------|-------------|
+| `result` | ChatResult: Chat result to be parsed |
 
 **Returns**:
 
@@ -145,7 +164,9 @@ Parses langchain LLM result into a format that is accepted by [Maxim](/sdk/pytho
 
 **Arguments**:
 
-- `result` - LLMResult: LLM result to be parsed
+| Name | Description |
+|------|-------------|
+| `result` | LLMResult: LLM result to be parsed |
 
 **Returns**:
 
@@ -166,8 +187,10 @@ Parses langchain messages into messages that are accepted by [Maxim](/sdk/python
 
 **Arguments**:
 
-- `input` - List[str] or List[List[Any]]: List of messages to be parsed
-- `default_role` - str: Default role to assign to messages without a role
+| Name | Description |
+|------|-------------|
+| `input` | List[str] or List[List[Any]]: List of messages to be parsed |
+| `default_role` | str: Default role to assign to messages without a role |
 
 **Returns**:
 

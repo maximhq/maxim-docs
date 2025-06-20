@@ -1,5 +1,6 @@
 ---
 title: MaximApis
+description: Maxim_Apis utilities for api client utilities for interacting with maxim services.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/apis/maxim_apis.py)
@@ -57,8 +58,10 @@ Initialize a new [Maxim](/sdk/python/references/maxim) API client.
 
 **Arguments**:
 
-- `base_url` - The base URL for the [Maxim](/sdk/python/references/maxim) API
-- `api_key` - The API key for authentication
+| Name | Description |
+|------|-------------|
+| `base_url` | The base URL for the [Maxim](/sdk/python/references/maxim) API |
+| `api_key` | The API key for authentication |
 
 #### get\_prompt
 
@@ -70,13 +73,15 @@ Get a prompt by ID.
 
 **Arguments**:
 
-- `id` - The prompt ID
-  
+| Name | Description |
+|------|-------------|
+| `id` | The prompt ID |
 
 **Returns**:
 
-- `[VersionAndRulesWithPromptId](/sdk/python/references/models/prompt)` - The prompt details
-  
+| Name | Description |
+|------|-------------|
+| `[VersionAndRulesWithPromptId](/sdk/python/references/models/prompt)` | The prompt details |
 
 **Raises**:
 
@@ -92,8 +97,9 @@ Get all prompts.
 
 **Returns**:
 
-- `List[[VersionAndRulesWithPromptId](/sdk/python/references/models/prompt)]` - List of all prompts
-  
+| Name | Description |
+|------|-------------|
+| `List[[VersionAndRulesWithPromptId](/sdk/python/references/models/prompt)]` | List of all prompts |
 
 **Raises**:
 
@@ -109,13 +115,15 @@ Get a prompt chain by ID.
 
 **Arguments**:
 
-- `id` - The prompt chain ID
-  
+| Name | Description |
+|------|-------------|
+| `id` | The prompt chain ID |
 
 **Returns**:
 
-- `[VersionAndRulesWithPromptChainId](/sdk/python/references/models/prompt_chain)` - The prompt chain details
-  
+| Name | Description |
+|------|-------------|
+| `[VersionAndRulesWithPromptChainId](/sdk/python/references/models/prompt_chain)` | The prompt chain details |
 
 **Raises**:
 
@@ -131,8 +139,9 @@ Get all prompt chains.
 
 **Returns**:
 
-- `List[[VersionAndRulesWithPromptChainId](/sdk/python/references/models/prompt_chain)]` - List of all prompt chains
-  
+| Name | Description |
+|------|-------------|
+| `List[[VersionAndRulesWithPromptChainId](/sdk/python/references/models/prompt_chain)]` | List of all prompt chains |
 
 **Raises**:
 
@@ -151,16 +160,18 @@ Run a custom prompt with the specified model and messages.
 
 **Arguments**:
 
-- `model` - The model to use
-- `messages` - List of chat messages
-- `tools` - Optional list of tools to use
-- `**kwargs` - Additional parameters to pass to the API
-  
+| Name | Description |
+|------|-------------|
+| `model` | The model to use |
+| `messages` | List of chat messages |
+| `tools` | Optional list of tools to use |
+| `**kwargs` | Additional parameters to pass to the API |
 
 **Returns**:
 
-- `[PromptResponse](/sdk/python/references/models/prompt)` - The response from the model
-  
+| Name | Description |
+|------|-------------|
+| `[PromptResponse](/sdk/python/references/models/prompt)` | The response from the model |
 
 **Raises**:
 
@@ -179,16 +190,18 @@ Run a specific prompt version with the given input.
 
 **Arguments**:
 
-- `prompt_version_id` - The ID of the prompt version to run
-- `input` - The input text for the prompt
-- `image_urls` - Optional list of image URLs to include
-- `variables` - Optional dictionary of variables to use
-  
+| Name | Description |
+|------|-------------|
+| `prompt_version_id` | The ID of the prompt version to run |
+| `input` | The input text for the prompt |
+| `image_urls` | Optional list of image URLs to include |
+| `variables` | Optional dictionary of variables to use |
 
 **Returns**:
 
-- `Optional[[PromptResponse](/sdk/python/references/models/prompt)]` - The response from the prompt
-  
+| Name | Description |
+|------|-------------|
+| `Optional[[PromptResponse](/sdk/python/references/models/prompt)]` | The response from the prompt |
 
 **Raises**:
 
@@ -206,15 +219,17 @@ Run a specific prompt chain version with the given input.
 
 **Arguments**:
 
-- `prompt_chain_version_id` - The ID of the prompt chain version to run
-- `input` - The input text for the prompt chain
-- `variables` - Optional dictionary of variables to use
-  
+| Name | Description |
+|------|-------------|
+| `prompt_chain_version_id` | The ID of the prompt chain version to run |
+| `input` | The input text for the prompt chain |
+| `variables` | Optional dictionary of variables to use |
 
 **Returns**:
 
-- `Optional[[AgentResponse](/sdk/python/references/models/prompt_chain)]` - The response from the prompt chain
-  
+| Name | Description |
+|------|-------------|
+| `Optional[[AgentResponse](/sdk/python/references/models/prompt_chain)]` | The response from the prompt chain |
 
 **Raises**:
 
@@ -230,13 +245,15 @@ Get a folder by ID.
 
 **Arguments**:
 
-- `id` - The folder ID
-  
+| Name | Description |
+|------|-------------|
+| `id` | The folder ID |
 
 **Returns**:
 
-- `[Folder](/sdk/python/references/models/folder)` - The folder details
-  
+| Name | Description |
+|------|-------------|
+| `[Folder](/sdk/python/references/models/folder)` | The folder details |
 
 **Raises**:
 
@@ -252,8 +269,9 @@ Get all folders.
 
 **Returns**:
 
-- `List[[Folder](/sdk/python/references/models/folder)]` - List of all folders
-  
+| Name | Description |
+|------|-------------|
+| `List[[Folder](/sdk/python/references/models/folder)]` | List of all folders |
 
 **Raises**:
 
@@ -270,9 +288,10 @@ Add entries to a dataset.
 
 **Arguments**:
 
-- `dataset_id` - The ID of the dataset
-- `dataset_entries` - List of dataset entries to add
-  
+| Name | Description |
+|------|-------------|
+| `dataset_id` | The ID of the dataset |
+| `dataset_entries` | List of dataset entries to add |
 
 **Returns**:
 
@@ -293,13 +312,15 @@ Get the total number of rows in a dataset.
 
 **Arguments**:
 
-- `dataset_id` - The ID of the dataset
-  
+| Name | Description |
+|------|-------------|
+| `dataset_id` | The ID of the dataset |
 
 **Returns**:
 
-- `int` - The total number of rows
-  
+| Name | Description |
+|------|-------------|
+| `int` | The total number of rows |
 
 **Raises**:
 
@@ -315,14 +336,16 @@ Get a specific row from a dataset.
 
 **Arguments**:
 
-- `dataset_id` - The ID of the dataset
-- `row_index` - The index of the row to retrieve
-  
+| Name | Description |
+|------|-------------|
+| `dataset_id` | The ID of the dataset |
+| `row_index` | The index of the row to retrieve |
 
 **Returns**:
 
-- `Optional[[DatasetRow](/sdk/python/references/models/dataset)]` - The dataset row, or None if not found
-  
+| Name | Description |
+|------|-------------|
+| `Optional[[DatasetRow](/sdk/python/references/models/dataset)]` | The dataset row, or None if not found |
 
 **Raises**:
 
@@ -338,8 +361,9 @@ Get the structure of a dataset.
 
 **Arguments**:
 
-- `dataset_id` - The ID of the dataset
-  
+| Name | Description |
+|------|-------------|
+| `dataset_id` | The ID of the dataset |
 
 **Returns**:
 
@@ -360,12 +384,15 @@ Check if a log repository exists.
 
 **Arguments**:
 
-- `logger_id` - The ID of the logger
-  
+| Name | Description |
+|------|-------------|
+| `logger_id` | The ID of the logger |
 
 **Returns**:
 
-- `bool` - True if the repository exists, False otherwise
+| Name | Description |
+|------|-------------|
+| `bool` | True if the repository exists, False otherwise |
 
 #### push\_logs
 
@@ -377,9 +404,10 @@ Push logs to a repository.
 
 **Arguments**:
 
-- `repository_id` - The ID of the repository
-- `logs` - The logs to push
-  
+| Name | Description |
+|------|-------------|
+| `repository_id` | The ID of the repository |
+| `logs` | The logs to push |
 
 **Raises**:
 
@@ -395,14 +423,16 @@ Fetch a platform evaluator by name.
 
 **Arguments**:
 
-- `name` - The name of the evaluator
-- `in_workspace_id` - The workspace ID
-  
+| Name | Description |
+|------|-------------|
+| `name` | The name of the evaluator |
+| `in_workspace_id` | The workspace ID |
 
 **Returns**:
 
-- `[Evaluator](/sdk/python/references/models/evaluator)` - The evaluator details
-  
+| Name | Description |
+|------|-------------|
+| `[Evaluator](/sdk/python/references/models/evaluator)` | The evaluator details |
 
 **Raises**:
 
@@ -428,21 +458,23 @@ Create a new test run.
 
 **Arguments**:
 
-- `name` - The name of the test run
-- `workspace_id` - The workspace ID
-- `workflow_id` - Optional workflow ID
-- `prompt_version_id` - Optional prompt version ID
-- `prompt_chain_version_id` - Optional prompt chain version ID
-- `run_type` - The type of run
-- `evaluator_config` - List of evaluators to use
-- `requires_local_run` - Whether the test run requires local execution
-- `human_evaluation_config` - Optional human evaluation configuration
-  
+| Name | Description |
+|------|-------------|
+| `name` | The name of the test run |
+| `workspace_id` | The workspace ID |
+| `workflow_id` | Optional workflow ID |
+| `prompt_version_id` | Optional prompt version ID |
+| `prompt_chain_version_id` | Optional prompt chain version ID |
+| `run_type` | The type of run |
+| `evaluator_config` | List of evaluators to use |
+| `requires_local_run` | Whether the test run requires local execution |
+| `human_evaluation_config` | Optional human evaluation configuration |
 
 **Returns**:
 
-- `[TestRun](/sdk/python/references/models/test_run)` - The created test run
-  
+| Name | Description |
+|------|-------------|
+| `[TestRun](/sdk/python/references/models/test_run)` | The created test run |
 
 **Raises**:
 
@@ -458,9 +490,10 @@ Attach a dataset to a test run.
 
 **Arguments**:
 
-- `test_run_id` - The ID of the test run
-- `dataset_id` - The ID of the dataset
-  
+| Name | Description |
+|------|-------------|
+| `test_run_id` | The ID of the test run |
+| `dataset_id` | The ID of the dataset |
 
 **Raises**:
 
@@ -478,10 +511,11 @@ Push an entry to a test run.
 
 **Arguments**:
 
-- `test_run` - The test run
-- `entry` - The test run entry to push
-- `run_config` - Optional run configuration
-  
+| Name | Description |
+|------|-------------|
+| `test_run` | The test run |
+| `entry` | The test run entry to push |
+| `run_config` | Optional run configuration |
 
 **Raises**:
 
@@ -497,8 +531,9 @@ Mark a test run as processed.
 
 **Arguments**:
 
-- `test_run_id` - The ID of the test run
-  
+| Name | Description |
+|------|-------------|
+| `test_run_id` | The ID of the test run |
 
 **Raises**:
 
@@ -514,8 +549,9 @@ Mark a test run as failed.
 
 **Arguments**:
 
-- `test_run_id` - The ID of the test run
-  
+| Name | Description |
+|------|-------------|
+| `test_run_id` | The ID of the test run |
 
 **Raises**:
 
@@ -531,13 +567,15 @@ Get the status of a test run.
 
 **Arguments**:
 
-- `test_run_id` - The ID of the test run
-  
+| Name | Description |
+|------|-------------|
+| `test_run_id` | The ID of the test run |
 
 **Returns**:
 
-- `[TestRunStatus](/sdk/python/references/models/test_run)` - The status of the test run
-  
+| Name | Description |
+|------|-------------|
+| `[TestRunStatus](/sdk/python/references/models/test_run)` | The status of the test run |
 
 **Raises**:
 
@@ -553,13 +591,15 @@ Get the final result of a test run.
 
 **Arguments**:
 
-- `test_run_id` - The ID of the test run
-  
+| Name | Description |
+|------|-------------|
+| `test_run_id` | The ID of the test run |
 
 **Returns**:
 
-- `[TestRunResult](/sdk/python/references/models/test_run)` - The final result of the test run
-  
+| Name | Description |
+|------|-------------|
+| `[TestRunResult](/sdk/python/references/models/test_run)` | The final result of the test run |
 
 **Raises**:
 
@@ -575,15 +615,17 @@ Get a signed URL for uploading a file.
 
 **Arguments**:
 
-- `key` - The key (filename) for the upload
-- `mime_type` - The MIME type of the file
-- `size` - The size of the file in bytes
-  
+| Name | Description |
+|------|-------------|
+| `key` | The key (filename) for the upload |
+| `mime_type` | The MIME type of the file |
+| `size` | The size of the file in bytes |
 
 **Returns**:
 
-- `[SignedURLResponse](/sdk/python/references/models/attachment)` - A dictionary containing the signed URL for upload
-  
+| Name | Description |
+|------|-------------|
+| `[SignedURLResponse](/sdk/python/references/models/attachment)` | A dictionary containing the signed URL for upload |
 
 **Raises**:
 
@@ -599,12 +641,14 @@ Upload data to a signed URL using multipart form data with retry logic.
 
 **Arguments**:
 
-- `url` - The signed URL to upload to
-- `data` - The binary data to upload
-- `mime_type` - The MIME type of the data
-  
+| Name | Description |
+|------|-------------|
+| `url` | The signed URL to upload to |
+| `data` | The binary data to upload |
+| `mime_type` | The MIME type of the data |
 
 **Returns**:
 
-- `bool` - True if upload was successful, False otherwise
-
+| Name | Description |
+|------|-------------|
+| `bool` | True if upload was successful, False otherwise |

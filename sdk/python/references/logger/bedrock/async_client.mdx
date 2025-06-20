@@ -1,5 +1,6 @@
 ---
 title: bedrock.AsyncClient
+description: Async_Client utilities for aws bedrock integration utilities.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/bedrock/async_client.py)
@@ -26,8 +27,10 @@ Initialize the [Maxim](/sdk/python/references/maxim) Bedrock async client.
 
 **Arguments**:
 
-- `logger` _[Logger](/sdk/python/references/logger/logger)_ - The [Maxim](/sdk/python/references/maxim) logger instance for tracking interactions.
-- `client` _BaseClient_ - The Bedrock async client instance to wrap.
+| Name | Type | Description |
+|------|------|-------------|
+| `logger` | _[Logger](/sdk/python/references/logger/logger)_ | The [Maxim](/sdk/python/references/maxim) logger instance for tracking interactions. |
+| `client` | _BaseClient_ | The Bedrock async client instance to wrap. |
 
 #### converse\_stream
 
@@ -53,19 +56,20 @@ Converse with the Bedrock client.
 
 **Arguments**:
 
-- `messages` _Iterable[BedrockMessageParam]_ - The messages to send to the Bedrock client.
-- `system` _Optional[Union[str, List[Dict[str, str]]]]_ - The system message to send to the Bedrock client.
-- `model` _str_ - The model to use for the Bedrock client.
-- `modelId` _str_ - The model ID to use for the Bedrock client.
-- `max_tokens` _Optional[int]_ - The maximum number of tokens to generate.
-- `trace_id` _Optional[str]_ - The trace ID to use for the Bedrock client.
-- `generation_name` _Optional[str]_ - The name of the generation to use for the Bedrock client.
-- `inferenceConfig` _Optional[Dict[str, Any]]_ - The inference configuration to use for the Bedrock client.
-- `toolConfig` _Optional[Dict[str, Any]]_ - The tool configuration to use for the Bedrock client.
-- `guardrailConfig` _Optional[Dict[str, Any]]_ - The guardrail configuration to use for the Bedrock client.
-- `performanceConfig` _Optional[Dict[str, Any]]_ - The performance configuration to use for the Bedrock client.
-- `additionalModelRequestFields` _Optional[Dict[str, Any]]_ - The additional model request fields to use for the Bedrock client.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `messages` | _Iterable[BedrockMessageParam]_ | The messages to send to the Bedrock client. |
+| `system` | _Optional[Union[str, List[Dict[str, str]]]]_ | The system message to send to the Bedrock client. |
+| `model` | _str_ | The model to use for the Bedrock client. |
+| `modelId` | _str_ | The model ID to use for the Bedrock client. |
+| `max_tokens` | _Optional[int]_ | The maximum number of tokens to generate. |
+| `trace_id` | _Optional[str]_ | The trace ID to use for the Bedrock client. |
+| `generation_name` | _Optional[str]_ | The name of the generation to use for the Bedrock client. |
+| `inferenceConfig` | _Optional[Dict[str, Any]]_ | The inference configuration to use for the Bedrock client. |
+| `toolConfig` | _Optional[Dict[str, Any]]_ | The tool configuration to use for the Bedrock client. |
+| `guardrailConfig` | _Optional[Dict[str, Any]]_ | The guardrail configuration to use for the Bedrock client. |
+| `performanceConfig` | _Optional[Dict[str, Any]]_ | The performance configuration to use for the Bedrock client. |
+| `additionalModelRequestFields` | _Optional[Dict[str, Any]]_ | The additional model request fields to use for the Bedrock client. |
 
 **Returns**:
 
@@ -95,21 +99,23 @@ Converse with the Bedrock client.
 
 **Arguments**:
 
-- `messages` _Iterable[BedrockMessageParam]_ - The messages to send to the Bedrock client.
-- `system` _Optional[Union[str, List[Dict[str, str]]]]_ - The system message to send to the Bedrock client.
-- `model` _str_ - The model to use for the Bedrock client.
-- `modelId` _str_ - The model ID to use for the Bedrock client.
-- `max_tokens` _Optional[int]_ - The maximum number of tokens to generate.
-- `trace_id` _Optional[str]_ - The trace ID to use for the Bedrock client.
-- `generation_name` _Optional[str]_ - The name of the generation to use for the Bedrock client.
-- `inferenceConfig` _Optional[Dict[str, Any]]_ - The inference configuration to use for the Bedrock client.
-- `toolConfig` _Optional[Dict[str, Any]]_ - The tool configuration to use for the Bedrock client.
-- `guardrailConfig` _Optional[Dict[str, Any]]_ - The guardrail configuration to use for the Bedrock client.
-- `performanceConfig` _Optional[Dict[str, Any]]_ - The performance configuration to use for the Bedrock client.
-- `additionalModelRequestFields` _Optional[Dict[str, Any]]_ - The additional model request fields to use for the Bedrock client.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `messages` | _Iterable[BedrockMessageParam]_ | The messages to send to the Bedrock client. |
+| `system` | _Optional[Union[str, List[Dict[str, str]]]]_ | The system message to send to the Bedrock client. |
+| `model` | _str_ | The model to use for the Bedrock client. |
+| `modelId` | _str_ | The model ID to use for the Bedrock client. |
+| `max_tokens` | _Optional[int]_ | The maximum number of tokens to generate. |
+| `trace_id` | _Optional[str]_ | The trace ID to use for the Bedrock client. |
+| `generation_name` | _Optional[str]_ | The name of the generation to use for the Bedrock client. |
+| `inferenceConfig` | _Optional[Dict[str, Any]]_ | The inference configuration to use for the Bedrock client. |
+| `toolConfig` | _Optional[Dict[str, Any]]_ | The tool configuration to use for the Bedrock client. |
+| `guardrailConfig` | _Optional[Dict[str, Any]]_ | The guardrail configuration to use for the Bedrock client. |
+| `performanceConfig` | _Optional[Dict[str, Any]]_ | The performance configuration to use for the Bedrock client. |
+| `additionalModelRequestFields` | _Optional[Dict[str, Any]]_ | The additional model request fields to use for the Bedrock client. |
 
 **Returns**:
 
-- `BedrockMessage` - The response from the Bedrock client.
-
+| Name | Description |
+|------|-------------|
+| `BedrockMessage` | The response from the Bedrock client. |

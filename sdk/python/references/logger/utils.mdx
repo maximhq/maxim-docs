@@ -1,5 +1,6 @@
 ---
 title: logger.Utils
+description: Utility functions and helpers for Logger integration.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/utils.py)
@@ -14,14 +15,17 @@ Detects if the given PCM16 byte buffer is mostly silence.
 
 **Arguments**:
 
-- `pcm_bytes` _bytes_ - PCM16LE audio data.
-- `threshold` _int_ - Max absolute value to consider as silence.
-- `min_silence_ratio` _float_ - Minimum ratio of silent samples to consider the buffer as silence.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `pcm_bytes` | _bytes_ | PCM16LE audio data. |
+| `threshold` | _int_ | Max absolute value to consider as silence. |
+| `min_silence_ratio` | _float_ | Minimum ratio of silent samples to consider the buffer as silence. |
 
 **Returns**:
 
-- `bool` - True if buffer is mostly silence, False otherwise.
+| Name | Description |
+|------|-------------|
+| `bool` | True if buffer is mostly silence, False otherwise. |
 
 #### pcm16\_to\_wav\_bytes
 
@@ -35,14 +39,17 @@ Convert PCM-16 audio data to WAV format bytes.
 
 **Arguments**:
 
-- `pcm_bytes` _bytes_ - Raw PCM-16 audio data
-- `num_channels` _int_ - Number of audio channels (default: 1)
-- `sample_rate` _int_ - Sample rate in Hz (default: 24000)
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `pcm_bytes` | _bytes_ | Raw PCM-16 audio data |
+| `num_channels` | _int_ | Number of audio channels (default: 1) |
+| `sample_rate` | _int_ | Sample rate in Hz (default: 24000) |
 
 **Returns**:
 
-- `bytes` - WAV format audio data
+| Name | Description |
+|------|-------------|
+| `bytes` | WAV format audio data |
 
 #### make\_object\_serializable
 
@@ -55,8 +62,9 @@ as much information as possible about the original object.
 
 **Arguments**:
 
-- `obj` - Any Python object
-  
+| Name | Description |
+|------|-------------|
+| `obj` | Any Python object |
 
 **Returns**:
 

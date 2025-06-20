@@ -1,5 +1,6 @@
 ---
 title: anthropic.Utils
+description: Utility functions and helpers for Anthropic integration.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/utils.py)
@@ -38,7 +39,10 @@ structured content blocks.
 
 **Arguments**:
 
-- `message` _Iterable[MessageParam]_ - Iterable of Anthropic message parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `message` | _Iterable[MessageParam]_ | Iterable of Anthropic message parameters |
+
   to be parsed. Can contain strings, dicts, or MessageParam objects.
 - `override_role` _Optional[str]_ - Optional role to override the message role.
   If provided, all messages will use this role instead of their original role.
@@ -46,7 +50,10 @@ structured content blocks.
 
 **Returns**:
 
-- `List[[GenerationRequestMessage](/sdk/python/references/logger/components/generation)]` - List of parsed messages in [Maxim](/sdk/python/references/maxim) format,
+| Name | Description |
+|------|-------------|
+| `List[[GenerationRequestMessage](/sdk/python/references/logger/components/generation)]` | List of parsed messages in [Maxim](/sdk/python/references/maxim) format, |
+
   with role and content extracted and standardized.
   
 
@@ -72,8 +79,11 @@ common parameters like temperature, top_p, and other generation settings.
 
 **Arguments**:
 
-- `max_tokens` _int_ - Maximum number of tokens to generate.
-- `**kwargs` _Any_ - Additional keyword arguments that may contain
+| Name | Type | Description |
+|------|------|-------------|
+| `max_tokens` | _int_ | Maximum number of tokens to generate. |
+| `**kwargs` | _Any_ | Additional keyword arguments that may contain |
+
   model parameters such as temperature, top_p, top_k, system, etc.
   
 
@@ -105,7 +115,10 @@ OpenAI-style responses for consistent logging and processing.
 
 **Arguments**:
 
-- `stream` _List[MessageStreamEvent]_ - List of stream events from
+| Name | Type | Description |
+|------|------|-------------|
+| `stream` | _List[MessageStreamEvent]_ | List of stream events from |
+
   Anthropic's streaming API response.
   
 
@@ -145,7 +158,10 @@ logging and processing across different AI providers.
 
 **Arguments**:
 
-- `message` _Any_ - Anthropic [Message](/sdk/python/references/models/prompt) object containing the API response
+| Name | Type | Description |
+|------|------|-------------|
+| `message` | _Any_ | Anthropic [Message](/sdk/python/references/models/prompt) object containing the API response |
+
   with content, usage statistics, and metadata.
   
 

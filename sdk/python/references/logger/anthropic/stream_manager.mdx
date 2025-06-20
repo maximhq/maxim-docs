@@ -1,5 +1,6 @@
 ---
 title: StreamManager
+description: Stream_Manager utilities for anthropic ai model integration and logging utilities.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/stream_manager.py)
@@ -18,8 +19,10 @@ to allow for seamless iteration over text content.
 
 **Attributes**:
 
-- `_wrapper` - The underlying stream wrapper.
-- `_callback` - Callback function to process stream events.
+| Name | Description |
+|------|-------------|
+| `_wrapper` | The underlying stream wrapper. |
+| `_callback` | Callback function to process stream events. |
 
 #### \_\_init\_\_
 
@@ -31,8 +34,10 @@ Initialize the text stream wrapper.
 
 **Arguments**:
 
-- `wrapper` - The underlying stream wrapper to delegate to.
-- `callback` - Callback function to be called for each event.
+| Name | Description |
+|------|-------------|
+| `wrapper` | The underlying stream wrapper to delegate to. |
+| `callback` | Callback function to be called for each event. |
 
 #### \_\_iter\_\_
 
@@ -44,7 +49,9 @@ Return the iterator object.
 
 **Returns**:
 
-- `[TextStreamWrapper](/sdk/python/references/logger/anthropic/stream_manager)` - Self as the iterator.
+| Name | Description |
+|------|-------------|
+| `[TextStreamWrapper](/sdk/python/references/logger/anthropic/stream_manager)` | Self as the iterator. |
 
 #### \_\_next\_\_
 
@@ -59,8 +66,9 @@ callback function, and returns the text content if available.
 
 **Returns**:
 
-- `str` - The text content from the event, or empty string if no text.
-  
+| Name | Description |
+|------|-------------|
+| `str` | The text content from the event, or empty string if no text. |
 
 **Raises**:
 
@@ -84,9 +92,11 @@ to provide seamless integration with existing code.
 
 **Attributes**:
 
-- `_mgr` _MessageStreamManager_ - The underlying stream manager.
-- `_callback` _Callable_ - Callback function for processing events.
-- `_stream` _MessageStream_ - The active stream instance.
+| Name | Type | Description |
+|------|------|-------------|
+| `_mgr` | _MessageStreamManager_ | The underlying stream manager. |
+| `_callback` | _Callable_ | Callback function for processing events. |
+| `_stream` | _MessageStream_ | The active stream instance. |
 
 #### \_\_init\_\_
 
@@ -99,8 +109,11 @@ Initialize the stream wrapper.
 
 **Arguments**:
 
-- `mgr` _MessageStreamManager_ - The underlying stream manager to wrap.
-- `callback` _Callable[[MessageStreamEvent], None]_ - Callback function
+| Name | Type | Description |
+|------|------|-------------|
+| `mgr` | _MessageStreamManager_ | The underlying stream manager to wrap. |
+| `callback` | _Callable[[MessageStreamEvent], None]_ | Callback function |
+
   to be called for each stream event.
   
 
@@ -121,7 +134,9 @@ stream to add callback functionality for each event.
 
 **Returns**:
 
-- `MessageStream` - A stream instance with callback support.
+| Name | Description |
+|------|-------------|
+| `MessageStream` | A stream instance with callback support. |
 
 #### \_\_exit\_\_
 
@@ -138,9 +153,11 @@ to ensure proper cleanup and resource management.
 
 **Arguments**:
 
-- `exc_type` - The exception type if an exception occurred.
-- `exc` - The exception instance if an exception occurred.
-- `exc_tb` - The traceback if an exception occurred.
+| Name | Description |
+|------|-------------|
+| `exc_type` | The exception type if an exception occurred. |
+| `exc` | The exception instance if an exception occurred. |
+| `exc_tb` | The traceback if an exception occurred. |
 
 #### \_\_iter\_\_
 
@@ -155,7 +172,9 @@ the context to create one.
 
 **Returns**:
 
-- `[StreamWrapper](/sdk/python/references/logger/anthropic/stream_manager)` - Self as the iterator.
+| Name | Description |
+|------|-------------|
+| `[StreamWrapper](/sdk/python/references/logger/anthropic/stream_manager)` | Self as the iterator. |
 
 #### \_\_next\_\_
 
@@ -170,8 +189,9 @@ the context to create one.
 
 **Returns**:
 
-- `MessageStreamEvent` - The next event from the stream.
-  
+| Name | Description |
+|------|-------------|
+| `MessageStreamEvent` | The next event from the stream. |
 
 **Raises**:
 
@@ -190,10 +210,12 @@ defined in this wrapper are delegated to the underlying stream manager.
 
 **Arguments**:
 
-- `name` _str_ - The attribute name to access.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `name` | _str_ | The attribute name to access. |
 
 **Returns**:
 
-- `Any` - The attribute value from the underlying manager.
-
+| Name | Description |
+|------|-------------|
+| `Any` | The attribute value from the underlying manager. |

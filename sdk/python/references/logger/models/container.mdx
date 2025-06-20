@@ -1,5 +1,6 @@
 ---
 title: Container
+description: Container utilities for data models and type definitions used throughout the maxim sdk.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/models/container.py)
@@ -28,7 +29,9 @@ Initializes the RunMetadata object
 
 **Arguments**:
 
-- `metadata` _Optional[Dict[str,Any]]_ - [Metadata](/sdk/python/references/models/metadata) to initialize from
+| Name | Type | Description |
+|------|------|-------------|
+| `metadata` | _Optional[Dict[str,Any]]_ | [Metadata](/sdk/python/references/models/metadata) to initialize from |
 
 ## [Container](/sdk/python/references/logger/models/container)
 
@@ -54,7 +57,9 @@ def id() -> str
 
 **Returns**:
 
-- `str` - id of the container
+| Name | Description |
+|------|-------------|
+| `str` | id of the container |
 
 #### type
 
@@ -64,7 +69,9 @@ def type() -> str
 
 **Returns**:
 
-- `str` - type of the container
+| Name | Description |
+|------|-------------|
+| `str` | type of the container |
 
 #### is\_created
 
@@ -76,7 +83,9 @@ Checks if the container has been created
 
 **Returns**:
 
-- `bool` - True if the container has been created, False otherwise
+| Name | Description |
+|------|-------------|
+| `bool` | True if the container has been created, False otherwise |
 
 #### parent
 
@@ -86,7 +95,9 @@ def parent() -> Optional[str]
 
 **Returns**:
 
-- `[Container](/sdk/python/references/logger/models/container)` - parent container
+| Name | Description |
+|------|-------------|
+| `[Container](/sdk/python/references/logger/models/container)` | parent container |
 
 #### add\_generation
 
@@ -99,7 +110,9 @@ Adds a generation to the container
 
 **Returns**:
 
-- `[Generation](/sdk/python/references/logger/components/generation)` - Generation object
+| Name | Description |
+|------|-------------|
+| `[Generation](/sdk/python/references/logger/components/generation)` | Generation object |
 
 #### add\_tool\_call
 
@@ -112,7 +125,9 @@ Adds a tool call to the container
 
 **Returns**:
 
-- `[ToolCall](/sdk/python/references/models/prompt)` - ToolCall object
+| Name | Description |
+|------|-------------|
+| `[ToolCall](/sdk/python/references/models/prompt)` | ToolCall object |
 
 #### add\_event
 
@@ -127,10 +142,11 @@ Adds an event to the container.
 
 **Arguments**:
 
-- `event_id` _str_ - Unique identifier for the event.
-- `name` _str_ - Name of the event.
-- `tags` _Dict[str, str]_ - Additional key-value pairs to associate with the event.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `event_id` | _str_ | Unique identifier for the event. |
+| `name` | _str_ | Name of the event. |
+| `tags` | _Dict[str, str]_ | Additional key-value pairs to associate with the event. |
 
 **Returns**:
 
@@ -147,7 +163,9 @@ Adds a span to the container
 
 **Returns**:
 
-- `[Span](/sdk/python/references/logger/components/span)` - Span object
+| Name | Description |
+|------|-------------|
+| `[Span](/sdk/python/references/logger/components/span)` | Span object |
 
 #### add\_retrieval
 
@@ -160,7 +178,9 @@ Adds a retrieval to the container
 
 **Returns**:
 
-- `[Retrieval](/sdk/python/references/logger/components/retrieval)` - Retrieval object
+| Name | Description |
+|------|-------------|
+| `[Retrieval](/sdk/python/references/logger/components/retrieval)` | Retrieval object |
 
 #### add\_tags
 
@@ -172,7 +192,9 @@ Adds tags to the container
 
 **Arguments**:
 
-- `tags` _Optional[Dict[str,str]]_ - Tags to add
+| Name | Type | Description |
+|------|------|-------------|
+| `tags` | _Optional[Dict[str,str]]_ | Tags to add |
 
 #### add\_error
 
@@ -184,7 +206,9 @@ Adds an error to the container
 
 **Arguments**:
 
-- `error` _[GenerationError](/sdk/python/references/logger/components/types)_ - [Error](/sdk/python/references/models/prompt) to add
+| Name | Type | Description |
+|------|------|-------------|
+| `error` | _[GenerationError](/sdk/python/references/logger/components/types)_ | [Error](/sdk/python/references/models/prompt) to add |
 
 #### set\_input
 
@@ -196,7 +220,9 @@ Sets the input to the container
 
 **Arguments**:
 
-- `input` _str_ - Input to set
+| Name | Type | Description |
+|------|------|-------------|
+| `input` | _str_ | Input to set |
 
 #### set\_output
 
@@ -208,7 +234,9 @@ Sets the output to the container
 
 **Arguments**:
 
-- `output` _str_ - Output to set
+| Name | Type | Description |
+|------|------|-------------|
+| `output` | _str_ | Output to set |
 
 #### add\_metadata
 
@@ -220,7 +248,9 @@ Adds metadata to the container
 
 **Arguments**:
 
-- `metadata` _Optional[Dict[str,str]]_ - [Metadata](/sdk/python/references/models/metadata) to add
+| Name | Type | Description |
+|------|------|-------------|
+| `metadata` | _Optional[Dict[str,str]]_ | [Metadata](/sdk/python/references/models/metadata) to add |
 
 #### end
 
@@ -248,7 +278,9 @@ Adds a generation to the container
 
 **Returns**:
 
-- `[Generation](/sdk/python/references/logger/components/generation)` - Generation object
+| Name | Description |
+|------|-------------|
+| `[Generation](/sdk/python/references/logger/components/generation)` | Generation object |
 
 #### end
 
