@@ -251,6 +251,12 @@
                                 "group": "Integrations",
                                 "pages": [
                                     {
+                                        "group": "Anthropic",
+                                        "pages": [
+                                            "sdk/python/integrations/anthropic/anthropic"
+                                        ]
+                                    },
+                                    {
                                         "group": "CrewAI",
                                         "pages": [
                                             "sdk/python/integrations/crewai/crewai"
