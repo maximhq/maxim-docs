@@ -1,5 +1,6 @@
 ---
 title: Logger
+description: Logger utilities for logging and instrumentation utilities for tracking ai model interactions.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/logger.py)
@@ -11,9 +12,11 @@ the logger ID, auto-flush setting, and flush interval.
 
 **Attributes**:
 
-- `id` _str_ - The unique identifier for the logger.
-- `auto_flush` _bool_ - Whether to automatically flush logs. Defaults to True.
-- `flush_interval` _int_ - The interval (in seconds) at which to flush logs when auto_flush is True. Defaults to 10 seconds.
+| Name | Type | Description |
+|------|------|-------------|
+| `id` | _str_ | The unique identifier for the logger. |
+| `auto_flush` | _bool_ | Whether to automatically flush logs. Defaults to True. |
+| `flush_interval` | _int_ | The interval (in seconds) at which to flush logs when auto_flush is True. Defaults to 10 seconds. |
 
 ## [LoggerConfig](/sdk/python/references/logger/logger)
 
@@ -31,9 +34,11 @@ the logger ID, auto-flush setting, and flush interval.
 
 **Attributes**:
 
-- `id` _str_ - The unique identifier for the logger.
-- `auto_flush` _bool_ - Whether to automatically flush logs.
-- `flush_interval` _int_ - The interval (in seconds) at which to flush logs when auto_flush is True.
+| Name | Type | Description |
+|------|------|-------------|
+| `id` | _str_ | The unique identifier for the logger. |
+| `auto_flush` | _bool_ | Whether to automatically flush logs. |
+| `flush_interval` | _int_ | The interval (in seconds) at which to flush logs when auto_flush is True. |
 
 ## [Logger](/sdk/python/references/logger/logger)
 
@@ -49,10 +54,12 @@ actual logging operations.
 
 **Attributes**:
 
-- `_id` _str_ - The unique identifier for this logger instance.
-- `raise_exceptions` _bool_ - Whether to raise exceptions during logging operations.
-- `is_debug` _bool_ - Whether debug logging is enabled.
-- `writer` _[LogWriter](/sdk/python/references/logger/writer)_ - The [LogWriter](/sdk/python/references/logger/writer) instance used for actual logging operations.
+| Name | Type | Description |
+|------|------|-------------|
+| `_id` | _str_ | The unique identifier for this logger instance. |
+| `raise_exceptions` | _bool_ | Whether to raise exceptions during logging operations. |
+| `is_debug` | _bool_ | Whether debug logging is enabled. |
+| `writer` | _[LogWriter](/sdk/python/references/logger/writer)_ | The [LogWriter](/sdk/python/references/logger/writer) instance used for actual logging operations. |
 
 #### \_\_init\_\_
 
@@ -68,11 +75,13 @@ Initializes the logger with the given configuration.
 
 **Arguments**:
 
-- `config` _[LoggerConfig](/sdk/python/references/logger/logger)_ - The configuration for the logger.
-- `api_key` _str_ - The API key for the logger.
-- `base_url` _str_ - The base URL for the logger.
-- `is_debug` _bool, optional_ - Whether to enable debug logging. Defaults to False.
-- `raise_exceptions` _bool, optional_ - Whether to raise exceptions. Defaults to False.
+| Name | Type | Description |
+|------|------|-------------|
+| `config` | _[LoggerConfig](/sdk/python/references/logger/logger)_ | The configuration for the logger. |
+| `api_key` | _str_ | The API key for the logger. |
+| `base_url` | _str_ | The base URL for the logger. |
+| `is_debug` | _bool, optional_ | Whether to enable debug logging. Defaults to False. |
+| `raise_exceptions` | _bool, optional_ | Whether to raise exceptions. Defaults to False. |
 
 #### session
 
@@ -84,12 +93,15 @@ Creates a new session with the given configuration.
 
 **Arguments**:
 
-- `config` _[SessionConfig](/sdk/python/references/logger/components/session)_ - The configuration for the new session.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `config` | _[SessionConfig](/sdk/python/references/logger/components/session)_ | The configuration for the new session. |
 
 **Returns**:
 
-- `[Session](/sdk/python/references/logger/components/session)` - The newly created session.
+| Name | Description |
+|------|-------------|
+| `[Session](/sdk/python/references/logger/components/session)` | The newly created session. |
 
 #### trace
 
@@ -101,12 +113,15 @@ Creates a new trace with the given configuration.
 
 **Arguments**:
 
-- `config` _[TraceConfig](/sdk/python/references/logger/components/trace)_ - The configuration for the new trace.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `config` | _[TraceConfig](/sdk/python/references/logger/components/trace)_ | The configuration for the new trace. |
 
 **Returns**:
 
-- `[Trace](/sdk/python/references/logger/components/trace)` - The newly created trace.
+| Name | Description |
+|------|-------------|
+| `[Trace](/sdk/python/references/logger/components/trace)` | The newly created trace. |
 
 #### session\_add\_tag
 
@@ -118,9 +133,11 @@ Adds a tag to the session.
 
 **Arguments**:
 
-- `session_id` _str_ - The ID of the session.
-- `key` _str_ - The key of the tag.
-- `value` _str_ - The value of the tag.
+| Name | Type | Description |
+|------|------|-------------|
+| `session_id` | _str_ | The ID of the session. |
+| `key` | _str_ | The key of the tag. |
+| `value` | _str_ | The value of the tag. |
 
 #### session\_end
 
@@ -132,7 +149,9 @@ Ends the session.
 
 **Arguments**:
 
-- `session_id` _str_ - The ID of the session.
+| Name | Type | Description |
+|------|------|-------------|
+| `session_id` | _str_ | The ID of the session. |
 
 #### session\_event
 
@@ -144,10 +163,12 @@ Adds an event to the session.
 
 **Arguments**:
 
-- `session_id` _str_ - The ID of the session.
-- `event_id` _str_ - The ID of the event.
-- `event` _str_ - The name of the event.
-- `data` _Any_ - The data associated with the event.
+| Name | Type | Description |
+|------|------|-------------|
+| `session_id` | _str_ | The ID of the session. |
+| `event_id` | _str_ | The ID of the event. |
+| `event` | _str_ | The name of the event. |
+| `data` | _Any_ | The data associated with the event. |
 
 #### session\_feedback
 
@@ -162,8 +183,10 @@ Adds a feedback to the session.
 
 **Arguments**:
 
-- `session_id` _str_ - The ID of the session.
-- `feedback` _[Feedback](/sdk/python/references/logger/components/feedback)_ - The feedback to add.
+| Name | Type | Description |
+|------|------|-------------|
+| `session_id` | _str_ | The ID of the session. |
+| `feedback` | _[Feedback](/sdk/python/references/logger/components/feedback)_ | The feedback to add. |
 
 #### session\_add\_attachment
 
@@ -197,13 +220,16 @@ Adds a trace to the session.
 
 **Arguments**:
 
-- `session_id` _str_ - The ID of the session.
-- `config` _[TraceConfig](/sdk/python/references/logger/components/trace)_ - The configuration for the trace.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `session_id` | _str_ | The ID of the session. |
+| `config` | _[TraceConfig](/sdk/python/references/logger/components/trace)_ | The configuration for the trace. |
 
 **Returns**:
 
-- `[Trace](/sdk/python/references/logger/components/trace)` - The newly created trace.
+| Name | Description |
+|------|-------------|
+| `[Trace](/sdk/python/references/logger/components/trace)` | The newly created trace. |
 
 #### session\_add\_trace
 
@@ -216,13 +242,16 @@ Adds a trace to the session.
 
 **Arguments**:
 
-- `session_id` _str_ - The ID of the session.
-- `config` _[TraceConfig](/sdk/python/references/logger/components/trace)_ - The configuration for the trace.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `session_id` | _str_ | The ID of the session. |
+| `config` | _[TraceConfig](/sdk/python/references/logger/components/trace)_ | The configuration for the trace. |
 
 **Returns**:
 
-- `[Trace](/sdk/python/references/logger/components/trace)` - The newly created trace.
+| Name | Description |
+|------|-------------|
+| `[Trace](/sdk/python/references/logger/components/trace)` | The newly created trace. |
 
 #### trace\_generation
 
@@ -237,13 +266,16 @@ Adds a generation to the trace.
 
 **Arguments**:
 
-- `trace_id` _str_ - The ID of the trace.
-- `config` _GenerationConfig_ - The configuration for the generation.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `trace_id` | _str_ | The ID of the trace. |
+| `config` | _GenerationConfig_ | The configuration for the generation. |
 
 **Returns**:
 
-- `[Generation](/sdk/python/references/logger/components/generation)` - The newly created generation.
+| Name | Description |
+|------|-------------|
+| `[Generation](/sdk/python/references/logger/components/generation)` | The newly created generation. |
 
 #### trace\_add\_generation
 
@@ -257,13 +289,16 @@ Adds a generation to the trace.
 
 **Arguments**:
 
-- `trace_id` _str_ - The ID of the trace.
-- `config` _GenerationConfig_ - The configuration for the generation.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `trace_id` | _str_ | The ID of the trace. |
+| `config` | _GenerationConfig_ | The configuration for the generation. |
 
 **Returns**:
 
-- `[Generation](/sdk/python/references/logger/components/generation)` - The newly created generation.
+| Name | Description |
+|------|-------------|
+| `[Generation](/sdk/python/references/logger/components/generation)` | The newly created generation. |
 
 #### trace\_retrieval
 
@@ -280,13 +315,16 @@ Adds a retrieval to the trace.
 
 **Arguments**:
 
-- `trace_id` _str_ - The ID of the trace.
-- `config` _[RetrievalConfig](/sdk/python/references/logger/components/retrieval)_ - The configuration for the retrieval.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `trace_id` | _str_ | The ID of the trace. |
+| `config` | _[RetrievalConfig](/sdk/python/references/logger/components/retrieval)_ | The configuration for the retrieval. |
 
 **Returns**:
 
-- `[Retrieval](/sdk/python/references/logger/components/retrieval)` - The newly created retrieval.
+| Name | Description |
+|------|-------------|
+| `[Retrieval](/sdk/python/references/logger/components/retrieval)` | The newly created retrieval. |
 
 #### trace\_add\_retrieval
 
@@ -300,13 +338,16 @@ Adds a retrieval to the trace.
 
 **Arguments**:
 
-- `trace_id` _str_ - The ID of the trace.
-- `config` _[RetrievalConfig](/sdk/python/references/logger/components/retrieval)_ - The configuration for the retrieval.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `trace_id` | _str_ | The ID of the trace. |
+| `config` | _[RetrievalConfig](/sdk/python/references/logger/components/retrieval)_ | The configuration for the retrieval. |
 
 **Returns**:
 
-- `[Retrieval](/sdk/python/references/logger/components/retrieval)` - The newly created retrieval.
+| Name | Description |
+|------|-------------|
+| `[Retrieval](/sdk/python/references/logger/components/retrieval)` | The newly created retrieval. |
 
 #### trace\_span
 
@@ -322,13 +363,16 @@ Adds a span to the trace.
 
 **Arguments**:
 
-- `trace_id` _str_ - The ID of the trace.
-- `config` _[SpanConfig](/sdk/python/references/logger/components/span)_ - The configuration for the span.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `trace_id` | _str_ | The ID of the trace. |
+| `config` | _[SpanConfig](/sdk/python/references/logger/components/span)_ | The configuration for the span. |
 
 **Returns**:
 
-- `[Span](/sdk/python/references/logger/components/span)` - The newly created span.
+| Name | Description |
+|------|-------------|
+| `[Span](/sdk/python/references/logger/components/span)` | The newly created span. |
 
 #### trace\_add\_span
 
@@ -341,13 +385,16 @@ Adds a span to the trace.
 
 **Arguments**:
 
-- `trace_id` _str_ - The ID of the trace.
-- `config` _[SpanConfig](/sdk/python/references/logger/components/span)_ - The configuration for the span.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `trace_id` | _str_ | The ID of the trace. |
+| `config` | _[SpanConfig](/sdk/python/references/logger/components/span)_ | The configuration for the span. |
 
 **Returns**:
 
-- `[Span](/sdk/python/references/logger/components/span)` - The newly created span.
+| Name | Description |
+|------|-------------|
+| `[Span](/sdk/python/references/logger/components/span)` | The newly created span. |
 
 #### trace\_add\_error
 
@@ -367,9 +414,11 @@ Adds a tag to the trace.
 
 **Arguments**:
 
-- `trace_id` _str_ - The ID of the trace.
-- `key` _str_ - The key of the tag.
-- `value` _str_ - The value of the tag.
+| Name | Type | Description |
+|------|------|-------------|
+| `trace_id` | _str_ | The ID of the trace. |
+| `key` | _str_ | The key of the tag. |
+| `value` | _str_ | The value of the tag. |
 
 #### trace\_add\_tool\_call
 
@@ -383,13 +432,16 @@ Adds a tool call to the trace.
 
 **Arguments**:
 
-- `trace_id` _str_ - The ID of the trace.
-- `config` _[ToolCallConfig](/sdk/python/references/logger/components/tool_call)_ - The configuration for the tool call.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `trace_id` | _str_ | The ID of the trace. |
+| `config` | _[ToolCallConfig](/sdk/python/references/logger/components/tool_call)_ | The configuration for the tool call. |
 
 **Returns**:
 
-- `[ToolCall](/sdk/python/references/models/prompt)` - The newly created tool call.
+| Name | Description |
+|------|-------------|
+| `[ToolCall](/sdk/python/references/models/prompt)` | The newly created tool call. |
 
 #### trace\_event
 
@@ -408,10 +460,12 @@ Adds an event to the trace.
 
 **Arguments**:
 
-- `trace_id` _str_ - The ID of the trace.
-- `event_id` _str_ - The ID of the event.
-- `event` _str_ - The name of the event.
-- `tags` _Optional[Dict[str, str]]_ - The tags associated with the event.
+| Name | Type | Description |
+|------|------|-------------|
+| `trace_id` | _str_ | The ID of the trace. |
+| `event_id` | _str_ | The ID of the event. |
+| `event` | _str_ | The name of the event. |
+| `tags` | _Optional[Dict[str, str]]_ | The tags associated with the event. |
 
 #### trace\_add\_event
 
@@ -435,8 +489,10 @@ Sets the input for the trace.
 
 **Arguments**:
 
-- `trace_id` _str_ - The ID of the trace.
-- `input` _str_ - The input for the trace.
+| Name | Type | Description |
+|------|------|-------------|
+| `trace_id` | _str_ | The ID of the trace. |
+| `input` | _str_ | The input for the trace. |
 
 #### trace\_set\_output
 
@@ -448,8 +504,10 @@ Sets the output for the trace.
 
 **Arguments**:
 
-- `trace_id` _str_ - The ID of the trace.
-- `output` _str_ - The output for the trace.
+| Name | Type | Description |
+|------|------|-------------|
+| `trace_id` | _str_ | The ID of the trace. |
+| `output` | _str_ | The output for the trace. |
 
 #### trace\_feedback
 
@@ -464,8 +522,10 @@ Adds a feedback to the trace.
 
 **Arguments**:
 
-- `trace_id` _str_ - The ID of the trace.
-- `feedback` _[Feedback](/sdk/python/references/logger/components/feedback)_ - The feedback to add.
+| Name | Type | Description |
+|------|------|-------------|
+| `trace_id` | _str_ | The ID of the trace. |
+| `feedback` | _[Feedback](/sdk/python/references/logger/components/feedback)_ | The feedback to add. |
 
 #### trace\_add\_feedback
 
@@ -485,8 +545,10 @@ Adds metadata to the trace.
 
 **Arguments**:
 
-- `trace_id` _str_ - The ID of the trace.
-- `metadata` _Dict[str, Any]_ - The metadata to add.
+| Name | Type | Description |
+|------|------|-------------|
+| `trace_id` | _str_ | The ID of the trace. |
+| `metadata` | _Dict[str, Any]_ | The metadata to add. |
 
 #### trace\_add\_attachment
 
@@ -508,7 +570,9 @@ Ends the trace.
 
 **Arguments**:
 
-- `trace_id` _str_ - The ID of the trace.
+| Name | Type | Description |
+|------|------|-------------|
+| `trace_id` | _str_ | The ID of the trace. |
 
 #### generation\_set\_model
 
@@ -520,8 +584,10 @@ Sets the model for the generation.
 
 **Arguments**:
 
-- `generation_id` _str_ - The ID of the generation.
-- `model` _str_ - The model for the generation.
+| Name | Type | Description |
+|------|------|-------------|
+| `generation_id` | _str_ | The ID of the generation. |
+| `model` | _str_ | The model for the generation. |
 
 #### generation\_set\_provider
 
@@ -542,8 +608,10 @@ Adds a message to the generation.
 
 **Arguments**:
 
-- `generation_id` _str_ - The ID of the generation.
-- `message` _Any_ - The OpenAI chat message to add.
+| Name | Type | Description |
+|------|------|-------------|
+| `generation_id` | _str_ | The ID of the generation. |
+| `message` | _Any_ | The OpenAI chat message to add. |
 
 #### generation\_set\_model\_parameters
 
@@ -556,8 +624,10 @@ Sets the model parameters for the generation.
 
 **Arguments**:
 
-- `generation_id` _str_ - The ID of the generation.
-- `model_parameters` _dict_ - The model parameters for the generation.
+| Name | Type | Description |
+|------|------|-------------|
+| `generation_id` | _str_ | The ID of the generation. |
+| `model_parameters` | _dict_ | The model parameters for the generation. |
 
 #### generation\_result
 
@@ -569,8 +639,10 @@ Sets the result for the generation.
 
 **Arguments**:
 
-- `generation_id` _str_ - The ID of the generation.
-- `result` _Any_ - The result for the generation.
+| Name | Type | Description |
+|------|------|-------------|
+| `generation_id` | _str_ | The ID of the generation. |
+| `result` | _Any_ | The result for the generation. |
 
 #### generation\_add\_attachment
 
@@ -593,7 +665,9 @@ Ends the generation.
 
 **Arguments**:
 
-- `generation_id` _str_ - The ID of the generation.
+| Name | Type | Description |
+|------|------|-------------|
+| `generation_id` | _str_ | The ID of the generation. |
 
 #### generation\_error
 
@@ -605,8 +679,10 @@ Sets the error for the generation.
 
 **Arguments**:
 
-- `generation_id` _str_ - The ID of the generation.
-- `error` _[GenerationError](/sdk/python/references/logger/components/types)_ - The error for the generation.
+| Name | Type | Description |
+|------|------|-------------|
+| `generation_id` | _str_ | The ID of the generation. |
+| `error` | _[GenerationError](/sdk/python/references/logger/components/types)_ | The error for the generation. |
 
 #### span\_generation
 
@@ -623,13 +699,16 @@ Adds a generation to the span.
 
 **Arguments**:
 
-- `span_id` _str_ - The ID of the span.
-- `config` _GenerationConfig_ - The configuration for the generation.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `span_id` | _str_ | The ID of the span. |
+| `config` | _GenerationConfig_ | The configuration for the generation. |
 
 **Returns**:
 
-- `[Generation](/sdk/python/references/logger/components/generation)` - The newly created generation.
+| Name | Description |
+|------|-------------|
+| `[Generation](/sdk/python/references/logger/components/generation)` | The newly created generation. |
 
 #### span\_add\_generation
 
@@ -643,13 +722,16 @@ Adds a generation to the span.
 
 **Arguments**:
 
-- `span_id` _str_ - The ID of the span.
-- `config` _GenerationConfig_ - The configuration for the generation.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `span_id` | _str_ | The ID of the span. |
+| `config` | _GenerationConfig_ | The configuration for the generation. |
 
 **Returns**:
 
-- `[Generation](/sdk/python/references/logger/components/generation)` - The newly created generation.
+| Name | Description |
+|------|-------------|
+| `[Generation](/sdk/python/references/logger/components/generation)` | The newly created generation. |
 
 #### span\_add\_error
 
@@ -674,13 +756,16 @@ Adds a retrieval to the span.
 
 **Arguments**:
 
-- `span_id` _str_ - The ID of the span.
-- `config` _[RetrievalConfig](/sdk/python/references/logger/components/retrieval)_ - The configuration for the retrieval.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `span_id` | _str_ | The ID of the span. |
+| `config` | _[RetrievalConfig](/sdk/python/references/logger/components/retrieval)_ | The configuration for the retrieval. |
 
 **Returns**:
 
-- `[Retrieval](/sdk/python/references/logger/components/retrieval)` - The newly created retrieval.
+| Name | Description |
+|------|-------------|
+| `[Retrieval](/sdk/python/references/logger/components/retrieval)` | The newly created retrieval. |
 
 #### span\_add\_retrieval
 
@@ -694,13 +779,16 @@ Adds a retrieval to the span.
 
 **Arguments**:
 
-- `span_id` _str_ - The ID of the span.
-- `config` _[RetrievalConfig](/sdk/python/references/logger/components/retrieval)_ - The configuration for the retrieval.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `span_id` | _str_ | The ID of the span. |
+| `config` | _[RetrievalConfig](/sdk/python/references/logger/components/retrieval)_ | The configuration for the retrieval. |
 
 **Returns**:
 
-- `[Retrieval](/sdk/python/references/logger/components/retrieval)` - The newly created retrieval.
+| Name | Description |
+|------|-------------|
+| `[Retrieval](/sdk/python/references/logger/components/retrieval)` | The newly created retrieval. |
 
 #### span\_add\_tool\_call
 
@@ -714,13 +802,16 @@ Adds a tool call to the span.
 
 **Arguments**:
 
-- `span_id` _str_ - The ID of the span.
-- `config` _[ToolCallConfig](/sdk/python/references/logger/components/tool_call)_ - The configuration for the tool call.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `span_id` | _str_ | The ID of the span. |
+| `config` | _[ToolCallConfig](/sdk/python/references/logger/components/tool_call)_ | The configuration for the tool call. |
 
 **Returns**:
 
-- `[ToolCall](/sdk/python/references/models/prompt)` - The newly created tool call.
+| Name | Description |
+|------|-------------|
+| `[ToolCall](/sdk/python/references/models/prompt)` | The newly created tool call. |
 
 #### span\_end
 
@@ -732,7 +823,9 @@ Ends the span.
 
 **Arguments**:
 
-- `span_id` _str_ - The ID of the span.
+| Name | Type | Description |
+|------|------|-------------|
+| `span_id` | _str_ | The ID of the span. |
 
 #### span\_add\_tag
 
@@ -744,9 +837,11 @@ Adds a tag to the span.
 
 **Arguments**:
 
-- `span_id` _str_ - The ID of the span.
-- `key` _str_ - The key of the tag.
-- `value` _str_ - The value of the tag.
+| Name | Type | Description |
+|------|------|-------------|
+| `span_id` | _str_ | The ID of the span. |
+| `key` | _str_ | The key of the tag. |
+| `value` | _str_ | The value of the tag. |
 
 #### span\_event
 
@@ -762,10 +857,12 @@ Adds an event to the span.
 
 **Arguments**:
 
-- `span_id` _str_ - The ID of the span.
-- `event_id` _str_ - The ID of the event.
-- `name` _str_ - The name of the event.
-- `tags` _Optional[Dict[str, str]]_ - The tags associated with the event.
+| Name | Type | Description |
+|------|------|-------------|
+| `span_id` | _str_ | The ID of the span. |
+| `event_id` | _str_ | The ID of the event. |
+| `name` | _str_ | The name of the event. |
+| `tags` | _Optional[Dict[str, str]]_ | The tags associated with the event. |
 
 #### span\_add\_metadata
 
@@ -777,8 +874,10 @@ Adds metadata to the span.
 
 **Arguments**:
 
-- `span_id` _str_ - The ID of the span.
-- `metadata` _Dict[str, Any]_ - The metadata to add.
+| Name | Type | Description |
+|------|------|-------------|
+| `span_id` | _str_ | The ID of the span. |
+| `metadata` | _Dict[str, Any]_ | The metadata to add. |
 
 #### span\_add\_attachment
 
@@ -803,13 +902,16 @@ Adds a span to the span.
 
 **Arguments**:
 
-- `span_id` _str_ - The ID of the span.
-- `config` _[SpanConfig](/sdk/python/references/logger/components/span)_ - The configuration for the sub-span.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `span_id` | _str_ | The ID of the span. |
+| `config` | _[SpanConfig](/sdk/python/references/logger/components/span)_ | The configuration for the sub-span. |
 
 **Returns**:
 
-- `[Span](/sdk/python/references/logger/components/span)` - The newly created sub-span.
+| Name | Description |
+|------|-------------|
+| `[Span](/sdk/python/references/logger/components/span)` | The newly created sub-span. |
 
 #### span\_add\_sub\_span
 
@@ -822,13 +924,16 @@ Adds a sub-span to the span.
 
 **Arguments**:
 
-- `span_id` _str_ - The ID of the span.
-- `config` _[SpanConfig](/sdk/python/references/logger/components/span)_ - The configuration for the sub-span.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `span_id` | _str_ | The ID of the span. |
+| `config` | _[SpanConfig](/sdk/python/references/logger/components/span)_ | The configuration for the sub-span. |
 
 **Returns**:
 
-- `[Span](/sdk/python/references/logger/components/span)` - The newly created sub-span.
+| Name | Description |
+|------|-------------|
+| `[Span](/sdk/python/references/logger/components/span)` | The newly created sub-span. |
 
 #### retrieval\_end
 
@@ -840,7 +945,9 @@ Ends the retrieval.
 
 **Arguments**:
 
-- `retrieval_id` _str_ - The ID of the retrieval.
+| Name | Type | Description |
+|------|------|-------------|
+| `retrieval_id` | _str_ | The ID of the retrieval. |
 
 #### retrieval\_input
 
@@ -852,8 +959,10 @@ Sets the input for the retrieval.
 
 **Arguments**:
 
-- `retrieval_id` _str_ - The ID of the retrieval.
-- `query` _Any_ - The input for the retrieval.
+| Name | Type | Description |
+|------|------|-------------|
+| `retrieval_id` | _str_ | The ID of the retrieval. |
+| `query` | _Any_ | The input for the retrieval. |
 
 #### retrieval\_output
 
@@ -865,8 +974,10 @@ Sets the output for the retrieval.
 
 **Arguments**:
 
-- `retrieval_id` _str_ - The ID of the retrieval.
-- `docs` _Any_ - The output for the retrieval.
+| Name | Type | Description |
+|------|------|-------------|
+| `retrieval_id` | _str_ | The ID of the retrieval. |
+| `docs` | _Any_ | The output for the retrieval. |
 
 #### retrieval\_add\_tag
 
@@ -878,9 +989,11 @@ Adds a tag to the retrieval.
 
 **Arguments**:
 
-- `retrieval_id` _str_ - The ID of the retrieval.
-- `key` _str_ - The key of the tag.
-- `value` _str_ - The value of the tag.
+| Name | Type | Description |
+|------|------|-------------|
+| `retrieval_id` | _str_ | The ID of the retrieval. |
+| `key` | _str_ | The key of the tag. |
+| `value` | _str_ | The value of the tag. |
 
 #### retrieval\_add\_attachment
 
@@ -903,8 +1016,10 @@ Updates the tool call.
 
 **Arguments**:
 
-- `tool_call_id` _str_ - The ID of the tool call.
-- `data` _Dict[str, Any]_ - The data to update the tool call with.
+| Name | Type | Description |
+|------|------|-------------|
+| `tool_call_id` | _str_ | The ID of the tool call. |
+| `data` | _Dict[str, Any]_ | The data to update the tool call with. |
 
 #### tool\_call\_result
 
@@ -916,8 +1031,10 @@ Sets the result for the tool call.
 
 **Arguments**:
 
-- `tool_call_id` _str_ - The ID of the tool call.
-- `result` _Any_ - The result for the tool call.
+| Name | Type | Description |
+|------|------|-------------|
+| `tool_call_id` | _str_ | The ID of the tool call. |
+| `result` | _Any_ | The result for the tool call. |
 
 #### tool\_call\_error
 
@@ -930,8 +1047,10 @@ Sets the error for the tool call.
 
 **Arguments**:
 
-- `tool_call_id` _str_ - The ID of the tool call.
-- `error` _[ToolCallError](/sdk/python/references/logger/components/tool_call)_ - The error for the tool call.
+| Name | Type | Description |
+|------|------|-------------|
+| `tool_call_id` | _str_ | The ID of the tool call. |
+| `error` | _[ToolCallError](/sdk/python/references/logger/components/tool_call)_ | The error for the tool call. |
 
 #### tool\_call\_add\_metadata
 
@@ -943,8 +1062,10 @@ Adds metadata to the tool call.
 
 **Arguments**:
 
-- `tool_call_id` _str_ - The ID of the tool call.
-- `metadata` _Dict[str, Any]_ - The metadata to add.
+| Name | Type | Description |
+|------|------|-------------|
+| `tool_call_id` | _str_ | The ID of the tool call. |
+| `metadata` | _Dict[str, Any]_ | The metadata to add. |
 
 #### id
 

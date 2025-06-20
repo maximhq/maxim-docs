@@ -1,5 +1,6 @@
 ---
 title: anthropic.Client
+description: Anthropic client implementation for API interactions and model integration.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/client.py)
@@ -18,8 +19,10 @@ and logging of Anthropic API interactions through the [Maxim](/sdk/python/refere
 
 **Attributes**:
 
-- `_client` _Anthropic_ - The underlying Anthropic client instance.
-- `_logger` _[Logger](/sdk/python/references/logger/logger)_ - The [Maxim](/sdk/python/references/maxim) logger instance for tracking interactions.
+| Name | Type | Description |
+|------|------|-------------|
+| `_client` | _Anthropic_ | The underlying Anthropic client instance. |
+| `_logger` | _[Logger](/sdk/python/references/logger/logger)_ | The [Maxim](/sdk/python/references/maxim) logger instance for tracking interactions. |
 
 #### \_\_init\_\_
 
@@ -31,8 +34,11 @@ Initialize the [Maxim](/sdk/python/references/maxim) Anthropic client.
 
 **Arguments**:
 
-- `client` _Anthropic_ - The Anthropic client instance to wrap.
-- `logger` _[Logger](/sdk/python/references/logger/logger)_ - The [Maxim](/sdk/python/references/maxim) logger instance for tracking and
+| Name | Type | Description |
+|------|------|-------------|
+| `client` | _Anthropic_ | The Anthropic client instance to wrap. |
+| `logger` | _[Logger](/sdk/python/references/logger/logger)_ | The [Maxim](/sdk/python/references/maxim) logger instance for tracking and |
+
   logging API interactions.
 
 #### messages
@@ -46,6 +52,9 @@ Get the messages interface with [Maxim](/sdk/python/references/maxim) logging ca
 
 **Returns**:
 
-- `[MaximAnthropicMessages](/sdk/python/references/logger/anthropic/message)` - A wrapped messages interface that provides
+| Name | Description |
+|------|-------------|
+| `[MaximAnthropicMessages](/sdk/python/references/logger/anthropic/message)` | A wrapped messages interface that provides |
+
   logging and monitoring capabilities for Anthropic message operations.
 

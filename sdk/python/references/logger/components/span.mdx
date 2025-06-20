@@ -1,5 +1,6 @@
 ---
 title: components.Span
+description: Span functionality for Components integration.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/span.py)
@@ -40,8 +41,9 @@ Convert a span config to a span config dict else return the config.
 
 **Arguments**:
 
-- `config` - The config to convert.
-  
+| Name | Description |
+|------|-------------|
+| `config` | The config to convert. |
 
 **Returns**:
 
@@ -67,8 +69,10 @@ Initialize a span.
 
 **Arguments**:
 
-- `config` - The config to initialize the span with.
-- `writer` - The writer to use.
+| Name | Description |
+|------|-------------|
+| `config` | The config to initialize the span with. |
+| `writer` | The writer to use. |
 
 #### span
 
@@ -80,7 +84,9 @@ Add a span to this span.
 
 **Arguments**:
 
-- `config` - The config to add the span to.
+| Name | Description |
+|------|-------------|
+| `config` | The config to add the span to. |
 
 #### input
 
@@ -92,7 +98,9 @@ Set the input for this span.
 
 **Arguments**:
 
-- `input` - The input to set for this span.
+| Name | Description |
+|------|-------------|
+| `input` | The input to set for this span. |
 
 #### input\_
 
@@ -105,9 +113,11 @@ Set the input for this span.
 
 **Arguments**:
 
-- `writer` - The writer to use.
-- `span_id` - The id of the span to set the input for.
-- `input` - The input to set for this span.
+| Name | Description |
+|------|-------------|
+| `writer` | The writer to use. |
+| `span_id` | The id of the span to set the input for. |
+| `input` | The input to set for this span. |
 
 #### add\_error
 
@@ -119,12 +129,15 @@ Add an error to this span.
 
 **Arguments**:
 
-- `config` - The config to add the error to.
-  
+| Name | Description |
+|------|-------------|
+| `config` | The config to add the error to. |
 
 **Returns**:
 
-- `[Error](/sdk/python/references/models/prompt)` - The error that was added.
+| Name | Description |
+|------|-------------|
+| `[Error](/sdk/python/references/models/prompt)` | The error that was added. |
 
 #### error\_
 
@@ -137,14 +150,17 @@ Add an error to this span.
 
 **Arguments**:
 
-- `writer` - The writer to use.
-- `span_id` - The id of the span to add the error to.
-- `config` - The config to add the error to.
-  
+| Name | Description |
+|------|-------------|
+| `writer` | The writer to use. |
+| `span_id` | The id of the span to add the error to. |
+| `config` | The config to add the error to. |
 
 **Returns**:
 
-- `[Error](/sdk/python/references/models/prompt)` - The error that was added.
+| Name | Description |
+|------|-------------|
+| `[Error](/sdk/python/references/models/prompt)` | The error that was added. |
 
 #### span\_
 
@@ -158,14 +174,17 @@ Add a span to this span.
 
 **Arguments**:
 
-- `writer` - The writer to use.
-- `span_id` - The id of the span to add the span to.
-- `config` - The config to add the span to.
-  
+| Name | Description |
+|------|-------------|
+| `writer` | The writer to use. |
+| `span_id` | The id of the span to add the span to. |
+| `config` | The config to add the span to. |
 
 **Returns**:
 
-- `[Span](/sdk/python/references/logger/components/span)` - The span that was added.
+| Name | Description |
+|------|-------------|
+| `[Span](/sdk/python/references/logger/components/span)` | The span that was added. |
 
 #### generation
 
@@ -178,12 +197,15 @@ Add a generation to this span.
 
 **Arguments**:
 
-- `config` - The config to add the generation to.
-  
+| Name | Description |
+|------|-------------|
+| `config` | The config to add the generation to. |
 
 **Returns**:
 
-- `[Generation](/sdk/python/references/logger/components/generation)` - The generation that was added.
+| Name | Description |
+|------|-------------|
+| `[Generation](/sdk/python/references/logger/components/generation)` | The generation that was added. |
 
 #### tool\_call
 
@@ -195,12 +217,15 @@ Add a tool call to this span.
 
 **Arguments**:
 
-- `config` - The config to add the tool call to.
-  
+| Name | Description |
+|------|-------------|
+| `config` | The config to add the tool call to. |
 
 **Returns**:
 
-- `[ToolCall](/sdk/python/references/models/prompt)` - The tool call that was added.
+| Name | Description |
+|------|-------------|
+| `[ToolCall](/sdk/python/references/models/prompt)` | The tool call that was added. |
 
 #### tool\_call\_
 
@@ -214,14 +239,17 @@ Add a tool call to this span.
 
 **Arguments**:
 
-- `writer` - The writer to use.
-- `span_id` - The id of the span to add the tool call to.
-- `config` - The config to add the tool call to.
-  
+| Name | Description |
+|------|-------------|
+| `writer` | The writer to use. |
+| `span_id` | The id of the span to add the tool call to. |
+| `config` | The config to add the tool call to. |
 
 **Returns**:
 
-- `[ToolCall](/sdk/python/references/models/prompt)` - The tool call that was added.
+| Name | Description |
+|------|-------------|
+| `[ToolCall](/sdk/python/references/models/prompt)` | The tool call that was added. |
 
 #### generation\_
 
@@ -236,14 +264,17 @@ Add a generation to this span.
 
 **Arguments**:
 
-- `writer` - The writer to use.
-- `span_id` - The id of the span to add the generation to.
-- `config` - The config to add the generation to.
-  
+| Name | Description |
+|------|-------------|
+| `writer` | The writer to use. |
+| `span_id` | The id of the span to add the generation to. |
+| `config` | The config to add the generation to. |
 
 **Returns**:
 
-- `[Generation](/sdk/python/references/logger/components/generation)` - The generation that was added.
+| Name | Description |
+|------|-------------|
+| `[Generation](/sdk/python/references/logger/components/generation)` | The generation that was added. |
 
 #### add\_attachment
 
@@ -256,7 +287,9 @@ Add an attachment to this span.
 
 **Arguments**:
 
-- `attachment` - The attachment to add.
+| Name | Description |
+|------|-------------|
+| `attachment` | The attachment to add. |
 
 #### add\_attachment\_
 
@@ -271,9 +304,11 @@ Static method to add an attachment to a span.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `span_id` - The ID of the span to add the attachment to.
-- `attachment` - The attachment to add.
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `span_id` | The ID of the span to add the attachment to. |
+| `attachment` | The attachment to add. |
 
 #### retrieval
 
@@ -285,12 +320,15 @@ Add a retrieval to this span.
 
 **Arguments**:
 
-- `config` - The config to add the retrieval to.
-  
+| Name | Description |
+|------|-------------|
+| `config` | The config to add the retrieval to. |
 
 **Returns**:
 
-- `[Retrieval](/sdk/python/references/logger/components/retrieval)` - The retrieval that was added.
+| Name | Description |
+|------|-------------|
+| `[Retrieval](/sdk/python/references/logger/components/retrieval)` | The retrieval that was added. |
 
 #### retrieval\_
 
@@ -304,14 +342,17 @@ Add a retrieval to this span.
 
 **Arguments**:
 
-- `writer` - The writer to use.
-- `span_id` - The id of the span to add the retrieval to.
-- `config` - The config to add the retrieval to.
-  
+| Name | Description |
+|------|-------------|
+| `writer` | The writer to use. |
+| `span_id` | The id of the span to add the retrieval to. |
+| `config` | The config to add the retrieval to. |
 
 **Returns**:
 
-- `[Retrieval](/sdk/python/references/logger/components/retrieval)` - The retrieval that was added.
+| Name | Description |
+|------|-------------|
+| `[Retrieval](/sdk/python/references/logger/components/retrieval)` | The retrieval that was added. |
 
 #### end\_
 
@@ -326,9 +367,11 @@ End this span.
 
 **Arguments**:
 
-- `writer` - The writer to use.
-- `span_id` - The id of the span to end.
-- `data` - The data to add to the span.
+| Name | Description |
+|------|-------------|
+| `writer` | The writer to use. |
+| `span_id` | The id of the span to end. |
+| `data` | The data to add to the span. |
 
 #### add\_tag\_
 
@@ -341,10 +384,12 @@ Add a tag to this span.
 
 **Arguments**:
 
-- `writer` - The writer to use.
-- `span_id` - The id of the span to add the tag to.
-- `key` - The key of the tag.
-- `value` - The value of the tag.
+| Name | Description |
+|------|-------------|
+| `writer` | The writer to use. |
+| `span_id` | The id of the span to add the tag to. |
+| `key` | The key of the tag. |
+| `value` | The value of the tag. |
 
 #### event\_
 
@@ -362,10 +407,11 @@ Add an event to this span.
 
 **Arguments**:
 
-- `writer` - The writer to use.
-- `span_id` - The id of the span to add the event to.
-- `id` - The id of the event.
-- `name` - The name of the event.
-- `tags` - The tags of the event.
-- `metadata` - The metadata of the event.
-
+| Name | Description |
+|------|-------------|
+| `writer` | The writer to use. |
+| `span_id` | The id of the span to add the event to. |
+| `id` | The id of the event. |
+| `name` | The name of the event. |
+| `tags` | The tags of the event. |
+| `metadata` | The metadata of the event. |

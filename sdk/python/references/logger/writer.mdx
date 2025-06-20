@@ -1,5 +1,6 @@
 ---
 title: Writer
+description: Writer utilities for logging and instrumentation utilities for tracking ai model interactions.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/writer.py)
@@ -19,13 +20,15 @@ Configuration class for the [LogWriter](/sdk/python/references/logger/writer).
 
 **Attributes**:
 
-- `base_url` - Base URL for the [Maxim](/sdk/python/references/maxim) API.
-- `api_key` - API key for authentication.
-- `repository_id` - ID of the repository to write logs to.
-- `auto_flush` - Whether to automatically flush logs periodically.
-- `flush_interval` - Time interval in seconds between automatic flushes.
-- `is_debug` - Whether to enable debug logging.
-- `raise_exceptions` - Whether to raise exceptions or handle them silently.
+| Name | Description |
+|------|-------------|
+| `base_url` | Base URL for the [Maxim](/sdk/python/references/maxim) API. |
+| `api_key` | API key for authentication. |
+| `repository_id` | ID of the repository to write logs to. |
+| `auto_flush` | Whether to automatically flush logs periodically. |
+| `flush_interval` | Time interval in seconds between automatic flushes. |
+| `is_debug` | Whether to enable debug logging. |
+| `raise_exceptions` | Whether to raise exceptions or handle them silently. |
 
 #### \_\_init\_\_
 
@@ -43,13 +46,15 @@ Initialize a [LogWriterConfig](/sdk/python/references/logger/writer) instance.
 
 **Arguments**:
 
-- `base_url` - Base URL for the [Maxim](/sdk/python/references/maxim) API.
-- `api_key` - API key for authentication.
-- `repository_id` - ID of the repository to write logs to.
-- `auto_flush` - Whether to automatically flush logs periodically.
-- `flush_interval` - Time interval in seconds between automatic flushes.
-- `is_debug` - Whether to enable debug logging.
-- `raise_exceptions` - Whether to raise exceptions or handle them silently.
+| Name | Description |
+|------|-------------|
+| `base_url` | Base URL for the [Maxim](/sdk/python/references/maxim) API. |
+| `api_key` | API key for authentication. |
+| `repository_id` | ID of the repository to write logs to. |
+| `auto_flush` | Whether to automatically flush logs periodically. |
+| `flush_interval` | Time interval in seconds between automatic flushes. |
+| `is_debug` | Whether to enable debug logging. |
+| `raise_exceptions` | Whether to raise exceptions or handle them silently. |
 
 ## [LogWriter](/sdk/python/references/logger/writer)
 
@@ -72,8 +77,9 @@ Initialize a [LogWriter](/sdk/python/references/logger/writer) instance.
 
 **Arguments**:
 
-- `config` - Configuration for the [LogWriter](/sdk/python/references/logger/writer).
-  
+| Name | Description |
+|------|-------------|
+| `config` | Configuration for the [LogWriter](/sdk/python/references/logger/writer). |
 
 **Raises**:
 
@@ -90,7 +96,9 @@ Get the repository ID.
 
 **Returns**:
 
-- `str` - The repository ID.
+| Name | Description |
+|------|-------------|
+| `str` | The repository ID. |
 
 #### upload\_file\_data
 
@@ -126,7 +134,9 @@ Upload an attachment to the [Maxim](/sdk/python/references/maxim) API.
 
 **Arguments**:
 
-- `attachment` - Attachment object to upload.
+| Name | Description |
+|------|-------------|
+| `attachment` | Attachment object to upload. |
 
 #### is\_running\_on\_lambda
 
@@ -138,7 +148,9 @@ Check if the code is running in an AWS Lambda environment.
 
 **Returns**:
 
-- `bool` - True if running in AWS Lambda, False otherwise.
+| Name | Description |
+|------|-------------|
+| `bool` | True if running in AWS Lambda, False otherwise. |
 
 #### write\_to\_file
 
@@ -150,8 +162,9 @@ Write logs to a local file.
 
 **Arguments**:
 
-- `logs` - List of [CommitLog](/sdk/python/references/logger/components/types) objects to write.
-  
+| Name | Description |
+|------|-------------|
+| `logs` | List of [CommitLog](/sdk/python/references/logger/components/types) objects to write. |
 
 **Returns**:
 
@@ -187,7 +200,9 @@ Check if the filesystem is accessible for writing.
 
 **Returns**:
 
-- `bool` - True if filesystem is accessible, False otherwise.
+| Name | Description |
+|------|-------------|
+| `bool` | True if filesystem is accessible, False otherwise. |
 
 #### flush\_logs
 
@@ -202,7 +217,9 @@ for handling failures based on the environment.
 
 **Arguments**:
 
-- `logs` - List of [CommitLog](/sdk/python/references/logger/components/types) objects to flush.
+| Name | Description |
+|------|-------------|
+| `logs` | List of [CommitLog](/sdk/python/references/logger/components/types) objects to flush. |
 
 #### commit
 
@@ -214,8 +231,9 @@ Add a log to the queue for later flushing.
 
 **Arguments**:
 
-- `log` - [CommitLog](/sdk/python/references/logger/components/types) object to add to the queue.
-  
+| Name | Description |
+|------|-------------|
+| `log` | [CommitLog](/sdk/python/references/logger/components/types) object to add to the queue. |
 
 **Raises**:
 

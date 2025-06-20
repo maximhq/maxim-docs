@@ -1,5 +1,6 @@
 ---
 title: decorators.Generation
+description: Generation utilities for decorators for automatic logging and instrumentation of functions and methods.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/decorators/generation.py)
@@ -14,7 +15,10 @@ Get the current generation from the context variable.
 
 **Returns**:
 
-- `Optional[[Generation](/sdk/python/references/logger/components/generation)]` - The current generation instance if one exists,
+| Name | Description |
+|------|-------------|
+| `Optional[[Generation](/sdk/python/references/logger/components/generation)]` | The current generation instance if one exists, |
+
   otherwise None.
 
 #### generation
@@ -37,7 +41,10 @@ The decorated function must be called within a @trace or @span decorated context
 
 **Arguments**:
 
-- `logger` _Optional[[Logger](/sdk/python/references/logger/logger)]_ - [Maxim](/sdk/python/references/maxim) logger instance. If None, uses the current
+| Name | Type | Description |
+|------|------|-------------|
+| `logger` | _Optional[[Logger](/sdk/python/references/logger/logger)]_ | [Maxim](/sdk/python/references/maxim) logger instance. If None, uses the current |
+
   logger from context.
 - `id` _Optional[Union[Callable, str]]_ - Generation ID. Can be a string or a
   callable that returns a string. If None, generates a UUID.
@@ -52,8 +59,9 @@ The decorated function must be called within a @trace or @span decorated context
 
 **Returns**:
 
-- `Callable` - The decorator function that wraps the target function.
-  
+| Name | Description |
+|------|-------------|
+| `Callable` | The decorator function that wraps the target function. |
 
 **Raises**:
 

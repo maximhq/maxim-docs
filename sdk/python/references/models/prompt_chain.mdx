@@ -1,5 +1,6 @@
 ---
 title: PromptChain
+description: Prompt_Chain utilities for data models and type definitions used throughout the maxim sdk.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/prompt_chain.py)
@@ -14,9 +15,11 @@ Type definition for agent execution costs.
 
 **Attributes**:
 
-- `input` - Cost for input tokens
-- `output` - Cost for output tokens
-- `total` - Total execution cost
+| Name | Description |
+|------|-------------|
+| `input` | Cost for input tokens |
+| `output` | Cost for output tokens |
+| `total` | Total execution cost |
 
 ## [AgentUsage](/sdk/python/references/models/prompt_chain)
 
@@ -28,9 +31,11 @@ Type definition for agent token usage statistics.
 
 **Attributes**:
 
-- `prompt_tokens` - Number of tokens used in the prompt
-- `completion_tokens` - Number of tokens used in the completion
-- `total_tokens` - Total number of tokens used
+| Name | Description |
+|------|-------------|
+| `prompt_tokens` | Number of tokens used in the prompt |
+| `completion_tokens` | Number of tokens used in the completion |
+| `total_tokens` | Total number of tokens used |
 
 ## [AgentResponseMeta](/sdk/python/references/models/prompt_chain)
 
@@ -42,10 +47,12 @@ Type definition for agent response metadata.
 
 **Attributes**:
 
-- `cost` - Cost breakdown for the response
-- `usage` - Token usage statistics
-- `bound_variable_responses` - Optional dictionary of bound variable values
-- `retrieved_context` - Optional retrieved context string
+| Name | Description |
+|------|-------------|
+| `cost` | Cost breakdown for the response |
+| `usage` | Token usage statistics |
+| `bound_variable_responses` | Optional dictionary of bound variable values |
+| `retrieved_context` | Optional retrieved context string |
 
 ## [AgentResponse](/sdk/python/references/models/prompt_chain)
 
@@ -61,8 +68,10 @@ metadata including cost, usage statistics, and contextual information.
 
 **Attributes**:
 
-- `response` - The actual response text from the agent
-- `meta` - [Metadata](/sdk/python/references/models/metadata) about the response including costs and usage
+| Name | Description |
+|------|-------------|
+| `response` | The actual response text from the agent |
+| `meta` | [Metadata](/sdk/python/references/models/metadata) about the response including costs and usage |
 
 #### from\_dict
 
@@ -75,12 +84,15 @@ Create an [AgentResponse](/sdk/python/references/models/prompt_chain) instance f
 
 **Arguments**:
 
-- `data` - Dictionary containing response and meta fields
-  
+| Name | Description |
+|------|-------------|
+| `data` | Dictionary containing response and meta fields |
 
 **Returns**:
 
-- `[AgentResponse](/sdk/python/references/models/prompt_chain)` - New instance created from the dictionary data
+| Name | Description |
+|------|-------------|
+| `[AgentResponse](/sdk/python/references/models/prompt_chain)` | New instance created from the dictionary data |
 
 ## [PromptNode](/sdk/python/references/models/prompt_chain)
 
@@ -96,7 +108,9 @@ that executes a prompt.
 
 **Attributes**:
 
-- `prompt` - The [Prompt](/sdk/python/references/models/prompt) object to be executed
+| Name | Description |
+|------|-------------|
+| `prompt` | The [Prompt](/sdk/python/references/models/prompt) object to be executed |
 
 ## [CodeBlockNode](/sdk/python/references/models/prompt_chain)
 
@@ -112,7 +126,9 @@ prompt chain workflow.
 
 **Attributes**:
 
-- `code` - The code string to be executed
+| Name | Description |
+|------|-------------|
+| `code` | The code string to be executed |
 
 ## [ApiParams](/sdk/python/references/models/prompt_chain)
 
@@ -125,9 +141,11 @@ Parameters for API node configuration.
 
 **Attributes**:
 
-- `id` - Unique identifier for the parameter
-- `key` - Parameter key name
-- `value` - Parameter value
+| Name | Description |
+|------|-------------|
+| `id` | Unique identifier for the parameter |
+| `key` | Parameter key name |
+| `value` | Parameter value |
 
 ## [ApiNode](/sdk/python/references/models/prompt_chain)
 
@@ -143,7 +161,9 @@ that makes an API call.
 
 **Attributes**:
 
-- `api` - Dictionary containing API configuration
+| Name | Description |
+|------|-------------|
+| `api` | Dictionary containing API configuration |
 
 ## [Node](/sdk/python/references/models/prompt_chain)
 
@@ -159,8 +179,10 @@ different types of content (prompt, code, or API configuration).
 
 **Attributes**:
 
-- `order` - Execution order of this node in the chain
-- `content` - The actual content ([PromptNode](/sdk/python/references/models/prompt_chain), [CodeBlockNode](/sdk/python/references/models/prompt_chain), or [ApiNode](/sdk/python/references/models/prompt_chain))
+| Name | Description |
+|------|-------------|
+| `order` | Execution order of this node in the chain |
+| `content` | The actual content ([PromptNode](/sdk/python/references/models/prompt_chain), [CodeBlockNode](/sdk/python/references/models/prompt_chain), or [ApiNode](/sdk/python/references/models/prompt_chain)) |
 
 #### from\_dict
 
@@ -173,12 +195,15 @@ Create a [Node](/sdk/python/references/models/prompt_chain) instance from a dict
 
 **Arguments**:
 
-- `data` - Dictionary containing order and content type fields
-  
+| Name | Description |
+|------|-------------|
+| `data` | Dictionary containing order and content type fields |
 
 **Returns**:
 
-- `[Node](/sdk/python/references/models/prompt_chain)` - New instance created from the dictionary data
+| Name | Description |
+|------|-------------|
+| `[Node](/sdk/python/references/models/prompt_chain)` | New instance created from the dictionary data |
 
 ## [PromptChain](/sdk/python/references/models/prompt_chain)
 
@@ -195,10 +220,12 @@ information for tracking changes over time.
 
 **Attributes**:
 
-- `prompt_chain_id` - Unique identifier for the prompt chain
-- `version` - Version number of this chain
-- `version_id` - Unique identifier for this specific version
-- `nodes` - List of nodes that make up the chain
+| Name | Description |
+|------|-------------|
+| `prompt_chain_id` | Unique identifier for the prompt chain |
+| `version` | Version number of this chain |
+| `version_id` | Unique identifier for this specific version |
+| `nodes` | List of nodes that make up the chain |
 
 #### from\_dict
 
@@ -211,12 +238,15 @@ Create a [PromptChain](/sdk/python/references/models/prompt_chain) instance from
 
 **Arguments**:
 
-- `data` - Dictionary containing prompt chain data
-  
+| Name | Description |
+|------|-------------|
+| `data` | Dictionary containing prompt chain data |
 
 **Returns**:
 
-- `[PromptChain](/sdk/python/references/models/prompt_chain)` - New instance created from the dictionary data
+| Name | Description |
+|------|-------------|
+| `[PromptChain](/sdk/python/references/models/prompt_chain)` | New instance created from the dictionary data |
 
 ## [PromptChainVersionConfig](/sdk/python/references/models/prompt_chain)
 
@@ -232,7 +262,9 @@ version of a prompt chain.
 
 **Attributes**:
 
-- `nodes` - List of nodes in this version configuration
+| Name | Description |
+|------|-------------|
+| `nodes` | List of nodes in this version configuration |
 
 #### from\_dict
 
@@ -245,12 +277,15 @@ Create a [PromptChainVersionConfig](/sdk/python/references/models/prompt_chain) 
 
 **Arguments**:
 
-- `data` - Dictionary containing version configuration data
-  
+| Name | Description |
+|------|-------------|
+| `data` | Dictionary containing version configuration data |
 
 **Returns**:
 
-- `[PromptChainVersionConfig](/sdk/python/references/models/prompt_chain)` - New instance created from the dictionary data
+| Name | Description |
+|------|-------------|
+| `[PromptChainVersionConfig](/sdk/python/references/models/prompt_chain)` | New instance created from the dictionary data |
 
 ## [PromptChainVersion](/sdk/python/references/models/prompt_chain)
 
@@ -266,13 +301,15 @@ its configuration, description, and timestamps.
 
 **Attributes**:
 
-- `id` - Unique identifier for this version
-- `version` - Version number
-- `promptChainId` - ID of the parent prompt chain
-- `description` - Optional description of this version
-- `config` - Optional configuration for this version
-- `createdAt` - Timestamp when this version was created
-- `updatedAt` - Timestamp when this version was last updated
+| Name | Description |
+|------|-------------|
+| `id` | Unique identifier for this version |
+| `version` | Version number |
+| `promptChainId` | ID of the parent prompt chain |
+| `description` | Optional description of this version |
+| `config` | Optional configuration for this version |
+| `createdAt` | Timestamp when this version was created |
+| `updatedAt` | Timestamp when this version was last updated |
 
 #### from\_dict
 
@@ -285,12 +322,15 @@ Create a [PromptChainVersion](/sdk/python/references/models/prompt_chain) instan
 
 **Arguments**:
 
-- `data` - Dictionary containing version data
-  
+| Name | Description |
+|------|-------------|
+| `data` | Dictionary containing version data |
 
 **Returns**:
 
-- `[PromptChainVersion](/sdk/python/references/models/prompt_chain)` - New instance created from the dictionary data
+| Name | Description |
+|------|-------------|
+| `[PromptChainVersion](/sdk/python/references/models/prompt_chain)` | New instance created from the dictionary data |
 
 ## [PromptChainRuleType](/sdk/python/references/models/prompt_chain)
 
@@ -306,11 +346,13 @@ of a prompt chain should be deployed based on various conditions.
 
 **Attributes**:
 
-- `field` - The field to evaluate in the rule
-- `value` - The value to compare against (can be various types including None)
-- `operator` - The comparison operator to use
-- `valueSource` - Optional source of the value
-- `exactMatch` - Optional flag for exact matching
+| Name | Description |
+|------|-------------|
+| `field` | The field to evaluate in the rule |
+| `value` | The value to compare against (can be various types including None) |
+| `operator` | The comparison operator to use |
+| `valueSource` | Optional source of the value |
+| `exactMatch` | Optional flag for exact matching |
 
 #### value
 
@@ -327,12 +369,15 @@ Create a [PromptChainRuleType](/sdk/python/references/models/prompt_chain) insta
 
 **Arguments**:
 
-- `obj` - Dictionary containing rule data
-  
+| Name | Description |
+|------|-------------|
+| `obj` | Dictionary containing rule data |
 
 **Returns**:
 
-- `[PromptChainRuleType](/sdk/python/references/models/prompt_chain)` - New instance created from the dictionary data
+| Name | Description |
+|------|-------------|
+| `[PromptChainRuleType](/sdk/python/references/models/prompt_chain)` | New instance created from the dictionary data |
 
 ## [PromptChainRuleGroupType](/sdk/python/references/models/prompt_chain)
 
@@ -348,8 +393,10 @@ Allows grouping multiple rules together with logical operators
 
 **Attributes**:
 
-- `rules` - List of rules or nested rule groups
-- `combinator` - Logical operator to combine rules ("and" or "or")
+| Name | Description |
+|------|-------------|
+| `rules` | List of rules or nested rule groups |
+| `combinator` | Logical operator to combine rules ("and" or "or") |
 
 #### from\_dict
 
@@ -362,12 +409,15 @@ Create a [PromptChainRuleGroupType](/sdk/python/references/models/prompt_chain) 
 
 **Arguments**:
 
-- `obj` - Dictionary containing rule group data
-  
+| Name | Description |
+|------|-------------|
+| `obj` | Dictionary containing rule group data |
 
 **Returns**:
 
-- `[PromptChainRuleGroupType](/sdk/python/references/models/prompt_chain)` - New instance created from the dictionary data
+| Name | Description |
+|------|-------------|
+| `[PromptChainRuleGroupType](/sdk/python/references/models/prompt_chain)` | New instance created from the dictionary data |
 
 ## [PromptChainDeploymentRules](/sdk/python/references/models/prompt_chain)
 
@@ -383,8 +433,10 @@ prompt chain should be deployed or used.
 
 **Attributes**:
 
-- `version` - The version number these rules apply to
-- `query` - Optional rule group that defines the deployment conditions
+| Name | Description |
+|------|-------------|
+| `version` | The version number these rules apply to |
+| `query` | Optional rule group that defines the deployment conditions |
 
 #### from\_dict
 
@@ -397,12 +449,15 @@ Create a [PromptChainDeploymentRules](/sdk/python/references/models/prompt_chain
 
 **Arguments**:
 
-- `obj` - Dictionary containing deployment rules data
-  
+| Name | Description |
+|------|-------------|
+| `obj` | Dictionary containing deployment rules data |
 
 **Returns**:
 
-- `[PromptChainDeploymentRules](/sdk/python/references/models/prompt_chain)` - New instance created from the dictionary data
+| Name | Description |
+|------|-------------|
+| `[PromptChainDeploymentRules](/sdk/python/references/models/prompt_chain)` | New instance created from the dictionary data |
 
 ## [VersionSpecificDeploymentConfig](/sdk/python/references/models/prompt)
 
@@ -418,10 +473,12 @@ and fallback information for a particular version.
 
 **Attributes**:
 
-- `id` - Unique identifier for this deployment configuration
-- `timestamp` - When this configuration was created
-- `rules` - The deployment rules for this configuration
-- `isFallback` - Whether this is a fallback configuration
+| Name | Description |
+|------|-------------|
+| `id` | Unique identifier for this deployment configuration |
+| `timestamp` | When this configuration was created |
+| `rules` | The deployment rules for this configuration |
+| `isFallback` | Whether this is a fallback configuration |
 
 #### from\_dict
 
@@ -434,12 +491,15 @@ Create a [VersionSpecificDeploymentConfig](/sdk/python/references/models/prompt)
 
 **Arguments**:
 
-- `obj` - Dictionary containing deployment configuration data
-  
+| Name | Description |
+|------|-------------|
+| `obj` | Dictionary containing deployment configuration data |
 
 **Returns**:
 
-- `[VersionSpecificDeploymentConfig](/sdk/python/references/models/prompt)` - New instance created from the dictionary data
+| Name | Description |
+|------|-------------|
+| `[VersionSpecificDeploymentConfig](/sdk/python/references/models/prompt)` | New instance created from the dictionary data |
 
 ## [PromptChainVersionsAndRules](/sdk/python/references/models/prompt_chain)
 
@@ -455,10 +515,12 @@ deployment rules and folder organization.
 
 **Attributes**:
 
-- `folderId` - ID of the folder containing this prompt chain
-- `rules` - Dictionary mapping rule IDs to lists of deployment configurations
-- `versions` - List of all available versions
-- `fallbackVersion` - Optional fallback version to use when rules don't match
+| Name | Description |
+|------|-------------|
+| `folderId` | ID of the folder containing this prompt chain |
+| `rules` | Dictionary mapping rule IDs to lists of deployment configurations |
+| `versions` | List of all available versions |
+| `fallbackVersion` | Optional fallback version to use when rules don't match |
 
 #### from\_dict
 
@@ -471,12 +533,15 @@ Create a [PromptChainVersionsAndRules](/sdk/python/references/models/prompt_chai
 
 **Arguments**:
 
-- `obj` - Dictionary containing versions and rules data
-  
+| Name | Description |
+|------|-------------|
+| `obj` | Dictionary containing versions and rules data |
 
 **Returns**:
 
-- `[PromptChainVersionsAndRules](/sdk/python/references/models/prompt_chain)` - New instance created from the dictionary data
+| Name | Description |
+|------|-------------|
+| `[PromptChainVersionsAndRules](/sdk/python/references/models/prompt_chain)` | New instance created from the dictionary data |
 
 ## [VersionAndRulesWithPromptChainId](/sdk/python/references/models/prompt_chain)
 
@@ -492,7 +557,10 @@ includes the prompt chain identifier for complete context.
 
 **Attributes**:
 
-- `promptChainId` - Unique identifier of the prompt chain
+| Name | Description |
+|------|-------------|
+| `promptChainId` | Unique identifier of the prompt chain |
+
   Inherits all attributes from [PromptChainVersionsAndRules](/sdk/python/references/models/prompt_chain)
 
 #### from\_dict
@@ -506,12 +574,15 @@ Create a [VersionAndRulesWithPromptChainId](/sdk/python/references/models/prompt
 
 **Arguments**:
 
-- `obj` - Dictionary containing versions, rules, and prompt chain ID data
-  
+| Name | Description |
+|------|-------------|
+| `obj` | Dictionary containing versions, rules, and prompt chain ID data |
 
 **Returns**:
 
-- `[VersionAndRulesWithPromptChainId](/sdk/python/references/models/prompt_chain)` - New instance created from the dictionary data
+| Name | Description |
+|------|-------------|
+| `[VersionAndRulesWithPromptChainId](/sdk/python/references/models/prompt_chain)` | New instance created from the dictionary data |
 
 ## [MaximApiPromptChainResponse](/sdk/python/references/models/prompt_chain)
 
@@ -527,8 +598,10 @@ about a single prompt chain, including error handling.
 
 **Attributes**:
 
-- `data` - The prompt chain versions and rules data
-- `error` - Optional error information if the API call failed
+| Name | Description |
+|------|-------------|
+| `data` | The prompt chain versions and rules data |
+| `error` | Optional error information if the API call failed |
 
 #### from\_dict
 
@@ -541,12 +614,15 @@ Create a [MaximApiPromptChainResponse](/sdk/python/references/models/prompt_chai
 
 **Arguments**:
 
-- `data` - Dictionary containing API response data
-  
+| Name | Description |
+|------|-------------|
+| `data` | Dictionary containing API response data |
 
 **Returns**:
 
-- `[MaximApiPromptChainResponse](/sdk/python/references/models/prompt_chain)` - New instance created from the dictionary data
+| Name | Description |
+|------|-------------|
+| `[MaximApiPromptChainResponse](/sdk/python/references/models/prompt_chain)` | New instance created from the dictionary data |
 
 ## [PromptChainWithId](/sdk/python/references/models/prompt_chain)
 
@@ -562,7 +638,10 @@ Contains all version and rule information along with the prompt chain identifier
 
 **Attributes**:
 
-- `promptChainId` - Unique identifier of the prompt chain
+| Name | Description |
+|------|-------------|
+| `promptChainId` | Unique identifier of the prompt chain |
+
   Inherits all attributes from [PromptChainVersionsAndRules](/sdk/python/references/models/prompt_chain)
 
 #### from\_dict
@@ -576,12 +655,15 @@ Create a [PromptChainWithId](/sdk/python/references/models/prompt_chain) instanc
 
 **Arguments**:
 
-- `obj` - Dictionary containing prompt chain data with ID
-  
+| Name | Description |
+|------|-------------|
+| `obj` | Dictionary containing prompt chain data with ID |
 
 **Returns**:
 
-- `[PromptChainWithId](/sdk/python/references/models/prompt_chain)` - New instance created from the dictionary data
+| Name | Description |
+|------|-------------|
+| `[PromptChainWithId](/sdk/python/references/models/prompt_chain)` | New instance created from the dictionary data |
 
 ## [VersionAndRulesWithPromptChainIdEncoder](/sdk/python/references/models/prompt_chain)
 
@@ -604,12 +686,15 @@ Convert [VersionAndRulesWithPromptChainId](/sdk/python/references/models/prompt_
 
 **Arguments**:
 
-- `o` - Object to encode
-  
+| Name | Description |
+|------|-------------|
+| `o` | Object to encode |
 
 **Returns**:
 
-- `dict` - Dictionary representation of the object, or calls parent default
+| Name | Description |
+|------|-------------|
+| `dict` | Dictionary representation of the object, or calls parent default |
 
 ## [MaximApiPromptChainsResponse](/sdk/python/references/models/prompt_chain)
 
@@ -625,8 +710,10 @@ about multiple prompt chains, including error handling.
 
 **Attributes**:
 
-- `data` - List of prompt chains with their versions and rules
-- `error` - Optional error information if the API call failed
+| Name | Description |
+|------|-------------|
+| `data` | List of prompt chains with their versions and rules |
+| `error` | Optional error information if the API call failed |
 
 #### from\_dict
 
@@ -639,10 +726,12 @@ Create a [MaximApiPromptChainsResponse](/sdk/python/references/models/prompt_cha
 
 **Arguments**:
 
-- `incoming_data` - Dictionary containing API response data for multiple chains
-  
+| Name | Description |
+|------|-------------|
+| `incoming_data` | Dictionary containing API response data for multiple chains |
 
 **Returns**:
 
-- `[MaximApiPromptChainsResponse](/sdk/python/references/models/prompt_chain)` - New instance created from the dictionary data
-
+| Name | Description |
+|------|-------------|
+| `[MaximApiPromptChainsResponse](/sdk/python/references/models/prompt_chain)` | New instance created from the dictionary data |

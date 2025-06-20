@@ -1,5 +1,6 @@
 ---
 title: Message
+description: Message utilities for anthropic ai model integration and logging utilities.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/anthropic/message.py)
@@ -21,7 +22,9 @@ while maintaining compatibility with the original Anthropic Messages API.
 
 **Attributes**:
 
-- `_logger` _[Logger](/sdk/python/references/logger/logger)_ - The [Maxim](/sdk/python/references/maxim) logger instance for tracking interactions.
+| Name | Type | Description |
+|------|------|-------------|
+| `_logger` | _[Logger](/sdk/python/references/logger/logger)_ | The [Maxim](/sdk/python/references/maxim) logger instance for tracking interactions. |
 
 #### \_\_init\_\_
 
@@ -33,8 +36,11 @@ Initialize the [Maxim](/sdk/python/references/maxim) Anthropic Messages client.
 
 **Arguments**:
 
-- `client` _Anthropic_ - The Anthropic client instance.
-- `logger` _[Logger](/sdk/python/references/logger/logger)_ - The [Maxim](/sdk/python/references/maxim) logger instance for tracking and
+| Name | Type | Description |
+|------|------|-------------|
+| `client` | _Anthropic_ | The Anthropic client instance. |
+| `logger` | _[Logger](/sdk/python/references/logger/logger)_ | The [Maxim](/sdk/python/references/maxim) logger instance for tracking and |
+
   logging message interactions.
 
 #### create\_non\_stream
@@ -51,8 +57,11 @@ generation tracking, and error handling.
 
 **Arguments**:
 
-- `*args` - [Variable](/sdk/python/references/models/dataset) length argument list passed to the parent create method.
-- `**kwargs` - Arbitrary keyword arguments passed to the parent create method.
+| Name | Description |
+|------|-------------|
+| `*args` | [Variable](/sdk/python/references/models/dataset) length argument list passed to the parent create method. |
+| `**kwargs` | Arbitrary keyword arguments passed to the parent create method. |
+
   Special headers:
   - x-maxim-trace-id: Optional trace ID for associating with existing trace.
   - x-maxim-generation-name: Optional name for the generation.
@@ -60,8 +69,9 @@ generation tracking, and error handling.
 
 **Returns**:
 
-- `Any` - The response from the Anthropic API create method.
-  
+| Name | Description |
+|------|-------------|
+| `Any` | The response from the Anthropic API create method. |
 
 **Notes**:
 
@@ -82,8 +92,11 @@ generation tracking, and processes streaming events.
 
 **Arguments**:
 
-- `*args` - [Variable](/sdk/python/references/models/dataset) length argument list passed to the parent stream method.
-- `**kwargs` - Arbitrary keyword arguments passed to the parent stream method.
+| Name | Description |
+|------|-------------|
+| `*args` | [Variable](/sdk/python/references/models/dataset) length argument list passed to the parent stream method. |
+| `**kwargs` | Arbitrary keyword arguments passed to the parent stream method. |
+
   Special headers:
   - x-maxim-trace-id: Optional trace ID for associating with existing trace.
   - x-maxim-generation-name: Optional name for the generation.
@@ -91,7 +104,10 @@ generation tracking, and processes streaming events.
 
 **Returns**:
 
-- `[StreamWrapper](/sdk/python/references/logger/anthropic/stream_manager)` - A wrapped stream manager that processes chunks and
+| Name | Description |
+|------|-------------|
+| `[StreamWrapper](/sdk/python/references/logger/anthropic/stream_manager)` | A wrapped stream manager that processes chunks and |
+
   handles logging of streaming events.
   
 
@@ -130,28 +146,30 @@ handler while ensuring all interactions are logged through [Maxim](/sdk/python/r
 
 **Arguments**:
 
-- `max_tokens` _int_ - The maximum number of tokens to generate.
-- `messages` _Iterable[MessageParam]_ - The conversation messages.
-- `model` _str_ - The model to use for generation.
-- `metadata` _MetadataParam | NotGiven_ - Additional metadata for the request.
-- `stop_sequences` _List[str] | NotGiven_ - Sequences that will stop generation.
-- `system` _Union[str, Iterable[TextBlockParam]] | NotGiven_ - System message.
-- `temperature` _float | NotGiven_ - Sampling temperature (0-1).
-- `tool_choice` _dict | NotGiven_ - How the model should use tools.
-- `tools` _Iterable[ToolParam] | NotGiven_ - Available tools for the model.
-- `top_k` _int | NotGiven_ - Top-k sampling parameter.
-- `top_p` _float | NotGiven_ - Top-p (nucleus) sampling parameter.
-- `extra_headers` _Headers | None_ - Additional HTTP headers.
-- `extra_query` _Query | None_ - Additional query parameters.
-- `extra_body` _Body | None_ - Additional request body data.
-- `timeout` _float | httpx.Timeout | None | NotGiven_ - Request timeout.
-- `**kwargs` - Additional arguments, including 'stream' for streaming mode.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `max_tokens` | _int_ | The maximum number of tokens to generate. |
+| `messages` | _Iterable[MessageParam]_ | The conversation messages. |
+| `model` | _str_ | The model to use for generation. |
+| `metadata` | _MetadataParam | NotGiven_ | Additional metadata for the request. |
+| `stop_sequences` | _List[str] | NotGiven_ | Sequences that will stop generation. |
+| `system` | _Union[str, Iterable[TextBlockParam]] | NotGiven_ | System message. |
+| `temperature` | _float | NotGiven_ | Sampling temperature (0-1). |
+| `tool_choice` | _dict | NotGiven_ | How the model should use tools. |
+| `tools` | _Iterable[ToolParam] | NotGiven_ | Available tools for the model. |
+| `top_k` | _int | NotGiven_ | Top-k sampling parameter. |
+| `top_p` | _float | NotGiven_ | Top-p (nucleus) sampling parameter. |
+| `extra_headers` | _Headers | None_ | Additional HTTP headers. |
+| `extra_query` | _Query | None_ | Additional query parameters. |
+| `extra_body` | _Body | None_ | Additional request body data. |
+| `timeout` | _float | httpx.Timeout | None | NotGiven_ | Request timeout. |
+| `**kwargs` |  | Additional arguments, including 'stream' for streaming mode. |
 
 **Returns**:
 
-- `Any` - Either a direct message response or a [StreamWrapper](/sdk/python/references/logger/anthropic/stream_manager) for streaming.
-  
+| Name | Description |
+|------|-------------|
+| `Any` | Either a direct message response or a [StreamWrapper](/sdk/python/references/logger/anthropic/stream_manager) for streaming. |
 
 **Notes**:
 
@@ -171,11 +189,13 @@ with the standard Anthropic Messages API while adding [Maxim](/sdk/python/refere
 
 **Arguments**:
 
-- `*args` - [Variable](/sdk/python/references/models/dataset) length argument list passed to create_stream.
-- `**kwargs` - Arbitrary keyword arguments passed to create_stream.
-  
+| Name | Description |
+|------|-------------|
+| `*args` | [Variable](/sdk/python/references/models/dataset) length argument list passed to create_stream. |
+| `**kwargs` | Arbitrary keyword arguments passed to create_stream. |
 
 **Returns**:
 
-- `[StreamWrapper](/sdk/python/references/logger/anthropic/stream_manager)` - A wrapped stream manager with logging capabilities.
-
+| Name | Description |
+|------|-------------|
+| `[StreamWrapper](/sdk/python/references/logger/anthropic/stream_manager)` | A wrapped stream manager with logging capabilities. |

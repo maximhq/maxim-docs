@@ -1,5 +1,6 @@
 ---
 title: Filter Objects
+description: Filter\_Objects module utilities and functionality.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/filter_objects.py)
@@ -14,9 +15,11 @@ Represents an incoming query with its components.
 
 **Attributes**:
 
-- `query` _str_ - The query string.
-- `operator` _str_ - The operator used in the query.
-- `exactMatch` _bool_ - Indicates whether the query requires an exact match.
+| Name | Type | Description |
+|------|------|-------------|
+| `query` | _str_ | The query string. |
+| `operator` | _str_ | The operator used in the query. |
+| `exactMatch` | _bool_ | Indicates whether the query requires an exact match. |
 
 #### \_\_init\_\_
 
@@ -28,9 +31,11 @@ Initialize an [IncomingQuery](/sdk/python/references/filter_objects) object.
 
 **Arguments**:
 
-- `query` _str_ - The query string.
-- `operator` _str_ - The operator used in the query.
-- `exactMatch` _bool_ - Indicates whether the query requires an exact match.
+| Name | Type | Description |
+|------|------|-------------|
+| `query` | _str_ | The query string. |
+| `operator` | _str_ | The operator used in the query. |
+| `exactMatch` | _bool_ | Indicates whether the query requires an exact match. |
 
 ## [QueryObject](/sdk/python/references/filter_objects)
 
@@ -42,8 +47,10 @@ Represents a query object with its components.
 
 **Attributes**:
 
-- `id` _str_ - The ID of the query object.
-- `query` _[RuleGroupType](/sdk/python/references/models/prompt)_ - The query object.
+| Name | Type | Description |
+|------|------|-------------|
+| `id` | _str_ | The ID of the query object. |
+| `query` | _[RuleGroupType](/sdk/python/references/models/prompt)_ | The query object. |
 
 #### parse\_incoming\_query
 
@@ -55,12 +62,15 @@ Parses an incoming query string into a list of [RuleType](/sdk/python/references
 
 **Arguments**:
 
-- `incomingQuery` _str_ - The incoming query string.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `incomingQuery` | _str_ | The incoming query string. |
 
 **Returns**:
 
-- `List[[RuleType](/sdk/python/references/models/prompt)]` - A list of RuleType objects.
+| Name | Description |
+|------|-------------|
+| `List[[RuleType](/sdk/python/references/models/prompt)]` | A list of RuleType objects. |
 
 #### evaluate\_rule\_group
 
@@ -73,13 +83,16 @@ Evaluates a rule group against incoming query rules.
 
 **Arguments**:
 
-- `ruleGroup` _[RuleGroupType](/sdk/python/references/models/prompt)_ - The rule group to evaluate.
-- `incomingQueryRules` _List[[RuleType](/sdk/python/references/models/prompt)]_ - The incoming query rules.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `ruleGroup` | _[RuleGroupType](/sdk/python/references/models/prompt)_ | The rule group to evaluate. |
+| `incomingQueryRules` | _List[[RuleType](/sdk/python/references/models/prompt)]_ | The incoming query rules. |
 
 **Returns**:
 
-- `bool` - True if the rule group matches, False otherwise.
+| Name | Description |
+|------|-------------|
+| `bool` | True if the rule group matches, False otherwise. |
 
 #### check\_operator\_match
 
@@ -92,13 +105,16 @@ Checks if the operator between two rules matches.
 
 **Arguments**:
 
-- `fieldRule` _[RuleType](/sdk/python/references/models/prompt)_ - The rule with the operator.
-- `fieldIncomingRule` _[RuleType](/sdk/python/references/models/prompt)_ - The incoming rule.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `fieldRule` | _[RuleType](/sdk/python/references/models/prompt)_ | The rule with the operator. |
+| `fieldIncomingRule` | _[RuleType](/sdk/python/references/models/prompt)_ | The incoming rule. |
 
 **Returns**:
 
-- `bool` - True if the operator matches, False otherwise.
+| Name | Description |
+|------|-------------|
+| `bool` | True if the operator matches, False otherwise. |
 
 #### condition\_met
 
@@ -110,13 +126,16 @@ Checks if the condition between two rules is met.
 
 **Arguments**:
 
-- `fieldRule` _[RuleType](/sdk/python/references/models/prompt)_ - The rule with the condition.
-- `fieldIncomingRule` _[RuleType](/sdk/python/references/models/prompt)_ - The incoming rule.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `fieldRule` | _[RuleType](/sdk/python/references/models/prompt)_ | The rule with the condition. |
+| `fieldIncomingRule` | _[RuleType](/sdk/python/references/models/prompt)_ | The incoming rule. |
 
 **Returns**:
 
-- `bool` - True if the condition is met, False otherwise.
+| Name | Description |
+|------|-------------|
+| `bool` | True if the condition is met, False otherwise. |
 
 #### find\_best\_match
 
@@ -129,13 +148,16 @@ Finds the best match for the incoming query among the list of objects.
 
 **Arguments**:
 
-- `objects` _List[[QueryObject](/sdk/python/references/filter_objects)]_ - The list of objects to search through.
-- `incomingQuery` _[IncomingQuery](/sdk/python/references/filter_objects)_ - The incoming query to match against.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `objects` | _List[[QueryObject](/sdk/python/references/filter_objects)]_ | The list of objects to search through. |
+| `incomingQuery` | _[IncomingQuery](/sdk/python/references/filter_objects)_ | The incoming query to match against. |
 
 **Returns**:
 
-- `Optional[[QueryObject](/sdk/python/references/filter_objects)]` - The best match for the incoming query, or None if no match is found.
+| Name | Description |
+|------|-------------|
+| `Optional[[QueryObject](/sdk/python/references/filter_objects)]` | The best match for the incoming query, or None if no match is found. |
 
 #### find\_all\_matches
 
@@ -148,11 +170,13 @@ Finds all matches for the incoming query among the list of objects.
 
 **Arguments**:
 
-- `objects` _List[[QueryObject](/sdk/python/references/filter_objects)]_ - The list of objects to search through.
-- `incoming_query` _[IncomingQuery](/sdk/python/references/filter_objects)_ - The incoming query to match against.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `objects` | _List[[QueryObject](/sdk/python/references/filter_objects)]_ | The list of objects to search through. |
+| `incoming_query` | _[IncomingQuery](/sdk/python/references/filter_objects)_ | The incoming query to match against. |
 
 **Returns**:
 
-- `List[[QueryObject](/sdk/python/references/filter_objects)]` - A list of all matches for the incoming query.
-
+| Name | Description |
+|------|-------------|
+| `List[[QueryObject](/sdk/python/references/filter_objects)]` | A list of all matches for the incoming query. |

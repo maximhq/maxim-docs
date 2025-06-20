@@ -1,5 +1,6 @@
 ---
 title: decorators.Span
+description: Span utilities for decorators for automatic logging and instrumentation of functions and methods.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/decorators/span.py)
@@ -64,17 +65,19 @@ It creates a new span and injects a tracer object into the decorated function.
 
 **Arguments**:
 
-- `logger` _[Logger](/sdk/python/references/logger/logger)_ - The [Logger](/sdk/python/references/logger/logger) instance to use for logging.
-- `id` _Optional[str] or Optional[Callable], optional_ - The ID for the span. If callable, it will be called to generate the ID. Defaults to None.
-- `trace_id` _Optional[str] or Optional[Callable], optional_ - The trace ID to associate with this span. If callable, it will be called to generate the trace ID. Defaults to current_trace.
-- `name` _Optional[str], optional_ - The name of the span. Defaults to None.
-- `tags` _Optional[dict], optional_ - Additional tags to associate with the span. Defaults to None.
-  
+| Name | Type | Description |
+|------|------|-------------|
+| `logger` | _[Logger](/sdk/python/references/logger/logger)_ | The [Logger](/sdk/python/references/logger/logger) instance to use for logging. |
+| `id` | _Optional[str] or Optional[Callable], optional_ | The ID for the span. If callable, it will be called to generate the ID. Defaults to None. |
+| `trace_id` | _Optional[str] or Optional[Callable], optional_ | The trace ID to associate with this span. If callable, it will be called to generate the trace ID. Defaults to current_trace. |
+| `name` | _Optional[str], optional_ | The name of the span. Defaults to None. |
+| `tags` | _Optional[dict], optional_ | Additional tags to associate with the span. Defaults to None. |
 
 **Returns**:
 
-- `Callable` - A decorator function that wraps the original function with span functionality.
-  
+| Name | Description |
+|------|-------------|
+| `Callable` | A decorator function that wraps the original function with span functionality. |
 
 **Raises**:
 

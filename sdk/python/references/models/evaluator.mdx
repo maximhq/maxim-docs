@@ -1,5 +1,6 @@
 ---
 title: Evaluator
+description: Evaluator utilities for data models and type definitions used throughout the maxim sdk.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/evaluator.py)
@@ -32,8 +33,10 @@ This class represents the return value of a local evaluator.
 
 **Arguments**:
 
-- `score` - The score of the evaluator.
-- `reasoning` - The reasoning of the evaluator.
+| Name | Description |
+|------|-------------|
+| `score` | The score of the evaluator. |
+| `reasoning` | The reasoning of the evaluator. |
 
 ## [PassFailCriteriaOnEachEntry](/sdk/python/references/models/evaluator)
 
@@ -55,8 +58,10 @@ This class represents the pass fail criteria on each entry.
 
 **Arguments**:
 
-- `score_should_be` - The score should be.
-- `value` - The value of the pass fail criteria.
+| Name | Description |
+|------|-------------|
+| `score_should_be` | The score should be. |
+| `value` | The value of the pass fail criteria. |
 
 ## [PassFailCriteriaForTestrunOverall](/sdk/python/references/models/evaluator)
 
@@ -78,9 +83,11 @@ This class represents the pass fail criteria for the overall testrun.
 
 **Arguments**:
 
-- `overall_should_be` - The overall should be.
-- `value` - The value of the pass fail criteria.
-- `for_result` - The for result.
+| Name | Description |
+|------|-------------|
+| `overall_should_be` | The overall should be. |
+| `value` | The value of the pass fail criteria. |
+| `for_result` | The for result. |
 
 ## [PassFailCriteria](/sdk/python/references/models/evaluator)
 
@@ -102,8 +109,10 @@ This class represents the pass fail criteria.
 
 **Arguments**:
 
-- `on_each_entry_pass_if` - The pass fail criteria on each entry.
-- `for_testrun_overall_pass_if` - The pass fail criteria for the overall testrun.
+| Name | Description |
+|------|-------------|
+| `on_each_entry_pass_if` | The pass fail criteria on each entry. |
+| `for_testrun_overall_pass_if` | The pass fail criteria for the overall testrun. |
 
 ## [LocalEvaluatorResultParameter](/sdk/python/references/models/evaluator)
 
@@ -125,8 +134,10 @@ This class represents the result parameter of a local evaluator.
 
 **Arguments**:
 
-- `output` - The output of the local evaluator.
-- `context_to_evaluate` - The context to evaluate.
+| Name | Description |
+|------|-------------|
+| `output` | The output of the local evaluator. |
+| `context_to_evaluate` | The context to evaluate. |
 
 ## [LocalEvaluationResult](/sdk/python/references/models/evaluator)
 
@@ -148,9 +159,11 @@ This class represents the result of a local evaluation.
 
 **Arguments**:
 
-- `result` - The result of the local evaluation.
-- `name` - The name of the local evaluation.
-- `pass_fail_criteria` - The pass fail criteria of the local evaluation.
+| Name | Description |
+|------|-------------|
+| `result` | The result of the local evaluation. |
+| `name` | The name of the local evaluation. |
+| `pass_fail_criteria` | The pass fail criteria of the local evaluation. |
 
 ## [LocalEvaluationResultWithId](/sdk/python/references/models/evaluator)
 
@@ -172,8 +185,9 @@ This class represents the result of a local evaluation with an id.
 
 **Arguments**:
 
-- `result` - The result of the local evaluation.
-- `name` - The name of the local evaluation.
-- `pass_fail_criteria` - The pass fail criteria of the local evaluation.
-- `id` - The id of the local evaluation.
-
+| Name | Description |
+|------|-------------|
+| `result` | The result of the local evaluation. |
+| `name` | The name of the local evaluation. |
+| `pass_fail_criteria` | The pass fail criteria of the local evaluation. |
+| `id` | The id of the local evaluation. |

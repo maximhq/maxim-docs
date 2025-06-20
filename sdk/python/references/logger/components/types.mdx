@@ -1,5 +1,6 @@
 ---
 title: Types
+description: Types functionality for Components integration.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/types.py)
@@ -47,10 +48,12 @@ Initialize a commit log.
 
 **Arguments**:
 
-- `entity` - The entity of the commit log.
-- `entity_id` - The id of the entity.
-- `action` - The action of the commit log.
-- `data` - The data of the commit log.
+| Name | Description |
+|------|-------------|
+| `entity` | The entity of the commit log. |
+| `entity_id` | The id of the entity. |
+| `action` | The action of the commit log. |
+| `data` | The data of the commit log. |
 
 #### serialize
 
@@ -62,12 +65,15 @@ Serialize the commit log.
 
 **Arguments**:
 
-- `custom_data` - The custom data to serialize.
-  
+| Name | Description |
+|------|-------------|
+| `custom_data` | The custom data to serialize. |
 
 **Returns**:
 
-- `str` - The serialized commit log.
+| Name | Description |
+|------|-------------|
+| `str` | The serialized commit log. |
 
 #### object\_to\_dict
 
@@ -79,8 +85,9 @@ Convert a complex object structure to a dictionary, handling nested custom objec
 
 **Arguments**:
 
-- `obj` - Any Python object to convert
-  
+| Name | Description |
+|------|-------------|
+| `obj` | Any Python object to convert |
 
 **Returns**:
 

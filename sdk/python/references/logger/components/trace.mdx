@@ -1,5 +1,6 @@
 ---
 title: components.Trace
+description: Trace functionality for Components integration.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/logger/components/trace.py)
@@ -40,8 +41,9 @@ Convert a [TraceConfig](/sdk/python/references/logger/components/trace) object t
 
 **Arguments**:
 
-- `config` - Either a [TraceConfig](/sdk/python/references/logger/components/trace) object or a [TraceConfigDict](/sdk/python/references/logger/components/trace) dictionary.
-  
+| Name | Description |
+|------|-------------|
+| `config` | Either a [TraceConfig](/sdk/python/references/logger/components/trace) object or a [TraceConfigDict](/sdk/python/references/logger/components/trace) dictionary. |
 
 **Returns**:
 
@@ -67,8 +69,10 @@ Initialize a new [Trace](/sdk/python/references/logger/components/trace) instanc
 
 **Arguments**:
 
-- `config` - Configuration for the trace, either as a [TraceConfig](/sdk/python/references/logger/components/trace) object or a [TraceConfigDict](/sdk/python/references/logger/components/trace).
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use for writing log entries.
+| Name | Description |
+|------|-------------|
+| `config` | Configuration for the trace, either as a [TraceConfig](/sdk/python/references/logger/components/trace) object or a [TraceConfigDict](/sdk/python/references/logger/components/trace). |
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use for writing log entries. |
 
 #### set\_input
 
@@ -80,7 +84,9 @@ Set the input for this trace.
 
 **Arguments**:
 
-- `input` - The input string to set.
+| Name | Description |
+|------|-------------|
+| `input` | The input string to set. |
 
 #### set\_input\_
 
@@ -93,9 +99,11 @@ Static method to set the input for a trace.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `trace_id` - The ID of the trace to update.
-- `input` - The input string to set.
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `trace_id` | The ID of the trace to update. |
+| `input` | The input string to set. |
 
 #### set\_output
 
@@ -107,7 +115,9 @@ Set the output for this trace.
 
 **Arguments**:
 
-- `output` - The output string to set.
+| Name | Description |
+|------|-------------|
+| `output` | The output string to set. |
 
 #### set\_output\_
 
@@ -120,9 +130,11 @@ Static method to set the output for a trace.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `trace_id` - The ID of the trace to update.
-- `output` - The output string to set.
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `trace_id` | The ID of the trace to update. |
+| `output` | The output string to set. |
 
 #### generation
 
@@ -135,8 +147,9 @@ Add a generation to this trace.
 
 **Arguments**:
 
-- `config` - Configuration for the generation.
-  
+| Name | Description |
+|------|-------------|
+| `config` | Configuration for the generation. |
 
 **Returns**:
 
@@ -152,8 +165,9 @@ Add a tool call to this trace.
 
 **Arguments**:
 
-- `config` - Configuration for the tool call.
-  
+| Name | Description |
+|------|-------------|
+| `config` | Configuration for the tool call. |
 
 **Returns**:
 
@@ -171,10 +185,11 @@ Static method to add a tool call to a trace.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `trace_id` - The ID of the trace to add the tool call to.
-- `config` - Configuration for the tool call.
-  
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `trace_id` | The ID of the trace to add the tool call to. |
+| `config` | Configuration for the tool call. |
 
 **Returns**:
 
@@ -193,10 +208,11 @@ Static method to add a generation to a trace.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `trace_id` - The ID of the trace to add the generation to.
-- `config` - Configuration for the generation.
-  
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `trace_id` | The ID of the trace to add the generation to. |
+| `config` | Configuration for the generation. |
 
 **Returns**:
 
@@ -212,8 +228,9 @@ Add an error to this trace.
 
 **Arguments**:
 
-- `config` - Configuration for the error.
-  
+| Name | Description |
+|------|-------------|
+| `config` | Configuration for the error. |
 
 **Returns**:
 
@@ -230,10 +247,11 @@ Static method to add an error to a trace.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `trace_id` - The ID of the trace to add the error to.
-- `config` - Configuration for the error.
-  
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `trace_id` | The ID of the trace to add the error to. |
+| `config` | Configuration for the error. |
 
 **Returns**:
 
@@ -249,8 +267,9 @@ Add a retrieval to this trace.
 
 **Arguments**:
 
-- `config` - Configuration for the retrieval.
-  
+| Name | Description |
+|------|-------------|
+| `config` | Configuration for the retrieval. |
 
 **Returns**:
 
@@ -268,10 +287,11 @@ Static method to add a retrieval to a trace.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `trace_id` - The ID of the trace to add the retrieval to.
-- `config` - Configuration for the retrieval.
-  
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `trace_id` | The ID of the trace to add the retrieval to. |
+| `config` | Configuration for the retrieval. |
 
 **Returns**:
 
@@ -287,8 +307,9 @@ Add a span to this trace.
 
 **Arguments**:
 
-- `config` - Configuration for the span.
-  
+| Name | Description |
+|------|-------------|
+| `config` | Configuration for the span. |
 
 **Returns**:
 
@@ -306,10 +327,11 @@ Static method to add a span to a trace.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `trace_id` - The ID of the trace to add the span to.
-- `config` - Configuration for the span.
-  
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `trace_id` | The ID of the trace to add the span to. |
+| `config` | Configuration for the span. |
 
 **Returns**:
 
@@ -325,7 +347,9 @@ Add feedback to this trace.
 
 **Arguments**:
 
-- `feedback` - The feedback to add.
+| Name | Description |
+|------|-------------|
+| `feedback` | The feedback to add. |
 
 #### feedback\_
 
@@ -339,9 +363,11 @@ Static method to add feedback to a trace.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `trace_id` - The ID of the trace to add the feedback to.
-- `feedback` - The feedback to add.
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `trace_id` | The ID of the trace to add the feedback to. |
+| `feedback` | The feedback to add. |
 
 #### add\_tag\_
 
@@ -354,10 +380,12 @@ Static method to add a tag to a trace.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `id` - The ID of the trace to add the tag to.
-- `key` - The tag key.
-- `value` - The tag value.
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `id` | The ID of the trace to add the tag to. |
+| `key` | The tag key. |
+| `value` | The tag value. |
 
 #### add\_attachment
 
@@ -370,7 +398,9 @@ Add an attachment to this trace.
 
 **Arguments**:
 
-- `attachment` - The attachment to add.
+| Name | Description |
+|------|-------------|
+| `attachment` | The attachment to add. |
 
 #### add\_attachment\_
 
@@ -385,9 +415,11 @@ Static method to add an attachment to a trace.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `trace_id` - The ID of the trace to add the attachment to.
-- `attachment` - The attachment to add.
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `trace_id` | The ID of the trace to add the attachment to. |
+| `attachment` | The attachment to add. |
 
 #### end\_
 
@@ -402,10 +434,11 @@ Static method to end a trace.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `trace_id` - The ID of the trace to end.
-- `data` - Additional data to include in the end event.
-  
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `trace_id` | The ID of the trace to end. |
+| `data` | Additional data to include in the end event. |
 
 **Returns**:
 
@@ -427,13 +460,14 @@ Static method to add a custom event to a trace.
 
 **Arguments**:
 
-- `writer` - The [LogWriter](/sdk/python/references/logger/writer) instance to use.
-- `trace_id` - The ID of the trace to add the event to.
-- `id` - The ID of the event.
-- `event` - The name of the event.
-- `tags` - Optional tags to associate with the event.
-- `metadata` - Optional metadata to include with the event.
-  
+| Name | Description |
+|------|-------------|
+| `writer` | The [LogWriter](/sdk/python/references/logger/writer) instance to use. |
+| `trace_id` | The ID of the trace to add the event to. |
+| `id` | The ID of the event. |
+| `event` | The name of the event. |
+| `tags` | Optional tags to associate with the event. |
+| `metadata` | Optional metadata to include with the event. |
 
 **Returns**:
 

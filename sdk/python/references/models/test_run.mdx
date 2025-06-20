@@ -1,5 +1,6 @@
 ---
 title: TestRun
+description: Test_Run utilities for data models and type definitions used throughout the maxim sdk.
 ---
 
 [View module source on GitHub](https://github.com/maximhq/maxim-py/blob/main/maxim/models/test_run.py)
@@ -174,7 +175,9 @@ Log an informational message.
 
 **Arguments**:
 
-- `message` _str_ - The message to be logged.
+| Name | Type | Description |
+|------|------|-------------|
+| `message` | _str_ | The message to be logged. |
 
 #### error
 
@@ -187,7 +190,9 @@ Log an error message.
 
 **Arguments**:
 
-- `message` _str_ - The error message to be logged.
+| Name | Type | Description |
+|------|------|-------------|
+| `message` | _str_ | The error message to be logged. |
 
 ## [TestRunConfig](/sdk/python/references/models/test_run)
 
@@ -200,15 +205,16 @@ Configuration for a test run.
 
 **Attributes**:
 
-- `base_url` _str_ - The base URL for the API.
-- `api_key` _str_ - The API key for authentication.
-- `in_workspace_id` _str_ - The ID of the workspace.
-- `workflow_id` _Optional[str]_ - The ID of the workflow.
-- `prompt_version_id` _Optional[str]_ - The ID of the prompt version.
-- `prompt_chain_version_id` _Optional[str]_ - The ID of the prompt chain version.
-- `name` _str_ - The name of the test run.
-- `data_structure` _Optional[T]_ - The structure of the test data.
-- `data` _Optional[Union[str, DataValue[T], Callable[[int], Optional[DataValue[T]]]]]_ - The test data or a function to retrieve it.
-- `test_config_id` _Optional[str]_ - The ID of the test configuration.
-- `platform_evaluators` _List[PlatformEvaluatorType[T]]_ - List of platform evaluators to use.
-
+| Name | Type | Description |
+|------|------|-------------|
+| `base_url` | _str_ | The base URL for the API. |
+| `api_key` | _str_ | The API key for authentication. |
+| `in_workspace_id` | _str_ | The ID of the workspace. |
+| `workflow_id` | _Optional[str]_ | The ID of the workflow. |
+| `prompt_version_id` | _Optional[str]_ | The ID of the prompt version. |
+| `prompt_chain_version_id` | _Optional[str]_ | The ID of the prompt chain version. |
+| `name` | _str_ | The name of the test run. |
+| `data_structure` | _Optional[T]_ | The structure of the test data. |
+| `data` | _Optional[Union[str, DataValue[T], Callable[[int], Optional[DataValue[T]]]]]_ | The test data or a function to retrieve it. |
+| `test_config_id` | _Optional[str]_ | The ID of the test configuration. |
+| `platform_evaluators` | _List[PlatformEvaluatorType[T]]_ | List of platform evaluators to use. |
