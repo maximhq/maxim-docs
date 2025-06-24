@@ -1,0 +1,88 @@
+---
+title: OpenTelemetry OTLP Ingest
+description: Learn how to send OpenTelemetry (OTLP) traces to Maxim for AI and LLM Observability.
+---
+
+## Overview
+
+OpenTelemetry Protocol (OTLP) is a vendor-neutral, industry-standard telemetry format for transmitting trace data. Maxim supports OTLP ingest for AI Observability and LLM Observability, enabling deep insights into your AI systems.
+
+## Before you begin
+
+- A Maxim account and Log Repository.
+- Your Log Repository ID (header `x-maxim-repo-id`).
+- Familiarity with OpenTelemetry Semantic Conventions for Generative AI: [Generative AI Semantic Conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/).
+
+<Note>
+Ensure you have created a Log Repository in Maxim and have your Log Repository ID ready. You can find it in the Maxim Dashboard under **Logs > Repositories**.
+</Note>
+
+## Endpoint & Protocol Configuration
+
+**Endpoint:** `https://api.getmaxim.ai/v1/otel`
+
+**Supported Protocols:** HTTP with OTLP binary Protobuf or JSON.
+
+| Protocol                 | Content-Type                       |
+| ------------------------ | ---------------------------------- |
+| HTTP + Protobuf (binary) | application/x-protobuf or application/protobuf |
+| HTTP + JSON              | application/json                   |
+
+**Transport Security:**
+- HTTPS/TLS is required.
+
+## Authentication Headers
+
+Maxim's OTLP endpoint requires the following headers:
+
+- `x-maxim-repo-id`: Your Maxim Log Repository ID.
+- `x-maxim-api-key`: Your Maxim API Key.
+- `Content-Type`: `application/json`, `application/x-protobuf`, or `application/protobuf`.
+
+
+## Supported Trace Format
+
+Maxim currently supports traces that follow the OpenTelemetry Semantic Conventions for Generative AI ([spec](https://opentelemetry.io/docs/specs/semconv/gen-ai/)).
+
+## Best Practices
+
+- Use binary Protobuf (`application/x-protobuf`) for performance and robustness.
+- Batch traces to reduce network overhead.
+- Include rich attributes following GenAI semantic conventions.
+- Secure your headers and avoid exposing credentials.
+- Monitor attribute size limits and apply quotas.
+
+## Error Codes and Responses
+
+| HTTP Status | Condition                                                            | Description                                                         |
+| ----------- | -------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| 200         | Success                                                              | `{ "data": { "success": true } }`                                   |
+| 403         | Missing or invalid headers - `x-maxim-repo-id` or `x-maxim-api-key`  | `{ "code": 403, "message": "Invalid access error" }`                |
+
+## Code Examples
+
+### Python Example
+
+```python
+from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
+from opentelemetry.sdk.trace.export import SimpleSpanProcessor
+from opentelemetry.sdk import trace as trace_sdk
+from opentelemetry import trace as trace_api
+
+maxim_api_key = ""
+repo_id = ""
+
+tracer_provider = trace_sdk.TracerProvider()
+span_exporter = OTLPSpanExporter(
+    endpoint="https://api.getmaxim.ai/v1/otel",
+    headers={
+        "x-maxim-api-key": f"{maxim_api_key}",
+        "x-maxim-repo-id": f"{repo_id}",
+    },
+)
+
+# Register the exporter
+tracer_provider.add_span_processor(SimpleSpanProcessor(span_exporter))
+# Make it the global provider
+trace_api.set_tracer_provider(tracer_provider)
+```

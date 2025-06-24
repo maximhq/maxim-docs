@@ -18,10 +18,7 @@
                 "groups": [
                     {
                         "group": "Introduction",
-                        "pages": [
-                            "introduction/overview",
-                            "introduction/running-your-first-eval"
-                        ]
+                        "pages": ["introduction/overview", "introduction/running-your-first-eval"]
                     },
                     {
                         "group": "Offline Evals",
@@ -137,9 +134,7 @@
                             },
                             {
                                 "group": "Via SDK",
-                                "pages": [
-                                    "online-evals/via-sdk/node-level-evaluation"
-                                ]
+                                "pages": ["online-evals/via-sdk/node-level-evaluation"]
                             },
                             "online-evals/set-up-alerts-and-notifications"
                         ]
@@ -168,16 +163,14 @@
                             },
                             "tracing/dashboard",
                             "tracing/otel-compatibility",
+                            "tracing/opentelemetry-otlp",
                             "tracing/exports",
                             "tracing/reporting"
                         ]
                     },
                     {
                         "group": "Simulations",
-                        "pages": [
-                            "simulations/overview",
-                            "simulations/simulation-runs"
-                        ]
+                        "pages": ["simulations/overview", "simulations/simulation-runs"]
                     },
                     {
                         "group": "Library",
@@ -239,9 +232,7 @@
                 "groups": [
                     {
                         "group": "Overview",
-                        "pages": [
-                            "sdk/overview"
-                        ]
+                        "pages": ["sdk/overview"]
                     },
                     {
                         "group": "Python",
@@ -252,21 +243,15 @@
                                 "pages": [
                                     {
                                         "group": "Anthropic",
-                                        "pages": [
-                                            "sdk/python/integrations/anthropic/anthropic"
-                                        ]
+                                        "pages": ["sdk/python/integrations/anthropic/anthropic"]
                                     },
                                     {
                                         "group": "CrewAI",
-                                        "pages": [
-                                            "sdk/python/integrations/crewai/crewai"
-                                        ]
+                                        "pages": ["sdk/python/integrations/crewai/crewai"]
                                     },
                                     {
                                         "group": "Gemini",
-                                        "pages": [
-                                            "sdk/python/integrations/gemini/gemini"
-                                        ]
+                                        "pages": ["sdk/python/integrations/gemini/gemini"]
                                     },
                                     {
                                         "group": "OpenAI",
@@ -284,27 +269,19 @@
                                     },
                                     {
                                         "group": "LangChain",
-                                        "pages": [
-                                            "sdk/python/integrations/langchain/langchain"
-                                        ]
+                                        "pages": ["sdk/python/integrations/langchain/langchain"]
                                     },
                                     {
                                         "group": "LangGraph",
-                                        "pages": [
-                                            "sdk/python/integrations/langgraph/langgraph"
-                                        ]
+                                        "pages": ["sdk/python/integrations/langgraph/langgraph"]
                                     },
                                     {
                                         "group": "Mistral",
-                                        "pages": [
-                                            "sdk/python/integrations/mistral/mistral"
-                                        ]
+                                        "pages": ["sdk/python/integrations/mistral/mistral"]
                                     },
                                     {
                                         "group": "LiveKit",
-                                        "pages": [
-                                            "sdk/python/integrations/livekit/livekit"
-                                        ]
+                                        "pages": ["sdk/python/integrations/livekit/livekit"]
                                     }
                                 ]
                             },
@@ -313,9 +290,7 @@
                                 "pages": [
                                     {
                                         "group": "Apis",
-                                        "pages": [
-                                            "sdk/python/references/apis/maxim_apis"
-                                        ]
+                                        "pages": ["sdk/python/references/apis/maxim_apis"]
                                     },
                                     {
                                         "group": "Cache",
@@ -330,9 +305,7 @@
                                     "sdk/python/references/filter_objects",
                                     {
                                         "group": "Dataset",
-                                        "pages": [
-                                            "sdk/python/references/dataset/dataset"
-                                        ]
+                                        "pages": ["sdk/python/references/dataset/dataset"]
                                     },
                                     {
                                         "group": "Decorators",
@@ -451,15 +424,11 @@
                                 "pages": [
                                     {
                                         "group": "LangChain",
-                                        "pages": [
-                                            "sdk/typescript/integrations/langchain/langchain"
-                                        ]
+                                        "pages": ["sdk/typescript/integrations/langchain/langchain"]
                                     },
                                     {
                                         "group": "LangGraph",
-                                        "pages": [
-                                            "sdk/typescript/integrations/langgraph/langgraph"
-                                        ]
+                                        "pages": ["sdk/typescript/integrations/langgraph/langgraph"]
                                     }
                                 ]
                             },
@@ -538,9 +507,7 @@
                 "groups": [
                     {
                         "group": "Overview",
-                        "pages": [
-                            "public-apis/overview"
-                        ]
+                        "pages": ["public-apis/overview"]
                     },
                     {
                         "group": "Prompts",
