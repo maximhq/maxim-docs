@@ -1,0 +1,4 @@
+{
+    "title": "OpenTelemetry",
+    "pages": ["forwarding-via-data-connectors", "ingesting-via-otlp"]
+}
