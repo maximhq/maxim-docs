@@ -47,3 +47,150 @@ When working with images in datasets:
 - For URLs, ensure they are publicly accessible
 - For local files, maintain consistent file paths across your team
 </Note>
+
+## Column types
+
+### Scenario
+
+The **Scenario** column type allows you to define specific situations or contexts for your test cases. Use this column to describe the background, user intent, or environment in which an interaction takes place. Scenarios help guide agents or models to respond appropriately based on the described situation.
+
+**Examples:**
+- "A customer wants to buy an iPhone."
+- "A user is trying to cancel their subscription."
+- "A student asks for help with a math problem."
+
+Scenarios are especially useful for simulating real-world conversations, testing agent behaviors, and ensuring your models handle a variety of user intents and contexts. Use this column when you are using this dataset for [agent simulation runs](/simulations/simulation-runs).
+
+### Expected Steps
+
+The **Expected Steps** column type allows you to specify the sequence of actions or decisions that an agent should take in response to a given scenario. This helps users clearly outline the ideal process or workflow, making it easier for evaluators to verify whether the agent is behaving as intended.
+
+Use this column to break down the expected agent behavior into individual, logical steps. This is especially useful for multi-turn interactions or complex tasks where the agent's reasoning and actions need to be evaluated step by step.
+
+**Example:**
+```
+- Greet the customer and ask how you can help.
+- Look up the customer's order history.
+- Provide information about the return policy.
+- Offer to initiate a return if eligible.
+```
+
+Including expected steps in your dataset enables more granular evaluation and helps ensure that agents follow the correct procedures during simulations or tests.
+
+
+### Expected Tool Calls
+
+The **Expected Tool Calls** column type allows you to specify which tools (such as APIs, functions, or plugins) you expect an agent to use in response to a scenario. This is especially useful when running prompt runs, where you want to evaluate whether the agent is choosing and invoking the correct tools as part of its reasoning process.
+
+Use this column to list the names of the tools or actions that should be called, optionally including parameters or expected arguments. This helps ensure that the agent's tool usage aligns with your expectations for the task.
+
+**Examples:**
+- "search_web"
+- "get_weather(location='San Francisco')"
+- "send_email(recipient, subject, body)"
+
+Including expected tool calls in your dataset enables more precise evaluation of agent behavior, particularly in scenarios where tool usage is critical to task completion.
+
+
+#### `inAnyOrder`
+```json
+[
+    {
+        "inAnyOrder": [
+            {
+                "name": "list_commits",
+                "arguments": {
+                    "owner": "facebook",
+                    "repo": "react"
+                }
+            },
+            {
+                "name": "list_branches",
+                "arguments": {
+                    "owner": "facebook",
+                    "repo": "react"
+                }
+            },
+            {
+                "name": "list_tags",
+                "arguments": {
+                    "owner": "facebook",
+                    "repo": "react"
+                }
+            }
+        ]
+    }
+]
+```
+
+This combinator indicates that tool calls within this block can be executed in any order, and any such order will be considered a valid execution flow.
+
+#### `anyOne`
+```json
+[
+     {
+        "anyOne": [
+            {
+                "name": "get_pull_request_reviews",
+                "arguments": {
+                    "owner": "facebook",
+                    "repo": "react",
+                    "pullNumber": 25678
+                }
+            },
+            {
+                "name": "get_pull_request_comments",
+                "arguments": {
+                    "owner": "facebook",
+                    "repo": "react",
+                    "pullNumber": 25678
+                }
+            }
+        ]
+    }
+]
+```
+The `anyOne` combinator is used when any one of several possible tool calls is acceptable to fulfill the requirement. This is useful in scenarios where there are multiple valid ways for an agent to achieve the same outcome, and you want to allow for flexibility in the agent's approach.
+
+For example, in the following JSON, either `get_pull_request_reviews` or `get_pull_request_comments` (with the specified arguments) will be considered a valid response. The agent only needs to make one of these tool calls to satisfy the expectation.
+
+
+### Conversation History
+
+Conversation history allows you to include a chat history while running Prompt tests. The sequence of messages sent to the LLM is as follows:
+- messages in the prompt version
+- history
+- input column in the dataset.
+
+#### Format
+
+- Conversation history is always a JSON array
+
+```json
+[
+    {
+        "role": "user",
+        "content" "This is string content"
+    },
+    {
+        "role": "user",
+        "content" : [
+            {
+                "type": "text",
+                "text": "This is with image attachment"
+            },
+            {
+                "type": "image_url",
+                "image_url": {
+                    "url": "https://url-image.com",
+                    "detail": "low"
+                }
+            }
+        ]
+    }
+]
+```
+
+<Callout>Similarly you can add `assistant` and `tool` messages in conversation history.</Callout>
+
+
