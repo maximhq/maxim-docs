@@ -123,7 +123,7 @@ Including expected tool calls in your dataset enables more precise evaluation of
 ]
 ```
 
-This combinator indicates that tool calls within this block can be executed in any order, and any such order will be considered a valid execution flow.
+This combinator indicates that tool calls within this block can be executed in any order, and any such order will be considered a valid execution flow. All tool calls are mandatory here.
 
 #### `anyOne`
 ```json
@@ -192,5 +192,3 @@ Conversation history allows you to include a chat history while running Prompt t
 ```
 
 <Callout>Similarly you can add `assistant` and `tool` messages in conversation history.</Callout>
-
-
