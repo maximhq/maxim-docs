@@ -161,9 +161,14 @@
                                     "tracing/tracing-via-sdk/errors"
                                 ]
                             },
+                            {
+                                "group": "OpenTelemetry",
+                                "pages": [
+                                    "tracing/opentelemetry/forwarding-via-data-connectors",
+                                    "tracing/opentelemetry/ingesting-via-otlp"
+                                ]
+                            },
                             "tracing/dashboard",
-                            "tracing/otel-compatibility",
-                            "tracing/opentelemetry-otlp",
                             "tracing/exports",
                             "tracing/reporting"
                         ]
@@ -1021,7 +1026,15 @@
         },
         {
             "source": "/observe/how-to/log-your-application/use-data-connectors",
-            "destination": "/tracing/otel-compatibility"
+            "destination": "/tracing/opentelemetry/forwarding-via-data-connectors"
+        },
+        {
+            "source": "/tracing/otel-compatibility",
+            "destination": "/tracing/opentelemetry/forwarding-via-data-connectors"
+        },
+        {
+            "source": "/tracing/opentelemetry-otlp",
+            "destination": "/tracing/opentelemetry/ingesting-via-otlp"
         },
         {
             "source": "/observe/how-to/log-your-application/export-logs",

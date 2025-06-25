@@ -1,17 +1,18 @@
 ---
-title: OpenTelemetry OTLP Ingest
+title: Ingesting via OTLP Endpoint
 description: Learn how to send OpenTelemetry (OTLP) traces to Maxim for AI and LLM Observability.
 ---
 
 ## Overview
 
-OpenTelemetry Protocol (OTLP) is a vendor-neutral, industry-standard telemetry format for transmitting trace data. Maxim supports OTLP ingest for AI Observability and LLM Observability, enabling deep insights into your AI systems.
+OpenTelemetry Protocol (OTLP) is a vendor-neutral, industry-standard telemetry format for transmitting trace data. Maxim provides OTLP ingestion capabilities for both AI and LLM Observability, enabling deep insights into your AI systems.
 
 ## Before you begin
 
-- A Maxim account and Log Repository.
-- Your Log Repository ID (header `x-maxim-repo-id`).
-- Familiarity with OpenTelemetry Semantic Conventions for Generative AI: [Generative AI Semantic Conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/).
+- A Maxim account and Log Repository
+- Your Log Repository ID (for the `x-maxim-repo-id` header)
+- Your Maxim API Key (for the `x-maxim-api-key` header) - [Learn how to obtain API keys](/settings/maxim-api-keys)
+- Familiarity with OpenTelemetry Semantic Conventions for Generative AI: [Generative AI Semantic Conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/)
 
 <Note>
 Ensure you have created a Log Repository in Maxim and have your Log Repository ID ready. You can find it in the Maxim Dashboard under **Logs > Repositories**.
@@ -21,7 +22,7 @@ Ensure you have created a Log Repository in Maxim and have your Log Repository I
 
 **Endpoint:** `https://api.getmaxim.ai/v1/otel`
 
-**Supported Protocols:** HTTP with OTLP binary Protobuf or JSON.
+**Supported Protocols:** HTTP with OTLP binary Protobuf or JSON
 
 | Protocol                 | Content-Type                       |
 | ------------------------ | ---------------------------------- |
@@ -35,22 +36,22 @@ Ensure you have created a Log Repository in Maxim and have your Log Repository I
 
 Maxim's OTLP endpoint requires the following headers:
 
-- `x-maxim-repo-id`: Your Maxim Log Repository ID.
-- `x-maxim-api-key`: Your Maxim API Key.
-- `Content-Type`: `application/json`, `application/x-protobuf`, or `application/protobuf`.
+- `x-maxim-repo-id`: Your Maxim Log Repository ID
+- `x-maxim-api-key`: Your Maxim API Key
+- `Content-Type`: `application/json`, `application/x-protobuf`, or `application/protobuf`
 
 
 ## Supported Trace Format
 
-Maxim currently supports traces that follow the OpenTelemetry Semantic Conventions for Generative AI ([spec](https://opentelemetry.io/docs/specs/semconv/gen-ai/)).
+Maxim currently supports traces that follow the OpenTelemetry Semantic Conventions for Generative AI ([specification](https://opentelemetry.io/docs/specs/semconv/gen-ai/)).
 
 ## Best Practices
 
-- Use binary Protobuf (`application/x-protobuf`) for performance and robustness.
-- Batch traces to reduce network overhead.
-- Include rich attributes following GenAI semantic conventions.
-- Secure your headers and avoid exposing credentials.
-- Monitor attribute size limits and apply quotas.
+- Use binary Protobuf (`application/x-protobuf`) for optimal performance and robustness
+- Batch traces to reduce network overhead
+- Include rich attributes following GenAI semantic conventions
+- Secure your headers and avoid exposing credentials
+- Monitor attribute size limits and apply appropriate quotas
 
 ## Error Codes and Responses
 
@@ -69,8 +70,10 @@ from opentelemetry.sdk.trace.export import SimpleSpanProcessor
 from opentelemetry.sdk import trace as trace_sdk
 from opentelemetry import trace as trace_api
 
-maxim_api_key = ""
-repo_id = ""
+# Replace with your actual Maxim API key
+maxim_api_key = "your_api_key_here"
+# Replace with your actual repository ID
+repo_id = "your_repository_id_here"
 
 tracer_provider = trace_sdk.TracerProvider()
 span_exporter = OTLPSpanExporter(

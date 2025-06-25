@@ -1,11 +1,15 @@
 ---
-title: OTel Compatibility
-description: Learn how to integrate Maxim with external observability platforms using data connectors for enhanced log analysis and monitoring.
+title: Forwarding via Data Connectors
+description: Send your traces to Maxim once and we'll forward them to your preferred observability platforms - New Relic, Snowflake, or any OpenTelemetry collector.
 ---
 
 import { MaximPlayer } from "/snippets/maximPlayer.mdx"
 
-Export your logs to external observability platforms to analyze and monitor application behavior in your preferred tools. Connect your logs to these platforms:
+## Unified Observability with Maxim
+
+Maxim acts as your central observability hub, eliminating the need to instrument your applications multiple times. **Send your traces once to Maxim, and we'll forward them to your preferred observability platforms** while providing AI-powered insights.
+
+### Supported Platforms
 
 - New Relic
 - Snowflake
@@ -16,6 +20,14 @@ Export your logs to external observability platforms to analyze and monitor appl
 <Note>
 Navigate to your log repository, click the top-right menu, and select "Set up data connectors" to manage your connections.
 </Note>
+
+## Why Use Maxim as Your Observability Hub?
+
+- **Single Instrumentation**: Instrument once with Maxim, forward to multiple destinations
+- **Enriched Data**: Maxim enhances your traces with AI context before forwarding
+- **Consistent Format**: Normalized data across all your observability tools
+- **Reduced Overhead**: Lower instrumentation maintenance and network traffic
+- **Centralized Control**: Manage all your observability connections in one place
 
 ## Connect to New Relic
 
@@ -73,7 +85,7 @@ Copy the connection string and paste it in the data connectors setup dialog.
 Select "Other OTel collector" in the data connectors setup dialog
 </Step>
 <Step title="Name your connector">
-Name your connector
+Name your connector — for example, Production connector.
 </Step>
 <Step title="Configure OTLP endpoint">
 Configure the OTLP endpoint:
@@ -90,8 +102,33 @@ Configure headers:
 </Step>
 </Steps>
 
-## How we protect your data
+## Common Use Cases
+
+### AI/LLM Observability Across Platforms
+
+Forward AI traces with semantic conventions to both Maxim (for specialized AI insights) and your existing observability platform (for correlation with other system metrics).
+
+### Hybrid Observability Architecture
+
+Use Maxim for real-time AI-powered analysis while forwarding data to Snowflake for long-term storage and business intelligence integration.
+
+### Multi-Team Collaboration
+
+Enable different teams to use their preferred tools (New Relic, OpenTelemetry collector, etc.) while maintaining a single source of truth in Maxim.
+
+## How We Protect Your Data
 
 - We encrypt all credentials in storage
 - We transmit data securely using HTTPS encryption
 - We recommend using dedicated API keys with minimal permissions
+
+## Frequently Asked Questions
+
+### How are traces exported to other platforms?
+Maxim exports traces following OpenTelemetry semantic conventions, ensuring compatibility with platforms like New Relic and other OTLP collectors. This maintains the structure and context of your trace data, including all AI/LLM-specific attributes defined in the OpenTelemetry specification.
+
+### Will using Maxim as a hub introduce latency?
+Maxim's architecture is optimized for minimal latency. Trace forwarding happens asynchronously and doesn't impact your application performance.
+
+### Can I send traces directly to Maxim?
+Yes! See our [Ingesting via OTLP Endpoint](/tracing/opentelemetry/ingesting-via-otlp) documentation for details.

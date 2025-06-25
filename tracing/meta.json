@@ -5,9 +5,8 @@
         "concepts",
         "quickstart",
         "tracing-via-sdk",
+        "opentelemetry",
         "dashboard",
-        "otel-compatibility",
-        "opentelemetry-otlp",
         "exports",
         "reporting"
     ]
