@@ -817,12 +817,61 @@
                                 "description": "Type of the data in the column"
                               },
                               "payload": {
-                                "nullable": true
+                                "type": "object",
+                                "properties": {
+                                  "text": {
+                                    "type": "string"
+                                  },
+                                  "files": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string"
+                                        },
+                                        "url": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "id",
+                                        "url"
+                                      ],
+                                      "additionalProperties": false
+                                    }
+                                  }
+                                },
+                                "additionalProperties": false
                               }
                             },
                             "required": [
                               "type"
-                            ]
+                            ],
+                            "if": {
+                              "properties": {
+                                "type": {
+                                  "const": "text"
+                                }
+                              }
+                            },
+                            "then": {
+                              "properties": {
+                                "payload": {
+                                  "required": ["text"],
+                                  "not": {
+                                    "required": ["files"]
+                                  }
+                                }
+                              }
+                            },
+                            "else": {
+                              "properties": {
+                                "payload": {
+                                  "required": ["text", "files"]
+                                }
+                              }
+                            }
                           }
                         },
                         "required": [
@@ -884,7 +933,30 @@
                                       "type": "string"
                                     },
                                     "payload": {
-                                      "type": "string"
+                                      "type": "object",
+                                      "properties": {
+                                        "text": {
+                                          "type": "string"
+                                        },
+                                        "files": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "object",
+                                            "properties": {
+                                              "id": {
+                                                "type": "string"
+                                              },
+                                              "url": {
+                                                "type": "string"
+                                              }
+                                            },
+                                            "required": [
+                                              "id",
+                                              "url"
+                                            ]
+                                          }
+                                        }
+                                      }
                                     }
                                   },
                                   "required": [
@@ -1243,12 +1315,58 @@
                                     "type": "string"
                                   },
                                   "payload": {
-                                    "nullable": true
+                                    "type": "object",
+                                    "properties": {
+                                      "text": {
+                                        "type": "string"
+                                      },
+                                      "files": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "id": {
+                                              "type": "string"
+                                            },
+                                            "url": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": ["id", "url"],
+                                          "additionalProperties": false
+                                        }
+                                      }
+                                    },
+                                    "additionalProperties": false
                                   }
                                 },
                                 "required": [
                                   "type"
                                 ],
+                                "if": {
+                                  "properties": {
+                                    "type": {
+                                      "const": "text"
+                                    }
+                                  }
+                                },
+                                "then": {
+                                  "properties": {
+                                    "payload": {
+                                      "required": ["text"],
+                                      "not": {
+                                        "required": ["files"]
+                                      }
+                                    }
+                                  }
+                                },
+                                "else": {
+                                  "properties": {
+                                    "payload": {
+                                      "required": ["text", "files"]
+                                    }
+                                  }
+                                },
                                 "description": "Value of the cell"
                               }
                             },
