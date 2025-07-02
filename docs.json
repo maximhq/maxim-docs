@@ -598,6 +598,37 @@
                         ]
                     }
                 ]
+            },
+            {
+                "tab": "Bifrost",
+                "groups": [
+                    {
+                        "group": "Overview",
+                        "pages": ["bifrost/overview/get-started", "bifrost/overview/benchmarks"]
+                    },
+                    {
+                        "group": "Quickstart",
+                        "pages": []
+                    },
+
+                    {
+                        "group": "Usage",
+                        "pages": []
+                    },
+                    {
+                        "group": "Architecture",
+                        "pages": []
+                    },
+
+                    {
+                        "group": "Media",
+                        "pages": []
+                    },
+                    {
+                        "group": "Contributing",
+                        "pages": []
+                    }
+                ]
             }
         ],
         "global": {
