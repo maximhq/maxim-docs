@@ -806,72 +806,60 @@
                             "minLength": 1
                           },
                           "value": {
-                            "type": "object",
-                            "properties": {
-                              "type": {
-                                "type": "string",
-                                "enum": [
-                                  "file",
-                                  "text"
-                                ],
-                                "description": "Type of the data in the column"
-                              },
-                              "payload": {
+                            "oneOf": [
+                              {
                                 "type": "object",
                                 "properties": {
-                                  "text": {
-                                    "type": "string"
+                                  "type": {
+                                    "type": "string",
+                                    "enum": [
+                                      "text"
+                                    ],
+                                    "description": "Text data type"
                                   },
-                                  "files": {
-                                    "type": "array",
-                                    "items": {
-                                      "type": "object",
-                                      "properties": {
-                                        "id": {
-                                          "type": "string"
-                                        },
-                                        "url": {
-                                          "type": "string"
-                                        }
-                                      },
-                                      "required": [
-                                        "id",
-                                        "url"
-                                      ],
-                                      "additionalProperties": false
-                                    }
+                                  "payload": {
+                                    "type": "string",
+                                    "description": "Text content as a string"
                                   }
                                 },
-                                "additionalProperties": false
-                              }
-                            },
-                            "required": [
-                              "type"
-                            ],
-                            "if": {
-                              "properties": {
-                                "type": {
-                                  "const": "text"
-                                }
-                              }
-                            },
-                            "then": {
-                              "properties": {
-                                "payload": {
-                                  "required": ["text"],
-                                  "not": {
-                                    "required": ["files"]
+                                "required": [
+                                  "type",
+                                  "payload"
+                                ]
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "type": {
+                                    "type": "string",
+                                    "enum": [
+                                      "file"
+                                    ],
+                                    "description": "File data type"
+                                  },
+                                  "payload": {
+                                    "type": "object",
+                                    "properties": {
+                                      "url": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "description": "Any publicly accessible URL of the file"
+                                      },
+                                      "base64": {
+                                        "type": "string",
+                                        "description": "Base64 encoded file content"
+                                      }
+                                    },
+                                    "description": "File data containing either a URL or base64 content"
                                   }
-                                }
+                                },
+                                "required": [
+                                  "type",
+                                  "payload"
+                                ]
                               }
-                            },
-                            "else": {
-                              "properties": {
-                                "payload": {
-                                  "required": ["text", "files"]
-                                }
-                              }
-                            }
+                            ],
+                            "description": "Value with conditional payload based on type"
                           }
                         },
                         "required": [
@@ -1309,65 +1297,60 @@
                                 "description": "The column in the row you want to update"
                               },
                               "value": {
-                                "type": "object",
-                                "properties": {
-                                  "type": {
-                                    "type": "string"
-                                  },
-                                  "payload": {
+                                "oneOf": [
+                                  {
                                     "type": "object",
                                     "properties": {
-                                      "text": {
-                                        "type": "string"
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "text"
+                                        ],
+                                        "description": "Text data type"
                                       },
-                                      "files": {
-                                        "type": "array",
-                                        "items": {
-                                          "type": "object",
-                                          "properties": {
-                                            "id": {
-                                              "type": "string"
-                                            },
-                                            "url": {
-                                              "type": "string"
-                                            }
-                                          },
-                                          "required": ["id", "url"],
-                                          "additionalProperties": false
-                                        }
+                                      "payload": {
+                                        "type": "string",
+                                        "description": "Text content as a string"
                                       }
                                     },
-                                    "additionalProperties": false
-                                  }
-                                },
-                                "required": [
-                                  "type"
-                                ],
-                                "if": {
-                                  "properties": {
-                                    "type": {
-                                      "const": "text"
-                                    }
-                                  }
-                                },
-                                "then": {
-                                  "properties": {
-                                    "payload": {
-                                      "required": ["text"],
-                                      "not": {
-                                        "required": ["files"]
+                                    "required": [
+                                      "type",
+                                      "payload"
+                                    ]
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "file"
+                                        ],
+                                        "description": "File data type"
+                                      },
+                                      "payload": {
+                                        "type": "object",
+                                        "properties": {
+                                          "url": {
+                                            "type": "string",
+                                            "format": "uri",
+                                            "description": "URL to the file"
+                                          },
+                                          "base64": {
+                                            "type": "string",
+                                            "description": "Base64 encoded file content"
+                                          }
+                                        },
+                                        "description": "File data containing either a URL or base64 content"
                                       }
-                                    }
+                                    },
+                                    "required": [
+                                      "type",
+                                      "payload"
+                                    ]
                                   }
-                                },
-                                "else": {
-                                  "properties": {
-                                    "payload": {
-                                      "required": ["text", "files"]
-                                    }
-                                  }
-                                },
-                                "description": "Value of the cell"
+                                ],
+                                "description": "Value with conditional payload based on type"
                               }
                             },
                             "required": [
