@@ -1,0 +1,477 @@
+---
+title: "Vercel Integration"
+description: "Learn how to integrate Maxim observability with the Vercel AI SDK in just one line of code."
+---
+
+# Maxim Integration for Vercel
+## Requirements
+
+```
+"ai"
+"@ai-sdk/openai"
+"@ai-sdk/anthropic" 
+"@maximai/maxim-js"
+```
+
+## Environment Variables
+
+```
+MAXIM_API_KEY=
+MAXIM_LOG_REPO_ID=
+OPENAI_API_KEY=
+ANTHROPIC_API_KEY=
+```
+
+## Initialize Logger
+
+```javascript
+import { maxim } from '@maximai/maxim-js';
+
+const logger = await maxim.logger({ id: process.env.MAXIM_LOG_REPO_ID });
+```
+
+## Wrap AI SDK Models with Maxim
+
+```javascript
+import { openai } from '@ai-sdk/openai';
+import { wrapMaximAISDKModel } from '@maximai/maxim-js/vercel-ai-sdk';
+
+const model = wrapMaximAISDKModel(openai('gpt-4'), logger);
+```
+
+## Make LLM calls using wrapped models
+
+```javascript
+import { generateText } from 'ai';
+import { openai } from '@ai-sdk/openai';
+import { wrapMaximAISDKModel } from '@maximai/maxim-js/vercel-ai-sdk';
+
+const model = wrapMaximAISDKModel(openai('gpt-4'), logger);
+
+// Generate text with automatic logging
+const response = await generateText({
+  model: model,
+  prompt: 'Write a haiku about recursion in programming.',
+  temperature: 0.8,
+  system: 'You are a helpful assistant.'
+});
+
+console.log('Response:', response.text);
+```
+
+## Working with Different AI SDK Functions
+
+The wrapped model works seamlessly with all Vercel AI SDK functions:
+
+### **Generate Object**
+
+```javascript
+import { generateObject } from 'ai';
+import { z } from 'zod';
+
+const response = await generateObject({
+  model: model,
+  prompt: 'Generate a user profile for John Doe',
+  schema: z.object({
+    name: z.string(),
+    age: z.number(),
+    email: z.string().email(),
+    interests: z.array(z.string()),
+  }),
+});
+
+console.log(response.object);
+```
+
+### **Stream Text**
+
+```javascript
+import { streamText } from 'ai';
+
+const { textStream } = await streamText({
+  model: model,
+  prompt: 'Write a short story about space exploration',
+  system: 'You are a creative writer',
+});
+
+for await (const textPart of textStream) {
+  process.stdout.write(textPart);
+}
+```
+
+## Custom Metadata and Tracing
+
+### **Using Custom Metadata**
+
+```javascript
+import { MaximVercelProviderMetadata } from '@maximai/maxim-js/vercel-ai-sdk';
+
+const response = await generateText({
+  model: model,
+  prompt: 'Hello, how are you?',
+  providerOptions: {
+    maxim: {
+      traceName: 'custom-trace-name',
+      traceTags: {
+        type: 'demo',
+        priority: 'high',
+      },
+    } as MaximVercelProviderMetadata,
+  },
+});
+```
+
+### **Available Metadata Fields**
+
+**Entity Naming:**
+- `sessionName` - Override the default session name
+- `traceName` - Override the default trace name
+- `spanName` - Override the default span name
+- `generationName` - Override the default LLM generation name
+
+**Entity Tagging:**
+- `sessionTags` - Add custom tags to the session (object: {key: value})
+- `traceTags` - Add custom tags to the trace (object: {key: value})
+- `spanTags` - Add custom tags to span (object: {key: value})
+- `generationTags` - Add custom tags to LLM generations (object: {key: value})
+
+**ID References:**
+- `sessionId` - Link this trace to an existing session
+- `traceId` - Use a specific trace ID
+- `spanId` - Use a specific span ID
+
+## Capture Multiple LLM Calls in One Trace
+
+```javascript
+import { v4 as uuid } from 'uuid';
+import { generateText } from 'ai';
+import { openai } from '@ai-sdk/openai';
+import { wrapMaximAISDKModel, MaximVercelProviderMetadata } from '@maximai/maxim-js/vercel-ai-sdk';
+
+// Initialize logger and model
+const logger = await maxim.logger({ id: process.env.MAXIM_LOG_REPO_ID });
+const model = wrapMaximAISDKModel(openai('gpt-4'), logger);
+
+// Create a new trace
+const traceId = uuid();
+const trace = logger.trace({ id: traceId, name: 'Multi-step conversation' });
+
+try {
+  // First LLM call
+  const response1 = await generateText({
+    model: model,
+    prompt: 'What was the capital of France in 1800s?',
+    providerOptions: {
+      maxim: {
+        traceId: traceId,
+        traceName: 'Historical Query'
+      } as MaximVercelProviderMetadata,
+    },
+  });
+
+  console.log('Response 1:', response1.text);
+
+  // Second LLM call in the same trace
+  const response2 = await generateText({
+    model: model,
+    prompt: 'Tell me more about that time period.',
+    providerOptions: {
+      maxim: {
+        traceId: traceId,
+      } as MaximVercelProviderMetadata,
+    },
+  });
+
+  console.log('Response 2:', response2.text);
+
+  // End the trace
+  trace.end();
+} catch (error) {
+  console.error('Error in trace:', error);
+}
+```
+
+## Capture Multi-Turn Conversations with Sessions
+
+```javascript
+import { v4 as uuid } from 'uuid';
+import { generateText } from 'ai';
+import { openai } from '@ai-sdk/openai';
+import { wrapMaximAISDKModel, MaximVercelProviderMetadata } from '@maximai/maxim-js/vercel-ai-sdk';
+
+// Initialize logger and model
+const logger = await maxim.logger({ id: process.env.MAXIM_LOG_REPO_ID });
+const model = wrapMaximAISDKModel(openai('gpt-4'), logger);
+
+// Create session and first trace
+const sessionId = uuid();
+const traceId1 = uuid();
+
+const trace1 = logger.trace({ 
+  id: traceId1, 
+  name: 'Programming Help',
+  sessionId: sessionId 
+});
+
+try {
+  // First conversation in the session
+  const response1 = await generateText({
+    model: model,
+    prompt: 'Hello, can you help me with JavaScript programming?',
+    providerOptions: {
+      maxim: {
+        sessionId: sessionId,
+        traceId: traceId1,
+        traceName: 'Programming Introduction'
+      } as MaximVercelProviderMetadata,
+    },
+  });
+
+  console.log('Assistant:', response1.text);
+
+  // Continue the conversation
+  const response2 = await generateText({
+    model: model,
+    prompt: 'Can you write a simple JavaScript function to calculate fibonacci numbers?',
+    providerOptions: {
+      maxim: {
+        sessionId: sessionId,
+        traceId: traceId1,
+      } as MaximVercelProviderMetadata,
+    },
+  });
+
+  console.log('Assistant:', response2.text);
+  trace1.end();
+
+  // Create second trace in the same session
+  const traceId2 = uuid();
+  const trace2 = logger.trace({ 
+    id: traceId2, 
+    name: 'ML Basics',
+    sessionId: sessionId 
+  });
+
+  const response3 = await generateText({
+    model: model,
+    prompt: 'Tell me about machine learning basics',
+    providerOptions: {
+      maxim: {
+        sessionId: sessionId,
+        traceId: traceId2,
+        traceName: 'ML Education'
+      } as MaximVercelProviderMetadata,
+    },
+  });
+
+  console.log('Assistant:', response3.text);
+  trace2.end();
+
+} catch (error) {
+  console.error('Error in conversation:', error);
+}
+```
+
+## Complete Advanced Example
+
+```javascript
+import { v4 as uuid } from 'uuid';
+import { generateText, generateObject } from 'ai';
+import { openai } from '@ai-sdk/openai';
+import { z } from 'zod';
+import { MaximVercelProviderMetadata, wrapMaximAISDKModel } from '@maximai/maxim-js/vercel-ai-sdk';
+
+const logger = await maxim.logger({ id: process.env.MAXIM_LOG_REPO_ID });
+if (!logger) {
+  throw new Error('Logger is not available');
+}
+
+const model = wrapMaximAISDKModel(openai('gpt-4o-mini'), logger);
+const spanId = uuid();
+const trace = logger.trace({ id: uuid(), name: 'City Prediction Demo' });
+
+const prompt = 'Predict the top 3 largest city by 2050. For each, return the name, the country, the reason why it will be on the list, and the estimated population in millions.';
+trace.input(prompt);
+
+try {
+  // Step 1: Generate initial text response
+  const { text: rawOutput } = await generateText({
+    model: model,
+    prompt: prompt,
+    providerOptions: {
+      maxim: {
+        traceName: 'City Prediction',
+        traceId: trace.id,
+        spanId: spanId,
+      } as MaximVercelProviderMetadata,
+    },
+  });
+
+  // Step 2: Extract structured data
+  const { object } = await generateObject({
+    model: model,
+    prompt: 'Extract the desired information from this text: \n' + rawOutput,
+    schema: z.object({
+      name: z.string().describe('the name of the city'),
+      country: z.string().describe('the name of the country'),
+      reason: z.string().describe('the reason why the city will be one of the largest cities by 2050'),
+      estimatedPopulation: z.number(),
+    }),
+    output: 'array',
+    providerOptions: {
+      maxim: {
+        traceId: trace.id,
+        spanId: spanId,
+      } as MaximVercelProviderMetadata,
+    },
+  });
+
+  // Step 3: Format the final output
+  const { text: output } = await generateText({
+    model: model,
+    prompt: `Format this into a human-readable format: ${JSON.stringify(object)}`,
+    providerOptions: {
+      maxim: {
+        traceId: trace.id,
+      } as MaximVercelProviderMetadata,
+    },
+  });
+
+  trace.end();
+  console.log('Final formatted response:', output);
+
+} catch (error) {
+  console.error('Error in city prediction demo:', error);
+}
+```
+
+## Streaming Support
+
+```javascript
+import { streamText } from 'ai';
+import { openai } from '@ai-sdk/openai';
+import { wrapMaximAISDKModel, MaximVercelProviderMetadata } from '@maximai/maxim-js/vercel-ai-sdk';
+
+const model = wrapMaximAISDKModel(openai('gpt-4'), logger);
+
+const { textStream } = await streamText({
+  model: model,
+  prompt: 'Write a story about a robot learning to paint.',
+  system: 'You are a creative storyteller',
+  providerOptions: {
+    maxim: {
+      traceName: 'Story Generation',
+      traceTags: {
+        type: 'creative',
+        format: 'streaming'
+      },
+    } as MaximVercelProviderMetadata,
+  },
+});
+
+for await (const textPart of textStream) {
+  process.stdout.write(textPart);
+}
+```
+
+## Multiple Provider Support
+
+```javascript
+import { openai } from '@ai-sdk/openai';
+import { anthropic } from '@ai-sdk/anthropic';
+import { google } from '@ai-sdk/google';
+import { wrapMaximAISDKModel } from '@maximai/maxim-js/vercel-ai-sdk';
+
+// Wrap different provider models
+const openaiModel = wrapMaximAISDKModel(openai('gpt-4'), logger);
+const anthropicModel = wrapMaximAISDKModel(anthropic('claude-3-5-sonnet-20241022'), logger);
+const googleModel = wrapMaximAISDKModel(google('gemini-pro'), logger);
+
+// Use them with the same interface
+const responses = await Promise.all([
+  generateText({ model: openaiModel, prompt: 'Hello from OpenAI' }),
+  generateText({ model: anthropicModel, prompt: 'Hello from Anthropic' }),
+  generateText({ model: googleModel, prompt: 'Hello from Google' })
+]);
+```
+
+## Next.js Integration
+
+### **API Route Example**
+
+```javascript
+// app/api/chat/route.js
+import { streamText } from 'ai';
+import { openai } from '@ai-sdk/openai';
+import { wrapMaximAISDKModel, MaximVercelProviderMetadata } from '@maximai/maxim-js/vercel-ai-sdk';
+import { maxim } from '@maximai/maxim-js';
+
+const logger = await maxim.logger({ id: process.env.MAXIM_LOG_REPO_ID });
+const model = wrapMaximAISDKModel(openai('gpt-4'), logger);
+
+export async function POST(req) {
+  const { messages } = await req.json();
+  
+  const result = await streamText({
+    model: model,
+    messages,
+    system: 'You are a helpful assistant',
+    providerOptions: {
+      maxim: {
+        traceName: 'Chat API',
+        traceTags: {
+          endpoint: '/api/chat',
+          type: 'conversation'
+        },
+      } as MaximVercelProviderMetadata,
+    },
+  });
+
+  return result.toAIStreamResponse();
+}
+```
+
+### **Client-side Integration**
+
+```javascript
+// components/Chat.jsx
+import { useChat } from 'ai/react';
+
+export default function Chat() {
+  const { messages, input, handleInputChange, handleSubmit } = useChat({
+    api: '/api/chat',
+  });
+
+  return (
+    <div>
+      {messages.map(m => (
+        <div key={m.id}>
+          <strong>{m.role}:</strong> {m.content}
+        </div>
+      ))}
+      
+      <form onSubmit={handleSubmit}>
+        <input
+          value={input}
+          onChange={handleInputChange}
+          placeholder="Say something..."
+        />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  );
+}
+```
+
+![Gif](https://example.com/vercel-ai-sdk-traces.gif)
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card title="Vercel AI SDK Integration Examples" icon="vercel" href="https://github.com/maxim-ai/examples/vercel-ai-sdk">
+    
+  </Card>
+  <Card title="Next.js Chatbot Example" icon="nextdotjs" href="https://github.com/maxim-ai/examples/nextjs-chatbot">
+    
+  </Card>
+</CardGroup>
