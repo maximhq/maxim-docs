@@ -1,15 +1,17 @@
 ---
-title: "Vercel Integration"
-description: "Learn how to integrate Maxim observability with the Vercel AI SDK in just one line of code."
+title: 'Vercel Integration'
+description:
+    'Learn how to integrate Maxim observability with the Vercel AI SDK in just one line of code.'
 ---
 
 # Maxim Integration for Vercel
+
 ## Requirements
 
 ```
 "ai"
 "@ai-sdk/openai"
-"@ai-sdk/anthropic" 
+"@ai-sdk/anthropic"
 "@maximai/maxim-js"
 ```
 
@@ -50,10 +52,10 @@ const model = wrapMaximAISDKModel(openai('gpt-4'), logger);
 
 // Generate text with automatic logging
 const response = await generateText({
-  model: model,
-  prompt: 'Write a haiku about recursion in programming.',
-  temperature: 0.8,
-  system: 'You are a helpful assistant.'
+    model: model,
+    prompt: 'Write a haiku about recursion in programming.',
+    temperature: 0.8,
+    system: 'You are a helpful assistant.',
 });
 
 console.log('Response:', response.text);
@@ -70,14 +72,14 @@ import { generateObject } from 'ai';
 import { z } from 'zod';
 
 const response = await generateObject({
-  model: model,
-  prompt: 'Generate a user profile for John Doe',
-  schema: z.object({
-    name: z.string(),
-    age: z.number(),
-    email: z.string().email(),
-    interests: z.array(z.string()),
-  }),
+    model: model,
+    prompt: 'Generate a user profile for John Doe',
+    schema: z.object({
+        name: z.string(),
+        age: z.number(),
+        email: z.string().email(),
+        interests: z.array(z.string()),
+    }),
 });
 
 console.log(response.object);
@@ -89,13 +91,13 @@ console.log(response.object);
 import { streamText } from 'ai';
 
 const { textStream } = await streamText({
-  model: model,
-  prompt: 'Write a short story about space exploration',
-  system: 'You are a creative writer',
+    model: model,
+    prompt: 'Write a short story about space exploration',
+    system: 'You are a creative writer',
 });
 
 for await (const textPart of textStream) {
-  process.stdout.write(textPart);
+    process.stdout.write(textPart);
 }
 ```
 
@@ -124,21 +126,24 @@ const response = await generateText({
 ### **Available Metadata Fields**
 
 **Entity Naming:**
-- `sessionName` - Override the default session name
-- `traceName` - Override the default trace name
-- `spanName` - Override the default span name
-- `generationName` - Override the default LLM generation name
+
+-   `sessionName` - Override the default session name
+-   `traceName` - Override the default trace name
+-   `spanName` - Override the default span name
+-   `generationName` - Override the default LLM generation name
 
 **Entity Tagging:**
-- `sessionTags` - Add custom tags to the session `(object: {key: value})`
-- `traceTags` - Add custom tags to the trace `(object: {key: value})`
-- `spanTags` - Add custom tags to span `(object: {key: value})`
-- `generationTags` - Add custom tags to LLM generations `(object: {key: value})`
+
+-   `sessionTags` - Add custom tags to the session `(object: {key: value})`
+-   `traceTags` - Add custom tags to the trace `(object: {key: value})`
+-   `spanTags` - Add custom tags to span `(object: {key: value})`
+-   `generationTags` - Add custom tags to LLM generations `(object: {key: value})`
 
 **ID References:**
-- `sessionId` - Link this trace to an existing session
-- `traceId` - Use a specific trace ID
-- `spanId` - Use a specific span ID
+
+-   `sessionId` - Link this trace to an existing session
+-   `traceId` - Use a specific trace ID
+-   `spanId` - Use a specific span ID
 
 ## Capture Multiple LLM Calls in One Trace
 
@@ -207,10 +212,10 @@ const model = wrapMaximAISDKModel(openai('gpt-4'), logger);
 const sessionId = uuid();
 const traceId1 = uuid();
 
-const trace1 = logger.trace({ 
-  id: traceId1, 
+const trace1 = logger.trace({
+  id: traceId1,
   name: 'Programming Help',
-  sessionId: sessionId 
+  sessionId: sessionId
 });
 
 try {
@@ -246,10 +251,10 @@ try {
 
   // Create second trace in the same session
   const traceId2 = uuid();
-  const trace2 = logger.trace({ 
-    id: traceId2, 
+  const trace2 = logger.trace({
+    id: traceId2,
     name: 'ML Basics',
-    sessionId: sessionId 
+    sessionId: sessionId
   });
 
   const response3 = await generateText({
@@ -391,9 +396,9 @@ const googleModel = wrapMaximAISDKModel(google('gemini-pro'), logger);
 
 // Use them with the same interface
 const responses = await Promise.all([
-  generateText({ model: openaiModel, prompt: 'Hello from OpenAI' }),
-  generateText({ model: anthropicModel, prompt: 'Hello from Anthropic' }),
-  generateText({ model: googleModel, prompt: 'Hello from Google' })
+    generateText({ model: openaiModel, prompt: 'Hello from OpenAI' }),
+    generateText({ model: anthropicModel, prompt: 'Hello from Anthropic' }),
+    generateText({ model: googleModel, prompt: 'Hello from Google' }),
 ]);
 ```
 
@@ -413,7 +418,7 @@ const model = wrapMaximAISDKModel(openai('gpt-4'), logger);
 
 export async function POST(req) {
   const { messages } = await req.json();
-  
+
   const result = await streamText({
     model: model,
     messages,
@@ -440,38 +445,34 @@ export async function POST(req) {
 import { useChat } from 'ai/react';
 
 export default function Chat() {
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
-    api: '/api/chat',
-  });
+    const { messages, input, handleInputChange, handleSubmit } = useChat({
+        api: '/api/chat',
+    });
 
-  return (
-    <div>
-      {messages.map(m => (
-        <div key={m.id}>
-          <strong>{m.role}:</strong> {m.content}
+    return (
+        <div>
+            {messages.map((m) => (
+                <div key={m.id}>
+                    <strong>{m.role}:</strong> {m.content}
+                </div>
+            ))}
+
+            <form onSubmit={handleSubmit}>
+                <input value={input} onChange={handleInputChange} placeholder="Say something..." />
+                <button type="submit">Send</button>
+            </form>
         </div>
-      ))}
-      
-      <form onSubmit={handleSubmit}>
-        <input
-          value={input}
-          onChange={handleInputChange}
-          placeholder="Say something..."
-        />
-        <button type="submit">Send</button>
-      </form>
-    </div>
-  );
+    );
 }
 ```
 
 ## Resources
 
 <CardGroup cols={2}>
-  <Card title="Vercel AI SDK" icon="vercel" href="https://ai-sdk.dev/docs/introduction">
-    
-  </Card>
-  <Card title="Vercel Maxim Example" icon="javascript" href="https://github.com/akmadan/vercel-maxim">
-    
-  </Card>
+    <Card title="Vercel AI SDK" icon="javascript" href="https://ai-sdk.dev/docs/introduction"></Card>
+    <Card
+        title="Vercel Maxim Example"
+        icon="github"
+        href="https://github.com/akmadan/vercel-maxim"
+    ></Card>
 </CardGroup>
