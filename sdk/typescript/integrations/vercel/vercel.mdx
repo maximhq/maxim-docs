@@ -27,9 +27,25 @@ ANTHROPIC_API_KEY=
 ## Initialize Logger
 
 ```javascript
-import { maxim } from '@maximai/maxim-js';
+import { Maxim } from "@maximai/maxim-js";
 
-const logger = await maxim.logger({ id: process.env.MAXIM_LOG_REPO_ID });
+async function initializeMaxim() {
+  const apiKey = process.env.MAXIM_API_KEY || "";
+  if (!apiKey) {
+    throw new Error("MAXIM_API_KEY is not defined in the environment variables");
+  }
+
+  const maxim = new Maxim({ apiKey });
+  const logger = await maxim.logger({
+    id: process.env.MAXIM_LOG_REPO_ID || "",
+  });
+
+  if (!logger) {
+    throw new Error("Logger is not available");
+  }
+
+  return { maxim, logger };
+}
 ```
 
 ## Wrap AI SDK Models with Maxim
@@ -411,8 +427,9 @@ const responses = await Promise.all([
 import { streamText } from 'ai';
 import { openai } from '@ai-sdk/openai';
 import { wrapMaximAISDKModel, MaximVercelProviderMetadata } from '@maximai/maxim-js/vercel-ai-sdk';
-import { maxim } from '@maximai/maxim-js';
+import { Maxim } from "@maximai/maxim-js";
 
+const maxim = new Maxim({ apiKey });
 const logger = await maxim.logger({ id: process.env.MAXIM_LOG_REPO_ID });
 const model = wrapMaximAISDKModel(openai('gpt-4'), logger);
 
