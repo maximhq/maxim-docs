@@ -57,10 +57,12 @@ The performance difference between Bifrost and LiteLLM is significant when teste
 | **Memory Usage** | 120MB   | 372MB   | 68% less      |
 
 _Note: Tests conducted on t3.medium instances with tier 5 OpenAI keys_
+_Note: Here the Bifrost Instance was without UI, performance stays exactly the same even with UI but memory usage increases_
 
 ### Like-for-Like Overhead Comparison
 
 When testing pure gateway overhead using mocked responses:
+_Note - Mock OpenAI Latency was 60ms_
 
 | Metric               | Bifrost | LiteLLM |
 | -------------------- | ------- | ------- |
@@ -72,6 +74,7 @@ This demonstrates that LiteLLM adds approximately 40x more overhead than Bifrost
 workload.
 
 ## Feature Comparison
+_Note: Here the Bifrost Instance was without UI, performance stays exactly the same even with UI but memory usage increases_
 
 ### Architecture & Performance
 
@@ -80,7 +83,7 @@ workload.
 | **Language**         | Go            | Python                |
 | **Deployment**       | Single binary | Multi-component       |
 | **Memory Usage**     | Low (120MB)   | High (372MB)          |
-| **Latency Overhead** | <15µs         | ~40ms                 |
+| **Latency Overhead** | <15&nbsp;µs   | ~40ms                 |
 | **Max Throughput**   | 5,000+ RPS    | Limited by Python GIL |
 
 ### Observability & Monitoring
