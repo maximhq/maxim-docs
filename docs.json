@@ -434,6 +434,10 @@
                                     {
                                         "group": "LangGraph",
                                         "pages": ["sdk/typescript/integrations/langgraph/langgraph"]
+                                    },
+                                    {
+                                        "group": "Vercel",
+                                        "pages": ["sdk/typescript/integrations/vercel/vercel"]
                                     }
                                 ]
                             },
