@@ -27,7 +27,7 @@ Or add it to your `requirements.txt`:
 
 ### 1. Set up environment variables
 
-```python
+```env
 ### Environment Variables Setup
 
 # Create a `.env` file in your project root:
@@ -45,6 +45,7 @@ OPENAI_API_KEY=your_openai_api_key
 from agno.agent import Agent
 from agno.models.openai import OpenAIChat
 from agno.tools.googlesearch import GoogleSearchTools
+from agno.tools.yfinance import YFinanceTools
 from maxim import Maxim
 from maxim.logger.agno import instrument_agno
 ```
