@@ -1,9 +1,10 @@
-# 🔌 Plugin Development Guide
+---
+title: "Plugin Development Guide"
+description: "Comprehensive guide for building powerful Bifrost plugins. Learn how to create PreHook and PostHook plugins that extend Bifrost's request/response pipeline with custom logic."
+---
 
-Comprehensive guide for building powerful Bifrost plugins. Learn how to create PreHook and PostHook plugins that extend Bifrost's request/response pipeline with custom logic.
+### ⚠️ IMPORTANT: Before developing a plugin, thoroughly read the [Plugin Architecture Documentation](/bifrost/architecture/plugins) to understand:
 
-> **⚠️ IMPORTANT**: Before developing a plugin, **thoroughly read** the [Plugin Architecture Documentation](../architecture/plugins.md) to understand:
->
 > - Plugin system design principles and execution pipeline
 > - Plugin lifecycle management and state transitions
 > - Error handling patterns and recovery mechanisms
@@ -87,7 +88,7 @@ graph LR
 
 ### **Development Environment**
 
-- **Go 1.23+** - Latest Go version
+- **Go 1.23\+** - Latest Go version
 - **Bifrost Core** - Understanding of Bifrost architecture
 - **Git** - Version control proficiency
 - **Testing Tools** - Go testing framework familiarity
@@ -797,35 +798,35 @@ func (p *AsyncPlugin) PostHook(
 
 ### **Code Quality**
 
-- [ ] **Interface Implementation** - Correctly implements Plugin interface
-- [ ] **Error Handling** - Proper error handling and short-circuit usage
-- [ ] **Thread Safety** - Safe for concurrent use
-- [ ] **Resource Management** - Proper cleanup in Cleanup() method
-- [ ] **Code Documentation** - Clear comments and documentation
+- **Interface Implementation** - Correctly implements Plugin interface
+- **Error Handling** - Proper error handling and short-circuit usage
+- **Thread Safety** - Safe for concurrent use
+- **Resource Management** - Proper cleanup in Cleanup() method
+- **Code Documentation** - Clear comments and documentation
 
 ### **Testing**
 
-- [ ] **Unit Tests** - Comprehensive test coverage (>90%)
-- [ ] **Integration Tests** - Tests with real Bifrost instance
-- [ ] **Concurrent Testing** - Tests under concurrent load
-- [ ] **Error Scenarios** - Tests for various error conditions
-- [ ] **Short-Circuit Testing** - Tests for short-circuit behavior
+- **Unit Tests** - Comprehensive test coverage (\>90%)
+- **Integration Tests** - Tests with real Bifrost instance
+- **Concurrent Testing** - Tests under concurrent load
+- **Error Scenarios** - Tests for various error conditions
+- **Short-Circuit Testing** - Tests for short-circuit behavior
 
 ### **Documentation**
 
-- [ ] **Plugin Documentation** - Clear setup and usage instructions
-- [ ] **Configuration Schema** - Documented configuration options
-- [ ] **Examples** - Working code examples and use cases
-- [ ] **Performance Impact** - Performance characteristics documented
-- [ ] **Compatibility** - Provider and feature compatibility matrix
+- **Plugin Documentation** - Clear setup and usage instructions
+- **Configuration Schema** - Documented configuration options
+- **Examples** - Working code examples and use cases
+- **Performance Impact** - Performance characteristics documented
+- **Compatibility** - Provider and feature compatibility matrix
 
 ### **Performance**
 
-- [ ] **Benchmarks** - Performance benchmarks included
-- [ ] **Memory Efficiency** - Minimal memory footprint
-- [ ] **Latency Impact** - Low latency overhead (<10ms)
-- [ ] **Resource Limits** - Configurable resource limits
-- [ ] **Monitoring** - Built-in metrics and monitoring
+- **Benchmarks** - Performance benchmarks included
+- **Memory Efficiency** - Minimal memory footprint
+- **Latency Impact** - Low latency overhead ( less than 10ms )
+- **Resource Limits** - Configurable resource limits
+- **Monitoring** - Built-in metrics and monitoring
 
 ---
 
@@ -886,10 +887,10 @@ func main() {
 5. **Add Configuration** - Make your plugin configurable
 6. **Write Tests** - Create comprehensive test suite
 7. **Document Usage** - Write clear documentation and examples
-8. **Submit Plugin** - Follow the [contribution process](./README.md#-pull-request-process)
+8. **Submit Plugin** - Follow the contribution process
 
 ---
 
 **Ready to build your plugin?** 🚀
 
-Check out the existing plugin implementations in `plugins/` for inspiration, and join the discussion in [GitHub Discussions](https://github.com/maximhq/bifrost/discussions) to share your plugin ideas!
+Check out the existing plugin implementations in `plugins/` for inspiration, and join the discussion in [GitHub Discussions](https://github.com/maximhq/bifrost/discussions) to share your plugin ideas\!
