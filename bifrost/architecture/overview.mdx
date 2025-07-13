@@ -7,52 +7,22 @@ description: "Deep dive into Bifrost's system architecture - designed for 10,000
 
 ### **Core Architecture**
 
-| Document                                                        | Description                                 | Focus Area                               |
-| --------------------------------------------------------------- | ------------------------------------------- | ---------------------------------------- |
-| [**🌐 System Overview**](/bifrost/architecture/system-overview) | High-level architecture & design principles | Components, interactions, data flow      |
-| [**🔄 Request Flow**](./request-flow.md)                        | Request processing pipeline deep dive       | Processing stages, memory management     |
-| [**📊 Benchmarks**](../benchmarks.md)                           | Performance benchmarks & optimization       | Metrics, scaling, optimization           |
-| [**⚙️ Concurrency**](./concurrency.md)                          | Worker pools & threading model              | Goroutines, channels, resource isolation |
+| Document                                                  | Description                                 | Focus Area                               |
+| --------------------------------------------------------- | ------------------------------------------- | ---------------------------------------- |
+| [**🌐 System Overview**](./system-overview.md)            | High-level architecture & design principles | Components, interactions, data flow      |
+| [**🔄 Request Flow**](/bifrost/architecture/request-flow) | Request processing pipeline deep dive       | Processing stages, memory management     |
+| [**📊 Benchmarks**](/bifrost/overview/benchmarks)         | Performance benchmarks & optimization       | Metrics, scaling, optimization           |
+| [**⚙️ Concurrency**](/bifrost/architecture/concurrency)   | Worker pools & threading model              | Goroutines, channels, resource isolation |
 
 ### **🔧 Internal Systems**
 
-| Document                                         | Description                         | Focus Area                              |
-| ------------------------------------------------ | ----------------------------------- | --------------------------------------- |
-| [**🔌 Plugin System**](./plugins.md)             | How plugins work internally         | Plugin lifecycle, interfaces, execution |
-| [**🛠️ MCP System**](./mcp.md)                   | Model Context Protocol internals    | Tool discovery, execution, integration  |
-| [**💡 Design Decisions**](./design-decisions.md) | Architecture rationale & trade-offs | Why we built it this way, alternatives  |
+| Document                                                         | Description                         | Focus Area                              |
+| ---------------------------------------------------------------- | ----------------------------------- | --------------------------------------- |
+| [**🔌 Plugin System**](/bifrost/architecture/plugins)            | How plugins work internally         | Plugin lifecycle, interfaces, execution |
+| [**🛠️ MCP System**](/bifrost/architecture/mcp)                  | Model Context Protocol internals    | Tool discovery, execution, integration  |
+| [**💡 Design Decisions**](/bifrost/architecture/design-decision) | Architecture rationale & trade-offs | Why we built it this way, alternatives  |
 
----
-
-## 🚀 Quick Start by Role
-
-### **🔧 System Administrators**
-
-1. [**System Overview**](./system-overview.md) - Deployment architecture
-2. [**Benchmarks**](../benchmarks.md) - Scaling and capacity planning
-3. [**Concurrency**](./concurrency.md) - Resource tuning parameters
-
-### **👨‍💻 Backend Developers**
-
-1. [**Request Flow**](./request-flow.md) - Processing pipeline internals
-2. [**Plugin System**](./plugins.md) - Extension mechanisms
-3. [**Design Decisions**](./design-decisions.md) - Implementation rationale
-
-### **🏗️ Platform Engineers**
-
-1. [**Benchmarks**](../benchmarks.md) - Throughput and optimization
-2. [**Concurrency**](./concurrency.md) - Resource allocation strategies
-3. [**System Overview**](./system-overview.md) - Integration architecture
-
-### **🔌 Plugin Developers**
-
-1. [**Plugin System**](./plugins.md) - Internal plugin architecture
-2. [**Request Flow**](./request-flow.md) - Hook points and data flow
-3. [**MCP System**](./mcp.md) - Tool integration patterns
-
----
-
-## 🏗️ Architecture at a Glance
+## Architecture at a Glance
 
 ### **High-Performance Design Principles**
 
@@ -112,28 +82,4 @@ description: "Deep dive into Bifrost's system architecture - designed for 10,000
 - **MCP Tools** - External tool integration
 - **Transport Layers** - Multiple interface options (HTTP, SDK, gRPC planned)
 
----
-
-## 🔗 Related Documentation
-
-### **Usage Documentation**
-
-- [**🚀 Quick Start**](../quickstart/README.md) - Get started with Bifrost
-- [**🌐 HTTP Transport**](../usage/http-transport/README.md) - HTTP API usage
-- [**📦 Go Package**](../usage/go-package/README.md) - Go SDK usage
-
-### **Configuration**
-
-- [**🔧 Provider Setup**](../usage/http-transport/configuration/providers.md) - Provider configuration
-- [**🔌 Plugin Setup**](../usage/http-transport/configuration/plugins.md) - Plugin configuration
-- [**🛠️ MCP Setup**](../usage/http-transport/configuration/mcp.md) - MCP configuration
-
-### **Operations**
-
-- [**📊 Monitoring**](../usage/monitoring.md) - Observability and metrics
-- [**🔐 Security**](../usage/key-management.md) - Key management and security
-- [**🌐 Networking**](../usage/networking.md) - Network configuration
-
----
-
-**💡 New to Bifrost architecture?** Start with [**System Overview**](./system-overview.md) for the complete picture, then dive into [**Request Flow**](./request-flow.md) to understand how it all works together.
+**💡 New to Bifrost architecture?** Start with [**System Overview**](/bifrost/architecture/system-overview) for the complete picture, then dive into [**Request Flow**](/bifrost/architecture/request-flow) to understand how it all works together.
