@@ -7,41 +7,41 @@ description: "Welcome to Bifrost - the unified AI model gateway that provides se
 
 Choose your preferred way to use Bifrost:
 
-| Usage Mode         | Best For                            | Setup Time | Documentation                                           |
-| ------------------ | ----------------------------------- | ---------- | ------------------------------------------------------- |
-| **Go Package**     | Direct integration, maximum control | 2 minutes  | [📖 Go Package Guide](quickstart/go-package.md)         |
-| **HTTP Transport** | Language-agnostic, microservices    | 30 seconds | [📖 HTTP Transport Guide](quickstart/http-transport.md) |
+| Usage Mode         | Best For                            | Setup Time | Documentation                                                 |
+| ------------------ | ----------------------------------- | ---------- | ------------------------------------------------------------- |
+| **Go Package**     | Direct integration, maximum control | 2 minutes  | [📖 Go Package Guide](/bifrost/quickstart/go-package)         |
+| **HTTP Transport** | Language-agnostic, microservices    | 30 seconds | [📖 HTTP Transport Guide](/bifrost/quickstart/http-transport) |
 
-**New to Bifrost?** Start with [⚡ Quick Start](quickstart/) to get running in under 30 seconds.
+**New to Bifrost?** Start with [⚡ Quick Start](/bifrost/quickstart/overview) to get running in under 30 seconds.
 
 ## I Want To...
 
-| Task                            | Go Here                                                                      |
-| ------------------------------- | ---------------------------------------------------------------------------- |
-| **Get started in 30 seconds**   | [Quick Start](quickstart/)                                                   |
-| **Replace my OpenAI SDK calls** | [OpenAI Integration](usage/http-transport/integrations/openai-compatible.md) |
-| **Use Bifrost in my Go app**    | [Go Package Usage](usage/go-package/)                                        |
-| **Configure via HTTP/JSON**     | [HTTP Transport Usage](usage/http-transport/)                                |
-| **Add fallback providers**      | [Providers](usage/providers.md)                                              |
-| **Understand the architecture** | [Architecture](architecture/)                                                |
-| **See practical examples**      | [Examples](examples/)                                                        |
-| **Deploy to production**        | [Production Guide](usage/http-transport/configuration/)                      |
-| **Contribute to the project**   | [Contributing](contributing/)                                                |
+| Task                            | Go Here                                                                            |
+| ------------------------------- | ---------------------------------------------------------------------------------- |
+| **Get started in 30 seconds**   | [Quick Start](/bifrost/quickstart/overview)                                        |
+| **Replace my OpenAI SDK calls** | [OpenAI Integration](/bifrost/usage/http-transport/integrations/openai-compatible) |
+| **Use Bifrost in my Go app**    | [Go Package Usage](/bifrost/usage/go-package/overview)                             |
+| **Configure via HTTP/JSON**     | [HTTP Transport Usage](/bifrost/usage/http-transport/configuration/plugins)        |
+| **Add fallback providers**      | [Providers](/bifrost/usage/providers)                                              |
+| **Understand the architecture** | [Architecture](/bifrost/architecture/overview)                                     |
+| **See practical examples**      | [Examples](https://github.com/maximhq/bifrost)                                     |
+| **Deploy to production**        | [Production Guide](/bifrost/usage/http-transport/configuration/providers)          |
+| **Contribute to the project**   | [Contributing](/bifrost/contributing/overview)                                     |
 
 ## Documentation Sections
 
-### [Quick Start](quickstart/)
+### [Quick Start](/bifrost/quickstart/overview)
 
 Get running in under 30 seconds with step-by-step guides for both Go package and HTTP transport usage.
 
-### [Usage](usage/)
+### [Usage](/bifrost/usage/go-package/overview)
 
 Complete API reference and usage guides:
 
-- [**Go Package**](usage/go-package/) - Direct Go integration
-- [**HTTP Transport**](usage/http-transport/) - REST API with drop-in integrations
+- [**Go Package**](/bifrost/usage/go-package/overview) - Direct Go integration
+- [**HTTP Transport**](/bifrost/usage/http-transport/configuration/providers) - REST API with drop-in integrations
 
-### [Architecture](architecture/)
+### [Architecture](/bifrost/architecture/overview)
 
 Deep dive into Bifrost's design, performance, and internals:
 
@@ -49,7 +49,7 @@ Deep dive into Bifrost's design, performance, and internals:
 - Performance benchmarks and optimization
 - Plugin and MCP architecture
 
-### [Examples](examples/)
+### [Examples](https://github.com/maximhq/bifrost)
 
 Practical, executable examples for common use cases:
 
@@ -61,13 +61,13 @@ Practical, executable examples for common use cases:
 
 Universal concepts that apply to both Go package and HTTP transport:
 
-- [**Providers**](usage/providers.md) - Multi-provider support and advanced configurations
-- [**Key Management**](usage/key-management.md) - API key rotation and distribution
-- [**Memory Management**](usage/memory-management.md) - Performance optimization
-- [**Networking**](usage/networking.md) - Proxies, timeouts, and retries
-- [**Error Handling**](usage/errors.md) - Error types and troubleshooting
+- [**Providers**](/bifrost/usage/providers) - Multi-provider support and advanced configurations
+- [**Key Management**](/bifrost/usage/key-management) - API key rotation and distribution
+- [**Memory Management**](/bifrost/usage/memory-management) - Performance optimization
+- [**Networking**](/bifrost/usage/networking) - Proxies, timeouts, and retries
+- [**Error Handling**](/bifrost/usage/errors) - Error types and troubleshooting
 
-### [Contributing](contributing/)
+### [Contributing](/bifrost/contributing/overview)
 
 Help improve Bifrost for everyone:
 
@@ -77,11 +77,7 @@ Help improve Bifrost for everyone:
 
 ### Additional Resources
 
-- [**Benchmarks**](benchmarks.md) - Performance metrics and comparisons
-- [**Troubleshooting**](troubleshooting.md) - Common issues and solutions
-- [**FAQ**](faq.md) - Frequently asked questions
-
----
+- [**Benchmarks**](/bifrost/overview/benchmarks) - Performance metrics and comparisons
 
 ## What Makes Bifrost Special
 
@@ -96,11 +92,7 @@ Help improve Bifrost for everyone:
 
 ## Quick Links
 
-- [**30-Second Setup**](quickstart/) - Get started immediately
-- [**Migration Guide**](usage/http-transport/integrations/migration-guide.md) - Migrate from existing providers
-- [**Benchmarks**](benchmarks.md) - Performance benchmarks and optimization
-- [**Production Deployment**](usage/http-transport/configuration/) - Scale to production
-
----
-
-**Need help?** Check our [FAQ](faq.md) or [Troubleshooting](troubleshooting.md).
+- [**30-Second Setup**](/bifrost/quickstart/overview) - Get started immediately
+- [**Migration Guide**](/bifrost/usage/http-transport/integrations/migration-guide) - Migrate from existing providers
+- [**Benchmarks**](/bifrost/overview/benchmarks) - Performance benchmarks and optimization
+- [**Production Deployment**](/bifrost/usage/http-transport/configuration/providers) - Scale to production
