@@ -1,10 +1,7 @@
-# ⚙️ Concurrency Model
-
-Deep dive into Bifrost's advanced concurrency architecture - worker pools, goroutine management, channel-based communication, and resource isolation patterns.
-
 ---
-
-## 🎯 Concurrency Philosophy
+title: "Concurrency Model"
+description: "Deep dive into Bifrost's advanced concurrency architecture - worker pools, goroutine management, channel-based communication, and resource isolation patterns."
+---
 
 ### **Core Principles**
 
@@ -13,7 +10,7 @@ Deep dive into Bifrost's advanced concurrency architecture - worker pools, gorou
 | **🔄 Provider Isolation**          | Independent worker pools per provider  | Fault tolerance, no cascade failures   |
 | **📡 Channel-Based Communication** | Go channels for all async operations   | Type-safe, deadlock-free communication |
 | **💾 Resource Pooling**            | Object pools with lifecycle management | Predictable memory usage, minimal GC   |
-| **⚡ Non-Blocking Operations**     | Async processing throughout pipeline   | Maximum concurrency, no blocking waits |
+| **⚡ Non-Blocking Operations**      | Async processing throughout pipeline   | Maximum concurrency, no blocking waits |
 | **🎯 Backpressure Handling**       | Configurable buffers and flow control  | Graceful degradation under load        |
 
 ### **Threading Architecture Overview**
@@ -244,26 +241,6 @@ The backpressure system protects Bifrost from being overwhelmed while maintainin
 - **Context-Based Timeouts** - All blocking operations respect timeout boundaries
 - **Graceful Degradation** - Timeouts result in controlled error responses
 - **Resource Protection** - Prevents goroutine leaks from infinite waits
-  case pool.jobQueue <- job:
-  pool.metrics.IncQueuedJobs()
-  return nil
-  case <-ctx.Done():
-  pool.metrics.IncTimeoutJobs()
-  return errors.New("queue full, timeout waiting")
-  }
-
-          case "error":
-              pool.metrics.IncRejectedJobs()
-              return errors.New("queue full, job rejected")
-
-          default:
-              return errors.New("unknown queue policy")
-          }
-      }
-
-  }
-
-````
 
 ---
 
@@ -295,7 +272,7 @@ graph TB
 
     GCRun --> PoolCleanup
     PoolCleanup --> Reallocation
-````
+```
 
 **Thread-Safe Pool Architecture:**
 
@@ -748,29 +725,3 @@ Bifrost employs multiple complementary strategies to prevent deadlocks in concur
 - **Automatic Recovery** - Detected deadlocks trigger automatic resolution procedures
 - **Resource Release** - Deadlock resolution involves strategic resource release
 - **Prevention Learning** - Deadlock patterns inform prevention strategy improvements
-
-```
-
----
-
-## 🔗 Related Architecture Documentation
-
-- **[🌐 System Overview](./system-overview.md)** - High-level architecture and component interaction
-- **[🔄 Request Flow](./request-flow.md)** - How concurrency fits in request processing
-- **[📊 Benchmarks](../benchmarks.md)** - Concurrency performance characteristics
-- **[🔌 Plugin System](./plugins.md)** - Plugin concurrency considerations
-- **[🛠️ MCP System](./mcp.md)** - MCP concurrency and worker integration
-- **[💡 Design Decisions](./design-decisions.md)** - Why this concurrency model was chosen
-
-## 📖 Usage Documentation
-
-- **[⚙️ Provider Configuration](../usage/http-transport/configuration/providers.md)** - Configure concurrency settings per provider
-- **[🔧 Memory Management](../usage/memory-management.md)** - Memory pool configuration and optimization
-- **[📊 Performance Monitoring](../usage/monitoring.md)** - Monitor concurrency metrics and health
-- **[🚀 Go Package Usage](../usage/go-package/README.md)** - Use Bifrost concurrency in Go applications
-- **[🌐 HTTP Transport](../usage/http-transport/README.md)** - Deploy Bifrost with optimal concurrency settings
-
----
-
-**🎯 Next Step:** Understand how plugins integrate with the concurrency model in **[Plugin System](./plugins.md)**.
-```
