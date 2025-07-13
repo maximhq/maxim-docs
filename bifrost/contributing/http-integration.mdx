@@ -3,8 +3,7 @@ title: "HTTP Integration Development Guide"
 description: "Comprehensive guide for building HTTP integrations for Bifrost. Learn how to create new API-compatible endpoints that translate between external service formats and Bifrost's unified interface."
 ---
 
-
-> **⚠️ IMPORTANT**: Before developing an integration, **thoroughly read** the [Request Flow Documentation](../architecture/request-flow.md) and [System Overview](../architecture/system-overview.md) to understand:
+> **⚠️ IMPORTANT**: Before developing an integration, **thoroughly read** the [Request Flow Documentation](/bifrost/architecture/request-flow) and [System Overview](/bifrost/architecture/system-overview) to understand:
 >
 > - HTTP transport layer architecture and request processing pipeline
 > - Integration patterns and GenericRouter design
@@ -651,17 +650,5 @@ func convertContentToBifrost(content interface{}) schemas.ModelChatMessageConten
     }
 }
 ```
-
----
-
-## 📖 **Additional Resources**
-
-- [**System Overview**](../architecture/system-overview.md) - Understanding Bifrost architecture
-- [**Request Flow**](../architecture/request-flow.md) - Request processing pipeline details
-- [**Benchmarks**](../benchmarks.md) - Performance characteristics and optimization
-- [**Existing Integrations**](../../transports/bifrost-http/integrations/) - Reference implementations
-- [**Integration Tests**](../../tests/transports-integrations/) - Test examples and utilities
-
----
 
 **Need Help?** Check existing integrations in the codebase or ask for guidance in the development community\!
