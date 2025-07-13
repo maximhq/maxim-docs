@@ -307,11 +307,7 @@ graph TD
 - **Retry:** Attempt plugin execution with exponential backoff
 - **Fallback:** Use alternative plugin or default behavior
 
-> **📖 Plugin Execution:** [Request Flow →](./request-flow.md#stage-3-plugin-pipeline-processing)
-
----
-
-## 🔧 Plugin Discovery & Configuration
+## Plugin Discovery & Configuration
 
 ### **Configuration Methods**
 
@@ -345,7 +341,7 @@ bifrost-http -config config.json -plugins "maxim,ratelimit"
 }
 ```
 
-> **📖 Plugin Configuration:** [Plugin Setup →](../usage/http-transport/configuration/plugins.md)
+> **📖 Plugin Configuration:** [Plugin Setup →](/bifrost/usage/http-transport/configuration/plugins)
 
 ---
 
@@ -459,8 +455,6 @@ graph TB
 - **Network Impact:** Configurable external service calls
 - **Storage Overhead:** Minimal for stateless plugins
 
-> **📖 Performance Monitoring:** [Plugin Metrics →](../usage/monitoring.md#plugin-metrics)
-
 ---
 
 ## 🔄 Plugin Integration Patterns
@@ -510,19 +504,6 @@ graph TB
 - **Message Queues:** Integration with message queue systems
 - **Caching Systems:** Redis, Memcached integration for state storage
 
-> **📖 Integration Examples:** [Plugin Development Guide →](../usage/go-package/plugins.md)
+> **📖 Integration Examples:** [Plugin Development Guide →](/bifrost/usage/go-package/plugins)
 
----
-
-## 🔗 Related Architecture Documentation
-
-- [**🌐 System Overview**](./system-overview.md) - How plugins fit in the overall architecture
-- [**🔄 Request Flow**](./request-flow.md) - Plugin execution in request processing pipeline
-- [**⚙️ Concurrency Model**](./concurrency.md) - Plugin concurrency and threading considerations
-- [**📊 Benchmarks**](../benchmarks.md) - Plugin performance characteristics and optimization
-- [**💡 Design Decisions**](./design-decisions.md) - Why this plugin architecture was chosen
-- [**🛠️ MCP System**](./mcp.md) - Integration between plugins and MCP system
-
----
-
-**🎯 Next Step:** Learn about the MCP (Model Context Protocol) system architecture in [**MCP System**](./mcp.md).
+**Next Step:** Learn about the MCP (Model Context Protocol) system architecture in [**MCP System**](/bifrost/architecture/mcp).
