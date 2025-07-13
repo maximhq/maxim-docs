@@ -1,7 +1,6 @@
-# Bifrost Benchmarks
-
-Bifrost has been tested under high load conditions to ensure optimal performance. The following results were obtained from benchmark tests running at 5000 requests per second (RPS) on different AWS EC2 instances.
-
+---
+title: "Bifrost Benchmarks"
+description: "Bifrost has been tested under high load conditions to ensure optimal performance. The following results were obtained from benchmark tests running at 5000 requests per second (RPS) on different AWS EC2 instances."
 ---
 
 ## Test Environment
@@ -15,8 +14,6 @@ Bifrost has been tested under high load conditions to ensure optimal performance
 
 - Buffer Size: 20,000
 - Initial Pool Size: 15,000
-
----
 
 ## Performance Metrics
 
@@ -43,8 +40,6 @@ _\*Bifrost's overhead is measured at 59 µs on t3.medium and 11 µs on t3.xlarge
 
 **Note**: On the t3.xlarge, we tested with significantly larger response payloads (~10 KB average vs ~1 KB on t3.medium). Even so, response parsing time dropped dramatically thanks to better CPU throughput and Bifrost's optimized memory reuse.
 
----
-
 ## Key Performance Highlights
 
 - **Perfect Success Rate**: 100% request success rate under high load on both instances
@@ -57,9 +52,7 @@ _\*Bifrost's overhead is measured at 59 µs on t3.medium and 11 µs on t3.xlarge
   - 58% faster JSON marshaling
   - Significantly reduced queue wait times
 
----
-
-## ⚙️ Configuration Flexibility
+## Configuration Flexibility
 
 One of Bifrost's key strengths is its flexibility in configuration. You can freely decide the tradeoff between memory usage and processing speed by adjusting Bifrost's configurations. This flexibility allows you to optimize Bifrost for your specific use case, whether you prioritize speed, memory efficiency, or a balance between the two.
 
@@ -73,19 +66,15 @@ One of Bifrost's key strengths is its flexibility in configuration. You can free
 - **Buffer and Concurrency Settings**: Controls the queue size and maximum number of concurrent requests (adjustable per provider)
 - **Retry and Timeout Configurations**: Customizable based on your requirements for each provider
 
----
-
-## 🚀 Run Your Own Benchmarks
+## Run Your Own Benchmarks
 
 Curious? Run your own benchmarks. The [Bifrost Benchmarking](https://github.com/maximhq/bifrost-benchmarking) repo has everything you need to test it in your own environment.
 
----
+## Related Documentation
 
-## 🔗 Related Documentation
+**Curious how we handle scales of 10k\+ RPS?** Check out our [System Architecture Documentation](./architecture/system-overview.md) for detailed insights into Bifrost's high-performance design, memory management, and scaling strategies.
 
-**🏛️ Curious how we handle scales of 10k+ RPS?** Check out our [System Architecture Documentation](./architecture/system-overview.md) for detailed insights into Bifrost's high-performance design, memory management, and scaling strategies.
-
-- **[🌐 System Overview](./architecture/system-overview.md)** - High-level architecture components
-- **[🔄 Request Flow](./architecture/request-flow.md)** - Request processing pipeline
-- **[⚙️ Concurrency Model](./architecture/concurrency.md)** - Worker pools and threading details
-- **[💡 Design Decisions](./architecture/design-decisions.md)** - Performance-related architectural choices
+- [**🌐 System Overview**](./architecture/system-overview.md) - High-level architecture components
+- [**🔄 Request Flow**](./architecture/request-flow.md) - Request processing pipeline
+- [**⚙️ Concurrency Model**](./architecture/concurrency.md) - Worker pools and threading details
+- [**💡 Design Decisions**](./architecture/design-decisions.md) - Performance-related architectural choices

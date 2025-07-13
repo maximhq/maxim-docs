@@ -1,0 +1,895 @@
+# 🔌 Plugin Development Guide
+
+Comprehensive guide for building powerful Bifrost plugins. Learn how to create PreHook and PostHook plugins that extend Bifrost's request/response pipeline with custom logic.
+
+> **⚠️ IMPORTANT**: Before developing a plugin, **thoroughly read** the [Plugin Architecture Documentation](../architecture/plugins.md) to understand:
+>
+> - Plugin system design principles and execution pipeline
+> - Plugin lifecycle management and state transitions
+> - Error handling patterns and recovery mechanisms
+> - Security considerations and validation requirements
+> - Performance implications and optimization strategies
+
+> You are also encouraged to go through existing plugins [here](https://github.com/maximhq/bifrost/tree/main/plugins) to understand the plugin system and how to implement your own plugins.
+
+---
+
+## 🏗️ **Plugin Structure Requirements**
+
+Each plugin should be organized as follows:
+
+```
+plugins/
+└── your-plugin-name/
+    ├── main.go           # Plugin implementation
+    ├── plugin_test.go    # Comprehensive tests
+    ├── README.md         # Documentation with examples
+    └── go.mod            # Module definition
+```
+
+### **Using Plugins**
+
+```go
+import (
+    "github.com/maximhq/bifrost/core"
+    "github.com/your-org/your-plugin"
+)
+
+client, err := bifrost.Init(schemas.BifrostConfig{
+    Account: &yourAccount,
+    Plugins: []schemas.Plugin{
+        your_plugin.NewYourPlugin(config),
+        // Add more plugins as needed
+    },
+})
+```
+
+---
+
+## 🎯 **Overview**
+
+Bifrost plugins provide a powerful middleware system that allows you to inject custom logic at critical points in the request lifecycle. You can build plugins for authentication, rate limiting, caching, monitoring, content filtering, and much more.
+
+### **Plugin Architecture Flow**
+
+```mermaid
+graph LR
+    subgraph "Plugin Pipeline"
+        direction TB
+        PR[PreHook 1] --> PR2[PreHook 2] --> PR3[PreHook N]
+        PR3 --> PC{Provider Call}
+        PC --> PO[PostHook N] --> PO2[PostHook 2] --> PO1[PostHook 1]
+    end
+
+    subgraph "Short-Circuit Paths"
+        direction TB
+        SC1[Short-Circuit Response]
+        SC2[Short-Circuit Error]
+        ER[Error Recovery]
+    end
+
+    PR -.-> SC1
+    PR2 -.-> SC2
+    PC -.-> ER
+    ER -.-> PO
+```
+
+---
+
+## 📋 **Prerequisites**
+
+### **Required Skills**
+
+- **Go Programming** - Intermediate proficiency required
+- **Interface Design** - Understanding of Go interfaces
+- **Middleware Patterns** - Request/response pipeline concepts
+- **Testing** - Unit and integration testing skills
+
+### **Development Environment**
+
+- **Go 1.23+** - Latest Go version
+- **Bifrost Core** - Understanding of Bifrost architecture
+- **Git** - Version control proficiency
+- **Testing Tools** - Go testing framework familiarity
+
+---
+
+## 🏗️ **Plugin Interface**
+
+### **Core Plugin Interface**
+
+Every plugin must implement the `Plugin` interface:
+
+```go
+type Plugin interface {
+    // GetName returns the unique name of the plugin
+    GetName() string
+
+    // PreHook is called before a request is processed by a provider
+    // Can modify request, short-circuit with response, or short-circuit with error
+    PreHook(ctx *context.Context, req *BifrostRequest) (*BifrostRequest, *PluginShortCircuit, error)
+
+    // PostHook is called after a response or after PreHook short-circuit
+    // Can modify response/error or recover from errors
+    PostHook(ctx *context.Context, result *BifrostResponse, err *BifrostError) (*BifrostResponse, *BifrostError, error)
+
+    // Cleanup is called on bifrost shutdown
+    Cleanup() error
+}
+```
+
+### **Short-Circuit Control**
+
+Plugins can short-circuit the request flow:
+
+```go
+type PluginShortCircuit struct {
+    Response       *BifrostResponse // If set, skip provider and return this response
+    Error          *BifrostError    // If set, skip provider and return this error
+    AllowFallbacks *bool            // Whether to allow fallback providers (default: true)
+}
+```
+
+---
+
+## 🔧 **Plugin Implementation Patterns**
+
+### **1. Request Modification Plugin**
+
+Modify requests before they reach the provider:
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "strings"
+
+    "github.com/maximhq/bifrost/core/schemas"
+)
+
+type RequestModifierPlugin struct {
+    name   string
+    config RequestModifierConfig
+}
+
+type RequestModifierConfig struct {
+    PrefixPrompt string `json:"prefix_prompt"`
+    SuffixPrompt string `json:"suffix_prompt"`
+}
+
+func NewRequestModifierPlugin(config RequestModifierConfig) *RequestModifierPlugin {
+    return &RequestModifierPlugin{
+        name:   "request-modifier",
+        config: config,
+    }
+}
+
+func (p *RequestModifierPlugin) GetName() string {
+    return p.name
+}
+
+func (p *RequestModifierPlugin) PreHook(
+    ctx *context.Context,
+    req *schemas.BifrostRequest,
+) (*schemas.BifrostRequest, *schemas.PluginShortCircuit, error) {
+
+    // Only modify chat completion requests
+    if req.Input.ChatCompletionInput == nil {
+        return req, nil, nil
+    }
+
+    messages := *req.Input.ChatCompletionInput
+
+    // Add prefix to first user message
+    if len(messages) > 0 && p.config.PrefixPrompt != "" {
+        for i, msg := range messages {
+            if msg.Role == schemas.ModelChatMessageRoleUser && msg.Content.ContentStr != nil {
+                originalContent := *msg.Content.ContentStr
+                newContent := p.config.PrefixPrompt + "\n\n" + originalContent
+
+                if p.config.SuffixPrompt != "" {
+                    newContent += "\n\n" + p.config.SuffixPrompt
+                }
+
+                messages[i].Content.ContentStr = &newContent
+                break
+            }
+        }
+    }
+
+    // Return modified request
+    modifiedReq := *req
+    modifiedReq.Input.ChatCompletionInput = &messages
+
+    return &modifiedReq, nil, nil
+}
+
+func (p *RequestModifierPlugin) PostHook(
+    ctx *context.Context,
+    result *schemas.BifrostResponse,
+    err *schemas.BifrostError,
+) (*schemas.BifrostResponse, *schemas.BifrostError, error) {
+    // No post-processing needed for this plugin
+    return result, err, nil
+}
+
+func (p *RequestModifierPlugin) Cleanup() error {
+    return nil
+}
+```
+
+### **2. Authentication Plugin**
+
+Validate and enrich requests with authentication:
+
+```go
+type AuthenticationPlugin struct {
+    name        string
+    apiKeys     map[string]string
+    rateLimiter map[string]*time.Ticker
+}
+
+func NewAuthenticationPlugin(validKeys map[string]string) *AuthenticationPlugin {
+    return &AuthenticationPlugin{
+        name:        "authentication",
+        apiKeys:     validKeys,
+        rateLimiter: make(map[string]*time.Ticker),
+    }
+}
+
+func (p *AuthenticationPlugin) PreHook(
+    ctx *context.Context,
+    req *schemas.BifrostRequest,
+) (*schemas.BifrostRequest, *schemas.PluginShortCircuit, error) {
+
+    // Extract API key from context
+    apiKey := extractAPIKeyFromContext(ctx)
+    if apiKey == "" {
+        return nil, &schemas.PluginShortCircuit{
+            Error: &schemas.BifrostError{
+                IsBifrostError: true,
+                StatusCode:     intPtr(401),
+                Error: schemas.ErrorField{
+                    Type:    stringPtr("authentication_error"),
+                    Code:    stringPtr("missing_api_key"),
+                    Message: "API key is required",
+                },
+            },
+            AllowFallbacks: boolPtr(false), // Don't try fallbacks for auth errors
+        }, nil
+    }
+
+    // Validate API key
+    userID, exists := p.apiKeys[apiKey]
+    if !exists {
+        return nil, &schemas.PluginShortCircuit{
+            Error: &schemas.BifrostError{
+                IsBifrostError: true,
+                StatusCode:     intPtr(401),
+                Error: schemas.ErrorField{
+                    Type:    stringPtr("authentication_error"),
+                    Code:    stringPtr("invalid_api_key"),
+                    Message: "Invalid API key",
+                },
+            },
+            AllowFallbacks: boolPtr(false),
+        }, nil
+    }
+
+    // Add user context to request
+    enrichedCtx := context.WithValue(*ctx, "user_id", userID)
+    enrichedCtx = context.WithValue(enrichedCtx, "authenticated", true)
+    *ctx = enrichedCtx
+
+    return req, nil, nil
+}
+```
+
+### **3. Caching Plugin**
+
+Cache responses for repeated requests:
+
+```go
+type CachingPlugin struct {
+    name     string
+    cache    map[string]*CacheEntry
+    cacheMu  sync.RWMutex
+    ttl      time.Duration
+}
+
+type CacheEntry struct {
+    Response  *schemas.BifrostResponse
+    Timestamp time.Time
+}
+
+func NewCachingPlugin(ttl time.Duration) *CachingPlugin {
+    plugin := &CachingPlugin{
+        name:  "caching",
+        cache: make(map[string]*CacheEntry),
+        ttl:   ttl,
+    }
+
+    // Start cleanup goroutine
+    go plugin.cleanupExpiredEntries()
+
+    return plugin
+}
+
+func (p *CachingPlugin) PreHook(
+    ctx *context.Context,
+    req *schemas.BifrostRequest,
+) (*schemas.BifrostRequest, *schemas.PluginShortCircuit, error) {
+
+    // Generate cache key from request
+    cacheKey := p.generateCacheKey(req)
+
+    p.cacheMu.RLock()
+    entry, exists := p.cache[cacheKey]
+    p.cacheMu.RUnlock()
+
+    // Check if cached response is valid
+    if exists && time.Since(entry.Timestamp) < p.ttl {
+        // Cache hit - short-circuit with cached response
+        return nil, &schemas.PluginShortCircuit{
+            Response: entry.Response,
+        }, nil
+    }
+
+    // Cache miss - let request continue
+    return req, nil, nil
+}
+
+func (p *CachingPlugin) PostHook(
+    ctx *context.Context,
+    result *schemas.BifrostResponse,
+    err *schemas.BifrostError,
+) (*schemas.BifrostResponse, *schemas.BifrostError, error) {
+
+    // Only cache successful responses
+    if err == nil && result != nil {
+        // Extract original request from context
+        if originalReq := extractRequestFromContext(ctx); originalReq != nil {
+            cacheKey := p.generateCacheKey(originalReq)
+
+            p.cacheMu.Lock()
+            p.cache[cacheKey] = &CacheEntry{
+                Response:  result,
+                Timestamp: time.Now(),
+            }
+            p.cacheMu.Unlock()
+        }
+    }
+
+    return result, err, nil
+}
+
+func (p *CachingPlugin) generateCacheKey(req *schemas.BifrostRequest) string {
+    // Create deterministic key based on request content
+    h := sha256.New()
+
+    // Include provider, model, and input
+    h.Write([]byte(string(req.Provider)))
+    h.Write([]byte(req.Model))
+
+    if req.Input.ChatCompletionInput != nil {
+        for _, msg := range *req.Input.ChatCompletionInput {
+            h.Write([]byte(string(msg.Role)))
+            if msg.Content.ContentStr != nil {
+                h.Write([]byte(*msg.Content.ContentStr))
+            }
+        }
+    }
+
+    return fmt.Sprintf("%x", h.Sum(nil))
+}
+
+func (p *CachingPlugin) cleanupExpiredEntries() {
+    ticker := time.NewTicker(time.Minute)
+    defer ticker.Stop()
+
+    for range ticker.C {
+        p.cacheMu.Lock()
+        for key, entry := range p.cache {
+            if time.Since(entry.Timestamp) > p.ttl {
+                delete(p.cache, key)
+            }
+        }
+        p.cacheMu.Unlock()
+    }
+}
+```
+
+### **4. Error Recovery Plugin**
+
+Recover from provider errors with fallback responses:
+
+```go
+type ErrorRecoveryPlugin struct {
+    name           string
+    fallbackModel  string
+    maxRetries     int
+    fallbackPrompt string
+}
+
+func NewErrorRecoveryPlugin(fallbackModel string, maxRetries int) *ErrorRecoveryPlugin {
+    return &ErrorRecoveryPlugin{
+        name:           "error-recovery",
+        fallbackModel:  fallbackModel,
+        maxRetries:     maxRetries,
+        fallbackPrompt: "I apologize, but I'm experiencing technical difficulties. Please try again later.",
+    }
+}
+
+func (p *ErrorRecoveryPlugin) PreHook(
+    ctx *context.Context,
+    req *schemas.BifrostRequest,
+) (*schemas.BifrostRequest, *schemas.PluginShortCircuit, error) {
+    // No pre-processing needed
+    return req, nil, nil
+}
+
+func (p *ErrorRecoveryPlugin) PostHook(
+    ctx *context.Context,
+    result *schemas.BifrostResponse,
+    err *schemas.BifrostError,
+) (*schemas.BifrostResponse, *schemas.BifrostError, error) {
+
+    // Only handle certain types of errors
+    if err == nil || !p.shouldRecover(err) {
+        return result, err, nil
+    }
+
+    // Check retry count
+    retryCount := getRetryCountFromContext(ctx)
+    if retryCount >= p.maxRetries {
+        return result, err, nil
+    }
+
+    // Create fallback response
+    fallbackResponse := &schemas.BifrostResponse{
+        ID:      generateUUID(),
+        Object:  "chat.completion",
+        Model:   p.fallbackModel,
+        Created: int(time.Now().Unix()),
+        Choices: []schemas.BifrostResponseChoice{
+            {
+                Index:        0,
+                FinishReason: "stop",
+                Message: schemas.BifrostMessage{
+                    Role: schemas.ModelChatMessageRoleAssistant,
+                    Content: schemas.MessageContent{
+                        ContentStr: &p.fallbackPrompt,
+                    },
+                },
+            },
+        },
+        Usage: schemas.LLMUsage{
+            PromptTokens:     0,
+            CompletionTokens: len(strings.Split(p.fallbackPrompt, " ")),
+            TotalTokens:      len(strings.Split(p.fallbackPrompt, " ")),
+        },
+        ExtraFields: schemas.BifrostResponseExtraFields{
+            Provider: schemas.ModelProvider("fallback"),
+        },
+    }
+
+    // Return recovered response (no error)
+    return fallbackResponse, nil, nil
+}
+
+func (p *ErrorRecoveryPlugin) shouldRecover(err *schemas.BifrostError) bool {
+    // Recover from rate limits and temporary failures
+    if err.StatusCode != nil {
+        code := *err.StatusCode
+        return code == 429 || code == 502 || code == 503 || code == 504
+    }
+    return false
+}
+```
+
+---
+
+## 🧪 **Plugin Testing**
+
+### **Unit Testing Framework**
+
+```go
+package main
+
+import (
+    "context"
+    "testing"
+    "github.com/stretchr/testify/assert"
+    "github.com/stretchr/testify/require"
+)
+
+func TestRequestModifierPlugin(t *testing.T) {
+    tests := []struct {
+        name           string
+        config         RequestModifierConfig
+        inputRequest   *schemas.BifrostRequest
+        expectedPrefix string
+        expectedSuffix string
+    }{
+        {
+            name: "adds prefix and suffix to user message",
+            config: RequestModifierConfig{
+                PrefixPrompt: "Please be concise:",
+                SuffixPrompt: "Respond in one sentence.",
+            },
+            inputRequest: &schemas.BifrostRequest{
+                Provider: schemas.OpenAI,
+                Model:    "gpt-4o-mini",
+                Input: schemas.RequestInput{
+                    ChatCompletionInput: &[]schemas.BifrostMessage{
+                        {
+                            Role: schemas.ModelChatMessageRoleUser,
+                            Content: schemas.MessageContent{
+                                ContentStr: stringPtr("What is AI?"),
+                            },
+                        },
+                    },
+                },
+            },
+            expectedPrefix: "Please be concise:",
+            expectedSuffix: "Respond in one sentence.",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            plugin := NewRequestModifierPlugin(tt.config)
+            ctx := context.Background()
+
+            result, shortCircuit, err := plugin.PreHook(&ctx, tt.inputRequest)
+
+            assert.NoError(t, err)
+            assert.Nil(t, shortCircuit)
+            assert.NotNil(t, result)
+
+            messages := *result.Input.ChatCompletionInput
+            require.Len(t, messages, 1)
+
+            content := *messages[0].Content.ContentStr
+            assert.Contains(t, content, tt.expectedPrefix)
+            assert.Contains(t, content, tt.expectedSuffix)
+            assert.Contains(t, content, "What is AI?")
+        })
+    }
+}
+
+func TestAuthenticationPlugin(t *testing.T) {
+    validKeys := map[string]string{
+        "test-key-1": "user-1",
+        "test-key-2": "user-2",
+    }
+
+    plugin := NewAuthenticationPlugin(validKeys)
+
+    tests := []struct {
+        name        string
+        apiKey      string
+        expectError bool
+        errorCode   string
+    }{
+        {
+            name:        "valid API key",
+            apiKey:      "test-key-1",
+            expectError: false,
+        },
+        {
+            name:        "invalid API key",
+            apiKey:      "invalid-key",
+            expectError: true,
+            errorCode:   "invalid_api_key",
+        },
+        {
+            name:        "missing API key",
+            apiKey:      "",
+            expectError: true,
+            errorCode:   "missing_api_key",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            ctx := context.WithValue(context.Background(), "api_key", tt.apiKey)
+            req := &schemas.BifrostRequest{
+                Provider: schemas.OpenAI,
+                Model:    "gpt-4o-mini",
+            }
+
+            result, shortCircuit, err := plugin.PreHook(&ctx, req)
+
+            assert.NoError(t, err) // Plugin errors are returned via shortCircuit
+
+            if tt.expectError {
+                assert.Nil(t, result)
+                assert.NotNil(t, shortCircuit)
+                assert.NotNil(t, shortCircuit.Error)
+
+                if tt.errorCode != "" {
+                    assert.Equal(t, tt.errorCode, *shortCircuit.Error.Error.Code)
+                }
+
+                assert.NotNil(t, shortCircuit.AllowFallbacks)
+                assert.False(t, *shortCircuit.AllowFallbacks)
+            } else {
+                assert.NotNil(t, result)
+                assert.Nil(t, shortCircuit)
+
+                // Check that user context was added
+                userID := ctx.Value("user_id")
+                assert.Equal(t, "user-1", userID)
+            }
+        })
+    }
+}
+```
+
+### **Integration Testing**
+
+```go
+func TestPluginIntegration(t *testing.T) {
+    // Create a test Bifrost instance with plugins
+    config := schemas.BifrostConfig{
+        Account: &testAccount,
+        Plugins: []schemas.Plugin{
+            NewAuthenticationPlugin(map[string]string{
+                "test-key": "test-user",
+            }),
+            NewRequestModifierPlugin(RequestModifierConfig{
+                PrefixPrompt: "Be helpful:",
+            }),
+            NewCachingPlugin(time.Minute),
+        },
+    }
+
+    client, err := bifrost.Init(config)
+    require.NoError(t, err)
+    defer client.Cleanup()
+
+    // Test authenticated request
+    ctx := context.WithValue(context.Background(), "api_key", "test-key")
+
+    request := &schemas.BifrostRequest{
+        Provider: schemas.OpenAI,
+        Model:    "gpt-4o-mini",
+        Input: schemas.RequestInput{
+            ChatCompletionInput: &[]schemas.BifrostMessage{
+                {
+                    Role: schemas.ModelChatMessageRoleUser,
+                    Content: schemas.MessageContent{
+                        ContentStr: stringPtr("Hello"),
+                    },
+                },
+            },
+        },
+    }
+
+    // First request - should hit provider
+    result1, err := client.ChatCompletionRequest(ctx, request)
+    assert.NoError(t, err)
+    assert.NotNil(t, result1)
+
+    // Second identical request - should hit cache
+    result2, err := client.ChatCompletionRequest(ctx, request)
+    assert.NoError(t, err)
+    assert.NotNil(t, result2)
+
+    // Results should be identical (from cache)
+    assert.Equal(t, result1.ID, result2.ID)
+}
+```
+
+---
+
+## 📚 **Advanced Plugin Patterns**
+
+### **Configuration-Driven Plugins**
+
+```go
+type ConfigurablePlugin struct {
+    name   string
+    config PluginConfig
+}
+
+type PluginConfig struct {
+    Rules []Rule `json:"rules"`
+}
+
+type Rule struct {
+    Condition string      `json:"condition"`
+    Action    string      `json:"action"`
+    Value     interface{} `json:"value"`
+}
+
+func (p *ConfigurablePlugin) PreHook(
+    ctx *context.Context,
+    req *schemas.BifrostRequest,
+) (*schemas.BifrostRequest, *schemas.PluginShortCircuit, error) {
+
+    for _, rule := range p.config.Rules {
+        if p.evaluateCondition(rule.Condition, req) {
+            return p.executeAction(rule.Action, rule.Value, req)
+        }
+    }
+
+    return req, nil, nil
+}
+```
+
+### **Plugin Chaining and Dependencies**
+
+```go
+type PluginManager struct {
+    plugins    []schemas.Plugin
+    pluginMeta map[string]PluginMetadata
+}
+
+type PluginMetadata struct {
+    Dependencies []string
+    Priority     int
+    Enabled      bool
+}
+
+func (pm *PluginManager) SortPluginsByDependencies() error {
+    // Topological sort based on dependencies
+    sorted, err := pm.topologicalSort()
+    if err != nil {
+        return fmt.Errorf("plugin dependency cycle detected: %w", err)
+    }
+
+    pm.plugins = sorted
+    return nil
+}
+```
+
+### **Async Plugin Operations**
+
+```go
+type AsyncPlugin struct {
+    name       string
+    workQueue  chan PluginWork
+    workers    int
+    workerPool sync.WaitGroup
+}
+
+type PluginWork struct {
+    Context  context.Context
+    Request  *schemas.BifrostRequest
+    Response *schemas.BifrostResponse
+    Error    *schemas.BifrostError
+    Done     chan struct{}
+}
+
+func (p *AsyncPlugin) PostHook(
+    ctx *context.Context,
+    result *schemas.BifrostResponse,
+    err *schemas.BifrostError,
+) (*schemas.BifrostResponse, *schemas.BifrostError, error) {
+
+    work := PluginWork{
+        Context:  *ctx,
+        Request:  extractRequestFromContext(ctx),
+        Response: result,
+        Error:    err,
+        Done:     make(chan struct{}),
+    }
+
+    // Queue work for async processing
+    select {
+    case p.workQueue <- work:
+        // Don't wait for async work to complete
+    default:
+        // Queue full, skip async processing
+    }
+
+    return result, err, nil
+}
+```
+
+---
+
+## ✅ **Plugin Submission Checklist**
+
+### **Code Quality**
+
+- [ ] **Interface Implementation** - Correctly implements Plugin interface
+- [ ] **Error Handling** - Proper error handling and short-circuit usage
+- [ ] **Thread Safety** - Safe for concurrent use
+- [ ] **Resource Management** - Proper cleanup in Cleanup() method
+- [ ] **Code Documentation** - Clear comments and documentation
+
+### **Testing**
+
+- [ ] **Unit Tests** - Comprehensive test coverage (>90%)
+- [ ] **Integration Tests** - Tests with real Bifrost instance
+- [ ] **Concurrent Testing** - Tests under concurrent load
+- [ ] **Error Scenarios** - Tests for various error conditions
+- [ ] **Short-Circuit Testing** - Tests for short-circuit behavior
+
+### **Documentation**
+
+- [ ] **Plugin Documentation** - Clear setup and usage instructions
+- [ ] **Configuration Schema** - Documented configuration options
+- [ ] **Examples** - Working code examples and use cases
+- [ ] **Performance Impact** - Performance characteristics documented
+- [ ] **Compatibility** - Provider and feature compatibility matrix
+
+### **Performance**
+
+- [ ] **Benchmarks** - Performance benchmarks included
+- [ ] **Memory Efficiency** - Minimal memory footprint
+- [ ] **Latency Impact** - Low latency overhead (<10ms)
+- [ ] **Resource Limits** - Configurable resource limits
+- [ ] **Monitoring** - Built-in metrics and monitoring
+
+---
+
+## 🚀 **Plugin Distribution**
+
+### **Plugin as Go Module**
+
+```go
+// go.mod
+module github.com/yourorg/bifrost-plugin-awesome
+
+go 1.23
+
+require (
+    github.com/maximhq/bifrost v1.0.0
+)
+```
+
+### **Plugin Registration**
+
+```go
+package main
+
+import (
+    "github.com/maximhq/bifrost/core/schemas"
+)
+
+// PluginFactory creates and configures the plugin
+func PluginFactory(config map[string]interface{}) (schemas.Plugin, error) {
+    // Parse configuration
+    pluginConfig, err := parseConfig(config)
+    if err != nil {
+        return nil, fmt.Errorf("invalid plugin configuration: %w", err)
+    }
+
+    // Create and return plugin instance
+    return NewYourAwesomePlugin(pluginConfig), nil
+}
+
+// For binary plugins
+func main() {
+    // Plugin binary entry point
+    plugin := NewYourAwesomePlugin(defaultConfig)
+
+    // Register with plugin system
+    schemas.RegisterPlugin("awesome-plugin", plugin)
+}
+```
+
+---
+
+## 🎯 **Next Steps**
+
+1. **Study Examples** - Review existing plugins in `plugins/` directory
+2. **Choose Use Case** - Identify the problem your plugin will solve
+3. **Design Interface** - Plan your plugin's PreHook/PostHook behavior
+4. **Implement Core Logic** - Build the main plugin functionality
+5. **Add Configuration** - Make your plugin configurable
+6. **Write Tests** - Create comprehensive test suite
+7. **Document Usage** - Write clear documentation and examples
+8. **Submit Plugin** - Follow the [contribution process](./README.md#-pull-request-process)
+
+---
+
+**Ready to build your plugin?** 🚀
+
+Check out the existing plugin implementations in `plugins/` for inspiration, and join the discussion in [GitHub Discussions](https://github.com/maximhq/bifrost/discussions) to share your plugin ideas!
