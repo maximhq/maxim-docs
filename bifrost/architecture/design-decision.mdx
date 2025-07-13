@@ -56,7 +56,7 @@ graph TB
 **Alternative Considered:** Shared worker pool across all providers\
 **Why Rejected:** Would create resource contention and cascade failures when one provider experiences issues.
 
-> **📖 Configuration Guide:** [Provider Setup →](../usage/http-transport/configuration/providers.md)
+> **📖 Configuration Guide:** [Provider Setup →](/bifrost/usage/http-transport/configuration/providers)
 
 ### **2. Aggressive Object Pooling Strategy**
 
@@ -98,7 +98,7 @@ graph LR
 - ⚠️ **Con:** Higher baseline memory usage (configurable)
 - ⚠️ **Con:** More complex memory management (handled internally)
 
-> **📖 Performance Tuning:** [Memory Management →](../usage/memory-management.md)
+> **📖 Performance Tuning:** [Memory Management →](/bifrost/usage/memory-management)
 
 ### **3. Sequential Fallback Chain Design**
 
@@ -128,7 +128,7 @@ graph LR
 **Alternative Considered:** Parallel fallback execution\
 **Why Rejected:** Would increase costs and complexity without providing significant reliability benefits.
 
-> **📖 Fallback Configuration:** [Provider Fallbacks →](../usage/providers.md#fallback-configuration)
+> **📖 Fallback Configuration:** [Provider Fallbacks →](/bifrost/usage/providers)
 
 ### **4. Unified Request/Response Schema**
 
@@ -147,7 +147,7 @@ graph LR
 - **Optional Extensions** - Provider-specific features via optional fields
 - **Future-Proof** - Extensible for new provider capabilities
 
-> **📖 Schema Reference:** [Go Package Schemas →](../usage/go-package/schemas.md) | [HTTP API Reference →](../usage/http-transport/endpoints.md)
+> **📖 Schema Reference:** [Go Package Schemas →](/bifrost/usage/go-package/schemas) | [HTTP API Reference →](/bifrost/usage/http-transport/endpoints)
 
 ### **5. Configuration-First Security**
 
@@ -172,7 +172,7 @@ graph TB
     Runtime -.->|✅ Validated<br/>Type Safe| Safety[Runtime Safety]
 ```
 
-> **📖 Configuration Guide:** [Provider Configuration →](../usage/http-transport/configuration/providers.md) | [Key Management →](../usage/key-management.md)
+> **📖 Configuration Guide:** [Provider Configuration →](/bifrost/usage/http-transport/configuration/providers) | [Key Management →](/bifrost/usage/key-management)
 
 ### **6. Dual Interface Architecture**
 
@@ -193,7 +193,7 @@ graph TB
 - **Consistent Behavior** - Same configuration and functionality
 - **Synchronized Updates** - Features available in both interfaces simultaneously
 
-> **📖 Interface Guides:** [Go Package →](../usage/go-package/README.md) | [HTTP Transport →](../usage/http-transport/README.md)
+> **📖 Interface Guides:** [Go Package →](/bifrost/usage/go-package/overview) | [HTTP Transport →](/bifrost/usage/http-transport/configuration/providers)
 
 ---
 
@@ -246,7 +246,7 @@ We carefully chose which reliability features to include based on value vs. comp
 - **Recovery Support** - Error details enable intelligent retry logic
 - **Debug Friendliness** - Rich error context for troubleshooting
 
-> **📖 Error Handling:** [Error Reference →](../usage/errors.md)
+> **📖 Error Handling:** [Error Reference →](/bifrost/usage/errors)
 
 ### **Plugin Architecture Philosophy**
 
@@ -261,7 +261,7 @@ We carefully chose which reliability features to include based on value vs. comp
 
 **Symmetric Execution:** PostHooks run in reverse order of PreHooks to ensure proper cleanup and state management.
 
-> **📖 Plugin Development:** [Plugin Guide →](../usage/http-transport/configuration/plugins.md)
+> **📖 Plugin Development:** [Plugin Guide →](/bifrost/usage/http-transport/configuration/plugins)
 
 ### **MCP Integration Strategy**
 
@@ -274,7 +274,7 @@ We carefully chose which reliability features to include based on value vs. comp
 - **Performance** - Avoid server-side execution overhead
 - **Compliance** - Client can implement authorization policies
 
-> **📖 MCP Setup:** [MCP Configuration →](../usage/http-transport/configuration/mcp.md)
+> **📖 MCP Setup:** [MCP Configuration →](/bifrost/usage/http-transport/configuration/mcp)
 
 ---
 
@@ -311,8 +311,6 @@ We carefully chose which reliability features to include based on value vs. comp
 - **Rich Metrics** - Comprehensive performance and business metrics
 - **Industry Standard** - Prometheus format for wide ecosystem compatibility
 - **Custom Labels** - Application-specific metric dimensions
-
-> **📖 Monitoring Setup:** [Observability →](../usage/monitoring.md)
 
 ---
 
@@ -377,12 +375,12 @@ We carefully chose which reliability features to include based on value vs. comp
 
 ## 🔗 Related Architecture Documentation
 
-- [**🌐 System Overview**](./system-overview.md) - High-level architecture and component interaction
-- [**🔄 Request Flow**](./request-flow.md) - How these decisions affect request processing
-- [**⚙️ Concurrency Model**](./concurrency.md) - Concurrency-related design decisions
-- [**📊 Benchmarks**](../benchmarks.md) - Performance implications of design choices
-- [**🔌 Plugin System**](./plugins.md) - Plugin architecture design decisions
-- [**🛠️ MCP System**](./mcp.md) - MCP integration design decisions
+- [**🌐 System Overview**](/bifrost/architecture/system-overview) - High-level architecture and component interaction
+- [**🔄 Request Flow**](/bifrost/architecture/request-flow) - How these decisions affect request processing
+- [**⚙️ Concurrency Model**](/bifrost/architecture/concurrency) - Concurrency-related design decisions
+- [**📊 Benchmarks**](/bifrost/overview/benchmarks) - Performance implications of design choices
+- [**🔌 Plugin System**](/bifrost/architecture/plugins) - Plugin architecture design decisions
+- [**🛠️ MCP System**](/bifrost/architecture/mcp) - MCP integration design decisions
 
 ---
 
