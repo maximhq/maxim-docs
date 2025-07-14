@@ -921,47 +921,30 @@
                                       "type": "string"
                                     },
                                     "payload": {
-                                      "oneOf": [
-                                        {
-                                          "type": "object",
-                                          "properties": {
-                                            "text": {
-                                              "type": "string"
-                                            }
-                                          },
-                                          "required": ["text"],
-                                          "additionalProperties": false
+                                      "type": "object",
+                                      "properties": {
+                                        "text": {
+                                          "type": "string"
                                         },
-                                        {
-                                          "type": "object",
-                                          "properties": {
-                                            "text": {
-                                              "type": "string"
-                                            },
-                                            "files": {
-                                              "type": "array",
-                                              "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                  "id": {
-                                                    "type": "string"
-                                                  },
-                                                  "url": {
-                                                    "type": "string"
-                                                  }
-                                                },
-                                                "required": [
-                                                  "id",
-                                                  "url"
-                                                ],
-                                                "additionalProperties": false
+                                        "files": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "object",
+                                            "properties": {
+                                              "id": {
+                                                "type": "string"
+                                              },
+                                              "url": {
+                                                "type": "string"
                                               }
-                                            }
-                                          },
-                                          "required": ["text", "files"],
-                                          "additionalProperties": false
+                                            },
+                                            "required": [
+                                              "id",
+                                              "url"
+                                            ]
+                                          }
                                         }
-                                      ]
+                                      }
                                     }
                                   },
                                   "required": [
@@ -1216,47 +1199,7 @@
                                       "type": "string"
                                     },
                                     "payload": {
-                                      "oneOf": [
-                                        {
-                                          "type": "object",
-                                          "properties": {
-                                            "text": {
-                                              "type": "string"
-                                            }
-                                          },
-                                          "required": ["text"],
-                                          "additionalProperties": false
-                                        },
-                                        {
-                                          "type": "object",
-                                          "properties": {
-                                            "text": {
-                                              "type": "string"
-                                            },
-                                            "files": {
-                                              "type": "array",
-                                              "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                  "id": {
-                                                    "type": "string"
-                                                  },
-                                                  "url": {
-                                                    "type": "string"
-                                                  }
-                                                },
-                                                "required": [
-                                                  "id",
-                                                  "url"
-                                                ],
-                                                "additionalProperties": false
-                                              }
-                                            }
-                                          },
-                                          "required": ["text", "files"],
-                                          "additionalProperties": false
-                                        }
-                                      ]
+                                      "type": "string"
                                     }
                                   },
                                   "required": [
@@ -1473,47 +1416,7 @@
                                       "type": "string"
                                     },
                                     "payload": {
-                                      "oneOf": [
-                                        {
-                                          "type": "object",
-                                          "properties": {
-                                            "text": {
-                                              "type": "string"
-                                            }
-                                          },
-                                          "required": ["text"],
-                                          "additionalProperties": false
-                                        },
-                                        {
-                                          "type": "object",
-                                          "properties": {
-                                            "text": {
-                                              "type": "string"
-                                            },
-                                            "files": {
-                                              "type": "array",
-                                              "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                  "id": {
-                                                    "type": "string"
-                                                  },
-                                                  "url": {
-                                                    "type": "string"
-                                                  }
-                                                },
-                                                "required": [
-                                                  "id",
-                                                  "url"
-                                                ],
-                                                "additionalProperties": false
-                                              }
-                                            }
-                                          },
-                                          "required": ["text", "files"],
-                                          "additionalProperties": false
-                                        }
-                                      ]
+                                      "type": "string"
                                     }
                                   },
                                   "required": [
