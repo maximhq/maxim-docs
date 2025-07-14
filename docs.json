@@ -247,6 +247,10 @@
                                 "group": "Integrations",
                                 "pages": [
                                     {
+                                        "group": "Agno",
+                                        "pages": ["sdk/python/integrations/agno/agno"]
+                                    },
+                                    {
                                         "group": "Anthropic",
                                         "pages": ["sdk/python/integrations/anthropic/anthropic"]
                                     },
