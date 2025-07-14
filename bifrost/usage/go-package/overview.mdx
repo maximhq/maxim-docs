@@ -18,8 +18,8 @@ description: "Complete guide to using Bifrost as a Go package in your applicatio
 
 ### **Usage Patterns**
 
-<details>
-  <summary><strong>🚀 Basic Usage (Most Common)</strong></summary>
+
+  🚀 Basic Usage (Most Common)
 
   ```go
   import (
@@ -48,10 +48,10 @@ description: "Complete guide to using Bifrost as a Go package in your applicatio
       })
   }
   ```
-</details>
 
-<details>
-  <summary><strong>⚡ Multi-Provider with Fallbacks</strong></summary>
+
+
+  ⚡ Multi-Provider with Fallbacks
 
   ```go
   response, err := client.ChatCompletionRequest(ctx, &schemas.BifrostRequest{
@@ -64,10 +64,10 @@ description: "Complete guide to using Bifrost as a Go package in your applicatio
       },
   })
   ```
-</details>
 
-<details>
-  <summary><strong>🛠️ Tool Calling</strong></summary>
+
+
+  🛠️ Tool Calling
 
   ```go
   response, err := client.ChatCompletionRequest(ctx, &schemas.BifrostRequest{
@@ -80,10 +80,10 @@ description: "Complete guide to using Bifrost as a Go package in your applicatio
       },
   })
   ```
-</details>
 
-<details>
-  <summary><strong>🔌 With Custom Plugin</strong></summary>
+
+
+  🔌 With Custom Plugin
 
   ```go
   client, _ := bifrost.Init(schemas.BifrostConfig{
@@ -91,7 +91,7 @@ description: "Complete guide to using Bifrost as a Go package in your applicatio
       Plugins: []schemas.Plugin{&MyCustomPlugin{}},
   })
   ```
-</details>
+
 
 ---
 

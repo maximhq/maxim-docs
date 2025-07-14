@@ -28,7 +28,7 @@ description: "Network configuration including proxy support, connection pooling,
 ### Default Network Settings
 
 <details open>
-  <summary><strong>🔧 Go Package Usage</strong></summary>
+  🔧 Go Package Usage
 
   ```go
   func (a *MyAccount) GetConfigForProvider(provider schemas.ModelProvider) (*schemas.ProviderConfig, error) {
@@ -66,10 +66,10 @@ description: "Network configuration including proxy support, connection pooling,
   | `MaxRetries`                     | `int`               | Retry attempts           | `0`              |
   | `RetryBackoffInitial`            | `time.Duration`     | Initial retry delay      | `500ms`          |
   | `RetryBackoffMax`                | `time.Duration`     | Maximum retry delay      | `5s`             |
-</details>
 
-<details>
-  <summary><strong>🌐 HTTP Transport Usage</strong></summary>
+
+
+  🌐 HTTP Transport Usage
 
   **Configuration (`config.json`):**
 
@@ -100,7 +100,7 @@ description: "Network configuration including proxy support, connection pooling,
     }
   }
   ```
-</details>
+
 
 ---
 
@@ -108,8 +108,8 @@ description: "Network configuration including proxy support, connection pooling,
 
 ### HTTP Proxy
 
-<details>
-  <summary><strong>🔧 Go Package - HTTP Proxy</strong></summary>
+
+  🔧 Go Package - HTTP Proxy
 
   ```go
   func (a *MyAccount) GetConfigForProvider(provider schemas.ModelProvider) (*schemas.ProviderConfig, error) {
@@ -135,10 +135,10 @@ description: "Network configuration including proxy support, connection pooling,
   | `URL`      | `string`    | Proxy server URL             | ✅        |
   | `Username` | `string`    | Proxy authentication user    | ❌        |
   | `Password` | `string`    | Proxy authentication pass    | ❌        |
-</details>
 
-<details>
-  <summary><strong>🌐 HTTP Transport - HTTP Proxy</strong></summary>
+
+
+  🌐 HTTP Transport - HTTP Proxy
 
   ```json
   {
@@ -164,12 +164,12 @@ description: "Network configuration including proxy support, connection pooling,
     }
   }
   ```
-</details>
+
 
 ### SOCKS5 Proxy
 
-<details>
-  <summary><strong>🔧 Go Package - SOCKS5 Proxy</strong></summary>
+
+  🔧 Go Package - SOCKS5 Proxy
 
   ```go
   func (a *MyAccount) GetConfigForProvider(provider schemas.ModelProvider) (*schemas.ProviderConfig, error) {
@@ -183,10 +183,10 @@ description: "Network configuration including proxy support, connection pooling,
       }, nil
   }
   ```
-</details>
 
-<details>
-  <summary><strong>🌐 HTTP Transport - SOCKS5 Proxy</strong></summary>
+
+
+  🌐 HTTP Transport - SOCKS5 Proxy
 
   ```json
   {
@@ -202,12 +202,12 @@ description: "Network configuration including proxy support, connection pooling,
     }
   }
   ```
-</details>
+
 
 ### Environment-Based Proxy
 
-<details>
-  <summary><strong>🔧 Go Package - Environment Proxy</strong></summary>
+
+  🔧 Go Package - Environment Proxy
 
   ```go
   func (a *MyAccount) GetConfigForProvider(provider schemas.ModelProvider) (*schemas.ProviderConfig, error) {
@@ -227,10 +227,10 @@ description: "Network configuration including proxy support, connection pooling,
   export HTTPS_PROXY=https://proxy.company.com:8443
   export NO_PROXY=localhost,127.0.0.1,.company.com
   ```
-</details>
 
-<details>
-  <summary><strong>🌐 HTTP Transport - Environment Proxy</strong></summary>
+
+
+  🌐 HTTP Transport - Environment Proxy
 
   ```json
   {
@@ -251,7 +251,7 @@ description: "Network configuration including proxy support, connection pooling,
   export HTTPS_PROXY=https://proxy.company.com:8443
   export NO_PROXY=localhost,127.0.0.1,.company.com
   ```
-</details>
+
 
 ---
 
@@ -259,8 +259,8 @@ description: "Network configuration including proxy support, connection pooling,
 
 ### Basic Retry Logic
 
-<details>
-  <summary><strong>🔧 Go Package - Retry Configuration</strong></summary>
+
+  🔧 Go Package - Retry Configuration
 
   ```go
   func (a *MyAccount) GetConfigForProvider(provider schemas.ModelProvider) (*schemas.ProviderConfig, error) {
@@ -293,10 +293,10 @@ description: "Network configuration including proxy support, connection pooling,
   Attempt 4: Request fails
   Give up after 3 retries
   ```
-</details>
 
-<details>
-  <summary><strong>🌐 HTTP Transport - Retry Configuration</strong></summary>
+
+
+  🌐 HTTP Transport - Retry Configuration
 
   ```json
   {
@@ -312,12 +312,12 @@ description: "Network configuration including proxy support, connection pooling,
     }
   }
   ```
-</details>
+
 
 ### Provider-Specific Timeouts
 
-<details>
-  <summary><strong>🔧 Go Package - Provider-Specific Timeouts</strong></summary>
+
+  🔧 Go Package - Provider-Specific Timeouts
 
   ```go
   func (a *MyAccount) GetConfigForProvider(provider schemas.ModelProvider) (*schemas.ProviderConfig, error) {
@@ -347,10 +347,10 @@ description: "Network configuration including proxy support, connection pooling,
       return &schemas.ProviderConfig{}, nil
   }
   ```
-</details>
 
-<details>
-  <summary><strong>🌐 HTTP Transport - Provider-Specific Timeouts</strong></summary>
+
+
+  🌐 HTTP Transport - Provider-Specific Timeouts
 
   ```json
   {
@@ -376,7 +376,7 @@ description: "Network configuration including proxy support, connection pooling,
     }
   }
   ```
-</details>
+
 
 ---
 
@@ -384,8 +384,8 @@ description: "Network configuration including proxy support, connection pooling,
 
 ### Authentication Headers
 
-<details>
-  <summary><strong>🔧 Go Package - Custom Headers</strong></summary>
+
+  🔧 Go Package - Custom Headers
 
   ```go
   func (a *MyAccount) GetConfigForProvider(provider schemas.ModelProvider) (*schemas.ProviderConfig, error) {
@@ -419,10 +419,10 @@ description: "Network configuration including proxy support, connection pooling,
       return fmt.Sprintf("req_%d", time.Now().UnixNano())
   }
   ```
-</details>
 
-<details>
-  <summary><strong>🌐 HTTP Transport - Custom Headers</strong></summary>
+
+
+  🌐 HTTP Transport - Custom Headers
 
   ```json
   {
@@ -449,12 +449,12 @@ description: "Network configuration including proxy support, connection pooling,
     }
   }
   ```
-</details>
+
 
 ### Tracking and Monitoring Headers
 
-<details>
-  <summary><strong>🔧 Go Package - Monitoring Headers</strong></summary>
+
+  🔧 Go Package - Monitoring Headers
 
   ```go
   func (a *MyAccount) GetConfigForProvider(provider schemas.ModelProvider) (*schemas.ProviderConfig, error) {
@@ -480,10 +480,10 @@ description: "Network configuration including proxy support, connection pooling,
       }, nil
   }
   ```
-</details>
 
-<details>
-  <summary><strong>🌐 HTTP Transport - Monitoring Headers</strong></summary>
+
+
+  🌐 HTTP Transport - Monitoring Headers
 
   ```json
   {
@@ -502,7 +502,7 @@ description: "Network configuration including proxy support, connection pooling,
     }
   }
   ```
-</details>
+
 
 ---
 
@@ -510,8 +510,8 @@ description: "Network configuration including proxy support, connection pooling,
 
 ### Corporate Network Setup
 
-<details>
-  <summary><strong>🏢 Enterprise Network Configuration</strong></summary>
+
+  🏢 Enterprise Network Configuration
 
   **Go Package - Enterprise Setup:**
 
@@ -575,12 +575,12 @@ description: "Network configuration including proxy support, connection pooling,
     }
   }
   ```
-</details>
+
 
 ### Multi-Region Configuration
 
-<details>
-  <summary><strong>🌍 Multi-Region Setup</strong></summary>
+
+  🌍 Multi-Region Setup
 
   **Go Package - Regional Endpoints:**
 
@@ -623,7 +623,7 @@ description: "Network configuration including proxy support, connection pooling,
       return &schemas.ProviderConfig{}, nil
   }
   ```
-</details>
+
 
 ---
 
@@ -631,8 +631,8 @@ description: "Network configuration including proxy support, connection pooling,
 
 ### Timeout Strategy
 
-<details>
-  <summary><strong>⏱️ Recommended Timeout Values</strong></summary>
+
+  ⏱️ Recommended Timeout Values
 
   | Use Case             | Timeout | Max Retries | Initial Backoff |
   | -------------------- | ------- | ----------- | --------------- |
@@ -654,12 +654,12 @@ description: "Network configuration including proxy support, connection pooling,
       }
   }
   ```
-</details>
+
 
 ### Proxy Best Practices
 
-<details>
-  <summary><strong>🔗 Proxy Configuration Tips</strong></summary>
+
+  🔗 Proxy Configuration Tips
 
   **Corporate Environment:**
 
@@ -681,7 +681,7 @@ description: "Network configuration including proxy support, connection pooling,
   ENV HTTPS_PROXY=http://proxy.company.com:8080
   ENV NO_PROXY=localhost,127.0.0.1
   ```
-</details>
+
 
 ---
 

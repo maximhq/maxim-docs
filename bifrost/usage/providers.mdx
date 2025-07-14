@@ -23,7 +23,7 @@ description: "Multi-provider support with unified API across all AI providers. S
 ### Single Provider Setup
 
 <details open>
-  <summary><strong>🔧 Go Package Usage</strong></summary>
+  🔧 Go Package Usage
 
   ```go
   package main
@@ -99,10 +99,10 @@ description: "Multi-provider support with unified API across all AI providers. S
       fmt.Printf("Response: %+v\n", response)
   }
   ```
-</details>
 
-<details>
-  <summary><strong>🌐 HTTP Transport Usage</strong></summary>
+
+
+  🌐 HTTP Transport Usage
 
   **1. Configuration (`config.json`):**
 
@@ -139,7 +139,7 @@ description: "Multi-provider support with unified API across all AI providers. S
       "messages": [{"role": "user", "content": "Hello from OpenAI!"}]
     }'
   ```
-</details>
+
 
 ---
 
@@ -147,8 +147,8 @@ description: "Multi-provider support with unified API across all AI providers. S
 
 Configure multiple providers for fallbacks and load distribution.
 
-<details>
-  <summary><strong>🔧 Go Package - Multi-Provider</strong></summary>
+
+  🔧 Go Package - Multi-Provider
 
   ```go
   func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schemas.Key, error) {
@@ -224,10 +224,10 @@ Configure multiple providers for fallbacks and load distribution.
       }
   }
   ```
-</details>
 
-<details>
-  <summary><strong>🌐 HTTP Transport - Multi-Provider</strong></summary>
+
+
+  🌐 HTTP Transport - Multi-Provider
 
   **Configuration (`config.json`):**
 
@@ -297,7 +297,7 @@ Configure multiple providers for fallbacks and load distribution.
 
   echo "$response"
   ```
-</details>
+
 
 ---
 
@@ -305,8 +305,8 @@ Configure multiple providers for fallbacks and load distribution.
 
 ### Enterprise Providers
 
-<details>
-  <summary><strong>Azure OpenAI Configuration</strong></summary>
+
+  Azure OpenAI Configuration
 
   **Go Package:**
 
@@ -351,10 +351,10 @@ Configure multiple providers for fallbacks and load distribution.
     }
   }
   ```
-</details>
 
-<details>
-  <summary><strong>Google Vertex AI Configuration</strong></summary>
+
+
+  Google Vertex AI Configuration
 
   **Go Package:**
 
@@ -394,10 +394,10 @@ Configure multiple providers for fallbacks and load distribution.
     }
   }
   ```
-</details>
 
-<details>
-  <summary><strong>Local Ollama Configuration</strong></summary>
+
+
+  Local Ollama Configuration
 
   **Go Package:**
 
@@ -447,7 +447,7 @@ Configure multiple providers for fallbacks and load distribution.
     }
   }
   ```
-</details>
+
 
 ---
 

@@ -1,25 +1,27 @@
 ---
-title: "🔑 Key Management"
-description: "Advanced API key management with weighted distribution, automatic rotation, and model-specific assignments across all providers."
+title: '🔑 Key Management'
+description:
+    'Advanced API key management with weighted distribution, automatic rotation, and model-specific
+    assignments across all providers.'
 ---
 
 ## Overview
 
 **Key Management Features:**
 
-- ✅ **Multiple Keys per Provider** - Distribute load across multiple API keys
-- ✅ **Weighted Distribution** - Control traffic distribution with custom weights
-- ✅ **Model-Specific Keys** - Assign keys to specific models only
-- ✅ **Automatic Rotation** - Seamless failover when keys are rate-limited
-- ✅ **Load Balancing** - Intelligent request distribution
-- ✅ **Cost Optimization** - Use different keys for different cost tiers
+-   ✅ **Multiple Keys per Provider** - Distribute load across multiple API keys
+-   ✅ **Weighted Distribution** - Control traffic distribution with custom weights
+-   ✅ **Model-Specific Keys** - Assign keys to specific models only
+-   ✅ **Automatic Rotation** - Seamless failover when keys are rate-limited
+-   ✅ **Load Balancing** - Intelligent request distribution
+-   ✅ **Cost Optimization** - Use different keys for different cost tiers
 
 **Benefits:**
 
-- 🛡️ **Higher Rate Limits** - Combine multiple keys for increased throughput
-- ⚡ **Improved Reliability** - Automatic failover prevents service interruption
-- 💰 **Cost Control** - Route traffic based on budget and usage patterns
-- 🔧 **Zero Downtime** - Hot-swap keys without service interruption
+-   🛡️ **Higher Rate Limits** - Combine multiple keys for increased throughput
+-   ⚡ **Improved Reliability** - Automatic failover prevents service interruption
+-   💰 **Cost Control** - Route traffic based on budget and usage patterns
+-   🔧 **Zero Downtime** - Hot-swap keys without service interruption
 
 ---
 
@@ -27,71 +29,67 @@ description: "Advanced API key management with weighted distribution, automatic 
 
 ### Single Key Configuration
 
-<details open>
-  <summary><strong>🔧 Go Package Usage</strong></summary>
+🔧 Go Package Usage
 
-  ```go
-  func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schemas.Key, error) {
-      switch provider {
-      case schemas.OpenAI:
-          return []schemas.Key{
-              {
-                  Value:  os.Getenv("OPENAI_API_KEY"),
-                  Models: []string{"gpt-4o-mini", "gpt-4o"},
-                  Weight: 1.0,  // 100% of traffic
-              },
-          }, nil
-      case schemas.Anthropic:
-          return []schemas.Key{
-              {
-                  Value:  os.Getenv("ANTHROPIC_API_KEY"),
-                  Models: []string{"claude-3-5-sonnet-20241022"},
-                  Weight: 1.0,
-              },
-          }, nil
-      }
-      return nil, fmt.Errorf("provider not configured")
-  }
-  ```
-</details>
-
-<details>
-  <summary><strong>🌐 HTTP Transport Usage</strong></summary>
-
-  **Configuration (`config.json`):**
-
-  ```json
-  {
-    "providers": {
-      "openai": {
-        "keys": [
-          {
-            "value": "env.OPENAI_API_KEY",
-            "models": ["gpt-4o-mini", "gpt-4o"],
-            "weight": 1.0
-          }
-        ]
-      },
-      "anthropic": {
-        "keys": [
-          {
-            "value": "env.ANTHROPIC_API_KEY",
-            "models": ["claude-3-5-sonnet-20241022"],
-            "weight": 1.0
-          }
-        ]
-      }
+```go
+func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schemas.Key, error) {
+    switch provider {
+    case schemas.OpenAI:
+        return []schemas.Key{
+            {
+                Value:  os.Getenv("OPENAI_API_KEY"),
+                Models: []string{"gpt-4o-mini", "gpt-4o"},
+                Weight: 1.0,  // 100% of traffic
+            },
+        }, nil
+    case schemas.Anthropic:
+        return []schemas.Key{
+            {
+                Value:  os.Getenv("ANTHROPIC_API_KEY"),
+                Models: []string{"claude-3-5-sonnet-20241022"},
+                Weight: 1.0,
+            },
+        }, nil
     }
-  }
-  ```
+    return nil, fmt.Errorf("provider not configured")
+}
+```
 
-  **Environment variables:**
+🌐 HTTP Transport Usage
 
-  ```bash
-  export OPENAI_API_KEY="sk-..."
-  export ANTHROPIC_API_KEY="sk-ant-..."
-  ```
-</details>
+**Configuration (`config.json`):**
+
+```json
+{
+    "providers": {
+        "openai": {
+            "keys": [
+                {
+                    "value": "env.OPENAI_API_KEY",
+                    "models": ["gpt-4o-mini", "gpt-4o"],
+                    "weight": 1.0
+                }
+            ]
+        },
+        "anthropic": {
+            "keys": [
+                {
+                    "value": "env.ANTHROPIC_API_KEY",
+                    "models": ["claude-3-5-sonnet-20241022"],
+                    "weight": 1.0
+                }
+            ]
+        }
+    }
+}
+```
+
+**Environment variables:**
+
+```bash
+export OPENAI_API_KEY="sk-..."
+export ANTHROPIC_API_KEY="sk-ant-..."
+```
 
 ---
 
@@ -101,225 +99,213 @@ description: "Advanced API key management with weighted distribution, automatic 
 
 Distribute requests evenly across multiple keys for maximum throughput:
 
-<details>
-  <summary><strong>🔧 Go Package - Equal Distribution</strong></summary>
+🔧 Go Package - Equal Distribution
 
-  ```go
-  func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schemas.Key, error) {
-      if provider == schemas.OpenAI {
-          return []schemas.Key{
-              {
-                  Value:  os.Getenv("OPENAI_KEY_1"),
-                  Models: []string{"gpt-4o-mini", "gpt-4o"},
-                  Weight: 0.25,  // 25% each for even distribution
-              },
-              {
-                  Value:  os.Getenv("OPENAI_KEY_2"),
-                  Models: []string{"gpt-4o-mini", "gpt-4o"},
-                  Weight: 0.25,
-              },
-              {
-                  Value:  os.Getenv("OPENAI_KEY_3"),
-                  Models: []string{"gpt-4o-mini", "gpt-4o"},
-                  Weight: 0.25,
-              },
-              {
-                  Value:  os.Getenv("OPENAI_KEY_4"),
-                  Models: []string{"gpt-4o-mini", "gpt-4o"},
-                  Weight: 0.25,
-              },
-          }, nil
-      }
-      return nil, fmt.Errorf("provider not configured")
-  }
-  ```
-</details>
-
-<details>
-  <summary><strong>🌐 HTTP Transport - Equal Distribution</strong></summary>
-
-  ```json
-  {
-    "providers": {
-      "openai": {
-        "keys": [
-          {
-            "value": "env.OPENAI_KEY_1",
-            "models": ["gpt-4o-mini", "gpt-4o"],
-            "weight": 0.25
-          },
-          {
-            "value": "env.OPENAI_KEY_2",
-            "models": ["gpt-4o-mini", "gpt-4o"],
-            "weight": 0.25
-          },
-          {
-            "value": "env.OPENAI_KEY_3",
-            "models": ["gpt-4o-mini", "gpt-4o"],
-            "weight": 0.25
-          },
-          {
-            "value": "env.OPENAI_KEY_4",
-            "models": ["gpt-4o-mini", "gpt-4o"],
-            "weight": 0.25
-          }
-        ]
-      }
+```go
+func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schemas.Key, error) {
+    if provider == schemas.OpenAI {
+        return []schemas.Key{
+            {
+                Value:  os.Getenv("OPENAI_KEY_1"),
+                Models: []string{"gpt-4o-mini", "gpt-4o"},
+                Weight: 0.25,  // 25% each for even distribution
+            },
+            {
+                Value:  os.Getenv("OPENAI_KEY_2"),
+                Models: []string{"gpt-4o-mini", "gpt-4o"},
+                Weight: 0.25,
+            },
+            {
+                Value:  os.Getenv("OPENAI_KEY_3"),
+                Models: []string{"gpt-4o-mini", "gpt-4o"},
+                Weight: 0.25,
+            },
+            {
+                Value:  os.Getenv("OPENAI_KEY_4"),
+                Models: []string{"gpt-4o-mini", "gpt-4o"},
+                Weight: 0.25,
+            },
+        }, nil
     }
-  }
-  ```
+    return nil, fmt.Errorf("provider not configured")
+}
+```
 
-  **Environment setup:**
+🌐 HTTP Transport - Equal Distribution
 
-  ```bash
-  export OPENAI_KEY_1="sk-1..."
-  export OPENAI_KEY_2="sk-2..."
-  export OPENAI_KEY_3="sk-3..."
-  export OPENAI_KEY_4="sk-4..."
-  ```
-</details>
+```json
+{
+    "providers": {
+        "openai": {
+            "keys": [
+                {
+                    "value": "env.OPENAI_KEY_1",
+                    "models": ["gpt-4o-mini", "gpt-4o"],
+                    "weight": 0.25
+                },
+                {
+                    "value": "env.OPENAI_KEY_2",
+                    "models": ["gpt-4o-mini", "gpt-4o"],
+                    "weight": 0.25
+                },
+                {
+                    "value": "env.OPENAI_KEY_3",
+                    "models": ["gpt-4o-mini", "gpt-4o"],
+                    "weight": 0.25
+                },
+                {
+                    "value": "env.OPENAI_KEY_4",
+                    "models": ["gpt-4o-mini", "gpt-4o"],
+                    "weight": 0.25
+                }
+            ]
+        }
+    }
+}
+```
+
+**Environment setup:**
+
+```bash
+export OPENAI_KEY_1="sk-1..."
+export OPENAI_KEY_2="sk-2..."
+export OPENAI_KEY_3="sk-3..."
+export OPENAI_KEY_4="sk-4..."
+```
 
 ### Tiered Access Strategy
 
 Use premium keys for expensive models, standard keys for cheaper models:
 
-<details>
-  <summary><strong>🔧 Go Package - Tiered Strategy</strong></summary>
+🔧 Go Package - Tiered Strategy
 
-  ```go
-  func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schemas.Key, error) {
-      if provider == schemas.OpenAI {
-          return []schemas.Key{
-              // Standard keys for cheap models
-              {
-                  Value:  os.Getenv("OPENAI_STANDARD_KEY_1"),
-                  Models: []string{"gpt-4o-mini"},  // Cheap model only
-                  Weight: 0.4,
-              },
-              {
-                  Value:  os.Getenv("OPENAI_STANDARD_KEY_2"),
-                  Models: []string{"gpt-4o-mini"},
-                  Weight: 0.3,
-              },
-              // Premium keys for expensive models
-              {
-                  Value:  os.Getenv("OPENAI_PREMIUM_KEY_1"),
-                  Models: []string{"gpt-4o", "gpt-4o-mini"},  // All models
-                  Weight: 0.2,
-              },
-              {
-                  Value:  os.Getenv("OPENAI_PREMIUM_KEY_2"),
-                  Models: []string{"gpt-4o", "gpt-4o-mini"},
-                  Weight: 0.1,
-              },
-          }, nil
-      }
-      return nil, fmt.Errorf("provider not configured")
-  }
-  ```
-
-  **Result:** Cost optimization with dedicated premium keys for expensive models
-</details>
-
-<details>
-  <summary><strong>🌐 HTTP Transport - Tiered Strategy</strong></summary>
-
-  ```json
-  {
-    "providers": {
-      "openai": {
-        "keys": [
-          {
-            "value": "env.OPENAI_STANDARD_KEY_1",
-            "models": ["gpt-4o-mini"],
-            "weight": 0.4
-          },
-          {
-            "value": "env.OPENAI_STANDARD_KEY_2",
-            "models": ["gpt-4o-mini"],
-            "weight": 0.3
-          },
-          {
-            "value": "env.OPENAI_PREMIUM_KEY_1",
-            "models": ["gpt-4o", "gpt-4o-mini"],
-            "weight": 0.2
-          },
-          {
-            "value": "env.OPENAI_PREMIUM_KEY_2",
-            "models": ["gpt-4o", "gpt-4o-mini"],
-            "weight": 0.1
-          }
-        ]
-      }
+```go
+func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schemas.Key, error) {
+    if provider == schemas.OpenAI {
+        return []schemas.Key{
+            // Standard keys for cheap models
+            {
+                Value:  os.Getenv("OPENAI_STANDARD_KEY_1"),
+                Models: []string{"gpt-4o-mini"},  // Cheap model only
+                Weight: 0.4,
+            },
+            {
+                Value:  os.Getenv("OPENAI_STANDARD_KEY_2"),
+                Models: []string{"gpt-4o-mini"},
+                Weight: 0.3,
+            },
+            // Premium keys for expensive models
+            {
+                Value:  os.Getenv("OPENAI_PREMIUM_KEY_1"),
+                Models: []string{"gpt-4o", "gpt-4o-mini"},  // All models
+                Weight: 0.2,
+            },
+            {
+                Value:  os.Getenv("OPENAI_PREMIUM_KEY_2"),
+                Models: []string{"gpt-4o", "gpt-4o-mini"},
+                Weight: 0.1,
+            },
+        }, nil
     }
-  }
-  ```
-</details>
+    return nil, fmt.Errorf("provider not configured")
+}
+```
+
+**Result:** Cost optimization with dedicated premium keys for expensive models
+
+🌐 HTTP Transport - Tiered Strategy
+
+```json
+{
+    "providers": {
+        "openai": {
+            "keys": [
+                {
+                    "value": "env.OPENAI_STANDARD_KEY_1",
+                    "models": ["gpt-4o-mini"],
+                    "weight": 0.4
+                },
+                {
+                    "value": "env.OPENAI_STANDARD_KEY_2",
+                    "models": ["gpt-4o-mini"],
+                    "weight": 0.3
+                },
+                {
+                    "value": "env.OPENAI_PREMIUM_KEY_1",
+                    "models": ["gpt-4o", "gpt-4o-mini"],
+                    "weight": 0.2
+                },
+                {
+                    "value": "env.OPENAI_PREMIUM_KEY_2",
+                    "models": ["gpt-4o", "gpt-4o-mini"],
+                    "weight": 0.1
+                }
+            ]
+        }
+    }
+}
+```
 
 ### Priority-Based Strategy
 
 Route traffic based on key priority and reliability:
 
-<details>
-  <summary><strong>🔧 Go Package - Priority Strategy</strong></summary>
+🔧 Go Package - Priority Strategy
 
-  ```go
-  func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schemas.Key, error) {
-      if provider == schemas.OpenAI {
-          return []schemas.Key{
-              // Primary key (highest priority)
-              {
-                  Value:  os.Getenv("OPENAI_PRIMARY_KEY"),
-                  Models: []string{"gpt-4o-mini", "gpt-4o"},
-                  Weight: 0.6,  // 60% traffic to primary
-              },
-              // Secondary keys (backup)
-              {
-                  Value:  os.Getenv("OPENAI_BACKUP_KEY_1"),
-                  Models: []string{"gpt-4o-mini", "gpt-4o"},
-                  Weight: 0.3,  // 30% to first backup
-              },
-              {
-                  Value:  os.Getenv("OPENAI_BACKUP_KEY_2"),
-                  Models: []string{"gpt-4o-mini", "gpt-4o"},
-                  Weight: 0.1,  // 10% to second backup
-              },
-          }, nil
-      }
-      return nil, fmt.Errorf("provider not configured")
-  }
-  ```
-</details>
-
-<details>
-  <summary><strong>🌐 HTTP Transport - Priority Strategy</strong></summary>
-
-  ```json
-  {
-    "providers": {
-      "openai": {
-        "keys": [
-          {
-            "value": "env.OPENAI_PRIMARY_KEY",
-            "models": ["gpt-4o-mini", "gpt-4o"],
-            "weight": 0.6
-          },
-          {
-            "value": "env.OPENAI_BACKUP_KEY_1",
-            "models": ["gpt-4o-mini", "gpt-4o"],
-            "weight": 0.3
-          },
-          {
-            "value": "env.OPENAI_BACKUP_KEY_2",
-            "models": ["gpt-4o-mini", "gpt-4o"],
-            "weight": 0.1
-          }
-        ]
-      }
+```go
+func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schemas.Key, error) {
+    if provider == schemas.OpenAI {
+        return []schemas.Key{
+            // Primary key (highest priority)
+            {
+                Value:  os.Getenv("OPENAI_PRIMARY_KEY"),
+                Models: []string{"gpt-4o-mini", "gpt-4o"},
+                Weight: 0.6,  // 60% traffic to primary
+            },
+            // Secondary keys (backup)
+            {
+                Value:  os.Getenv("OPENAI_BACKUP_KEY_1"),
+                Models: []string{"gpt-4o-mini", "gpt-4o"},
+                Weight: 0.3,  // 30% to first backup
+            },
+            {
+                Value:  os.Getenv("OPENAI_BACKUP_KEY_2"),
+                Models: []string{"gpt-4o-mini", "gpt-4o"},
+                Weight: 0.1,  // 10% to second backup
+            },
+        }, nil
     }
-  }
-  ```
-</details>
+    return nil, fmt.Errorf("provider not configured")
+}
+```
+
+🌐 HTTP Transport - Priority Strategy
+
+```json
+{
+    "providers": {
+        "openai": {
+            "keys": [
+                {
+                    "value": "env.OPENAI_PRIMARY_KEY",
+                    "models": ["gpt-4o-mini", "gpt-4o"],
+                    "weight": 0.6
+                },
+                {
+                    "value": "env.OPENAI_BACKUP_KEY_1",
+                    "models": ["gpt-4o-mini", "gpt-4o"],
+                    "weight": 0.3
+                },
+                {
+                    "value": "env.OPENAI_BACKUP_KEY_2",
+                    "models": ["gpt-4o-mini", "gpt-4o"],
+                    "weight": 0.1
+                }
+            ]
+        }
+    }
+}
+```
 
 ---
 
@@ -327,143 +313,135 @@ Route traffic based on key priority and reliability:
 
 ### Multi-Provider Key Management
 
-<details>
-  <summary><strong>🔧 Go Package - Cross-Provider Keys</strong></summary>
+🔧 Go Package - Cross-Provider Keys
 
-  ```go
-  func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schemas.Key, error) {
-      switch provider {
-      case schemas.OpenAI:
-          return []schemas.Key{
-              {
-                  Value:  os.Getenv("OPENAI_KEY_1"),
-                  Models: []string{"gpt-4o-mini", "gpt-4o"},
-                  Weight: 0.7,
-              },
-              {
-                  Value:  os.Getenv("OPENAI_KEY_2"),
-                  Models: []string{"gpt-4o"},
-                  Weight: 0.3,
-              },
-          }, nil
-      case schemas.Anthropic:
-          return []schemas.Key{
-              {
-                  Value:  os.Getenv("ANTHROPIC_KEY_1"),
-                  Models: []string{"claude-3-5-sonnet-20241022"},
-                  Weight: 0.8,
-              },
-              {
-                  Value:  os.Getenv("ANTHROPIC_KEY_2"),
-                  Models: []string{"claude-3-5-sonnet-20241022"},
-                  Weight: 0.2,
-              },
-          }, nil
-      case schemas.Bedrock:
-          return []schemas.Key{
-              {
-                  Value:  os.Getenv("AWS_ACCESS_KEY_ID"),
-                  Models: []string{"anthropic.claude-3-5-sonnet-20241022-v2:0"},
-                  Weight: 1.0,
-              },
-          }, nil
-      }
-      return nil, fmt.Errorf("provider %s not configured", provider)
-  }
-  ```
-</details>
-
-<details>
-  <summary><strong>🌐 HTTP Transport - Cross-Provider Keys</strong></summary>
-
-  ```json
-  {
-    "providers": {
-      "openai": {
-        "keys": [
-          {
-            "value": "env.OPENAI_KEY_1",
-            "models": ["gpt-4o-mini", "gpt-4o"],
-            "weight": 0.7
-          },
-          {
-            "value": "env.OPENAI_KEY_2",
-            "models": ["gpt-4o"],
-            "weight": 0.3
-          }
-        ]
-      },
-      "anthropic": {
-        "keys": [
-          {
-            "value": "env.ANTHROPIC_KEY_1",
-            "models": ["claude-3-5-sonnet-20241022"],
-            "weight": 0.8
-          },
-          {
-            "value": "env.ANTHROPIC_KEY_2",
-            "models": ["claude-3-5-sonnet-20241022"],
-            "weight": 0.2
-          }
-        ]
-      },
-      "bedrock": {
-        "keys": [
-          {
-            "value": "env.AWS_ACCESS_KEY_ID",
-            "models": ["anthropic.claude-3-5-sonnet-20241022-v2:0"],
-            "weight": 1.0
-          }
-        ],
-        "meta_config": {
-          "region": "us-east-1",
-          "secret_access_key": "env.AWS_SECRET_ACCESS_KEY"
-        }
-      }
+```go
+func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schemas.Key, error) {
+    switch provider {
+    case schemas.OpenAI:
+        return []schemas.Key{
+            {
+                Value:  os.Getenv("OPENAI_KEY_1"),
+                Models: []string{"gpt-4o-mini", "gpt-4o"},
+                Weight: 0.7,
+            },
+            {
+                Value:  os.Getenv("OPENAI_KEY_2"),
+                Models: []string{"gpt-4o"},
+                Weight: 0.3,
+            },
+        }, nil
+    case schemas.Anthropic:
+        return []schemas.Key{
+            {
+                Value:  os.Getenv("ANTHROPIC_KEY_1"),
+                Models: []string{"claude-3-5-sonnet-20241022"},
+                Weight: 0.8,
+            },
+            {
+                Value:  os.Getenv("ANTHROPIC_KEY_2"),
+                Models: []string{"claude-3-5-sonnet-20241022"},
+                Weight: 0.2,
+            },
+        }, nil
+    case schemas.Bedrock:
+        return []schemas.Key{
+            {
+                Value:  os.Getenv("AWS_ACCESS_KEY_ID"),
+                Models: []string{"anthropic.claude-3-5-sonnet-20241022-v2:0"},
+                Weight: 1.0,
+            },
+        }, nil
     }
-  }
-  ```
-</details>
+    return nil, fmt.Errorf("provider %s not configured", provider)
+}
+```
+
+🌐 HTTP Transport - Cross-Provider Keys
+
+```json
+{
+    "providers": {
+        "openai": {
+            "keys": [
+                {
+                    "value": "env.OPENAI_KEY_1",
+                    "models": ["gpt-4o-mini", "gpt-4o"],
+                    "weight": 0.7
+                },
+                {
+                    "value": "env.OPENAI_KEY_2",
+                    "models": ["gpt-4o"],
+                    "weight": 0.3
+                }
+            ]
+        },
+        "anthropic": {
+            "keys": [
+                {
+                    "value": "env.ANTHROPIC_KEY_1",
+                    "models": ["claude-3-5-sonnet-20241022"],
+                    "weight": 0.8
+                },
+                {
+                    "value": "env.ANTHROPIC_KEY_2",
+                    "models": ["claude-3-5-sonnet-20241022"],
+                    "weight": 0.2
+                }
+            ]
+        },
+        "bedrock": {
+            "keys": [
+                {
+                    "value": "env.AWS_ACCESS_KEY_ID",
+                    "models": ["anthropic.claude-3-5-sonnet-20241022-v2:0"],
+                    "weight": 1.0
+                }
+            ],
+            "meta_config": {
+                "region": "us-east-1",
+                "secret_access_key": "env.AWS_SECRET_ACCESS_KEY"
+            }
+        }
+    }
+}
+```
 
 ### Dynamic Key Selection
 
-<details>
-  <summary><strong>🔧 Go Package - Runtime Key Selection</strong></summary>
+🔧 Go Package - Runtime Key Selection
 
-  ```go
-  type DynamicAccount struct {
-      keyRotationInterval time.Duration
-      lastRotation        time.Time
-      currentKeyIndex     int
-      keys                map[schemas.ModelProvider][]schemas.Key
-  }
+```go
+type DynamicAccount struct {
+    keyRotationInterval time.Duration
+    lastRotation        time.Time
+    currentKeyIndex     int
+    keys                map[schemas.ModelProvider][]schemas.Key
+}
 
-  func (a *DynamicAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schemas.Key, error) {
-      // Rotate keys every hour
-      if time.Since(a.lastRotation) > a.keyRotationInterval {
-          a.rotateKeys()
-          a.lastRotation = time.Now()
-      }
+func (a *DynamicAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schemas.Key, error) {
+    // Rotate keys every hour
+    if time.Since(a.lastRotation) > a.keyRotationInterval {
+        a.rotateKeys()
+        a.lastRotation = time.Now()
+    }
 
-      if keys, exists := a.keys[provider]; exists {
-          return keys, nil
-      }
-      return nil, fmt.Errorf("provider not configured")
-  }
+    if keys, exists := a.keys[provider]; exists {
+        return keys, nil
+    }
+    return nil, fmt.Errorf("provider not configured")
+}
 
-  func (a *DynamicAccount) rotateKeys() {
-      // Implement key rotation logic
-      // Could fetch new keys from secret management system
-      log.Info("Rotating API keys...")
-  }
-  ```
-</details>
+func (a *DynamicAccount) rotateKeys() {
+    // Implement key rotation logic
+    // Could fetch new keys from secret management system
+    log.Info("Rotating API keys...")
+}
+```
 
-<details>
-  <summary><strong>🌐 HTTP Transport - Hot Key Reload</strong></summary>
+🌐 HTTP Transport - Hot Key Reload
 
-  This feature is under development.
-</details>
+This feature is under development.
 
 ---
 
@@ -494,119 +472,114 @@ Key Selection Process:
 
 ### Security Best Practices
 
-<details>
-  <summary><strong>🔒 Environment Variable Management</strong></summary>
+🔒 Environment Variable Management
 
-  **Recommended approach:**
+**Recommended approach:**
 
-  ```bash
-  # Use descriptive naming
-  export OPENAI_PRIMARY_KEY="sk-..."
-  export OPENAI_FALLBACK_KEY="sk-..."
-  export ANTHROPIC_PRODUCTION_KEY="sk-ant-..."
+```bash
+# Use descriptive naming
+export OPENAI_PRIMARY_KEY="sk-..."
+export OPENAI_FALLBACK_KEY="sk-..."
+export ANTHROPIC_PRODUCTION_KEY="sk-ant-..."
 
-  # Avoid hardcoding in config files
-  # ❌ Bad
-  {
-    "value": "sk-actual-key-here"
-  }
+# Avoid hardcoding in config files
+# ❌ Bad
+{
+  "value": "sk-actual-key-here"
+}
 
-  # ✅ Good
-  {
-    "value": "env.OPENAI_API_KEY"
-  }
-  ```
-</details>
+# ✅ Good
+{
+  "value": "env.OPENAI_API_KEY"
+}
+```
 
-<details>
-  <summary><strong>🔄 Key Rotation Schedule</strong></summary>
+🔄 Key Rotation Schedule
 
-  **Recommended rotation schedule:**
+**Recommended rotation schedule:**
 
-  ```text
-  • Production keys: Every 30 days
-  • Development keys: Every 90 days
-  • Backup keys: Every 60 days
-  • Emergency keys: Keep fresh, rotate every 14 days
-  ```
+```text
+• Production keys: Every 30 days
+• Development keys: Every 90 days
+• Backup keys: Every 60 days
+• Emergency keys: Keep fresh, rotate every 14 days
+```
 
-  **Implementation:**
+**Implementation:**
 
-  ```go
-  // Track key age and force rotation
-  type KeyWithMetadata struct {
-      schemas.Key
-      CreatedAt time.Time
-      LastUsed  time.Time
-  }
+```go
+// Track key age and force rotation
+type KeyWithMetadata struct {
+    schemas.Key
+    CreatedAt time.Time
+    LastUsed  time.Time
+}
 
-  func (k *KeyWithMetadata) ShouldRotate() bool {
-      return time.Since(k.CreatedAt) > 30*24*time.Hour // 30 days
-  }
-  ```
-</details>
+func (k *KeyWithMetadata) ShouldRotate() bool {
+    return time.Since(k.CreatedAt) > 30*24*time.Hour // 30 days
+}
+```
 
 ### Performance Optimization
 
-<details>
-  <summary><strong>⚡ Weight Optimization</strong></summary>
+⚡ Weight Optimization
 
-  **High-throughput scenario:**
+**High-throughput scenario:**
 
-  ```json
-  {
+```json
+{
     "providers": {
-      "openai": {
-        "keys": [
-          {
-            "value": "env.OPENAI_HIGH_LIMIT_KEY",
-            "models": ["gpt-4o-mini"],
-            "weight": 0.8
-          },
-          {
-            "value": "env.OPENAI_STANDARD_KEY",
-            "models": ["gpt-4o-mini"],
-            "weight": 0.2
-          }
-        ]
-      }
+        "openai": {
+            "keys": [
+                {
+                    "value": "env.OPENAI_HIGH_LIMIT_KEY",
+                    "models": ["gpt-4o-mini"],
+                    "weight": 0.8
+                },
+                {
+                    "value": "env.OPENAI_STANDARD_KEY",
+                    "models": ["gpt-4o-mini"],
+                    "weight": 0.2
+                }
+            ]
+        }
     }
-  }
-  ```
+}
+```
 
-  **Cost-optimized scenario:**
+**Cost-optimized scenario:**
 
-  ```json
-  {
+```json
+{
     "providers": {
-      "openai": {
-        "keys": [
-          {
-            "value": "env.OPENAI_CHEAP_KEY",
-            "models": ["gpt-4o-mini"],
-            "weight": 0.9
-          },
-          {
-            "value": "env.OPENAI_PREMIUM_KEY",
-            "models": ["gpt-4o"],
-            "weight": 0.1
-          }
-        ]
-      }
+        "openai": {
+            "keys": [
+                {
+                    "value": "env.OPENAI_CHEAP_KEY",
+                    "models": ["gpt-4o-mini"],
+                    "weight": 0.9
+                },
+                {
+                    "value": "env.OPENAI_PREMIUM_KEY",
+                    "models": ["gpt-4o"],
+                    "weight": 0.1
+                }
+            ]
+        }
     }
-  }
-  ```
-</details>
+}
+```
 
 ---
 
 ## 🎯 Next Steps
 
-| **Task**                   | **Documentation**                                                  |
-| -------------------------- | ------------------------------------------------------------------ |
-| **🔗 Configure providers** | [Providers](/bifrost/usage/http-transport/configuration/providers) |
-| **🌐 Set up networking**   | [Networking](/bifrost/usage/networking)                            |
+| **Task**                    | **Documentation**                                                  |
+| --------------------------- | ------------------------------------------------------------------ |
+| **🔗 Configure providers**  | [Providers](/bifrost/usage/http-transport/configuration/providers) |
+| **🌐 Set up networking**    | [Networking](/bifrost/usage/networking)                            |
 | **⚡ Optimize performance** | [Memory Management](/bifrost/usage/memory-management)              |
 | **❌ Handle failures**      | [Error Handling](/bifrost/usage/errors)                            |
 
-> **💡 Tip:** Use weights that sum to 1.0 for easier percentage calculations, but Bifrost automatically normalizes weights if they don't sum to 1.0.
+> **💡 Tip:** Use weights that sum to 1.0 for easier percentage calculations, but Bifrost
+> automatically normalizes weights if they don't sum to 1.0.
