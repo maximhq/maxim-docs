@@ -32,22 +32,22 @@ curl -X POST http://localhost:8080/v1/chat/completions \
 
 ### **Unified API Endpoints**
 
-| Endpoint                    | Purpose            | Documentation                     |
-| --------------------------- | ------------------ | --------------------------------- |
-| `POST /v1/chat/completions` | Chat conversations | [Endpoints Guide](./endpoints.md) |
-| `POST /v1/text/completions` | Text generation    | [Endpoints Guide](./endpoints.md) |
-| `POST /v1/mcp/tool/execute` | Tool execution     | [Endpoints Guide](./endpoints.md) |
-| `GET /metrics`              | Prometheus metrics | [Endpoints Guide](./endpoints.md) |
+| Endpoint                    | Purpose            | Documentation                                              |
+| --------------------------- | ------------------ | ---------------------------------------------------------- |
+| `POST /v1/chat/completions` | Chat conversations | [Endpoints Guide](/bifrost/usage/http-transport/endpoints) |
+| `POST /v1/text/completions` | Text generation    | [Endpoints Guide](/bifrost/usage/http-transport/endpoints) |
+| `POST /v1/mcp/tool/execute` | Tool execution     | [Endpoints Guide](/bifrost/usage/http-transport/endpoints) |
+| `GET /metrics`              | Prometheus metrics | [Endpoints Guide](/bifrost/usage/http-transport/endpoints) |
 
 ### **Drop-in API Compatibility**
 
-| Provider         | Endpoint                            | Compatibility                                                  |
-| ---------------- | ----------------------------------- | -------------------------------------------------------------- |
-| **OpenAI**       | `POST /openai/v1/chat/completions`  | [OpenAI Compatible](./integrations/openai-compatible.md)       |
-| **Anthropic**    | `POST /anthropic/v1/messages`       | [Anthropic Compatible](./integrations/anthropic-compatible.md) |
-| **Google GenAI** | `POST /genai/v1beta/models/{model}` | [GenAI Compatible](./integrations/genai-compatible.md)         |
+| Provider         | Endpoint                            | Compatibility                                                                           |
+| ---------------- | ----------------------------------- | --------------------------------------------------------------------------------------- |
+| **OpenAI**       | `POST /openai/v1/chat/completions`  | [OpenAI Compatible](/bifrost/usage/http-transport/integrations/openai-compatible)       |
+| **Anthropic**    | `POST /anthropic/v1/messages`       | [Anthropic Compatible](/bifrost/usage/http-transport/integrations/anthropic-compatible) |
+| **Google GenAI** | `POST /genai/v1beta/models/{model}` | [GenAI Compatible](/bifrost/usage/http-transport/integrations/genai-compatible)         |
 
-> **📖 Migration:** See [Migration Guide](./integrations/migration-guide.md) for step-by-step migration from existing providers.
+> **📖 Migration:** See [Migration Guide](/bifrost/usage/http-transport/integrations/migration-guide) for step-by-step migration from existing providers.
 
 ---
 
@@ -55,11 +55,11 @@ curl -X POST http://localhost:8080/v1/chat/completions \
 
 ### **Core Configuration Files**
 
-| Component                                         | Configuration                   | Time to Setup |
-| ------------------------------------------------- | ------------------------------- | ------------- |
-| [**🔧 Providers**](./configuration/providers.md)  | API keys, models, fallbacks     | 5 min         |
-| [**🛠️ MCP Integration**](./configuration/mcp.md) | Tool servers and connections    | 10 min        |
-| [**🔌 Plugins**](./configuration/plugins.md)      | Custom middleware (coming soon) | 5 min         |
+| Component                                                                  | Configuration                   | Time to Setup |
+| -------------------------------------------------------------------------- | ------------------------------- | ------------- |
+| [**🔧 Providers**](/bifrost/usage/http-transport/configuration/providers)  | API keys, models, fallbacks     | 5 min         |
+| [**🛠️ MCP Integration**](/bifrost/usage/http-transport/configuration/mcp) | Tool servers and connections    | 10 min        |
+| [**🔌 Plugins**](/bifrost/usage/http-transport/configuration/plugins)      | Custom middleware (coming soon) | 5 min         |
 
 ### **Quick Configuration Example**
 
@@ -106,15 +106,15 @@ curl -X POST http://localhost:8080/v1/chat/completions \
 
 ### **"I want to..."**
 
-| Goal                       | Integration Type       | Guide                                                          |
-| -------------------------- | ---------------------- | -------------------------------------------------------------- |
-| **Replace OpenAI API**     | Drop-in replacement    | [OpenAI Compatible](./integrations/openai-compatible.md)       |
-| **Replace Anthropic API**  | Drop-in replacement    | [Anthropic Compatible](./integrations/anthropic-compatible.md) |
-| **Use with existing SDKs** | Change base URL only   | [Migration Guide](./integrations/migration-guide.md)           |
-| **Add multiple providers** | Provider configuration | [Providers Config](./configuration/providers.md)               |
-| **Add external tools**     | MCP integration        | [MCP Config](./configuration/mcp.md)                           |
-| **Custom monitoring**      | Plugin configuration   | [Plugins Config](./configuration/plugins.md)                   |
-| **Production deployment**  | Docker \+ config       | [Deployment Guide](../../quickstart/http-transport.md)         |
+| Goal                       | Integration Type       | Guide                                                                                   |
+| -------------------------- | ---------------------- | --------------------------------------------------------------------------------------- |
+| **Replace OpenAI API**     | Drop-in replacement    | [OpenAI Compatible](/bifrost/usage/http-transport/integrations/openai-compatible)       |
+| **Replace Anthropic API**  | Drop-in replacement    | [Anthropic Compatible](/bifrost/usage/http-transport/integrations/anthropic-compatible) |
+| **Use with existing SDKs** | Change base URL only   | [Migration Guide](/bifrost/usage/http-transport/integrations/migration-guide)           |
+| **Add multiple providers** | Provider configuration | [Providers Config](/bifrost/usage/http-transport/configuration/providers)               |
+| **Add external tools**     | MCP integration        | [MCP Config](/bifrost/usage/http-transport/configuration/mcp)                           |
+| **Custom monitoring**      | Plugin configuration   | [Plugins Config](/bifrost/usage/http-transport/configuration/plugins)                   |
+| **Production deployment**  | Docker \+ config       | [Deployment Guide](/bifrost/quickstart/http-transport)                                  |
 
 ### **Language Examples**
 
@@ -290,28 +290,13 @@ curl http://localhost:8080/v1/chat/completions \
 
 ### **📖 API Reference**
 
-- [**🌐 Endpoints**](./endpoints.md) - Complete API endpoint documentation
-- [**📋 OpenAPI Spec**](./openapi.json) - Machine-readable API specification
-
-### **⚙️ Configuration Guides**
-
-- [**🔧 Provider Setup**](./configuration/providers.md) - Configure AI providers and keys
-- [**🛠️ MCP Integration**](./configuration/mcp.md) - Setup external tool integration
-- [**🔌 Plugin System**](./configuration/plugins.md) - Configure custom middleware
-
-### **🔗 Integration Guides**
-
-- [**📱 Drop-in Integrations**](./integrations/README.md) - Overview of API compatibility
-- [**🔄 Migration Guide**](./integrations/migration-guide.md) - Migrate from existing providers
-- [**⚙️ SDK Examples**](./integrations/) - Language-specific integration examples
-
----
+- [**🌐 Endpoints**](/bifrost/usage/http-transport/endpoints) - Complete API endpoint documentation
+- [**📋 OpenAPI Spec**](/bifrost/usage/http-transport/openapi.json) - Machine-readable API specification
 
 ## 🎯 Next Steps
 
-1. [**⚡ Quick Setup**](../../quickstart/http-transport.md) - Get Bifrost HTTP running in 30 seconds
-2. [**🔧 Configure Providers**](./configuration/providers.md) - Add your AI provider credentials
-3. [**🔗 Choose Integration**](./integrations/README.md) - Pick drop-in replacement or unified API
-4. [**🚀 Deploy to Production**](../../quickstart/http-transport.md#production-deployment) - Scale for production workloads
+1. [**⚡ Quick Setup**](/bifrost/quickstart/http-transport) - Get Bifrost HTTP running in 30 seconds
+2. [**🔧 Configure Providers**](/bifrost/usage/http-transport/configuration/providers) - Add your AI provider credentials
+3. [**🔗 Choose Integration**](/bifrost/usage/http-transport/integrations/overview) - Pick drop-in replacement or unified API
 
-> **🏛️ Architecture:** For HTTP transport design and performance details, see [Architecture Documentation](../../architecture/README.md).
+> **🏛️ Architecture:** For HTTP transport design and performance details, see [Architecture Documentation](/bifrost/architecture/overview).
