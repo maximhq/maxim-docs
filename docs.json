@@ -434,6 +434,10 @@
                                     {
                                         "group": "LangGraph",
                                         "pages": ["sdk/typescript/integrations/langgraph/langgraph"]
+                                    },
+                                    {
+                                        "group": "Vercel",
+                                        "pages": ["sdk/typescript/integrations/vercel/vercel"]
                                     }
                                 ]
                             },
@@ -596,37 +600,6 @@
                             "self-hosting/zerotouch",
                             "self-hosting/dataplane"
                         ]
-                    }
-                ]
-            },
-            {
-                "tab": "Bifrost",
-                "groups": [
-                    {
-                        "group": "Overview",
-                        "pages": ["bifrost/overview/get-started", "bifrost/overview/benchmarks"]
-                    },
-                    {
-                        "group": "Quickstart",
-                        "pages": []
-                    },
-
-                    {
-                        "group": "Usage",
-                        "pages": []
-                    },
-                    {
-                        "group": "Architecture",
-                        "pages": []
-                    },
-
-                    {
-                        "group": "Media",
-                        "pages": []
-                    },
-                    {
-                        "group": "Contributing",
-                        "pages": []
                     }
                 ]
             }

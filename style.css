@@ -105,6 +105,10 @@ p[data-component-part='step-title'] {
   margin-top: 8px !important;
 }
 
+[data-component-part='step-content'] .callout p:first-child {
+  margin-top: 0 !important;
+}
+
 :root {
   --font-family-headings-custom: 'Inter', sans-serif !important;
 }
