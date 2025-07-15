@@ -1,0 +1,162 @@
+---
+title: 'Best LiteLLM Alternative: Bifrost vs LiteLLM'
+description:
+    'Bifrost is built with one clear mission: to be the fastest, most scalable LLM gateway
+    available. Written in Go, it prioritizes performance and production-ready features from the
+    ground up.'
+---
+
+### Architecture & Design Philosophy
+
+**Key Features:**
+
+-   **Minimal Overhead**: Less than 15µs internal overhead per request at 5,000 RPS
+-   **Go-Based Architecture**: Single lightweight binary with no external dependencies
+-   **Plugin-First Middleware**: Clean, extensible architecture for custom logic
+-   **Multi-Protocol Support**: HTTP and gRPC (planned) support
+-   **Native Observability**: Built-in Prometheus metrics without additional setup
+
+### Performance Characteristics
+
+Bifrost's performance numbers are impressive:
+
+-   Handles 5,000+ RPS with minimal latency
+-   Memory efficient with intelligent connection pooling
+-   Zero runtime memory allocation when properly configured
+-   Designed to scale horizontally
+
+## LiteLLM
+
+### Overview
+
+LiteLLM has been a popular choice in the LLM ecosystem, offering a unified interface for multiple
+LLM providers. It's designed to be a drop-in replacement that abstracts away provider-specific
+implementations.
+
+**Key Features:**
+
+-   Wide ecosystem integration with 54+ supported integrations
+-   Extensive provider support (OpenAI, Anthropic, Azure, Cohere, etc.)
+-   Python-friendly with comprehensive SDK
+-   Mature documentation and community
+-   Flexible deployment options
+
+## Performance Comparison
+
+### Benchmark Results at 500 RPS
+
+The performance difference between Bifrost and LiteLLM is significant when tested under load:
+
+| Metric           | Bifrost | LiteLLM | Improvement   |
+| ---------------- | ------- | ------- | ------------- |
+| **Success Rate** | 100%    | 88.78%  | 11.22% better |
+| **P50 Latency**  | 804ms   | 38.65s  | 48x faster    |
+| **P99 Latency**  | 1.68s   | 90.72s  | 54x faster    |
+| **Max Latency**  | 6.13s   | 92.67s  | 15x faster    |
+| **Throughput**   | 424/s   | 44.84/s | 9.5x higher   |
+| **Memory Usage** | 120MB   | 372MB   | 68% less      |
+
+_Note: Tests conducted on t3.medium instances with tier 5 OpenAI keys_
+_Note: Here the Bifrost Instance was without UI, performance stays exactly the same even with UI but memory usage increases_
+
+### Like-for-Like Overhead Comparison
+
+When testing pure gateway overhead using mocked responses:
+_Note - Mock OpenAI Latency was 60ms_
+
+| Metric               | Bifrost | LiteLLM |
+| -------------------- | ------- | ------- |
+| **RPS**              | 500     | 475     |
+| **Median Latency**   | 60.99ms | 100ms   |
+| **Gateway Overhead** | 0.99ms  | 40ms    |
+
+This demonstrates that LiteLLM adds approximately 40x more overhead than Bifrost for the same
+workload.
+
+## Feature Comparison
+_Note: Here the Bifrost Instance was without UI, performance stays exactly the same even with UI but memory usage increases_
+
+### Architecture & Performance
+
+| Feature              | Bifrost       | LiteLLM               |
+| -------------------- | ------------- | --------------------- |
+| **Language**         | Go            | Python                |
+| **Deployment**       | Single binary | Multi-component       |
+| **Memory Usage**     | Low (120MB)   | High (372MB)          |
+| **Latency Overhead** | <15&nbsp;µs   | ~40ms                 |
+| **Max Throughput**   | 5,000+ RPS    | Limited by Python GIL |
+
+### Observability & Monitoring
+
+| Feature                  | Bifrost           | LiteLLM                 |
+| ------------------------ | ----------------- | ----------------------- |
+| **Metrics**              | Native Prometheus | External tools required |
+| **Setup Complexity**     | Drop-in ready     | Requires configuration  |
+| **Real-time Monitoring** | Built-in          | Third-party integration |
+
+### Integration & Ecosystem
+
+| Feature                   | Bifrost                                   | LiteLLM              |
+| ------------------------- | ----------------------------------------- | -------------------- |
+| **LLM Providers**         | OpenAI, Anthropic, Azure, Bedrock, Cohere | 100+ providers       |
+| **Framework Integration** | API-first                                 | SDK-first            |
+| **Customization**         | Plugin architecture                       | Python extensibility |
+| **Community**             | Growing                                   | Mature               |
+
+### Deployment & Operations
+
+| Feature              | Bifrost         | LiteLLM            |
+| -------------------- | --------------- | ------------------ |
+| **Deployment Model** | Single binary   | Multi-service      |
+| **Configuration**    | YAML/JSON based | Python-based       |
+| **Scaling**          | Horizontal      | Vertical (limited) |
+| **Maintenance**      | Low             | Medium             |
+
+## Pricing Comparison
+
+| Solution    | Cost Model               | Monthly Cost (Basic) | Enterprise Features               |
+| ----------- | ------------------------ | -------------------- | --------------------------------- |
+| **Bifrost** | Open source              | Free                 | Production-ready out of the box   |
+| **LiteLLM** | Open source + paid tiers | Free tier available  | Additional features in paid plans |
+
+## Migration Considerations
+
+### From LiteLLM to Bifrost
+
+**Advantages:**
+
+-   Immediate performance gains
+-   Reduced infrastructure costs
+-   Simpler deployment and maintenance
+-   Better observability out of the box
+
+### From Custom Implementation to Either
+
+Both solutions offer significant advantages over custom LLM proxy implementations:
+
+-   Reduced development time
+-   Better reliability and error handling
+-   Professional maintenance and updates
+-   Community support and documentation
+
+## Conclusion
+
+The choice between Bifrost and LiteLLM largely depends on your specific requirements and
+constraints:
+
+**Choose Bifrost if** you prioritize performance, efficiency, and are building production-grade
+systems where every millisecond and dollar counts. Its minimal overhead, high throughput, and native
+observability make it ideal for high-scale applications.
+
+For most production environments dealing with significant scale, Bifrost's performance advantages
+(54x lower P99 latency, 9.5x higher throughput, 68% less memory usage) make it the compelling
+choice. However, LiteLLM's maturity and ecosystem breadth make it attractive for rapid prototyping
+and testing.
+
+Both solutions are actively maintained and evolving, so your choice may also depend on which
+direction aligns better with your team's expertise and long-term architectural goals.
+
+_The performance gap between these solutions is substantial enough that it should be a primary
+consideration for any production deployment. While ecosystem breadth is valuable, the reliability
+and cost implications of using a more efficient gateway often outweigh the convenience of having
+access to more providers._
