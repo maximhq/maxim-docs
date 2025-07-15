@@ -1,17 +1,15 @@
 ---
-title: Maxim Observability with CrewAI
-description: Learn how to add Maxim observability and tracing to your CrewAI agent applications in just one line of code.
+title: "Maxim Observability with CrewAI"
+description: "Learn how to add Maxim observability and tracing to your CrewAI agent applications in just one line of code."
 ---
-
-# Maxim Observability with CrewAI
 
 This cookbook shows how to add Maxim observability and tracing to your [CrewAI](https://github.com/joaomdmoura/crewAI) agent applications in just one line of code. You'll learn how to instrument CrewAI, log agent interactions, and view traces in the Maxim dashboard.
 
 ## Prerequisites
 
-- Python >= 3.10
-- A Maxim account ([sign up here](https://app.maxim.ai/))
-- Maxim API Key ([generate here](https://app.maxim.ai/settings/api-keys))
+- Python \>= 3.10
+- A Maxim account ([sign up here](https://app.getmaxim.ai/))
+- Maxim API Key
 - A CrewAI project ([CrewAI GitHub](https://github.com/joaomdmoura/crewAI))
 
 ## 1. Installation
@@ -92,21 +90,19 @@ finally:
     Maxim().cleanup()  # Ensure cleanup happens even if errors occur
 ```
 
-That's it! All your CrewAI agent interactions will now be logged and available in your Maxim dashboard.
+That's it\! All your CrewAI agent interactions will now be logged and available in your Maxim dashboard.
 
 ## 6. Viewing Your Traces
 
 After running your CrewAI application:
 
-- Log in to your [Maxim Dashboard](https://app.maxim.ai/)
+- Log in to your [Maxim Dashboard](https://app.getmaxim.ai/)
 - Navigate to your repository
 - View detailed agent traces, including:
   - Agent conversations
   - Tool usage patterns
   - Performance metrics
   - Cost analytics
-
-![CrewAI traces in Maxim](crewai_traces.gif)
 
 ## 7. Troubleshooting
 
@@ -123,4 +119,4 @@ After running your CrewAI application:
 
 ---
 
-For more details, see the [CrewAI documentation](https://docs.crewai.com/) and the [Maxim Python SDK documentation](https://docs.maxim.ai/sdk/python/overview/). 
+For more details, see the [CrewAI documentation](https://docs.crewai.com/) and the [Maxim Python SDK documentation](https://getmaxim.ai/docs).
