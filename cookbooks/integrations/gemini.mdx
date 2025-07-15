@@ -1,20 +1,18 @@
 ---
-title: Tracing Google Gemini using Maxim
-description: Learn how to integrate Maxim's tracing capabilities with Google Gemini to monitor and log your GenAI app's requests and tool calls.
+title: "Tracing Google Gemini using Maxim"
+description: "Learn how to integrate Maxim's tracing capabilities with Google Gemini to monitor and log your GenAI app's requests and tool calls."
 ---
-
-# Tracing Google Gemini using Maxim
 
 In this cookbook, you'll learn how to easily integrate Maxim's powerful tracing into your GenAI app powered by Google Gemini. We'll walk through a simple example that shows how to set up the integration, trace requests, and log tool calls.
 
 ## Prerequisites
 
-- Python 3.8+
-- [Maxim Python SDK](https://pypi.org/project/maxim/) (`pip install maxim`)
-- [Google Generative AI SDK](https://github.com/google/generative-ai-python) (`pip install google-generativeai`)
+- Python 3.8\+
+- [Maxim Python SDK](https://pypi.org/project/maxim/) (`pip install maxim-py`)
+- [Google GenAI SDK](https://pypi.org/project/google-genai/) (`pip install google-genai`)
 - [python-dotenv](https://pypi.org/project/python-dotenv/) (`pip install python-dotenv`)
 - A [Google Gemini API key](https://aistudio.google.com/app/apikey)
-- A [Maxim API key](https://docs.maxim.ai/introduction/create-maxim-api-key)
+- A Maxim API key
 
 ## 1. Load Environment Variables
 
@@ -77,7 +75,7 @@ response = client.models.generate_content(
 
 ## 6. View Traces in Maxim
 
-All requests, responses, and tool calls are now automatically traced and can be viewed in your [Maxim dashboard](https://app.maxim.ai/).
+All requests, responses, and tool calls are now automatically traced and can be viewed in your [Maxim dashboard](https://app.getmaxim.ai/).
 
 ---
 
@@ -116,4 +114,4 @@ print(response)
 
 ---
 
-For more details, see the [Maxim Python SDK documentation](https://docs.maxim.ai/sdk/python/overview/). 
+For more details, see the [Maxim Python SDK documentation](https://www.getmaxim.ai/docs/sdk/python/integrations/gemini/gemini).
