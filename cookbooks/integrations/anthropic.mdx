@@ -1,17 +1,15 @@
 ---
-title: Tracing Anthropic Claude with Maxim
-description: Learn how to integrate Anthropic's Claude models with Maxim for full observability and tracing, including both standard and streaming completions.
+title: "Tracing Anthropic Claude with Maxim"
+description: "Learn how to integrate Anthropic's Claude models with Maxim for full observability and tracing, including both standard and streaming completions."
 ---
-
-# Tracing Anthropic Claude with Maxim
 
 This cookbook shows how to integrate Anthropic's Claude models with Maxim for full observability and tracing. You'll learn how to log both standard and streaming completions, making it easy to monitor and debug your LLM-powered applications.
 
 ## Prerequisites
 
-- Python 3.8+
+- Python 3.8\+
 - [Anthropic Python SDK](https://pypi.org/project/anthropic/) (`pip install anthropic`)
-- [Maxim Python SDK](https://pypi.org/project/maxim/) (`pip install maxim`)
+- [Maxim Python SDK](https://pypi.org/project/maxim-py/) (`pip install maxim-py`)
 - [python-dotenv](https://pypi.org/project/python-dotenv/) (`pip install python-dotenv`)
 - API keys for Anthropic and Maxim
 - (Optional) Set up a `.env` file with your API keys
@@ -83,8 +81,8 @@ with client.messages.stream(
 
 ## 6. Visualize in Maxim
 
-All requests, responses, and streaming events are automatically traced and can be viewed in your [Maxim dashboard](https://app.maxim.ai/).
+All requests, responses, and streaming events are automatically traced and can be viewed in your [Maxim dashboard](https://app.getmaxim.ai/).
 
 ---
 
-For more details, see the [Anthropic Python SDK documentation](https://docs.anthropic.com/claude/docs/python-sdk) and the [Maxim Python SDK documentation](https://docs.maxim.ai/sdk/python/overview/). 
+For more details, see the [Anthropic Python SDK documentation](https://docs.anthropic.com/en/home) and the [Maxim Python SDK documentation](https://www.getmaxim.ai/docs/introduction/overview).
