@@ -1,5 +1,5 @@
 ---
-title: "Tracing Google Gemini using Maxim"
+title: "Tracing Google Gemini based Weather Agent using Maxim"
 description: "Learn how to integrate Maxim's tracing capabilities with Google Gemini to monitor and log your GenAI app's requests and tool calls."
 ---
 
@@ -8,7 +8,7 @@ In this cookbook, you'll learn how to easily integrate Maxim's powerful tracing 
 ## Prerequisites
 
 - Python 3.8\+
-- [Maxim Python SDK](https://pypi.org/project/maxim/) (`pip install maxim-py`)
+- [Maxim Python SDK](https://pypi.org/project/maxim-py/) (`pip install maxim-py`)
 - [Google GenAI SDK](https://pypi.org/project/google-genai/) (`pip install google-genai`)
 - [python-dotenv](https://pypi.org/project/python-dotenv/) (`pip install python-dotenv`)
 - A [Google Gemini API key](https://aistudio.google.com/app/apikey)
@@ -111,6 +111,8 @@ response = client.models.generate_content(
 )
 print(response)
 ```
+
+![Gif](/images/gemini_traces.gif)
 
 ---
 
