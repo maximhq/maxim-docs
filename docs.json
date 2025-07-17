@@ -602,6 +602,22 @@
                         ]
                     }
                 ]
+            },
+            {
+                "tab": "Cookbooks",
+                "groups": [
+                    {
+                        "group": "Integrations",
+                        "pages": [
+                            "cookbooks/integrations/agno",
+                            "cookbooks/integrations/anthropic",
+                            "cookbooks/integrations/crewai",
+                            "cookbooks/integrations/gemini",
+                            "cookbooks/integrations/react_agent",
+                            "cookbooks/integrations/vercel"
+                        ]
+                    }
+                ]
             }
         ],
         "global": {
