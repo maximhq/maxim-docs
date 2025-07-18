@@ -1,16 +1,17 @@
 {
-	"title": "Prompts",
-	"pages": [
-		"quickstart",
-		"prompt-playground",
-		"prompt-versions",
-		"prompt-evals",
-		"prompt-partials",
-		"tool-calls",
-		"mcp",
-		"retrieval",
-		"prompt-deployment",
-		"folders-and-tags",
-		"human-annotation"
-	]
+    "title": "Prompts",
+    "pages": [
+        "quickstart",
+        "prompt-playground",
+        "prompt-versions",
+        "prompt-evals",
+        "prompt-partials",
+        "tool-calls",
+        "mcp",
+        "retrieval",
+        "prompt-deployment",
+        "folders-and-tags",
+        "human-annotation",
+        "prompt-optimization"
+    ]
 }

@@ -42,7 +42,8 @@
                                             "offline-evals/via-ui/prompts/prompt-evals",
                                             "offline-evals/via-ui/prompts/prompt-deployment",
                                             "offline-evals/via-ui/prompts/folders-and-tags",
-                                            "offline-evals/via-ui/prompts/human-annotation"
+                                            "offline-evals/via-ui/prompts/human-annotation",
+                                            "offline-evals/via-ui/prompts/prompt-optimization"
                                         ]
                                     },
                                     {
