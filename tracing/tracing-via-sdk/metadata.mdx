@@ -54,13 +54,14 @@ maxim = Maxim(Config(api_key=""))
 logger = maxim.logger(LoggerConfig(id=""))
 ```
 
-```go Go
-import "github.com/maximhq/maxim-go"
+import (
+    "github.com/maximhq/maxim-go"
+    "github.com/maximhq/maxim-go/logging"
+)
 
 mx := maxim.Init(&maxim.MaximSDKConfig{ApiKey: ""})
 
 logger, err := mx.GetLogger(&logging.LoggerConfig{Id: ""})
-```
 
 ```java Java
 import ai.getmaxim.sdk.Maxim;
