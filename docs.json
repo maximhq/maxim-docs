@@ -151,6 +151,7 @@
                                 "pages": [
                                     "tracing/tracing-via-sdk/traces",
                                     "tracing/tracing-via-sdk/spans",
+                                    "tracing/tracing-via-sdk/metadata",
                                     "tracing/tracing-via-sdk/generations",
                                     "tracing/tracing-via-sdk/retrieval",
                                     "tracing/tracing-via-sdk/attachments",
