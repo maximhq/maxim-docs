@@ -50,12 +50,13 @@ const logger = await maxim.logger({ id: "" });
 ````
 
 ```python Python
-from maxim import Maxim, Config
-from maxim.logger import Logger, LoggerConfig
+from maxim import Maxim
 
-maxim = Maxim(Config(api_key=""))
+# Initialized using MAXIM_API_KEY from env variables
+maxim = Maxim()
 
-logger = maxim.logger(LoggerConfig(id=""))
+# Initialized using MAXIM_LOG_REPO_ID from env variables
+logger = maxim.logger()
 ````
 
 ```go Go
@@ -95,10 +96,10 @@ trace.end();
 ```python Python
 from maxim.logger import TraceConfig
 
-trace = logger.trace(TraceConfig(
-id="trace-id", # Unique ID of the trace
-name="user-query",
-))
+trace = logger.trace({
+  "id":"trace-id", # Unique ID of the trace
+  "name":"user-query",
+})
 
 trace.set_input("Hello, how are you?")
 trace.set_output("I'm fine, thank you!")

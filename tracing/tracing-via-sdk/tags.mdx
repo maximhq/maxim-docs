@@ -22,16 +22,14 @@ description: Tag your traces to group and filter endpoint data effectively. Add 
     ```
 
     ```python Python
-    from maxim.logger import TraceConfig
-
-    trace = logger.trace(TraceConfig(
-        id="trace-id",
-        name="user-query",
-        tags={
+    trace = logger.trace({
+        "id":"trace-id",
+        "name":"user-query",
+        "tags":{
             "productId": "instaTravel",
             "experimentId": "fastlane",
         },
-    ))
+    })
     ```
 
     ```go Go

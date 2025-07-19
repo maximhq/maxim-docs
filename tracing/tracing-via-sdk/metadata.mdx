@@ -54,14 +54,13 @@ maxim = Maxim(Config(api_key=""))
 logger = maxim.logger(LoggerConfig(id=""))
 ```
 
-import (
-    "github.com/maximhq/maxim-go"
-    "github.com/maximhq/maxim-go/logging"
-)
+```go Go
+import "github.com/maximhq/maxim-go"
 
 mx := maxim.Init(&maxim.MaximSDKConfig{ApiKey: ""})
 
 logger, err := mx.GetLogger(&logging.LoggerConfig{Id: ""})
+```
 
 ```java Java
 import ai.getmaxim.sdk.Maxim;
@@ -96,27 +95,21 @@ trace.addMetadata({"customKey":"customValue","timestamp": new Date().toISOString
 ```
 
 ```python Python
-from maxim.logger import TraceConfig
-
-trace = logger.trace(TraceConfig(
-    id="trace-id",
-    name="user-query",
-    metadata={
+trace = logger.trace({
+    "id":"trace-id",
+    "name":"user-query",
+    "metadata": {
         "user_id": "user-123",
         "session_id": "session-456",
         "model": "gpt-4",
         "temperature": 0.7,
         "environment": "production"
     }
-))
+})
 
 # Add metadata after creation
-trace.add_metadata(
-    {
-        "custom_key": "custom_value",
-        "timestamp": "2024-01-01T00:00:00Z",
-    }
-)
+trace.add_metadata({"custom_key": "custom_value","timestamp", "2024-01-01T00:00:00Z"})
+```
 
 ```go Go
 trace := logger.Trace(&logging.TraceConfig{
@@ -158,19 +151,17 @@ const generation = trace.generation({
  ```
 
 ```python Python
-from maxim.logger import GenerationConfig
-
-generation = trace.generation(GenerationConfig(
-    id="generation-id",
-    name="llm-call",
-    metadata={
+generation = trace.generation({
+    "id":"generation-id",
+    "name":"llm-call",
+    "metadata":{
         "provider": "openai",
         "model": "gpt-4",
         "max_tokens": 1000,
         "temperature": 0.7,
         "top_p": 0.9
     }
-))
+})
 
 generation.set_metadata("prompt_version", "v2.1")
 generation.set_metadata("user_id", "user-123")
@@ -256,40 +247,38 @@ const retrieval = trace.retrieval({
 ```
 
 ```python Python
-from maxim.logger import SpanConfig, EventConfig, RetrievalConfig
-
 # Span with metadata
-span = trace.span(SpanConfig(
-    id="span-id",
-    name="data-processing",
-    metadata={
+span = trace.span({
+    "id":"span-id",
+    "name":"data-processing",
+    "metadata":{
         "data_source": "database",
         "record_count": 150,
         "processing_time": "2.3s"
     }
-))
+})
 
 # Event with metadata
-event = trace.event(EventConfig(
-    id="event-id",
-    name="user-action",
-    metadata={
+event = trace.event({
+    "id":"event-id",
+    "name":"user-action",
+    "metadata":{
         "action": "button-click",
         "element_id": "submit-btn",
         "page_url": "/dashboard"
     }
-))
+})
 
 # Retrieval with metadata
-retrieval = trace.retrieval(RetrievalConfig(
-    id="retrieval-id",
-    name="vector-search",
-    metadata={
+retrieval = trace.retrieval({
+    "id"="retrieval-id",
+    "name"="vector-search",
+    "metadata"={
         "vector_db": "pinecone",
         "index_name": "documents",
         "similarity_threshold": 0.8
     }
-))
+})
 ```
 
 ```go Go

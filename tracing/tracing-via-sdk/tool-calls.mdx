@@ -1,5 +1,5 @@
 ---
-title: Tracing Tool Calls
+title: Tool Calls
 description: Track external system calls triggered by LLM responses in your agentic endpoints. Tool calls represent interactions with external services, allowing you to monitor execution time and responses.
 ---
 
@@ -25,18 +25,14 @@ description: Track external system calls triggered by LLM responses in your agen
     ```
 
     ```python Python
-    from maxim.logger import ToolCallConfig
-
     tool_call = completion.choices[0].message.tool_calls[0]
-    tool_call_config = ToolCallConfig(
-        id=tool_call.id,
-        name=tool_call.function.name,
-        description="Get current temperature for a given location.",
-        args=tool_call.function.arguments,
-        tags={ "location": toolCall.function.arguments["location"] }
-    )
-    trace_tool_call = trace.tool_call(tool_call_config)
-
+    trace_tool_call = trace.tool_call({
+        "id":tool_call.id,
+        "name":tool_call.function.name,
+        "description":"Get current temperature for a given location.",
+        "args":tool_call.function.arguments,
+        "tags":{ "location": toolCall.function.arguments["location"] }
+    })
     try:
         result = call_external_service(tool_call.function.name, tool_call.function.arguments)
         trace_tool_call.result(result)
