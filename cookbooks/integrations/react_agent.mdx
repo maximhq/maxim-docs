@@ -35,7 +35,7 @@ from uuid import uuid4
 import openai
 from openai import OpenAI
 
-maxim = Maxim(Config(apiKey=os.environ["MAXIM_API_KEY"]))
+maxim = Maxim(Config(api_key=os.environ["MAXIM_API_KEY"]))
 logger = maxim.logger(LoggerConfig(id=os.environ["MAXIM_LOG_REPO_ID"]))
 client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 ```
