@@ -37,7 +37,7 @@ from openai import OpenAI
 
 maxim = Maxim(Config(apiKey=os.environ["MAXIM_API_KEY"]))
 logger = maxim.logger(LoggerConfig(id=os.environ["MAXIM_LOG_REPO"]))
-client = OpenAI(api_key=os.environ.get("OpenAI_API_KEY"))
+client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 ```
 
 ## 3. Define the ReAct Agent Class
@@ -72,7 +72,7 @@ class Agent:
         result = self.execute()
         self.messages.append({"role": "assistant", "content": result})
 
-        enc = tiktoken.get_encoding("o200k_base")
+        enc = tiktoken.get_encoding("cl100k_base")
         messages_string = ''.join(["role: " + entry["role"] + " content: " + entry['content'] for entry in self.messages])
         prompt_tokens = len(enc.encode(messages_string))
         completion_tokens = len(enc.encode(result))
@@ -99,7 +99,7 @@ class Agent:
         return result
 
     def execute(self):
-        completion = client.chat.completions.create(
+        completion = self.client.chat.completions.create(
             model="gpt-4o", messages=self.messages
         )
         return completion.choices[0].message.content

@@ -207,7 +207,7 @@ import { openai } from '@ai-sdk/openai';
 import { wrapMaximAISDKModel, MaximVercelProviderMetadata } from '@maximai/maxim-js/vercel-ai-sdk';
 import { Maxim } from "@maximai/maxim-js";
 
-const maxim = new Maxim({ apiKey });
+const maxim = new Maxim({ apiKey: process.env.MAXIM_API_KEY });
 const logger = await maxim.logger({ id: process.env.MAXIM_LOG_REPO_ID });
 const model = wrapMaximAISDKModel(openai('gpt-4'), logger);
 

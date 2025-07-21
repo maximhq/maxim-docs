@@ -50,7 +50,7 @@ client = MaximAnthropicClient(Anthropic(api_key=ANTHROPIC_API_KEY), logger)
 user_input = "What was the capital of France in 1800s?"
 
 response = client.messages.create(
-    model="claude-3-5-sonnet-20241022",
+    model=MODEL_NAME,
     max_tokens=1024,
     messages=[{"role": "user", "content": user_input}],
     extra_headers={"x-maxim-trace-id": str(uuid4())}
