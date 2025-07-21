@@ -6,6 +6,7 @@ Data structures, interfaces, and type definitions reference for Bifrost Go packa
 
 ---
 
+
 ## 📋 Schema Overview
 
 Bifrost schemas define the structure for:
@@ -76,13 +77,18 @@ if len(response.Choices) > 0 {
     choice := response.Choices[0]
 
     // Text content
-    if choice.Message.Content.ContentStr != nil {
-        fmt.Println("Response:", *choice.Message.Content.ContentStr)
+    if choice.BifrostNonStreamResponseChoice != nil && choice.BifrostNonStreamResponseChoice.Message.Content.ContentStr != nil {
+        fmt.Println("Response:", *choice.BifrostNonStreamResponseChoice.Message.Content.ContentStr)
+    }
+
+    // Streaming content
+    if choice.BifrostStreamResponseChoice != nil && choice.BifrostStreamResponseChoice.Delta.Content != nil {
+        fmt.Println("Streaming Response:", *choice.BifrostStreamResponseChoice.Delta.Content)
     }
 
     // Tool calls
-    if choice.Message.ToolCalls != nil {
-        for _, toolCall := range *choice.Message.ToolCalls {
+    if choice.BifrostNonStreamResponseChoice != nil && choice.BifrostNonStreamResponseChoice.Message.ToolCalls != nil {
+        for _, toolCall := range *choice.BifrostNonStreamResponseChoice.Message.ToolCalls {
             // Handle tool call
         }
     }
@@ -559,6 +565,7 @@ providers := []schemas.ModelProvider{
     schemas.Cohere,      // Cohere models
     schemas.Mistral,     // Mistral models
     schemas.Ollama,      // Local Ollama
+    schemas.Groq,        // Groq models
 }
 
 // Popular model choices
@@ -641,6 +648,7 @@ func reliableRequest(message string) *schemas.BifrostRequest {
 }
 ```
 
+---
 ---
 
 ## 📚 Related Documentation

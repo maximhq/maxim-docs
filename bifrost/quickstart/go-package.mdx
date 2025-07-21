@@ -1,6 +1,7 @@
 ---
-title: "Go Package Quick Start"
-description: "Get Bifrost running in your Go application in 30 seconds with this minimal setup guide."
+title: 'Go Package Quick Start'
+description:
+    'Get Bifrost running in your Go application in 30 seconds with this minimal setup guide.'
 ---
 
 ## 30-Second Setup
@@ -62,21 +63,21 @@ func (a *MyAccount) GetConfigForProvider(provider schemas.ModelProvider) (*schem
 
 func main() {
     // Initialize Bifrost
-    client, err := bifrost.Init(schemas.BifrostConfig{
+    client, initErr := bifrost.Init(schemas.BifrostConfig{
         Account: &MyAccount{},
     })
-    if err != nil {
-        panic(err)
+    if initErr != nil {
+        panic(initErr)
     }
     defer client.Cleanup()
 
     // Make a chat completion request
-    response, err := client.ChatCompletionRequest(context.Background(), schemas.ChatCompletionRequest{
-        Provider: schemas.OpenAI,
-        Model:    "gpt-4o-mini",
-        Messages: []schemas.Message{
-            {Role: schemas.User, Content: schemas.Content{ContentStr: bifrost.Ptr("Hello, Bifrost!")}},
-        },
+   response, bifrostErr := client.ChatCompletionRequest(context.Background(), &schemas.BifrostRequest{
+		Provider: schemas.OpenAI, // Primary provider
+		Model:    "gpt-4o-mini",
+		Input: schemas.RequestInput{
+			ChatCompletionInput: &messages,
+		},
     })
 
     if err != nil {
@@ -149,9 +150,13 @@ response, err := client.ChatCompletionRequest(context.Background(), schemas.Chat
     Messages: []schemas.Message{
         {Role: schemas.User, Content: schemas.Content{ContentStr: bifrost.Ptr("Hello!")}},
     },
-    Fallbacks: []schemas.FallbackConfig{
-        {Provider: schemas.Anthropic, Model: "claude-3-sonnet-20240229"},
-    },
+    Params: &schemas.ModelParameters{
+			MaxTokens: bifrost.Ptr(100),
+		},
+	Fallbacks: []schemas.Fallback{
+			{Provider: schemas.Anthropic, Model: "claude-3-sonnet-20240229"},
+		},
+	})
 })
 ```
 
@@ -163,7 +168,7 @@ response, err := client.ChatCompletionRequest(context.Background(), schemas.Chat
     Provider: schemas.OpenAI,
     Model:    "gpt-4o-mini",
     Messages: []schemas.Message{
-        {Role: schemas.User, Content: schemas.Content{ContentStr: bifrost.Ptr("What's the weather?")}},
+        {Role: schemas.ModelChatMessageRoleUser, Content: schemas.MessageContent{ContentStr: bifrost.Ptr("Which tool can I use to get the weather?")}},
     },
     Tools: []schemas.Tool{
         {
@@ -194,16 +199,17 @@ response, err := client.ChatCompletionRequest(context.Background(), schemas.Chat
 | **Add all 8\+ providers**    | [🔗 Providers](/bifrost/usage/http-transport/configuration/providers) | 5 min     |
 | **Production configuration** | [👤 Account Management](/bifrost/usage/go-package/account)            | 15 min    |
 | **Custom plugins**           | [🔌 Plugins](/bifrost/usage/go-package/plugins)                       | 20 min    |
-| **MCP integration**          | [🛠️ MCP](/bifrost/usage/go-package/mcp)                              | 15 min    |
+| **MCP integration**          | [🛠️ MCP](/bifrost/usage/go-package/mcp)                               | 15 min    |
 | **Full API reference**       | [📊 Schemas](/bifrost/usage/go-package/schemas)                       | Reference |
 
 ## Prefer HTTP API?
 
-If you want to use Bifrost from Python, Node.js, or other languages, try the [**HTTP Transport Quick Start**](/bifrost/quickstart/http-transport) instead.
+If you want to use Bifrost from Python, Node.js, or other languages, try the
+[**HTTP Transport Quick Start**](/bifrost/quickstart/http-transport) instead.
 
 ## Why Go Package?
 
-- ✅ **Type safety** - Compile-time validation
-- ✅ **Performance** - No HTTP overhead
-- ✅ **Custom logic** - Full programmatic control
-- ✅ **Advanced features** - Complete plugin system access
+-   ✅ **Type safety** - Compile-time validation
+-   ✅ **Performance** - No HTTP overhead
+-   ✅ **Custom logic** - Full programmatic control
+-   ✅ **Advanced features** - Complete plugin system access

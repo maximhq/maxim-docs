@@ -3,7 +3,9 @@ title: "Provider Configuration"
 description: "Complete guide to configuring AI providers in Bifrost HTTP transport through config.json."
 ---
 
-## Configuration Overview
+## 📋 Configuration Overview (File Based)
+
+> You can directly use the UI (`http://localhost:{port}/providers`) to configure the providers.
 
 Provider configuration in `config.json` defines:
 
@@ -494,8 +496,7 @@ docker run -p 8080:8080 \
 curl -X POST http://localhost:8080/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d '{
-    "provider": "openai",
-    "model": "gpt-4o-mini",
+    "model": "openai/gpt-4o-mini",
     "messages": [{"role": "user", "content": "Test message"}]
   }'
 
@@ -503,11 +504,10 @@ curl -X POST http://localhost:8080/v1/chat/completions \
 curl -X POST http://localhost:8080/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d '{
-    "provider": "openai",
-    "model": "gpt-4o-mini",
+    "model": "openai/gpt-4o-mini",
     "messages": [{"role": "user", "content": "Test message"}],
     "fallbacks": [
-      {"provider": "anthropic", "model": "claude-3-sonnet-20240229"}
+      "anthropic/claude-3-sonnet-20240229"
     ]
   }'
 ```
@@ -521,5 +521,6 @@ bifrost-http -config config.json -validate
 # Check which providers are loaded
 curl http://localhost:8080/metrics | grep bifrost_providers
 ```
+
 
 **🏛️ Architecture:** For provider selection algorithms and load balancing, see [Architecture Documentation](/bifrost/architecture/overview).

@@ -3,7 +3,7 @@ title: "Plugins"
 description: "Custom middleware for request/response hooks, rate limiting, caching, and monitoring in Bifrost."
 ---
 
-## Plugin Overview
+## 📋 Plugin Overview
 
 Plugins provide middleware functionality in Bifrost:
 
@@ -142,7 +142,7 @@ For advanced plugin development and complete examples:
 
 ```go
 // Add plugins to your Bifrost client
-client, err := bifrost.Init(schemas.BifrostConfig{
+client, initErr := bifrost.Init(schemas.BifrostConfig{
     Account: &MyAccount{},
     Plugins: []schemas.Plugin{
         NewLoggingPlugin(),

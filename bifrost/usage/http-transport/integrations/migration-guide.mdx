@@ -3,18 +3,18 @@ title: "Migration Guide"
 description: "Step-by-step guide to migrate from existing AI provider APIs to Bifrost for improved reliability, cost optimization, and enhanced features."
 ---
 
-## Migration Overview
+## 📋 Migration Overview
 
 ### **Why Migrate to Bifrost?**
 
-| Current Pain Point             | Bifrost Solution                          | Business Impact          |
-| ------------------------------ | ----------------------------------------- | ------------------------ |
-| **Single provider dependency** | Multi-provider fallbacks                  | 99.9% uptime reliability |
-| **Rate limit bottlenecks**     | Load balancing \+ queuing                 | 3x higher throughput     |
-| **Limited tool integration**   | Built-in MCP support                      | Extended AI capabilities |
-| **Manual monitoring**          | Prometheus metrics                        | Operational visibility   |
-| **High API costs**             | Smart routing optimization                | 20-40% cost reduction    |
-| **Complex error handling**     | Automatic retries \+ graceful degradation | Improved user experience |
+| Current Pain Point             | Bifrost Solution                         | Business Impact          |
+| ------------------------------ | ---------------------------------------- | ------------------------ |
+| **Single provider dependency** | Multi-provider fallbacks                 | 99.9% uptime reliability |
+| **Rate limit bottlenecks**     | Load balancing + queuing                 | 3x higher throughput     |
+| **Limited tool integration**   | Built-in MCP support                     | Extended AI capabilities |
+| **Manual monitoring**          | Prometheus metrics                       | Operational visibility   |
+| **High API costs**             | Smart routing optimization               | 20-40% cost reduction    |
+| **Complex error handling**     | Automatic retries + graceful degradation | Improved user experience |
 
 ### **Migration Strategies**
 
@@ -45,7 +45,7 @@ go install github.com/maximhq/bifrost/transports/bifrost-http@latest
 bifrost-http -config config.json -port 8080
 ```
 
-### **Step 2: Create Configuration**
+### **Step 2: Create Configuration (Or Use UI)**
 
 ```json
 {
@@ -115,19 +115,16 @@ const anthropic = new Anthropic({
 ```bash
 # Test OpenAI compatibility
 curl -X POST http://localhost:8080/openai/v1/chat/completions \
-  -H "Authorization: Bearer $OPENAI_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"model": "gpt-4o-mini", "messages": [{"role": "user", "content": "test"}]}'
 
 # Test Anthropic compatibility
 curl -X POST http://localhost:8080/anthropic/v1/messages \
-  -H "x-api-key: $ANTHROPIC_API_KEY" \
   -H "Content-Type: application/json" \
-  -H "anthropic-version: 2023-06-01" \
   -d '{"model": "claude-3-sonnet-20240229", "max_tokens": 100, "messages": [{"role": "user", "content": "test"}]}'
 ```
 
-**✅ Migration Complete\!** Your application now benefits from:
+**✅ Migration Complete!** Your application now benefits from:
 
 - Multi-provider fallbacks
 - Automatic load balancing
@@ -521,27 +518,27 @@ spec:
 
 ### **Pre-Migration**
 
-- **Identify dependencies** - Catalog all AI API usage
-- **Set up monitoring** - Baseline current performance metrics
-- **Configure Bifrost** - Create config.json with all providers
-- **Test compatibility** - Verify all SDKs work with Bifrost
-- **Plan rollback** - Prepare quick revert procedures
+- [ ] **Identify dependencies** - Catalog all AI API usage
+- [ ] **Set up monitoring** - Baseline current performance metrics
+- [ ] **Configure Bifrost** - Create config.json with all providers
+- [ ] **Test compatibility** - Verify all SDKs work with Bifrost
+- [ ] **Plan rollback** - Prepare quick revert procedures
 
 ### **During Migration**
 
-- **Start with dev/staging** - Test in non-production first
-- **Monitor error rates** - Watch for compatibility issues
-- **Validate responses** - Ensure output quality is maintained
-- **Check performance** - Monitor latency and throughput
-- **Gradual rollout** - Increase traffic percentage slowly
+- [ ] **Start with dev/staging** - Test in non-production first
+- [ ] **Monitor error rates** - Watch for compatibility issues
+- [ ] **Validate responses** - Ensure output quality is maintained
+- [ ] **Check performance** - Monitor latency and throughput
+- [ ] **Gradual rollout** - Increase traffic percentage slowly
 
 ### **Post-Migration**
 
-- **Monitor enhanced features** - Verify fallbacks work
-- **Optimize configuration** - Tune timeouts and concurrency
-- **Set up alerting** - Monitor Bifrost health metrics
-- **Document changes** - Update team documentation
-- **Cost analysis** - Measure cost savings from optimization
+- [ ] **Monitor enhanced features** - Verify fallbacks work
+- [ ] **Optimize configuration** - Tune timeouts and concurrency
+- [ ] **Set up alerting** - Monitor Bifrost health metrics
+- [ ] **Document changes** - Update team documentation
+- [ ] **Cost analysis** - Measure cost savings from optimization
 
 ---
 
@@ -609,9 +606,9 @@ client = openai.OpenAI(
 
 **Solution:** Check feature compatibility in integration guides:
 
-- [OpenAI Compatible](/bifrost/usage/http-transport/integrations/openai-compatible)
-- [Anthropic Compatible](/bifrost/usage/http-transport/integrations/anthropic-compatible)
-- [GenAI Compatible](/bifrost/usage/http-transport/integrations/genai-compatible)
+- [OpenAI Compatible](./openai-compatible.md)
+- [Anthropic Compatible](./anthropic-compatible.md)
+- [GenAI Compatible](./genai-compatible.md)
 
 ---
 
@@ -685,5 +682,6 @@ services:
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
 ```
+
 
 **Architecture:** For migration architecture patterns and best practices, see [Architecture Documentation](/bifrost/architecture/overview).

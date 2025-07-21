@@ -3,7 +3,8 @@ title: "HTTP API Endpoints"
 description: "Complete reference for Bifrost HTTP transport API endpoints and usage patterns."
 ---
 
-## Endpoint Overview
+
+## 📋 Endpoint Overview
 
 Bifrost HTTP transport provides:
 
@@ -28,8 +29,7 @@ Chat conversation endpoint supporting all providers.
 
 ```json
 {
-  "provider": "openai",
-  "model": "gpt-4o-mini",
+  "model": "openai/gpt-4o-mini",
   "messages": [
     {
       "role": "user",
@@ -40,12 +40,7 @@ Chat conversation endpoint supporting all providers.
     "temperature": 0.7,
     "max_tokens": 1000
   },
-  "fallbacks": [
-    {
-      "provider": "anthropic",
-      "model": "claude-3-sonnet-20240229"
-    }
-  ]
+  "fallbacks": ["anthropic/claude-3-sonnet-20240229"]
 }
 ```
 
@@ -80,12 +75,45 @@ Chat conversation endpoint supporting all providers.
 curl -X POST http://localhost:8080/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d '{
-    "provider": "openai",
-    "model": "gpt-4o-mini",
+    "model": "openai/gpt-4o-mini",
     "messages": [
       {"role": "user", "content": "What is the capital of France?"}
     ]
   }'
+```
+
+### **Streaming Responses**
+
+To receive a stream of partial responses, set `"stream": true` in your request. The response will be a `text/event-stream` of Server-Sent Events (SSE).
+
+**Request with Streaming:**
+
+```json
+{
+  "model": "openai/gpt-4o-mini",
+  "messages": [{"role": "user", "content": "Write a short story."}],
+  "stream": true
+}
+```
+
+**SSE Event Stream:**
+
+Each event in the stream is a JSON object prefixed with `data: `. The stream is terminated by a `[DONE]` message.
+
+```
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-4o-mini","choices":[{"index":0,"delta":{"role":"assistant"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-4o-mini","choices":[{"index":0,"delta":{"content":"Once"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-4o-mini","choices":[{"index":0,"delta":{"content":" upon"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-4o-mini","choices":[{"index":0,"delta":{"content":" a"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-4o-mini","choices":[{"index":0,"delta":{"content":" time"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-123","object":"chat.completion.chunk","created":1694268190,"model":"gpt-4o-mini","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
+
+data: [DONE]
 ```
 
 ### **POST /v1/text/completions**
@@ -96,8 +124,7 @@ Text completion endpoint for simple text generation.
 
 ```json
 {
-  "provider": "openai",
-  "model": "gpt-4o-mini",
+  "model": "openai/gpt-4o-mini",
   "text": "The future of AI is",
   "params": {
     "temperature": 0.8,
@@ -170,7 +197,6 @@ Drop-in replacement for OpenAI API:
 ```bash
 curl -X POST http://localhost:8080/openai/v1/chat/completions \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $OPENAI_API_KEY" \
   -d '{
     "model": "gpt-4o-mini",
     "messages": [
@@ -188,8 +214,6 @@ Drop-in replacement for Anthropic API:
 ```bash
 curl -X POST http://localhost:8080/anthropic/v1/messages \
   -H "Content-Type: application/json" \
-  -H "x-api-key: $ANTHROPIC_API_KEY" \
-  -H "anthropic-version: 2023-06-01" \
   -d '{
     "model": "claude-3-sonnet-20240229",
     "max_tokens": 1000,
@@ -201,14 +225,13 @@ curl -X POST http://localhost:8080/anthropic/v1/messages \
 
 ### **Google GenAI Compatible**
 
-**POST /genai/v1beta/models/:generateContent**
+**POST /genai/v1beta/models/{model}:generateContent**
 
 Drop-in replacement for Google GenAI API:
 
 ```bash
 curl -X POST http://localhost:8080/genai/v1beta/models/gemini-pro:generateContent \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GOOGLE_API_KEY" \
   -d '{
     "contents": [{
       "parts": [{"text": "Hello!"}]
@@ -251,12 +274,11 @@ bifrost_provider_errors_total{provider="openai",error_type="rate_limit"} 23
 
 ### **Common Parameters**
 
-| Parameter   | Type   | Description             | Example                       |
-| ----------- | ------ | ----------------------- | ----------------------------- |
-| `provider`  | string | AI provider to use      | `"openai"`                    |
-| `model`     | string | Model name              | `"gpt-4o-mini"`               |
-| `params`    | object | Model parameters        | `{"temperature": 0.7}`        |
-| `fallbacks` | array  | Fallback configurations | `[{"provider": "anthropic"}]` |
+| Parameter   | Type   | Description             | Example                                  |
+| ----------- | ------ | ----------------------- | ---------------------------------------- |
+| `model`     | string | Provider and model name | `"openai/gpt-4o-mini"`                   |
+| `params`    | object | Model parameters        | `{"temperature": 0.7}`                   |
+| `fallbacks` | array  | Fallback model names    | `["anthropic/claude-3-sonnet-20240229"]` |
 
 ### **Model Parameters**
 
@@ -312,8 +334,7 @@ MCP tools are automatically available in chat completions:
 curl -X POST http://localhost:8080/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d '{
-    "provider": "openai",
-    "model": "gpt-4o-mini",
+    "model": "openai/gpt-4o-mini",
     "messages": [
       {"role": "user", "content": "List files in the current directory"}
     ]
@@ -351,8 +372,7 @@ curl -X POST http://localhost:8080/v1/chat/completions \
 # Initial request
 curl -X POST http://localhost:8080/v1/chat/completions \
   -d '{
-    "provider": "openai",
-    "model": "gpt-4o-mini",
+    "model": "openai/gpt-4o-mini",
     "messages": [
       {"role": "user", "content": "Read the README.md file"},
       {
@@ -497,5 +517,6 @@ func makeRequest() {
     )
 }
 ```
+
 
 **🏛️ Architecture:** For endpoint implementation details and performance, see [Architecture Documentation](/bifrost/architecture/overview).
