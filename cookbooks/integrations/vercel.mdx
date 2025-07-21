@@ -1,18 +1,22 @@
 ---
-title: "Maxim Observability with Vercel AI SDK"
-description: "Learn how to add Maxim observability and tracing to your Vercel AI SDK applications in just one line of code."
+title: 'Maxim Observability with Vercel AI SDK'
+description:
+    'Learn how to add Maxim observability and tracing to your Vercel AI SDK applications in just one
+    line of code.'
 ---
 
-This cookbook shows how to add Maxim observability and tracing to your Vercel AI SDK applications in just one line of code. You'll learn how to wrap models, log LLM calls, stream responses, add custom metadata, and integrate with Next.js APIs and client components.
+This cookbook shows how to add Maxim observability and tracing to your Vercel AI SDK applications in
+just one line of code. You'll learn how to wrap models, log LLM calls, stream responses, add custom
+metadata, and integrate with Next.js APIs and client components.
 
 ## Prerequisites
 
-- Node.js 18\+
-- [@ai-sdk/openai](https://www.npmjs.com/package/@ai-sdk/openai)
-- [@ai-sdk/anthropic](https://www.npmjs.com/package/@ai-sdk/anthropic)
-- [@ai-sdk/google](https://www.npmjs.com/package/@ai-sdk/google)
-- [@maximai/maxim-js](https://www.npmjs.com/package/@maximai/maxim-js)
-- [ai](https://www.npmjs.com/package/ai) (Vercel AI SDK)
+-   Node.js 18\+
+-   [@ai-sdk/openai](https://www.npmjs.com/package/@ai-sdk/openai)
+-   [@ai-sdk/anthropic](https://www.npmjs.com/package/@ai-sdk/anthropic)
+-   [@ai-sdk/google](https://www.npmjs.com/package/@ai-sdk/google)
+-   [@maximai/maxim-js](https://www.npmjs.com/package/@maximai/maxim-js)
+-   [ai](https://www.npmjs.com/package/ai) (Vercel AI SDK)
 
 Install with:
 
@@ -34,24 +38,25 @@ ANTHROPIC_API_KEY=your-anthropic-api-key
 ## 2. Initialize Maxim Logger
 
 ```js
-import { Maxim } from "@maximai/maxim-js";
+import { Maxim } from '@maximai/maxim-js';
 
 async function initializeMaxim() {
-  const apiKey = process.env.MAXIM_API_KEY || "";
-  if (!apiKey) {
-    throw new Error("MAXIM_API_KEY is not defined in the environment variables");
-  }
+    const apiKey = process.env.MAXIM_API_KEY || '';
+    if (!apiKey) {
+        throw new Error('MAXIM_API_KEY is not defined in the environment variables');
+    }
 
-  const maxim = new Maxim({ apiKey });
-  const logger = await maxim.logger({
-    id: process.env.MAXIM_LOG_REPO_ID || "",
-  });
+    const maxim = new Maxim({ apiKey });
+    if (!process.env.MAXIM_LOG_REPO_ID) {
+        throw new Error('MAXIM_LOG_REPO_ID is not defined in the environment variables');
+    }
+    const logger = await maxim.logger({ id: process.env.MAXIM_LOG_REPO_ID });
 
-  if (!logger) {
-    throw new Error("Logger is not available");
-  }
+    if (!logger) {
+        throw new Error('Logger is not available');
+    }
 
-  return { maxim, logger };
+    return { maxim, logger };
 }
 ```
 
@@ -141,12 +146,12 @@ const response = await generateText({
 
 ### Available Metadata Fields
 
-- **Entity Naming:**
-  - `sessionName`, `traceName`, `spanName`, `generationName`
-- **Entity Tagging:**
-  - `sessionTags`, `traceTags`, `spanTags`, `generationTags`
-- **ID References:**
-  - `sessionId`, `traceId`, `spanId`
+-   **Entity Naming:**
+    -   `sessionName`, `traceName`, `spanName`, `generationName`
+-   **Entity Tagging:**
+    -   `sessionTags`, `traceTags`, `spanTags`, `generationTags`
+-   **ID References:**
+    -   `sessionId`, `traceId`, `spanId`
 
 ## 7. Streaming Support with Metadata
 
@@ -263,10 +268,13 @@ export default function Chat() {
 
 ## 11. Visualize in Maxim
 
-All requests, responses, and streaming events are automatically traced and can be viewed in your [Maxim dashboard](https://app.getmaxim.ai/).
+All requests, responses, and streaming events are automatically traced and can be viewed in your
+[Maxim dashboard](https://app.getmaxim.ai/).
 
 ![](/images/vercel.gif)
 
 ---
 
-For more details, see the [Maxim JS SDK documentation](https://www.npmjs.com/package/@maximai/maxim-js) and the [Vercel AI SDK documentation](https://sdk.vercel.ai/docs).
+For more details, see the
+[Maxim JS SDK documentation](https://www.npmjs.com/package/@maximai/maxim-js) and the
+[Vercel AI SDK documentation](https://sdk.vercel.ai/docs).
