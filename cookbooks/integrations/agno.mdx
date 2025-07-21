@@ -34,7 +34,8 @@ from maxim.logger.agno import instrument_agno
 load_dotenv()
 
 # Instrument Agno with Maxim's logger for observability
-instrument_agno(Maxim().logger())
+maxim = Maxim(api_key=os.getenv("MAXIM_API_KEY"))
+instrument_agno(maxim.logger())
 ```
 
 ## 3. Define the Web Search Agent
@@ -114,7 +115,7 @@ if __name__ == "__main__":
 
 ## 7. Observability with Maxim
 
-All agent interactions, tool calls, and responses are automatically traced and can be visualized in your [Maxim dashboard](https://app.getmaxim.ai/). This provides deep insight into agent reasoning, tool usage, and user interactions.
+All agent interactions, tool calls, and responses are automatically traced and can be visualized in your [Maxim dashboard](https://app.getmaxim.ai/). This provides deep insights into agent reasoning, tool usage, and user interactions.
 
 ![](/images/agno.gif)
 
