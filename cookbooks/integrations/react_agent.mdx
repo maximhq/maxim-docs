@@ -144,7 +144,11 @@ def wikipedia(q):
         "list": "search",
         "srsearch": q,
         "format": "json"
-    }).json()["query"]["search"][0]["snippet"]
+    }).json()
+    try:
+        return resp["query"]["search"][0]["snippet"]
+    except (KeyError, IndexError):
+        return "No Wikipedia results found."
 
 def calculate(operation: str) -> float:
     return eval(operation)
