@@ -181,7 +181,7 @@ def run(max_iterations=10, query: str = ""):
             arg = action[0][1]
             if chosen_tool in tools:
                 result_tool = eval(f"{chosen_tool}('{arg}')")
-                tool_span.event(str(uuid4()), f"Tool Call - choosen_tool:args: {chosen_tool}:{arg}",{})
+                tool_span.event(str(uuid4()), f"Tool Call - chosen_tool:args: {chosen_tool}:{arg}",{})
                 tool_span.event(str(uuid4()), f"Tool Call - result: {result_tool}",{})
                 next_prompt = f"Observation: {result_tool}"
             else:
