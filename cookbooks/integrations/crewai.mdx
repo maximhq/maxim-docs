@@ -49,13 +49,15 @@ from maxim.logger.crewai import instrument_crewai
 Instrument CrewAI with just one line:
 
 ```python
-instrument_crewai(Maxim().logger())
+maxim = Maxim(Config(api_key= MAXIM_API_KEY))
+
+instrument_crewai(maxim.logger(LoggerConfig(id=MAXIM_REPO_ID)))
 ```
 
 You can enable debug logging for troubleshooting:
 
 ```python
-instrument_crewai(Maxim().logger(), debug=True)
+instrument_crewai(maxim.logger(LoggerConfig(id=MAXIM_REPO_ID)), debug = True)
 ```
 
 ## 5. Create and Run Your CrewAI Application
