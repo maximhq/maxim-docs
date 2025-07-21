@@ -613,7 +613,7 @@
                             "cookbooks/integrations/anthropic",
                             "cookbooks/integrations/crewai",
                             "cookbooks/integrations/gemini",
-                            "cookbooks/integrations/react_agent",
+                            "cookbooks/integrations/react-agent",
                             "cookbooks/integrations/vercel"
                         ]
                     }
