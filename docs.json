@@ -278,7 +278,8 @@
                                     },
                                     {
                                         "group": "LangGraph",
-                                        "pages": ["sdk/python/integrations/langgraph/langgraph"]
+                                        "pages": ["sdk/python/integrations/langgraph/langgraph-with-decorator", 
+                                    "sdk/python/integrations/langgraph/langgraph-without-decorator"]
                                     },
                                     {
                                         "group": "Mistral",
