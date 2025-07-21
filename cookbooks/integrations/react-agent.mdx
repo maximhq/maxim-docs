@@ -151,6 +151,7 @@ def wikipedia(q):
         return "No Wikipedia results found."
 
 def calculate(operation: str) -> float:
+
     return eval(operation)
 ```
 
@@ -170,7 +171,7 @@ import re
 
 def run(max_iterations=10, query: str = ""):
     agent = Agent(client=client, system=system_prompt)
-    tools = ["calculate", "wikipedia"]
+    tools = {"calculate": calculate, "wikipedia": wikipedia}
     next_prompt = query
     i = 0
     while i < max_iterations:

@@ -24,7 +24,6 @@ dotenv.load_dotenv()
 MODEL_NAME = "claude-3-5-sonnet-20241022"
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 if not ANTHROPIC_API_KEY:
     raise RuntimeError("Missing ANTHROPIC_API_KEY environment variable")
 ```
