@@ -82,28 +82,25 @@ For organizations with strict security, compliance, or governance requirements, 
 | :------------------- | :-------------- | :--------------- |
 | **SOC2**             | ✅ Yes           | ✅ Yes            |
 | **ISO27001**         | ✅ Yes           | ✅ Yes            |
-| **HIPAA Compliance** | ❌ No            | ✅ Yes            |
-| **GDPR Compliance**  | ❌ No            | ✅ Yes            |
+| **HIPAA Compliance** | ✅ Yes            | ✅ Yes            |
+| **GDPR Compliance**  | ✅ Yes           | ✅ Yes            |
 | **RBAC**             | Partial         | ✅ Yes (Granular) |
 | **SAML/SSO Support** | ✅ Yes           | ✅ Yes            |
 | **2FA**              | ✅ Team\+ Plans  | ✅ All Plans      |
-| **Self-Hosting**     | ✅ Open Source   | ❌ In-VPC only    |
+| **Self-Hosting**     | ✅ Open Source   | ✅ (In-VPC only)   |
 
-Maxim AI has positioned itself as the platform of choice for organizations operating in regulated industries, with comprehensive compliance certifications and enterprise-grade security features. Langfuse offers more flexibility with open-source self-hosting but with fewer compliance certifications.
-
-## Pricing Structure
+## Pricing
 
 The pricing models reflect the different target segments of each platform:
 
-| **Metric**      | **🪢 Langfuse**  | **Maxim AI**        |
-| :-------------- | :--------------- | :------------------ |
-| **Free Tier**   | 50k events/month | 10k events/month    |
-| **Usage-Based** | \$8/100k events  | \$1/10k events      |
-| **Seat-Based**  | ❌ No             | ✅ Yes (\$29\+/seat) |
+| Metric | Maxim | Langfuse |
+| --- | --- | --- |
+| Free Tier | ✅ Up to 10 k requests (logs & traces) | ✅ 50 k units/mo (traces + observations + scores) |
+| Usage-based Pricing | ✅ Professional – **$1 / 10 k logs**, up to 100 k logs & traces, 10 datasets, 1 000 entries each | ✅ Core – **$59/mo** (100 k units, graduated $8→$6 / 100 k thereafter, 90-day retention). Pro – **$199/mo** (unlimited retention & higher rate limits). |
+| Seat-based Pricing | ✅ $29 / seat / month (Professional) & $49 / seat / month (Business) | ❌ Unlimited users; no seat pricing |
 
-Langfuse offers a more generous free tier, while Maxim AI provides a hybrid pricing model that combines usage and seat-based pricing. For enterprise deployments with comprehensive features, Maxim AI's pricing structure scales efficiently with actual usage patterns.
-
-Explore Maxim Pricing - https://getmax.im/C9u6TpN
+Maxim offers a more flexible and cost-efficient entry with usage-based pricing at just $1/10k logs, making it ideal for high-throughput, low-cost observability. In contrast, Langfuse bundles usage into billable units with a higher base cost ($59/mo Core Plan), and lacks seat-based control—where Maxim provides granular access management via seat-based pricing.
+[Explore Maxim Pricing](https://getmax.im/C9u6TpN)
 
 ## Use Case Recommendations
 
