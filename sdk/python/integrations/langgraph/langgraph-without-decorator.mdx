@@ -149,7 +149,7 @@ workflow.add_edge("action", "agent")
 
 ## Maxim Logger Integration
 
-```python
+```python {4}
 from maxim import  Maxim
 from maxim.decorators import current_trace
 
@@ -158,7 +158,7 @@ logger = Maxim({}).logger()
 
 Start tracing entire LangGraph agent using 2 simle annotations.
 
-```python
+```python {4}
 from maxim.logger.langchain import MaximLangchainTracer
 
 app = workflow.compile()
