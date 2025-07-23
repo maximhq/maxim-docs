@@ -259,6 +259,10 @@
                                         "pages": ["sdk/python/integrations/gemini/gemini"]
                                     },
                                     {
+                                        "group": "Groq",
+                                        "pages": ["sdk/python/integrations/groq/groq"]
+                                    },
+                                    {
                                         "group": "OpenAI",
                                         "pages": [
                                             "sdk/python/integrations/openai/one-line-integration",
