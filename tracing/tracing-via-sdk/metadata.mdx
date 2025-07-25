@@ -1,0 +1,371 @@
+---
+title: Metadata
+description: Add custom key-value pairs to components for enhanced observability
+---
+
+The metadata functionality allows you to add custom key-value pairs (string, any) to all components like trace, generation, retrieval, event, and span. This is useful for storing additional context, configuration, user information, or any custom data that helps with debugging, analysis, and observability.
+
+<div className="w-full flex justify-end -mb-11">
+  <LanguageSwitcher />
+</div>
+
+<Steps>
+<Step title="Create a repository">
+
+Select **Logs** from the sidebar and click the "Create repository" button.
+
+</Step>
+
+<Step title="Install SDK">
+<CodeGroup>
+```package-install JS/TS
+npm install @maximai/maxim-js
+```
+
+```bash Python
+pip install maxim-py
+```
+
+```bash Go
+go get github.com/maximhq/maxim-go
+```
+
+
+</CodeGroup>
+</Step>
+
+<Step title="Initialize SDK">
+<CodeGroup>
+  
+```typescript JS/TS
+import { Maxim } from "@maximai/maxim-js"
+
+const maxim = new Maxim({ apiKey: "" });
+
+const logger = await maxim.logger({ id: "" });
+```
+
+```python Python
+from maxim import Maxim, Config
+from maxim.logger import Logger, LoggerConfig
+
+maxim = Maxim(Config(api_key=""))
+
+logger = maxim.logger(LoggerConfig(id=""))
+```
+
+import (
+    "github.com/maximhq/maxim-go"
+    "github.com/maximhq/maxim-go/logging"
+)
+
+mx := maxim.Init(&maxim.MaximSDKConfig{ApiKey: ""})
+
+logger, err := mx.GetLogger(&logging.LoggerConfig{Id: ""})
+
+```java Java
+import ai.getmaxim.sdk.Maxim;
+import ai.getmaxim.sdk.Config;
+
+Maxim maxim = new Maxim(new Config(null, "api-key", null, false));
+
+Logger logger = maxim.logger(new LoggerConfig("id"));
+```
+
+</CodeGroup>
+</Step>
+
+<Step title="Add metadata to traces">
+<CodeGroup>
+
+```typescript JS/TS
+const trace = logger.trace({
+  id: "trace-id",
+  name: "user-query",
+  metadata: {
+    userId: "user-123",
+    sessionId: "session-456",
+    model: "gpt-4",
+    temperature: 0.7,
+    environment: "production"
+  }
+});
+
+// Add metadata after creation
+trace.addMetadata({"customKey":"customValue","timestamp": new Date().toISOString()});
+```
+
+```python Python
+from maxim.logger import TraceConfig
+
+trace = logger.trace(TraceConfig(
+    id="trace-id",
+    name="user-query",
+    metadata={
+        "user_id": "user-123",
+        "session_id": "session-456",
+        "model": "gpt-4",
+        "temperature": 0.7,
+        "environment": "production"
+    }
+))
+
+# Add metadata after creation
+trace.add_metadata(
+    {
+        "custom_key": "custom_value",
+        "timestamp": "2024-01-01T00:00:00Z",
+    }
+)
+
+```go Go
+trace := logger.Trace(&logging.TraceConfig{
+    Id: "trace-id",
+    Name: maxim.StrPtr("user-query"),
+    Metadata: map[string]interface{}{
+        "userId": "user-123",
+        "sessionId": "session-456",
+        "model": "gpt-4",
+        "temperature": 0.7,
+        "environment": "production",
+    },
+})
+
+// Add metadata after creation
+trace.AddMetadata(map[string]interface{}{"customKey": "customValue","timestamp": time.Now().Format(time.RFC3339)})
+```
+
+</CodeGroup>
+</Step>
+
+<Step title="Add metadata to generations">
+<CodeGroup>
+
+```typescript JS/TS
+const generation = trace.generation({
+  id: "generation-id",
+  name: "llm-call",
+  metadata: {
+    provider: "openai",
+    model: "gpt-4",
+    maxTokens: 1000,
+    temperature: 0.7,
+    topP: 0.9
+  }
+ });
+ 
+ generation.addMetadata({"promptVersion": "v2.1", "userId": "user-123"});
+ ```
+
+```python Python
+from maxim.logger import GenerationConfig
+
+generation = trace.generation(GenerationConfig(
+    id="generation-id",
+    name="llm-call",
+    metadata={
+        "provider": "openai",
+        "model": "gpt-4",
+        "max_tokens": 1000,
+        "temperature": 0.7,
+        "top_p": 0.9
+    }
+))
+
+generation.set_metadata("prompt_version", "v2.1")
+generation.set_metadata("user_id", "user-123")
+```
+
+```go Go
+generation := trace.Generation(&logging.GenerationConfig{
+    Id: "generation-id",
+    Name: maxim.StrPtr("llm-call"),
+    Metadata: map[string]interface{}{
+        "provider": "openai",
+        "model": "gpt-4",
+        "maxTokens": 1000,
+        "temperature": 0.7,
+        "topP": 0.9,
+    },
+})
+
+generation.SetMetadata("promptVersion", "v2.1")
+generation.SetMetadata("userId", "user-123")
+```
+
+```java Java
+import ai.getmaxim.sdk.logger.components.Generation;
+import ai.getmaxim.sdk.logger.components.GenerationConfig;
+
+Map<String, Object> genMetadata = new HashMap<>();
+genMetadata.put("provider", "openai");
+genMetadata.put("model", "gpt-4");
+genMetadata.put("maxTokens", 1000);
+genMetadata.put("temperature", 0.7);
+genMetadata.put("topP", 0.9);
+
+Generation generation = trace.generation(new GenerationConfig(
+    "generation-id",
+    "llm-call",
+    genMetadata
+));
+
+generation.setMetadata("promptVersion", "v2.1");
+generation.setMetadata("userId", "user-123");
+```
+
+</CodeGroup>
+</Step>
+
+<Step title="Add metadata to other components">
+<CodeGroup>
+
+```typescript JS/TS
+// Span with metadata
+const span = trace.span({
+  id: "span-id",
+  name: "data-processing",
+  metadata: {
+    dataSource: "database",
+    recordCount: 150,
+    processingTime: "2.3s"
+  }
+});
+
+// Event with metadata
+const event = trace.event({
+  id: "event-id",
+  name: "user-action",
+  metadata: {
+    action: "button-click",
+    elementId: "submit-btn",
+    pageUrl: "/dashboard"
+  }
+});
+
+// Retrieval with metadata
+const retrieval = trace.retrieval({
+  id: "retrieval-id",
+  name: "vector-search",
+  metadata: {
+    vectorDb: "pinecone",
+    indexName: "documents",
+    similarityThreshold: 0.8
+  }
+});
+```
+
+```python Python
+from maxim.logger import SpanConfig, EventConfig, RetrievalConfig
+
+# Span with metadata
+span = trace.span(SpanConfig(
+    id="span-id",
+    name="data-processing",
+    metadata={
+        "data_source": "database",
+        "record_count": 150,
+        "processing_time": "2.3s"
+    }
+))
+
+# Event with metadata
+event = trace.event(EventConfig(
+    id="event-id",
+    name="user-action",
+    metadata={
+        "action": "button-click",
+        "element_id": "submit-btn",
+        "page_url": "/dashboard"
+    }
+))
+
+# Retrieval with metadata
+retrieval = trace.retrieval(RetrievalConfig(
+    id="retrieval-id",
+    name="vector-search",
+    metadata={
+        "vector_db": "pinecone",
+        "index_name": "documents",
+        "similarity_threshold": 0.8
+    }
+))
+```
+
+```go Go
+// Span with metadata
+span := trace.Span(&logging.SpanConfig{
+    Id: "span-id",
+    Name: maxim.StrPtr("data-processing"),
+    Metadata: map[string]interface{}{
+        "dataSource": "database",
+        "recordCount": 150,
+        "processingTime": "2.3s",
+    },
+})
+
+// Event with metadata
+event := trace.Event(&logging.EventConfig{
+    Id: "event-id",
+    Name: maxim.StrPtr("user-action"),
+    Metadata: map[string]interface{}{
+        "action": "button-click",
+        "elementId": "submit-btn",
+        "pageUrl": "/dashboard",
+    },
+})
+
+// Retrieval with metadata
+retrieval := trace.Retrieval(&logging.RetrievalConfig{
+    Id: "retrieval-id",
+    Name: maxim.StrPtr("vector-search"),
+    Metadata: map[string]interface{}{
+        "vectorDb": "pinecone",
+        "indexName": "documents",
+        "similarityThreshold": 0.8,
+    },
+})
+```
+
+```java Java
+// Span with metadata
+Map<String, Object> spanMetadata = new HashMap<>();
+spanMetadata.put("dataSource", "database");
+spanMetadata.put("recordCount", 150);
+spanMetadata.put("processingTime", "2.3s");
+
+Span span = trace.span(new SpanConfig(
+    "span-id",
+    "data-processing",
+    spanMetadata
+));
+
+// Event with metadata
+Map<String, Object> eventMetadata = new HashMap<>();
+eventMetadata.put("action", "button-click");
+eventMetadata.put("elementId", "submit-btn");
+eventMetadata.put("pageUrl", "/dashboard");
+
+Event event = trace.event(new EventConfig(
+    "event-id",
+    "user-action",
+    eventMetadata
+));
+
+// Retrieval with metadata
+Map<String, Object> retrievalMetadata = new HashMap<>();
+retrievalMetadata.put("vectorDb", "pinecone");
+retrievalMetadata.put("indexName", "documents");
+retrievalMetadata.put("similarityThreshold", 0.8);
+
+Retrieval retrieval = trace.retrieval(new RetrievalConfig(
+    "retrieval-id",
+    "vector-search",
+    retrievalMetadata
+));
+```
+
+</CodeGroup>
+</Step>
+
+</Steps>

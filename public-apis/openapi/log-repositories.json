@@ -1678,6 +1678,81 @@
           }
         }
       }
+    },
+    "/v1/log-repositories/logs/tags/unique-values": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Get unique values for a tag",
+        "summary": "Get unique values for a tag",
+        "tags": [
+          "Log repository"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the log repository"
+            },
+            "required": true,
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "trace"
+              ],
+              "description": "Type of entity to get unique tag values for"
+            },
+            "required": true,
+            "name": "entityType",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Key to get unique tag values for"
+            },
+            "required": true,
+            "name": "key",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Unique values retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Trace not found"
+          }
+        }
+      }
     }
   }
 }

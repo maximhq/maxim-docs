@@ -1,0 +1,89 @@
+---
+title: Prompt Optimization
+description: Improve your prompt performance with real test data and evaluation metrics
+---
+
+## When to use prompt optimization
+
+- Improve prompt performance based on specific evaluation metrics
+- Eliminate guesswork in prompt engineering
+- Automatically generate better prompt versions from test data
+
+## Optimize a prompt
+
+<Steps>
+
+<Step title="Navigate to a test run">
+Open your workspace and select a completed test run associated with a prompt.
+
+![Test run page showing optimization option](/images/docs/offline-evals/via-ui/prompts/optimization/prompt-optimization-button.png)
+</Step>
+
+<Step title="Start prompt optimization">
+Click the `Optimize prompt` button on the run page to open the optimization dialog.
+
+<Note>
+The button may be disabled if:
+- The test run is still running or queued
+- Required evaluators or models are not available
+
+Hover over the button to see the specific reasons.
+</Note>
+</Step>
+
+<Step title="Configure optimization settings">
+Select your optimization preferences:
+
+- **Evaluators to prioritize**: Choose which metrics to focus on during optimization
+- **Optimization iterations**: Set how many improvement cycles to run
+
+![Optimization dialog with configuration options](/images/docs/offline-evals/via-ui/prompts/optimization/prompt-optimization-form.png)
+</Step>
+
+<Step title="Run the optimization">
+Submit your configuration to start the optimization process. The system will:
+
+- Analyze your current prompt and test results
+- Generate improved prompt versions using AI models
+- Test new versions against your dataset
+- Iterate based on evaluator feedback
+
+![Optimization progress indicator](/images/docs/offline-evals/via-ui/prompts/optimization/prompt-optimization-progress.png)
+</Step>
+
+<Step title="Review optimization results">
+Once complete, you'll receive:
+
+- **Side-by-side comparison** of original and optimized prompts
+- **Detailed reasoning** for each change made
+- **Performance improvements** across your chosen evaluators
+- **Suggestions** for accepting or modifying the optimized version
+
+![Results comparison view](/images/docs/offline-evals/via-ui/prompts/optimization/prompt-optimization-report-view.png)
+</Step>
+
+<Step title="Accept or iterate">
+Review the optimized prompt and choose to:
+
+- **Accept**: Creates a new prompt version and links it to your runs
+- **Discard**: Discard the optimized prompt and keep the original
+
+![Accept optimization dialog](/images/docs/offline-evals/via-ui/prompts/optimization/prompt-optimization-accept-version.png)
+</Step>
+
+
+
+<Step title="Optimization results">
+
+After accepting an optimized prompt, you'll have:
+
+- **New prompt version** tailored to your success metrics
+- **Performance tracking** showing improvements over time in run reports
+
+You will also receive an email when your prompt optimization is complete.
+
+![Optimization results](/images/docs/offline-evals/via-ui/prompts/optimization/prompt-optimization-run-report.png)
+</Step>
+
+</Steps>
+

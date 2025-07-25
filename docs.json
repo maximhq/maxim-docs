@@ -42,7 +42,8 @@
                                             "offline-evals/via-ui/prompts/prompt-evals",
                                             "offline-evals/via-ui/prompts/prompt-deployment",
                                             "offline-evals/via-ui/prompts/folders-and-tags",
-                                            "offline-evals/via-ui/prompts/human-annotation"
+                                            "offline-evals/via-ui/prompts/human-annotation",
+                                            "offline-evals/via-ui/prompts/prompt-optimization"
                                         ]
                                     },
                                     {
@@ -150,6 +151,7 @@
                                 "pages": [
                                     "tracing/tracing-via-sdk/traces",
                                     "tracing/tracing-via-sdk/spans",
+                                    "tracing/tracing-via-sdk/metadata",
                                     "tracing/tracing-via-sdk/generations",
                                     "tracing/tracing-via-sdk/retrieval",
                                     "tracing/tracing-via-sdk/attachments",
@@ -247,6 +249,10 @@
                                 "group": "Integrations",
                                 "pages": [
                                     {
+                                        "group": "Agno",
+                                        "pages": ["sdk/python/integrations/agno/agno"]
+                                    },
+                                    {
                                         "group": "Anthropic",
                                         "pages": ["sdk/python/integrations/anthropic/anthropic"]
                                     },
@@ -257,6 +263,10 @@
                                     {
                                         "group": "Gemini",
                                         "pages": ["sdk/python/integrations/gemini/gemini"]
+                                    },
+                                    {
+                                        "group": "Groq",
+                                        "pages": ["sdk/python/integrations/groq/groq"]
                                     },
                                     {
                                         "group": "OpenAI",
@@ -278,7 +288,8 @@
                                     },
                                     {
                                         "group": "LangGraph",
-                                        "pages": ["sdk/python/integrations/langgraph/langgraph"]
+                                        "pages": ["sdk/python/integrations/langgraph/langgraph-with-decorator", 
+                                    "sdk/python/integrations/langgraph/langgraph-without-decorator"]
                                     },
                                     {
                                         "group": "Mistral",
@@ -604,6 +615,7 @@
                 ]
             },
             {
+
                 "tab": "LLM Gateway",
                 "groups": [
                     {
@@ -687,6 +699,19 @@
                             "bifrost/contributing/plugin",
                             "bifrost/contributing/http-integration",
                             "bifrost/contributing/code-conventions"
+
+                "tab": "Cookbooks",
+                "groups": [
+                    {
+                        "group": "Integrations",
+                        "pages": [
+                            "cookbooks/integrations/agno",
+                            "cookbooks/integrations/anthropic",
+                            "cookbooks/integrations/crewai",
+                            "cookbooks/integrations/gemini",
+                            "cookbooks/integrations/react-agent",
+                            "cookbooks/integrations/vercel"
+
                         ]
                     }
                 ]

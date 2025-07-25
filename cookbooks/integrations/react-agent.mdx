@@ -1,0 +1,213 @@
+---
+title: "Tracing a ReAct Agent with Maxim"
+description: "Learn how to build a ReAct-style agent using OpenAI's GPT models and trace its reasoning, tool calls, and answers using Maxim's observability SDK."
+---
+
+In this cookbook, you'll learn how to build a ReAct-style agent using OpenAI's GPT models and trace its reasoning, tool calls, and answers using Maxim's observability SDK. This approach allows you to visualize the agent's step-by-step reasoning, tool usage, and final answers in the Maxim dashboard.
+
+## Prerequisites
+
+- Python 3.8\+
+- [Maxim Python SDK](https://pypi.org/project/maxim-py/) (`pip install maxim-py`)
+- [OpenAI Python SDK](https://pypi.org/project/openai/) (`pip install openai`)
+- [tiktoken](https://pypi.org/project/tiktoken/) (`pip install tiktoken`)
+- [python-dotenv](https://pypi.org/project/python-dotenv/) (`pip install python-dotenv`)
+- [httpx](https://pypi.org/project/httpx/) (`pip install httpx`)
+- API keys for Maxim and OpenAI
+
+## 1. Load Environment Variables
+
+```python
+from dotenv import load_dotenv
+import os
+load_dotenv()
+```
+
+## 2. Set Up Maxim Logger and OpenAI Client
+
+```python
+from maxim.maxim import Maxim, Config, LoggerConfig
+from maxim.logger.components.session import SessionConfig
+from maxim.logger.components.trace import TraceConfig
+from maxim.logger.components.span import Span, SpanConfig
+from maxim.logger.components.generation import GenerationConfig
+from uuid import uuid4
+import openai
+from openai import OpenAI
+
+maxim = Maxim(Config(api_key=os.environ["MAXIM_API_KEY"]))
+logger = maxim.logger(LoggerConfig(id=os.environ["MAXIM_LOG_REPO_ID"]))
+client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+```
+
+## 3. Define the ReAct Agent Class
+
+The agent follows the ReAct pattern: it reasons, chooses actions (tool calls), observes results, and iterates until it produces an answer.
+
+```python
+import tiktoken
+from time import time
+
+class Agent:
+    def __init__(self, client: OpenAI, system: str = "") -> None:
+        self.client = client
+        self.system = system
+        self.messages: list = []
+        self.generation = None
+        if self.system:
+            self.messages.append({"role": "system", "content": system})
+
+    def __call__(self, span: Span, message=""):
+        if message:
+            self.messages.append({"role": "user", "content": message})
+        self.generationConfig = GenerationConfig(
+            id=str(uuid4()),
+            name="generation",
+            provider="OpenAI",
+            model="gpt-4o",
+            model_parameters={"temperature": 0},
+            messages=self.messages
+        )
+        self.generation = span.generation(self.generationConfig)
+        result = self.execute()
+        self.messages.append({"role": "assistant", "content": result})
+
+        enc = tiktoken.get_encoding("cl100k_base")
+        messages_string = ''.join(["role: " + entry["role"] + " content: " + entry['content'] for entry in self.messages])
+        prompt_tokens = len(enc.encode(messages_string))
+        completion_tokens = len(enc.encode(result))
+
+        self.generation.result({
+            "id": self.generation.id,
+            "object": "text_completion",
+            "created": int(time()),
+            "model": self.generationConfig.model,
+            "choices": [
+                {
+                    "index": 0,
+                    "text": result,
+                    "logprobs": None,
+                    "finish_reason": "stop",
+                },
+            ],
+            "usage": {
+                "prompt_tokens": prompt_tokens,
+                "completion_tokens": completion_tokens,
+                "total_tokens": prompt_tokens + completion_tokens,
+            },
+        })
+        return result
+
+    def execute(self):
+        completion = self.client.chat.completions.create(
+            model="gpt-4o", messages=self.messages
+        )
+        return completion.choices[0].message.content
+```
+
+## 4. Define the System Prompt (ReAct Format)
+
+The system prompt instructs the agent to reason, act, pause, observe, and answer, using available tools.
+
+```python
+system_prompt = """
+You run in a loop of Thought, Action, PAUSE, Observation.
+At the end of the loop you output an Answer
+Use Thought to describe your thoughts about the question you have been asked.
+Use Action to run one of the actions available to you - then return PAUSE.
+Observation will be the result of running those actions.
+
+Your available actions are:
+
+calculate:
+e.g. calculate: 4 * 7 / 3
+Runs a calculation and returns the number - uses Python so be sure to use floating point syntax if necessary
+
+wikipedia:
+e.g. wikipedia: Django
+Returns a summary from searching Wikipedia
+
+Always look things up on Wikipedia if you have the opportunity to do so.
+
+... (see full prompt in code above) ...
+""".strip()
+```
+
+## 5. Implement Tool Functions
+
+```python
+import httpx
+
+def wikipedia(q):
+    return httpx.get("https://en.wikipedia.org/w/api.php", params={
+        "action": "query",
+        "list": "search",
+        "srsearch": q,
+        "format": "json"
+    }).json()
+    try:
+        return resp["query"]["search"][0]["snippet"]
+    except (KeyError, IndexError):
+        return "No Wikipedia results found."
+
+def calculate(operation: str) -> float:
+
+    return eval(operation)
+```
+
+## 6. Set Up Maxim Session and Trace
+
+```python
+session = logger.session(SessionConfig(id=uuid4().hex))
+trace = session.trace(TraceConfig(id=uuid4().hex))
+```
+
+## 7. Run the ReAct Agent with Tracing
+
+The agent will loop, reasoning and calling tools, and each step will be traced as a span in Maxim.
+
+```python
+import re
+
+def run(max_iterations=10, query: str = ""):
+    agent = Agent(client=client, system=system_prompt)
+    tools = {"calculate": calculate, "wikipedia": wikipedia}
+    next_prompt = query
+    i = 0
+    while i < max_iterations:
+        i += 1
+        span = trace.span(SpanConfig(id=str(uuid4()), name=f"Span : {i}"))
+        result = agent(span, next_prompt)
+        if "PAUSE" in result and "Action" in result:
+            action = re.findall(r"Action: ([a-z_]+): (.+)", result, re.IGNORECASE)
+            span.name = f"Span : {i} - {action}"
+            chosen_tool = action[0][0]
+            tool_span = span.span(SpanConfig(id=str(uuid4()), name=f"Tool Call {chosen_tool}"))
+            arg = action[0][1]
+            if chosen_tool in tools:
+                result_tool = eval(f"{chosen_tool}('{arg}')")
+                tool_span.event(str(uuid4()), f"Tool Call - chosen_tool:args: {chosen_tool}:{arg}",{})
+                tool_span.event(str(uuid4()), f"Tool Call - result: {result_tool}",{})
+                next_prompt = f"Observation: {result_tool}"
+            else:
+                next_prompt = "Observation: Tool not found"
+                span.event(str(uuid4()), f"Tool not found",{})
+            continue
+        if "Answer" in result:
+            span.event(str(uuid4()), f"Final Answer: {result}",{})
+            break
+```
+
+## 8. Example Usage
+
+```python
+run(query="How many planets in the solar system have rings? Now, calculate the total area of all the rings in the solar system.")
+```
+
+## 9. Visualize in Maxim
+
+Each reasoning step, tool call, and answer is now visible as a trace and spans in your [Maxim dashboard](https://app.getmaxim.ai/).
+
+---
+
+For more details, see the [Maxim Python SDK documentation](https://www.getmaxim.ai/docs).
