@@ -288,8 +288,10 @@
                                     },
                                     {
                                         "group": "LangGraph",
-                                        "pages": ["sdk/python/integrations/langgraph/langgraph-with-decorator", 
-                                    "sdk/python/integrations/langgraph/langgraph-without-decorator"]
+                                        "pages": [
+                                            "sdk/python/integrations/langgraph/langgraph-with-decorator",
+                                            "sdk/python/integrations/langgraph/langgraph-without-decorator"
+                                        ]
                                     },
                                     {
                                         "group": "Mistral",
@@ -615,7 +617,6 @@
                 ]
             },
             {
-
                 "tab": "LLM Gateway",
                 "groups": [
                     {
@@ -699,7 +700,11 @@
                             "bifrost/contributing/plugin",
                             "bifrost/contributing/http-integration",
                             "bifrost/contributing/code-conventions"
-
+                        ]
+                    }
+                ]
+            },
+            {
                 "tab": "Cookbooks",
                 "groups": [
                     {
@@ -711,7 +716,6 @@
                             "cookbooks/integrations/gemini",
                             "cookbooks/integrations/react-agent",
                             "cookbooks/integrations/vercel"
-
                         ]
                     }
                 ]
