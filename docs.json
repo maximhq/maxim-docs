@@ -627,6 +627,13 @@
                             "cookbooks/integrations/react-agent",
                             "cookbooks/integrations/vercel"
                         ]
+                    },
+                    {
+                        "group": "SDK",
+                        "pages": [
+                            "cookbooks/sdk/sdk_test_run_local_dataset"
+                           
+                        ]
                     }
                 ]
             }
