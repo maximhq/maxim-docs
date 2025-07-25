@@ -288,8 +288,10 @@
                                     },
                                     {
                                         "group": "LangGraph",
-                                        "pages": ["sdk/python/integrations/langgraph/langgraph-with-decorator", 
-                                    "sdk/python/integrations/langgraph/langgraph-without-decorator"]
+                                        "pages": [
+                                            "sdk/python/integrations/langgraph/langgraph-with-decorator",
+                                            "sdk/python/integrations/langgraph/langgraph-without-decorator"
+                                        ]
                                     },
                                     {
                                         "group": "Mistral",
@@ -631,8 +633,8 @@
                     {
                         "group": "SDK",
                         "pages": [
+                            "cookbooks/sdk/sdk_custom_evaluator",
                             "cookbooks/sdk/sdk_test_run_local_dataset"
-                           
                         ]
                     }
                 ]
