@@ -717,6 +717,10 @@
                             "cookbooks/integrations/react-agent",
                             "cookbooks/integrations/vercel"
                         ]
+                    },
+                    {
+                        "group": "Platform Features",
+                        "pages": ["cookbooks/platform-features/prompt-partials"]
                     }
                 ]
             }
