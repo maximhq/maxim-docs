@@ -236,8 +236,10 @@ def load_csv_data(filepath: str) -> List[Dict[str, Any]]:
     """
     Load data from CSV file and return as list of dictionaries
     """
-    with open(filepath, 'r', encoding='utf-8') as f:
-        return list(csv.DictReader(f))
+    with open(filepath, newline='', encoding='utf-8') as f:
+        dialect = csv.Sniffer().sniff(f.read(2048))
+        f.seek(0)
+        return list(csv.DictReader(f, dialect=dialect))
 
 # Load your CSV data
 db = load_csv_data("/path/to/your/dataset.csv")

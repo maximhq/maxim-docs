@@ -224,12 +224,16 @@ class KeywordPresenceEvaluator(BaseEvaluator):
 
     def evaluate(self, result: LocalEvaluatorResultParameter, data: ManualData) -> Dict[str, LocalEvaluatorReturn]:
         # Get response text (handle different output formats)
-        response = result.outputs.get("response", result.output if hasattr(result, 'output') else "").lower()
+        response_text = (
+            getattr(result, "outputs", {}).get("response")
+            if hasattr(result, "outputs")
+            else getattr(result, "output", "")
+        ).lower()
         
         # Check for missing keywords
         missing_keywords = [
             kw for kw in self.required_keywords
-            if kw.lower() not in response
+            if kw.lower() not in response_text
         ]
 
         all_present = len(missing_keywords) == 0
