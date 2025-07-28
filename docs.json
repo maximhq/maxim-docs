@@ -719,6 +719,13 @@
                         ]
                     },
                     {
+                        "group": "SDK",
+                        "pages": [
+                            "cookbooks/sdk/sdk_custom_evaluator",
+                            "cookbooks/sdk/sdk_test_run_local_dataset"
+                        ]
+                    },
+                    {
                         "group": "Platform Features",
                         "pages": ["cookbooks/platform-features/prompt-partials"]
                     }
