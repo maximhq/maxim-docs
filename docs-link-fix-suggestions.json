@@ -525,7 +525,7 @@
     "approved": true
   },
   {
-    "broken_link": "offline-evals/via-ui/prompts/evaluate/how-to/evaluate-prompts/querying-prompts",
+    "broken_link": "offline-evals/via-ui/prompts/evaluate/how-to/evaluate-prompts/prompt-management",
     "suggested_link": null,
     "file": "apps/maxim-docs/offline-evals/via-ui/prompts/prompt-deployment.mdx",
     "line": 119,

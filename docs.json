@@ -88,7 +88,7 @@
                                             "offline-evals/via-sdk/prompts/quickstart",
                                             "offline-evals/via-sdk/prompts/local-prompt",
                                             "offline-evals/via-sdk/prompts/maxim-prompt",
-                                            "offline-evals/via-sdk/prompts/querying-prompts",
+                                            "offline-evals/via-sdk/prompts/prompt-management",
                                             "offline-evals/via-sdk/prompts/ci-cd-integration"
                                         ]
                                     },
@@ -921,8 +921,8 @@
             "destination": "/offline-evals/via-ui/prompts/human-annotation"
         },
         {
-            "source": "/evaluate/how-to/evaluate-prompts/querying-prompts",
-            "destination": "/offline-evals/via-ui/prompts/querying-prompts"
+            "source": "/evaluate/how-to/evaluate-prompts/prompt-management",
+            "destination": "/offline-evals/via-ui/prompts/prompt-management"
         },
         {
             "source": "/evaluate/how-to/evaluate-prompts/rag-quality",
