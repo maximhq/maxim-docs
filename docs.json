@@ -715,7 +715,8 @@
                             "cookbooks/integrations/crewai",
                             "cookbooks/integrations/gemini",
                             "cookbooks/integrations/react-agent",
-                            "cookbooks/integrations/vercel"
+                            "cookbooks/integrations/vercel",
+                             "cookbooks/integrations/groq"
                         ]
                     },
                     {
