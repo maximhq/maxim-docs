@@ -921,12 +921,12 @@
             "destination": "/offline-evals/via-ui/prompts/human-annotation"
         },
         {
-            "source": "/evaluate/how-to/evaluate-prompts/prompt-management",
-            "destination": "/offline-evals/via-ui/prompts/prompt-management"
+            "source": "/evaluate/how-to/evaluate-prompts/querying-prompts",
+            "destination": "/offline-evals/via-sdk/prompts/prompt-management"
         },
         {
-            "source": "/evaluate/how-to/evaluate-prompts/querying-prompts",
-            "destination": "/offline-evals/via-ui/prompts/prompt-management"
+            "source": "/offline-evals/via-sdk/prompts/querying-prompts",
+            "destination": "/offline-evals/via-sdk/prompts/prompt-management"
         },
         {
             "source": "/evaluate/how-to/evaluate-prompts/rag-quality",
