@@ -24,9 +24,16 @@ description: Track and collect user feedback in application traces using Maxim's
     ```
 
     ```python Python
-    from maxim.logger.components import Feedback
-
-    trace.feedback(feedback=Feedback(score=5, comment="Great job!", metadata: {"flow": "support","properties" :{"name": "John Doe"}}))
+    trace.feedback({
+        "score":5, 
+        "comment":"Great job!", 
+        "metadata": {
+            "flow": "support",
+            "properties":{
+                "name": "John Doe"
+            }
+        }
+    })
     ```
 
     ```go Go

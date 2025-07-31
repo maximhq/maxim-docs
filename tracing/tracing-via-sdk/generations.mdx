@@ -36,23 +36,21 @@ Each trace/span can contain multiple generations.
     ```
 
     ```python Python
-    from maxim.logger.components.generation import GenerationConfig
-
-    generation = trace.generation(GenerationConfig(
-        id="generation-id",
-        name="customer-support--gather-information",
-        provider="openai",
-        model="gpt-4o",
-        messages=[
+    generation = trace.generation({
+        "id":"generation-id",
+        "name":"customer-support--gather-information",
+        "provider":"openai",
+        "model":"gpt-4o",
+        "messages":[
             { "role": "system", "content": "you are a helpful assistant who helps gather customer information" },
             { "role": "user", "content": "My internet is not working" },
         ],
-        model_parameters={"temperature": 0.7},
-    ))
-    // Note: Replace 'trace.generation' with 'span.generation' when creating generations within an existing span
+        "model_parameters":{"temperature": 0.7},
+    })
+    # Note: Replace 'trace.generation' with 'span.generation' when creating generations within an existing span
 
-    // Execute the LLM call
-    // aiCompletion = client.chat.completions.create(...)
+    # Execute the LLM call
+    # aiCompletion = client.chat.completions.create(...)
     ```
 
     ```go Go
@@ -115,14 +113,15 @@ Each trace/span can contain multiple generations.
                 role: "assistant",
                 content: "Apologies for the inconvenience. Can you please share your customer id?"
             },
-            finish_reason: "stop"
+            finish_reason: "stop",
+            logprobs: null,
         }],
         usage: {
             prompt_tokens: 100,
             completion_tokens: 50,
             total_tokens: 150
         }
-    });
+    }); 
     ```
 
     ```python Python
