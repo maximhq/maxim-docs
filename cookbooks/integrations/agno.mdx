@@ -1,18 +1,24 @@
 ---
-title: "Building a Financial Conversational Agent with Agno and Maxim"
-description: "Learn how to build a multi-agent financial conversational assistant using Agno for agent orchestration and Maxim for observability and tracing."
+title: 'Building a Financial Conversational Agent with Agno and Maxim'
+description:
+    'Learn how to build a multi-agent financial conversational assistant using Agno for agent
+    orchestration and Maxim for observability and tracing.'
 ---
 
-In this cookbook, you'll learn how to build a multi-agent financial conversational assistant using [Agno](https://github.com/agno-agi/agno) for agent orchestration and [Maxim](https://getmaxim.ai/docs) for observability and tracing. The agent can answer questions about stocks, companies, and financial data by leveraging both web search and financial data tools, with all interactions traced in Maxim.
+In this cookbook, you'll learn how to build a multi-agent financial conversational assistant using
+[Agno](https://github.com/agno-agi/agno) for agent orchestration and
+[Maxim](https://getmaxim.ai/docs) for observability and tracing. The agent can answer questions
+about stocks, companies, and financial data by leveraging both web search and financial data tools,
+with all interactions traced in Maxim.
 
 ## Prerequisites
 
-- Python 3.8\+
-- [Agno](https://pypi.org/project/agno/) (`pip install agno`)
-- [Maxim Python SDK](https://pypi.org/project/maxim-py/) (`pip install maxim-py`)
-- [python-dotenv](https://pypi.org/project/python-dotenv/) (`pip install python-dotenv`)
-- API keys for OpenAI and Maxim (and optionally Google Gemini)
-- (Optional) Set up a `.env` file with your API keys
+-   Python 3.8\+
+-   [Agno](https://pypi.org/project/agno/) (`pip install agno`)
+-   [Maxim Python SDK](https://pypi.org/project/maxim-py/) (`pip install maxim-py`)
+-   [python-dotenv](https://pypi.org/project/python-dotenv/) (`pip install python-dotenv`)
+-   API keys for OpenAI and Maxim (and optionally Google Gemini)
+-   (Optional) Set up a `.env` file with your API keys
 
 ## 1. Import Required Libraries
 
@@ -57,7 +63,8 @@ web_search_agent = Agent(
 
 ## 4. Define the Finance Agent
 
-This agent uses an LLM and YFinance tools to retrieve financial data such as stock prices, analyst recommendations, and company information.
+This agent uses an LLM and YFinance tools to retrieve financial data such as stock prices, analyst
+recommendations, and company information.
 
 ```python
 finance_agent = Agent(
@@ -73,7 +80,8 @@ finance_agent = Agent(
 
 ## 5. Aggregate Agents into a Multi-Agent System
 
-Combine both agents into a multi-agent system that can answer user questions by leveraging both web search and financial data tools.
+Combine both agents into a multi-agent system that can answer user questions by leveraging both web
+search and financial data tools.
 
 ```python
 multi_ai_agent = Agent(
@@ -115,10 +123,21 @@ if __name__ == "__main__":
 
 ## 7. Observability with Maxim
 
-All agent interactions, tool calls, and responses are automatically traced and can be visualized in your [Maxim dashboard](https://app.getmaxim.ai/). This provides deep insights into agent reasoning, tool usage, and user interactions.
+All agent interactions, tool calls, and responses are automatically traced and can be visualized in
+your [Maxim dashboard](https://app.getmaxim.ai/). This provides deep insights into agent reasoning,
+tool usage, and user interactions.
 
 ![](/images/agno.gif)
 
 ---
 
-For more details, see the [Agno documentation](https://github.com/agno-agi/agno) and the [Maxim Python SDK documentation](https://www.getmaxim.ai/docs/introduction/overview).
+For more details, see the [Agno documentation](https://github.com/agno-agi/agno) and the
+[Maxim Python SDK documentation](https://www.getmaxim.ai/docs/introduction/overview).
+
+## Resources
+
+<CardGroup cols="1">
+    <Card title="Cookbook Code" icon="github" href="https://github.com/maximhq/maxim-cookbooks/blob/main/python/observability-online-eval/agno/agent.ipynb">
+        Python Notebook for Agno & Maxim
+    </Card>
+</CardGroup>
