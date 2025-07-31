@@ -108,8 +108,10 @@ trace = logger.trace({
 })
 
 # Add metadata after creation
-trace.add_metadata({"custom_key": "custom_value","timestamp", "2024-01-01T00:00:00Z"})
-```
+trace.add_metadata({
+    "custom_key": "custom_value",
+    "timestamp": "2024-01-01T00:00:00Z"
+})
 
 ```go Go
 trace := logger.Trace(&logging.TraceConfig{
@@ -271,9 +273,9 @@ event = trace.event({
 
 # Retrieval with metadata
 retrieval = trace.retrieval({
-    "id"="retrieval-id",
-    "name"="vector-search",
-    "metadata"={
+    "id": "retrieval-id",
+    "name": "vector-search",
+    "metadata": {
         "vector_db": "pinecone",
         "index_name": "documents",
         "similarity_threshold": 0.8

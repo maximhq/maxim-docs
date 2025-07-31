@@ -31,7 +31,7 @@ description: Track external system calls triggered by LLM responses in your agen
         "name":tool_call.function.name,
         "description":"Get current temperature for a given location.",
         "args":tool_call.function.arguments,
-        "tags":{ "location": toolCall.function.arguments["location"] }
+        "tags":{ "location": tool_call.function.arguments["location"] }
     })
     try:
         result = call_external_service(tool_call.function.name, tool_call.function.arguments)
