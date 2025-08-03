@@ -9,17 +9,17 @@ description: "Complete guide to using Bifrost as a Go package in your applicatio
 
 | Component                                    | Purpose                                      | Time to Learn |
 | -------------------------------------------- | -------------------------------------------- | ------------- |
-| [**🏛️ Account Interface**](./account.md)    | Provider configuration and key management    | 5 min         |
-| [**🤖 Bifrost Client**](./bifrost-client.md) | Main client methods and request handling     | 10 min        |
-| [**🔌 Plugins**](./plugins.md)               | Custom middleware and request/response hooks | 15 min        |
-| [**🛠️ MCP Integration**](./mcp.md)          | Tool calling and external integrations       | 15 min        |
-| [**📊 Logging**](./logging.md)               | Custom logging and monitoring                | 5 min         |
-| [**📋 Schemas**](./schemas.md)               | Data structures and interfaces reference     | 10 min        |
+| [**Account Interface**](./account.md)    | Provider configuration and key management    | 5 min         |
+| [**Bifrost Client**](./bifrost-client.md) | Main client methods and request handling     | 10 min        |
+| [**Plugins**](./plugins.md)               | Custom middleware and request/response hooks | 15 min        |
+| [**MCP Integration**](./mcp.md)          | Tool calling and external integrations       | 15 min        |
+| [**Logging**](./logging.md)               | Custom logging and monitoring                | 5 min         |
+| [**Schemas**](./schemas.md)               | Data structures and interfaces reference     | 10 min        |
 
 ### **Usage Patterns**
 
 
-  🚀 Basic Usage (Most Common)
+  Basic Usage (Most Common)
 
   ```go
   import (
@@ -51,7 +51,7 @@ description: "Complete guide to using Bifrost as a Go package in your applicatio
 
 
 
-  ⚡ Multi-Provider with Fallbacks
+  Multi-Provider with Fallbacks
 
   ```go
   response, err := client.ChatCompletionRequest(ctx, &schemas.BifrostRequest{
@@ -67,7 +67,7 @@ description: "Complete guide to using Bifrost as a Go package in your applicatio
 
 
 
-  🛠️ Tool Calling
+  Tool Calling
 
   ```go
   response, err := client.ChatCompletionRequest(ctx, &schemas.BifrostRequest{
@@ -83,7 +83,7 @@ description: "Complete guide to using Bifrost as a Go package in your applicatio
 
 
 
-  🔌 With Custom Plugin
+  With Custom Plugin
 
   ```go
   client, _ := bifrost.Init(schemas.BifrostConfig{
@@ -95,7 +95,7 @@ description: "Complete guide to using Bifrost as a Go package in your applicatio
 
 ---
 
-## 🎯 Common Use Cases
+## Common Use Cases
 
 ### **"I want to..."**
 
@@ -114,7 +114,7 @@ description: "Complete guide to using Bifrost as a Go package in your applicatio
 
 ---
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 **Understanding the Flow:**
 
@@ -127,25 +127,25 @@ Your App → Account → Bifrost Client → Plugins → Provider → Response
 - [**Plugins**](./plugins.md): Request/response middleware (rate limiting, caching, monitoring)
 - [**MCP Integration**](./mcp.md): Tool calling and external service integration
 
-> **🏛️ Deep Architecture:** For system internals, worker design, and performance details, see [Architecture Documentation](../../architecture/).
+> **Deep Architecture:** For system internals, worker design, and performance details, see [Architecture Documentation](../../architecture/).
 
 ---
 
-## 🌐 Language Integrations
+## Language Integrations
 
 **Using HTTP Transport Instead?**
 
 If you need to use Bifrost from non-Go languages (Python, Node.js, etc.) or in microservices:
 
-- [**🌐 HTTP Transport Setup**](../../quickstart/http-transport) - 30-second API setup
-- [**📡 HTTP Transport Usage**](../http-transport/) - REST API documentation
-- [**🔄 Drop-in Integration**](../http-transport/integrations/overview) - Replace OpenAI/Anthropic URLs
+- [**HTTP Transport Setup**](../../quickstart/http-transport) - 30-second API setup
+- [**HTTP Transport Usage**](../http-transport/) - REST API documentation
+- [**Drop-in Integration**](../http-transport/integrations/overview) - Replace OpenAI/Anthropic URLs
 
-> **💡 Tip:** HTTP transport hosts the same Go package via REST API, so concepts like Account and Plugins are configured via JSON instead of Go code.
+> **Tip:** HTTP transport hosts the same Go package via REST API, so concepts like Account and Plugins are configured via JSON instead of Go code.
 
 ---
 
-## 🔧 Advanced Configuration
+## Advanced Configuration
 
 ### **Performance Tuning**
 
@@ -165,16 +165,16 @@ If you need to use Bifrost from non-Go languages (Python, Node.js, etc.) or in m
 
 ---
 
-## 📚 Next Steps
+## Next Steps
 
 **Quick Start Path:**
 
-1. [**⚡ 30-second setup**](../../quickstart/go-package.md) - Get running now
-2. [**🏛️ Account setup**](./account.md) - Configure providers and keys
-3. [**🤖 Client usage**](./bifrost-client.md) - Learn core methods
-4. [**🔌 Add plugins**](./plugins.md) - Customize behavior (optional)
+1. [**30-second setup**](../../quickstart/go-package.md) - Get running now
+2. [**Account setup**](./account.md) - Configure providers and keys
+3. [**Client usage**](./bifrost-client.md) - Learn core methods
+4. [**Add plugins**](./plugins.md) - Customize behavior (optional)
 
 **Advanced Features:**
 
-- [**🛠️ MCP Integration**](./mcp.md) - Tool calling (if needed)
-- [**📊 Production**](../providers.md) - All providers setup
+- [**MCP Integration**](./mcp.md) - Tool calling (if needed)
+- [**Production**](../providers.md) - All providers setup

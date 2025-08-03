@@ -4,7 +4,7 @@ description: "Guide to configuring custom plugins in Bifrost HTTP transport for 
 ---
 
 
-## 📋 Plugin Overview
+## Plugin Overview
 
 Bifrost plugins provide middleware functionality:
 
@@ -34,7 +34,7 @@ docker run -p 8080:8080 \
 
 ---
 
-## 🔧 Available Plugins
+## Available Plugins
 
 ### **Maxim Logger Plugin**
 
@@ -74,7 +74,7 @@ curl http://localhost:8080/metrics
 
 ---
 
-## 🛠️ Custom Plugin Development
+## Custom Plugin Development
 
 ### **Plugin Interface**
 
@@ -131,7 +131,7 @@ func (p *MyPlugin) ProcessResponse(
 
 ---
 
-## 📋 Plugin Use Cases
+## Plugin Use Cases
 
 ### **Authentication Plugin**
 
@@ -204,7 +204,7 @@ func (p *TransformPlugin) ProcessRequest(
 
 ---
 
-## 🔮 Future JSON Configuration
+## Future JSON Configuration
 
 **Planned configuration format** (under development):
 
@@ -266,7 +266,7 @@ func (p *TransformPlugin) ProcessRequest(
 
 ---
 
-## 🧪 Testing Custom Plugins
+## Testing Custom Plugins
 
 ### **Unit Testing**
 
@@ -310,7 +310,7 @@ curl -X POST http://localhost:8080/v1/chat/completions \
 
 ---
 
-## 🔧 Plugin Execution Order
+## Plugin Execution Order
 
 Plugins execute in loading order:
 
@@ -330,6 +330,6 @@ bifrost-http -plugins "auth,rate-limit,maxim"
 7. `auth.ProcessResponse()`
 
 
-**Architecture:** For plugin system design and performance details, see [Architecture Documentation](/bifrost/architecture/overview).
+> **Architecture:** For plugin system design and performance details, see [Architecture Documentation](/bifrost/architecture/overview).
 
-**Development:** Full plugin development guide and examples available in [Go Package Plugins](/bifrost/usage/go-package/plugins).
+> **Development:** Full plugin development guide and examples available in [Go Package Plugins](/bifrost/usage/go-package/plugins).

@@ -4,7 +4,7 @@ description: "Complete guide to implementing the Account interface for provider 
 ---
 
 
-## 📋 Interface Overview
+## Interface Overview
 
 The Account interface is your configuration provider that tells Bifrost:
 
@@ -22,7 +22,7 @@ type Account interface {
 
 ---
 
-## 🚀 Basic Implementation
+## Basic Implementation
 
 ### **Minimal Account (Single Provider)**
 
@@ -72,7 +72,7 @@ func (a *SimpleAccount) GetConfigForProvider(provider schemas.ModelProvider) (*s
 
 ---
 
-## ⚡ Multi-Provider Implementation
+## Multi-Provider Implementation
 
 ### **Production-Ready Account**
 
@@ -206,7 +206,7 @@ func (a *MultiProviderAccount) GetConfigForProvider(provider schemas.ModelProvid
 
 ---
 
-## 🔧 Advanced Configuration
+## Advanced Configuration
 
 ### **Load Balanced Keys**
 
@@ -301,7 +301,7 @@ func (a *ProxyAccount) GetConfigForProvider(provider schemas.ModelProvider) (*sc
 
 ---
 
-## 💾 Configuration Patterns
+## Configuration Patterns
 
 ### **JSON Configuration File**
 
@@ -381,7 +381,7 @@ func (a *DatabaseAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]
 
 ---
 
-## 🔒 Security Best Practices
+## Security Best Practices
 
 ### **API Key Management**
 
@@ -420,7 +420,7 @@ func (a *Account) GetKeysForProvider(provider schemas.ModelProvider) ([]schemas.
 
 ---
 
-## 🧪 Testing Your Account
+## Testing Your Account
 
 ### **Unit Tests**
 
@@ -473,4 +473,4 @@ func TestAccountWithBifrost(t *testing.T) {
 ```
 
 
-**🏛️ Architecture:** For how Account fits into the overall system, see [System Design](/bifrost/architecture/overview).
+**Architecture:** For how Account fits into the overall system, see [System Design](/bifrost/architecture/overview).

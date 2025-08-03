@@ -7,11 +7,11 @@ description: "Deep dive into Bifrost's advanced concurrency architecture - worke
 
 | Principle                          | Implementation                         | Benefit                                |
 | ---------------------------------- | -------------------------------------- | -------------------------------------- |
-| **🔄 Provider Isolation**          | Independent worker pools per provider  | Fault tolerance, no cascade failures   |
-| **📡 Channel-Based Communication** | Go channels for all async operations   | Type-safe, deadlock-free communication |
-| **💾 Resource Pooling**            | Object pools with lifecycle management | Predictable memory usage, minimal GC   |
-| **⚡ Non-Blocking Operations**      | Async processing throughout pipeline   | Maximum concurrency, no blocking waits |
-| **🎯 Backpressure Handling**       | Configurable buffers and flow control  | Graceful degradation under load        |
+| **Provider Isolation**          | Independent worker pools per provider  | Fault tolerance, no cascade failures   |
+| **Channel-Based Communication** | Go channels for all async operations   | Type-safe, deadlock-free communication |
+| **Resource Pooling**            | Object pools with lifecycle management | Predictable memory usage, minimal GC   |
+| **Non-Blocking Operations**      | Async processing throughout pipeline   | Maximum concurrency, no blocking waits |
+| **Backpressure Handling**       | Configurable buffers and flow control  | Graceful degradation under load        |
 
 ### **Threading Architecture Overview**
 
@@ -60,7 +60,7 @@ graph TB
 
 ---
 
-## 🏗️ Worker Pool Architecture
+## Worker Pool Architecture
 
 ### **Provider-Isolated Worker Pools**
 
@@ -139,7 +139,7 @@ sequenceDiagram
 
 ---
 
-## 📡 Channel-Based Communication
+## Channel-Based Communication
 
 ### **Channel Architecture**
 
@@ -244,7 +244,7 @@ The backpressure system protects Bifrost from being overwhelmed while maintainin
 
 ---
 
-## 💾 Memory Pool Concurrency
+## Memory Pool Concurrency
 
 ### **Thread-Safe Object Pools**
 
@@ -313,7 +313,7 @@ Comprehensive metrics provide insights into pool efficiency and system health:
 
 ---
 
-## 🔄 Goroutine Management
+## Goroutine Management
 
 ### **Goroutine Lifecycle Patterns**
 
@@ -439,7 +439,7 @@ func (worker *Worker) ExecuteWithCleanup(job *Job) {
 
 ---
 
-## 🎯 Concurrency Optimization Strategies
+## Concurrency Optimization Strategies
 
 ### **Load-Based Worker Scaling** (📝Planned)
 
@@ -570,7 +570,7 @@ func CalculateOptimalConcurrency(provider ProviderOptimization) ConcurrencyConfi
 
 ---
 
-## 📊 Concurrency Monitoring & Metrics
+## Concurrency Monitoring & Metrics
 
 ### **Key Concurrency Metrics**
 
@@ -637,7 +637,7 @@ Comprehensive concurrency monitoring provides operational insights and performan
 
 ---
 
-## 🚨 Deadlock Prevention & Detection
+## Deadlock Prevention & Detection
 
 ### **Deadlock Prevention Strategies**
 

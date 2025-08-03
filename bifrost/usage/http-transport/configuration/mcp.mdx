@@ -3,7 +3,7 @@ title: "MCP Configuration"
 description: "Complete guide to configuring Model Context Protocol (MCP) integration in Bifrost HTTP transport for external tool execution."
 ---
 
-## 📋 MCP Overview (File Based)
+## MCP Overview (File Based)
 
 > You can directly use the UI (`http://localhost:{port}/mcp-clients`) to configure the MCP clients.
 
@@ -33,7 +33,7 @@ MCP (Model Context Protocol) configuration enables:
 
 ---
 
-## 🔌 Connection Types
+## Connection Types
 
 ### **STDIO Connection**
 
@@ -99,7 +99,7 @@ For server-sent events:
 
 ---
 
-## 🛠️ Popular MCP Servers
+## Popular MCP Servers
 
 ### **Filesystem Tools**
 
@@ -161,7 +161,7 @@ For server-sent events:
 
 ---
 
-## 🔒 Tool Filtering
+## Tool Filtering
 
 ### **Whitelist Approach**
 
@@ -197,7 +197,7 @@ Allow all tools except dangerous ones:
 
 ---
 
-## 🌐 Using MCP Tools via HTTP
+## Using MCP Tools via HTTP
 
 ### **Automatic Tool Integration**
 
@@ -413,7 +413,7 @@ curl -X POST http://localhost:8080/v1/chat/completions \
 
 ---
 
-## 🌐 MCP Management API Endpoints
+## MCP Management API Endpoints
 
 Bifrost HTTP transport provides REST API endpoints for dynamic MCP client management.
 
@@ -653,7 +653,7 @@ curl -X DELETE http://localhost:8080/api/mcp/client/temp-filesystem
 
 ---
 
-## 🔧 Environment Variables
+## Environment Variables
 
 ### **Required Variables for MCP Servers**
 
@@ -704,7 +704,7 @@ bifrost-http -config config.json -port 8080 -plugins maxim
 
 ---
 
-## 🧪 Testing MCP Integration
+## Testing MCP Integration
 
 ### **Verify MCP Tools Are Available**
 
@@ -749,7 +749,7 @@ docker logs bifrost-container | grep MCP
 
 ---
 
-## 🔄 Multi-Tool Workflow Example
+## Multi-Tool Workflow Example
 
 ### **Complete Configuration**
 
@@ -806,4 +806,4 @@ curl -X POST http://localhost:8080/v1/chat/completions \
   }'
 ```
 
-**🏛️ Architecture:** For MCP system design and performance details, see [Architecture Documentation](/bifrost/architecture/overview).
+> **Architecture:** For MCP system design and performance details, see [Architecture Documentation](/bifrost/architecture/overview).

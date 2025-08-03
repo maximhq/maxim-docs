@@ -36,7 +36,7 @@ flowchart TD
 
 ---
 
-## 🚪 Stage 1: Transport Layer Processing
+## Stage 1: Transport Layer Processing
 
 ### **HTTP Transport Flow**
 
@@ -97,7 +97,7 @@ sequenceDiagram
 
 ---
 
-## 🎯 Stage 2: Request Routing & Load Balancing
+## Stage 2: Request Routing & Load Balancing
 
 ### **Provider Selection Logic**
 
@@ -155,7 +155,7 @@ func (ks *KeySelector) SelectKey() *APIKey {
 
 ---
 
-## 🔌 Stage 3: Plugin Pipeline Processing
+## Stage 3: Plugin Pipeline Processing
 
 ### **Pre-Processing Hooks**
 
@@ -211,7 +211,7 @@ func (pm *PluginManager) ExecutePreHooks(
 
 ---
 
-## 🛠️ Stage 4: MCP Tool Discovery & Integration
+## Stage 4: MCP Tool Discovery & Integration
 
 ### **Tool Discovery Process**
 
@@ -279,7 +279,7 @@ func (mcpm *MCPManager) EnhanceRequest(
 
 ---
 
-## 💾 Stage 5: Memory Pool Management
+## Stage 5: Memory Pool Management
 
 ### **Object Pool Lifecycle**
 
@@ -327,7 +327,7 @@ func (mp *MemoryPools) ReturnChannel(ch *ProcessingChannel) {
 
 ---
 
-## ⚙️ Stage 6: Worker Pool Processing
+## Stage 6: Worker Pool Processing
 
 ### **Worker Assignment & Execution**
 
@@ -380,7 +380,7 @@ func (pwp *ProviderWorkerPool) ProcessRequest(job *ProcessingJob) {
 
 ---
 
-## 🌐 Stage 7: Provider API Communication
+## Stage 7: Provider API Communication
 
 ### **HTTP Request Execution**
 
@@ -429,7 +429,7 @@ func (w *ProviderWorker) ExecuteRequest(job *ProcessingJob) *ProviderResponse {
 
 ---
 
-## 🔄 Stage 8: Tool Execution & Response Processing
+## Stage 8: Tool Execution & Response Processing
 
 ### **MCP Tool Execution Flow**
 
@@ -488,7 +488,7 @@ func (mcp *MCPProcessor) ProcessToolCalls(
 
 ---
 
-## 📤 Stage 9: Post-Processing & Response Formation
+## Stage 9: Post-Processing & Response Formation
 
 ### **Plugin Post-Processing**
 

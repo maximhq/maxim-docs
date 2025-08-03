@@ -4,7 +4,7 @@ description: "Complete guide to using the main Bifrost client methods for chat c
 ---
 
 
-## 📋 Client Overview
+## Client Overview
 
 The Bifrost client is your main interface for making AI requests. It handles:
 
@@ -27,7 +27,7 @@ response, bifrostErr := client.ChatCompletionRequest(ctx, request)
 
 ---
 
-## 🚀 Core Methods
+## Core Methods
 
 ### **Chat Completion**
 
@@ -128,7 +128,7 @@ defer client.Cleanup() // Ensures proper resource cleanup
 
 ---
 
-## ⚡ Advanced Request Patterns
+## Advanced Request Patterns
 
 ### **Multi-Turn Conversations**
 
@@ -207,7 +207,7 @@ response, err := client.ChatCompletionRequest(ctx, &schemas.BifrostRequest{
 
 ---
 
-## 🛠️ Tool Calling
+## Tool Calling
 
 ### **Basic Tool Usage**
 
@@ -293,7 +293,7 @@ toolChoice := &schemas.ToolChoice{
 
 ---
 
-## 🖼️ Multimodal Requests
+## Multimodal Requests
 
 ### **Image Analysis**
 
@@ -351,7 +351,7 @@ response, err := client.ChatCompletionRequest(ctx, &schemas.BifrostRequest{
 
 ---
 
-## 🔄 Context Management
+## Context Management
 
 ### **Context with Timeouts**
 
@@ -396,7 +396,7 @@ response, err := client.ChatCompletionRequest(ctx, request)
 
 ---
 
-## 📊 Response Handling
+## Response Handling
 
 ### **Response Structure**
 
@@ -476,7 +476,7 @@ if err != nil {
 
 ---
 
-## 🔧 Advanced Configuration
+## Advanced Configuration
 
 ### **Custom Initialization**
 
@@ -537,7 +537,7 @@ func main() {
 
 ---
 
-## 🧪 Testing Client Usage
+## Testing Client Usage
 
 ### **Unit Tests**
 
@@ -610,4 +610,4 @@ func TestIntegrationChatCompletion(t *testing.T) {
 
 --
 
-**🏛️ Architecture:** For system internals and performance details, see [Architecture Documentation](/bifrost/architecture/overview).
+**Architecture:** For system internals and performance details, see [Architecture Documentation](/bifrost/architecture/overview).

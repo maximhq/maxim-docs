@@ -1,5 +1,5 @@
 ---
-title: "Usage Documentation"
+title: "Usage Overview"
 description: "Complete API reference and usage guides for both Go package and HTTP transport integration methods."
 ---
 
@@ -7,80 +7,80 @@ description: "Complete API reference and usage guides for both Go package and HT
 
 | Method                                                                         | Description                         | Best For                      | Documentation                   |
 | ------------------------------------------------------------------------------ | ----------------------------------- | ----------------------------- | ------------------------------- |
-| [**🔧 Go Package**](/bifrost/usage/go-package/overview)                        | Direct Go integration               | Go applications, custom logic | Complete Go API reference       |
-| [**🌐 HTTP Transport**](/bifrost/usage/http-transport/configuration/providers) | REST API with drop-in compatibility | Any language, microservices   | HTTP endpoints and integrations |
+| [**Go Package**](/bifrost/usage/go-package/overview)                        | Direct Go integration               | Go applications, custom logic | Complete Go API reference       |
+| [**HTTP Transport**](/bifrost/usage/http-transport/configuration/providers) | REST API with drop-in compatibility | Any language, microservices   | HTTP endpoints and integrations |
 
 ---
 
-## 🔧 Go Package Usage
+## Go Package Usage
 
 **Direct integration for Go applications**
 
 ### Core Topics
 
-- [**📋 Overview**](/bifrost/usage/go-package/overview) - Getting started with the Go package
-- [**🎯 Bifrost Client**](/bifrost/usage/go-package/bifrost-client) - Main client methods and configuration
-- [**👤 Account Management**](/bifrost/usage/go-package/account) - API key management and authentication
-- [**🔌 Plugins**](/bifrost/usage/go-package/plugins) - Custom middleware and request processing
-- [**🛠️ MCP Integration**](/bifrost/usage/go-package/mcp) - Model Context Protocol usage
-- [**📝 Logging**](/bifrost/usage/go-package/logging) - Logging configuration and best practices
-- [**📊 Schemas**](/bifrost/usage/go-package/schemas) - Data structures and interfaces
+- [**Overview**](/bifrost/usage/go-package/overview) - Getting started with the Go package
+- [**Bifrost Client**](/bifrost/usage/go-package/bifrost-client) - Main client methods and configuration
+- [**Account Management**](/bifrost/usage/go-package/account) - API key management and authentication
+- [**Plugins**](/bifrost/usage/go-package/plugins) - Custom middleware and request processing
+- [**MCP Integration**](/bifrost/usage/go-package/mcp) - Model Context Protocol usage
+- [**Logging**](/bifrost/usage/go-package/logging) - Logging configuration and best practices
+- [**Schemas**](/bifrost/usage/go-package/schemas) - Data structures and interfaces
 
 ### Quick Links
 
-- [**⚡ Quick Start**](/bifrost/quickstart/go-package) - 30-second setup
-- [**🏛️ Architecture**](/bifrost/architecture/overview) - How it works internally
+- [**Quick Start**](/bifrost/quickstart/go-package) - 30-second setup
+- [**Architecture**](/bifrost/architecture/overview) - How it works internally
 
-## 🌐 HTTP Transport Usage
+## HTTP Transport Usage
 
 **REST API with drop-in compatibility for existing provider SDKs**
 
 ### Core Topics
 
-- [**📋 Overview**](/bifrost/usage/http-transport/overview) - Getting started with HTTP transport
-- [**🎯 Endpoints**](/bifrost/usage/http-transport/endpoints) - Native Bifrost REST API
-- [**🔧 Configuration**](/bifrost/usage/http-transport/configuration/providers) - JSON configuration for providers, plugins, and MCP
-- [**🔄 Integrations**](/bifrost/usage/http-transport/integrations/overview) - Drop-in replacements for OpenAI, Anthropic, GenAI
+- [**Overview**](/bifrost/usage/http-transport/overview) - Getting started with HTTP transport
+- [**Endpoints**](/bifrost/usage/http-transport/endpoints) - Native Bifrost REST API
+- [**Configuration**](/bifrost/usage/http-transport/configuration/providers) - JSON configuration for providers, plugins, and MCP
+- [**Integrations**](/bifrost/usage/http-transport/integrations/overview) - Drop-in replacements for OpenAI, Anthropic, GenAI
 
 ### Configuration
 
-- [**🔗 Providers**](/bifrost/usage/http-transport/configuration/providers) - Provider setup and configuration
-- [**🛠️ MCP**](/bifrost/usage/http-transport/configuration/mcp) - Model Context Protocol configuration
-- [**🔌 Plugins**](/bifrost/usage/http-transport/configuration/plugins) - Plugin configuration and custom plugins
+- [**Providers**](/bifrost/usage/http-transport/configuration/providers) - Provider setup and configuration
+- [**MCP**](/bifrost/usage/http-transport/configuration/mcp) - Model Context Protocol configuration
+- [**Plugins**](/bifrost/usage/http-transport/configuration/plugins) - Plugin configuration and custom plugins
 
 ### Drop-in Integrations
 
-- [**🤖 OpenAI Compatible**](/bifrost/usage/http-transport/integrations/openai-compatible) - Replace OpenAI API calls
-- [**🧠 Anthropic Compatible**](/bifrost/usage/http-transport/integrations/anthropic-compatible) - Replace Anthropic API calls
-- [**🔍 GenAI Compatible**](/bifrost/usage/http-transport/integrations/genai-compatible) - Replace Google GenAI API calls
-- [**🔄 Migration Guide**](/bifrost/usage/http-transport/integrations/migration-guide) - Step-by-step migration from existing providers
+- [**OpenAI Compatible**](/bifrost/usage/http-transport/integrations/openai-compatible) - Replace OpenAI API calls
+- [**Anthropic Compatible**](/bifrost/usage/http-transport/integrations/anthropic-compatible) - Replace Anthropic API calls
+- [**GenAI Compatible**](/bifrost/usage/http-transport/integrations/genai-compatible) - Replace Google GenAI API calls
+- [**Migration Guide**](/bifrost/usage/http-transport/integrations/migration-guide) - Step-by-step migration from existing providers
 
 ---
 
-## 🔧 Universal Concepts
+## Universal Concepts
 
 These concepts apply to both Go package and HTTP transport usage:
 
 | Concept                                                                   | Description                                           | Documentation                                         |
 | ------------------------------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
-| [**🔗 Providers**](/bifrost/usage/http-transport/configuration/providers) | Multi-provider support and advanced configurations    | Provider-specific settings, fallbacks, load balancing |
-| [**🔑 Key Management**](/bifrost/usage/key-management)                    | API key rotation and weighted distribution            | Key rotation strategies, security best practices      |
-| [**⚡ Memory Management**](/bifrost/usage/memory-management)               | Performance optimization and resource management      | Memory usage patterns, optimization techniques        |
-| [**🌐 Networking**](/bifrost/usage/networking)                            | Proxies, timeouts, retries, and connection management | Network configuration, proxy settings, retry policies |
-| [**❌ Error Handling**](/bifrost/usage/errors)                             | Error types, codes, and troubleshooting               | Comprehensive error reference and resolution guide    |
+| [**Providers**](/bifrost/usage/http-transport/configuration/providers) | Multi-provider support and advanced configurations    | Provider-specific settings, fallbacks, load balancing |
+| [**Key Management**](/bifrost/usage/key-management)                    | API key rotation and weighted distribution            | Key rotation strategies, security best practices      |
+| [**Memory Management**](/bifrost/usage/memory-management)               | Performance optimization and resource management      | Memory usage patterns, optimization techniques        |
+| [**Networking**](/bifrost/usage/networking)                            | Proxies, timeouts, retries, and connection management | Network configuration, proxy settings, retry policies |
+| [**Error Handling**](/bifrost/usage/errors)                             | Error types, codes, and troubleshooting               | Comprehensive error reference and resolution guide    |
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Migrating from Another Provider?
 
-1. [**🔄 Migration Guide**](/bifrost/usage/http-transport/integrations/migration-guide) - Step-by-step migration
-2. [**🤖 OpenAI Users**](/bifrost/usage/http-transport/integrations/openai-compatible) - Drop-in replacement
-3. [**🧠 Anthropic Users**](/bifrost/usage/http-transport/integrations/anthropic-compatible) - Drop-in replacement
+1. [**Migration Guide**](/bifrost/usage/http-transport/integrations/migration-guide) - Step-by-step migration
+2. [**OpenAI Users**](/bifrost/usage/http-transport/integrations/openai-compatible) - Drop-in replacement
+3. [**Anthropic Users**](/bifrost/usage/http-transport/integrations/anthropic-compatible) - Drop-in replacement
 
 ### Need Advanced Features?
 
-1. [**🔌 Plugins**](/bifrost/usage/go-package/plugins) - Custom middleware
-2. [**🛠️ MCP Integration**](/bifrost/usage/go-package/mcp) - External tools
-3. [**🏛️ Architecture**](/bifrost/architecture/overview) - Understand internals
+1. [**Plugins**](/bifrost/usage/go-package/plugins) - Custom middleware
+2. [**MCP Integration**](/bifrost/usage/go-package/mcp) - External tools
+3. [**Architecture**](/bifrost/architecture/overview) - Understand internals

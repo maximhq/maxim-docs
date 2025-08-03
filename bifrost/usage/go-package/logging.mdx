@@ -3,7 +3,7 @@ title: "Logging"
 description: "Complete guide to configuring and using custom logging in Bifrost for debugging, monitoring, and observability."
 ---
 
-## 📋 Logging Overview
+## Logging Overview
 
 Bifrost's logging system provides:
 
@@ -23,7 +23,7 @@ client, initErr := bifrost.Init(schemas.BifrostConfig{
 
 ---
 
-## 🚀 Basic Logger Implementation
+## Basic Logger Implementation
 
 ### **Standard Library Logger**
 
@@ -97,7 +97,7 @@ client, initErr := bifrost.Init(schemas.BifrostConfig{
 
 ---
 
-## ⚡ Advanced Logger Implementations
+## Advanced Logger Implementations
 
 ### **JSON Structured Logger**
 
@@ -269,7 +269,7 @@ func (l *LogrusAdapter) convertFields(fields []schemas.LogField) logrus.Fields {
 
 ---
 
-## 🔍 Request Tracing and Correlation
+## Request Tracing and Correlation
 
 ### **Request Correlation Logger**
 
@@ -362,7 +362,7 @@ func (p *CorrelationPlugin) Cleanup() error {
 
 ---
 
-## 📊 Performance and Metrics Logging
+## Performance and Metrics Logging
 
 ### **Performance Monitoring Logger**
 
@@ -447,7 +447,7 @@ func (p *PerformancePlugin) PostHook(ctx *context.Context, result *schemas.Bifro
 
 ---
 
-## 🔧 Environment-Specific Logging
+## Environment-Specific Logging
 
 ### **Development vs Production Logging**
 
@@ -552,7 +552,7 @@ func createMultiLogger() schemas.Logger {
 
 ---
 
-## 🛡️ Security and Sanitization
+## Security and Sanitization
 
 ### **Secure Logger**
 
@@ -627,7 +627,7 @@ func (l *SecureLogger) sanitizeValue(key string, value interface{}) interface{} 
 
 ---
 
-## 🧪 Testing Logging
+## Testing Logging
 
 ### **Mock Logger for Testing**
 
@@ -722,11 +722,11 @@ func TestLogging(t *testing.T) {
 }
 ```
 
-## 📚 Related Documentation
+## Related Documentation
 
-- [**🤖 Bifrost Client**](./bifrost-client.md) - Client initialization with custom loggers
-- [**🔌 Plugins**](./plugins.md) - Logging plugins and middleware
-- [**📋 Schemas**](./schemas.md) - Logger interface and log level definitions
-- [**🌐 HTTP Transport**](../http-transport/) - HTTP transport logging configuration
+- [**Bifrost Client**](./bifrost-client.md) - Client initialization with custom loggers
+- [**Plugins**](./plugins.md) - Logging plugins and middleware
+- [**Schemas**](./schemas.md) - Logger interface and log level definitions
+- [**HTTP Transport**](../http-transport/) - HTTP transport logging configuration
 
-> **🏛️ Architecture:** For logging system design and best practices, see [Architecture Documentation](../../architecture/).
+> **Architecture:** For logging system design and best practices, see [Architecture Documentation](../../architecture/).

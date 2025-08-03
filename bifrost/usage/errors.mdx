@@ -1,5 +1,5 @@
 ---
-title: '❌ Error Handling'
+title: 'Error Handling'
 description:
     "Understanding Bifrost's structured error format and best practices for error handling."
 ---
@@ -8,27 +8,27 @@ description:
 
 **Error Handling Features:**
 
--   ✅ **Structured Errors** - Consistent error format across all providers
--   ✅ **Error Codes** - Specific error codes for different failure types
--   ✅ **Context Information** - Detailed error context and debugging info
--   ✅ **Automatic Fallbacks** - Bifrost handles provider fallbacks automatically
--   ✅ **Circuit Breaking** - Available via plugins for advanced reliability
--   ✅ **Provider Mapping** - Provider-specific errors mapped to common format
+-   **Structured Errors** - Consistent error format across all providers
+-   **Error Codes** - Specific error codes for different failure types
+-   **Context Information** - Detailed error context and debugging info
+-   **Automatic Fallbacks** - Bifrost handles provider fallbacks automatically
+-   **Circuit Breaking** - Available via plugins for advanced reliability
+-   **Provider Mapping** - Provider-specific errors mapped to common format
 
 **Benefits:**
 
--   🔍 **Easier Debugging** - Structured error information with context
--   📊 **Better Monitoring** - Categorized errors for alerting and metrics
--   🛡️ **Built-in Reliability** - Automatic fallbacks and recovery
--   ⚡ **Simple Integration** - Handle errors without complex retry logic
+-   **Easier Debugging** - Structured error information with context
+-   **Better Monitoring** - Categorized errors for alerting and metrics
+-   **Built-in Reliability** - Automatic fallbacks and recovery
+-   **Simple Integration** - Handle errors without complex retry logic
 
 ---
 
-## 🏗️ Error Structure
+## Error Structure
 
 ### BifrostError Schema
 
-🔧 Go Package - BifrostError Structure
+Go Package - BifrostError Structure
 
 ```go
 // Bifrost error structure
@@ -59,7 +59,7 @@ func isBifrostError(err error) (*schemas.BifrostError, bool) {
 }
 ```
 
-🌐 HTTP Transport - Error Response Format
+HTTP Transport - Error Response Format
 
 ```json
 {
@@ -88,11 +88,11 @@ func isBifrostError(err error) (*schemas.BifrostError, bool) {
 
 ---
 
-## 🎯 Basic Error Handling
+## Basic Error Handling
 
 ### Simple Error Handling
 
-🔧 Go Package - Basic Error Handling
+Go Package - Basic Error Handling
 
 ```go
 func handleBasicErrors(bf *bifrost.Bifrost, request schemas.BifrostRequest) (*schemas.BifrostResponse, error) {
@@ -144,10 +144,10 @@ func logStructuredError(bifrostErr *schemas.BifrostError, request schemas.Bifros
 }
 ```
 
-> **💡 Note:** Bifrost automatically handles fallbacks between providers, so you don't need to
+> **Note:** Bifrost automatically handles fallbacks between providers, so you don't need to
 > implement manual fallback logic.
 
-🌐 HTTP Transport - Basic Error Handling
+HTTP Transport - Basic Error Handling
 
 ```python
 import requests
@@ -223,12 +223,12 @@ except Exception as e:
     print("Error:", e)
 ```
 
-> **💡 Note:** Bifrost HTTP transport automatically handles retries and fallbacks, so simple error
+> **Note:** Bifrost HTTP transport automatically handles retries and fallbacks, so simple error
 > handling is usually sufficient.
 
 ---
 
-## 📋 Common Error Types
+## Common Error Types
 
 ### Authentication Errors
 
@@ -260,11 +260,11 @@ except Exception as e:
 
 ---
 
-## 📊 Error Monitoring
+## Error Monitoring
 
 ### Metrics and Alerting
 
-📈 Error Tracking
+Error Tracking
 
 **Go Package - Error Metrics:**
 
@@ -301,11 +301,11 @@ curl http://localhost:8080/metrics | grep -E "error"
 
 ---
 
-## 🛠️ Best Practices
+## Best Practices
 
 ### Error Handling Guidelines
 
-📋 Best Practices
+Best Practices
 
 **1. Always Check for Bifrost Errors:**
 
@@ -378,14 +378,14 @@ if err != nil {
 
 ---
 
-## 🎯 Next Steps
+## Next Steps
 
 | **Task**                    | **Documentation**                                                  |
 | --------------------------- | ------------------------------------------------------------------ |
-| **🔗 Configure providers**  | [Providers](/bifrost/usage/http-transport/configuration/providers) |
-| **🔑 Manage API keys**      | [Key Management](/bifrost/usage/key-management)                    |
-| **🌐 Set up networking**    | [Networking](/bifrost/usage/networking)                            |
-| **⚡ Optimize performance** | [Memory Management](/bifrost/usage/memory-management)              |
+| **Configure providers**  | [Providers](/bifrost/usage/http-transport/configuration/providers) |
+| **Manage API keys**      | [Key Management](/bifrost/usage/key-management)                    |
+| **Set up networking**    | [Networking](/bifrost/usage/networking)                            |
+| **Optimize performance** | [Memory Management](/bifrost/usage/memory-management)              |
 
-> **💡 Tip:** Bifrost handles complex error recovery automatically. Focus on understanding error
+> **Tip:** Bifrost handles complex error recovery automatically. Focus on understanding error
 > types for monitoring and debugging rather than implementing retry logic.

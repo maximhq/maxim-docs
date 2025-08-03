@@ -7,28 +7,28 @@ description: "Network configuration including proxy support, connection pooling,
 
 **Networking Features:**
 
-- ✅ **Proxy Support** - HTTP, SOCKS5, and environment-based proxy configuration
-- ✅ **Connection Pooling** - Optimize network resources and performance
-- ✅ **Custom Headers** - Add authentication, organization, or tracking headers
-- ✅ **Timeout Control** - Fine-grained timeout configuration per provider
-- ✅ **Retry Logic** - Exponential backoff with configurable retry policies
-- ✅ **Base URL Override** - Custom endpoints for enterprise deployments
+- **Proxy Support** - HTTP, SOCKS5, and environment-based proxy configuration
+- **Connection Pooling** - Optimize network resources and performance
+- **Custom Headers** - Add authentication, organization, or tracking headers
+- **Timeout Control** - Fine-grained timeout configuration per provider
+- **Retry Logic** - Exponential backoff with configurable retry policies
+- **Base URL Override** - Custom endpoints for enterprise deployments
 
 **Benefits:**
 
-- 🚀 **Better Performance** - Connection reuse and pooling
-- 🛡️ **Enterprise Ready** - Proxy and firewall compatibility
-- ⚡ **Fault Tolerance** - Automatic retry with backoff strategies
-- 🔧 **Flexible Deployment** - Custom endpoints and headers
+- **Better Performance** - Connection reuse and pooling
+- **Enterprise Ready** - Proxy and firewall compatibility
+- **Fault Tolerance** - Automatic retry with backoff strategies
+- **Flexible Deployment** - Custom endpoints and headers
 
 ---
 
-## ⚡ Basic Network Configuration
+## Basic Network Configuration
 
 ### Default Network Settings
 
 
-  🔧 Go Package Usage
+    Go Package Usage
 
   ```go
   func (a *MyAccount) GetConfigForProvider(provider schemas.ModelProvider) (*schemas.ProviderConfig, error) {
@@ -69,7 +69,7 @@ description: "Network configuration including proxy support, connection pooling,
 
 
 
-  🌐 HTTP Transport Usage
+    HTTP Transport Usage
 
   **Configuration (`config.json`):**
 
@@ -104,12 +104,12 @@ description: "Network configuration including proxy support, connection pooling,
 
 ---
 
-## 🔗 Proxy Configuration
+## Proxy Configuration
 
 ### HTTP Proxy
 
 
-  🔧 Go Package - HTTP Proxy
+    Go Package - HTTP Proxy
 
   ```go
   func (a *MyAccount) GetConfigForProvider(provider schemas.ModelProvider) (*schemas.ProviderConfig, error) {
@@ -138,7 +138,7 @@ description: "Network configuration including proxy support, connection pooling,
 
 
 
-  🌐 HTTP Transport - HTTP Proxy
+    HTTP Transport - HTTP Proxy
 
   ```json
   {
@@ -169,7 +169,7 @@ description: "Network configuration including proxy support, connection pooling,
 ### SOCKS5 Proxy
 
 
-  🔧 Go Package - SOCKS5 Proxy
+    Go Package - SOCKS5 Proxy
 
   ```go
   func (a *MyAccount) GetConfigForProvider(provider schemas.ModelProvider) (*schemas.ProviderConfig, error) {
@@ -186,13 +186,13 @@ description: "Network configuration including proxy support, connection pooling,
 
 
 
-  🌐 HTTP Transport - SOCKS5 Proxy
+  HTTP Transport - SOCKS5 Proxy
 
   ```json
   {
     "providers": {
       "openai": {
-        "proxy_config": {
+        "proxy_config": { 
           "type": "socks5",
           "url": "socks5://proxy.company.com:1080",
           "username": "socks-user",
@@ -207,7 +207,7 @@ description: "Network configuration including proxy support, connection pooling,
 ### Environment-Based Proxy
 
 
-  🔧 Go Package - Environment Proxy
+    Go Package - Environment Proxy
 
   ```go
   func (a *MyAccount) GetConfigForProvider(provider schemas.ModelProvider) (*schemas.ProviderConfig, error) {
@@ -230,7 +230,7 @@ description: "Network configuration including proxy support, connection pooling,
 
 
 
-  🌐 HTTP Transport - Environment Proxy
+    HTTP Transport - Environment Proxy
 
   ```json
   {
@@ -255,12 +255,12 @@ description: "Network configuration including proxy support, connection pooling,
 
 ---
 
-## ⏱️ Timeout & Retry Configuration
+## Timeout & Retry Configuration
 
 ### Basic Retry Logic
 
 
-  🔧 Go Package - Retry Configuration
+    Go Package - Retry Configuration
 
   ```go
   func (a *MyAccount) GetConfigForProvider(provider schemas.ModelProvider) (*schemas.ProviderConfig, error) {
@@ -296,7 +296,7 @@ description: "Network configuration including proxy support, connection pooling,
 
 
 
-  🌐 HTTP Transport - Retry Configuration
+    HTTP Transport - Retry Configuration
 
   ```json
   {
@@ -317,7 +317,7 @@ description: "Network configuration including proxy support, connection pooling,
 ### Provider-Specific Timeouts
 
 
-  🔧 Go Package - Provider-Specific Timeouts
+    Go Package - Provider-Specific Timeouts
 
   ```go
   func (a *MyAccount) GetConfigForProvider(provider schemas.ModelProvider) (*schemas.ProviderConfig, error) {
@@ -350,7 +350,7 @@ description: "Network configuration including proxy support, connection pooling,
 
 
 
-  🌐 HTTP Transport - Provider-Specific Timeouts
+    HTTP Transport - Provider-Specific Timeouts
 
   ```json
   {
@@ -380,12 +380,12 @@ description: "Network configuration including proxy support, connection pooling,
 
 ---
 
-## 📋 Custom Headers
+## Custom Headers
 
 ### Authentication Headers
 
 
-  🔧 Go Package - Custom Headers
+    Go Package - Custom Headers
 
   ```go
   func (a *MyAccount) GetConfigForProvider(provider schemas.ModelProvider) (*schemas.ProviderConfig, error) {
@@ -422,7 +422,7 @@ description: "Network configuration including proxy support, connection pooling,
 
 
 
-  🌐 HTTP Transport - Custom Headers
+    HTTP Transport - Custom Headers
 
   ```json
   {
@@ -454,7 +454,7 @@ description: "Network configuration including proxy support, connection pooling,
 ### Tracking and Monitoring Headers
 
 
-  🔧 Go Package - Monitoring Headers
+  Go Package - Monitoring Headers
 
   ```go
   func (a *MyAccount) GetConfigForProvider(provider schemas.ModelProvider) (*schemas.ProviderConfig, error) {
@@ -483,7 +483,7 @@ description: "Network configuration including proxy support, connection pooling,
 
 
 
-  🌐 HTTP Transport - Monitoring Headers
+    HTTP Transport - Monitoring Headers
 
   ```json
   {
@@ -506,12 +506,12 @@ description: "Network configuration including proxy support, connection pooling,
 
 ---
 
-## 🔧 Enterprise Configuration
+## Enterprise Configuration
 
 ### Corporate Network Setup
 
 
-  🏢 Enterprise Network Configuration
+    Enterprise Network Configuration
 
   **Go Package - Enterprise Setup:**
 
@@ -627,12 +627,12 @@ description: "Network configuration including proxy support, connection pooling,
 
 ---
 
-## 🛠️ Best Practices
+## Best Practices
 
 ### Timeout Strategy
 
 
-  ⏱️ Recommended Timeout Values
+    Recommended Timeout Values
 
   | Use Case             | Timeout | Max Retries | Initial Backoff |
   | -------------------- | ------- | ----------- | --------------- |
@@ -659,7 +659,7 @@ description: "Network configuration including proxy support, connection pooling,
 ### Proxy Best Practices
 
 
-  🔗 Proxy Configuration Tips
+    Proxy Configuration Tips
 
   **Corporate Environment:**
 
@@ -685,13 +685,13 @@ description: "Network configuration including proxy support, connection pooling,
 
 ---
 
-## 🎯 Next Steps
+## Next Steps
 
 | **Task**                    | **Documentation**                                     |
 | --------------------------- | ----------------------------------------------------- |
-| **🔑 Configure API keys**   | [Key Management](/bifrost/usage/key-management)       |
-| **🔗 Set up providers**     | [Providers](/bifrost/usage/providers)                 |
-| **⚡ Optimize performance**  | [Memory Management](/bifrost/usage/memory-management) |
-| **❌ Handle network errors** | [Error Handling](/bifrost/usage/errors)               |
+| **Configure API keys**   | [Key Management](/bifrost/usage/key-management)       |
+| **Set up providers**     | [Providers](/bifrost/usage/providers)                 |
+| **Optimize performance**  | [Memory Management](/bifrost/usage/memory-management) |
+| **Handle network errors** | [Error Handling](/bifrost/usage/errors)               |
 
-> **💡 Tip:** Always test your proxy and timeout settings in a staging environment before deploying to production.
+> **Tip:** Always test your proxy and timeout settings in a staging environment before deploying to production.

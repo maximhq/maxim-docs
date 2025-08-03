@@ -626,7 +626,7 @@
                     {
                         "group": "Quick Start",
                         "pages": [
-                            "bifrost/quickstart/overview",
+                           
                             "bifrost/quickstart/go-package",
                             "bifrost/quickstart/http-transport"
                         ]
