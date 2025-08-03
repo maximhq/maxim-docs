@@ -3,7 +3,7 @@ title: "Google GenAI Compatible API"
 description: "Complete guide to using Bifrost as a drop-in replacement for Google GenAI API with full compatibility and enhanced features."
 ---
 
-## 📋 Overview
+## Overview
 
 Bifrost provides **100% Google GenAI API compatibility** with enhanced features:
 
@@ -15,11 +15,11 @@ Bifrost provides **100% Google GenAI API compatibility** with enhanced features:
 
 **Endpoint:** `POST /genai/v1beta/models/{model}:generateContent`
 
-> **🔄 Provider Flexibility:** While using Google GenAI SDK format, you can specify any model like `"gemini-pro"` (uses Google) or `"openai/gpt-4o-mini"` (uses OpenAI) - Bifrost will route to the appropriate provider automatically.
+> **Provider Flexibility:** While using Google GenAI SDK format, you can specify any model like `"gemini-pro"` (uses Google) or `"openai/gpt-4o-mini"` (uses OpenAI) - Bifrost will route to the appropriate provider automatically.
 
 ---
 
-## 🔄 Quick Migration
+## Quick Migration
 
 ### **Python (Google GenAI SDK)**
 
@@ -63,9 +63,9 @@ const response = await model.generateContent("Hello!");
 
 ---
 
-## 📊 Supported Features
+## Supported Features
 
-### **✅ Fully Supported**
+### **Fully Supported**
 
 | Feature                 | Status     | Notes                           |
 | ----------------------- | ---------- | ------------------------------- |
@@ -78,7 +78,7 @@ const response = await model.generateContent("Hello!");
 | **Generation Config**   | ✅ Full    | Temperature, top-k, etc.        |
 | **Function Calling**    | ✅ Full    | Google + MCP tools              |
 
-### **🚀 Enhanced Features**
+### **Enhanced Features**
 
 | Feature                      | Enhancement              | Benefit               |
 | ---------------------------- | ------------------------ | --------------------- |
@@ -90,7 +90,7 @@ const response = await model.generateContent("Hello!");
 
 ---
 
-## 🛠️ Request Examples
+## Request Examples
 
 ### **Basic Content Generation**
 
@@ -239,7 +239,7 @@ curl -X POST http://localhost:8080/genai/v1beta/models/gemini-pro:generateConten
 
 ---
 
-## 🔧 Advanced Usage
+## Advanced Usage
 
 ### **System Instructions**
 
@@ -341,7 +341,7 @@ except Exception as e:
 
 ---
 
-## ⚡ Enhanced Features
+## Enhanced Features
 
 ### **Automatic MCP Tool Integration**
 
@@ -419,7 +419,7 @@ response3 = client.models.generate_content(
 
 ---
 
-## 🧪 Testing & Validation
+## Testing & Validation
 
 ### **Compatibility Testing**
 
@@ -506,7 +506,7 @@ test_function_calling()
 
 ---
 
-## 🌐 Multi-Provider Support
+## Multi-Provider Support
 
 Use multiple providers with Google GenAI SDK format by prefixing model names:
 
@@ -533,7 +533,7 @@ response3 = model3.generate_content("Hello!")
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
 ### **Bifrost Config for Google GenAI**
 
@@ -579,7 +579,7 @@ export BIFROST_LOG_LEVEL="info"
 
 ---
 
-## 🚨 Common Issues & Solutions
+## Common Issues & Solutions
 
 ### **Issue: "API Key not valid"**
 
@@ -658,4 +658,4 @@ response = model.generate_content(
 ```
 
 
-**🏛️ Architecture:** For Google GenAI integration implementation details, see [Architecture Documentation](/bifrost/architecture/overview).
+**Architecture:** For Google GenAI integration implementation details, see [Architecture Documentation](/bifrost/architecture/overview).

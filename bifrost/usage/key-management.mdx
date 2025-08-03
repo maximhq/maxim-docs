@@ -1,5 +1,5 @@
 ---
-title: '🔑 Key Management'
+title: 'Key Management'
 description:
     'Advanced API key management with weighted distribution, automatic rotation, and model-specific
     assignments across all providers.'
@@ -18,18 +18,18 @@ description:
 
 **Benefits:**
 
--   🛡️ **Higher Rate Limits** - Combine multiple keys for increased throughput
--   ⚡ **Improved Reliability** - Automatic failover prevents service interruption
--   💰 **Cost Control** - Route traffic based on budget and usage patterns
--   🔧 **Zero Downtime** - Hot-swap keys without service interruption
+-   **Higher Rate Limits** - Combine multiple keys for increased throughput
+-   **Improved Reliability** - Automatic failover prevents service interruption
+-   **Cost Control** - Route traffic based on budget and usage patterns
+-   **Zero Downtime** - Hot-swap keys without service interruption
 
 ---
 
-## ⚡ Basic Key Setup
+## Basic Key Setup
 
 ### Single Key Configuration
 
-🔧 Go Package Usage
+Go Package Usage
 
 ```go
 func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schemas.Key, error) {
@@ -55,7 +55,7 @@ func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schema
 }
 ```
 
-🌐 HTTP Transport Usage
+HTTP Transport Usage
 
 **Configuration (`config.json`):**
 
@@ -93,13 +93,13 @@ export ANTHROPIC_API_KEY="sk-ant-..."
 
 ---
 
-## 🔄 Key Distribution Strategies
+## Key Distribution Strategies
 
 ### Load Balancing Strategy
 
 Distribute requests evenly across multiple keys for maximum throughput:
 
-🔧 Go Package - Equal Distribution
+Go Package - Equal Distribution
 
 ```go
 func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schemas.Key, error) {
@@ -131,7 +131,7 @@ func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schema
 }
 ```
 
-🌐 HTTP Transport - Equal Distribution
+HTTP Transport - Equal Distribution
 
 ```json
 {
@@ -177,7 +177,7 @@ export OPENAI_KEY_4="sk-4..."
 
 Use premium keys for expensive models, standard keys for cheaper models:
 
-🔧 Go Package - Tiered Strategy
+Go Package - Tiered Strategy
 
 ```go
 func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schemas.Key, error) {
@@ -213,7 +213,7 @@ func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schema
 
 **Result:** Cost optimization with dedicated premium keys for expensive models
 
-🌐 HTTP Transport - Tiered Strategy
+HTTP Transport - Tiered Strategy
 
 ```json
 {
@@ -250,7 +250,7 @@ func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schema
 
 Route traffic based on key priority and reliability:
 
-🔧 Go Package - Priority Strategy
+Go Package - Priority Strategy
 
 ```go
 func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schemas.Key, error) {
@@ -279,7 +279,7 @@ func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schema
 }
 ```
 
-🌐 HTTP Transport - Priority Strategy
+HTTP Transport - Priority Strategy
 
 ```json
 {
@@ -309,11 +309,11 @@ func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schema
 
 ---
 
-## 🎯 Advanced Key Patterns
+## Advanced Key Patterns
 
 ### Multi-Provider Key Management
 
-🔧 Go Package - Cross-Provider Keys
+Go Package - Cross-Provider Keys
 
 ```go
 func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schemas.Key, error) {
@@ -357,7 +357,7 @@ func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schema
 }
 ```
 
-🌐 HTTP Transport - Cross-Provider Keys
+HTTP Transport - Cross-Provider Keys
 
 ```json
 {
@@ -409,7 +409,7 @@ func (a *MyAccount) GetKeysForProvider(provider schemas.ModelProvider) ([]schema
 
 ### Dynamic Key Selection
 
-🔧 Go Package - Runtime Key Selection
+Go Package - Runtime Key Selection
 
 ```go
 type DynamicAccount struct {
@@ -439,13 +439,13 @@ func (a *DynamicAccount) rotateKeys() {
 }
 ```
 
-🌐 HTTP Transport - Hot Key Reload
+HTTP Transport - Hot Key Reload
 
 This feature is under development.
 
 ---
 
-## 📊 Key Selection Algorithm
+## Key Selection Algorithm
 
 Bifrost uses weighted random selection for key distribution:
 
@@ -468,11 +468,11 @@ Key Selection Process:
 
 ---
 
-## 🛠️ Best Practices
+## Best Practices
 
 ### Security Best Practices
 
-🔒 Environment Variable Management
+Environment Variable Management
 
 **Recommended approach:**
 
@@ -494,7 +494,7 @@ export ANTHROPIC_PRODUCTION_KEY="sk-ant-..."
 }
 ```
 
-🔄 Key Rotation Schedule
+Key Rotation Schedule
 
 **Recommended rotation schedule:**
 
@@ -522,7 +522,7 @@ func (k *KeyWithMetadata) ShouldRotate() bool {
 
 ### Performance Optimization
 
-⚡ Weight Optimization
+Weight Optimization
 
 **High-throughput scenario:**
 
@@ -572,14 +572,14 @@ func (k *KeyWithMetadata) ShouldRotate() bool {
 
 ---
 
-## 🎯 Next Steps
+## Next Steps
 
 | **Task**                    | **Documentation**                                                  |
 | --------------------------- | ------------------------------------------------------------------ |
-| **🔗 Configure providers**  | [Providers](/bifrost/usage/http-transport/configuration/providers) |
-| **🌐 Set up networking**    | [Networking](/bifrost/usage/networking)                            |
-| **⚡ Optimize performance** | [Memory Management](/bifrost/usage/memory-management)              |
-| **❌ Handle failures**      | [Error Handling](/bifrost/usage/errors)                            |
+| **Configure providers**  | [Providers](/bifrost/usage/http-transport/configuration/providers) |
+| **Set up networking**    | [Networking](/bifrost/usage/networking)                            |
+| **Optimize performance** | [Memory Management](/bifrost/usage/memory-management)              |
+| **Handle failures**      | [Error Handling](/bifrost/usage/errors)                            |
 
-> **💡 Tip:** Use weights that sum to 1.0 for easier percentage calculations, but Bifrost
+> **Tip:** Use weights that sum to 1.0 for easier percentage calculations, but Bifrost
 > automatically normalizes weights if they don't sum to 1.0.

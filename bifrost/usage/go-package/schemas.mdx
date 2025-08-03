@@ -1,13 +1,7 @@
-# 📋 Schemas
-
-Data structures, interfaces, and type definitions reference for Bifrost Go package. This guide focuses on practical usage patterns rather than comprehensive API documentation.
-
-> **💡 Quick Start:** See the [30-second setup](../../quickstart/go-package.md) for basic schema usage examples.
-
 ---
-
-
-## 📋 Schema Overview
+title: "Schemas"
+description: "Data structures, interfaces, and type definitions reference for Bifrost Go package."
+---
 
 Bifrost schemas define the structure for:
 
@@ -17,13 +11,13 @@ Bifrost schemas define the structure for:
 - **MCP tool definitions** for external integrations
 - **Error handling** with detailed error types
 
-> **🔄 OpenAI Compatibility:** Bifrost follows OpenAI's request/response structure for maximum compatibility. This ensures easy migration from OpenAI and consistent behavior across all providers.
+> **OpenAI Compatibility:** Bifrost follows OpenAI's request/response structure for maximum compatibility. This ensures easy migration from OpenAI and consistent behavior across all providers.
 
-> **📖 Complete Reference:** All schemas have detailed GoDoc comments in the source code. This guide focuses on practical usage patterns.
+> **Complete Reference:** All schemas have detailed GoDoc comments in the source code. This guide focuses on practical usage patterns.
 
 ---
 
-## 🚀 Core Request/Response Schemas
+## Core Request/Response Schemas
 
 ### **BifrostRequest**
 
@@ -113,7 +107,7 @@ fmt.Printf("Provider: %s, Latency: %v\n",
 
 ---
 
-## ⚡ Message and Content Schemas
+## Message and Content Schemas
 
 ### **BifrostMessage**
 
@@ -208,7 +202,7 @@ multimodalContent := schemas.MessageContent{
 
 ---
 
-## 🔧 Configuration Schemas
+## Configuration Schemas
 
 ### **BifrostConfig**
 
@@ -285,7 +279,7 @@ withTools := &schemas.ModelParameters{
 
 ---
 
-## 🛠️ Tool and MCP Schemas
+## Tool and MCP Schemas
 
 ### **Tool Definition**
 
@@ -377,7 +371,7 @@ forceWeather := schemas.ToolChoice{
 
 ---
 
-## 📊 Interface Implementations
+## Interface Implementations
 
 ### **Account Interface**
 
@@ -500,7 +494,7 @@ func (l *MyLogger) Log(level schemas.LogLevel, message string, fields ...schemas
 
 ---
 
-## 🚨 Error Handling Schemas
+## Error Handling Schemas
 
 ### **BifrostError**
 
@@ -548,7 +542,7 @@ if err != nil {
 
 ---
 
-## 🎯 Common Usage Patterns
+## Common Usage Patterns
 
 ### **Provider Selection**
 
@@ -651,12 +645,12 @@ func reliableRequest(message string) *schemas.BifrostRequest {
 ---
 ---
 
-## 📚 Related Documentation
+## Related Documentation
 
-- **[🤖 Bifrost Client](./bifrost-client.md)** - Using schemas with the client
-- **[🏛️ Account Interface](./account.md)** - Account schema implementation
-- **[🔌 Plugins](./plugins.md)** - Plugin schema implementation
-- **[🛠️ MCP Integration](./mcp.md)** - MCP schema usage
-- **[📊 Logging](./logging.md)** - Logger schema implementation
+- **[Bifrost Client](./bifrost-client.md)** - Using schemas with the client
+- **[Account Interface](./account.md)** - Account schema implementation
+- **[Plugins](./plugins.md)** - Plugin schema implementation
+- **[MCP Integration](./mcp.md)** - MCP schema usage
+- **[Logging](./logging.md)** - Logger schema implementation
 
-> **📖 Source Code:** For complete schema definitions and GoDoc documentation, see the [core/schemas directory](https://github.com/maximhq/bifrost/tree/main/core/schemas).
+> **Source Code:** For complete schema definitions and GoDoc documentation, see the [core/schemas directory](https://github.com/maximhq/bifrost/tree/main/core/schemas).

@@ -3,7 +3,7 @@ title: "OpenAI Compatible API"
 description: "Complete guide to using Bifrost as a drop-in replacement for OpenAI API with full compatibility and enhanced features."
 ---
 
-## 📋 Overview
+## Overview
 
 Bifrost provides **100% OpenAI API compatibility** with enhanced features:
 
@@ -15,11 +15,11 @@ Bifrost provides **100% OpenAI API compatibility** with enhanced features:
 
 **Endpoint:** `POST /openai/v1/chat/completions`
 
-> **🔄 Provider Flexibility:** While using OpenAI SDK format, you can specify any model like `"anthropic/claude-3-sonnet-20240229"` or `"openai/gpt-4o-mini"` - Bifrost will route to the appropriate provider automatically.
+> **Provider Flexibility:** While using OpenAI SDK format, you can specify any model like `"anthropic/claude-3-sonnet-20240229"` or `"openai/gpt-4o-mini"` - Bifrost will route to the appropriate provider automatically.
 
 ---
 
-## 🔄 Quick Migration
+## Quick Migration
 
 ### **Python (OpenAI SDK)**
 
@@ -71,9 +71,9 @@ const response = await openai.chat.completions.create({
 
 ---
 
-## 📊 Supported Features
+## Supported Features
 
-### **✅ Fully Supported**
+### **Fully Supported**
 
 | Feature                        | Status  | Notes                    |
 | ------------------------------ | ------- | ------------------------ |
@@ -86,7 +86,7 @@ const response = await openai.chat.completions.create({
 | **Max Tokens**                 | ✅ Full | Token limit control      |
 | **Presence/Frequency Penalty** | ✅ Full | Repetition control       |
 
-### **🚀 Enhanced Features**
+### **Enhanced Features**
 
 | Feature                      | Enhancement              | Benefit               |
 | ---------------------------- | ------------------------ | --------------------- |
@@ -98,7 +98,7 @@ const response = await openai.chat.completions.create({
 
 ---
 
-## 🛠️ Request Examples
+## Request Examples
 
 ### **Basic Chat Completion**
 
@@ -238,7 +238,7 @@ response = client.chat.completions.create(
 
 ---
 
-## 🔧 Advanced Usage
+## Advanced Usage
 
 ### **Streaming Responses**
 
@@ -302,7 +302,7 @@ except Exception as e:
 
 ---
 
-## ⚡ Enhanced Features
+## Enhanced Features
 
 ### **Automatic MCP Tool Integration**
 
@@ -350,7 +350,7 @@ Multiple API keys automatically load balanced:
 
 ---
 
-## 🧪 Testing & Validation
+## Testing & Validation
 
 ### **Compatibility Testing**
 
@@ -422,7 +422,7 @@ benchmark_response_time(openai_client, "Direct OpenAI")
 
 ---
 
-## 🌐 Multi-Provider Support
+## Multi-Provider Support
 
 Use multiple providers with OpenAI SDK format by prefixing model names:
 
@@ -455,7 +455,7 @@ response3 = client.chat.completions.create(
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
 ### **Bifrost Config for OpenAI**
 
@@ -505,7 +505,7 @@ export BIFROST_LOG_LEVEL="info"
 
 ---
 
-## 🚨 Common Issues & Solutions
+## Common Issues & Solutions
 
 ### **Issue: "Invalid API Key"**
 

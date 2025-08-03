@@ -56,7 +56,7 @@ graph TB
 **Alternative Considered:** Shared worker pool across all providers\
 **Why Rejected:** Would create resource contention and cascade failures when one provider experiences issues.
 
-> **📖 Configuration Guide:** [Provider Setup →](/bifrost/usage/http-transport/configuration/providers)
+> **Configuration Guide:** [Provider Setup →](/bifrost/usage/http-transport/configuration/providers)
 
 ### **2. Aggressive Object Pooling Strategy**
 
@@ -197,7 +197,7 @@ graph TB
 
 ---
 
-## ⚖️ Critical Trade-off Analysis
+## Critical Trade-off Analysis
 
 ### **Performance vs. Memory Usage**
 
@@ -233,7 +233,7 @@ We carefully chose which reliability features to include based on value vs. comp
 
 ---
 
-## 🔧 Implementation Philosophy
+## Implementation Philosophy
 
 ### **Error Handling Strategy**
 
@@ -278,7 +278,7 @@ We carefully chose which reliability features to include based on value vs. comp
 
 ---
 
-## 🚀 Future-Proofing Decisions
+## Future-Proofing Decisions
 
 ### **Schema Extensibility**
 
@@ -314,7 +314,7 @@ We carefully chose which reliability features to include based on value vs. comp
 
 ---
 
-## 📊 Alternative Architectures Considered
+## Alternative Architectures Considered
 
 ### **Event-Driven Architecture**
 
@@ -348,7 +348,7 @@ We carefully chose which reliability features to include based on value vs. comp
 
 ---
 
-## 🎯 Success Metrics & Validation
+## Success Metrics & Validation
 
 ### **Performance Targets (Achieved)**
 
@@ -373,15 +373,15 @@ We carefully chose which reliability features to include based on value vs. comp
 
 ---
 
-## 🔗 Related Architecture Documentation
+## Related Architecture Documentation
 
-- [**🌐 System Overview**](/bifrost/architecture/system-overview) - High-level architecture and component interaction
-- [**🔄 Request Flow**](/bifrost/architecture/request-flow) - How these decisions affect request processing
-- [**⚙️ Concurrency Model**](/bifrost/architecture/concurrency) - Concurrency-related design decisions
-- [**📊 Benchmarks**](/bifrost/overview/benchmarks) - Performance implications of design choices
-- [**🔌 Plugin System**](/bifrost/architecture/plugins) - Plugin architecture design decisions
-- [**🛠️ MCP System**](/bifrost/architecture/mcp) - MCP integration design decisions
+- [**System Overview**](/bifrost/architecture/system-overview) - High-level architecture and component interaction
+- [**Request Flow**](/bifrost/architecture/request-flow) - How these decisions affect request processing
+- [**Concurrency Model**](/bifrost/architecture/concurrency) - Concurrency-related design decisions
+- [**Benchmarks**](/bifrost/overview/benchmarks) - Performance implications of design choices
+- [**Plugin System**](/bifrost/architecture/plugins) - Plugin architecture design decisions
+- [** MCP System**](/bifrost/architecture/mcp) - MCP integration design decisions
 
 ---
 
-**💭 These design decisions reflect careful consideration of real-world usage patterns, performance requirements, and operational needs. Each decision balances multiple factors to create a robust, performant, and developer-friendly AI gateway.**
+**These design decisions reflect careful consideration of real-world usage patterns, performance requirements, and operational needs. Each decision balances multiple factors to create a robust, performant, and developer-friendly AI gateway.**

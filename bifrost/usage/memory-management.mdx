@@ -33,7 +33,7 @@ in parallel.
         may limit throughput.
 -   **Configuration**: This is configured on a per-provider basis.
 
-    🔧 Go Package - Concurrency Configuration
+    Go Package - Concurrency Configuration
 
     Concurrency is set within the `ProviderConfig` returned by your `Account` implementation.
 
@@ -51,7 +51,7 @@ in parallel.
     }
     ```
 
-    🌐 HTTP Transport - Concurrency Configuration
+    HTTP Transport - Concurrency Configuration
 
     Concurrency is set in your `config.json` under each provider's `concurrency_and_buffer_size`.
 
@@ -90,7 +90,7 @@ workers.
     -   `false` (default): New requests will block until space is available in the queue.
     -   `true`: New requests are immediately dropped with an error.
 
-    🔧 Go Package - Buffer Configuration
+    Go Package - Buffer Configuration
 
     The buffer size is set alongside concurrency in `ProviderConfig`.
 
@@ -114,7 +114,7 @@ workers.
     })
     ```
 
-    🌐 HTTP Transport - Buffer Configuration
+    HTTP Transport - Buffer Configuration
 
     The buffer size is set in your `config.json`. Note that `dropExcessRequests` is not configurable
     for the HTTP transport and defaults to `false` (blocking).
@@ -154,7 +154,7 @@ collector and improving latency.
     `config.json`.
 
 
-  🔧 Go Package - Object Pool Configuration
+    Go Package - Object Pool Configuration
 
 Set `InitialPoolSize` in the `BifrostConfig` during initialization.
 
@@ -167,7 +167,7 @@ bifrost, err := bifrost.Init(schemas.BifrostConfig{
 })
 ```
 
-🌐 HTTP Transport - Object Pool Configuration
+    HTTP Transport - Object Pool Configuration
 
 The pool size for the HTTP transport is set at startup.
 
@@ -193,7 +193,7 @@ docker run -p 8080:8080 \
 
 ---
 
-## ✨ Future Development
+## Future Development
 
 ### Dynamic Scaling
 
@@ -205,7 +205,7 @@ headers). This will enable Bifrost to smartly self-tune for optimal performance 
 
 ---
 
-## ⚙️ Configuration Recommendations
+## Configuration Recommendations
 
 Tune these settings based on your application's traffic patterns and performance goals.
 
@@ -218,7 +218,7 @@ Tune these settings based on your application's traffic patterns and performance
 
 ---
 
-## 📊 Monitoring Memory
+## Monitoring Memory
 
 Monitor your Bifrost instance to ensure your configuration is optimal.
 
@@ -227,6 +227,6 @@ Monitor your Bifrost instance to ensure your configuration is optimal.
 -   **Go Profiling (pprof)**: For detailed memory analysis when using the Go package, use the
     standard `net/http/pprof` tool to inspect heap allocations and goroutine counts.
 
-> **💡 Tip:** Start with the **Balanced** configuration and adjust based on observed performance and
+> **Tip:** Start with the **Balanced** configuration and adjust based on observed performance and
 > resource utilization. For example, if you see requests blocking frequently, increase
 > `buffer_size`. If your provider rate limits are being hit, decrease `concurrency`.

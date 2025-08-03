@@ -4,7 +4,7 @@ description: "Complete reference for Bifrost HTTP transport API endpoints and us
 ---
 
 
-## 📋 Endpoint Overview
+## Endpoint Overview
 
 Bifrost HTTP transport provides:
 
@@ -17,7 +17,7 @@ Base URL: `http://localhost:8080` (configurable)
 
 ---
 
-## 🔄 Unified API Endpoints
+## Unified API Endpoints
 
 > All endpoints and request/response formats are **OpenAI compatible**.
 
@@ -186,7 +186,7 @@ Direct MCP tool execution endpoint.
 
 ---
 
-## 🔗 Drop-in Compatible Endpoints
+## Drop-in Compatible Endpoints
 
 ### **OpenAI Compatible**
 
@@ -241,7 +241,7 @@ curl -X POST http://localhost:8080/genai/v1beta/models/gemini-pro:generateConten
 
 ---
 
-## 📊 Monitoring Endpoints
+## Monitoring Endpoints
 
 ### **GET /metrics**
 
@@ -270,7 +270,7 @@ bifrost_provider_errors_total{provider="openai",error_type="rate_limit"} 23
 
 ---
 
-## 🔧 Request Parameters
+## Request Parameters
 
 ### **Common Parameters**
 
@@ -324,7 +324,7 @@ bifrost_provider_errors_total{provider="openai",error_type="rate_limit"} 23
 
 ---
 
-## 🛠️ Tool Calling
+## Tool Calling
 
 ### **Automatic Tool Integration**
 
@@ -395,7 +395,7 @@ curl -X POST http://localhost:8080/v1/chat/completions \
 
 ---
 
-## 🔄 Error Handling
+## Error Handling
 
 ### **Error Response Format**
 
@@ -451,7 +451,7 @@ curl -X POST http://localhost:8080/v1/chat/completions \
 
 ---
 
-## 🌍 Language SDK Examples
+## Language SDK Examples
 
 ### **Python (OpenAI SDK)**
 
@@ -519,4 +519,4 @@ func makeRequest() {
 ```
 
 
-**🏛️ Architecture:** For endpoint implementation details and performance, see [Architecture Documentation](/bifrost/architecture/overview).
+> **Architecture:** For endpoint implementation details and performance, see [Architecture Documentation](/bifrost/architecture/overview).

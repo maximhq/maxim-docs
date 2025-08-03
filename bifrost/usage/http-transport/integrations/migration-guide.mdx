@@ -3,7 +3,7 @@ title: "Migration Guide"
 description: "Step-by-step guide to migrate from existing AI provider APIs to Bifrost for improved reliability, cost optimization, and enhanced features."
 ---
 
-## 📋 Migration Overview
+## Migration Overview
 
 ### **Why Migrate to Bifrost?**
 
@@ -25,7 +25,7 @@ description: "Step-by-step guide to migrate from existing AI provider APIs to Bi
 
 ---
 
-## 🚀 Strategy 1: Drop-in Replacement (Recommended)
+## Strategy 1: Drop-in Replacement (Recommended)
 
 **Best for:** Teams wanting immediate benefits with zero code changes.
 
@@ -133,7 +133,7 @@ curl -X POST http://localhost:8080/anthropic/v1/messages \
 
 ---
 
-## 🔄 Strategy 2: Gradual Migration
+## Strategy 2: Gradual Migration
 
 **Best for:** Large applications wanting to minimize risk by migrating incrementally.
 
@@ -192,7 +192,7 @@ client = openai.OpenAI(
 
 ---
 
-## 🎯 Strategy 3: Canary Deployment
+## Strategy 3: Canary Deployment
 
 **Best for:** High-traffic applications requiring careful validation.
 
@@ -264,7 +264,7 @@ curl http://localhost:8080/metrics | grep bifrost_request_duration_seconds
 
 ---
 
-## 🔵 Strategy 4: Blue-Green Migration
+## Strategy 4: Blue-Green Migration
 
 **Best for:** Applications requiring instant rollback capability.
 
@@ -319,7 +319,7 @@ upstream app {
 
 ---
 
-## 🧪 Testing & Validation
+## Testing & Validation
 
 ### **Compatibility Testing Script**
 
@@ -406,7 +406,7 @@ print(f"Overhead: {bifrost_stats['mean'] - direct_stats['mean']:.3f}s")
 
 ---
 
-## 🔧 Production Configuration
+## Production Configuration
 
 ### **High Availability Setup**
 
@@ -514,7 +514,7 @@ spec:
 
 ---
 
-## 📊 Migration Checklist
+## Migration Checklist
 
 ### **Pre-Migration**
 
@@ -542,7 +542,7 @@ spec:
 
 ---
 
-## 🚨 Common Migration Issues
+## Common Migration Issues
 
 ### **Issue: Authentication Errors**
 
@@ -612,7 +612,7 @@ client = openai.OpenAI(
 
 ---
 
-## 📈 Post-Migration Optimization
+## Post-Migration Optimization
 
 ### **Cost Optimization**
 

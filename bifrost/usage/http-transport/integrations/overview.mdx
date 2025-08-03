@@ -2,7 +2,7 @@
 title: "Drop-in API Compatibility"
 description: "Complete guide to using Bifrost as a drop-in replacement for existing AI provider APIs with zero code changes."
 ---
-## 📋 Overview
+## Overview
 
 Bifrost provides **drop-in API compatibility** for major AI providers:
 
@@ -15,7 +15,7 @@ Simply change your `base_url` and keep everything else the same.
 
 ---
 
-## 🔄 Quick Migration
+## Quick Migration
 
 ### **Before (Direct Provider)**
 
@@ -43,7 +43,7 @@ client = openai.OpenAI(
 
 ---
 
-## 🌐 Supported Integrations
+## Supported Integrations
 
 | Provider         | Endpoint Pattern  | Compatibility       | Documentation                                     |
 | ---------------- | ----------------- | ------------------- | ------------------------------------------------- |
@@ -54,9 +54,9 @@ client = openai.OpenAI(
 
 ---
 
-## ✨ Benefits of Drop-in Integration
+## Benefits of Drop-in Integration
 
-### **📈 Enhanced Capabilities**
+### **Enhanced Capabilities**
 
 Your existing code gets these features automatically:
 
@@ -67,14 +67,14 @@ Your existing code gets these features automatically:
 - **Monitoring** - Prometheus metrics and observability
 - **Cost optimization** - Smart routing to cheaper models
 
-### **🔒 Security & Control**
+### **Security & Control**
 
 - **Centralized API key management** - Store keys in one secure location
 - **Request filtering** - Block inappropriate content or requests
 - **Usage tracking** - Monitor and control API consumption
 - **Access controls** - Fine-grained permissions per client
 
-### **🎯 Operational Benefits**
+### **Operational Benefits**
 
 - **Single deployment** - One service handles all AI providers
 - **Unified logging** - Consistent request/response logging
@@ -83,7 +83,7 @@ Your existing code gets these features automatically:
 
 ---
 
-## 🛠️ Integration Patterns
+## Integration Patterns
 
 ### **SDK-based Integration**
 
@@ -155,7 +155,7 @@ export ANTHROPIC_BASE_URL="http://bifrost:8080/anthropic"
 
 ---
 
-## 🌐 Multi-Provider Usage
+## Multi-Provider Usage
 
 ### **Provider-Prefixed Models**
 
@@ -248,7 +248,7 @@ creative_response = client.chat.completions.create(
 
 ---
 
-## 🚀 Deployment Scenarios
+## Deployment Scenarios
 
 ### **Microservices Architecture**
 
@@ -347,7 +347,7 @@ server {
 
 ---
 
-## 🧪 Testing Integration
+## Testing Integration
 
 ### **Compatibility Testing**
 
@@ -395,7 +395,7 @@ print(response.choices[0].message.tool_calls)
 
 ---
 
-## 📊 Migration Strategies
+## Migration Strategies
 
 ### **Gradual Migration**
 
@@ -444,36 +444,36 @@ def create_client():
 
 ---
 
-## 📚 Integration Guides
+## Integration Guides
 
 Choose your provider integration:
 
-### **🤖 OpenAI Compatible**
+### **OpenAI Compatible**
 
 - Full ChatCompletion API support
 - Function calling compatibility
 - Vision and multimodal requests
-- [**📖 OpenAI Integration Guide**](/bifrost/usage/http-transport/integrations/openai-compatible)
+- [**OpenAI Integration Guide**](/bifrost/usage/http-transport/integrations/openai-compatible)
 
-### **🧠 Anthropic Compatible**
+### **Anthropic Compatible**
 
 - Messages API compatibility
 - Tool use integration
 - System message handling
-- [**📖 Anthropic Integration Guide**](/bifrost/usage/http-transport/integrations/anthropic-compatible)
+- [**Anthropic Integration Guide**](/bifrost/usage/http-transport/integrations/anthropic-compatible)
 
-### **🔮 Google GenAI Compatible**
+### **Google GenAI Compatible**
 
 - GenerateContent API support
 - Multi-turn conversations
 - Content filtering
-- [**📖 GenAI Integration Guide**](/bifrost/usage/http-transport/integrations/genai-compatible)
+- [**GenAI Integration Guide**](/bifrost/usage/http-transport/integrations/genai-compatible)
 
-### **🔄 Migration Guide**
+### **Migration Guide**
 
 - Step-by-step migration process
 - Common pitfalls and solutions
 - Performance optimization tips
-- [**📖 Complete Migration Guide**](/bifrost/usage/http-transport/integrations/migration-guide)
+- [**Complete Migration Guide**](/bifrost/usage/http-transport/integrations/migration-guide)
 
 **Architecture:** For integration design patterns and performance details, see [Architecture Documentation](/bifrost/architecture/overview).

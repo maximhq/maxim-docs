@@ -7,16 +7,16 @@ description: "Bifrost's high-level architecture designed for enterprise-grade pe
 
 | Principle                      | Implementation                                   | Benefit                                       |
 | ------------------------------ | ------------------------------------------------ | --------------------------------------------- |
-| **🔄 Asynchronous Processing** | Channel-based worker pools per provider          | High concurrency, no blocking operations      |
-| **💾 Memory Pool Management**  | Object pooling for channels, messages, responses | Minimal GC pressure, sustained throughput     |
-| **🏗️ Provider Isolation**     | Independent resources and workers per provider   | Fault tolerance, no cascade failures          |
-| **🔌 Plugin-First Design**     | Middleware pipeline without core modifications   | Extensible business logic injection           |
-| **⚡ Connection Optimization**  | HTTP/2, keep-alive, intelligent pooling          | Reduced latency, optimal resource utilization |
-| **📊 Built-in Observability**  | Native Prometheus metrics                        | Zero-dependency monitoring                    |
+| **Asynchronous Processing** | Channel-based worker pools per provider          | High concurrency, no blocking operations      |
+| **Memory Pool Management**  | Object pooling for channels, messages, responses | Minimal GC pressure, sustained throughput     |
+| **Provider Isolation**     | Independent resources and workers per provider   | Fault tolerance, no cascade failures          |
+| **Plugin-First Design**     | Middleware pipeline without core modifications   | Extensible business logic injection           |
+| **Connection Optimization**  | HTTP/2, keep-alive, intelligent pooling          | Reduced latency, optimal resource utilization |
+| **Built-in Observability**  | Native Prometheus metrics                        | Zero-dependency monitoring                    |
 
 ---
 
-## 🏗️ High-Level Architecture
+## High-Level Architecture
 
 ```mermaid
 graph TB
@@ -118,7 +118,7 @@ graph TB
 
 ---
 
-## ⚙️ Core Components
+## Core Components
 
 ### **1. Transport Layer**
 
@@ -267,7 +267,7 @@ graph TB
 
 ---
 
-## 🔄 Data Flow Architecture
+## Data Flow Architecture
 
 ### **Request Processing Pipeline**
 
@@ -342,7 +342,7 @@ graph TB
 
 ---
 
-## 📊 Component Interactions
+## Component Interactions
 
 ### **Configuration Hierarchy**
 
@@ -383,7 +383,7 @@ flowchart TD
 
 ---
 
-## 🚀 Scalability Architecture
+## Scalability Architecture
 
 ### **Horizontal Scaling**
 

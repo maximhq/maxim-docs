@@ -11,11 +11,11 @@ The Model Context Protocol (MCP) system in Bifrost enables AI models to seamless
 
 **Core MCP Principles:**
 
-- **🔍 Dynamic Discovery** - Tools are discovered at runtime, not hardcoded
-- **🛡️ Client-Side Execution** - Bifrost controls all tool execution for security
-- **🌐 Multi-Protocol Support** - STDIO, HTTP, and SSE connection types
-- **🎯 Request-Level Filtering** - Granular control over tool availability
-- **⚡ Async Execution** - Non-blocking tool invocation and response handling
+- **Dynamic Discovery** - Tools are discovered at runtime, not hardcoded
+- **Client-Side Execution** - Bifrost controls all tool execution for security
+- **Multi-Protocol Support** - STDIO, HTTP, and SSE connection types
+- **Request-Level Filtering** - Granular control over tool availability
+- **Async Execution** - Non-blocking tool invocation and response handling
 
 ### **MCP System Components**
 
@@ -121,11 +121,9 @@ graph TB
 - **Security:** Similar to HTTP with streaming capabilities
 - **Benefits:** Real-time updates, persistent connections, event-driven
 
-> **📖 MCP Configuration:** [MCP Setup Guide →](/bifrost/usage/http-transport/configuration/mcp)
-
 ---
 
-## 🔍 Tool Discovery & Registration
+## Tool Discovery & Registration
 
 ### **Dynamic Tool Discovery Process**
 
@@ -188,7 +186,7 @@ sequenceDiagram
 
 ---
 
-## 🎛️ Tool Filtering & Access Control
+## Tool Filtering & Access Control
 
 ### **Multi-Level Filtering System**
 
@@ -258,7 +256,7 @@ curl -X POST http://localhost:8080/v1/chat/completions \
 
 ---
 
-## ⚙️ Tool Execution Engine
+## Tool Execution Engine
 
 ### **Async Tool Execution Architecture**
 
@@ -344,27 +342,27 @@ The following diagram shows the end-to-end user experience with MCP tool executi
 flowchart TD
     A["👤 User Message<br/>\"List files in current directory\""] --> B["🤖 Bifrost Core"]
 
-    B --> C["🔧 MCP Manager<br/>Auto-discovers and adds<br/>available tools to request"]
+    B --> C["MCP Manager<br/>Auto-discovers and adds<br/>available tools to request"]
 
-    C --> D["🌐 LLM Provider<br/>(OpenAI, Anthropic, etc.)"]
+    C --> D["LLM Provider<br/>(OpenAI, Anthropic, etc.)"]
 
-    D --> E{"🔍 Response contains<br/>tool_calls?"}
+    D --> E{"Response contains<br/>tool_calls?"}
 
-    E -->|No| F["✅ Final Response<br/>Display to user"]
+    E -->|No| F["Final Response<br/>Display to user"]
 
-    E -->|Yes| G["📝 Add assistant message<br/>with tool_calls to history"]
+    E -->|Yes| G["Add assistant message<br/>with tool_calls to history"]
 
-    G --> H["🛡️ YOUR EXECUTION LOGIC<br/>(Security, Approval, Logging)"]
+    G --> H["YOUR EXECUTION LOGIC<br/>(Security, Approval, Logging)"]
 
-    H --> I{"🤔 User Decision Point<br/>Execute this tool?"}
+    H --> I{"User Decision Point<br/>Execute this tool?"}
 
-    I -->|Deny| J["❌ Create denial result<br/>Add to conversation history"]
+    I -->|Deny| J["Create denial result<br/>Add to conversation history"]
 
-    I -->|Approve| K["⚙️ client.ExecuteMCPTool()<br/>Bifrost executes via MCP"]
+    I -->|Approve| K["client.ExecuteMCPTool()<br/>Bifrost executes via MCP"]
 
-    K --> L["📊 Tool Result<br/>Add to conversation history"]
+    K --> L["Tool Result<br/>Add to conversation history"]
 
-    J --> M["🔄 Continue conversation loop<br/>Send updated history back to LLM"]
+    J --> M["Continue conversation loop<br/>Send updated history back to LLM"]
     L --> M
 
     M --> D
@@ -380,10 +378,10 @@ flowchart TD
 
 **User Control Points:**
 
-- **🛡️ Security Layer** - Your application controls all tool execution decisions
-- **🤔 Approval Gate** - Users can approve or deny each tool execution
-- **📊 Transparency** - Full visibility into what tools will be executed and why
-- **🔄 Conversation Continuity** - Tool results seamlessly integrate into conversation flow
+- **Security Layer** - Your application controls all tool execution decisions
+- **Approval Gate** - Users can approve or deny each tool execution
+- **Transparency** - Full visibility into what tools will be executed and why
+- **Conversation Continuity** - Tool results seamlessly integrate into conversation flow
 
 **Security Benefits:**
 
@@ -423,7 +421,7 @@ This flow ensures that while AI models can discover and request tool usage, all 
 
 ---
 
-## 🔧 MCP Integration Patterns
+## MCP Integration Patterns
 
 ### **Common Integration Scenarios**
 
@@ -477,7 +475,7 @@ This flow ensures that while AI models can discover and request tool usage, all 
 
 ---
 
-## 🛡️ Security & Safety Considerations
+## Security & Safety Considerations
 
 ### **MCP Security Architecture**
 

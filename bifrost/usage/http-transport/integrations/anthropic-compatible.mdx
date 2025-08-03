@@ -3,7 +3,7 @@ title: "Anthropic Compatible API"
 description: "Complete guide to using Bifrost as a drop-in replacement for Anthropic API with full compatibility and enhanced features."
 ---
 
-## 📋 Overview
+## Overview
 
 Bifrost provides **100% Anthropic API compatibility** with enhanced features:
 
@@ -15,11 +15,11 @@ Bifrost provides **100% Anthropic API compatibility** with enhanced features:
 
 **Endpoint:** `POST /anthropic/v1/messages`
 
-> **🔄 Provider Flexibility:** While using Anthropic SDK format, you can specify any model like `"claude-3-sonnet-20240229"` (uses Anthropic) or `"openai/gpt-4o-mini"` (uses OpenAI) - Bifrost will route to the appropriate provider automatically.
+> **Provider Flexibility:** While using Anthropic SDK format, you can specify any model like `"claude-3-sonnet-20240229"` (uses Anthropic) or `"openai/gpt-4o-mini"` (uses OpenAI) - Bifrost will route to the appropriate provider automatically.
 
 ---
 
-## 🔄 Quick Migration
+## Quick Migration
 
 ### **Python (Anthropic SDK)**
 
@@ -73,9 +73,9 @@ const response = await anthropic.messages.create({
 
 ---
 
-## 📊 Supported Features
+## Supported Features
 
-### **✅ Fully Supported**
+### **Fully Supported**
 
 | Feature             | Status     | Notes                           |
 | ------------------- | ---------- | ------------------------------- |
@@ -88,7 +88,7 @@ const response = await anthropic.messages.create({
 | **Temperature**     | ✅ Full    | Sampling control                |
 | **Stop Sequences**  | ✅ Full    | Custom stop tokens              |
 
-### **🚀 Enhanced Features**
+### **Enhanced Features**
 
 | Feature                      | Enhancement              | Benefit               |
 | ---------------------------- | ------------------------ | --------------------- |
@@ -100,7 +100,7 @@ const response = await anthropic.messages.create({
 
 ---
 
-## 🛠️ Request Examples
+## Request Examples
 
 ### **Basic Message**
 
@@ -256,7 +256,7 @@ response = client.messages.create(
 
 ---
 
-## 🔧 Advanced Usage
+## Advanced Usage
 
 ### **Multi-turn Conversation**
 
@@ -361,7 +361,7 @@ except Exception as e:
 
 ---
 
-## ⚡ Enhanced Features
+## Enhanced Features
 
 ### **Automatic MCP Tool Integration**
 
@@ -409,7 +409,7 @@ Multiple API keys automatically load balanced:
 
 ---
 
-## 🧪 Testing & Validation
+## Testing & Validation
 
 ### **Compatibility Testing**
 
@@ -491,7 +491,7 @@ test_tool_use()
 
 ---
 
-## 🌐 Multi-Provider Support
+## Multi-Provider Support
 
 Use multiple providers with Anthropic SDK format by prefixing model names:
 
@@ -527,7 +527,7 @@ response3 = client.messages.create(
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
 ### **Bifrost Config for Anthropic**
 
@@ -576,7 +576,7 @@ export BIFROST_LOG_LEVEL="info"
 
 ---
 
-## 🚨 Common Issues & Solutions
+## Common Issues & Solutions
 
 ### **Issue: "Invalid API Key"**
 

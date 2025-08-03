@@ -3,7 +3,7 @@ title: "Plugins"
 description: "Custom middleware for request/response hooks, rate limiting, caching, and monitoring in Bifrost."
 ---
 
-## 📋 Plugin Overview
+## Plugin Overview
 
 Plugins provide middleware functionality in Bifrost:
 
@@ -23,7 +23,7 @@ type Plugin interface {
 
 ---
 
-## 🚀 Basic Plugin Examples
+## Basic Plugin Examples
 
 ### **Simple Logging Plugin**
 
@@ -130,13 +130,13 @@ func (p *CachePlugin) PostHook(ctx *context.Context, result *schemas.BifrostResp
 
 ---
 
-## 📖 Learn More
+## Learn More
 
 For advanced plugin development and complete examples:
 
-- [**🏗️ Plugin Architecture**](../../architecture/overview) - Understanding plugin system design (essential for new plugin development)
-- [**🛠️ Plugin Development Guide**](../../contributing/overview) - Step-by-step guide to building custom plugins
-- [**📦 Plugin Store**](https://github.com/maximhq/bifrost/tree/main/plugins) - Ready-to-use community plugins
+- [**Plugin Architecture**](../../architecture/overview) - Understanding plugin system design (essential for new plugin development)
+- [**Plugin Development Guide**](../../contributing/overview) - Step-by-step guide to building custom plugins
+- [**Plugin Store**](https://github.com/maximhq/bifrost/tree/main/plugins) - Ready-to-use community plugins
 
 ### **Using Plugins**
 
@@ -153,4 +153,4 @@ client, initErr := bifrost.Init(schemas.BifrostConfig{
 defer client.Cleanup() // Calls Cleanup() on all plugins
 ```
 
-> **⚡ Plugin Order:** Plugins execute in the order they're added. PreHooks run forward, PostHooks run in reverse order.
+> **Plugin Order:** Plugins execute in the order they're added. PreHooks run forward, PostHooks run in reverse order.
