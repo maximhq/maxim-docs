@@ -1,0 +1,328 @@
+---
+title: "Real Time Interview Voice Agent using LiveKit"
+description: "Learn how to add Maxim observability for LiveKit based voice agents"
+---
+
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
+This tutorial will guide you through building a real-time, voice-based Interview Agent using LiveKit for audio and Maxim for observability. The agent conducts mock interviews tailored to your provided Job Description (JD), supports web search, and logs all activity for transparency and debugging.
+
+## Prerequisites
+- Python 3.8+
+- LiveKit server credentials (URL, API key, secret)
+- Tavily API key (for web search tool)
+- Google Cloud credentials (for Gemini LLM and voice)
+- Maxim account (API key, log repo ID)
+
+## Project Setup
+Configure your environment variables in .env:
+
+```.env
+LIVEKIT_URL=https://your-livekit-server-url
+LIVEKIT_API_KEY=your_livekit_api_key
+LIVEKIT_API_SECRET=your_livekit_api_secret
+MAXIM_API_KEY=your_maxim_api_key
+MAXIM_LOG_REPO_ID=your_maxim_log_repo_id
+TAVILY_API_KEY=your_tavily_api_key
+# For Google Gemini (if needed):
+# GOOGLE_API_KEY=your_google_api_key
+# or
+# GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json
+```
+
+## Install dependencies:
+```
+pip install -r requirements.txt
+```
+
+## Add dependencies to requirements.txt:
+```text
+ipykernel>=6.29.5
+livekit>=0.1.0
+livekit-agents[google,openai]~=1.0
+livekit-api>=1.0.2
+maxim-py==3.9.0
+python-dotenv>=1.1.0
+tavily-python>=0.7.5
+```
+
+## Set up a virtual environment:
+```
+python3 -m venv venv
+source venv/bin/activate
+```
+
+## Create a project directory and navigate into it:
+
+```
+mkdir interview_voice_agent
+cd interview_voice_agent
+```
+
+---
+
+## Code Walkthrough: Key Components
+Below, each section of the code is presented with a technical explanation.
+
+### 1. Imports and Initializationimport logging
+
+```python
+import os
+import uuid
+import dotenv
+from livekit import agents
+from livekit import api as livekit_api
+from livekit.agents import Agent, AgentSession, function_tool
+from livekit.api.room_service import CreateRoomRequest
+from livekit.plugins import google
+from maxim import Maxim
+from maxim.logger.livekit import instrument_livekit
+from tavily import TavilyClient
+
+dotenv.load_dotenv(override=True)
+logging.basicConfig(level=logging.DEBUG)
+
+logger = Maxim().logger()
+TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
+```
+
+### Explanation:
+- Imports all required libraries for real-time audio, AI agent orchestration, logging, and web search.
+- Loads environment variables and configures logging for debugging and traceability.
+- Initializes the Maxim logger and retrieves the Tavily API key for web search functionality.
+
+### 2. Maxim Event Instrumentation
+
+```python {11}
+def on_event(event: str, data: dict):
+    if event == "maxim.trace.started":
+        trace_id = data["trace_id"]
+        trace = data["trace"]
+        logging.debug(f"Trace started - ID: {trace_id}", extra={"trace": trace})
+    elif event == "maxim.trace.ended":
+        trace_id = data["trace_id"]
+        trace = data["trace"]
+        logging.debug(f"Trace ended - ID: {trace_id}", extra={"trace": trace})
+
+instrument_livekit(logger, on_event)
+
+```
+
+### Explanation:
+Defines a callback to log when Maxim traces start and end, providing visibility into the agent's lifecycle.
+instrument_livekit integrates Maxim with LiveKit, ensuring all relevant events are captured for observability.
+
+---
+
+### 3. InterviewAgent Class
+
+```python
+class InterviewAgent(Agent):
+    def __init__(self, jd: str) -> None:
+        super().__init__(instructions=f"You are a professional interviewer conducting a Mock Interview with the job description: {jd}\\nAsk relevant interview questions, listen to answers, and follow up as a real interviewer would.")
+
+    @function_tool()
+    async def web_search(self, query: str) -> str:
+        if not TAVILY_API_KEY:
+            return "Tavily API key is not set. Please set the TAVILY_API_KEY environment variable."
+        tavily_client = TavilyClient(api_key=TAVILY_API_KEY)
+        try:
+            response = tavily_client.search(query=query, search_depth="basic")
+            if response.get('answer'):
+                return response['answer']
+            return str(response.get('results', 'No results found.'))
+        except Exception as e:
+            return f"An error occurred during web search: {e}"
+
+```
+### Explanation:
+- Defines the main agent class, which is initialized with a Job Description (JD) and uses it to guide the interview.
+- The web_search method is exposed as a tool, allowing the agent to perform real-time web searches using Tavily.
+- Handles missing API keys and exceptions gracefully, returning informative error messages.
+- Focus on the System Instructions provided, you can modify it as per your requirements (incase you are building an agent for some other usecase) -
+
+```text
+You are a professional interviewer.
+The job description is: {jd}\\nAsk relevant interview questions,
+listen to answers, and follow up as a real interviewer would.
+```
+
+### 4. Entrypoint: Starting the Interview Session
+
+```python
+async def entrypoint(ctx: agents.JobContext):
+    print("\\n🎤 Welcome to your AI Interviewer! Paste your Job Description below.\\n")
+    jd = input("Paste the Job Description (JD) and press Enter:\\n")
+    room_name = os.getenv("LIVEKIT_ROOM_NAME") or f"interview-room-{uuid.uuid4().hex}"
+    lkapi = livekit_api.LiveKitAPI(
+        url=os.getenv("LIVEKIT_URL"),
+        api_key=os.getenv("LIVEKIT_API_KEY"),
+        api_secret=os.getenv("LIVEKIT_API_SECRET"),
+    )
+    try:
+        req = CreateRoomRequest(
+            name=room_name,
+            empty_timeout=600,# keep the room alive 10m after empty
+            max_participants=2,# interviewer + candidate
+        )
+        room = await lkapi.room.create_room(req)
+        print(f"\\nRoom created! Join this link in your browser to start the interview: {os.getenv('LIVEKIT_URL')}/join/{room.name}\\n")
+        session = AgentSession(
+            llm=google.beta.realtime.RealtimeModel(model="gemini-2.0-flash-exp", voice="Puck"),
+        )
+        await session.start(room=room, agent=InterviewAgent(jd))
+        await ctx.connect()
+        await session.generate_reply(
+            instructions="Greet the candidate and start the interview."
+        )
+    finally:
+        await lkapi.aclose()
+```
+
+### Explanation:
+- Prompts the user for a Job Description and creates a new LiveKit room for the interview session.
+- Initializes the agent session with the provided JD and configures the LLM and TTS voice.
+- Prints a join link for the user to access the interview room in their browser.
+- Ensures proper cleanup of resources after the session ends.
+
+---
+
+### 5. Main Block
+
+```python
+if __name__ == "__main__":
+    opts = agents.WorkerOptions(entrypoint_fnc=entrypoint)
+    agents.cli.run_app(opts)
+```
+
+### Explanation:
+Entry point for the script. Configures the worker options and launches the agent using the provided entry point function.
+
+## How to Use
+- Paste your JD: The agent will use it to generate relevant interview questions.
+- Room is created: A join link is printed, open it in your browser to join the interview room or you can also trigger the voice agent via the console as we are doing in the below video.
+- Interact with the AI interviewer:
+    - Your voice is transcribed (STT)
+    - Gemini LLM processes and generates responses
+- Monitor in Maxim:
+    - All prompts, responses, and events are logged for review and debugging
+
+## Run the script:
+
+```python
+python interview_agent.py
+
+# or if you are using uv for dependency management
+
+uv sync
+uv run interview_agent.py console
+
+```
+
+## Observability with Maxim
+Every action, prompt, and web search is logged in your Maxim dashboard.
+Use Maxim to debug, audit, and improve your agent's performance.
+
+## Troubleshooting
+- No audio or agent is silent
+  - Check your Google Cloud credentials
+  - Confirm browser and microphone permissions
+- Web search not working
+  - Ensure your TAVILY_API_KEY is set in .env
+- No Maxim traces
+  - Ensure your MAXIM_API_KEY is set in .env
+
+<MaximPlayer url="https://www.youtube.com/embed/zHzjisB900Q?si=8RMWJPM1DC7cfj8b" />
+
+## Complete Code: interview_agent.py
+
+```python
+import logging
+import os
+import uuid
+import dotenv
+from livekit import agents
+from livekit import api as livekit_api
+from livekit.agents import Agent, AgentSession, function_tool
+from livekit.api.room_service import CreateRoomRequest
+from livekit.plugins import google
+from maxim import Maxim
+from maxim.logger.livekit import instrument_livekit
+from tavily import TavilyClient
+
+dotenv.load_dotenv(override=True)
+logging.basicConfig(level=logging.DEBUG)
+
+logger = Maxim().logger()
+TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
+
+def on_event(event: str, data: dict):
+    if event == "maxim.trace.started":
+        trace_id = data["trace_id"]
+        trace = data["trace"]
+        logging.debug(f"Trace started - ID: {trace_id}", extra={"trace": trace})
+    elif event == "maxim.trace.ended":
+        trace_id = data["trace_id"]
+        trace = data["trace"]
+        logging.debug(f"Trace ended - ID: {trace_id}", extra={"trace": trace})
+
+instrument_livekit(logger, on_event)
+
+class InterviewAgent(Agent):
+    def __init__(self, jd: str) -> None:
+        super().__init__(instructions=f"You are a professional interviewer. The job description is: {jd}\\nAsk relevant interview questions, listen to answers, and follow up as a real interviewer would.")
+
+    @function_tool()
+    async def web_search(self, query: str) -> str:
+        if not TAVILY_API_KEY:
+            return "Tavily API key is not set. Please set the TAVILY_API_KEY environment variable."
+        tavily_client = TavilyClient(api_key=TAVILY_API_KEY)
+        try:
+            response = tavily_client.search(query=query, search_depth="basic")
+            if response.get('answer'):
+                return response['answer']
+            return str(response.get('results', 'No results found.'))
+        except Exception as e:
+            return f"An error occurred during web search: {e}"
+
+async def entrypoint(ctx: agents.JobContext):
+    print("\\n🎤 Welcome to your AI Interviewer! Paste your Job Description below.\\n")
+    jd = input("Paste the Job Description (JD) and press Enter:\\n")
+    room_name = os.getenv("LIVEKIT_ROOM_NAME") or f"interview-room-{uuid.uuid4().hex}"
+    lkapi = livekit_api.LiveKitAPI(
+        url=os.getenv("LIVEKIT_URL"),
+        api_key=os.getenv("LIVEKIT_API_KEY"),
+        api_secret=os.getenv("LIVEKIT_API_SECRET"),
+    )
+    try:
+        req = CreateRoomRequest(
+            name=room_name,
+            empty_timeout=600,# keep the room alive 10m after empty
+            max_participants=2,# interviewer + candidate
+        )
+        room = await lkapi.room.create_room(req)
+        print(f"\\nRoom created! Join this link in your browser to start the interview: {os.getenv('LIVEKIT_URL')}/join/{room.name}\\n")
+        session = AgentSession(
+            llm=google.beta.realtime.RealtimeModel(model="gemini-2.0-flash-exp", voice="Puck"),
+        )
+        await session.start(room=room, agent=InterviewAgent(jd))
+        await ctx.connect()
+        await session.generate_reply(
+            instructions="Greet the candidate and start the interview."
+        )
+    finally:
+        await lkapi.aclose()
+
+if __name__ == "__main__":
+    opts = agents.WorkerOptions(entrypoint_fnc=entrypoint)
+    agents.cli.run_app(opts)
+
+```
+
+## Resources
+
+<CardGroup cols="1">
+    <Card title="Cookbook Code" icon="github" href="https://github.com/maximhq/maxim-cookbooks/blob/main/python/observability-online-eval/livekit/livekit-openai.py">
+        Python Notebook for LiveKit & Maxim
+    </Card>
+</CardGroup>

@@ -626,7 +626,6 @@
                     {
                         "group": "Quick Start",
                         "pages": [
-                           
                             "bifrost/quickstart/go-package",
                             "bifrost/quickstart/http-transport"
                         ]
@@ -716,7 +715,8 @@
                             "cookbooks/integrations/gemini",
                             "cookbooks/integrations/react-agent",
                             "cookbooks/integrations/vercel",
-                             "cookbooks/integrations/groq"
+                            "cookbooks/integrations/groq",
+                            "cookbooks/integrations/livekit"
                         ]
                     },
                     {
