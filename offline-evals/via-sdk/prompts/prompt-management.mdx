@@ -1,6 +1,6 @@
 ---
-title: Prompt Management
-description: Learn how to retrieve and use tested prompts from the Maxim platform for your production workflows
+title: "Prompt Management"
+description: "Learn how to retrieve and use tested prompts from the Maxim platform for your production workflows"
 ---
 
 After testing and perfecting your prompts, you can query and use them in your production systems. This guide shows how to retrieve prompts from the Maxim platform and integrate them into your applications.
@@ -17,6 +17,7 @@ To query prompts, you need to:
 Initialize the Maxim SDK with prompt management enabled:
 
 <CodeGroup>
+
 ```python Python
 from maxim import Maxim
 from maxim.models import QueryBuilder
@@ -29,7 +30,8 @@ maxim = Maxim(
         "prompt_management": True,  # Enable prompt management
     }
 )
-````
+```
+
 
 ```typescript JS/TS
 import { Maxim, QueryBuilder } from '@maximai/maxim-js';
@@ -39,7 +41,7 @@ const maxim = new Maxim({
   apiKey: 'your-maxim-api-key',
   promptManagement: true, // Enable prompt management
 });
-````
+```
 
 </CodeGroup>
 
@@ -48,6 +50,7 @@ const maxim = new Maxim({
 Retrieve a specific prompt using deployment variables to match your environment:
 
 <CodeGroup>
+
 ```python Python
 # Query a prompt for production environment
 prompt = maxim.get_prompt(
@@ -69,8 +72,8 @@ if prompt:  # Use the prompt in your application
     print(f"Response: {response.choices[0].message.content}")
 else:
     print("No matching prompt found")
+```
 
-````
 
 ```typescript JS/TS
 // Query a prompt for production environment
@@ -98,7 +101,7 @@ if (prompt) {
 } else {
   console.log('No matching prompt found');
 }
-````
+```
 
 </CodeGroup>
 
@@ -107,6 +110,7 @@ if (prompt) {
 Retrieve all prompts that match specific deployment criteria:
 
 <CodeGroup>
+
 ```python Python
 from maxim import Maxim
 from maxim.models import QueryBuilder
@@ -139,8 +143,8 @@ if prompts:
     )
 else:
     print("No matching prompts found")
+```
 
-````
 
 ```typescript JS/TS
 // Get all prompts for a specific environment and feature
@@ -167,7 +171,7 @@ if (prompts && prompts.length > 0) {
     console.log('No matching prompt found');
   }
 }
-````
+```
 
 </CodeGroup>
 
@@ -176,6 +180,7 @@ if (prompts && prompts.length > 0) {
 Query prompts using tags for more specific filtering:
 
 <CodeGroup>
+
 ```python Python
 # Query prompts with specific tags
 prompt = maxim.get_prompt(
@@ -190,7 +195,8 @@ prompt = maxim.get_prompt(
 
 if prompt:
     response = prompt.run("Explain our premium features")
-````
+```
+
 
 ```typescript JS/TS
 // Query prompts with specific tags
@@ -207,7 +213,7 @@ const prompt = await maxim.getPrompt(
 if (prompt) {
     const response = await prompt.run("Explain our premium features");
 }
-````
+```
 
 </CodeGroup>
 
@@ -216,6 +222,7 @@ if (prompt) {
 Query prompts from specific folders to organize by team or feature:
 
 <CodeGroup>
+
 ```python Python
 # Query prompts from a specific folder
 prompts = maxim.get_prompts(
@@ -227,8 +234,8 @@ prompts = maxim.get_prompts(
 )
 
 print(f"Found {len(prompts)} marketing production prompts")
+```
 
-````
 
 ```typescript JS/TS
 // Query prompts from a specific folder
@@ -241,7 +248,75 @@ const prompts = await maxim.getPrompts(
 );
 
 console.log(`Found ${prompts.length} marketing prompts`);
-````
+```
+
+</CodeGroup>
+
+
+## Matching algorithm
+
+Before going into the details of how to use the SDK, let's understand how the matching algorithm works. Maxim SDK uses best matching entity algorithm.
+
+1. Let's assume that, you have asked for a prompt with deployment var `env` as `prod`, `customerId` as `"123"` and a tag, `tenantId` as `456` for `promptId` - `"abc"`.
+2. SDK will first try to find a prompt matching all conditions.
+3. **If we don't find any matching entity, we enforce only `deploymentVar` conditions (you can override this behaviour, as explained in the next section) and match as many tags as possible.**
+4. If we still don't find any prompt, we check for a prompt version marked as fallback.
+5. If we still don't find any prompt, we return `null`.
+
+## Overriding fallback algorithm
+
+1. You can override fallback algorithm by calling `.exactMatch()` on `QueryBuilder` object. That will enforce all conditions to be matched.
+
+<CodeGroup>
+
+```typescript JS/TS
+const prompt = await maxim.getPrompt(
+	"prompt-id",
+	new QueryBuilder()
+        .and()
+        .deploymentVar("Environment", "prod")
+        .tag("CustomerId", "123")
+        .exactMatch()
+        .build(),
+);
+```
+
+```python Python
+from maxim.models.queryBuilder import QueryBuilder
+
+prompt = maxim.getPrompt("prompt-id", QueryBuilder().and_()
+		.deploymentVar("Environment", "prod")
+		.tag("CustomerId","123")
+		.exactMatch()
+		.build())
+```
+
+</CodeGroup>
+
+2. You can override fallback algorithm at each variable level. The third optional parameter in `deploymentVar` & `tag` function is `enforce`. If you pass `true` to this parameter, it will enforce exact match for that variable.
+
+<CodeGroup>
+
+```typescript JS/TS
+const prompt = await maxim.getPrompt(
+	"prompt-id",
+	new QueryBuilder()
+	    .and()
+		.deploymentVar("Environment", "prod")
+		.tag("CustomerId", "123", true)
+		.build(),
+);
+```
+
+```python Python
+from maxim.models.queryBuilder import QueryBuilder
+
+prompt = maxim.getPrompt("prompt-id", QueryBuilder().and_()
+		.deploymentVar("Environment", "prod")
+		.tag("CustomerId", "123", true)
+		.exactMatch()
+		.build())
+```
 
 </CodeGroup>
 
