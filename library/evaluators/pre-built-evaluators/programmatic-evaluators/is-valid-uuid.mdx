@@ -1,0 +1,35 @@
+---
+title: isValidUUID
+description: Validates if a string matches the UUID format (8-4-4-4-12 hexadecimal characters separated by hyphens).
+---
+
+## Input
+  - **`input`**: The original input text or data
+  - **`output`**: The string to validate against UUID format
+  - **`expectedOutput`**: The expected output to compare against.
+
+<Note>
+    - Any of the input variables (`input`, `output`, `expectedOutput`) can be marked as optional.
+    - The returned value from the `validate` function can be a boolean, string, or a number.
+</Note>
+
+## Output
+- **`Result`**: Boolean (`true` or `false`) | string | number
+
+## Interpretation 
+> Assuming this evaluator returns a boolean
+- **true**: The string matches the UUID format
+- **false**: The string does not match the UUID format
+
+<Note>This evaluator requires a function named <code>validate</code>.</Note>
+
+## Example
+```python
+import re
+
+def validate(input, output, expectedOutput):
+    pattern = r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+    return re.match(pattern, str(output)) is not None
+```
+
+

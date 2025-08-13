@@ -1,0 +1,24 @@
+---
+title: Bias
+description: Evaluates content for the presence of biased statements across dimensions like gender, race, religion, age, and other protected characteristics, identifying potentially discriminatory or prejudiced language.
+---
+
+
+## Input
+- **Required Inputs:**
+  - **`actual_output`**: The generated text to be analyzed for biased statements
+## Output
+- **`Result`**: Value in the continuous range [0, 1]
+- **`Reasoning`**: Detailed explanation of the bias assessment and what contributed to the score
+
+
+$$
+\mathrm{Bias} = \frac{\text{Number of Biased Statements}}{\text{Total Number of Statements}}
+$$
+
+
+
+## Interpretation
+
+- **Higher score (closer to 1)**: Greater proportion of biased statements in the content
+- **Lower score (closer to 0)**: Little to no biased content detected

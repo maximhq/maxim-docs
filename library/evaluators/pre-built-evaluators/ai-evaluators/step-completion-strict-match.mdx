@@ -1,0 +1,18 @@
+---
+title: Step Completion Strict Match
+description: Evaluates whether an agent has completed all required steps in exactly the specified order, ensuring strict sequential compliance.
+---
+
+
+## Input
+- **Required Inputs:**
+  - **`session`**: Complete interaction log between user and agent showing all steps taken
+  - **`expected_steps`**: Ordered list of required steps to be verified in sequence
+## Output
+- **`Result`**: Binary score (0 or 1)
+- **`Reasoning`**: Detailed explanation of step completion
+
+## Interpretation
+
+- **1**: All steps completed in exact order
+- **0**: Missing steps or wrong order

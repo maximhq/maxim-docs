@@ -1,0 +1,44 @@
+---
+title: isValidDate
+description: Validates if a string matches supported date formats and is a valid calendar date.
+---
+
+## Input
+  - **`input`**: The original input text or data
+  - **`output`**: The date string to validate
+  - **`expectedOutput`**: The expected output to compare against.
+
+<Note>
+    - Any of the input variables (`input`, `output`, `expectedOutput`) can be marked as optional.
+    - The returned value from the `validate` function can be a boolean, string, or a number.
+</Note>
+
+## Output
+- **`Result`**: Boolean (`true` or `false`) | string | number
+
+## Interpretation 
+> Assuming this evaluator returns a boolean
+- **true**: The string is a valid date
+- **false**: The string is not a valid date
+
+<Note>This evaluator requires a function named <code>validate</code>.</Note>
+
+## Example
+```python
+from datetime import datetime
+
+def validate(input, output, expectedOutput):
+    date_str = str(output)
+    formats = [
+        '%Y-%m-%d', '%m/%d/%Y', '%d/%m/%Y', '%Y/%m/%d', '%Y-%d-%m'
+    ]
+    for fmt in formats:
+        try:
+            datetime.strptime(date_str, fmt)
+            return True
+        except ValueError:
+            continue
+    return False
+```
+
+

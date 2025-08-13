@@ -1,0 +1,36 @@
+---
+title: isBetweenRange
+description: Validates if a given output value is within the specified range (0-100, exclusive).
+---
+
+## Input
+  - **`input`**: The original input text or data
+  - **`output`**: The value to be validated (string or number)
+  - **`expectedOutput`**: The expected output to compare against.
+
+<Note>
+    - Any of the input variables (`input`, `output`, `expectedOutput`) can be marked as optional.
+    - The returned value from the `validate` function can be a boolean, string, or a number.
+</Note>
+
+## Output
+- **`Result`**: Boolean (`true` or `false`) | string | number
+
+## Interpretation 
+> Assuming this evaluator returns a boolean
+- **true**: The value is within (0, 100)
+- **false**: The value is outside the range or invalid
+
+<Note>This evaluator requires a function named <code>validate</code>.</Note>
+
+## Example
+```python
+def validate(input, output, expectedOutput):
+    try:
+        value = float(output)
+    except (TypeError, ValueError):
+        return False
+    return 0 < value < 100
+```
+
+

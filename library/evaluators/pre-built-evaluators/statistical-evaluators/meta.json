@@ -1,0 +1,22 @@
+{
+	"pages": [
+		"bleu",
+		"f1-score",
+		"precision",
+		"recall",
+		"rouge1",
+		"rouge2",
+		"rougel",
+		"rougelsum",
+		"sql-query-analysis",
+		"sqlite-validation",
+		"tool-call-accuracy",
+		"tree-similarity-editing-distance",
+		"semantic-similarity",
+		"chebyshev-embedding-distance",
+		"cosine-embedding-distance",
+		"euclidean-embedding-distance",
+		"hamming-embedding-distance",
+		"manhattan-embedding-distance"
+	]
+}

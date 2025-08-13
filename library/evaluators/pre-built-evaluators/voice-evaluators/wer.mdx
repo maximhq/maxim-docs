@@ -1,0 +1,18 @@
+---
+title: WER (Word Error Rate)
+description: Quantifies the accuracy of machine-generated transcriptions or translations by measuring the proportion of words that are incorrectly transcribed or translated compared to the reference text. 
+---
+
+<Note>WER is a Statistical Metric</Note>
+## Input
+- **Required Inputs:**
+  - **`actual_output`**: The Generated Transcripts given by the model
+  - **`expected_output`**: Reference transcript text
+
+## Output
+- **`Result`**: WER percentage (0–100, lower is better)
+- **`Reasoning`**: Brief breakdown of errors (S, D, I) and overall accuracy
+
+## Interpretation
+- **0%**: Perfect transcription with no errors
+- **Higher percentages**: More transcription errors, lower accuracy

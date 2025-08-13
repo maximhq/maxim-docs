@@ -1,0 +1,33 @@
+---
+title: Semantic Similarity
+description: Evaluates how close two texts are in meaning by comparing their vector embeddings, typically using cosine similarity. It captures meaning beyond exact word matches.
+---
+
+### Input
+- **`output`** (str): The generated text.
+- **`expectedOutput`** (str): The reference text.
+
+### Output
+- **`Result`** (float): A similarity score, typically between 0 and 1.
+
+## Interpretation
+- **`1`**: The texts are considered semantically identical.
+- **`0`**: The texts have completely different meanings.
+- Robust to paraphrasing and synonymous language.
+
+## Formula
+$$
+\mathrm{Similarity} = \frac{A \cdot B}{\|A\| \times \|B\|}
+$$
+Where `A` and `B` are the embedding vectors.
+
+<Note>This is a **similarity metric**. Higher scores (closer to 1) indicate greater semantic similarity.</Note>
+
+## How It Works
+Compute vector embeddings for the generated and reference texts, then measure their similarity (commonly cosine similarity). This captures shared meaning beyond exact word matches.
+
+## Use Cases
+- Evaluating chatbots and conversational AI
+- Assessing the quality of abstractive summaries
+- Measuring relevance in search and retrieval
+- Paraphrase detection

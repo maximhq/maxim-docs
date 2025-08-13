@@ -1,0 +1,25 @@
+---
+title: SQLite Validation
+description: Checks if a generated SQL query is syntactically valid and executable against a given SQLite schema by actually running the query in an in-memory database.
+---
+
+### Input
+- **`output`** (str): The generated SQL query.
+- **`db_schema`** (str): The `CREATE TABLE` statements for the database schema.
+
+### Output
+- **`Result`** (int): A binary score (0 or 1).
+- **`Reasoning`** (str): An explanation of the validation result, including any syntax or schema errors found.
+
+## Interpretation
+- **`1`**: The query is valid and successfully executed against the schema.
+- **`0`**: The query is invalid due to a syntax error, execution error, or incompatibility with the schema.
+
+
+<Note>This is a **validation metric**. It returns a binary score indicating whether the SQL can be successfully executed.</Note>
+
+## Use Cases
+
+- Quickly checking the validity of generated SQL in a text-to-SQL pipeline.
+- Filtering out invalid queries before they are sent to a production database.
+- Providing immediate feedback to an AI agent generating SQL.

@@ -1,0 +1,17 @@
+---
+title: Agent Trajectory
+description: Assesses whether an agent has completed all required steps to achieve a task, evaluating the logical progression and completeness of steps taken during a session.
+---
+
+
+## Input
+- **Required Inputs:**
+  - **`session`**: Complete interaction log between user and agent showing all steps taken
+## Output
+- **`Result`**: Binary Value (0 or 1)
+- **`Reasoning`**: Detailed explanation of the evaluation
+
+## Interpretation
+
+- **1**: All required steps have been completed
+- **0**: Missing steps to complete the task

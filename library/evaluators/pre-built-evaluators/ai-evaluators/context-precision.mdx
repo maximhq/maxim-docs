@@ -1,0 +1,23 @@
+---
+title: Context Precision
+description: Accesses if relevant nodes in the retrieved context are prioritized over irrelevant ones for a specific input.
+---
+
+> This evaluator uses weighted cumulative precision (WCP) which prioritizes the relevance of top-ranked context nodes and rewards correct ordering. This approach is critical because LLMs tend to focus more on earlier context nodes, and incorrect ranking can lead to hallucinations.
+
+## Input
+- **Required Inputs:**
+  - **`input`**: The original user query
+  - **`context`**:  List of context chunks retrieved for the response
+  - **`expected_output`**: The expected response that should be generated
+## Output
+- **`Result`**: Value in the continuous range [0, 1]
+- **`Reasoning`**: Detailed explanation of precision assessment
+
+## Interpretation
+
+- **Higher score (closer to 1)**: Better precision - relevant context nodes are prioritized at the top of the retrieved context, and most statements in the expected output are justified by these nodes
+- **Lower score (closer to 0)**: Poor precision - relevant context nodes are ranked lower than irrelevant ones, or few statements in the expected output are justified by the retrieved context
+
+<Note>Higher scores indicate better precision, meaning the retrieved context contains more relevant information and less irrelevant content for generating the expected output.</Note>
+
