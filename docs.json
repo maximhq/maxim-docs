@@ -261,6 +261,10 @@
                                         "pages": ["sdk/python/integrations/crewai/crewai"]
                                     },
                                     {
+                                        "group": "Fireworks",
+                                        "pages": ["sdk/python/integrations/fireworks/fireworks"]
+                                    },
+                                    {
                                         "group": "Gemini",
                                         "pages": ["sdk/python/integrations/gemini/gemini"]
                                     },
