@@ -298,6 +298,13 @@
                                         ]
                                     },
                                     {
+                                        "group": "LlamaIndex",
+                                        "pages": [
+                                            "sdk/python/integrations/llamaindex/llamaindex"
+                                         
+                                        ]
+                                    },
+                                    {
                                         "group": "Mistral",
                                         "pages": ["sdk/python/integrations/mistral/mistral"]
                                     },
