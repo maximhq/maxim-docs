@@ -70,7 +70,7 @@
             {
               "schema": {
                 "type": "string",
-                "description": "Cursor for pagination. Pass the last seen entry id to fetch the next page (ordered by id desc)."
+                "description": "Cursor for pagination"
               },
               "required": false,
               "name": "cursor",
