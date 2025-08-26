@@ -197,16 +197,15 @@
                                                     "library/evaluators/pre-built-evaluators/ai-evaluators/agent-trajectory",
                                                     "library/evaluators/pre-built-evaluators/ai-evaluators/bias",
                                                     "library/evaluators/pre-built-evaluators/ai-evaluators/clarity",
-                                                    
-                                                    
+
                                                     "library/evaluators/pre-built-evaluators/ai-evaluators/conciseness",
                                                     "library/evaluators/pre-built-evaluators/ai-evaluators/consistency",
                                                     "library/evaluators/pre-built-evaluators/ai-evaluators/context-precision",
                                                     "library/evaluators/pre-built-evaluators/ai-evaluators/context-recall",
                                                     "library/evaluators/pre-built-evaluators/ai-evaluators/context-relevance",
-                                                    
+
                                                     "library/evaluators/pre-built-evaluators/ai-evaluators/faithfulness",
-                                                    
+
                                                     "library/evaluators/pre-built-evaluators/ai-evaluators/output-relevance",
                                                     "library/evaluators/pre-built-evaluators/ai-evaluators/pii-detection",
                                                     "library/evaluators/pre-built-evaluators/ai-evaluators/sql-correctness",
@@ -388,10 +387,7 @@
                                     },
                                     {
                                         "group": "LlamaIndex",
-                                        "pages": [
-                                            "sdk/python/integrations/llamaindex/llamaindex"
-                                         
-                                        ]
+                                        "pages": ["sdk/python/integrations/llamaindex/llamaindex"]
                                     },
                                     {
                                         "group": "Mistral",
@@ -406,25 +402,7 @@
                             {
                                 "group": "Reference",
                                 "pages": [
-                                    {
-                                        "group": "Apis",
-                                        "pages": ["sdk/python/references/apis/maxim_apis"]
-                                    },
-                                    {
-                                        "group": "Cache",
-                                        "pages": [
-                                            "sdk/python/references/cache/cache",
-                                            "sdk/python/references/cache/inMemory"
-                                        ]
-                                    },
                                     "sdk/python/references/maxim",
-                                    "sdk/python/references/expiring_key_value_store",
-                                    "sdk/python/references/scribe",
-                                    "sdk/python/references/filter_objects",
-                                    {
-                                        "group": "Dataset",
-                                        "pages": ["sdk/python/references/dataset/dataset"]
-                                    },
                                     {
                                         "group": "Decorators",
                                         "pages": [
@@ -433,13 +411,6 @@
                                             "sdk/python/references/decorators/span",
                                             "sdk/python/references/decorators/tool_call",
                                             "sdk/python/references/decorators/trace"
-                                        ]
-                                    },
-                                    {
-                                        "group": "Evaluators",
-                                        "pages": [
-                                            "sdk/python/references/evaluators/base_evaluator",
-                                            "sdk/python/references/evaluators/utils"
                                         ]
                                     },
                                     {
@@ -511,12 +482,37 @@
                                         ]
                                     },
                                     {
+                                        "group": "Apis",
+                                        "pages": ["sdk/python/references/apis/maxim_apis"]
+                                    },
+                                    {
+                                        "group": "Dataset",
+                                        "pages": ["sdk/python/references/dataset/dataset"]
+                                    },
+                                    {
+                                        "group": "Cache",
+                                        "pages": [
+                                            "sdk/python/references/cache/cache",
+                                            "sdk/python/references/cache/inMemory"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Evaluators",
+                                        "pages": [
+                                            "sdk/python/references/evaluators/base_evaluator",
+                                            "sdk/python/references/evaluators/utils"
+                                        ]
+                                    },
+                                    {
                                         "group": "Test_Runs",
                                         "pages": [
                                             "sdk/python/references/test_runs/test_run_builder",
                                             "sdk/python/references/test_runs/utils"
                                         ]
                                     },
+                                    "sdk/python/references/expiring_key_value_store",
+                                    "sdk/python/references/scribe",
+                                    "sdk/python/references/filter_objects",
                                     {
                                         "group": "Tests",
                                         "pages": [
@@ -557,15 +553,6 @@
                             {
                                 "group": "Reference",
                                 "pages": [
-                                    "sdk/typescript/reference/overview",
-                                    "sdk/typescript/reference/modules",
-                                    "sdk/typescript/reference/langchain/overview",
-                                    {
-                                        "group": "LangChain",
-                                        "pages": [
-                                            "sdk/typescript/reference/langchain/classes/MaximLangchainTracer"
-                                        ]
-                                    },
                                     "sdk/typescript/reference/core/overview",
                                     {
                                         "group": "Classes",
@@ -616,6 +603,15 @@
                                             "sdk/typescript/reference/core/enumerations/Entity",
                                             "sdk/typescript/reference/core/enumerations/QueryRuleType",
                                             "sdk/typescript/reference/core/enumerations/VariableType"
+                                        ]
+                                    },
+
+                                    "sdk/typescript/reference/modules",
+                                    "sdk/typescript/reference/langchain/overview",
+                                    {
+                                        "group": "LangChain",
+                                        "pages": [
+                                            "sdk/typescript/reference/langchain/classes/MaximLangchainTracer"
                                         ]
                                     }
                                 ]
@@ -726,7 +722,6 @@
                     {
                         "group": "Quick Start",
                         "pages": [
-                           
                             "bifrost/quickstart/go-package",
                             "bifrost/quickstart/http-transport"
                         ]
@@ -816,7 +811,7 @@
                             "cookbooks/integrations/gemini",
                             "cookbooks/integrations/react-agent",
                             "cookbooks/integrations/vercel",
-                             "cookbooks/integrations/groq"
+                            "cookbooks/integrations/groq"
                         ]
                     },
                     {
