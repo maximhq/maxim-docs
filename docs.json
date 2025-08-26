@@ -311,6 +311,10 @@
                                     {
                                         "group": "LiveKit",
                                         "pages": ["sdk/python/integrations/livekit/livekit"]
+                                    },
+                                    {
+                                        "group": "Smolagents",
+                                        "pages": ["sdk/python/integrations/smolagents/smolagents"]
                                     }
                                 ]
                             },
