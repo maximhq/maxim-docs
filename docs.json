@@ -396,6 +396,10 @@
                                     {
                                         "group": "LiveKit",
                                         "pages": ["sdk/python/integrations/livekit/livekit"]
+                                    },
+                                    {
+                                        "group": "Pydantic AI",
+                                        "pages": ["sdk/python/integrations/pydantic-ai/pydantic_ai"]
                                     }
                                 ]
                             },
