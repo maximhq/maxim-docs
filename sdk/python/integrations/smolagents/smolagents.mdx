@@ -19,14 +19,14 @@ Maxim AI provides comprehensive agent monitoring, evaluation, and observability 
 Install the required packages via pip:
 
 ```python
-pip install maxim-py Smolagents python-dotenv
+pip install maxim-py smolagents python-dotenv
 ```
 
 Or add them to your `requirements.txt`:
 
 ```
 maxim-py
-Smolagents
+smolagents
 python-dotenv
 ```
 
@@ -49,8 +49,8 @@ OPENAI_API_KEY=your_openai_api_key_here
 
 ```python
 from maxim import Maxim
-from maxim.logger.Smolagents import instrument_Smolagents
-from Smolagents import OpenAIServerModel, CodeAgent
+from maxim.logger.smolagents import instrument_smolagents
+from smolagents import OpenAIServerModel, CodeAgent
 from dotenv import load_dotenv
 import os
 ```
@@ -62,7 +62,7 @@ import os
 load_dotenv()
 
 # Instrument Smolagents with just one line
-instrument_Smolagents(Maxim().logger())
+instrument_smolagents(Maxim().logger())
 ```
 
 ### 4. Create and run your Smolagents application
@@ -102,18 +102,18 @@ from sqlalchemy import (
     text,
 )
 from maxim import Maxim
-from maxim.logger.Smolagents import instrument_Smolagents
+from maxim.logger.smolagents import instrument_smolagents
 import os
-from Smolagents import OpenAIServerModel
-from Smolagents import CodeAgent
-from Smolagents import tool
+from smolagents import OpenAIServerModel
+from smolagents import CodeAgent
+from smolagents import tool
 from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
 
 # Initialize Maxim
-instrument_Smolagents(Maxim().logger())
+instrument_smolagents(Maxim().logger())
 
 # Set up SQL database
 engine = create_engine("sqlite:///:memory:")
@@ -244,8 +244,8 @@ finally:
 ### Common Issues
 
 - **No traces appearing**: Ensure your API key and repository ID are correct
-- **Import errors**: Make sure you've installed all required packages (`maxim-py`, `Smolagents`, `python-dotenv`)
-- **Tool not working**: Ensure `instrument_Smolagents()` is called **before** creating your agent
+- **Import errors**: Make sure you've installed all required packages (`maxim-py`, `smolagents`, `python-dotenv`)
+- **Tool not working**: Ensure `instrument_smolagents()` is called **before** creating your agent
 - **Environment variables**: Verify your `.env` file is in the correct location and contains all required keys
 
 ### Debug Mode
@@ -253,17 +253,17 @@ finally:
 Enable debug mode to surface any internal errors:
 
 ```python {1}
-instrument_Smolagents(Maxim().logger(), debug=True)
+instrument_smolagents(Maxim().logger(), debug=True)
 ```
 
 ## Resources
 
 <CardGroup cols={3}>
-  <Card title="Smolagents Docs" icon="book" href="https://huggingface.co/docs/Smolagents/en/index">
+  <Card title="Smolagents Docs" icon="book" href="https://huggingface.co/docs/smolagents/en/index">
     Official Smolagents documentation
   </Card>
   
-  <Card title="Github (Smolagents cookbook)" icon="github" href="https://github.com/maximhq/maxim-cookbooks/blob/main/python/observability-online-eval/Smolagents/example.py">
+  <Card title="Github (smolagents cookbook)" icon="github" href="https://github.com/maximhq/maxim-cookbooks/blob/main/python/observability-online-eval/smolagents/example.py">
     Official Maxim GitHub repository
   </Card>
 </CardGroup>
