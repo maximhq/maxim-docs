@@ -1,0 +1,36 @@
+---
+title: containsValidURL
+description: Validates if a string contains at least one valid URL with HTTP/HTTPS/FTP protocols.
+---
+
+## Input
+  - **`input`**: The original input text or data
+  - **`output`**: The string to check for URLs
+  - **`expectedOutput`**: The expected output to compare against.
+
+<Note>
+    - Any of the input variables (`input`, `output`, `expectedOutput`) can be marked as optional.
+    - The returned value from the `validate` function can be a boolean, string, or a number.
+</Note>
+
+## Output
+- **`Result`**: Boolean (`true` or `false`) | string | number
+
+## Interpretation 
+> Assuming this evaluator returns a boolean
+- **true**: One or more valid URLs were detected
+- **false**: No valid URLs were found
+
+<Note>This evaluator requires a function named <code>validate</code>.</Note>
+
+## Example
+```python
+import re
+
+def validate(input, output, expectedOutput):
+    # Case-insensitive; matches http, https, or ftp URLs anywhere in the string
+    pattern = r"(?i)\b(?:https?|ftp)://[^\s<>\"]+"
+    return re.search(pattern, str(output)) is not None
+```
+
+

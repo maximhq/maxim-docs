@@ -1,0 +1,28 @@
+---
+title: Precision
+description: Measures the accuracy of positive predictions by calculating the proportion of true positives among all predicted positives.
+---
+
+### Input
+- **`output`** (str): The generated text (set of predicted positive items)
+- **`expectedOutput`** (str): The reference text (set of ground-truth positive items)
+
+### Output
+- **`Result`** (float): A score between 0 and 1.
+
+## Interpretation
+- **Higher scores (closer to 1)**: A larger fraction of predicted positives are correct (fewer false positives)
+- **Lower scores (closer to 0)**: Many predicted positives are incorrect (more false positives)
+
+## Formula
+$$
+\mathrm{Precision} = \frac{\mathrm{TP}}{\mathrm{TP} + \mathrm{FP}}
+$$
+
+
+<Note>This is a **Similarity** Metric</Note>
+
+## Use Cases
+- Information retrieval and search relevance
+- Classification tasks where avoiding false alarms is critical
+- Evaluating the relevance of generated content

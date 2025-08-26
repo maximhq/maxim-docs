@@ -1,0 +1,21 @@
+---
+title: Output Relevance
+description: Evaluates whether each statement in the output relevantly addresses the input, breaking down the output into statements and assessing individual relevance.
+---
+
+
+## Input
+- **Required Inputs:**
+  - **`input`**: The user's query or prompt
+  - **`actual_output`**: The generated response to evaluate for relevance
+- **Optional Inputs**
+  - **`history`**: Previous conversation context 
+## Output
+- **`Result`**: Value in the continuous range [0, 1]
+- **`Reasoning`**: Detailed explanation of relevance assessment
+
+## Interpretation
+
+- **Higher scores (closer to 1)**: More statements are relevant to input
+- **Lower scores (closer to 0)**: More statements are irrelevant
+

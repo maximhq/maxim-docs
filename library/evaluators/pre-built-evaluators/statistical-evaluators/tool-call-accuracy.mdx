@@ -1,0 +1,26 @@
+---
+title: Tool Call Accuracy
+description: Computes function calling accuracy by comparing its actual tool calls against an set of expected sequence of tools and parameters, providing granular feedback.
+---
+
+### Input
+- **`output`** (list): The model-generated list of tool calls.
+- **`expectedOutput`** (list): The reference list of expected tool calls (JSON-formatted objects with tool name and arguments).
+
+### Output
+- **`Result`** (float): A score between 0 and 1.
+- **`Reasoning`** (str): Optional detailed feedback on the matching process.
+
+## Interpretation
+- **Higher scores (closer to 1)**: Most expected tool calls were made correctly with proper parameters and order
+- **Lower scores (closer to 0)**: Few expected tool calls were matched correctly
+
+## Formula
+$$
+\mathrm{Tool\ Call\ Accuracy} = \frac{\text{Number of correct tool calls}}{\text{Total expected tool calls}}
+$$
+
+## Use Cases
+- Evaluating agent compliance with required tool sequences
+- Assessing function-calling tasks that require specific arguments
+- Measuring multi-step tool-use workflows end-to-end

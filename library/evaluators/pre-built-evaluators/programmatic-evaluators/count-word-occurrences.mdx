@@ -1,0 +1,32 @@
+---
+title: countWordOccurrences
+description: Checks whether the word "test" appears at least once in the given string (case-insensitive).
+---
+
+## Input
+  - **`input`**: The original input text or data
+  - **`output`**: The input string to check for occurrences
+  - **`expectedOutput`**: The expected output to compare against.
+
+<Note>
+    - Any of the input variables (`input`, `output`, `expectedOutput`) can be marked as optional.
+    - The returned value from the `validate` function can be a boolean, string, or a number.
+</Note>
+
+## Output
+- **`Result`**: Boolean (`true` or `false`) | string | number
+
+## Interpretation 
+> Assuming this evaluator returns a boolean
+- **true**: The word appears at least once
+- **false**: The word does not appear
+
+<Note>This evaluator requires a function named <code>validate</code>.</Note>
+
+## Example
+```javascript
+validate("Test this string") // returns true
+validate("No matches here") // returns false
+```
+
+

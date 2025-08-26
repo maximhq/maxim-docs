@@ -1,0 +1,32 @@
+---
+title: Manhattan Embedding Distance
+description: Calculates the L1 distance between two text embeddings, representing the sum of absolute differences across all dimensions.
+---
+
+### Input
+- **`output`** (str): The generated text to be evaluated.
+- **`expectedOutput`** (str): The reference or ground truth text.
+
+### Output
+- **`Result`** (float): A distance score from 0 to infinity.
+
+## Interpretation
+- **`0`**: The embeddings are identical.
+- **Higher scores**: The texts are more semantically different.
+    > Generally less sensitive to outliers than Euclidean distance.
+
+## Formula
+$$
+\mathrm{Manhattan}(x, y) = \sum_i |x_i - y_i|
+$$
+Where `i` indexes the dimensions of the vectors.
+
+<Note>This is a **distance metric**. Lower scores indicate greater similarity.</Note>
+
+## How It Works
+The evaluator computes embeddings for both texts and then sums the absolute differences for each corresponding dimension.
+
+## Use Cases
+- Scenarios where movement is constrained to a grid (e.g., city blocks)
+- Feature engineering in machine learning, as it can be more robust to outliers
+- High-dimensional spaces where it can be more effective than Euclidean distance

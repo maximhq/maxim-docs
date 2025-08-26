@@ -1,0 +1,16 @@
+---
+title: Abrupt Disconnection
+description: Detects if there is unexpected call terminations or early termination at the end of a pre recorded audio recording 
+---
+
+## Input
+- **Required Inputs:**
+  - **`actual_output`**: URL of the audio recording to evaluate
+
+## Output
+- **`Result`**: Binary score (0 or 1)
+- **`Reasoning`**: Brief explanation of the detection
+
+## Interpretation
+- **1**: Abrupt disconnection detected
+- **0**: No abrupt disconnection detected

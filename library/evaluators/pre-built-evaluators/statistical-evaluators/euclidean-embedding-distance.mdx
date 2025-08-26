@@ -1,0 +1,32 @@
+---
+title: Euclidean Embedding Distance
+description: Calculates the straight-line L2 distance between two text embeddings, providing a natural measure of semantic difference in the vector space.
+---
+
+### Input
+- **`output`** (str): The generated text to be evaluated.
+- **`expectedOutput`** (str): The reference or ground truth text.
+
+### Output
+- **`Result`** (float): A distance score from 0 to infinity.
+
+## Interpretation
+- **`0`**: The embeddings are identical.
+- **Higher scores**: The texts are more semantically different.
+    > The score is sensitive to vector magnitude.
+
+## Formula
+$$
+\mathrm{Euclidean}(x, y) = \sqrt{\sum_i (x_i - y_i)^2}
+$$
+Where `x_i` and `y_i` are the components of the vectors at dimension `i`.
+
+<Note>This is a **distance metric**. Lower scores indicate greater similarity.</Note>
+
+## How It Works
+The evaluator computes embeddings for both the generated and reference texts, then calculates the straight-line distance between these two vector points in the embedding space.
+
+## Use Cases
+- Semantic distance measurement
+- Cluster analysis and nearest neighbor search
+- Quality threshold verification
