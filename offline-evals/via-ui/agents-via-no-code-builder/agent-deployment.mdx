@@ -27,9 +27,16 @@ description: Quick iterations on agents should not require code deployments ever
         Edit or define new variables by clicking "Edit deployment variables"
     </Step>
     <Step title="Define variable properties">
-        Define the name and type of any variable. For variables of type `select` provide possible options. e.g. Environment: Beta, Staging, Prod.
+        Define the name and type of any variable. 
+        - For variables of type `select` provide possible options. e.g. Environment: Beta, Staging, Prod.
 
         ![Add new deployment variable](/images/docs/evaluate/how-to/evaluate-prompts/deployments/add-new-deployment-variable.png)
+        
+        - For variables of type `multiselect`, configure when the deployment runs:
+          - all selected options are present in the deployment rule using the `=` operator, or
+          - any of the selected options are present in the deployment rule using the `includes` operator.
+
+        ![Multiselect deployment rule](/images/docs/evaluate/how-to/evaluate-prompts/deployments/multiselect-deployment-rule.png)
     </Step>
     <Step title="Deploy conditionally">
         Every time you have a new version to deploy, use the variable based rules to deploy conditionally.
@@ -127,5 +134,32 @@ Adding filters based on Tags
 		.deployment_var("Environment", "prod")
 		.tag("TenantId", "3000")
 		.build())
+  ```
+</CodeGroup>
+
+Use multiselect variables
+<CodeGroup>
+  ```typescript JS/TS
+  import { Maxim, QueryBuilder } from "@maximai/maxim-js;
+
+  const maxim = new Maxim({ apiKey: "", promptManagement: true});
+
+  const prompt = await maxim.getPromptChain(
+    "prompt-chain-id",
+    new QueryBuilder().and().deploymentVar("Tenant ID", ["Tenant1"]).build(),
+  );
+  ```
+
+  ```python Python
+  from maxim import Maxim, Config
+  from maxim.models import QueryBuilder
+
+  maxim = Maxim(Config(api_key="", prompt_management=True))
+
+  prompt = maxim.get_prompt_chain("prompt-chain-id",
+    QueryBuilder()
+      .and_()
+      .deployment_var("Tenant ID", ["Tenant1"])
+      .build())
   ```
 </CodeGroup>

@@ -187,7 +187,95 @@
                             {
                                 "group": "Evaluators",
                                 "pages": [
-                                    "library/evaluators/pre-built-evaluators",
+                                    {
+                                        "group": "Pre-built Evaluators",
+                                        "pages": [
+                                            "library/evaluators/pre-built-evaluators/overview",
+                                            {
+                                                "group": "AI Evaluators",
+                                                "pages": [
+                                                    "library/evaluators/pre-built-evaluators/ai-evaluators/agent-trajectory",
+                                                    "library/evaluators/pre-built-evaluators/ai-evaluators/bias",
+                                                    "library/evaluators/pre-built-evaluators/ai-evaluators/clarity",
+
+                                                    "library/evaluators/pre-built-evaluators/ai-evaluators/conciseness",
+                                                    "library/evaluators/pre-built-evaluators/ai-evaluators/consistency",
+                                                    "library/evaluators/pre-built-evaluators/ai-evaluators/context-precision",
+                                                    "library/evaluators/pre-built-evaluators/ai-evaluators/context-recall",
+                                                    "library/evaluators/pre-built-evaluators/ai-evaluators/context-relevance",
+
+                                                    "library/evaluators/pre-built-evaluators/ai-evaluators/faithfulness",
+
+                                                    "library/evaluators/pre-built-evaluators/ai-evaluators/output-relevance",
+                                                    "library/evaluators/pre-built-evaluators/ai-evaluators/pii-detection",
+                                                    "library/evaluators/pre-built-evaluators/ai-evaluators/sql-correctness",
+                                                    "library/evaluators/pre-built-evaluators/ai-evaluators/step-completion-strict-match",
+                                                    "library/evaluators/pre-built-evaluators/ai-evaluators/step-completion-unordered-match",
+                                                    "library/evaluators/pre-built-evaluators/ai-evaluators/step-utility",
+                                                    "library/evaluators/pre-built-evaluators/ai-evaluators/summarization",
+                                                    "library/evaluators/pre-built-evaluators/ai-evaluators/task-success",
+                                                    "library/evaluators/pre-built-evaluators/ai-evaluators/tool-selection",
+                                                    "library/evaluators/pre-built-evaluators/ai-evaluators/toxicity"
+                                                ]
+                                            },
+                                            {
+                                                "group": "Voice Evaluators",
+                                                "pages": [
+                                                    "library/evaluators/pre-built-evaluators/voice-evaluators/abrupt-disconnection",
+                                                    "library/evaluators/pre-built-evaluators/voice-evaluators/ai-interrupting-user",
+                                                    "library/evaluators/pre-built-evaluators/voice-evaluators/sentiment-analysis",
+                                                    "library/evaluators/pre-built-evaluators/voice-evaluators/signal-to-noise-ratio",
+                                                    "library/evaluators/pre-built-evaluators/voice-evaluators/user-interrupting-ai",
+                                                    "library/evaluators/pre-built-evaluators/voice-evaluators/user-satisfaction",
+                                                    "library/evaluators/pre-built-evaluators/voice-evaluators/wer"
+                                                ]
+                                            },
+                                            {
+                                                "group": "Statistical Evaluators",
+                                                "pages": [
+                                                    "library/evaluators/pre-built-evaluators/statistical-evaluators/bleu",
+                                                    "library/evaluators/pre-built-evaluators/statistical-evaluators/f1-score",
+                                                    "library/evaluators/pre-built-evaluators/statistical-evaluators/precision",
+                                                    "library/evaluators/pre-built-evaluators/statistical-evaluators/recall",
+                                                    "library/evaluators/pre-built-evaluators/statistical-evaluators/rouge1",
+                                                    "library/evaluators/pre-built-evaluators/statistical-evaluators/rouge2",
+                                                    "library/evaluators/pre-built-evaluators/statistical-evaluators/rougel",
+                                                    "library/evaluators/pre-built-evaluators/statistical-evaluators/rougelsum",
+                                                    "library/evaluators/pre-built-evaluators/statistical-evaluators/sql-query-analysis",
+                                                    "library/evaluators/pre-built-evaluators/statistical-evaluators/sqlite-validation",
+                                                    "library/evaluators/pre-built-evaluators/statistical-evaluators/tool-call-accuracy",
+                                                    "library/evaluators/pre-built-evaluators/statistical-evaluators/tree-similarity-editing-distance",
+                                                    "library/evaluators/pre-built-evaluators/statistical-evaluators/semantic-similarity",
+                                                    "library/evaluators/pre-built-evaluators/statistical-evaluators/chebyshev-embedding-distance",
+                                                    "library/evaluators/pre-built-evaluators/statistical-evaluators/cosine-embedding-distance",
+                                                    "library/evaluators/pre-built-evaluators/statistical-evaluators/euclidean-embedding-distance",
+                                                    "library/evaluators/pre-built-evaluators/statistical-evaluators/hamming-embedding-distance",
+                                                    "library/evaluators/pre-built-evaluators/statistical-evaluators/manhattan-embedding-distance"
+                                                ]
+                                            },
+                                            {
+                                                "group": "Programmatic Evaluators",
+                                                "pages": [
+                                                    "library/evaluators/pre-built-evaluators/programmatic-evaluators/contains-special-characters",
+                                                    "library/evaluators/pre-built-evaluators/programmatic-evaluators/contains-valid-email",
+                                                    "library/evaluators/pre-built-evaluators/programmatic-evaluators/contains-valid-phone-number",
+                                                    "library/evaluators/pre-built-evaluators/programmatic-evaluators/contains-valid-url",
+                                                    "library/evaluators/pre-built-evaluators/programmatic-evaluators/count-word-occurrences",
+                                                    "library/evaluators/pre-built-evaluators/programmatic-evaluators/is-between-range",
+                                                    "library/evaluators/pre-built-evaluators/programmatic-evaluators/is-valid-base64",
+                                                    "library/evaluators/pre-built-evaluators/programmatic-evaluators/is-valid-date",
+                                                    "library/evaluators/pre-built-evaluators/programmatic-evaluators/is-valid-email",
+                                                    "library/evaluators/pre-built-evaluators/programmatic-evaluators/is-valid-hex-color",
+                                                    "library/evaluators/pre-built-evaluators/programmatic-evaluators/is-valid-json",
+                                                    "library/evaluators/pre-built-evaluators/programmatic-evaluators/is-valid-md5",
+                                                    "library/evaluators/pre-built-evaluators/programmatic-evaluators/is-valid-phone-number",
+                                                    "library/evaluators/pre-built-evaluators/programmatic-evaluators/is-valid-sha256",
+                                                    "library/evaluators/pre-built-evaluators/programmatic-evaluators/is-valid-url",
+                                                    "library/evaluators/pre-built-evaluators/programmatic-evaluators/is-valid-uuid"
+                                                ]
+                                            }
+                                        ]
+                                    },
                                     "library/evaluators/custom-evaluators",
                                     "library/evaluators/third-party-evaluators"
                                 ]
@@ -261,6 +349,10 @@
                                         "pages": ["sdk/python/integrations/crewai/crewai"]
                                     },
                                     {
+                                        "group": "Fireworks",
+                                        "pages": ["sdk/python/integrations/fireworks/fireworks"]
+                                    },
+                                    {
                                         "group": "Gemini",
                                         "pages": ["sdk/python/integrations/gemini/gemini"]
                                     },
@@ -294,37 +386,27 @@
                                         ]
                                     },
                                     {
+                                        "group": "LlamaIndex",
+                                        "pages": ["sdk/python/integrations/llamaindex/llamaindex"]
+                                    },
+                                    {
                                         "group": "Mistral",
                                         "pages": ["sdk/python/integrations/mistral/mistral"]
                                     },
                                     {
                                         "group": "LiveKit",
                                         "pages": ["sdk/python/integrations/livekit/livekit"]
+                                    },
+                                    {
+                                        "group": "Pydantic AI",
+                                        "pages": ["sdk/python/integrations/pydantic-ai/pydantic_ai"]
                                     }
                                 ]
                             },
                             {
                                 "group": "Reference",
                                 "pages": [
-                                    {
-                                        "group": "Apis",
-                                        "pages": ["sdk/python/references/apis/maxim_apis"]
-                                    },
-                                    {
-                                        "group": "Cache",
-                                        "pages": [
-                                            "sdk/python/references/cache/cache",
-                                            "sdk/python/references/cache/inMemory"
-                                        ]
-                                    },
                                     "sdk/python/references/maxim",
-                                    "sdk/python/references/expiring_key_value_store",
-                                    "sdk/python/references/scribe",
-                                    "sdk/python/references/filter_objects",
-                                    {
-                                        "group": "Dataset",
-                                        "pages": ["sdk/python/references/dataset/dataset"]
-                                    },
                                     {
                                         "group": "Decorators",
                                         "pages": [
@@ -333,13 +415,6 @@
                                             "sdk/python/references/decorators/span",
                                             "sdk/python/references/decorators/tool_call",
                                             "sdk/python/references/decorators/trace"
-                                        ]
-                                    },
-                                    {
-                                        "group": "Evaluators",
-                                        "pages": [
-                                            "sdk/python/references/evaluators/base_evaluator",
-                                            "sdk/python/references/evaluators/utils"
                                         ]
                                     },
                                     {
@@ -411,12 +486,37 @@
                                         ]
                                     },
                                     {
+                                        "group": "Apis",
+                                        "pages": ["sdk/python/references/apis/maxim_apis"]
+                                    },
+                                    {
+                                        "group": "Dataset",
+                                        "pages": ["sdk/python/references/dataset/dataset"]
+                                    },
+                                    {
+                                        "group": "Cache",
+                                        "pages": [
+                                            "sdk/python/references/cache/cache",
+                                            "sdk/python/references/cache/inMemory"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Evaluators",
+                                        "pages": [
+                                            "sdk/python/references/evaluators/base_evaluator",
+                                            "sdk/python/references/evaluators/utils"
+                                        ]
+                                    },
+                                    {
                                         "group": "Test_Runs",
                                         "pages": [
                                             "sdk/python/references/test_runs/test_run_builder",
                                             "sdk/python/references/test_runs/utils"
                                         ]
                                     },
+                                    "sdk/python/references/expiring_key_value_store",
+                                    "sdk/python/references/scribe",
+                                    "sdk/python/references/filter_objects",
                                     {
                                         "group": "Tests",
                                         "pages": [
@@ -457,15 +557,6 @@
                             {
                                 "group": "Reference",
                                 "pages": [
-                                    "sdk/typescript/reference/overview",
-                                    "sdk/typescript/reference/modules",
-                                    "sdk/typescript/reference/langchain/overview",
-                                    {
-                                        "group": "LangChain",
-                                        "pages": [
-                                            "sdk/typescript/reference/langchain/classes/MaximLangchainTracer"
-                                        ]
-                                    },
                                     "sdk/typescript/reference/core/overview",
                                     {
                                         "group": "Classes",
@@ -516,6 +607,15 @@
                                             "sdk/typescript/reference/core/enumerations/Entity",
                                             "sdk/typescript/reference/core/enumerations/QueryRuleType",
                                             "sdk/typescript/reference/core/enumerations/VariableType"
+                                        ]
+                                    },
+
+                                    "sdk/typescript/reference/modules",
+                                    "sdk/typescript/reference/langchain/overview",
+                                    {
+                                        "group": "LangChain",
+                                        "pages": [
+                                            "sdk/typescript/reference/langchain/classes/MaximLangchainTracer"
                                         ]
                                     }
                                 ]
@@ -717,6 +817,7 @@
                             "cookbooks/integrations/vercel",
                             "cookbooks/integrations/groq",
                             "cookbooks/integrations/livekit"
+
                         ]
                     },
                     {

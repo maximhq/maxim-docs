@@ -1,0 +1,35 @@
+---
+title: isValidEmail
+description: Validates if the provided string is a valid email address.
+---
+
+## Input
+  - **`input`**: The original input text or data
+  - **`output`**: The string to validate as an email address
+  - **`expectedOutput`**: The expected output to compare against.
+
+<Note>
+    - Any of the input variables (`input`, `output`, `expectedOutput`) can be marked as optional.
+    - The returned value from the `validate` function can be a boolean, string, or a number.
+</Note>
+
+## Output
+- **`Result`**: Boolean (`true` or `false`) | string | number
+
+## Interpretation 
+> Assuming this evaluator returns a boolean
+- **true**: The string is a valid email address
+- **false**: The string is not a valid email address
+
+<Note>This evaluator requires a function named <code>validate</code>.</Note>
+
+## Example
+```python
+import re
+
+def validate(input, output, expectedOutput):
+    pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+    return re.match(pattern, str(output)) is not None
+```
+
+

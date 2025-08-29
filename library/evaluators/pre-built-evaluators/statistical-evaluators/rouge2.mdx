@@ -1,0 +1,35 @@
+---
+title: ROUGE-2
+description: Measures summary quality and local fluency by calculating the overlap of bigrams (word pairs) between the generated and reference texts. It is more stringent than ROUGE-1.
+---
+
+### Input
+- **`output`** (str): The generated text
+- **`expectedOutput`** (str): The reference text
+
+### Output
+- **`Result`** (float): A score between 0 and 1.
+
+## Interpretation
+- **Higher scores (closer to 1)**: Better bigram overlap (captures local word order and fluency)
+- **Lower scores (closer to 0)**: Poor bigram overlap
+
+## Formula
+$$
+\mathrm{ROUGE\text{-}2} = \frac{\text{Count of overlapping bigrams}}{\text{Total bigrams in reference}}
+$$
+
+#### Example Calculation:
+- Reference bigrams: [the cat, cat sat, sat on, on the, the mat]
+- Candidate bigrams: [the cat, cat sits, sits on, on the, the mat]
+- Overlapping bigrams: [the cat, on the, the mat] = 3
+- Total reference bigrams = 5
+$$
+\mathrm{ROUGE\text{-}2} = \frac{3}{5} = 0.6
+$$
+
+<Note>This is a **Similarity** Metric</Note>
+
+## Use Cases
+- Evaluating text summarization where sentence structure matters
+- Assessing machine translation quality
