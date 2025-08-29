@@ -317,7 +317,9 @@
                             "settings/maxim-api-keys",
                             "settings/custom-pricing",
                             "settings/vault",
-                            "settings/two-factor-authentication"
+                            "settings/two-factor-authentication",
+                            "settings/setup-sso-with-okta",
+                            "settings/setup-sso-with-google"
                         ]
                     }
                 ]
