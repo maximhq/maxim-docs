@@ -1,0 +1,83 @@
+---
+title: Set up Single Sign-On (SSO) with Google
+description: Step-by-step guide to configure Google Workspace SAML 2.0 Single Sign-On (SSO) for Maxim.
+---
+
+Enable enterprise-grade Single Sign-On with Google Workspace (SAML 2.0) to centralize authentication, improve security, and streamline access to Maxim.
+
+## Overview
+
+This guide walks you through configuring Google as the Identity Provider (IdP) for Maxim using SAML 2.0.
+
+You will:
+- Create a custom SAML app in Google Admin Console
+- Download IdP metadata
+- Configure service provider details (ACS URL, Entity ID)
+- Map user attributes
+- Enable user access
+- Upload metadata to Maxim and test SSO
+
+## Prerequisites
+
+- Google Workspace Super Admin access
+- Maxim AI admin access
+- SAML-based Single Sign-On (SSO) enabled for your plan. Check [plans](https://www.getmaxim.ai/pricing) for more details.
+
+## Step-by-step setup
+
+<Steps>
+<Step title="Create a custom SAML app in Google">
+- In Google Admin Console, go to Apps → Web and mobile apps
+- Click "Add app" → "Add custom SAML app"
+![Create custom SAML app](/images/docs/settings/sso/google/1_google_admin_apps.png)
+</Step>
+
+<Step title="Application details">
+Enter an app name (e.g., "Maxim AI"), optionally upload an icon and click "Continue"
+![Enter application details](/images/docs/settings/sso/google/2_add_custom_saml_app.png)
+</Step>
+
+<Step title="Download IdP metadata">
+On the Google IdP details screen:
+
+- Click "DOWNLOAD METADATA" to get the IdP metadata XML and click "Continue"
+![Download IdP metadata](/images/docs/settings/sso/google/3_download_metadata_xml.png)
+</Step>
+
+<Step title="Configure service provider details">
+- Single sign-on URL (ACS URL): `https://app.getmaxim.ai/api/oauth/saml`
+- Audience URI (Entity ID): `www.getmaxim.ai`
+![Configure service provider details](/images/docs/settings/sso/google/4_service_provider_details.png)
+</Step>
+
+<Step title="Attribute mapping">
+Under the Attributes section, add the following mappings:
+
+- email → Primary email
+- firstName → First name
+- lastName → Last name
+
+Then click "Finish" to save the configuration.
+![Attribute mapping](/images/docs/settings/sso/google/5_attribute_mapping.png)
+</Step>
+
+<Step title="Enable user access">
+From the app’s "User access" section:
+
+- Turn the app ON for everyone, or
+- Turn ON for selected Organizational Units (OUs) / Groups as needed
+</Step>
+
+<Step title="Complete the setup in Maxim">
+- Log in to Maxim AI, go to Settings → Single sign-on, and click "Add identity provider"
+- Enter your email address domain as the tenant identifier
+- Enter "Google" as the name for the identity provider
+- Paste the IdP metadata XML and click "Add provider"
+![Add identity provider](/images/docs/settings/sso/google/6_add_xml_in_maxim.png)
+</Step>
+</Steps>
+
+## Testing Single Sign-On (SSO)
+
+Once you have completed the setup, you can test SSO by logging out of Maxim AI and clicking on the Sign in with SSO button on the login page.
+You should be redirected to the Google login page. After logging in, you should be redirected back to Maxim AI.
