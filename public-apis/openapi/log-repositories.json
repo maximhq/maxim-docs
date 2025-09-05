@@ -1171,6 +1171,21 @@
                                                                                 },
                                                                                 "pass": {
                                                                                     "type": "boolean"
+                                                                                },
+                                                                                "reasoning": {
+                                                                                    "type": "string"
+                                                                                },
+                                                                                "variables": {
+                                                                                    "type": "object",
+                                                                                    "additionalProperties": {
+                                                                                        "type": "string"
+                                                                                    }
+                                                                                },
+                                                                                "optionalVariables": {
+                                                                                    "type": "object",
+                                                                                    "additionalProperties": {
+                                                                                        "type": "string"
+                                                                                    }
                                                                                 }
                                                                             },
                                                                             "required": [
@@ -1584,6 +1599,21 @@
                                                             },
                                                             "pass": {
                                                                 "type": "boolean"
+                                                            },
+                                                            "reasoning": {
+                                                                "type": "string"
+                                                            },
+                                                            "variables": {
+                                                                "type": "object",
+                                                                "additionalProperties": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "optionalVariables": {
+                                                                "type": "object",
+                                                                "additionalProperties": {
+                                                                    "type": "string"
+                                                                }
                                                             }
                                                         },
                                                         "required": [
