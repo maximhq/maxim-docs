@@ -9,7 +9,7 @@ This post outlines how the two compare across observability, evaluation, and ent
 
 | Category             | Maxim                                                              | LangSmith                                                  |
 | :------------------- | :----------------------------------------------------------------- | :--------------------------------------------------------- |
-| Core Focus           | End-to-end Agent Simulation, Evaluation, Observability             | Debugging and visualizing LangChain pipelines              |
+| Core Focus           | End-to-end Agent Simulation, Evaluation, Observability and AI Gateway             | Debugging and visualizing LangChain pipelines              |
 | Ideal For            | Teams building complex agents with tools, memory, and long context | LangChain users debugging traces and understanding outputs |
 | Deployment           | In-VPC only                                                        | SaaS (self-hosting via license for enterprise)             |
 | Production Readiness | ✅ (agent-level alerts, node evals, compliance)                     | 🚧 (great for dev/debug, limited prod controls)            |
@@ -24,10 +24,10 @@ Maxim is better suited for mature teams running real-time agents. LangSmith is h
 | :-------------------------------------------- | :-------------- | :-------- |
 | OpenTelemetry Support                         | ✅               | ✅         |
 | Proxy-Based Logging (e.g., LiteLLM)           | ✅               | ✅         |
-| First-party LLM Gateway                       | ✅ (open source) | ❌         |
+| First-party AI Gateway                       | ✅ (open source) | ❌         |
 | Node-level Evaluation                         | ✅               | ✅         |
-| Agentic Evaluation (multi-turn conversations) | ✅               | ✅         |
-| Real-time Alerts (Slack, PagerDuty)           | ✅               | ❌         |
+| Agentic Evaluation                             | ✅               | ✅         |
+| Real-time Alerts (Slack, PagerDuty)           | ✅ (Native Integration)              | ✅ (via webhooks)         |
 
 LangSmith is built around LangChain primitives - chains, tools, retrievers, and provides rich visual traces for debugging. However, it doesn’t offer real-time monitoring, alerts, or system-wide observability beyond LangChain. Maxim, on the other hand, is platform-agnostic and provides deep, granular traces across any agent framework, with built-in alerting hooks and monitoring pipelines.
 

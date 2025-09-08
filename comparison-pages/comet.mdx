@@ -9,7 +9,7 @@ So, which platform suits your needs? Here's a side-by-side breakdown of Maxim vs
 
 | Category      | Maxim                                            | Comet (Opik)                                        |
 | :------------ | :----------------------------------------------- | :-------------------------------------------------- |
-| Core Focus    | Agent Simulation, Evaluation, Compliance         | Prompt & model experiment tracking, evaluation logs |
+| Core Focus    | Agent Simulation, Evaluation & Observability, AI Gateway         | Prompt & model experiment tracking, evaluation logs |
 | Ideal For     | Teams building tool-using LLM agents & workflows | Teams tracking LLM outputs like ML experiments      |
 | Deployment    | In-VPC only                                      | Open source (Opik) or SaaS (Comet)                  |
 | Pricing Model | Usage-based \+ Seat-based                        | Usage-based (Pro plan with span caps)               |
@@ -26,10 +26,10 @@ So, which platform suits your needs? Here's a side-by-side breakdown of Maxim vs
 | :------------------------------------ | :-------------- | :----------- |
 | OpenTelemetry Compatibility           | ✅               | ✅            |
 | Proxy-Based Logging (LiteLLM etc.)    | ✅               | ✅            |
-| First-party LLM Gateway               | ✅ (open source) | ✅            |
-| Node-level Trace Evaluation           | ✅               | ❌            |
-| Agentic Evaluation (multi-turn flows) | ✅               | ❌            |
-| Real-time Alerts (Slack, PagerDuty)   | ✅               | ❌            |
+| First-party AI Gateway               | ✅ (open source) | ✅            |
+| Node-level Evaluation           | ✅               | ❌            |
+| Agentic Evaluation | ✅               | ❌            |
+| Real-time Alerts (Slack, PagerDuty)   | ✅               | ✅ (Slack & Pagerduty Native Integration is unavailable)            |
 
 Maxim offers node-by-node analysis and agent-wide evaluations. Comet supports prompt tracing and logging but lacks the depth of agentic simulation & evaluation across flows or conversational context.
 
@@ -56,7 +56,7 @@ Learn about running evaluations in Maxim - https://getmax.im/2szXgsJ
 | Visual Prompt Chain Editor       | ✅              | ❌                   |
 | Prompt Versioning & CMS          | ✅              | ✅                   |
 | Side-by-side Prompt Comparison   | ✅              | ✅                   |
-| Attach Context (API, Files, MCP) | ✅ (MCP coming) | ✅ (Opik MCP Server) |
+| Attach Context (API, Files, MCP) | ✅  | ✅  |
 | Sandboxed Tool Testing           | ✅              | ❌                   |
 
 Maxim offers a rich, no-code environment for testing tools and tool-using prompts, whereas Comet focuses more on capturing what prompts were run, rather than enabling deeper simulation of agent behavior.

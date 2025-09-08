@@ -7,9 +7,13 @@ description: "This article provides an in-depth comparison of Maxim AI and Arize
 
 Maxim AI and Arize Phoenix represent two distinct approaches to LLM observability and evaluation, serving different market segments with unique value propositions.
 
-Maxim AI provides a comprehensive, end-to-end AI development platform that integrates agent simulation, evaluation, observability, and development tools into a unified workflow. This integrated approach spans from prompt engineering and agent building to production monitoring, designed specifically for teams building sophisticated AI applications that require rigorous evaluation and enterprise-grade reliability.
+Arize Phoenix is a free, open-source, self-hosted LLM observability and evaluation tool, while Arize AX is Arize AI's enterprise SaaS platform offering the same core functionality plus advanced features like custom dashboards, AI Copilot, dedicated support, HIPAA compliance, and Machine Vision/ML support for larger-scale deployments
 
-Arize Phoenix is an open-source LLM observability platform that focuses on providing essential monitoring capabilities for machine learning and LLM applications without vendor lock-in. Phoenix is built entirely on OpenTelemetry standards, making it highly compatible with existing observability infrastructure while offering unlimited usage through its open-source model.
+Maxim AI provides a comprehensive, end-to-end AI development platform that integrates agent simulation, evaluation, observability, and development tools into a unified workflow. This integrated approach spans from prompt engineering and agent building to production monitoring, designed specifically for teams building sophisticated AI applications that require rigorous evaluation and enterprise-grade reliability. 
+
+> Some of the features marked as unavailable for Phoenix are available in their Arize AX solution. Check this [Link](https://www.getmaxim.ai/compare/maxim-vs-arize) for Maxim AI vs Arize AI comparison.
+
+Arize Phoenix focuses on providing essential monitoring capabilities for machine learning and LLM applications without vendor lock-in. Phoenix is built entirely on OpenTelemetry standards, making it highly compatible with existing observability infrastructure while offering unlimited usage through its open-source model.
 
 Maxim AI's approach is built on three core principles that differentiate it in the market:
 
@@ -26,7 +30,7 @@ The foundation of any LLM platform lies in its observability capabilities. Here'
 | **Tracing** | ✅ Yes | ✅ Yes |
 | **OpenTelemetry Support** | ✅ Yes | ✅ Yes |
 | **First-party LLM Gateway** | ✅ Yes (Open Source) | ❌ No |
-| **Real-Time Alerts** | ✅ Yes (Slack/PagerDuty) | ❌ No |
+| **Real-Time Alerts** | ✅ Yes (Slack/PagerDuty) | ✅ |
 | **Node-level Evaluation** | ✅ Yes | ❌ No |
 | **Agentic Evaluation** | ✅ Yes | ❌ No |
 | **Proxy-Based Logging** | ✅ Yes | ✅ Yes |
@@ -102,8 +106,8 @@ The pricing models reflect fundamentally different approaches:
 | Metric | Maxim | Arize Phoenix |
 | --- | --- | --- |
 | Free Tier | ✅ Up to 10k requests (Logs & Traces) | Self Hosted OSS (unlimited users) |
-| Usage-based Pricing | ✅ In Professional Plan — $1/10k logs, up to 100k log & trace requests, 10 datasets, and 1,000 entries per dataset | ✅ Phoenix Cloud - Upto 100K Logs, 10 GB Storage, Additional Storage available at $50/month |
-| Seat-based Pricing | ✅ $29/seat/month (Professional) & $49/seat/month (Business) | No Seat Based Pricing, the hosted instance caps logs at 100 K and storage at 10 GB |
+| Usage-based Pricing | ✅ In Professional Plan — $1/10k logs, up to 100k log & trace requests, 10 datasets, and 1,000 entries per dataset | ✅ Phoenix Cloud - Upto 100K Logs, 10GB Storage, Additional Storage available at $50/month |
+| Seat-based Pricing | ✅ $29/seat/month (Professional) & $49/seat/month (Business) | No Seat Based Pricing, the hosted instance caps logs at 100K and storage at 10GB |
 | Summary | Predictable SaaS pricing | Infrastructure + maintenance costs are borne by the user |
 
 > Maxim offers predictable, fully-managed SaaS pricing starting at $29/seat/month, ideal for teams that prefer no infrastructure overhead. While Arize Phoenix is free and open source, it requires teams to manage hosting, scaling, and maintenance, which can incur hidden operational costs, making Maxim the better choice for speed, simplicity, and enterprise readiness.
