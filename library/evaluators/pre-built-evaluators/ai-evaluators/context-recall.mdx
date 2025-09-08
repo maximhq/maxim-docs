@@ -1,0 +1,19 @@
+---
+title: Context Recall
+description: Assesses how closely the retrieved context matches the expected output by identifying key statements in the expected output and evaluating whether each is represented in the retrieved context.
+---
+
+## Input
+- **Required Inputs:**
+  - **`expected_output`**: The expected response that should be generated
+  - **`context`**: List of context chunks retrieved for the response
+## Output
+- **`Result`**: Value in the continuous range [0, 1]
+- **`Reasoning`**: Detailed explanation of recall assessment
+
+## Interpretation
+
+- **Higher score (closer to 1)**: Better recall - most or all key statements in the expected output are represented in the retrieved context
+- **Lower score (closer to 0)**: Poor recall - few or no statements in the expected output are represented in the retrieved context
+
+<Note>A higher context recall score reflects a retriever's ability to capture and return the full set of relevant information from the knowledge base, indicating a more comprehensive retrieval process.</Note>

@@ -1,0 +1,32 @@
+---
+title: F1 Score
+description: Calculates the harmonic mean of precision and recall, providing a single, balanced score that is useful for imbalanced datasets.
+---
+
+### Input
+- **`output`** (str): The generated text (set of items)
+- **`expectedOutput`** (str): The reference text (set of items)
+
+### Output
+- **`Result`** (float): A score between 0 and 1.
+
+## Interpretation
+- **Higher scores (closer to 1)**: Strong balance of precision and recall
+- **Lower scores (closer to 0)**: Either precision or recall (or both) are weak
+
+## Formula
+$$
+\mathrm{F1} = \frac{2 \cdot \mathrm{Precision} \cdot \mathrm{Recall}}{\mathrm{Precision} + \mathrm{Recall}}
+$$
+Where:
+$$
+\mathrm{Precision} = \frac{\mathrm{TP}}{\mathrm{TP} + \mathrm{FP}},\quad\mathrm{Recall} = \frac{\mathrm{TP}}{\mathrm{TP} + \mathrm{FN}}
+$$
+
+
+<Note>This is a **Similarity** Metric</Note>
+
+## Use Cases
+- Evaluating classifiers with class imbalance
+- Information extraction and NER
+- Scenarios where both precision and recall matter

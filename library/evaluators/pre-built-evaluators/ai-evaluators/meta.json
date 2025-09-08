@@ -1,0 +1,23 @@
+{
+	"pages": [
+		"agent-trajectory",
+		"bias",
+		"clarity",
+		"conciseness",
+		"consistency",
+		"context-precision",
+		"context-recall",
+		"context-relevance",
+		"faithfulness",
+		"output-relevance",
+		"pii-detection",
+		"sql-correctness",
+		"step-completion-strict-match",
+		"step-completion-unordered-match",
+		"step-utility",
+		"summarization",
+		"task-success",
+		"tool-selection",
+		"toxicity"
+	]
+}

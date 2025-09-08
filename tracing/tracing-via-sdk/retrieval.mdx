@@ -1,5 +1,5 @@
 ---
-title: Tracing Retrieval
+title: Retrieval
 description: Retrieval-Augmented Generation (RAG) is a technique that enhances large language models by retrieving relevant information from external sources before generating responses.
 ---
 
@@ -24,12 +24,10 @@ This approach combines the power of pre-trained models with up-to-date, domain-s
     ```
 
     ```python Python
-    from maxim.logger import RetrievalConfig
-
-	retrieval = trace.retrieval(RetrievalConfig(
-		id="retrieval-id",
-		name="National Geographic survey report 2025.pdf",
-	))
+	retrieval = trace.retrieval({
+		"id":"retrieval-id",
+		"name":"National Geographic survey report 2025.pdf",
+	})
 	retrieval.input("best places 2025")
 	retrieval.output([
 		"Tokyo, Japan",

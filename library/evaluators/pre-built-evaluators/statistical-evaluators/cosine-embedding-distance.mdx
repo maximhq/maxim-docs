@@ -1,0 +1,33 @@
+---
+title: Cosine Embedding Distance
+description: Measures the cosine of the angle between two embedding vectors to evaluate semantic similarity based on orientation, not magnitude.
+---
+
+### Input
+- **`output`** (str): The generated text to be evaluated.
+- **`expectedOutput`** (str): The reference or ground truth text.
+
+### Output
+- **`Result`** (float): A distance score between 0 and 1.
+
+## Interpretation
+- **`0`**: The vectors have the same orientation (perfectly similar).
+- **`1`**: The vectors are orthogonal (no similarity).
+
+<Note>A lower distance corresponds to greater semantic similarity, with smaller values indicating that the two outputs are closer in meaning </Note>
+
+## Formula
+$$
+\mathrm{Cosine\ Distance} = 1 - \frac{A \cdot B}{\|A\| \times \|B\|}
+$$
+Where `A · B` is the dot product of the vectors and `||A||` is the vector's magnitude.
+
+<Note>This is a **distance metric** <code>distance = 1 - cosine_similarity</code>. Lower scores (closer to 0) indicate higher similarity</Note>
+
+## How It Works
+The evaluator computes embeddings for both texts and then calculates the angle between them. This provides a measure of similarity that is not affected by the length (magnitude) of the vectors.
+
+## Use Cases
+- Document similarity and text classification
+- Information retrieval and search engines
+- Paraphrase detection

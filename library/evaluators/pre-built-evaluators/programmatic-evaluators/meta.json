@@ -1,0 +1,22 @@
+{
+  "pages": [
+    "contains-special-characters",
+    "contains-valid-email",
+    "contains-valid-phone-number",
+    "contains-valid-url",
+    "count-word-occurrences",
+    "is-between-range",
+    "is-valid-base64",
+    "is-valid-date",
+    "is-valid-email",
+    "is-valid-hex-color",
+    "is-valid-json",
+    "is-valid-md5",
+    "is-valid-phone-number",
+    "is-valid-sha256",
+    "is-valid-url",
+    "is-valid-uuid"
+  ]
+}
+
+

@@ -1,0 +1,49 @@
+---
+title: "Providers"
+description: "Multi-provider support with unified API across all AI providers. Switch between providers seamlessly or configure automatic fallbacks."
+---
+
+## Supported Providers
+
+| Provider              | Models                                 | Features                            | Enterprise |
+| --------------------- | -------------------------------------- | ----------------------------------- | ---------- |
+| **OpenAI**         | GPT-4o, GPT-4 Turbo, GPT-4, GPT-3.5    | Function calling, streaming, vision | ✅         |
+| **Anthropic**      | Claude 3.5 Sonnet, Claude 3 Opus/Haiku | Tool use, vision, 200K context      | ✅         |
+| **Azure OpenAI**   | Enterprise GPT deployment              | Private networks, compliance        | ✅         |
+| **Amazon Bedrock** | Claude, Titan, Cohere, Meta            | Multi-model platform, VPC           | ✅         |
+| **Google Vertex**  | Gemini Pro, PaLM, Codey                | Enterprise AI platform              | ✅         |
+| **Cohere**         | Command, Embed, Rerank                 | Enterprise NLP, multilingual        | ✅         |
+| **Mistral**        | Mistral Large, Medium, Small           | European AI, cost-effective         | ✅         |
+| **Ollama**         | Llama, Mistral, CodeLlama              | Local deployment, privacy           | ✅         |
+| **Groq**           | Mixtral, Llama, Gemma                  | Enterprise AI platform              | ✅         |
+| **SGLang**         | Qwen                 | Enterprise AI platform              | ✅         |
+
+---
+
+
+## Provider Features Matrix
+
+| Feature              | OpenAI | Anthropic | Azure | Bedrock | Vertex | Cohere | Mistral | Ollama | Groq   | SGLang |  
+| -------------------- | ------ | --------- | ----- | ------- | ------ | ------ | ------- | ------ | ------ | ------ |
+| **Chat Completion**  | ✅     | ✅        | ✅    | ✅      | ✅     | ✅     | ✅      | ✅     | ✅     | ✅     |
+| **Function Calling** | ✅     | ✅        | ✅    | ✅      | ✅     | ❌     | ✅      | ✅     | ✅     | ✅     |
+| **Streaming**        | ✅     | ✅        | ✅    | ✅      | ✅     | ✅     | ✅      | ✅     | ✅     | ✅     |
+| **Vision**           | ✅     | ✅        |  ✅    | ✅      | ✅     | ❌     | ✅      | ✅     | ❌     | ✅     |
+| **JSON Mode**        | ✅     | ✅        | ✅    | ✅      | ✅     | ❌     | ✅      | ✅     | ✅     | ✅     |
+| **Custom Base URL**  | ✅     | ✅        | ✅    | ❌      | ❌     | ✅     | ✅      | ✅     | ✅     | ✅     |
+| **Proxy Support**    | ✅     | ✅        | ✅    | ❌      | ❌     | ✅     | ✅      | ✅     | ✅     | ✅      |
+
+---
+
+## Next Steps
+
+| **Task**                           | **Documentation**                         |
+| ---------------------------------- | ----------------------------------------- |
+| **Configure multiple API keys** | [Key Management](key-management.md)       |
+| **Set up networking & proxies** | [Networking](networking.md)               |
+| **Optimize performance**         | [Memory Management](memory-management.md) |
+| **Handle errors gracefully**     | [Error Handling](errors.md)               |
+| **Go Package deep dive**        | [Go Package Usage](go-package/)           |
+| **HTTP Transport setup**        | [HTTP Transport Usage](http-transport/)   |
+
+> **Tip:** All responses from Bifrost follow OpenAI's format regardless of the underlying provider, ensuring consistent integration across your application.

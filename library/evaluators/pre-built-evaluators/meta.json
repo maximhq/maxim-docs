@@ -1,0 +1,9 @@
+{
+	"pages": [
+		"overview",
+		"ai-evaluators",
+		"voice-evaluators",
+		"statistical-evaluators",
+		"programmatic-evaluators"
+	]
+}

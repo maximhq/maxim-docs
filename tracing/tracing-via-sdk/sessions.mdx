@@ -20,11 +20,10 @@ Sessions are particularly useful for tracking multi-turn conversations or comple
     ```
 
     ```python Python
-    from maxim.logger import SessionConfig
-
-    session = logger.session(
-        SessionConfig(id="session-id", name="session-name")
-    )
+    session = logger.session({
+        "id":"session-id", 
+        "name":"session-name"
+    })
     ```
 
     ```go Go
@@ -54,11 +53,7 @@ After creating a `session` object, you can add multiple traces across the lifecy
     ```
 
     ```python Python
-    from maxim.logger import TraceConfig
-
-    trace = session.trace(
-        TraceConfig(id="trace-id", name="trace-name")
-    )
+    trace = session.trace({"id":"trace-id", "name":"trace-name"})
     ```
 
     ```go Go
@@ -87,10 +82,8 @@ After creating a `session` object, you can add multiple traces across the lifecy
     ```
 
     ```python Python
-    from maxim.logger import TraceConfig
-
     trace = logger.trace(
-        TraceConfig(id="trace-id", name="trace-name", session_id="session-id")
+        {"id":"trace-id", "name":"trace-name", "session_id":"session-id"}
     )
     ```
 

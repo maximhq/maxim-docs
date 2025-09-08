@@ -1,0 +1,35 @@
+---
+title: containsSpecialCharacters
+description: Validates if a string contains special characters such as !@#$%^&*(),.?":{}|<>.
+---
+
+## Input
+  - **`input`**: The original input text or data
+  - **`output`**: The string to be validated
+  - **`expectedOutput`**: The expected output to compare against.
+
+<Note>
+    - Any of the input variables (`input`, `output`, `expectedOutput`) can be marked as optional.
+    - The returned value from the `validate` function can be a boolean, string, or a number.
+</Note>
+
+## Output
+- **`Result`**: Boolean (`true` or `false`) | string | number
+
+## Interpretation 
+> Assuming this evaluator returns a boolean
+- **true**: At least one special character was found
+- **false**: No special characters were found
+
+<Note>This evaluator requires a function named <code>validate</code>.</Note>
+
+## Example
+```python
+import re
+
+def validate(input, output, expectedOutput):
+    pattern = r'[!#$%^&*(),.?":{}|<>]'
+    return bool(re.search(pattern, str(output)))
+```
+
+

@@ -1,0 +1,29 @@
+---
+title: Recall
+description: Measures the completeness of positive predictions by calculating the proportion of true positives among all actual positives.
+---
+
+### Input
+- **`output`** (str): The generated text (set of items)
+- **`expectedOutput`** (str): The reference text (set of items)
+
+### Output
+- **`Result`** (float): A score between 0 and 1.
+
+## Interpretation
+- **Higher scores (closer to 1)**: A larger fraction of actual positives are recovered (fewer false negatives)
+- **Lower scores (closer to 0)**: Many actual positives were missed (more false negatives)
+
+## Formula
+$$
+\mathrm{Recall} = \frac{\mathrm{TP}}{\mathrm{TP} + \mathrm{FN}}
+$$
+
+
+
+<Note>This is a **Similarity** Metric</Note>
+
+## Use Cases
+- Medical diagnosis and anomaly detection
+- Fraud detection
+- Any task where missing positives is costly

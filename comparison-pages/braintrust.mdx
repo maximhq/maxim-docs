@@ -9,9 +9,8 @@ This comparison outlines key differences across observability, evaluation, promp
 
 | Category      | Maxim                                                           | Braintrust                                                      |
 | :------------ | :-------------------------------------------------------------- | :-------------------------------------------------------------- |
-| Focus         | End-to-end agent evaluation, observability, compliance          | Lightweight eval and prompt testing for RAG & prompt-first apps |
+| Focus         | Agent Simulation, Evaluation & Observability, AI Gateway          | Evaluation and Prompt Testing for RAG & prompt-first apps |
 | Best For      | Teams building production-ready agents, with humans in the loop | Devs needing fast iteration on prompts, with LLM-as-a-judge     |
-| Deployment    | In-VPC only                                                     | Open Source                                                     |
 | Compliance    | SOC2, HIPAA, GDPR, ISO27001                                     | SOC2                                                            |
 | Pricing Model | Usage \+ Seat-based                                             | Usage-based (\$249/mo for 5GB)                                  |
 
@@ -36,10 +35,10 @@ At Maxim, we have developed the end-to-end evaluation stack for AI development, 
 | Proxy-Based Logging (e.g., LiteLLM) | ✅               | ❌              |
 | First-party LLM Gateway             | ✅ (open-source) | ✅              |
 | Node-level Evaluation               | ✅               | ❌              |
-| Agentic Evaluation (multi-turn)     | ✅               | ⛔️ (they only can evaluate output) |
-| Real-Time Alerts (Slack, PagerDuty) | ✅               | ❌              |
+| Agentic Evaluation   |   ✅                              | ✅               |
+| Real-Time Alerts (Slack, PagerDuty) | ✅ (Native Integration)            | ✅ (via webhooks)|
 
-**Key distinction**: Maxim supports fine-grained, per-node decision tracing and alerting, critical for debugging complex agent workflows. Braintrust provides high-level tracing but currently lacks node visibility and alerting.
+**Key distinction**: Maxim supports fine-grained, per-node decision tracing and alerting, critical for debugging complex agent workflows. Braintrust provides high-level tracing but currently lacks node visibility a native integration for alerts on Slack / Pagerduty.
 
 ## Evaluation & Testing
 
@@ -81,7 +80,7 @@ Prompt tooling in Maxim supports agent-style chains and branching. Braintrust is
 | Fine-Grained RBAC              | ✅               | ✅           |
 | SAML / SSO                     | ✅               | ✅           |
 | 2FA                            | ✅ All plans     | ✅           |
-| Self-Hosting                   | ✅ (In-VPC only) | ✅           |
+| Self-Hosting                   | ✅ [Self Hosting Overview](https://www.getmaxim.ai/docs/self-hosting/overview)              | ✅           |
 
 Maxim is designed for security-sensitive teams. Braintrust is better suited for those who prefer running tools internally with full control over deployment.
 
@@ -89,11 +88,11 @@ Maxim is designed for security-sensitive teams. Braintrust is better suited for 
 
 | Metric | Maxim | Braintrust |
 | --- | --- | --- |
-| Free Tier | ✅ Up to 10 k requests (logs & traces) | ✅ Up to 1 M trace spans |
-| Usage-based Pricing | ✅ Professional – **$1 / 10 k logs**, up to 100 k logs & traces, 10 datasets, 1 000 entries each | ✅ Pro – **$249/mo** (5 GB processed, $3/GB thereafter; 50 k scores, $1.50/1 k thereafter; 1-month retention; 5-user cap) |
-| Seat-based Pricing | ✅ $29 / seat / month (Professional) & $49 / seat / month (Business) | ❌ No seat-based pricing (5-user hard cap) |
+| Free Tier | ✅ Up to 10k requests (logs & traces) | ✅ Up to 1M trace spans |
+| Usage-based Pricing | ✅ Professional – **$1/10 k logs**, up to 100 k logs & traces, 10 datasets, 1000 entries each | ✅ Pro – **$249/mo** (5GB processed, $3/GB thereafter; 50k scores, $1.50/1k thereafter; 1-month retention; Unlimited users) |
+| Seat-based Pricing | ✅ $29 / seat / month (Professional) & $49 / seat / month (Business) | ❌ No seat-based pricing |
 
-Maxim offers a seat-based pricing model where usage (up to 100k logs & traces) is bundled into the $29/seat/month Professional Plan - ideal for teams needing predictable costs and granular access control. Braintrust’s flat **$249/month Pro Plan** includes limited users and quickly escalates costs with its per-GB and per-metric overages, making Maxim the more predictable and cost-efficient choice for high-volume, multi-user environments.
+> Maxim offers a seat-based pricing model where usage (up to 100k logs & traces) is bundled into the $29/seat/month Professional Plan - ideal for teams needing predictable costs and granular access control. Braintrust’s flat **$249/month Pro Plan** includes unlimited users but quickly escalates costs with its per-GB and per-metric overages, making Maxim the more predictable and cost-efficient choice for high-volume, multi-user environments.
 
 [Explore Maxim Pricing](https://getmax.im/C9u6TpN)
 

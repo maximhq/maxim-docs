@@ -9,7 +9,7 @@ This post outlines how the two compare across observability, evaluation, and ent
 
 | Category             | Maxim                                                              | LangSmith                                                  |
 | :------------------- | :----------------------------------------------------------------- | :--------------------------------------------------------- |
-| Core Focus           | End-to-end Agent Simulation, Evaluation, Observability             | Debugging and visualizing LangChain pipelines              |
+| Core Focus           | End-to-end Agent Simulation, Evaluation, Observability and AI Gateway             | Debugging and visualizing LangChain pipelines              |
 | Ideal For            | Teams building complex agents with tools, memory, and long context | LangChain users debugging traces and understanding outputs |
 | Deployment           | In-VPC only                                                        | SaaS (self-hosting via license for enterprise)             |
 | Production Readiness | ✅ (agent-level alerts, node evals, compliance)                     | 🚧 (great for dev/debug, limited prod controls)            |
@@ -24,12 +24,12 @@ Maxim is better suited for mature teams running real-time agents. LangSmith is h
 | :-------------------------------------------- | :-------------- | :-------- |
 | OpenTelemetry Support                         | ✅               | ✅         |
 | Proxy-Based Logging (e.g., LiteLLM)           | ✅               | ✅         |
-| First-party LLM Gateway                       | ✅ (open source) | ❌         |
+| First-party AI Gateway                       | ✅ (open source) | ❌         |
 | Node-level Evaluation                         | ✅               | ✅         |
-| Agentic Evaluation (multi-turn conversations) | ✅               | ✅         |
-| Real-time Alerts (Slack, PagerDuty)           | ✅               | ❌         |
+| Agentic Evaluation                             | ✅               | ✅         |
+| Real-time Alerts (Slack, PagerDuty)           | ✅ (Native Integration)              | ✅ (via webhooks)         |
 
-LangSmith is built around LangChain primitives - chains, tools, retrievers, and provides rich visual traces for debugging. However, it doesn’t offer real-time monitoring, alerts, or system-wide observability beyond LangChain. Maxim, on the other hand, is platform-agnostic and provides deep, granular traces across any agent framework, with built-in alerting hooks and monitoring pipelines.
+LangSmith is built around LangChain primitives—chains, tools, retrievers—and provides rich visual traces for debugging. It lacks native real-time monitoring/alerts and system-wide observability beyond LangChain, though basic alerting is possible via webhooks.
 
 ## Evaluation Capabilities
 
@@ -85,13 +85,13 @@ Learn about Maxim Prompt Comparison Feature - https://getmax.im/XkIcNtt
 | Usage-based Pricing | ✅ Professional – **$1 / 10 k logs**, up to 100 k logs & traces, 10 datasets, 1 000 entries each | ✅ Plus – 10 k base traces/mo, $0.50 / 1 k base traces, $4.50 / 1 k extended traces |
 | Seat-based Pricing | ✅ $29 / seat / month (Professional) & $49 / seat / month (Business) | ✅ Plus – $39 / seat / month |
 
-**Maxim** offers a generous free tier (10 k logs/traces), ideal for early-stage teams. You can start on the Free Plan and graduate to Professional or Business tiers as needs grow.
+> **Maxim** offers a generous free tier (10 k logs/traces), ideal for early-stage teams. You can start on the Free Plan and graduate to Professional or Business tiers as needs grow.
 
-Maxim’s seat-based plans are more affordable for teams needing dataset evaluations and structured logging at volume.
+> Maxim’s seat-based plans are more affordable for teams needing dataset evaluations and structured logging at volume.
 
-**LangSmith** may be preferred by teams deeply integrated into LangChain. 
+> **LangSmith** may be preferred by teams deeply integrated into LangChain. 
 
-In summary, Maxim is better for scalable, affordable evaluation + logging workflows. 
+> In summary, Maxim is better for scalable, affordable evaluation + logging workflows. 
 
 [Explore Maxim pricing](https://getmax.im/C9u6TpN)
 

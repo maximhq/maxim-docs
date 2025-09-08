@@ -1,0 +1,20 @@
+---
+title: Faithfulness
+description: Evaluates whether claims in the output factually align with the contents of the provided context and input by checking for contradictions, ultimately ensuring factual consistency.
+---
+
+## Input
+- **Required Inputs:**
+  - **`input`**: The user's query or prompt
+  - **`output`**: The model-generated answer to be evaluated
+  - **`context`**: The source material that the output should be faithful to
+- **Optional Inputs**
+  - **`history`**: Previous conversation context
+## Output
+- **`Result`**: Value in the continuous range [0, 1]
+- **`Reasoning`**: Detailed explanation of faithfulness assessment
+
+## Interpretation
+
+- **Higher scores (closer to 1)**: Better faithfulness - most or all claims in the output are consistent with the provided context, input, and history
+- **Lower scores (closer to 0)**: Poor faithfulness - many claims in the output contradict or are not supported by the provided context, input, and history

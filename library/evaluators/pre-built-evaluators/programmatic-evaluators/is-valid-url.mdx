@@ -1,0 +1,43 @@
+---
+title: isValidURL
+description: Validates if the given string is a valid URL.
+---
+
+## Input
+  - **`input`**: The original input text or data
+  - **`output`**: The URL string to validate
+  - **`expectedOutput`**: The expected output to compare against.
+
+<Note>
+    - Any of the input variables (`input`, `output`, `expectedOutput`) can be marked as optional.
+    - The returned value from the `validate` function can be a boolean, string, or a number.
+</Note>
+
+## Output
+- **`Result`**: Boolean (`true` or `false`) | string | number
+
+## Interpretation 
+> Assuming this evaluator returns a boolean
+- **true**: The string is a valid URL
+- **false**: The string is not a valid URL
+
+<Note>This evaluator requires a function named <code>validate</code>.</Note>
+
+## Example
+```python
+from urllib.parse import urlparse
+
+def validate(input, actual_output, expected_output):
+    """
+    Returns True if actual_output is a syntactically valid URL with an allowed scheme and non-empty netloc.
+    expected_output is unused for this evaluator but kept for interface consistency.
+    """
+    try:
+        url = str(actual_output).strip()
+        parsed = urlparse(url)
+        return parsed.scheme in ("http", "https", "ftp") and bool(parsed.netloc)
+    except Exception:
+        return False
+```
+
+

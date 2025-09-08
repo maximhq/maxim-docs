@@ -63,7 +63,7 @@ workspaceId = os.environ.get("MAXIM_WORKSPACE_ID", None)
 
 ## 3. Initialize Maxim Logger
 
-```python
+```python {2}
 maxim_client = Maxim()
 logger = maxim_client.logger()
 ```
@@ -174,7 +174,7 @@ app = workflow.compile()
 
 ## 9. Start tracing entire LangGraph agent using 2 simple annotations.
 
-```python
+```python {1, 6, 16}
 @span(name="another-method-span")
 def another_method(query: str) -> str:
     return query

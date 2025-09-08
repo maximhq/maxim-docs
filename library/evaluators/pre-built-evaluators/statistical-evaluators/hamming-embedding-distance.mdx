@@ -1,0 +1,33 @@
+---
+title: Hamming Embedding Distance
+description: Counts the number of positions at which two embedding vectors differ, making it suitable for comparing binary or categorical data.
+---
+
+### Input
+- **`output`** (str): The generated text to be evaluated.
+- **`expectedOutput`** (str): The reference or ground truth text.
+
+### Output
+- **`Result`** (int): An integer distance score, from 0 to the dimension of the vectors.
+
+## Interpretation
+- **`0`**: The vectors are identical.
+- **Higher scores**: The vectors have more differing positions.
+    > The result is a discrete integer, not a continuous value.
+
+## Formula
+$$
+\mathrm{Hamming}(x, y) = \sum_i \mathbb{1}[x_i \ne y_i]
+$$
+The sum counts the number of positions `i` where the elements differ.
+
+<Note>This is a **distance metric**. Lower scores indicate greater similarity. The score is an integer representing the count of differing dimensions.</Note>
+
+## How It Works
+The evaluator computes embeddings for both texts, compares them dimension by dimension, and counts the number of differing positions. For non-binary vectors, this can involve binarization (e.g., thresholding).
+
+## Use Cases
+- Comparing binary hashes or fingerprints of data
+- Error detection in telecommunications
+- Genetics (comparing DNA sequences)
+- Evaluating binary or categorical embeddings

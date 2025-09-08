@@ -1,0 +1,30 @@
+---
+title: Step Utility
+description: Evaluates the usefulness and contribution of each step in an agent's session towards achieving the overall task goal.
+---
+
+import { Info } from "nextra/components";
+
+<Info>
+The Step Utility evaluator uses three attributes to define the score:
+- **Relevance**: The relevance of the step to the overall task.
+- **Effectiveness**: The effectiveness and contribution of the step to advance the overall objective.
+- **Alignment**: The alignment of the step to match the context of the task.
+</Info>
+
+## Input
+- **Required Inputs:**
+  - **`session`**: Complete interaction log showing all steps
+## Output
+- **`Result`**: Value in the continuous range [0, 1]
+- **`Reasoning`**: Detailed explanation of utility assessment
+
+$$
+\mathrm{StepUtility} = \frac{\text{Number of Useful Steps}}{\text{Total Number of Steps}}
+$$
+
+
+## Interpretation
+
+- **Higher scores (closer to 1)**: More steps in the session contribute effectively to achieving the task goal
+- **Lower scores (closer to 0)**: Fewer steps contribute to task achievement, with many steps being unhelpful

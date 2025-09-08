@@ -1,0 +1,29 @@
+---
+title: Summarization
+description: Evaluates the quality of text summarization across multiple dimensions including content coverage, alignment with source, and information accuracy.
+---
+
+
+## Input
+- **Required Inputs:**
+  - **`input`**: Original text
+  - **`actual_output`**: The generated summary text to be evaluated
+## Output
+- **`Result`**: Value in the continuous range [0, 1]
+- **`Reasoning`**: Detailed explanation of assessment
+
+The Summarization evaluator score is calculated using the following equation:
+
+$$
+\mathrm{Summarization} = \min(\text{Alignment Score}, \text{Coverage Score})
+$$
+
+To break it down:
+
+- **Alignment Score**: Determines whether the summary contains hallucinated or contradictory information compared to the original text.
+- **Coverage Score**: Determines whether the summary includes the necessary information from the original text.
+
+## Interpretation
+
+- **Higher scores**: Indicate better summarization quality
+- **Lower scores**: Indicate missing information or inaccuracies

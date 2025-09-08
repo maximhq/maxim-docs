@@ -1,0 +1,18 @@
+---
+title: Step Completion Unordered Match
+description: Evaluates whether an agent has completed all required steps, considering flexible execution order.
+---
+
+
+## Input
+- **Required Inputs:**
+  - **`session`**: Complete interaction log between user and agent showing all steps taken
+  - **`expected_steps`**: List of required steps (order flexible)
+## Output
+- **`Result`**: Binary score (0 or 1)
+- **`Reasoning`**: Detailed explanation of step completion
+
+## Interpretation
+
+- **1**: All steps completed (order flexible)
+- **0**: Missing steps or dependency violations

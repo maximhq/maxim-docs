@@ -24,14 +24,12 @@ Create spans with trace object
     ```
 
     ```python Python
-    from maxim.logger import SpanConfig
-
     trace = logger.trace({"id": "trace-id"})
 
-    span = trace.span(SpanConfig(
-        id="span-id",
-        name="customer-support--classify-question"
-    ))
+    span = trace.span({
+        "id":"span-id",
+        "name":"customer-support--classify-question"
+    })
     ```
 
     ```go Go
@@ -73,12 +71,10 @@ Replace 'trace.span' with 'span.span' when creating spans within an existing spa
     ```
 
     ```python Python
-    from maxim.logger import SpanConfig
-
-    span = logger.trace_add_span("trace-id", SpanConfig(
-        id="span-id",
-        name="customer-support--classify-question"
-    ))
+    span = logger.trace_add_span("trace-id", {
+        "id":"span-id",
+        "name":"customer-support--classify-question"
+    })
     ```
 
     ```go Go
