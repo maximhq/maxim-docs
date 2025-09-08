@@ -1,0 +1,29 @@
+---
+title: SQL Query Analysis
+description: Evaluates a generated SQL query's correctness by comparing its structure, semantics, and execution plan against a reference query. It goes beyond simple string matching.
+---
+
+### Input
+- **`output`** (str): The generated SQL query.
+- **`expectedOutput`** (str): The reference (gold standard) SQL query.
+
+### Output
+- **`Result`** (float): A score between 0 and 1.
+
+## Interpretation
+- **`1`**: The generated query is semantically equivalent to the reference query.
+- **`0`**: The generated query is completely different or invalid.
+- The score reflects a holistic assessment of query correctness.
+
+## How It Works
+The evaluator performs a multi-faceted analysis of the SQL queries, considering:
+- **Syntax**: Is the generated query valid SQL?
+- **Structure**: Does it use the same tables, columns, and clauses?
+- **Semantics**: Is it likely to produce the same result as the reference query? This may involve comparing execution plans.
+
+<Note>This is a **similarity metric** designed specifically for evaluating generated SQL.</Note>
+
+## Use Cases
+
+- Evaluating natural-language-to-SQL models.
+- Assessing AI agents that generate SQL for data retrieval.

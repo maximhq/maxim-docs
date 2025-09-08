@@ -1,0 +1,88 @@
+---
+title: Set up Single Sign-On (SSO) with Okta
+description: Step-by-step guide to configure Okta SAML 2.0 Single Sign-On (SSO) for Maxim AI.
+---
+
+Enable enterprise-grade Single Sign-On with Okta to centralize authentication, improve security, and streamline access to Maxim AI.
+
+## Overview
+
+This guide walks you through configuring Okta as the Identity Provider (IdP) for Maxim AI using SAML 2.0.
+
+You will:
+- Create a SAML 2.0 app in Okta
+- Configure SAML settings and attributes
+- Assign users and groups
+- Upload Okta metadata to Maxim AI and test SSO
+
+## Prerequisites
+
+- Okta administrator access
+- Maxim AI admin access
+- SAML-based Single Sign-On (SSO) enabled for your plan. Check [plans](https://www.getmaxim.ai/pricing) for more details.
+
+## Step-by-step setup
+
+<Steps>
+<Step title="Create a SAML 2.0 application in Okta">
+In Okta Admin Console, go to Applications → Applications and click "Create App Integration"
+![Create app integration](/images/docs/settings/sso/okta/1_create_application.png)
+</Step>
+
+<Step title="Configure sign-in method">
+Select "SAML 2.0" and click "Next"
+![Select SAML 2.0](/images/docs/settings/sso/okta/2_sign_in_method.png)
+</Step>
+
+<Step title="Application details">
+Enter an app name (e.g., "Maxim AI") and optionally upload an icon
+![Enter app name](/images/docs/settings/sso/okta/3_general_settings.png)
+</Step>
+
+<Step title="Configure service provider details">
+In the SAML settings:
+
+- Single sign-on URL (ACS URL): `https://app.getmaxim.ai/api/oauth/saml`
+- Audience URI (Entity ID): `www.getmaxim.ai`
+- Name ID format: EmailAddress
+- Application username: Email
+
+Attribute Statements (recommended):
+- email → user.email
+- firstName → user.firstName
+- lastName → user.lastName
+
+![SAML settings](/images/docs/settings/sso/okta/4_configure_saml.png)
+</Step>
+
+<Step title="Support settings">
+In Okta, leave the default support contact settings unless your org requires custom values, then click "Next".
+![Okta Support settings](/images/docs/settings/sso/okta/5_okta_support.png)
+</Step>
+
+<Step title="Copy IdP metadata URL">
+Copy the IdP metadata URL from the Sign On tab of your Okta app
+![Copy IdP metadata URL](/images/docs/settings/sso/okta/6_metadata_url.png)
+</Step>
+
+<Step title="Upload IdP metadata to Maxim">
+- Log in to Maxim AI, go to Settings → Single sign-on, and click "Add identity provider"
+- Enter your email address domain as the tenant identifier
+- Enter "Okta" as the name for the identity provider
+- Paste the IdP metadata URL and click "Add provider"
+![Add identity provider](/images/docs/settings/sso/okta/7_add_identity_provider.png)
+</Step>
+
+<Step title="Assign users and groups">
+1. In the Okta app, open the Assignments tab
+2. Assign People and/or Groups who should access Maxim AI
+3. Confirm users have valid email addresses matching their Maxim AI accounts
+</Step>
+</Steps>
+
+
+## Testing Single Sign-On (SSO)
+
+Once you have completed the setup, you can test SSO by logging out of Maxim AI and clicking on the Sign in with SSO button on the login page.
+You should be redirected to the Okta login page. After logging in, you should be redirected back to Maxim AI.
+

@@ -1,0 +1,35 @@
+---
+title: isValidSHA256
+description: Validates if a string matches the SHA-256 hash pattern (64 hexadecimal characters).
+---
+
+## Input
+  - **`input`**: The original input text or data
+  - **`output`**: The string to validate
+  - **`expectedOutput`**: The expected output to compare against.
+
+<Note>
+    - Any of the input variables (`input`, `output`, `expectedOutput`) can be marked as optional.
+    - The returned value from the `validate` function can be a boolean, string, or a number.
+</Note>
+
+## Output
+- **`Result`**: (`true` or `false` , string or a number)
+
+## Interpretation 
+> _assuming response format is boolean_
+- **true**: The string matches the SHA-256 pattern
+- **false**: The string does not match the SHA-256 pattern
+
+<Note>This evaluator requires a function named <code>validate</code>.</Note>
+
+## Example
+```python
+import re
+
+def validate(input, output, expectedOutput):
+    pattern = r'^[a-fA-F0-9]{64}$'
+    return re.match(pattern, str(output)) is not None
+```
+
+

@@ -1,0 +1,22 @@
+---
+title: Context Relevance
+description: Assesses how relevant the information in the retrieved context is to the given input and history (if present)
+---
+
+
+## Input
+- **Required Inputs:**
+  - **`input`**: The user's query or prompt
+  - **`context`**: Array of context documents to evaluate for relevance
+- **Optional Inputs**
+  - **`history`**: Previous conversation context 
+## Output
+- **`Result`**: Value in the continuous range [0, 1]
+- **`Reasoning`**: Explanation of relevance assessment
+
+## Interpretation
+
+- **Higher score (closer to 1)**: Better relevance - most or all statements in the retrieved context are relevant to the input query
+- **Lower score (closer to 0)**: Poor relevance - few or no statements in the retrieved context are relevant to the input query
+
+<Note>Higher scores indicate better relevance, meaning the retrieved context contains more information that is directly related to answering the input query.</Note>

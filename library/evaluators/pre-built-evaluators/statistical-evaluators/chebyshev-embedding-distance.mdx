@@ -1,0 +1,33 @@
+---
+title: Chebyshev Embedding Distance
+description: Calculates the L∞ distance between two text embeddings, defined as the greatest difference along any single dimension.
+---
+
+### Input
+- **`output`** (str): The generated text to be evaluated.
+- **`expectedOutput`** (str): The reference or ground truth text.
+
+### Output
+- **`Result`** (float): A distance score from 0 to infinity.
+
+## Interpretation
+- **`0`**: The embeddings are identical.
+- **Lower scores**: The texts are more semantically similar.
+- **Higher scores**: The texts are more semantically different.
+    > The score is determined entirely by the one dimension where the embeddings differ the most.
+
+## Formula
+$$
+\mathrm{Chebyshev}(x, y) = \max_i |x_i - y_i|
+$$
+Where `i` indexes the dimensions of the vectors.
+
+<Note>This is a **distance metric**. Lower scores indicate greater similarity. It is particularly sensitive to the single largest deviation.</Note>
+
+## How It Works
+The evaluator computes embeddings for both texts and then finds the maximum absolute difference across all corresponding dimensions of the vectors.
+
+## Use Cases
+- Identifying outliers in semantic similarity
+- Scenarios where the maximum deviation is more important than the average deviation
+- Logistics and chessboard-related distance calculations

@@ -1,0 +1,25 @@
+---
+title: Tool Selection
+description: Evaluates whether an agent selected and used appropriate tools for each step in a task, including parameter configuration.
+---
+
+
+## Input
+- **Required Inputs:**
+  - **`session`**: Complete interaction log showing tool usage
+## Output
+- **`Result`**: Value in the continuous range [0, 1]
+- **`Reasoning`**: Detailed explanation of tool selection assessment
+
+$$
+\mathrm{ToolSelection} = \frac{\text{Sum of Individual Tool Scores}}{\text{Total Number of Tool Calls}}
+$$
+
+<Note>
+Where each tool call is scored as:- **1**: Tool was correctly selected and **0**: Tool selection was incorrectly selected
+</Note>
+
+## Interpretation
+
+- **Higher score (closer to 1)**: More tool calls were correctly selected and used
+- **Lower score (closer to 0)**: More tool calls were incorrectly selected or used

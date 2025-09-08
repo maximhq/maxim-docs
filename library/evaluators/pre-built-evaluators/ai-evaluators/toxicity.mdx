@@ -1,0 +1,21 @@
+---
+title: Toxicity
+description: Assesses content for harmful or toxic language, ensuring text does not contain offensive, abusive, or harmful language to individuals or groups.
+---
+
+
+## Input
+- **Required Inputs:**
+  - **`actual_output`**: The text content to be checked for harmful or inappropriate content 
+## Output
+- **`Result`**: Value in the continuous range [0, 1]
+- **`Reasoning`**: Explanation of toxicity assessment
+
+$$
+\mathrm{Toxicity} = \frac{\text{Number of Toxic Statements}}{\text{Total Number of Statements}}
+$$
+
+## Interpretation
+
+- **Higher score (closer to 1)**: Greater proportion of toxic or harmful content detected
+- **Lower score (closer to 0)**: Little to no toxic content detected

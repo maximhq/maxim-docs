@@ -1,0 +1,19 @@
+---
+title: SQL Correctness
+description: Evaluates whether a generated SQL query correctly translates a natural language query into valid SQL based on a provided database schema.
+---
+
+
+## Input
+- **Required Inputs:**
+  - **`input`**: Natural language query intent
+  - **`output`**: Generated SQL query
+  - **`db_schema`**: Database schema definition
+## Output
+- **`Result`**: Binary score (0 or 1)
+- **`Reasoning`**: Brief explanation of assessment
+
+## Interpretation
+
+- **1**: Query is correct (valid syntax and captures intent)
+- **0**: Query is incorrect (invalid syntax or wrong intent)

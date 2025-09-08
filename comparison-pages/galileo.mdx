@@ -9,7 +9,7 @@ This post outlines how the two compare across observability, evaluation, and ent
 
 | Category             | Maxim                                                              | Galileo                                                      |
 | :------------------- | :----------------------------------------------------------------- | :----------------------------------------------------------- |
-| Core Focus           | End-to-end Agent Simulation, Evaluation, Observability             | AI evaluation automation, automated tests, and production protection |
+| Core Focus           | End-to-end Agent Simulation, Evaluation, Observability and AI Gateway            | AI evaluation automation, automated tests, and production protection |
 | Ideal For            | Teams building complex agents with tools, memory, and long context | Teams focused on AI accuracy measurement and automated tests |
 | Deployment           | In-VPC only                                                        | SaaS (self-hosting available in Enterprise plan)             |
 | Production Readiness | ✅ Real-time alerts, node level evals, compliances                   | ✅ Production protection (Hallucinations, PII, and prompt injections), automated evaluations            |
@@ -24,10 +24,10 @@ Maxim's Agent Simulation & its own Open Source AI Gateway makes it a better choi
 | :-------------------------------------------- | :-------------- | :------ |
 | OpenTelemetry Support                         | ✅               | ✅       |
 | Proxy-Based Logging (e.g., LiteLLM)           | ✅               | ✅       |
-| First-party LLM Gateway                       | ✅ (open source) | ❌       |
+| First-party AI Gateway                       | ✅ (open source) | ❌       |
 | Node-level Evaluation                         | ✅               | ❌       |
-| Agentic Evaluation (multi-turn conversations) | ✅               | ✅       |
-| Real-time Alerts (Slack, PagerDuty)           | ✅               | ✅ (Slack) |
+| Agentic Evaluation | ✅               | ✅       |
+| Real-time Alerts (Slack, PagerDuty)           | ✅               | ✅ |
 | Real-time Production Protection (PII, and prompt injections)               | ✅               | ✅ |
 
 Maxim provides node-level evaluation capabilities and offer a first-party Open Source LLM gateway (Bifrost - is a high-performance AI gateway that connects you to 10+ providers (OpenAI, Anthropic, Bedrock, and more) through a single API. It allows automatic failover, load balancing, and zero-downtime deployments). 
@@ -88,7 +88,7 @@ Maxim offers comprehensive compliance coverage including HIPAA and GDPR, while G
 | Metric | Maxim | Galileo |
 | --- | --- | --- |
 | Free Tier | ✅ Up to 10k requests (logs & traces) | ✅ (5k traces/month, 3 users / org, 1 org) |
-| Usage-based Pricing | ✅ Professional – **$1 / 10 k logs**, up to 100 k logs & traces, 10 datasets, 1000 entries each | ❌ No Usage based pricing |
+| Usage-based Pricing | ✅ Professional – **$1/10k logs**, up to 100k logs & traces, 10 datasets, 1000 entries each | ❌ No Usage based pricing |
 | Seat-based Pricing | ✅ $29 / seat / month (Professional) & $49 / seat / month (Business) | ❌ No seat-based pricing |
 
 > **Maxim** offers a generous free tier and flexible usage-based pricing that scales with your needs. The seat-based pricing model makes it cost-effective for teams of all sizes.

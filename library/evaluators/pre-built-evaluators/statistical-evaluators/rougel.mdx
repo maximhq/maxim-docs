@@ -1,0 +1,38 @@
+---
+title: ROUGE-L
+description: Measures summary quality by finding the longest common subsequence (LCS) of words, capturing sentence-level structural similarity without requiring consecutive matches.
+---
+
+### Input
+- **`output`** (str): The generated text
+- **`expectedOutput`** (str): The reference text
+
+### Output
+- **`Result`** (float): A score between 0 and 1.
+
+## Interpretation
+- **Higher scores (closer to 1)**: Stronger structural similarity and correct word order
+- **Lower scores (closer to 0)**: Weak structural similarity
+
+## Formula
+
+$$
+\mathrm{ROUGE\text{-}L} = \frac{\text{Length of LCS}}{\text{Total number of words in the reference}}
+$$
+
+
+#### Example Calculation:
+- Reference: "the cat sat on the mat" (m = 6)
+- Candidate: "the cat lies on the rug" (n = 6)
+- LCS(X,Y) = [the, cat, on, the] → length = 4
+
+Compute ROUGE-L using the formula:
+$$
+\mathrm{ROUGE\text{-}L} = \frac{4}{6} \approx 0.667
+$$
+
+<Note>This is a **Similarity** Metric</Note>
+
+## Use Cases
+- Evaluating abstractive summarization
+- Assessing machine translation
