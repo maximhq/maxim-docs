@@ -400,12 +400,19 @@
                                         "pages": ["sdk/python/integrations/livekit/livekit"]
                                     },
                                     {
+
+                                        "group": "Smolagents",
+                                        "pages": ["sdk/python/integrations/smolagents/smolagents"]
+                                    },
+                                  {
+
                                         "group": "Together",
                                         "pages": ["sdk/python/integrations/together/together"]
                                     },
                                     {
                                         "group": "Pydantic AI",
                                         "pages": ["sdk/python/integrations/pydantic-ai/pydantic_ai"]
+
                                     }
                                 ]
                             },

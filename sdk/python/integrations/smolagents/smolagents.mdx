@@ -1,0 +1,269 @@
+---
+title: "Smolagents Integration"
+description: "Start agent monitoring, evaluation, and observability for your Smolagents applications"
+---
+
+Maxim AI provides comprehensive agent monitoring, evaluation, and observability for your Smolagents applications. With Maxim's one-line integration, you can easily trace and analyze agent interactions, tool usage, and performance metrics.
+
+## Getting Started
+
+### Prerequisites
+
+- Python version >=3.10
+- A Maxim account ([sign up here](https://getmaxim.ai/))
+- Generate Maxim API Key
+- A Smolagents project
+
+### Installation
+
+Install the required packages via pip:
+
+```python
+pip install maxim-py smolagents python-dotenv
+```
+
+Or add them to your `requirements.txt`:
+
+```
+maxim-py
+smolagents
+python-dotenv
+```
+
+### Basic Setup
+
+### 1. Set up environment variables
+
+Create a `.env` file in your project root:
+
+```python
+# Maxim API Configuration
+MAXIM_API_KEY=your_api_key_here
+MAXIM_LOG_REPO_ID=your_repo_id_here
+
+# OpenAI API Configuration (for Smolagents)
+OPENAI_API_KEY=your_openai_api_key_here
+```
+
+### 2. Import the required packages
+
+```python
+from maxim import Maxim
+from maxim.logger.smolagents import instrument_smolagents
+from smolagents import OpenAIServerModel, CodeAgent
+from dotenv import load_dotenv
+import os
+```
+
+### 3. Initialize Maxim with your API key
+
+```python {5}
+# Load environment variables
+load_dotenv()
+
+# Instrument Smolagents with just one line
+instrument_smolagents(Maxim().logger())
+```
+
+### 4. Create and run your Smolagents application
+
+```python
+# Create your agent with tools
+agent = CodeAgent(
+    tools=[your_tools],  # Your custom tools
+    model=OpenAIServerModel(
+        model_id="gpt-4o-mini",
+        api_key=os.environ["OPENAI_API_KEY"],
+        api_base="https://api.openai.com/v1",
+    ),
+)
+
+# Run your agent
+result = agent.run("Your query here")
+```
+
+That's it! All your Smolagents interactions will now be logged and available in your Maxim dashboard.
+
+## Complete Example
+
+Here's a complete example showing how to integrate Smolagents with Maxim, including a custom SQL tool:
+
+```python {25}
+from sqlalchemy import (
+    Column,
+    Float,
+    Integer,
+    MetaData,
+    String,
+    Table,
+    create_engine,
+    insert,
+    inspect,
+    text,
+)
+from maxim import Maxim
+from maxim.logger.smolagents import instrument_smolagents
+import os
+from smolagents import OpenAIServerModel
+from smolagents import CodeAgent
+from smolagents import tool
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+# Initialize Maxim
+instrument_smolagents(Maxim().logger())
+
+# Set up SQL database
+engine = create_engine("sqlite:///:memory:")
+metadata_obj = MetaData()
+
+# Create receipts SQL table
+table_name = "receipts"
+receipts = Table(
+    table_name,
+    metadata_obj,
+    Column("receipt_id", Integer, primary_key=True),
+    Column("customer_name", String(16), primary_key=True),
+    Column("price", Float),
+    Column("tip", Float),
+)
+metadata_obj.create_all(engine)
+
+# Insert sample data
+rows = [
+    {"receipt_id": 1, "customer_name": "Alan Payne", "price": 12.06, "tip": 1.20},
+    {"receipt_id": 2, "customer_name": "Alex Mason", "price": 23.86, "tip": 0.24},
+    {"receipt_id": 3, "customer_name": "Woodrow Wilson", "price": 53.43, "tip": 5.43},
+    {"receipt_id": 4, "customer_name": "Margaret James", "price": 21.11, "tip": 1.00},
+]
+for row in rows:
+    stmt = insert(receipts).values(**row)
+    with engine.begin() as connection:
+        connection.execute(stmt)
+
+# Create SQL tool
+@tool
+def sql_engine(query: str) -> str:
+    """
+    Allows you to perform SQL queries on the table. Returns a string representation of the result.
+    The table is named 'receipts'. Its description is as follows:
+        Columns:
+        - receipt_id: INTEGER
+        - customer_name: VARCHAR(16)
+        - price: FLOAT
+        - tip: FLOAT
+
+    Args:
+        query: The query to perform. This should be correct SQL.
+    """
+    output = ""
+    with engine.connect() as con:
+        rows = con.execute(text(query))
+        for row in rows:
+            output += "\n" + str(row)
+    return output
+
+# Create and run agent
+agent = CodeAgent(
+    tools=[sql_engine],
+    model=OpenAIServerModel(
+        model_id="gpt-4o-mini",
+        api_key=os.environ["OPENAI_API_KEY"],
+        api_base="https://api.openai.com/v1",
+    ),
+)
+
+# Run the agent
+result = agent.run("Can you give me the name of the client who got the most expensive receipt?")
+print(result)
+```
+
+## Viewing Your Traces
+
+After running your Smolagents application:
+
+1. Log in to your [Maxim Dashboard](https://app.getmaxim.ai/login)
+2. Navigate to your repository
+3. View detailed agent traces, including:
+   - Agent conversations
+   - Tool usage patterns
+   - Performance metrics
+   - Cost analytics
+
+## Advanced Usage
+
+### Custom Tools with Maxim Integration
+
+You can create custom tools and they will automatically be traced by Maxim:
+
+```python
+@tool
+def custom_tool(input_data: str) -> str:
+    """
+    A custom tool that processes input data.
+    
+    Args:
+        input_data: The input string to process
+        
+    Returns:
+        Processed result
+    """
+    # Your tool logic here
+    result = f"Processed: {input_data}"
+    return result
+
+# Add to your agent
+agent = CodeAgent(
+    tools=[custom_tool, sql_engine],
+    model=OpenAIServerModel(
+        model_id="gpt-4o-mini",
+        api_key=os.environ["OPENAI_API_KEY"],
+    ),
+)
+```
+
+### Error Handling
+
+Ensure proper cleanup even when errors occur:
+
+```python
+try:
+    result = agent.run("Your query here")
+    print(result)
+except Exception as e:
+    print(f"Error: {e}")
+finally:
+    # Ensure Maxim cleanup happens
+    maxim.cleanup()
+```
+
+## Troubleshooting
+
+### Common Issues
+
+- **No traces appearing**: Ensure your API key and repository ID are correct
+- **Import errors**: Make sure you've installed all required packages (`maxim-py`, `smolagents`, `python-dotenv`)
+- **Tool not working**: Ensure `instrument_smolagents()` is called **before** creating your agent
+- **Environment variables**: Verify your `.env` file is in the correct location and contains all required keys
+
+### Debug Mode
+
+Enable debug mode to surface any internal errors:
+
+```python {1}
+instrument_smolagents(Maxim().logger(), debug=True)
+```
+
+## Resources
+
+<CardGroup cols={3}>
+  <Card title="Smolagents Docs" icon="book" href="https://huggingface.co/docs/smolagents/en/index">
+    Official Smolagents documentation
+  </Card>
+  
+  <Card title="Github (smolagents cookbook)" icon="github" href="https://github.com/maximhq/maxim-cookbooks/blob/main/python/observability-online-eval/smolagents/example.py">
+    Official Maxim GitHub repository
+  </Card>
+</CardGroup>
