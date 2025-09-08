@@ -294,6 +294,10 @@
                                     {
                                         "group": "LiveKit",
                                         "pages": ["sdk/python/integrations/livekit/livekit"]
+                                    },
+                                    {
+                                        "group": "Together",
+                                        "pages": ["sdk/python/integrations/together/together"]
                                     }
                                 ]
                             },
