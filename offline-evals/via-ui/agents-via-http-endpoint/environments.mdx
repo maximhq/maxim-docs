@@ -1,0 +1,18 @@
+---
+title: Environments
+description: Use environments to configure your API requests and responses.
+---
+
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
+You can use [environments](/settings/environment) to dynamically replace the variables in your API requests and responses.
+
+1. Select the environment you want to use from the dropdown in the top right corner of the playground.
+![Environment dropdown](/images/docs/evaluate/workflow/http_workflow/environment_selector.png)
+2. Use the `{{env.key_name}}` syntax to access the variables in the headers and parameters of your API request.
+![Environment variables](/images/docs/evaluate/workflow/http_workflow/env_variable_selector.png)
+3. You can also use the `maxim.getEnvironmentVariable("key_name")` method in your scripts to access the variables.
+
+See it in action:
+
+<MaximPlayer url="https://drive.google.com/file/d/1YkW_XzaYFVS1_UE6N3NxGiykjT6B98gN/preview" />

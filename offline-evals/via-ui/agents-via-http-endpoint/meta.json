@@ -1,4 +1,4 @@
 {
 	"title": "Agents via HTTP Endpoint",
-	"pages": ["quickstart", "scripts", "agent-evals"]
+	"pages": ["quickstart", "scripts", "agent-evals", "environments"]
 }

@@ -64,7 +64,8 @@
                                         "pages": [
                                             "offline-evals/via-ui/agents-via-http-endpoint/quickstart",
                                             "offline-evals/via-ui/agents-via-http-endpoint/scripts",
-                                            "offline-evals/via-ui/agents-via-http-endpoint/agent-evals"
+                                            "offline-evals/via-ui/agents-via-http-endpoint/agent-evals",
+                                            "offline-evals/via-ui/agents-via-http-endpoint/environments"
                                         ]
                                     },
                                     {
@@ -317,6 +318,7 @@
                             "settings/maxim-api-keys",
                             "settings/custom-pricing",
                             "settings/vault",
+                            "settings/environment",
                             "settings/two-factor-authentication",
                             "settings/setup-sso-with-okta",
                             "settings/setup-sso-with-google"
