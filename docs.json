@@ -756,41 +756,6 @@
                         "pages": ["cookbooks/platform-features/prompt-partials"]
                     }
                 ]
-            },
-            {
-                "tab": "Release Notes",
-                "groups": [
-                    {
-                        "group": "2025",
-                        "pages": [
-                            {
-                                "group": "October",
-                                "pages": ["release-notes/2025/October/2025-01-10"]
-                            },
-                            {
-                                "group": "September",
-                                "pages": ["release-notes/2025/September/2025-01-09"]
-                            },
-                            {
-                                "group": "August",
-                                "pages": [
-                                    "release-notes/2025/August/2025-01-08",
-                                    "release-notes/2025/August/2025-07-08",
-                                    "release-notes/2025/August/2025-11-08",
-                                    "release-notes/2025/August/2025-21-08"
-                                ]
-                            },
-                            {
-                                "group": "July",
-                                "pages": [
-                                    "release-notes/2025/July/2025-01-07",
-                                    "release-notes/2025/July/2025-09-07",
-                                    "release-notes/2025/July/2025-21-07"
-                                ]
-                            }
-                        ]
-                    }
-                ]
             }
         ],
         "global": {
