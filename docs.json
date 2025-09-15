@@ -903,6 +903,10 @@
             "destination": "offline-evals/via-sdk/agent-http/quickstart"
         },
         {
+            "source": "/offline-evals/via-sdk/agent-no-code/local-agent",
+            "destination": "/offline-evals/via-sdk/local-agent"
+        },
+        {
             "source": "/evaluate/how-to/evaluate-prompts/experiment-in-prompt-playground",
             "destination": "/offline-evals/via-ui/prompts/prompt-playground"
         },
