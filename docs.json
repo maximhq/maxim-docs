@@ -741,7 +741,9 @@
                             "cookbooks/integrations/gemini",
                             "cookbooks/integrations/react-agent",
                             "cookbooks/integrations/vercel",
-                            "cookbooks/integrations/groq"
+                            "cookbooks/integrations/groq",
+                            "cookbooks/integrations/livekit"
+
                         ]
                     },
                     {
