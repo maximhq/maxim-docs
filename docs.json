@@ -742,7 +742,10 @@
                             "cookbooks/integrations/react-agent",
                             "cookbooks/integrations/vercel",
                             "cookbooks/integrations/groq",
-                            "cookbooks/integrations/livekit"
+                            "cookbooks/integrations/livekit",
+                            "cookbooks/integrations/pydantic",
+                            "cookbooks/integrations/together"
+
 
                         ]
                     },
