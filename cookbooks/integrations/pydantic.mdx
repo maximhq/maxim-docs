@@ -264,10 +264,10 @@ async def run_streaming_example():
         print("Streaming concept explanation in progress...")
         print("Streaming concept explanation completed")
     
-    # Run a simple synchronous example for comparison
-    print("Running synchronous calculation for comparison...")
-    result = agent.run("What is 7 * 8?")
-    print(f"Synchronous Result: {result}")
+    # Run a simple calculation without blocking the event loop
+    print("Running calculation for comparison...")
+    result = await agent.run("What is 7 * 8?")
+    print(f"Result: {result}")
     
     print("Streaming agent example completed!")
 
@@ -275,28 +275,28 @@ async def run_streaming_example():
 await run_streaming_example()
 ```
 
-### Synchronous Comparison
+### Additional Example
 
 ```python
-def run_sync_example():
-    """Run a synchronous example for comparison."""
-    print("=== Synchronous Agent Example (for comparison) ===")
+async def run_additional_example():
+    """Run an additional agent example."""
+    print("=== Additional Agent Example ===")
     
     agent = create_streaming_agent()
     
-    # Run multiple synchronous operations
+    # Run multiple operations
     print("Running first calculation...")
-    result = agent.run("What is 12 + 18?")
+    result = await agent.run("What is 12 + 18?")
     print(f"Result: {result}")
     
     print("Running second calculation...")
-    result = agent.run("Calculate 6 * 9")
+    result = await agent.run("Calculate 6 * 9")
     print(f"Result: {result}")
     
-    print("Synchronous example completed!")
+    print("Example completed!")
 
-# Run synchronous example
-run_sync_example()
+# Run example
+await run_additional_example()
 ```
 
 ## Complete Example with All Features
@@ -324,8 +324,8 @@ async def main():
     
     print("\n" + "=" * 55)
     
-    # Run synchronous example for comparison
-    run_sync_example()
+    # Run additional example
+    await run_additional_example()
     
     print("\n=== All Examples Completed ===")
     print("Check your Maxim dashboard to see:")
