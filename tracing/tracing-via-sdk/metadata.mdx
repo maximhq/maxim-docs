@@ -112,6 +112,7 @@ trace.add_metadata({
     "custom_key": "custom_value",
     "timestamp": "2024-01-01T00:00:00Z"
 })
+```
 
 ```go Go
 trace := logger.Trace(&logging.TraceConfig{
@@ -150,6 +151,7 @@ const generation = trace.generation({
  });
  
  generation.addMetadata({"promptVersion": "v2.1", "userId": "user-123"});
+ 
  ```
 
 ```python Python
