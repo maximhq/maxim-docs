@@ -549,6 +549,7 @@
                     {
                         "group": "Typescript",
                         "pages": [
+                            "sdk/typescript/setup",
                             {
                                 "group": "Integrations",
                                 "pages": [
