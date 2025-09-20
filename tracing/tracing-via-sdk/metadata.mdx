@@ -250,37 +250,13 @@ const retrieval = trace.retrieval({
 
 ```python Python
 # Span with metadata
-span = trace.span({
-    "id":"span-id",
-    "name":"data-processing",
-    "metadata":{
-        "data_source": "database",
-        "record_count": 150,
-        "processing_time": "2.3s"
-    }
-})
+span = trace.span(id="span-id", name="data-processing", metadata={"data_source": "database", "record_count": 150, "processing_time": "2.3s"})
 
 # Event with metadata
-event = trace.event({
-    "id":"event-id",
-    "name":"user-action",
-    "metadata":{
-        "action": "button-click",
-        "element_id": "submit-btn",
-        "page_url": "/dashboard"
-    }
-})
+event = trace.event(id="event-id", name="user-action", metadata={"action": "button-click", "element_id": "submit-btn", "page_url": "/dashboard"})
 
 # Retrieval with metadata
-retrieval = trace.retrieval({
-    "id": "retrieval-id",
-    "name": "vector-search",
-    "metadata": {
-        "vector_db": "pinecone",
-        "index_name": "documents",
-        "similarity_threshold": 0.8
-    }
-})
+retrieval = trace.retrieval(id="retrieval-id", name="vector-search",metadata={"vector_db": "pinecone", "index_name": "documents", "similarity_threshold": 0.8})
 ```
 
 ```go Go
