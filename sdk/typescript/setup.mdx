@@ -1,0 +1,456 @@
+---
+title: "Getting Started"
+description: "Maxim SDK Setup for NodeJS / React Native Projects"
+---
+
+This guide covers how to set up the `@maximai/maxim-js` SDK in both Node.js and React Native projects.
+
+## Table of Contents
+
+- [Node.js Setup](#nodejs-setup)
+- [React Native Setup](#react-native-setup)
+- [Usage Examples](#usage-examples)
+- [Troubleshooting](#troubleshooting)
+
+## Node.js Setup
+
+### Installation
+
+```bash
+npm install @maximai/maxim-js
+```
+
+### Basic Configuration
+
+```javascript
+import { Maxim } from '@maximai/maxim-js';
+
+const maxim = new Maxim({
+  apiKey: 'your-api-key',
+  baseUrl: 'https://api.getmaxim.ai', // Optional
+  promptManagement: true, // Optional, default: true
+  debug: false // Optional, default: false
+});
+```
+
+### Environment Variables
+
+Create a `.env` file in your project root:
+
+```env
+MAXIM_API_KEY=your-api-key-here
+MAXIM_REPOSITORY_ID=your-repository-id-here
+```
+
+### Example Usage
+
+```javascript
+import { Maxim, VariableType } from '@maximai/maxim-js';
+
+const maxim = new Maxim({
+  apiKey: process.env.MAXIM_API_KEY,
+  promptManagement: true
+});
+
+// Example: Get all prompts
+async function getAllPrompts() {
+  try {
+    const prompts = await maxim.getPrompts();
+    console.log('Available prompts:', prompts);
+    return prompts;
+  } catch (error) {
+    console.error('Error fetching prompts:', error);
+  }
+}
+
+// Example: Add dataset entries
+async function addDatasetEntries(datasetId, entries) {
+  try {
+    const normalizedEntries = entries.map(entry => ({
+      ...entry,
+      cellValue: {
+        type: VariableType.TEXT,
+        payload: entry.cellValue.payload
+      }
+    }));
+    
+    await maxim.addDatasetEntries(datasetId, normalizedEntries);
+    console.log('Dataset entries added successfully');
+  } catch (error) {
+    console.error('Error adding dataset entries:', error);
+  }
+}
+```
+
+---
+
+## React Native Setup
+
+### Installation
+
+```bash
+npm install @maximai/maxim-js
+```
+
+### Required Polyfills
+
+Install the necessary Node.js polyfills for React Native:
+
+```bash
+npm install react-native-fs react-native-os react-native-path crypto-js stream-browserify https-browserify http-browserify events inherits url util buffer process querystring punycode assert constants mime-types @types/mime-types
+```
+
+### Metro Configuration
+
+Create or update your `metro.config.js` file:
+
+```javascript
+const { getDefaultConfig } = require('expo/metro-config');
+const path = require('path');
+
+const defaultConfig = getDefaultConfig(__dirname);
+
+// Create aliases for Node.js modules to their React Native alternatives
+defaultConfig.resolver.extraNodeModules = {
+  // File system and OS modules
+  os: require.resolve('react-native-os'),
+  fs: require.resolve('react-native-fs'),
+  path: require.resolve('react-native-path'),
+  
+  // Crypto module
+  crypto: require.resolve('crypto-js'),
+  
+  // Stream module
+  stream: require.resolve('stream-browserify'),
+  
+  // HTTP modules - use browserify versions
+  'node:http': require.resolve('http-browserify'),
+  'node:https': require.resolve('https-browserify'),
+  http: require.resolve('http-browserify'),
+  https: require.resolve('https-browserify'),
+  
+  // Additional Node.js modules
+  events: require.resolve('events'),
+  inherits: require.resolve('inherits'),
+  url: require.resolve('url'),
+  util: require.resolve('util'),
+  buffer: require.resolve('buffer'),
+  process: require.resolve('process'),
+  querystring: require.resolve('querystring'),
+  punycode: require.resolve('punycode'),
+  assert: require.resolve('assert'),
+  constants: require.resolve('constants'),
+};
+
+// Ensure React Native platform resolution
+defaultConfig.resolver.platforms = ['native', 'react-native', 'ios', 'android', 'web'];
+
+module.exports = defaultConfig;
+```
+
+### Service Layer Setup
+
+Create a service layer to handle SDK initialization and exports:
+
+```typescript
+// services/maxim.ts
+import * as MaximSDK from '@maximai/maxim-js';
+
+let maximClient: any | null = null;
+
+const ENV_API_KEY = process.env.EXPO_PUBLIC_MAXIM_API_KEY;
+const ENV_REPOSITORY_ID = process.env.EXPO_PUBLIC_MAXIM_REPOSITORY_ID;
+
+export type MaximConfig = {
+  apiKey?: string;
+  baseUrl?: string;
+  promptManagement?: boolean;
+  debug?: boolean;
+};
+
+function getSdk(): any {
+  return MaximSDK;
+}
+
+export function getVariableType(): any {
+  const sdk = getSdk();
+  return sdk.VariableType;
+}
+
+export async function initMaxim(config: MaximConfig): Promise<void> {
+  if (maximClient) return;
+  const sdk = getSdk();
+  const { Maxim } = sdk;
+  maximClient = new Maxim({
+    apiKey: config.apiKey ?? ENV_API_KEY,
+    baseUrl: config.baseUrl,
+    promptManagement: config.promptManagement ?? true,
+    debug: config.debug,
+  });
+}
+
+export async function ensureInitialized(): Promise<void> {
+  if (!maximClient) {
+    await initMaxim({});
+  }
+}
+
+export async function getPrompts(): Promise<any[]> {
+  await ensureInitialized();
+  return maximClient.getPrompts();
+}
+
+export async function getPrompt(promptId: string): Promise<any> {
+  await ensureInitialized();
+  return maximClient.getPrompt(promptId);
+}
+
+export async function addDatasetEntries(datasetId: string, entries: any[]): Promise<void> {
+  await ensureInitialized();
+  return maximClient.addDatasetEntries(datasetId, entries);
+}
+
+export async function buildRule(config: any): Promise<any> {
+  await ensureInitialized();
+  return maximClient.buildRule(config);
+}
+```
+
+### Environment Variables
+
+For Expo projects, create a `.env` file:
+
+```env
+EXPO_PUBLIC_MAXIM_API_KEY=your-api-key-here
+EXPO_PUBLIC_MAXIM_REPOSITORY_ID=your-repository-id-here
+```
+
+### React Native Component Example
+
+```tsx
+import React from 'react';
+import { View, Text, Button, Alert } from 'react-native';
+import {
+  ensureInitialized,
+  getPrompts,
+  getVariableType,
+  addDatasetEntries
+} from '@/services/maxim';
+
+export default function MaximExample() {
+  const [prompts, setPrompts] = React.useState<any[]>([]);
+  const [VariableType, setVariableType] = React.useState<any>(null);
+
+  React.useEffect(() => {
+    // Initialize SDK
+    ensureInitialized().catch(console.error);
+    
+    // Load VariableType asynchronously
+    try {
+      const VarType = getVariableType();
+      setVariableType(VarType);
+    } catch (error) {
+      console.error('Error loading VariableType:', error);
+    }
+  }, []);
+
+  const fetchPrompts = async () => {
+    try {
+      const allPrompts = await getPrompts();
+      setPrompts(allPrompts);
+      Alert.alert('Success', `Loaded ${allPrompts.length} prompts`);
+    } catch (error) {
+      Alert.alert('Error', 'Failed to fetch prompts');
+      console.error(error);
+    }
+  };
+
+  const addSampleData = async () => {
+    if (!VariableType) {
+      Alert.alert('Error', 'VariableType not loaded yet');
+      return;
+    }
+
+    try {
+      const sampleEntries = [
+        {
+          columnName: "Input",
+          cellValue: {
+            type: VariableType.TEXT,
+            payload: "Sample input text"
+          }
+        },
+        {
+          columnName: "Expected Output",
+          cellValue: {
+            type: VariableType.TEXT,
+            payload: "Sample expected output"
+          }
+        }
+      ];
+
+      await addDatasetEntries('your-dataset-id', sampleEntries);
+      Alert.alert('Success', 'Dataset entries added');
+    } catch (error) {
+      Alert.alert('Error', 'Failed to add dataset entries');
+      console.error(error);
+    }
+  };
+
+  return (
+    <View style={{ padding: 20 }}>
+      <Text style={{ fontSize: 18, marginBottom: 20 }}>Maxim SDK Example</Text>
+      
+      <Button title="Fetch Prompts" onPress={fetchPrompts} />
+      
+      <Text style={{ marginTop: 10, marginBottom: 10 }}>
+        Loaded {prompts.length} prompts
+      </Text>
+      
+      <Button title="Add Sample Data" onPress={addSampleData} />
+      
+      <Text style={{ marginTop: 10 }}>
+        VariableType loaded: {VariableType ? 'Yes' : 'No'}
+      </Text>
+    </View>
+  );
+}
+```
+
+---
+
+## Usage Examples
+
+### Working with Prompts
+
+```javascript
+// Get all prompts
+const prompts = await maxim.getPrompts();
+
+// Get a specific prompt
+const prompt = await maxim.getPrompt('prompt-id');
+
+// Build a rule
+const rule = await maxim.buildRule({
+  repositoryId: 'your-repo-id',
+  promptId: 'your-prompt-id',
+  // ... other configuration
+});
+```
+
+### Working with Datasets
+
+```javascript
+import { VariableType } from '@maximai/maxim-js'; // Node.js
+// or
+const VariableType = getVariableType(); // React Native
+
+// Prepare dataset entries
+const entries = [
+  {
+    columnName: "Input",
+    cellValue: {
+      type: VariableType.TEXT,
+      payload: "Doctor: Hi, what brings you in today?"
+    }
+  },
+  {
+    columnName: "Expected Output",
+    cellValue: {
+      type: VariableType.TEXT,
+      payload: "Chief complaint: Sore throat and mild fever x1 day."
+    }
+  }
+];
+
+// Add entries to dataset
+await maxim.addDatasetEntries('dataset-id', entries);
+```
+
+### Variable Types
+
+The SDK provides several variable types:
+
+```javascript
+// Available VariableType options:
+VariableType.TEXT
+VariableType.NUMBER
+VariableType.BOOLEAN
+VariableType.JSON
+// ... and more
+```
+
+---
+
+## Troubleshooting
+
+### Common Issues
+
+#### 1. Node.js Module Import Errors in React Native
+
+**Error**: `The package attempted to import the Node standard library module "os"`
+
+**Solution**: Ensure you have installed all required polyfills and configured Metro correctly as shown in the [React Native Setup](#react-native-setup) section.
+
+#### 2. VariableType Import Issues in React Native
+
+**Error**: Runtime crashes when importing VariableType directly
+
+**Solution**: Use the service layer approach to load VariableType asynchronously:
+
+```tsx
+// ❌ Don't do this in React Native
+import { VariableType } from '@maximai/maxim-js';
+
+// ✅ Do this instead
+const VariableType = getVariableType();
+```
+
+#### 3. Metro Bundling Issues
+
+**Error**: Metro fails to resolve modules
+
+**Solution**: 
+1. Clear Metro cache: `npx expo start --clear`
+2. Ensure all polyfills are installed
+3. Verify `metro.config.js` is properly configured
+
+#### 4. API Key Issues
+
+**Error**: Authentication failures
+
+**Solution**: 
+- Verify your API key is correct
+- For React Native/Expo, use `EXPO_PUBLIC_` prefix for environment variables
+- For Node.js, use standard environment variables
+
+### Best Practices
+
+1. **Always initialize the SDK** before making API calls
+2. **Use the service layer** in React Native projects for better error handling
+3. **Handle errors gracefully** with try-catch blocks
+4. **Load VariableType asynchronously** in React Native
+5. **Clear Metro cache** when adding new polyfills
+
+### Support
+
+For additional support:
+- Visit [Maxim AI Documentation](https://docs.getmaxim.ai)
+- Check the [GitHub repository](https://github.com/maximhq/maxim-js) for updates
+
+---
+
+## Changelog
+
+### Version Compatibility
+
+- `@maximai/maxim-js` v6.15.0+: Supports both Node.js and React Native with proper configuration
+- React Native: Requires Metro configuration and polyfills
+- Node.js: Works out of the box
+
+### Recent Updates
+
+- Added comprehensive React Native support
+- Improved platform detection
+- Enhanced error handling
+- Added TypeScript definitions
