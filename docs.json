@@ -402,19 +402,16 @@
                                         "pages": ["sdk/python/integrations/livekit/livekit"]
                                     },
                                     {
-
                                         "group": "Smolagents",
                                         "pages": ["sdk/python/integrations/smolagents/smolagents"]
                                     },
-                                  {
-
+                                    {
                                         "group": "Together",
                                         "pages": ["sdk/python/integrations/together/together"]
                                     },
                                     {
                                         "group": "Pydantic AI",
                                         "pages": ["sdk/python/integrations/pydantic-ai/pydantic_ai"]
-
                                     }
                                 ]
                             },
@@ -757,6 +754,28 @@
                     {
                         "group": "Platform Features",
                         "pages": ["cookbooks/platform-features/prompt-partials"]
+                    }
+                ]
+            },
+            {
+                "tab": "Changelog",
+                "groups": [
+                    {
+                        "group": "Release Notes",
+                        "pages": [
+                            "release-notes/flexi-evals",
+                            "release-notes/google-cloud-marketplace",
+                            "release-notes/workspace-duplication",
+                            "release-notes/custom-metric-support",
+                            "release-notes/saml-based-sso",
+                            "release-notes/new-providers-open-router-cerebras",
+                            "release-notes/openai-gpt-5",
+                            "release-notes/human-annotation-revamp",
+                            "release-notes/datasets-file-attachments",
+                            "release-notes/grok-4-model",
+                            "release-notes/unlimited-log-size",
+                            "release-notes/ai-simulations-prompt-playground"
+                        ]
                     }
                 ]
             }
