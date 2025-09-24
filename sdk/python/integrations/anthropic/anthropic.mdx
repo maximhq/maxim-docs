@@ -40,7 +40,7 @@ from maxim.logger.anthropic import MaximAnthropicClient
 client = MaximAnthropicClient(client=Anthropic(api_key=ANTHROPIC_API_KEY), logger=logger)
 ```
 
-## Make LLM calls using MaximAnthropicClient
+## Make LLM Calls Using MaximAnthropicClient
 
 ```python
 from anthropic import Anthropic
@@ -108,7 +108,7 @@ with client.messages.stream(
     final_response = "".join(response_chunks)
 ```
 
-## Capture multiple LLM calls in one trace
+## Capture Multiple LLM Calls in One Trace
 
 **Initialize Maxim SDK and Anthropic Client**
 

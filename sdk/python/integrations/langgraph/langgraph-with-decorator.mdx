@@ -114,7 +114,7 @@ def should_continue(state):
         return "continue"
 ```
 
-## 7. Define the function that calls the model
+## 7. Define the Function That Calls the Model
 
 ```python
 def call_model(state, config):
@@ -172,7 +172,7 @@ workflow.add_edge("action", "agent")
 app = workflow.compile()
 ```
 
-## 9. Start tracing entire LangGraph agent using 2 simple annotations.
+## 9. Start Tracing Entire LangGraph Agent Using 2 Simple Annotations
 
 ```python {1, 6, 16}
 @span(name="another-method-span")
@@ -200,7 +200,7 @@ async def handle(query: str):
     return resp
 ```
 
-## 10. Get the response from the agent:
+## 10. Get the Response from the Agent
 
 ```python
 resp = await handle("is there any new iron man movies coming this year?")

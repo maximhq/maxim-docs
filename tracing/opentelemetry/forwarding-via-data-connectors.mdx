@@ -78,7 +78,7 @@ Copy the connection string and paste it in the data connectors setup dialog.
 </Step>
 </Steps>
 
-## Connect to an OTLP collector
+## Connect to an OTLP Collector
 
 <Steps>
 <Step title="Select platform">
@@ -124,11 +124,11 @@ Enable different teams to use their preferred tools (New Relic, OpenTelemetry co
 
 ## Frequently Asked Questions
 
-### How are traces exported to other platforms?
+### How Are Traces Exported to Other Platforms?
 Maxim exports traces following OpenTelemetry semantic conventions, ensuring compatibility with platforms like New Relic and other OTLP collectors. This maintains the structure and context of your trace data, including all AI/LLM-specific attributes defined in the OpenTelemetry specification.
 
-### Will using Maxim as a hub introduce latency?
+### Will Using Maxim as a Hub Introduce Latency?
 Maxim's architecture is optimized for minimal latency. Trace forwarding happens asynchronously and doesn't impact your application performance.
 
-### Can I send traces directly to Maxim?
+### Can I Send Traces Directly to Maxim?
 Yes! See our [Ingesting via OTLP Endpoint](/tracing/opentelemetry/ingesting-via-otlp) documentation for details.
