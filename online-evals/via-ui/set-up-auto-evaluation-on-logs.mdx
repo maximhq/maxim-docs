@@ -4,7 +4,7 @@ description: Evaluate captured logs automatically from the UI based on filters a
 ---
 
 
-## Why evaluate logs?
+## Why Evaluate Logs?
 
 We know that evaluation is a necessary step while building an LLM, but since an LLM can be non-deterministic, all possible scenarios can never be covered; thus evaluating the LLM on live system also becomes crucial.
 
@@ -18,7 +18,7 @@ Evaluation on logs helps cover cases or scenarios that might not be covered by *
 You need to have your **logging set up** to capture interactions between your LLM and users before you can evaluate them. To do so, you would need to integrate [Maxim SDK](/tracing/tracing-via-sdk/traces) into your application.
 </Note>
 
-## Setting up auto evaluation
+## Setting Up Auto Evaluation
 
 <Steps>
 <Step title="Navigate to repository">
@@ -122,7 +122,7 @@ This tab contains the following sections:
 
 This view is essential for when you are evaluating the each log on the node level, essentially on each component of the trace (like a generation or retrieval, etc). This view helps with your perception as to what component's evaluation you are looking at on the right panel (and the component's place in the trace as well). We discuss more about the [Node Level Evaluation](/online-evals/via-sdk/node-level-evaluation) further down.
 
-## Dataset curation
+## Dataset Curation
 
 Once you have logs and evaluations in Maxim, you can easily curate datasets by filtering and selecting logs based on different criteria.
 
