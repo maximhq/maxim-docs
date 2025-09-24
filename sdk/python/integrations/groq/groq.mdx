@@ -16,7 +16,7 @@ import { MaximPlayer } from "/snippets/maximPlayer.mdx"
 "maxim-py"
 ```
 
-## Env variables
+## Env Variables
 
 ```
 MAXIM_API_KEY=
@@ -24,7 +24,7 @@ MAXIM_LOG_REPO_ID=
 GROQ_API_KEY=
 ```
 
-## Initialize logger
+## Initialize Logger
 
 The first step is to set up the Maxim logger that will capture and track your Groq API calls. This
 logger connects to your Maxim dashboard where you can monitor performance, costs, and usage
@@ -62,7 +62,7 @@ instrument_groq(logger)
 client = Groq()
 ```
 
-## Make LLM calls using Groq Client
+## Make LLM Calls Using Groq Client
 
 After instrumentation, all your Groq API calls will be automatically logged to Maxim. You can use
 the Groq client exactly as you normally would - no additional code needed for logging.

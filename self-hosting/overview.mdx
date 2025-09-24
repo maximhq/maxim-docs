@@ -45,13 +45,13 @@ Maxim is designed for companies with a security mindset.
 
 </div>
 
-## Maxim infrastructure
+## Maxim Infrastructure
 
 To better understand these deployment options, let's examine the key components of our infrastructure:
 
 ![infrastructure](/images/docs/invpc/architecture.png)
 
-### Control plane
+### Control Plane
 
 The control plane encompasses all applications that handle the business logic and user experience. Web service and serverless functions are exposed to internet via a load balancer.
 
@@ -64,7 +64,7 @@ The control plane encompasses all applications that handle the business logic an
 | Workers              | Real-time log processing, evaluation, and alerts | Go         |
 | Serverless functions | SDK APIs                                         | Go         |
 
-### Data plane
+### Data Plane
 
 The data plane encompasses all components that handle data at rest and in transit. We utilize secure VPC peering (where required) to connect to control plane.
 
@@ -81,18 +81,18 @@ The data plane encompasses all components that handle data at rest and in transi
 
 ## Pillars of Maxim's Infrastructure
 
-### Infra as code
+### Infra as Code
 
 - We deploy our infrastructure using Terraform.
 - All the images are securely hosted and fingerprinted by customer-specific keys for every version.
 - Our infra as code is available for review by the customer.
 
-### Cloud provider support
+### Cloud Provider Support
 
 - We manage the orchestration of the infrastructure using Kubernetes.
 - We support GCP, AWS and Azure as cloud provider.
 
-### Security measures
+### Security Measures
 
 - We attach a cloud-native security layer to ingress (Cloud Armor on GCP, AWS WAF, Azure WAF etc.).
 - We have pre-defined configurations vetted by our security team for every cloud provider.

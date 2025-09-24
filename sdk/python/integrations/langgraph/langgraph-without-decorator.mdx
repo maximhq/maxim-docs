@@ -1,5 +1,5 @@
 ---
-title: 'LangGraph Agent with Maxim Observability wihout using Decorators'
+title: 'LangGraph Agent with Maxim Observability without using Decorators'
 description:
     'Creating a LangGraph agent with Tavily Search API and observing it using Maxim Single Line
     Integration'
@@ -65,7 +65,7 @@ def _get_model(model_name: str):
     return model
 ```
 
-### Define the function that determines whether to continue or not
+### Define the Function That Determines Whether to Continue or Not
 
 ```python
 def should_continue(state):
@@ -82,7 +82,7 @@ def should_continue(state):
 system_prompt = """Be a helpful assistant"""
 ```
 
-### Define the function that calls the model
+### Define the Function That Calls the Model
 
 ```python
 def call_model(state, config):
@@ -95,21 +95,21 @@ def call_model(state, config):
     return {"messages": [response]}
 ```
 
-### Define the function to execute tools
+### Define the Function to Execute Tools
 
 ```python
 tool_node = ToolNode(tools)
 ```
 
 
-### Define the config
+### Define the Config
 
 ```python
 class GraphConfig(TypedDict):
     model_name: Literal["anthropic", "openai"]
 ```
 
-### Define a new graph
+### Define a New Graph
 ```python
 workflow = StateGraph(AgentState, config_schema=GraphConfig)
 
@@ -182,7 +182,7 @@ async def handle(query:str):
     return resp
 ```
 
-### Get the response from the agent:
+### Get the Response from the Agent
 
 ```python
 resp = await handle("tell me latest football news?") 
