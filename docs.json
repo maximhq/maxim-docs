@@ -762,6 +762,38 @@
                         "pages": ["cookbooks/platform-features/prompt-partials"]
                     }
                 ]
+            },
+            {
+                "tab": "Changelog",
+                "groups": [
+                    {
+                        "group": "Release Notes",
+                        "pages": [
+                            {
+                                "group": "Aug 2025",
+                                "pages": [
+                                    "release-notes/Aug 2025/flexi-evals",
+                                    "release-notes/Aug 2025/google-cloud-marketplace",
+                                    "release-notes/Aug 2025/workspace-duplication",
+                                    "release-notes/Aug 2025/custom-metric-support",
+                                    "release-notes/Aug 2025/saml-based-sso",
+                                    "release-notes/Aug 2025/new-providers-open-router-cerebras",
+                                    "release-notes/Aug 2025/openai-gpt-5"
+                                ]
+                            },
+                            {
+                                "group": "July 2025",
+                                "pages": [
+                                    "release-notes/July 2025/ai-simulations-prompt-playground",
+                                    "release-notes/July 2025/grok-4-model",
+                                    "release-notes/July 2025/unlimited-log-size",
+                                    "release-notes/July 2025/datasets-file-attachments",
+                                    "release-notes/July 2025/human-annotation-revamp"
+                                ]
+                            }
+                        ]
+                    }
+                ]
             }
         ],
         "global": {
