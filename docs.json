@@ -745,7 +745,9 @@
                             "cookbooks/integrations/groq",
                             "cookbooks/integrations/livekit",
                             "cookbooks/integrations/pydantic",
-                            "cookbooks/integrations/together"
+                            "cookbooks/integrations/together",
+                            "cookbooks/integrations/smolagents",
+                            "cookbooks/integrations/llamaindex"
 
 
                         ]
