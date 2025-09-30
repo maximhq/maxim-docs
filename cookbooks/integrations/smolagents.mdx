@@ -1,0 +1,294 @@
+---
+title: "Agent Observability for Smolagents"
+description: "Learn how to add Maxim observability and tracing to your Smolagents applications with SQL database interactions and tool calling."
+---
+
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
+This cookbook shows how to add Maxim observability and tracing to your [Smolagents](https://github.com/huggingface/smolagents) applications. You'll learn how to instrument Smolagents, create SQL database tools, and monitor agent interactions with full observability in the Maxim dashboard.
+
+## Prerequisites
+
+- Python 3.8+
+- [Smolagents](https://github.com/huggingface/smolagents) (`pip install smolagents`)
+- [Maxim Python SDK](https://pypi.org/project/maxim-py/) (`pip install maxim-py`)
+- [SQLAlchemy](https://pypi.org/project/sqlalchemy/) (`pip install sqlalchemy`)
+- [python-dotenv](https://pypi.org/project/python-dotenv/) (`pip install python-dotenv`)
+- API keys for OpenAI and Maxim
+- (Optional) Set up a `.env` file with your API keys
+
+## 1. Set Up Environment Variables
+
+Create a `.env` file in your project root:
+
+```env
+# Maxim API Configuration
+MAXIM_API_KEY=your_maxim_api_key_here
+MAXIM_LOG_REPO_ID=your_maxim_repo_id_here
+
+# OpenAI Configuration
+OPENAI_API_KEY=your_openai_api_key_here
+```
+
+## 2. Import Required Libraries
+
+```python
+from sqlalchemy import (
+    Column,
+    Float,
+    Integer,
+    MetaData,
+    String,
+    Table,
+    create_engine,
+    insert,
+    inspect,
+    text,
+)
+from maxim import Maxim
+from maxim.logger.smolagents import instrument_smolagents
+import os
+from smolagents import OpenAIServerModel, CodeAgent, tool
+from dotenv import load_dotenv
+```
+
+## 3. Initialize Maxim and Instrument Smolagents
+
+```python {8}
+# Load environment variables from .env file
+load_dotenv()
+
+# Initialize Maxim for observability
+maxim = Maxim(api_key=os.getenv("MAXIM_API_KEY"))
+
+# Instrument Smolagents with Maxim's logger
+instrument_smolagents(maxim.logger())
+```
+
+## 4. Set Up SQL Database
+
+Create an in-memory SQLite database with a receipts table:
+
+```python
+# Create SQLite engine
+engine = create_engine("sqlite:///:memory:")
+metadata_obj = MetaData()
+
+# Create receipts SQL table
+table_name = "receipts"
+receipts = Table(
+    table_name,
+    metadata_obj,
+    Column("receipt_id", Integer, primary_key=True),
+    Column("customer_name", String(16), primary_key=True),
+    Column("price", Float),
+    Column("tip", Float),
+)
+metadata_obj.create_all(engine)
+
+# Insert sample data
+rows = [
+    {"receipt_id": 1, "customer_name": "Alan Payne", "price": 12.06, "tip": 1.20},
+    {"receipt_id": 2, "customer_name": "Alex Mason", "price": 23.86, "tip": 0.24},
+    {"receipt_id": 3, "customer_name": "Woodrow Wilson", "price": 53.43, "tip": 5.43},
+    {"receipt_id": 4, "customer_name": "Margaret James", "price": 21.11, "tip": 1.00},
+]
+
+for row in rows:
+    stmt = insert(receipts).values(**row)
+    with engine.begin() as connection:
+        connection.execute(stmt)
+
+# Display table schema
+inspector = inspect(engine)
+columns_info = [(col["name"], col["type"]) for col in inspector.get_columns("receipts")]
+table_description = "Columns:\n" + "\n".join([f"  - {name}: {col_type}" for name, col_type in columns_info])
+print(table_description)
+```
+
+## 5. Create SQL Tool for the Agent
+
+Define a tool that allows the agent to query the database:
+
+```python
+@tool
+def sql_engine(query: str) -> str:
+    """
+    Allows you to perform SQL queries on the table. Returns a string representation of the result.
+    The table is named 'receipts'. Its description is as follows:
+        Columns:
+        - receipt_id: INTEGER
+        - customer_name: VARCHAR(16)
+        - price: FLOAT
+        - tip: FLOAT
+
+    Args:
+        query: The query to perform. This should be correct SQL.
+    """
+    output = ""
+    with engine.connect() as con:
+        rows = con.execute(text(query))
+        for row in rows:
+            output += "\n" + str(row)
+    return output
+```
+
+## 6. Initialize the Smolagents CodeAgent
+
+Create an agent with the SQL tool and OpenAI model:
+
+```python
+# Initialize the agent with tools and model
+agent = CodeAgent(
+    tools=[sql_engine],
+    model=OpenAIServerModel(
+        model_id="gpt-4o-mini",               # or "gpt-4o"
+        api_key=os.environ["OPENAI_API_KEY"], # uses .env via load_dotenv()
+        api_base="https://api.openai.com/v1", # optional, default works
+    ),
+)
+```
+
+## 7. Run Agent Queries
+
+Execute queries and observe the agent's reasoning and tool usage:
+
+```python
+# Example query
+query = "Can you give me the name of the client who got the most expensive receipt?"
+print(f"Query: {query}")
+print("=" * 50)
+
+response = agent.run(query)
+print(f"Response: {response}")
+```
+
+## 8. Advanced Usage Examples
+
+### Multiple Queries
+
+```python
+queries = [
+    "What is the total amount spent by all customers?",
+    "Which customer left the highest tip?",
+    "What is the average tip percentage?",
+    "Show me all receipts above $20"
+]
+
+for query in queries:
+    print(f"\nQuery: {query}")
+    print("-" * 40)
+    response = agent.run(query)
+    print(f"Response: {response}")
+```
+
+### Complex Analysis
+
+```python
+complex_query = """
+Analyze the receipt data and provide insights about:
+1. Customer spending patterns
+2. Tip behavior
+3. Any interesting trends you notice
+"""
+
+print(f"Complex Analysis Query: {complex_query}")
+print("=" * 60)
+
+response = agent.run(complex_query)
+print(f"Analysis: {response}")
+```
+
+## 9. Observability with Maxim
+
+All agent interactions, tool calls, and SQL queries are automatically traced and can be visualized in your [Maxim dashboard](https://app.getmaxim.ai/). This provides deep insights into:
+
+- **Agent Reasoning**: See how the agent processes queries and decides which tools to use
+- **Tool Usage**: Monitor SQL query execution and results
+- **Performance Metrics**: Track response times and token usage
+- **Error Handling**: Identify and debug any issues with queries or tool calls
+
+## 10. Error Handling and Debugging
+
+Add error handling to make your agent more robust:
+
+```python
+@tool
+def safe_sql_engine(query: str) -> str:
+    """
+    Safely perform SQL queries on the receipts table with error handling.
+    """
+    try:
+        output = ""
+        with engine.connect() as con:
+            rows = con.execute(text(query))
+            for row in rows:
+                output += "\n" + str(row)
+        return output if output else "No results found"
+    except Exception as e:
+        return f"Error executing query: {str(e)}"
+
+# Update agent with safer tool
+agent = CodeAgent(
+    tools=[safe_sql_engine],
+    model=OpenAIServerModel(
+        model_id="gpt-4o-mini",
+        api_key=os.environ["OPENAI_API_KEY"],
+    ),
+)
+```
+
+## 11. Production Considerations
+
+### Environment Configuration
+
+```python
+import os
+from maxim import Config, Maxim
+from maxim.logger import LoggerConfig
+
+# Production-ready Maxim setup
+maxim = Maxim(Config(api_key=os.getenv("MAXIM_API_KEY")))
+logger = maxim.logger(LoggerConfig(id=os.getenv("MAXIM_LOG_REPO_ID")))
+
+# Instrument with debug logging for development
+instrument_smolagents(logger, debug=True)
+```
+
+### Resource Cleanup
+
+```python
+try:
+    # Your agent operations here
+    response = agent.run("Your query here")
+    print(response)
+finally:
+    # Ensure proper cleanup
+    maxim.cleanup()
+```
+
+## 12. Visualize in Maxim Dashboard
+
+After running your Smolagents application:
+
+- Log in to your [Maxim Dashboard](https://app.getmaxim.ai/)
+- Navigate to your repository
+- View detailed traces including:
+  - Agent conversations and reasoning
+  - SQL tool calls and results
+  - Performance metrics and costs
+  - Error logs and debugging information
+
+
+
+---
+
+For more details, see the [Smolagents documentation](https://github.com/huggingface/smolagents) and the [Maxim Python SDK documentation](https://www.getmaxim.ai/docs/introduction/overview).
+
+## Resources
+
+<CardGroup cols="1">
+    <Card title="Cookbook Code" icon="github" href="https://github.com/maximhq/maxim-cookbooks/tree/main/python/observability-online-eval/smolagents">
+        Python Script for Smolagents & Maxim
+    </Card>
+</CardGroup>
