@@ -1,0 +1,58 @@
+---
+title: Voice Simulation
+description: Test your Voice Agent's interaction capabilities with realistic voice simulations
+---
+
+## Voice Simulation Overview
+
+Maxim's Voice simulation allows you to test how your AI agent handles voice interactions, ensuring natural conversations and appropriate responses to different speech patterns, accents and scenarios.
+
+## Features of Voice Simulations
+
+- Real-time audio streaming and transcription in interactive sessions
+- Integration with providers of your choice ([Twilio](https://www.twilio.com/en-us), [VAPI](https://vapi.ai/), etc.)
+- Multi-scenario testing with built-in voice evaluators
+
+## Setting up Voice Simulations
+
+<Steps>
+
+<Step title="Adding a New Voice Provider">
+- Go to Settings -> Voice Providers
+- Add a voice provider of your choice between Twilio / Vapi
+- Add its account SID and Auth Key for secure connection
+
+![Voice Provider Configuration](/images/docs/evaluate/runs/img18.png)
+</Step>
+
+<Step title="Setup Voice Agent Details">
+- Go to Agents -> Voice Agents
+- Create a new agent, adding its name and description (simulation agent has context of this)
+- Add the phone number and country code of the voice agent
+
+![Voice Agent Setup](/images/docs/evaluate/runs/img19.png)
+</Step>
+
+<Step title="Define the Scenario and Persona">
+- Scenario: Conversation context and goals
+- Persona: Voice characteristics and style
+- First message initiator is configurable - default is simulation agent waiting for your voice agent to speak first
+
+<Note>
+If simulation agent speaks first is selected, ensure your voice agent waits before responding to maintain proper conversation turn-taking.
+</Note>
+
+![Define Scenario](/images/docs/evaluate/runs/img20.png)
+</Step>
+
+</Steps>
+
+
+## Example Voice Simulation Run
+
+Key features of the simulation run interface:
+- Transcripts shown in real-time for both simulation agent and voice agent
+- Audio recordings can be played back and downloaded
+- Statistical conversation metrics like Average Response Latency, Average Pitch, Talk Ratio and Speech Rate
+
+![Voice Simulation Run](/images/docs/evaluate/runs/img21.png)

@@ -178,7 +178,21 @@
                     },
                     {
                         "group": "Simulations",
-                        "pages": ["simulations/overview", "simulations/simulation-runs"]
+                        "pages": [
+                            {
+                                "group": "Text Simulation",
+                                "pages": [
+                                    "simulations/text-simulation/overview",
+                                    "simulations/text-simulation/simulation-runs"
+                                ]
+                            },
+                            {
+                                "group": "Voice Simulation",
+                                "pages": [
+                                    "simulations/voice-simulation/voice-simulation"
+                                ]
+                            }
+                        ]
                     },
                     {
                         "group": "Library",
@@ -1024,11 +1038,11 @@
         },
         {
             "source": "/evaluate/how-to/evaluate-workflows-via-api-endpoint/simulate-multi-turn-conversations",
-            "destination": "/simulations/overview"
+            "destination": "/simulations/text-simulation/overview"
         },
         {
             "source": "/evaluate/how-to/evaluate-workflows-via-api-endpoint/evaluate-simulated-sessions-for-agents",
-            "destination": "/simulations/simulation-runs"
+            "destination": "/simulations/text-simulation/simulation-runs"
         },
         {
             "source": "/evaluate/how-to/evaluate-workflows-via-api-endpoint/scripting-to-configure-response-structures",

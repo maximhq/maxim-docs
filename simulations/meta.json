@@ -1,4 +1,13 @@
 {
 	"title": "Simulations",
-	"pages": ["overview", "simulation-runs"]
+	"folders": {
+		"text-simulation": {
+			"title": "Text Simulation",
+			"pages": ["overview", "simulation-runs"]
+		},
+		"voice-simulation": {
+			"title": "Voice Simulation",
+			"pages": ["voice-simulation"]
+		}
+	}
 }
