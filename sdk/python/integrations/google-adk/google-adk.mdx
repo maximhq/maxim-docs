@@ -1,0 +1,245 @@
+---
+title: Google ADK Integration
+description: Integrate Maxim with Google's Agent Development Kit (ADK) for comprehensive observability and monitoring of multi-agent systems.
+---
+## Overview
+
+The Google ADK integration allows you to:
+
+- **Automatic Instrumentation**: Automatically capture traces from ADK agents without code changes
+- **Multi-Agent Monitoring**: Track complex agent interactions and workflows
+- **Performance Insights**: Monitor agent execution times and resource usage
+- **Metrics Collection**: Collect key metrics such as latency, token usage, and cost for each agent or workflow
+- **Error Tracking**: Capture and analyze agent failures and exceptions
+- **Custom Logging**: Add structured logging to your agent workflows
+- **Node-Level Evaluation**: Apply evaluators to components within an agent trace using Maxim's node-level evaluation capabilities, enabling granular assessment and scoring of each step or node in an agent workflow
+
+## Installation
+
+### Prerequisites
+
+- Python 3.10+
+- Google ADK installed and configured
+- Maxim account and API key
+
+### Install Dependencies
+
+```bash
+pip install maxim-py google-adk python-dotenv
+```
+
+## Quick Start
+
+### 1. Environment Setup
+
+Create a `.env` file in your project directory:
+
+```bash
+# Google Cloud Configuration
+GOOGLE_CLOUD_PROJECT=your-project-id
+GOOGLE_CLOUD_LOCATION=us-central1
+GOOGLE_API_KEY=your-google-api-key
+GOOGLE_GENAI_USE_VERTEXAI=False
+
+# Maxim Configuration
+MAXIM_API_KEY=your-maxim-api-key
+MAXIM_LOG_REPO_ID=your-log-repository-id
+```
+
+### 2. Basic Integration
+
+Add Maxim instrumentation to your ADK agent:
+
+```python {24}
+# __init__.py
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+# Use Gemini API instead of Vertex AI (simpler setup)
+os.environ.setdefault("GOOGLE_GENAI_USE_VERTEXAI", "False")
+
+# Import your agent
+from . import agent
+
+# Initialize Maxim instrumentation
+try:
+    from maxim import Maxim
+    from maxim.logger.google_adk import instrument_google_adk
+
+    print("🔌 Initializing Maxim instrumentation for Google ADK...")
+    maxim = Maxim()
+    maxim_logger = maxim.logger()
+
+    # Apply instrumentation patches to Google ADK
+    instrument_google_adk(maxim_logger, debug=True)
+
+    print("✅ Maxim instrumentation complete!")
+    
+    # Export the instrumented agent
+    root_agent = agent.root_agent
+    
+except ImportError as e:
+    print(f"⚠️  Could not initialize Maxim instrumentation: {e}")
+    print("💡 Running without Maxim logging")
+    # Fall back to using the agent without Maxim
+    root_agent = agent.root_agent
+```
+
+### 3. Run Your Agent
+
+```bash
+# Navigate to your agent directory
+cd your-agent-directory
+
+# Install dependencies
+uv sync
+
+# Run the agent with Maxim instrumentation
+adk run your_agent
+
+# Optional: Start web UI
+adk web
+```
+
+## Example: Financial Advisor Agent
+
+Here's a complete example of a financial advisor agent ([Agent Example by Google](https://github.com/google/adk-samples/tree/main/python/agents/financial-advisor)) with Maxim instrumentation:
+
+```python {24}
+# financial_advisor/__init__.py
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+# Use Gemini API instead of Vertex AI
+os.environ.setdefault("GOOGLE_GENAI_USE_VERTEXAI", "False")
+
+# Import the agent
+from . import agent
+
+# Initialize Maxim instrumentation
+try:
+    from maxim import Maxim
+    from maxim.logger.google_adk import instrument_google_adk
+
+    print("🔌 Initializing Maxim instrumentation for Google ADK...")
+    maxim = Maxim()
+    maxim_logger = maxim.logger()
+
+    # Apply instrumentation patches
+    instrument_google_adk(maxim_logger, debug=True)
+
+    print("✅ Maxim instrumentation complete!")
+    
+    # Export the instrumented agent
+    root_agent = agent.root_agent
+    
+except ImportError as e:
+    print(f"⚠️  Could not initialize Maxim instrumentation: {e}")
+    print("💡 Running without Maxim logging")
+    root_agent = agent.root_agent
+```
+
+### Running the Example
+
+```bash
+# Navigate to the financial advisor directory
+cd financial-advisor
+
+# Install dependencies
+uv sync
+
+# Run the agent
+adk run financial_advisor
+
+# Start web UI
+adk web
+
+# Run tests
+uv run pytest tests
+
+# Run evaluations
+uv run pytest eval
+```
+
+## Monitoring and Observability
+
+### Dashboard Views
+
+Once your agent is running with Maxim instrumentation, you can monitor:
+
+- **Agent Performance**: Response times, success rates, and error rates
+- **Workflow Traces**: Complete execution paths through your multi-agent system
+- **Custom Metrics**: Business-specific metrics and KPIs
+- **Error Analysis**: Detailed error tracking and debugging information
+
+![](/images/adk.gif)
+
+### Key Metrics Tracked
+
+- Agent execution time
+- Token usage and costs
+- Error rates and types
+- Agent interaction patterns
+
+## Troubleshooting
+
+### Common Issues
+
+**Instrumentation not working:**
+```bash
+# Check Maxim installation
+pip show maxim-py
+
+# Verify API key
+echo $MAXIM_API_KEY
+
+# Check debug logs
+export MAXIM_DEBUG=true
+```
+
+**Agent not starting:**
+```bash
+# Check Google ADK installation
+adk --version
+
+# Verify environment variables
+cat .env
+
+# Check agent configuration
+adk validate your_agent
+```
+
+**Missing traces:**
+- Ensure `instrument_google_adk()` is called before agent initialization
+- Check that your agent is properly imported after instrumentation
+- Verify Maxim API key and repository ID are correct
+
+### Debug Mode
+
+Enable debug mode for detailed logging:
+
+```python
+# Enable debug mode
+instrument_google_adk(maxim_logger, debug=True)
+
+# Or set environment variable
+os.environ["MAXIM_DEBUG"] = "true"
+```
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card title="Google ADK integration cookbook (GitHub)" icon="github" href="https://github.com/maximhq/maxim-cookbooks/blob/main/python/observability-online-eval/google-adk">
+    
+  </Card>
+
+   <Card title="Google ADK Official Examples" icon="github" href="https://github.com/google/adk-samples/tree/main/python/agents">
+    
+  </Card>
+</CardGroup>

@@ -426,6 +426,10 @@
                                     {
                                         "group": "Pydantic AI",
                                         "pages": ["sdk/python/integrations/pydantic-ai/pydantic_ai"]
+                                    },
+                                    {
+                                        "group": "Google ADK",
+                                        "pages": ["sdk/python/integrations/google-adk/google-adk"]
                                     }
                                 ]
                             },
