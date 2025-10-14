@@ -628,30 +628,6 @@
     ]
   },
   "valid_links": {
-    "https://openai.github.io/openai-agents-python/": [
-      {
-        "file": "apps/maxim-docs/integrations/openai-agents-sdk.mdx",
-        "line": 3
-      }
-    ],
-    "https://www.getmaxim.ai/docs/observe/quickstart": [
-      {
-        "file": "apps/maxim-docs/integrations/openai-agents-sdk.mdx",
-        "line": 16
-      }
-    ],
-    "https://getmax.im/openai-agents-language": [
-      {
-        "file": "apps/maxim-docs/integrations/openai-agents-sdk.mdx",
-        "line": 64
-      }
-    ],
-    "https://getmax.im/openai-agents-customer-support": [
-      {
-        "file": "apps/maxim-docs/integrations/openai-agents-sdk.mdx",
-        "line": 73
-      }
-    ],
     "#performance-metrics-alerts": [
       {
         "file": "apps/maxim-docs/library/alerts.mdx",
