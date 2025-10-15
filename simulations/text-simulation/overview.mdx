@@ -4,12 +4,18 @@ title: Simulation Overview
 
 ## Why Simulate Conversations?
 
-Testing AI conversations manually is time-consuming and often misses edge cases. It helps you:
+Testing AI conversations manually is time-consuming and often misses edge cases. Maxim supports both **agent simulation** and **prompt simulation** to help you:
 
 - Test how your AI maintains context across multiple exchanges
 - Evaluate responses to different user emotions and behaviors
 - Verify proper use of business context and policies
 - Identify potential conversation dead-ends
+
+### Agent Simulation
+Test your complete agent workflows with AI-generated user interactions. This is particularly valuable for multi-agent systems where complex user scenarios can reveal workflow issues.
+
+### Prompt Simulation  
+Test individual prompts or prompt chains with AI-generated inputs, allowing you to optimize prompt performance before integrating into your agent.
 
 import { MaximPlayer } from "/snippets/maximPlayer.mdx"
 
@@ -22,6 +28,26 @@ import { MaximPlayer } from "/snippets/maximPlayer.mdx"
 - Customer requesting refund for a defective laptop
 - New user needs help configuring account security settings
 - Customer confused about unexpected charges on their bill
+
+### Agent Description (for Agent Simulation)
+
+When setting up agent simulation, provide a detailed description of your agent's purpose, capabilities, and business context. This helps the simulation generate more realistic and relevant test scenarios.
+
+**Example:**
+```
+Financial Advisor Agent
+
+This agent helps users with investment decisions and financial planning. It can:
+- Analyze portfolio performance
+- Recommend investment strategies based on risk tolerance
+- Provide market insights and trends
+- Help with retirement planning
+
+The agent maintains a professional, helpful tone and always recommends consulting with a licensed financial advisor for major decisions.
+```
+
+![Agent Description](/images/simulation_description.png)
+
 
 ## 2. Define the User Persona
 

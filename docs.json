@@ -319,7 +319,7 @@
                     {
                         "group": "Integrations",
                         "pages": [
-                            "integrations/openai-agents-sdk",
+                            "integrations/overview",
                             "integrations/create-a-pagerduty-integration",
                             "integrations/create-a-slack-integration"
                         ]
@@ -1286,7 +1286,11 @@
         },
         {
             "source": "/observe/integrations/openai-agents-sdk",
-            "destination": "/integrations/openai-agents-sdk"
+            "destination": "/sdk/python/integrations/openai/agents-sdk"
+        },
+        {
+            "source": "/integrations/openai-agents-sdk",
+            "destination": "/sdk/python/integrations/openai/agents-sdk"
         },
         {
             "source": "/observe/overview",
