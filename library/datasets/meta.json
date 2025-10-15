@@ -3,6 +3,7 @@
     "pages": [
         "use-local-datasets",
         "import-or-create-datasets",
+        "synthetic-data-generation",
         "curate-datasets",
         "manage-datasets"
     ]

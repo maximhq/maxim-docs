@@ -300,6 +300,7 @@
                                 "pages": [
                                     "library/datasets/use-local-datasets",
                                     "library/datasets/import-or-create-datasets",
+                                    "library/datasets/synthetic-data-generation",
                                     "library/datasets/curate-datasets",
                                     "library/datasets/manage-datasets"
                                 ]
