@@ -11,15 +11,20 @@ Testing AI conversations manually is time-consuming and often misses edge cases.
 - Verify proper use of business context and policies
 - Identify potential conversation dead-ends
 
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
+<MaximPlayer url="https://www.youtube.com/embed/J1Jhkh8wzZ4?si=ijlmRyAP3vgkb3yD" />
+
+
 ### Agent Simulation
 Test your complete agent workflows with AI-generated user interactions. This is particularly valuable for multi-agent systems where complex user scenarios can reveal workflow issues.
+
+![Agent Simulation](/images/agent_sim.gif)
 
 ### Prompt Simulation  
 Test individual prompts or prompt chains with AI-generated inputs, allowing you to optimize prompt performance before integrating into your agent.
 
-import { MaximPlayer } from "/snippets/maximPlayer.mdx"
-
-<MaximPlayer url="https://www.youtube.com/embed/J1Jhkh8wzZ4?si=ijlmRyAP3vgkb3yD" />
+![Prompt Simulation](/images/prompt_simulation.gif)
 
 
 
@@ -58,6 +63,9 @@ The agent maintains a professional, helpful tone and always recommends consultin
 <Note>
 Mix different emotional states and expertise levels to test how your agent adapts its communication style.
 </Note>
+
+
+
 
 After defining the user persona, select the field where your agent's replies come from:
 
