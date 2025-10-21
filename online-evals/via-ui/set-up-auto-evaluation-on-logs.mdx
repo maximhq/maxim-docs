@@ -10,12 +10,58 @@ We know that evaluation is a necessary step while building an LLM, but since an 
 
 Evaluation on logs helps cover cases or scenarios that might not be covered by **Test runs**, ensuring that the LLM is performing optimally under various conditions. Additionally, it allows for potential issues to be identified early on which allows for making necessary adjustments to improve the overall performance of the LLM in time.
 
+With Maxim's multi-level evaluation system, you can evaluate at different granularities—from entire conversations (sessions) to individual responses (traces) to specific components (spans)—giving you comprehensive visibility into your AI application's performance.
+
 ![Diagram of the evaluation iteration loop](/images/docs/observe/how-to/evaluate-logs/auto-evaluation/diagram-of-the-evaluation-iteration-loop.png)
 
 <Note>
 **Before you start**
 
 You need to have your **logging set up** to capture interactions between your LLM and users before you can evaluate them. To do so, you would need to integrate [Maxim SDK](/tracing/tracing-via-sdk/traces) into your application.
+</Note>
+
+## Understanding Evaluation Levels
+
+Maxim supports evaluating your AI application at three different levels of granularity. This multi-level approach allows you to assess quality at different scopes depending on your use case:
+
+### Session-Level Evaluation
+
+Sessions represent multi-turn interactions or conversations. Session-level evaluators assess the quality of an entire conversation flow.
+
+**Use session-level evaluation when:**
+- You want to measure conversation quality across multiple turns
+- You need to evaluate multi-turn coherence, context retention, or conversation flow
+- You're assessing overall user satisfaction or goal completion
+- Your evaluator needs access to the full conversation history
+
+**Examples:** Conversation coherence, multi-turn faithfulness, overall user satisfaction, goal completion rate
+
+### Trace-Level Evaluation
+
+Traces represent single interactions or responses. Trace-level evaluators assess individual completions or responses.
+
+**Use trace-level evaluation when:**
+- You want to measure the quality of individual responses
+- You need to evaluate single-turn metrics like helpfulness or accuracy
+- You're assessing response-specific attributes like tone or formatting
+- Your evaluator only needs the current input and output
+
+**Examples:** Response helpfulness, answer accuracy, tone appropriateness, hallucination detection
+
+### Span-Level Evaluation
+
+Spans represent specific components within a trace (e.g., a generation, retrieval, tool call, or custom component). Span-level evaluators assess individual components in isolation.
+
+**Use span-level evaluation when:**
+- You want to evaluate specific components of your agentic workflow
+- You need to assess retrieval quality, individual generation steps, or tool usage
+- You're optimizing specific parts of your application independently
+- You need component-specific metrics for debugging or optimization
+
+**Examples:** Retrieval relevance, generation clarity, tool call appropriateness, context quality
+
+<Note>
+Span-level evaluations are configured programmatically via the SDK rather than through the UI. See [Node-Level Evaluation](/online-evals/via-sdk/node-level-evaluation) for implementation details.
 </Note>
 
 ## Setting Up Auto Evaluation
@@ -25,36 +71,68 @@ You need to have your **logging set up** to capture interactions between your LL
 Navigate to the repository where you want to evaluate your logs.
 </Step>
 <Step title="Access evaluation configuration">
-Click on `Configure evaluation` in the top right corner of the page and choose the `Setup&nbsp;evaluation&nbsp;configuration` option. This will open up the evaluation configuration sheet.
+Click on `Configure evaluation` in the top right corner of the page. This will open up the evaluation configuration sheet.
 
-<Img
-    src={
-        <div className="p-4 flex flex-col gap-1 items-end">
-                <Icon icon="settings2" />Configure evaluation
-            <div className="min-w-[8rem] overflow-hidden rounded-sm border bg-background-primary p-1 text-content-primary shadow-md">
-                <div className="flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-md outline-hidden bg-background-highlight-primary text-content-primary">
-                    Setup evaluation configuration
-                </div>
-                <div className="flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-md outline-hidden">
-                    Create annotation queue
-                </div>
-            </div>
-        </div>
-    }
-    alt="Screenshot of the repository page with the configure evaluation button highlighted"
-/>
+![Screenshot of the repository page with the configure evaluation button highlighted](/images/docs/configure_eval.png)
 </Step>
-<Step title="Configure auto evaluation settings">
-The sheet's `Auto Evaluation` section has 3 parts:
+<Step title="Understand evaluation levels">
+The `Auto Evaluation` section allows you to configure evaluators at different levels of granularity:
 
-- `Select evaluators`: Choose the evaluators you want to use for your evaluation.
-- `Filters`: Setup filters to only evaluate logs that meet a certain criteria.
-- `Sampling`: Choose a sampling rate, this will help you control the amount of logs that are evaluated and prevent evaluating every log; which could potentially lead to very high costs.
-
-![Screenshot of the evaluation configuration sheet](/images/docs/observe/how-to/evaluate-logs/auto-evaluation/screenshot-of-the-evaluation-configuration-sheet.png)
+- **Session**: Evaluate multi-turn interactions (conversations) as a whole. Use this when you need to assess the quality of an entire conversation or dialogue flow.
+- **Trace**: Evaluate a single response to a user. Use this for evaluating individual interactions or single completions.
+- **Span**: Evaluate specific components within a trace (e.g., a particular generation, retrieval, or tool call). This is configured via the SDK - see [Node-Level Evaluation](/online-evals/via-sdk/node-level-evaluation) for details.
 
 <Note>
-The `Human Evaluation` section below is explained in the [Set up human evaluation on logs](/online-evals/via-ui/set-up-human-annotation-on-logs) section
+**Choosing the right level:**
+- Use **Session** level for evaluating conversation quality, multi-turn coherence, or overall user satisfaction
+- Use **Trace** level for single-turn quality metrics like helpfulness, accuracy, or tone
+- Use **Span** level (via SDK) for component-specific metrics like retrieval quality or generation clarity
+</Note>
+</Step>
+<Step title="Add evaluators at each level">
+For each level (Session and Trace), click `Add evaluators` to select the evaluators you want to run.
+
+Once you select an evaluator, you'll need to map variables to the evaluator's required inputs. For example:
+- `{{input}}` might map to the user's input
+- `{{output}}` might map to `trace[*].output` for session-level or `trace.output` for trace-level
+- `{{context}}` might map to retrieved context like `retrieval[*].retrievedChunks[*]`
+
+![Screenshot of variable mapping](/images/docs/auto_eval.png)
+
+<Note>
+**Variable mapping syntax:**
+- Use `trace.output` to reference a trace's output
+- Use `trace[*].output` to reference all outputs in a session
+- Use `retrieval[*].retrievedChunks[*]` to reference retrieved context from retrieval spans
+- Custom mappings can be created by clicking on the mapping field
+</Note>
+</Step>
+<Step title="Configure filters and sampling">
+Below the evaluator configuration, you'll find:
+
+**Filters**: Setup filters to only evaluate logs that meet certain criteria. Click `Add filter rule` to create conditions based on various log properties:
+
+- **Trace ID / Session ID**: Filter by specific trace or session identifiers
+- **Input / Output**: Filter based on user input or model output content
+- **Error**: Filter logs that have errors or specific error types
+- **Model**: Filter by the LLM model used (e.g., gpt-4, claude-3, etc.)
+- **Tags**: Filter by custom tags you've added to your traces
+- **Metrics**: Filter based on evaluation scores or other metrics
+- **Cost**: Filter by cost thresholds (e.g., only evaluate expensive requests)
+- **Tokens**: Filter by token usage (e.g., evaluate long conversations)
+- **User Feedback**: Filter by user ratings or feedback scores
+- **Latency**: Filter by response time (e.g., evaluate slow requests)
+
+You can combine multiple filter conditions using "All" (AND) or "Any" (OR) logic to create sophisticated filtering rules.
+
+**Sampling**: Choose a sampling rate to control what percentage of logs are evaluated. This helps manage costs by preventing evaluation of every single log.
+
+![Screenshot of filters and sampling](/images/docs/filters_sampling.png)
+
+You can also enable **Rate Limiting** to cap the maximum number of logs sampled per time period, providing additional cost control.
+
+<Note>
+The `Human Evaluation` section is explained in the [Set up human evaluation on logs](/online-evals/via-ui/set-up-human-annotation-on-logs) section
 </Note>
 </Step>
 <Step title="Save configuration">
@@ -87,9 +165,15 @@ Evaluation summary displays the following information (top to bottom, left to ri
 - How many tokens were used across the all evaluators' evaluations
 - What was the total time taken for the evaluation to process
 
-### Trace evaluation card
+### Evaluation cards by level
 
-In each card, you will find a tab switcher on the top right corner, this is used to navigate through the evaluation's details. Here is what you can find in in different tabs:
+Depending on what levels you configured evaluators for, you'll see separate evaluation cards:
+
+- **Session evaluation card**: Shows evaluators that ran on the entire session (multi-turn conversation)
+- **Trace evaluation card**: Shows evaluators that ran on the individual trace (single interaction)
+- **Span evaluation cards**: Shows evaluators that ran on specific components within the trace (configured via SDK)
+
+In each card, you will find a tab switcher on the top right corner, this is used to navigate through the evaluation's details. Here is what you can find in different tabs:
 
 #### Overview tab
 
@@ -120,7 +204,15 @@ This tab contains the following sections:
 
 ![Screenshot of the tree view on the left panel](/images/docs/observe/how-to/evaluate-logs/auto-evaluation/screenshot-of-the-tree-view-on-the-left-panel.png)
 
-This view is essential for when you are evaluating the each log on the node level, essentially on each component of the trace (like a generation or retrieval, etc). This view helps with your perception as to what component's evaluation you are looking at on the right panel (and the component's place in the trace as well). We discuss more about the [Node Level Evaluation](/online-evals/via-sdk/node-level-evaluation) further down.
+This hierarchical view shows the structure of your trace and is essential when you have evaluations at different levels:
+
+- **Session level**: The root node represents the entire session
+- **Trace level**: Child nodes represent individual traces within a session
+- **Span level**: Nested nodes represent components within traces (generations, retrievals, tool calls, etc.)
+
+When you click on any node in the tree view, the right panel displays the evaluation results specific to that level. This helps you understand which component's evaluation you're viewing and its place in the overall interaction hierarchy.
+
+Learn more about evaluating individual components in [Node Level Evaluation](/online-evals/via-sdk/node-level-evaluation).
 
 ## Dataset Curation
 
