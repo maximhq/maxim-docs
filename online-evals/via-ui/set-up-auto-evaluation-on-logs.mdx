@@ -34,8 +34,6 @@ Sessions represent multi-turn interactions or conversations. Session-level evalu
 - You're assessing overall user satisfaction or goal completion
 - Your evaluator needs access to the full conversation history
 
-**Examples:** Conversation coherence, multi-turn faithfulness, overall user satisfaction, goal completion rate
-
 ### Trace-Level Evaluation
 
 Traces represent single interactions or responses. Trace-level evaluators assess individual completions or responses.
@@ -44,9 +42,6 @@ Traces represent single interactions or responses. Trace-level evaluators assess
 - You want to measure the quality of individual responses
 - You need to evaluate single-turn metrics like helpfulness or accuracy
 - You're assessing response-specific attributes like tone or formatting
-- Your evaluator only needs the current input and output
-
-**Examples:** Response helpfulness, answer accuracy, tone appropriateness, hallucination detection
 
 ### Span-Level Evaluation
 
@@ -57,8 +52,6 @@ Spans represent specific components within a trace (e.g., a generation, retrieva
 - You need to assess retrieval quality, individual generation steps, or tool usage
 - You're optimizing specific parts of your application independently
 - You need component-specific metrics for debugging or optimization
-
-**Examples:** Retrieval relevance, generation clarity, tool call appropriateness, context quality
 
 <Note>
 Span-level evaluations are configured programmatically via the SDK rather than through the UI. See [Node-Level Evaluation](/online-evals/via-sdk/node-level-evaluation) for implementation details.
@@ -150,13 +143,11 @@ In the logs' table view, you can find the evaluations on a trace in its row towa
 
 Click the trace to view detailed evaluation results. In the sheet, you will find the `Evaluation` tab, wherein you can see the evaluation in detail.
 
-![Screenshot of the details sheet with the evaluation tab highlighted](/images/docs/observe/how-to/evaluate-logs/auto-evaluation/screenshot-of-the-details-sheet-with-the-evaluation-tab-highlighted.png)
+![Screenshot of the details sheet with the evaluation tab highlighted](/images/docs/trace_evaluator.png)
 
 The evaluation tab displays many details regarding the evaluation of the trace, let us see how you can navigate through them and get more insights into how your LLM is performing.
 
 ### Evaluation summary
-
-![Screenshot of the evaluation summary](/images/docs/observe/how-to/evaluate-logs/auto-evaluation/screenshot-of-the-evaluation-summary.png)
 
 Evaluation summary displays the following information (top to bottom, left to right):
 
@@ -204,12 +195,6 @@ This tab contains the following sections:
 
 ![Screenshot of the tree view on the left panel](/images/docs/observe/how-to/evaluate-logs/auto-evaluation/screenshot-of-the-tree-view-on-the-left-panel.png)
 
-This hierarchical view shows the structure of your trace and is essential when you have evaluations at different levels:
-
-- **Session level**: The root node represents the entire session
-- **Trace level**: Child nodes represent individual traces within a session
-- **Span level**: Nested nodes represent components within traces (generations, retrievals, tool calls, etc.)
-
 When you click on any node in the tree view, the right panel displays the evaluation results specific to that level. This helps you understand which component's evaluation you're viewing and its place in the overall interaction hierarchy.
 
 Learn more about evaluating individual components in [Node Level Evaluation](/online-evals/via-sdk/node-level-evaluation).
@@ -220,7 +205,7 @@ Once you have logs and evaluations in Maxim, you can easily curate datasets by f
 
 <Steps>
 <Step title="Filter logs with specific evaluation scores (e.g., bias score greater than 0)">
-![Filter](/images/docs/online-evals/dataset-curation-filter-state.png)
+![Filter](/images/docs/filter_by_evals.png)
 </Step>
 <Step title="Select all filtered logs using the top-left selector">
 ![Filtered](/images/docs/online-evals/dataset-curation-filtered-state.png)
