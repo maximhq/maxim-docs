@@ -3,10 +3,20 @@ title: Online Evaluation Overview
 description: Get started with online evals.
 ---
 
-Online evaluation is a key part of Maxim’s platform, enabling you to continuously monitor and assess your AI application’s quality in production. You can run evaluations on the entire session, a single trace or particular nodes within the trace (e.g., tool calls, generations or retrievals).
+Online evaluation is a key part of Maxim's platform, enabling you to continuously monitor and assess your AI application's quality in production. Maxim supports multi-level evaluation, allowing you to assess quality at different granularities:
 
-With online evals, you can automatically evaluate logs, set up custom filters and sampling, and gain detailed insights into your system’s real-world performance.
+- **Session-level**: Evaluate entire multi-turn conversations to assess overall conversation quality, coherence, and user satisfaction
+- **Trace-level**: Evaluate individual single-turn interactions to measure response quality, accuracy, and appropriateness
+- **Span-level (Node-level)**: Evaluate specific components within a trace (e.g., generations, retrievals, tool calls) to optimize individual parts of your workflow
 
-You can combine automated evaluators with human review, curate datasets from evaluated logs, and configure alerts to stay on top of both quality and performance. This ensures your AI remains reliable and effective as it interacts with users in live environments.
+With online evals, you can:
+- Automatically evaluate logs based on custom filters and sampling rules
+- Configure evaluators at different levels through the UI (Session/Trace) or SDK (Span/Node)
+- Map evaluator variables to your trace data for flexible evaluation
+- Combine automated evaluators with human review
+- Curate datasets from evaluated logs for offline testing
+- Set up alerts to stay on top of both quality and performance issues
+
+This multi-level approach ensures your AI remains reliable and effective as it interacts with users in live environments, giving you comprehensive visibility from high-level conversations down to individual components.
 
 ![Online Evals](/images/docs/online-evals/online-evals-overview.png)
