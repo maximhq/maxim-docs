@@ -1,0 +1,214 @@
+---
+title: Map Variables to Evaluators
+description: Map variables from your prompts, workflows, or datasets to evaluator inputs using our flexible mapping system
+---
+
+import { MaximPlayer } from '/snippets/maximPlayer.mdx';
+import { Plus } from 'lucide-react';
+
+Variable mapping defines where evaluators should access data from during evaluation. You can map variables from prompts, workflows, or datasets to any pre-built or custom evaluator.
+
+When you select an evaluator, Maxim automatically fills in variable mappings based on common patterns. You can modify these mappings to fit your specific needs. If a variable isn't found in Maxim's built-in options, it falls back to matching dataset column names.
+
+## Dataset Variables
+
+Access any dataset column by its type or column name. These variables are available for all entity types:
+
+- `dataset.input` - Input column (same as `run.input`)
+- `dataset.output` - Output column
+- `dataset.expectedOutput` - Expected output column
+- `dataset.scenario` - Scenario column
+- `dataset.expectedSteps` - Expected steps column
+- `dataset.expectedToolCalls` - Expected tool calls column
+- `dataset.columns["column name"]` - Any custom column by name
+
+## Run Variables
+
+Access run-specific data using the `run.` prefix. Available options depend on your entity type (prompt or workflow).
+
+## Prompt Variable Mapping
+
+### Single-Turn Prompts
+
+Access prompt version data using the `version.` prefix:
+
+- `version.messages` (`JSON`) - All messages in the prompt version, including saved messages
+- `version.systemMessage` (`String`) - System message from the saved version
+- `version.userMessages` (`JSON`) - User messages combining saved version messages and run input
+
+Access run data:
+
+- `run.input` (`String`) - Input variable
+- `run.output` (`String`) - Output variable
+- `run.retrieval` (`String`) - Retrieved context based on your selection
+- `run.toolCalls` (`JSON`) - Tool calls with name, arguments, and results
+
+### Multi-Turn Prompts
+
+Variable mapping works the same as single-turn prompts:
+
+**Version variables:**
+- `version.messages` (`JSON`) - All messages in the prompt version
+- `version.systemMessage` (`String`) - System message
+- `version.userMessages` (`JSON`) - Combined user messages
+
+**Run variables:**
+- `run.input` (`String`) - Input variable
+- `run.output` (`String`) - Output variable
+- `run.retrieval` (`String`) - Retrieved context
+- `run.toolCalls` (`JSON`) - Tool calls with details
+
+## Workflow Variable Mapping
+
+### Single-Turn Workflows
+
+Access workflow response data using the `response.` prefix:
+
+- `run.input` (`String`) - Input variable
+- `run.output` (`String`) - Output variable
+- `run.retrieval` (`String`) - Retrieved context
+- `run.response` (`JSON/any`) - Workflow response with nested field access via dropdown or dot notation for objects, index notation for arrays
+
+### Multi-Turn Workflows
+
+For simulation runs, map variables from the conversation:
+
+- `run.session` (`JSON`) - Complete conversation session
+
+**Example session structure:**
+
+```json
+[
+    {
+        "request": {
+            "type": "text",
+            "payload": { "query": "Can you please book a hotel for me?" }
+        },
+        "response": {
+            "type": "text",
+            "payload": {
+                "query": "Sure — may I know the city, check-in date, and number of guests?"
+            }
+        },
+        "turn": 0
+    },
+    {
+        "request": {
+            "type": "text",
+            "payload": {
+                "query": "In Bangalore, 2 guests, check-in on 5th Nov, budget around $80 per night."
+            }
+        },
+        "response": {
+            "type": "text",
+            "payload": {
+                "query": "Got it. Do you prefer a hotel near city center or closer to airport?"
+            }
+        },
+        "turn": 1
+    },
+    {
+        "request": {
+            "type": "text",
+            "payload": { "query": "City center. Also free breakfast would be great." }
+        },
+        "response": {
+            "type": "text",
+            "payload": {
+                "query": "Understood. Should I auto-book the best matching option or show options first?"
+            }
+        },
+        "turn": 2
+    },
+    {
+        "request": {
+            "type": "text",
+            "payload": { "query": "Show options first." }
+        },
+        "response": {
+            "type": "text",
+            "payload": {
+                "query": "Here are 3 hotels under $80 with free breakfast near city center. Would you like me to proceed with Hotel Blu Orchid?"
+            }
+        },
+        "turn": 3
+    }
+]
+```
+
+## Voice agent Variable Mapping
+
+For voice agent simulation runs, map variables from the conversation:
+
+- `run.session` (`JSON`) - Complete conversation session
+- `run.recordingUrl` (`String`) - Call recording url of the call
+
+**Example session structure:**
+
+```json
+[
+    {
+        "request": {
+            "type": "text",
+            "payload": { "query": "Can you please book a hotel for me?" }
+        },
+        "response": {
+            "type": "text",
+            "payload": {
+                "query": "Sure — may I know the city, check-in date, and number of guests?"
+            }
+        },
+        "turn": 0
+    },
+    {
+        "request": {
+            "type": "text",
+            "payload": {
+                "query": "In Bangalore, 2 guests, check-in on 5th Nov, budget around $80 per night."
+            }
+        },
+        "response": {
+            "type": "text",
+            "payload": {
+                "query": "Got it. Do you prefer a hotel near city center or closer to airport?"
+            }
+        },
+        "turn": 1
+    },
+    {
+        "request": {
+            "type": "text",
+            "payload": { "query": "City center. Also free breakfast would be great." }
+        },
+        "response": {
+            "type": "text",
+            "payload": {
+                "query": "Understood. Should I auto-book the best matching option or show options first?"
+            }
+        },
+        "turn": 2
+    },
+    {
+        "request": {
+            "type": "text",
+            "payload": { "query": "Show options first." }
+        },
+        "response": {
+            "type": "text",
+            "payload": {
+                "query": "Here are 3 hotels under $80 with free breakfast near city center. Would you like me to proceed with Hotel Blu Orchid?"
+            }
+        },
+        "turn": 3
+    }
+]
+```
+
+## No-code agent Variable Mapping
+
+Access no-code agent run data:
+
+- `run.input` (`String`) - Input variable
+- `run.output` (`String`) - Output variable
+- `run.retrieval` (`String`) - Retrieved context based on your selection
+- `run.toolCalls` (`JSON`) - Tool calls with name, arguments, and results

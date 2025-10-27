@@ -5,6 +5,7 @@
         "custom-evaluators",
         "third-party-evaluators",
         "sessions-in-evaluators",
+        "variables-mapping",
         "folders-in-evaluators"
     ]
 }

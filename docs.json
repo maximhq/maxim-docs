@@ -292,8 +292,9 @@
                                     },
                                     "library/evaluators/custom-evaluators",
                                     "library/evaluators/third-party-evaluators",
-                                    "library/evaluators/folders-in-evaluators",
-                                    "library/evaluators/sessions-in-evaluators"
+                                    "library/evaluators/sessions-in-evaluators",
+                                    "library/evaluators/variables-mapping",
+                                    "library/evaluators/folders-in-evaluators"
                                 ]
                             },
                             {
