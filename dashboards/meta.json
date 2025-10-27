@@ -1,4 +1,4 @@
 {
 	"title": "Dashboards",
-	"pages": ["test-runs-comparison-dashboard", "custom-logs-dashboard"]
+	"pages": ["test-runs-comparison-dashboard", "custom-logs-dashboard", "live-trends-dashboard"]
 }
