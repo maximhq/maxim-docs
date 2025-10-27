@@ -1,19 +1,19 @@
 ---
 title: Agent Deployment
-description: Quick iterations on agents should not require code deployments every time. With more and more stakeholders working on prompt engineering, its critical to keep deployments of agents as easy as possible without much overhead. Agent deployments on Maxim allow conditional deployment of agent changes that can be used via the SDK.
+description: Quick iterations on Agents should not require code deployments every time. With more and more stakeholders working on prompt engineering, its critical to keep deployments of Agents as easy as possible without much overhead. Agent deployments on Maxim allow conditional deployment of Agent changes that can be used via the SDK.
 ---
 
-## Why Deploy Agents via No-Code Builder via Maxim
+## Why deploy Agents via Maxim
 
-- Prompt experimentation - Create multiple versions of your agents, and use a wide variety of models available on Maxim to test and compare their performance using your custom data.
+- Prompt experimentation - Create multiple versions of your Agents, and use a wide variety of models available on Maxim to test and compare their performance using your custom data.
 - Deploy without code changes - Deploy the final version directly from UI—no code changes required. Use Maxim's RBAC support to limit deployment permission to key stakeholders.
 - Custom variables - Use custom variables to create rules to control which environments or user groups should receive the updates. This helps in setting up A/B tests or testing prompt variations internally before pushing to users.
 
 ### Deploying an Agent
 
 <Steps>
-	<Step title="Navigate to Agents via no-code builder">
-		Navigate to Evaluation > Agents via no-code builder and open the agent you want to deploy.
+	<Step title="Navigate to Prompt Chains">
+		Navigate to Evaluation > Prompts > Prompt Chains and open the prompt chain you want to deploy.
 	</Step>
 	<Step title="Access deployment options">
 		Click the 🚀 icon in the header and choose to deploy the present version.
@@ -27,16 +27,9 @@ description: Quick iterations on agents should not require code deployments ever
         Edit or define new variables by clicking "Edit deployment variables"
     </Step>
     <Step title="Define variable properties">
-        Define the name and type of any variable. 
-        - For variables of type `select` provide possible options. e.g. Environment: Beta, Staging, Prod.
+        Define the name and type of any variable. For variables of type `select` provide possible options. e.g. Environment: Beta, Staging, Prod.
 
         ![Add new deployment variable](/images/docs/evaluate/how-to/evaluate-prompts/deployments/add-new-deployment-variable.png)
-        
-        - For variables of type `multiselect`, configure when the deployment runs:
-          - all selected options are present in the deployment rule using the `=` operator, or
-          - any of the selected options are present in the deployment rule using the `includes` operator.
-
-        ![Multiselect deployment rule](/images/docs/evaluate/how-to/evaluate-prompts/deployments/multiselect-deployment-rule.png)
     </Step>
     <Step title="Deploy conditionally">
         Every time you have a new version to deploy, use the variable based rules to deploy conditionally.
@@ -50,7 +43,7 @@ description: Quick iterations on agents should not require code deployments ever
 
 ## Fetching Agents via SDK
 
-For building query to get agent with specific deployment variables, you can use `QueryBuilder`.
+For building query to get Agent with specific deployment variables, you can use `QueryBuilder`.
 
 <CodeGroup>
   ```typescript JS/TS
@@ -137,29 +130,4 @@ Adding filters based on Tags
   ```
 </CodeGroup>
 
-Use multiselect variables
-<CodeGroup>
-  ```typescript JS/TS
-  import { Maxim, QueryBuilder } from "@maximai/maxim-js;
-
-  const maxim = new Maxim({ apiKey: "", promptManagement: true});
-
-  const prompt = await maxim.getPromptChain(
-    "prompt-chain-id",
-    new QueryBuilder().and().deploymentVar("Tenant ID", ["Tenant1"]).build(),
-  );
-  ```
-
-  ```python Python
-  from maxim import Maxim, Config
-  from maxim.models import QueryBuilder
-
-  maxim = Maxim(Config(api_key="", prompt_management=True))
-
-  prompt = maxim.get_prompt_chain("prompt-chain-id",
-    QueryBuilder()
-      .and_()
-      .deployment_var("Tenant ID", ["Tenant1"])
-      .build())
-  ```
-</CodeGroup>
+<Callout>Learn more about advanced [prompt chain querying](/evaluate/how-to/evaluate-chains/querying-prompt-chains) techniques.</Callout>

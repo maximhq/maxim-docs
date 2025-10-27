@@ -1,13 +1,13 @@
 {
-	"title": "Evaluate Agents",
+	"title": "Evaluate Chains",
 	"pages": [
-		"quickstart",
-		"types-of-nodes",
-		"variables-in-agents",
-		"multi-agent-system",
-		"loops",
-		"error-debugging",
-		"agent-deployment",
-		"agent-evals"
+		"experiment-with-prompt-chains",
+		"debug-errors-at-every-node",
+		"use-loops-in-chains",
+		"use-api-nodes-within-chains",
+		"deploy-prompt-chains",
+		"test-prompt-chains",
+		"querying-prompt-chains",
+		"multi-agent-system"
 	]
 }

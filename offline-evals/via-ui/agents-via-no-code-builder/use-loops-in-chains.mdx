@@ -7,12 +7,15 @@ description: Learn how to use loops in your no-code agent to repeat steps or rer
 Use loops when you need to rerun a node or part of the flow multiple times.
 
 
-![Example of an Agent with loops](/images/docs/offline-evals/via-ui/agents-via-no-code-builder/prompt-chain-loops.png)
+![Example of an Agent with loops](/images/docs/evaluate/how-to/prompt-chains/prompt-chain-loops.png)
 
 The above example shows a simple agent that would identify the landmark in the given image and return the current weather of that location. The flow that occurs is as follows:
 
 1. The `Prompt` node gets the initial image as an input and runs the LLM to identify the landmark.
 2. The `getWeather` tool is called with the location of the landmark as input.
 3. The output of the `getWeather` tool is connected back to the `Prompt` node.
-4. The `Prompt` node runs again with the updated context and returns an assistant message to move the agent forward.
-5. The `Final output` node gets executed and the agent completes its execution.
+4. The `Prompt` node runs again with the updated context and returns an assistant message to move the chain forward.
+5. The `Final output` node gets executed and the chain completes its execution.
+
+You can check the full execution log of the chain by clicking on the `View run logs` button in the bottom toolbar.
+![View run logs button in the bottom toolbar](/images/docs/evaluate/how-to/prompt-chains/prompt-chain-loops-sheet.png)
