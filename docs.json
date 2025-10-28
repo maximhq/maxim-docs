@@ -75,6 +75,7 @@
                                             "offline-evals/via-ui/advanced/presets",
                                             "offline-evals/via-ui/advanced/scheduled-runs",
                                             "offline-evals/via-ui/advanced/customized-reports",
+                                            "offline-evals/via-ui/advanced/tag-reports",
                                             "offline-evals/via-ui/advanced/dataset-evaluation"
                                         ]
                                     }
