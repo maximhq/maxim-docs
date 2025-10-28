@@ -7,7 +7,7 @@
 		},
 		"voice-simulation": {
 			"title": "Voice Simulation",
-			"pages": ["voice-simulation"]
+			"pages": ["voice-simulation", "simulation-runs"]
 		}
 	}
 }
