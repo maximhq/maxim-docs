@@ -732,6 +732,13 @@
                             "source": "public-apis/openapi/test-run-share-report.json",
                             "directory": "Test run reports"
                         }
+                    },
+                    {
+                        "group": "Logging",
+                        "openapi": {
+                            "source": "public-apis/openapi/logging.json",
+                            "directory": "Logging"
+                        }
                     }
                 ]
             },
