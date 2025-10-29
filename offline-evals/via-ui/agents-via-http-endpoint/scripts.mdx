@@ -66,6 +66,66 @@ function postSimulation() {
 ```
 </CodeGroup>
 
+## Async Scripts
+
+You can use `async` functions in any script hook to perform asynchronous operations such as fetching data or reading secrets before returning. Simply define the hook with the `async` keyword and `await` the required promises:
+
+<CodeGroup>
+```javascript prescript
+async function prescript(request) {
+	const tokenResponse = await fetch("https://example.com/token");
+	const { token } = await tokenResponse.json();
+
+	request.headers["Authorization"] = `Bearer ${token}`;
+	request.data = {
+		...JSON.parse(request.data || "{}"),
+		fetchedAt: Date.now(),
+	};
+
+	return request;
+}
+```
+</CodeGroup>
+
+## Viewing Logs
+
+Scripts support standard JavaScript console methods for debugging and monitoring. You can use `console.log()`, `console.error()`, or any other console method to track execution flow and inspect data:
+
+<CodeGroup>
+```javascript prescript
+function prescript(request) {
+	console.log("Processing request:", request.url);
+	console.log("Request data:", request.data);
+	
+	request.headers["Authorization"] = "Bearer your-token";
+	
+	return request;
+}
+```
+
+```javascript postscriptV2
+function postscriptV2(response, request) {
+	console.log("Response status:", response.status);
+	console.log("Response data:", response.data);
+	
+	return {
+		content: response.data.message,
+		confidence: response.data.metadata?.confidence || 1.0,
+	};
+}
+```
+
+```javascript simulation
+function preSimulation() {
+	console.log("Starting simulation");
+	return {
+		simulationId: maxim.getVariable("simulationId"),
+		startTime: Date.now(),
+	};
+}
+```
+</CodeGroup>
+
 ## Variable Management
 
 Maxim's scripts flow providers a robust programmatic access to manage variable across the simulation course. Each sandbox has access to 4 methods
@@ -102,6 +162,57 @@ This method allows you to securely retrieve a variable stored in the vault. Vaul
 ```javascript
 var vaultVariable = maxim.getVaultVariable("variable-name");
 ```
+
+### Pre-built Variables
+
+Maxim provides several pre-built variables that are available in the script context for you to use:
+
+- **`input`**: The current input query or prompt from the dataset that is being sent to the endpoint. This represents the user's message or query for the current turn of the conversation.
+
+- **`history`**: Contains all previous messages in a multi-turn conversation. This allows your scripts to access the complete conversation context, including all prior user messages and assistant responses.
+
+- **`simulationId`**: A unique identifier for the current simulation or test run. This can be used to track and correlate data across multiple interactions within the same simulation.
+
+<CodeGroup>
+```javascript
+// Access predefined variables using getVariable
+var simulationId = maxim.getVariable("simulationId"); // Unique identifier for the simulation
+var input = maxim.getVariable("input"); // Input prompt/query to the endpoint
+var history = maxim.getVariable("history"); // All previous messages in the conversation
+```
+
+```javascript prescript
+function prescript(request) {
+	// Get the input query from the dataset
+	var userQuery = maxim.getVariable("input");
+	
+	// Access conversation history
+	var conversationHistory = maxim.getVariable("history");
+	
+	request.data = {
+		query: userQuery,
+		history: conversationHistory,
+		timestamp: Date.now(),
+	};
+	
+	return request;
+}
+```
+
+```javascript simulation
+function preSimulation() {
+	// Get simulation identifier
+	var simId = maxim.getVariable("simulationId");
+	
+	console.log("Starting simulation:", simId);
+	
+	return {
+		simulationId: simId,
+		startTime: Date.now(),
+	};
+}
+```
+</CodeGroup>
 
 ## Available Libraries
 

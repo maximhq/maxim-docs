@@ -39,11 +39,11 @@ You can also import or create datasets in Maxim using CSV files.
 <Step title="Create or Import a Dataset Using CSV">
 
 1. Go to the **Datasets** section in the Library. 
-2. Click **Create New** or **Upload CSV**.  
+2. Click on **Upload CSV Dataset**.  
 3. Upload your CSV file.  
-4. Add columns in the Dataset for columns in CSV.
+4. Map your columns with their respective types.
 ![Create dataset with csv](/images/docs/library/how-to/datasets/create-dataset-using-csv/create-dataset-with-csv.png)
-5. Add to dataset and save.  
+5. Click on **Create Dataset** to complete dataset creation.
 
 </Step>
 
@@ -63,10 +63,10 @@ You can add new entries to an existing dataset by uploading a CSV with compatibl
 
 1. Prepare your CSV file with columns matching your dataset structure (e.g., `Input`, `Expected_Output`). 
 2. In the Maxim UI, go to **Library → Datasets**, select your dataset.  
-3. Use the **Upload CSV** or **Add entries** option.  
-4. Map CSV columns to dataset columns.
+3. Click on **Upload CSV** and upload your CSV file.  
+4. Map CSV columns to dataset columns or create new dataset columns.
 ![Add Dataset Entries with csv](/images/docs/library/how-to/datasets/create-dataset-using-csv/update-dataset-with-csv.png)
-5. Confirm import to append the new rows to your dataset.  
+5. Confirm mapped dataset columns and column types and click on **Add to dataset**.  
 
 </Step>
 
@@ -99,6 +99,59 @@ When working with images in datasets:
 </Note>
 
 ## Column types
+
+### Input
+
+The **Input** column type represents the input query used to test your application. This column contains the data that will be processed by your prompt, endpoint, or agent during test runs. Every dataset must have at least one Input column to define what data will be fed into your application.
+
+Use this column to store the questions, prompts, or data points that you want to test. Input columns are automatically used during test runs and passed to your application for processing.
+
+**Examples:**
+- "Summarize this article about climate change"
+- "What's the weather in New York?"
+- "Translate the following text to French: Hello world"
+
+The Input column serves as the primary entry point for your test cases and enables systematic evaluation across multiple scenarios.
+
+### Expected Output
+
+The **Expected Output** column type represents the desired response that your application should generate for the corresponding input. This column is used to evaluate whether your application's actual output matches the expected result during test runs.
+
+Use this column to define what you consider the correct or ideal response for each input. When evaluators are configured for your test runs, they compare the actual output against the expected output to determine accuracy and quality.
+
+**Examples:**
+- For an input "Translate 'Hello' to Spanish", the expected output might be "Hola"
+- For a summarization task, the expected output would be the ideal summary of the original content
+
+This column is essential for automated evaluation and helps identify cases where your application's outputs deviate from the desired results.
+
+### Output
+
+The **Output** column type is used when you have already run your queries elsewhere and have the outputs within your CSV that you want to evaluate directly. This column contains pre-generated responses that you want to assess or analyze without re-running your application.
+
+Use this column when you need to evaluate existing outputs from previous runs, external systems, or manual annotations. This is particularly useful when you want to assess the quality of responses that were generated outside of Maxim's platform.
+
+This column type enables you to import historical evaluation data and perform comparative analysis on outputs that were generated using different models or prompts.
+
+### File
+
+The **File** column type allows you to upload a file or provide a file URL containing assets or structured data. This is useful for testing applications that need to process documents, images, or other file-based inputs.
+
+Use this column when your test cases require external files such as PDFs, images, documents, or structured data files. Files can be uploaded directly to Maxim or referenced via URLs.
+
+**Supported formats:** PDF, TXT, WAV, MP3, images, and other common file types
+
+This column type enables multimodal testing scenarios where your application needs to process different types of media and structured content beyond text inputs.
+
+### Variables
+
+The **Variables** column type stores values used to parameterize prompts or endpoint payloads, allowing dynamic substitution of content during testing. This enables you to create reusable test cases with flexible inputs that can be customized per row.
+
+Use this column to define contextual information that varies across test cases but can be referenced consistently in your prompts or API requests. Variables are automatically substituted during test runs using the `{{variable_name}}` syntax.
+
+**Example:** A variable like `{{user_name}}` can be defined in your dataset and automatically substituted in prompts or API requests during test runs.
+
+Variables provide flexibility in dataset design by allowing you to parameterize common elements like user information, preferences, or context-specific data without hardcoding values into your prompts.
 
 ### Scenario
 
