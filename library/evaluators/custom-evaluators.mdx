@@ -1,16 +1,22 @@
 ---
 title: Custom Evaluators
+
 description: Create and configure custom evaluators to meet your specific evaluation needs
+
 ---
 
 import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
 import { Plus } from "lucide-react";
 
 While Maxim offers a comprehensive set of evaluators in the [Store](/library/evaluators/pre-built-evaluators), you might need custom evaluators for specific use cases. This guide covers four types of custom evaluators you can create:
 
 - AI-based evaluators
+
 - API-based evaluators
+
 - Human evaluators
+
 - Programmatic evaluators
 
 ## AI-based Evaluators
@@ -18,6 +24,7 @@ While Maxim offers a comprehensive set of evaluators in the [Store](/library/eva
 Create custom AI evaluators by selecting an LLM as the judge and configuring custom evaluation instructions.
 
 <Steps>
+
 <Step title="Create new Evaluator">
 
 Click the create button and select AI to start building your custom evaluator.
@@ -28,39 +35,51 @@ Click the create button and select AI to start building your custom evaluator.
 
 <Step title="Configure model and parameters">
 
-Select the LLM you want to use as the judge and configure model-specific parameters based on your requirements.
+Select the LLM you want to use as the judge and configure model-specific parameters based on your requirements in the Definition tab.
 
 ![Model configuration for custom AI evaluator](/images/docs/library/how-to/evaluators/custom-ai-evaluators/model-config-for-ai-evaluator.png)
 
 </Step>
 
-<Step title="Define evaluation logic">
+<Step title="Choose evaluation scale">
 
-Configure how your evaluator should judge the outputs:
+Select the evaluation scale from the dropdown:
 
-- **Requirements**: Define evaluation criteria in plain English
+- **Binary (Yes/No)**: Returns `true` or `false`
+- **Scale of 1 to 5**: Returns a numeric score from 1 to 5
+- **String values**: Returns a string value
+- **Number**: Returns a numeric score
 
-  ```plaintext
-  "Check if the text uses punctuation marks correctly to clarify meaning"
-  ```
+![Evaluation scale selection](/images/docs/library/how-to/evaluators/custom-ai-evaluators/ai-evaluator-model-instructions.png)
 
-- **Evaluation scale**: Choose your scoring type
-  - **Scale**: Score from 1 to 5
-  - **Binary**: Yes/No response
+</Step>
 
-- **Grading logic**: Define what each score means
+<Step title="Configure evaluation instructions">
 
-  ```plaintext
-  1: Punctuation is consistently incorrect or missing; hampers readability
-  2: Frequent punctuation errors; readability is often disrupted
-  3: Some punctuation errors; readability is generally maintained
-  4: Few punctuation errors; punctuation mostly aids in clarity
-  5: Punctuation is correct and enhances clarity; no errors
-  ```
+In the **Evaluation instructions** field, write the instructions that tell the AI evaluator how to judge the outputs. You can use variables like `{{input}}`, `{{output}}`, `{{context}}` to reference dynamic values from your dataset or logs. These variables will be automatically replaced with actual values during evaluation.
 
-  <Note>You can use variables in **Requirements** and **Grading logic**</Note>
+**Example for Scale evaluation:**
 
-![Evaluation logic configuration](/images/docs/library/how-to/evaluators/custom-ai-evaluators/ai-evaluator-model-instruction.png)
+```plaintext
+Check if the text uses punctuation marks correctly to clarify meaning.
+
+Use the following scales to evaluate:
+1: Punctuation is consistently incorrect or missing; hampers readability
+2: Frequent punctuation errors; readability is often disrupted
+3: Some punctuation errors; readability is generally maintained
+4: Few punctuation errors; punctuation mostly aids in clarity
+5: Punctuation is correct and enhances clarity; no errors
+```
+
+**Example for Binary evaluation:**
+
+```plaintext
+Check if the {{output}} is factually correct based on the {{input}} and {{context}}.
+
+Respond with a yes if the answer meets all the requirements above; if the answer doesn't match with any one of the above requirements, respond with a no.
+```
+
+<Note>Variables are highlighted in the editor and can be inserted using the suggestions dropdown. The placeholders `REQUIREMENT` and `<SCORING CRITERIA>` are also highlighted when present in your instructions if you're using the default template structure.</Note>
 
 </Step>
 
@@ -73,13 +92,65 @@ For example, a score of 4 becomes 0.8 after normalization.
 ![Score normalization toggle for AI evaluators](/images/docs/library/how-to/evaluators/custom-ai-evaluators/ai-evaluator-score-normalization.png)
 
 </Step>
+
 </Steps>
+
+## Understanding the AI Evaluator Interface
+
+The AI evaluator editor is organized into three main tabs:
+
+### Definition Tab
+
+The **Definition** tab is where you configure your AI evaluator:
+
+- **Model selection**: Choose the LLM you want to use as the judge
+- **Model configuration**: Configure model-specific parameters (temperature, max tokens, etc.)
+- **Evaluation scale**: Select the scoring type (Binary, Scale, String values, or Number)
+- **Evaluation instructions**: Write the instructions that tell the AI how to evaluate outputs
+- **Score normalization** (optional): Convert scores from 1-5 scale to 0-1 scale for Scale evaluations
+
+### Variables Tab
+
+The **Variables** tab shows all available variables for your evaluator:
+
+- **Reserved variables**: These are built-in variables provided by Maxim that you can use in your evaluator instructions:
+
+  - `input`: Input query from dataset or logged trace
+  - `output`: Output from the test run or logged trace
+  - `context`: Retrieved context from your data source
+  - `expectedOutput`: Expected output as mentioned in dataset
+  - `expectedToolCalls`: Expected tools to be called as mentioned in dataset
+  - `toolCalls`: Actual tool calls made during execution
+  - `toolOutputs`: Outputs of all tool calls made
+  - `prompt`: Content of all messages in the prompt version
+  - `scenario`: Scenario for simulating multi-turn session
+  - `sessionOutputs`: Agent outputs across all turns of the session
+  - `session`: A sequence of multi-turn interactions between user and your application
+  - `history`: Prior turns in the current session before the latest input
+  - `expectedSteps`: Expected steps to be followed by the agent as mentioned in dataset
+
+- **Custom variables**: You can define additional custom variables if needed
+
+Variables are automatically replaced with actual values during evaluation execution.
+
+### Pass Criteria Tab
+
+The **Pass Criteria** tab allows you to configure when an evaluation should be considered passing:
+
+- **Pass query**: Define criteria for individual evaluation metrics
+
+  Example: Pass if evaluation score > 0.8
+
+- **Pass evaluator (%)**: Set threshold for overall evaluation across multiple entries
+
+  Example: Pass if 80% of entries meet the evaluation criteria
 
 ## API-based Evaluators
 
 Connect your existing evaluation system to Maxim by exposing it via an API endpoint. This lets you reuse your evaluators without rebuilding them.
 
 <Steps>
+
 <Step title="Navigate to Create Menu">
 
 Select `API-based` from the create menu to start building.
@@ -93,7 +164,9 @@ Select `API-based` from the create menu to start building.
 Add your API endpoint details including:
 
 - Headers
+
 - Query parameters
+
 - Request body
 
 For advanced transformations, use pre and post scripts under the `Scripts` tab.
@@ -109,6 +182,7 @@ For advanced transformations, use pre and post scripts under the `Scripts` tab.
 Test your endpoint using the playground. On successful response, map your API response fields to:
 
 - Score (required)
+
 - Reasoning (optional)
 
 This mapping allows you to keep your API structure unchanged.
@@ -116,6 +190,7 @@ This mapping allows you to keep your API structure unchanged.
 ![Map API response to evaluator fields](/images/docs/library/how-to/evaluators/api-evaluator/api-evaluator-fields-mapping.png)
 
 </Step>
+
 </Steps>
 
 ## Human Evaluators
@@ -123,6 +198,7 @@ This mapping allows you to keep your API structure unchanged.
 Set up human raters to review and assess AI outputs for quality control. Human evaluation is essential for maintaining quality control and oversight of your AI system's outputs.
 
 <Steps>
+
 <Step title="Navigate to Create Menu">
 
 Select `Human` from the create menu.
@@ -136,7 +212,9 @@ Select `Human` from the create menu.
 Write clear guidelines for human reviewers. These instructions appear during the review process and should include:
 
 - What aspects to evaluate
+
 - How to assign ratings
+
 - Examples of good and bad responses
 
 ![Add reviewer instructions](/images/docs/library/how-to/evaluators/human-evaluator/human-evaluator-instructions.png)
@@ -148,6 +226,7 @@ Write clear guidelines for human reviewers. These instructions appear during the
 Choose between two rating formats:
 
 **Binary (Yes/No)**
+
 Simple binary evaluation
 
 ![Binary config](/images/docs/library/how-to/evaluators/human-evaluator/human-evaluator-binary-type.png)
@@ -155,6 +234,7 @@ Simple binary evaluation
 ![Binary config](/images/docs/library/how-to/evaluators/human-evaluator/human-evaluator-binary-type-interface.png)
 
 **Scale**
+
 Nuanced rating system for detailed quality assessment
 
 ![Scale config](/images/docs/library/how-to/evaluators/human-evaluator/human-evaluator-scale-type.png)
@@ -162,6 +242,7 @@ Nuanced rating system for detailed quality assessment
 ![Scale config](/images/docs/library/how-to/evaluators/human-evaluator/human-evaluator-scale-type-interface.png)
 
 </Step>
+
 </Steps>
 
 ## Programmatic Evaluators
@@ -169,6 +250,7 @@ Nuanced rating system for detailed quality assessment
 Build custom code-based evaluators using Javascript or Python with access to standard libraries.
 
 <Steps>
+
 <Step title="Navigate to Create Menu">
 
 Select Programmatic from the create menu <Icon icon="plus" className="inline-block size-5"/> to start building
@@ -179,7 +261,15 @@ Select Programmatic from the create menu <Icon icon="plus" className="inline-blo
 
 <Step title="Select Language and Response Type">
 
-Choose your programming language and set the Response type (Number or Boolean) from the top bar
+Choose your programming language and set the Response type (Number, Boolean, or String) from the top bar. The response type determines what your evaluator function should return:
+
+- **Boolean**: Returns `true` or `false` (Yes/No evaluation)
+
+- **Number**: Returns a numeric score for scale-based evaluation
+
+- **String values**: Returns a string value for multi-select or categorical evaluation
+
+<Note>The evaluator result can be a string value when using the "String values" response type. This is useful for categorical evaluations or when you need to return specific string labels rather than numeric scores.</Note>
 
 ![Evaluation configuration options](/images/docs/library/how-to/evaluators/programmatic-evaluator/config-top-bar.png)
 
@@ -190,24 +280,39 @@ Choose your programming language and set the Response type (Number or Boolean) f
 Define a function named `validate` in your chosen language. This function is required as Maxim uses it during execution.
 
 <Note>
+
 **Code restrictions**
 
 **Javascript**
+
 - No infinite loops
+
 - No debugger statements
+
 - No global objects (window, document, global, process)
+
 - No require statements
+
 - No with statements
+
 - No Function constructor
+
 - No eval
+
 - No setTimeout or setInterval
 
 **Python**
+
 - No infinite loops
+
 - No recursive functions
+
 - No global/nonlocal statements
+
 - No raise, try, or assert statements
+
 - No disallowed variable assignments
+
 </Note>
 
 ![Code editor for evaluation logic](/images/docs/library/how-to/evaluators/programmatic-evaluator/code-editor.png)
@@ -221,7 +326,58 @@ Monitor your evaluator execution with the built-in console. Add console logs for
 ![Console showing debug logs during evaluator execution](/images/docs/library/how-to/evaluators/programmatic-evaluator/programmatic-evaluator-console.png)
 
 </Step>
+
 </Steps>
+
+## Understanding the Programmatic Evaluator Interface
+
+The programmatic evaluator editor is organized into three main tabs:
+
+### Definition Tab
+
+The **Definition** tab is where you write your evaluation code. Here you can:
+
+- Select your programming language (JavaScript or Python)
+
+- Choose the response type (Boolean, Number, or String values)
+
+- Write your `validate` function that contains the evaluation logic
+
+- Use reserved variables (see below) in your code
+
+### Variables Tab
+
+The **Variables** tab shows all available variables for your evaluator:
+
+- **Reserved variables**: These are built-in variables provided by Maxim that you can use in your evaluator code:
+
+  - `input`: Input query from dataset or logged trace
+  - `output`: Output from the test run or logged trace
+  - `context`: Retrieved context from your data source
+  - `expectedOutput`: Expected output as mentioned in dataset
+  - `expectedToolCalls`: Expected tools to be called as mentioned in dataset
+  - `toolCalls`: Actual tool calls made during execution
+  - `scenario`: Scenario for simulating multi-turn session
+  - `sessionOutputs`: Agent outputs across all turns of the session
+  - `session`: A sequence of multi-turn interactions between user and your application
+  - `history`: Prior turns in the current session before the latest input
+  - `expectedSteps`: Expected steps to be followed by the agent as mentioned in dataset
+
+- **Custom variables**: You can define additional custom variables if needed
+
+Variables are automatically replaced with actual values during evaluation execution.
+
+### Pass Criteria Tab
+
+The **Pass Criteria** tab allows you to configure when an evaluation should be considered passing:
+
+- **Pass query**: Define criteria for individual evaluation metrics
+
+  Example: Pass if evaluation score > 0.8
+
+- **Pass evaluator (%)**: Set threshold for overall evaluation across multiple entries
+
+  Example: Pass if 80% of entries meet the evaluation criteria
 
 ## Common Configuration Steps
 
@@ -232,11 +388,13 @@ All evaluator types share some common configuration steps:
 Configure two types of pass criteria for any evaluator type:
 
 **Pass query**
+
 Define criteria for individual evaluation metrics
 
 Example: Pass if evaluation score > 0.8
 
 **Pass evaluator (%)**
+
 Set threshold for overall evaluation across multiple entries
 
 Example: Pass if 80% of entries meet the evaluation criteria
@@ -248,7 +406,9 @@ Example: Pass if 80% of entries meet the evaluation criteria
 Test your evaluator in the playground before using it in your workflows. The right panel shows input fields for all variables used in your evaluator.
 
 1. Fill in sample values for each variable
+
 2. Click **Run** to see how your evaluator performs
+
 3. Iterate and improve your evaluator based on the results
 
 ![Testing an evaluator in the playground with input fields for variables](/images/docs/library/how-to/evaluators/common/evaluator-playground.png)

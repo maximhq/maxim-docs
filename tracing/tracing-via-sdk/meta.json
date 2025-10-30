@@ -1,16 +1,17 @@
 {
-	"title": "Tracing via SDK",
-	"pages": [
-		"traces",
-		"spans",
-		"generations",
-		"attachments",
-		"retrieval",
-		"sessions",
-		"tool-calls",
-		"tags",
-		"events",
-		"user-feedback",
-		"errors"
-	]
+    "title": "Tracing via SDK",
+    "pages": [
+        "traces",
+        "spans",
+        "generations",
+        "attachments",
+        "retrieval",
+        "sessions",
+        "tool-calls",
+        "tags",
+        "events",
+        "user-feedback",
+        "errors",
+        "custom-metrics"
+    ]
 }

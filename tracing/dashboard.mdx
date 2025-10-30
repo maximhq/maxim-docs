@@ -2,6 +2,7 @@
 title: Dashboard
 description: Learn how to use the dashboard to filter and sort your logs
 ---
+
 import { MaximPlayer } from "/snippets/maximPlayer.mdx"
 
 Filter and sort your logs using custom criteria to streamline debugging. Create saved views to quickly access your most-used search patterns.
@@ -9,18 +10,31 @@ Filter and sort your logs using custom criteria to streamline debugging. Create 
 ## Create Filters and Saved Views
 
 <Steps>
+
 <Step title="Access the search interface">
+
 Open your log repository and type filters directly in the search bar or select from the filter menu
+
 </Step>
+
 <Step title="Apply filtering criteria">
+
 Apply filters to display logs matching your specified criteria
+
 </Step>
+
 <Step title="Save your view">
+
 Click the bookmark icon <Icon icon="bookmark" className="h-4 w-4" /> to save your current filter configuration
+
 </Step>
+
 <Step title="Quick access">
+
 Access your saved filters directly from the search bar for quick navigation
+
 </Step>
+
 </Steps>
 
 Here's an example of how you can create a saved view, with a specific set of filter configuration.
@@ -31,6 +45,56 @@ You can also access the saved view from the search bar to apply those filters qu
 
 ![Saved Filter View](/images/docs/tracing/saved-view-filter-search.png)
 
-
-
 <MaximPlayer url="https://drive.google.com/file/d/1HMc0wNdZdgz2SvZbYgfeD3CAeFLyDH1R/preview" />
+
+## Logs Charts
+
+Logs charts visualize your log data over time, helping you identify patterns, trends, and anomalies. Charts can be displayed as bar charts or line charts.
+
+### Interactive Features
+
+- **Hover**: Hover over bars or points to see detailed information
+
+- **Click**: Click on chart elements to interact with tooltips and navigate to logs
+
+- **Drag selection**: Drag across the chart to select multiple time periods
+
+- **Visual feedback**: Selected ranges are highlighted with a shaded overlay
+
+Use these interactive features to quickly identify patterns, anomalies, and navigate to specific log entries for deeper analysis.
+
+![Logs Charts](/images/docs/dashboards/logs-charts-on-hover-interaction.png)
+
+![Logs Charts](/images/docs/dashboards/logs-charts-drag-interaction.png)
+
+### Chart Controls
+
+- **Chart type toggle**: Hover over the chart to see bar/line chart toggle buttons at the top right
+
+- **Fullscreen**: Click the expand icon to view the chart in fullscreen mode
+
+### Custom Metrics
+
+Custom metrics graphs show up when you send them with your logs. When present, Maxim displays them as separate charts alongside standard metrics like latency, cost, and tokens.
+
+Custom metrics charts support the same interactive features as standard charts and allow you to:
+
+- View metrics over time with aggregation options (average, p50, p90, p95, p99)
+
+- Switch between different aggregation types using the dropdown on each chart
+
+- Filter and drill down into specific time ranges
+
+- Navigate to logs filtered by the selected metric values
+
+Custom metrics help you track application-specific data points that matter to your use case, such as user satisfaction scores, custom business metrics, or any numeric values you log alongside your traces and sessions.
+
+![Custom Metrics](/images/docs/dashboards/logs-charts-custom-metrics.png)
+
+### Viewing Logs from Charts
+
+1. Hover over or click a data point on the chart
+
+2. In the tooltip, click on a series name or click "View logs"
+
+3. You'll be navigated to the logs view filtered for that time range with relevant filters applied

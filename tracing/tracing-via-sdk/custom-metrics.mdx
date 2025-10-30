@@ -1,0 +1,170 @@
+---
+title: Custom Metrics
+
+description: Learn how to track and log metrics from LLM generations, traces, retrievals, and sessions in your AI application to monitor performance, quality, and resource usage.
+
+---
+
+## Track Metrics in Traces
+
+Track trace-level metrics like tool call counts, costs, and evaluation scores.
+
+<CodeGroup>
+
+```typescript JS/TS
+const trace = logger.trace({
+    id: "trace-id",
+    name: "customer-query-processing",
+});
+
+// Track metrics
+trace.addMetric('tool_calls_count', 3);
+trace.addMetric('cost_usd', 0.05);
+trace.addMetric('tokens_total', 1420);
+trace.addMetric('user_feedback_score', 4.7);
+```
+
+```python Python
+from maxim.logger import TraceConfig
+
+trace = logger.trace(TraceConfig(
+    id="trace-id",
+    name="customer-query-processing",
+))
+
+# Track metrics
+trace.add_metric('tool_calls_count', 3)
+trace.add_metric('cost_usd', 0.05)
+trace.add_metric('tokens_total', 1420)
+trace.add_metric('user_feedback_score', 4.7)
+```
+
+</CodeGroup>
+
+## Track Metrics in Generations
+
+Track generation quality metrics, token accounting, and streaming characteristics for LLM calls.
+
+<CodeGroup>
+
+```typescript JS/TS
+// Create generation object
+const generation = trace.generation({
+    id: "generation-id",
+    name: "customer-support--gather-information",
+    // Additional fields
+});
+
+// Track metrics
+generation.addMetric('tokens_in', 312);
+generation.addMetric('tokens_out', 87);
+generation.addMetric('output_tokens', 87);
+generation.addMetric('ttft_ms', 180.5);
+generation.addMetric('tps', 15.8);
+generation.addMetric('avg_logprob', -0.32);
+```
+
+```python Python
+from maxim.logger.components.generation import GenerationConfig
+
+# Create generation object
+generation = trace.generation(GenerationConfig(
+    id="generation-id",
+    name="customer-support--gather-information",
+    # Additional fields
+))
+
+# Track metrics
+generation.add_metric('tokens_in', 312)
+generation.add_metric('tokens_out', 87)
+generation.add_metric('output_tokens', 87)
+generation.add_metric('ttft_ms', 180.5)
+generation.add_metric('tps', 15.8)
+generation.add_metric('avg_logprob', -0.32)
+```
+
+</CodeGroup>
+
+<Note>
+
+Learn how to track complete LLM flows in the [LLM logging guide](/tracing/tracing-via-sdk/generations).
+
+</Note>
+
+## Track Metrics in Retrievals
+
+Track RAG evaluation metrics like precision, recall, MRR, and NDCG for retrieval operations.
+
+<CodeGroup>
+
+```typescript JS/TS
+const retrieval = trace.retrieval({
+    id: "retrieval-id",
+    name: "knowledge-base-search",
+});
+
+// Track metrics
+retrieval.addMetric('precision', 0.82);
+retrieval.addMetric('recall', 0.76);
+retrieval.addMetric('mrr', 0.61);
+retrieval.addMetric('results_count', 10);
+```
+
+```python Python
+from maxim.logger import RetrievalConfig
+
+retrieval = trace.retrieval(RetrievalConfig(
+    id="retrieval-id",
+    name="knowledge-base-search",
+))
+
+# Track metrics
+retrieval.add_metric('precision', 0.82)
+retrieval.add_metric('recall', 0.76)
+retrieval.add_metric('mrr', 0.61)
+retrieval.add_metric('results_count', 10)
+```
+
+</CodeGroup>
+
+<Note>
+
+Explore more on retrieval tracking in the [Retrieval logging guide](/tracing/tracing-via-sdk/retrievals).
+
+</Note>
+
+## Track Metrics in Sessions
+
+Track session-level aggregates like trace counts and message counts.
+
+<CodeGroup>
+
+```typescript JS/TS
+const session = logger.session({
+    id: "session-id",
+    name: "user-conversation",
+});
+
+// Track metrics
+session.addMetric('traces_count', 4);
+session.addMetric('user_messages_count', 2);
+session.addMetric('assistant_messages_count', 2);
+```
+
+```python Python
+from maxim.logger import SessionConfig
+
+session = logger.session(SessionConfig(
+    id="session-id",
+    name="user-conversation",
+))
+
+# Track metrics
+session.add_metric('traces_count', 4)
+session.add_metric('user_messages_count', 2)
+session.add_metric('assistant_messages_count', 2)
+```
+
+</CodeGroup>
+
+![Metrics](/images/docs/tracing/via-sdk/custom-metrics.png)
