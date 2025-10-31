@@ -791,6 +791,17 @@
                         "group": "Release Notes",
                         "pages": [
                             {
+                                "group": "Sep 2025",
+                                "pages": [
+                                    "release-notes/Sep 2025/enhanced-graphs-and-search",
+                                    "release-notes/Sep 2025/audit-logs",
+                                    "release-notes/Sep 2025/environment-management",
+                                    "release-notes/Sep 2025/evaluator-session-history",
+                                    "release-notes/Sep 2025/openai-responses-api",
+                                    "release-notes/Sep 2025/voice-agent-simulation"
+                                ]
+                            },
+                            {
                                 "group": "Aug 2025",
                                 "pages": [
                                     "release-notes/Aug 2025/flexi-evals",
