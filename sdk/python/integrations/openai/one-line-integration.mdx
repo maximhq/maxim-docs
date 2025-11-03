@@ -60,7 +60,6 @@ print(response_text)
 
 ![Demo](/images/docs/sdk/python/openai/py-openai-integration.gif)
 
-
 <CardGroup cols={2}>
   <Card title="OpenAI one line integration cookbook" icon="github" href="https://github.com/maximhq/maxim-cookbooks/blob/main/python/observability-online-eval/openai/openai-sdk/one-line-integration.ipynb">
     
@@ -69,6 +68,174 @@ print(response_text)
     
   </Card>
 </CardGroup>
+
+## Using OpenAI Responses API
+
+The OpenAI Responses API is the new standard that will replace the Chat Completions API. Maxim fully supports logging and tracing with the Responses API.
+
+### Basic Responses API Usage
+
+```python
+from openai import OpenAI
+from maxim import Maxim
+from maxim.logger.openai import MaximOpenAIClient
+
+# Initialize Maxim logger
+logger = Maxim().logger()
+
+# Initialize OpenAI client
+client = MaximOpenAIClient(client=OpenAI(api_key=OPENAI_API_KEY), logger=logger)
+
+# Make a request using Responses API
+response = client.responses.create(
+    model="gpt-4o",
+    input="Write a haiku about recursion in programming.",
+)
+
+# Extract response text
+response_text = response.output_text
+print(response_text)
+```
+
+### Responses API with Tool Calls
+
+The Responses API handles tool calls differently from Chat Completions. Here's how to use tools with automatic logging:
+
+```python
+import json
+from openai import OpenAI
+from maxim import Maxim
+from uuid import uuid4
+
+# Initialize Maxim
+logger = Maxim().logger()
+client = OpenAI(api_key=OPENAI_API_KEY)
+
+# Create tracing hierarchy
+session = logger.session({"id": str(uuid4()), "name": "Weather Query Session"})
+trace = session.trace({"id": str(uuid4()), "name": "Weather Tool Scenario"})
+span = trace.span({"id": str(uuid4()), "name": "User <> GPT-4o"})
+
+# Create generation to track conversation
+generation = span.generation({
+    "id": str(uuid4()),
+    "name": "Weather Query",
+    "messages": [],
+    "model": "gpt-4o",
+    "provider": "openai",
+    "model_parameters": {},
+})
+
+# Define your tool
+tools = [{
+    "type": "function",
+    "name": "get_weather",
+    "description": "Get the current weather for a location",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "location": {
+                "type": "string",
+                "description": "The city and state, e.g., San Francisco, CA",
+            }
+        },
+        "required": ["location"],
+    },
+    "strict": True,
+}]
+
+# Step 1: Make initial request with tool definition
+user_prompt = "What's the current weather in New York, NY?"
+generation.add_message({"role": "user", "content": user_prompt})
+
+first_response = client.responses.create(
+    model="gpt-4o",
+    input=user_prompt,
+    tools=tools,
+)
+
+# Log assistant response
+generation.add_message({"role": "assistant", "content": first_response.output_text})
+
+# Step 2: Extract and execute tool calls
+tool_calls = [
+    item for item in first_response.output 
+    if hasattr(item, "type") and item.type == "function_call"
+]
+
+if tool_calls:
+    tool_call = tool_calls[0]
+    
+    # Create tool call on span for tracking
+    span_tool_call = span.tool_call({
+        "id": tool_call.call_id,
+        "name": tool_call.name,
+        "description": "Weather lookup tool",
+        "args": tool_call.arguments,
+    })
+    
+    # Execute your tool (your actual implementation)
+    args = json.loads(tool_call.arguments)
+    tool_result = get_weather(args["location"])  # Your function
+    
+    # Log tool result
+    span_tool_call.result(tool_result)
+    generation.add_message({"role": "tool", "content": tool_result})
+    
+    # Step 3: Submit tool result and get final response
+    final_response = client.responses.create(
+        model="gpt-4o",
+        input=[{
+            "type": "function_call_output",
+            "call_id": tool_call.call_id,
+            "output": tool_result,
+        }],
+        previous_response_id=first_response.id,
+    )
+    
+    # Log final response
+    generation.result(final_response)
+
+# Close tracing hierarchy
+span.end()
+trace.end()
+session.end()
+```
+
+### Key Differences: Responses API vs Chat Completions
+
+| Feature | Chat Completions API | Responses API |
+|---------|---------------------|---------------|
+| **Input Parameter** | `messages` (list of message dicts) | `input` (string or structured input) |
+| **Response Field** | `response.choices[0].message.content` | `response.output_text` |
+| **Tool Calls** | `response.choices[0].message.tool_calls` | `response.output` (items with `type="function_call"`) |
+| **Tool Results** | Added to messages array | `function_call_output` with `previous_response_id` |
+| **Conversation** | All messages in single call | Chained with `previous_response_id` |
+
+### Responses API with MaximOpenAIClient
+
+You can also use MaximOpenAIClient with the Responses API for automatic trace creation:
+
+```python
+from openai import OpenAI
+from maxim import Maxim
+from maxim.logger.openai import MaximOpenAIClient
+
+logger = Maxim().logger()
+client = MaximOpenAIClient(client=OpenAI(api_key=OPENAI_API_KEY), logger=logger)
+
+# Automatic logging with Responses API
+response = client.responses.create(
+    model="gpt-4o",
+    input="Explain quantum computing in simple terms.",
+)
+
+print(response.output_text)
+```
+
+<Note>
+The Responses API is OpenAI's future standard and supports advanced features like web search. As the Chat Completions API is being phased out, we recommend migrating to the Responses API for new projects.
+</Note>
 
 
 ## Advanced use-cases
