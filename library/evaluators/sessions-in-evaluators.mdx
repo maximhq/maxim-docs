@@ -1,0 +1,64 @@
+---
+title: Sessions in Evaluators
+description: Track changes to your evaluators using sessions to maintain a history of configurations.
+---
+
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
+Sessions in evaluators are version snapshots that capture the configuration state of your evaluator at a specific point in time. Each time you save changes to an evaluator, a new session is created, allowing you to track changes and restore previous configurations.
+
+## Understanding Sessions
+
+When you edit an evaluator and save your changes, Maxim creates a new session. Sessions contain:
+
+- **Configuration**: The complete evaluator configuration at the time of saving
+- **Timestamp**: When the session was created
+- **Creator**: Who created the session
+- **Tag**: Optional name you can add to help identify the session
+
+## Saving Sessions
+
+Sessions are created when you manually save changes to an evaluator:
+
+- **Save button**: Click the `Save` button in the evaluator header to create a new session
+- **Keyboard shortcut**: Press `Ctrl/Cmd + S` to save and create a new session
+
+When you save, the evaluator's current configuration is saved as a new session.
+
+## Viewing Sessions
+
+<Steps>
+
+<Step title="Open evaluator">
+Navigate to any evaluator in your workspace.
+</Step>
+
+<Step title="Access session history">
+Click on the session indicator next to the Save button to see a dropdown showing recent sessions.
+</Step>
+
+<Step title="View complete history">
+Click `View complete session history` from the dropdown to open a sheet showing all sessions for that evaluator.
+</Step>
+
+</Steps>
+
+## Switching Between Sessions
+
+- **From dropdown**: Click on any session in the dropdown to restore that configuration
+- **From session sheet**: Select any session from the complete history sheet to switch to it
+
+When you switch sessions, the evaluator configuration is restored to that session's state, allowing you to view or continue working from that point.
+
+## Tagging Sessions
+
+You can add tags (names) to sessions to help identify them:
+
+1. Hover over a session in the session history
+2. Click the tag icon that appears
+3. Enter a name for the session (up to 70 characters)
+4. Click `Tag session` to save
+
+Tags help you quickly identify important sessions or milestone configurations.
+
+<Note>Switching to a previous session will load that session's configuration. You can continue editing from that point, and saving will create a new session.</Note>

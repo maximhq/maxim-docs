@@ -161,7 +161,8 @@
                                     "tracing/tracing-via-sdk/tags",
                                     "tracing/tracing-via-sdk/events",
                                     "tracing/tracing-via-sdk/user-feedback",
-                                    "tracing/tracing-via-sdk/errors"
+                                    "tracing/tracing-via-sdk/errors",
+                                    "tracing/tracing-via-sdk/custom-metrics"
                                 ]
                             },
                             {
@@ -188,9 +189,7 @@
                             },
                             {
                                 "group": "Voice Simulation",
-                                "pages": [
-                                    "simulations/voice-simulation/voice-simulation"
-                                ]
+                                "pages": ["simulations/voice-simulation/voice-simulation"]
                             }
                         ]
                     },
@@ -292,7 +291,9 @@
                                         ]
                                     },
                                     "library/evaluators/custom-evaluators",
-                                    "library/evaluators/third-party-evaluators"
+                                    "library/evaluators/third-party-evaluators",
+                                    "library/evaluators/folders-in-evaluators",
+                                    "library/evaluators/sessions-in-evaluators"
                                 ]
                             },
                             {
@@ -767,8 +768,6 @@
                             "cookbooks/integrations/together",
                             "cookbooks/integrations/smolagents",
                             "cookbooks/integrations/llamaindex"
-
-
                         ]
                     },
                     {

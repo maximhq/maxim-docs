@@ -1,37 +1,144 @@
 ---
 title: Members and Roles
-description: Learn how to invite team members and create roles in Maxim.
+description: Learn how to invite team members and manage organization and workspace roles in Maxim.
 ---
 
 import { MaximPlayer } from "/snippets/maximPlayer.mdx"
 
-## Invite Team Members
+## Understanding Roles
 
-To invite a team member to your workspace, follow these steps:
+Maxim uses two types of roles that work together:
 
-- Go to `Settings` → `Members`.
-- Click on `Invite`, located at the top right of the page.
-- Enter the email ID of the person you want to invite. To invite multiple people, separate their email IDs with commas.
+- **Organization roles**: Control access to organization-wide settings like billing, members, API keys, and workspace management.
 
-## Create Roles
+- **Workspace roles**: Control access to resources within a specific workspace like prompts, workflows, and datasets.
 
-Maxim uses a role-based access control (RBAC) system to manage user permissions. You can create a role by following these steps:
+Every user needs both an organization role and a workspace role for each workspace they access.
 
-- Go to `Settings` → `Roles`.
-- Click on `Create role`.
-- Enter a name for the role.
-- Select the permissions you want to assign to the role.
-- Click on `Create`.
+## Organization Roles
 
-<MaximPlayer url="https://drive.google.com/file/d/10s17EcrpWYVhVxDE-nVCL-KakdAA3u6X/preview" />
+Organization roles determine what users can do at the organization level:
 
-## Customize Roles
+- **Super admin**: Full control including creating and managing roles
 
-You can edit the permissions of any of the inbuilt roles or even create a custom role by clicking `Create role`.
-Once done, you can customise the set of permissions for that role.
+- **Admin**: Manage members, workspaces, and most settings (cannot create roles)
 
-![Customize Roles](/images/docs/settings/customise_roles.png)
+- **Billing admin**: Access to billing only
 
-<Note>You cannot edit the name of inbuilt roles.</Note>
+- **Contributor**: Can view and access workspaces (limited permissions)
 
-You can explore more about your workspace settings by heading to the workspace settings page. You can explore more about billing, proxy settings and more.
+- **Viewer**: Read-only access to workspaces
+
+### Invite Organization Members
+
+To invite a team member to your organization:
+
+- Go to `Settings` → `Members` (under Organization settings)
+
+- Click `Invite` at the top right
+
+- Enter email addresses (separate multiple with commas)
+
+- Select an organization role
+
+- Select which workspaces they should access and their workspace role for each
+
+- Click `Invite`
+
+![Add user to organization](/images/docs/settings/invite-user-to-organization.png)
+
+### Create Organization Roles
+
+- Go to `Settings` → `Roles` (under Organization settings)
+
+- Click `Create role`
+
+- Enter a name for the role
+
+- Select the permissions you want to assign
+
+- Click `Create`
+
+![Create organization role](/images/docs/settings/create-new-organization-role.png)
+
+### Duplicate Organization Roles
+
+You can duplicate built-in organization roles (Super admin, Admin, Billing admin, Contributor, Viewer) to create new roles with similar permissions:
+
+- Go to `Settings` → `Roles` (under Organization settings)
+
+- Hover over a built-in role in the roles table
+
+- Click the `Duplicate` button that appears
+
+- The role editor opens with the duplicated role's permissions pre-filled
+
+- Modify the name and permissions as needed
+
+- Click `Create` to save the new role
+
+<Note>You cannot edit the name of built-in organization roles (Super admin, Admin, Billing admin, Contributor, Viewer). You can only duplicate them to create custom roles with similar permissions.</Note>
+
+<Note>Custom organization roles cannot be duplicated but can be edited directly.</Note>
+
+
+## Workspace Roles
+
+Workspace roles determine what users can do within a specific workspace:
+
+- **Admin**: Full access to workspace resources and settings
+
+- **Editor**: Can create, edit, and delete workspace resources
+
+- **Viewer**: Read-only access to workspace resources
+
+### Invite Workspace Members
+
+To add members to a specific workspace:
+
+- Go to `Settings` → `Workspace members` (under Workspace settings)
+
+- Click `Invite`
+
+- Enter email addresses or select existing organization members
+
+- Select a workspace role
+
+- Click `Invite`
+
+![Invite workspace members](/images/docs/settings/invite-user-to-workspace.png)
+
+### Create Workspace Roles
+
+- Go to `Settings` → `Workspace roles` (under Workspace settings)
+
+- Click `Create role`
+
+- Enter a name for the role
+
+- Select the permissions you want to assign
+
+- Click `Create`
+
+![Create workspace role](/images/docs/settings/create-new-workspace-role.png)
+
+### Duplicate Workspace Roles
+
+You can duplicate built-in workspace roles (Admin, Editor, Viewer) to create new roles with similar permissions:
+
+- Go to `Settings` → `Workspace roles` (under Workspace settings)
+
+- Hover over a built-in role in the roles table
+
+- Click the `Duplicate` button that appears
+
+- The role editor opens with the duplicated role's permissions pre-filled
+
+- Modify the name and permissions as needed
+
+- Click `Create` to save the new role
+
+<Note>You cannot edit the name of built-in workspace roles (Admin, Editor, Viewer). You can only duplicate them to create custom roles with similar permissions.</Note>
+
+<Note>Custom workspace roles cannot be duplicated but can be edited directly.</Note>
+

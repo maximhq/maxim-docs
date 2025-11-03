@@ -1,8 +1,10 @@
 {
-	"title": "Evaluators",
-	"pages": [
-		"pre-built-evaluators",
-		"custom-evaluators",
-		"third-party-evaluators"
-	]
+    "title": "Evaluators",
+    "pages": [
+        "pre-built-evaluators",
+        "custom-evaluators",
+        "third-party-evaluators",
+        "sessions-in-evaluators",
+        "folders-in-evaluators"
+    ]
 }
