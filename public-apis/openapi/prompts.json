@@ -107,6 +107,44 @@
             "required": false,
             "name": "cursor",
             "in": "query"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "variable": {
+                    "type": "string",
+                    "description": "Variable name for deployment query condition"
+                  },
+                  "operator": {
+                    "type": "string",
+                    "enum": [
+                      ">",
+                      "<",
+                      "<=",
+                      ">=",
+                      "="
+                    ],
+                    "description": "Comparison operator for the deployment query condition"
+                  },
+                  "value": {
+                    "type": "string",
+                    "description": "Value to compare with"
+                  }
+                },
+                "required": [
+                  "variable",
+                  "operator",
+                  "value"
+                ]
+              },
+              "description": "Deployment query conditions to match against deployment strategy. When provided, returns the matching prompt version."
+            },
+            "required": false,
+            "name": "deploymentQuery",
+            "in": "query"
           }
         ],
         "responses": {
