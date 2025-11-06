@@ -799,6 +799,16 @@
                         "group": "Release Notes",
                         "pages": [
                             {
+                                "group": "Oct 2025",
+                                "pages": [
+                                    "release-notes/Oct 2025/synthetic-data-generation",
+                                    "release-notes/Oct 2025/workspace-rbac",
+                                    "release-notes/Oct 2025/retroactive-evals",
+                                    "release-notes/Oct 2025/flexible-evaluators",
+                                    "release-notes/Oct 2025/litellm-support"
+                                ]
+                            },
+                            {
                                 "group": "Sep 2025",
                                 "pages": [
                                     "release-notes/Sep 2025/enhanced-graphs-and-search",
