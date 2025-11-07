@@ -27,122 +27,21 @@ This will direct you to the Prompt Tools page.
 Click on the + button.
 </Step>
 <Step>
-You have the option to select "Code" as the tool type.
+You can select the tool type as **Code**, **API**, or **Schema**.
 </Step>
 <Step>
 Click the "Create" button.
 </Step>
 <Step>
-Proceed to write your own custom function in javascript.
+Proceed to write your own custom function in JavaScript.
 </Step>
 </Steps>
 
 <MaximPlayer url="https://drive.google.com/file/d/12E7FaogMtQ3gs0UE64pbKlOmEbwur-jM/preview"/>
 
-Within the interface there is a designated area to input code. Adjacent to this, on the right-hand side, you can provide relevant inputs tailored to the function's requirements. Upon execution, the output is displayed in the console located at the bottom of the screen.
-
-In this example, we are creating a Prompt tool to calculate the total fare for traveling through a list of cities using a predefined fare map.
-This prompt tool can then be attached to single prompts.
-
-Here is the code snippet for the prompt tool:
-
-```js title="tool.js"
-const pricesMap = {
-    London_Barcelona: 3423,
-    Barcelona_London: 3500,
-    London_Chicago: 3021,
-    Chicago_London: 3670,
-    London_Madrid: 6375,
-    Madrid_London: 6590,
-    London_Paris: 5621,
-    Paris_London: 5560,
-    Barcelona_Chicago: 3000,
-    Chicago_Barcelona: 3890,
-    Barcelona_Madrid: 4000,
-    Madrid_Barcelona: 4321,
-    Barcelona_Paris: 2034,
-    Paris_Barcelona: 2041,
-    Chicago_Madrid: 6987,
-    Madrid_Chicago: 6456,
-    Chicago_Paris: 3970,
-    Paris_Chicago: 3256,
-    Madrid_Paris: 4903,
-    Paris_Madrid: 4678,
-};
-
-function Travel_Prices(st1, st2) {
-    const key1 = `${st1}_${st2}`;
-    const key2 = `${st2}_${st1}`;
-
-    if (pricesMap[key1] !== undefined) {
-        return pricesMap[key1];
-    } else if (pricesMap[key2] !== undefined) {
-        return pricesMap[key2];
-    } else {
-        return "Price not found for the given stations";
-    }
-}
-
-function Total_Travel_Price(cities) {
-    if (cities.length < 2) {
-        return "At least two cities are required to calculate travel price";
-    }
-
-    let total_price = 0;
-
-    for (let i = 0; i < cities.length - 1; i++) {
-        const price = Travel_Prices(cities[i], cities[i + 1]);
-        if (typeof price === "string") {
-            return price; // Return the error message if price not found
-        }
-        total_price += price;
-    }
-
-    return total_price;
-}
-```
-
-### Bring your custom functions via APIs
-
-In Maxim you can expose function call via APIs. We generate function schema based on the Query Parameters and Payload. We collect variables from both of these and add them to function call / tools call object while sending it to the model.
-
-For example
-
-- If your payload looks like
-
-    ```json title="Zipcode API payload"
-    {
-        "check": "123333"
-    }
-    ```
-
-- We convert this into JSON schema and while making requests to the model, we send the payload as
-
-    ```json title="Payload sent to the model while making requests"
-    {
-        "type": "function",
-        "function": {
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "check": {
-                        "type": "string"
-                    }
-                }
-            },
-            "name": "clt473gri0006yzrl26rz79iu", // This is the ID of the function.
-            "description": "This function accepts a zipcode and returns the corresponding location information" // This is the description of the function.
-        }
-    }
-    ```
-
-<MaximPlayer url="https://drive.google.com/file/d/1RXwoCSs23J054tfNTf5g8oyB0VwsAUs7/preview"/>
-
 ---
 
 ## Create a Code-Based Tool
-
-### Creating a code-based tool
 
 <Steps>
 <Step title="Navigate to Prompt Tools">
@@ -323,6 +222,79 @@ Here's how an API payload gets converted into a function schema:
 ```
 
 <MaximPlayer url="https://drive.google.com/file/d/1RXwoCSs23J054tfNTf5g8oyB0VwsAUs7/preview"/>
+
+---
+
+## Define Tool Variables
+You can define variables for your prompt tools, which are automatically translated into properties within the function schema exposed to the LLM. The LLM uses these properties to decide the arguments for a tool/function call.
+
+### Variable Configuration:
+**Type:** Variables can be set as either string or number.
+
+**Description:** Add a description for the variable to help the LLM understand its purpose.
+
+**Optionality:** You can designate variables as optional or non-optional (required). The LLM uses this information, along with the user's prompt, to determine if it should include the variable in its function call.
+
+You can add variables to your prompt tools by following the steps below:
+### Add variables to Code-Based Tool
+<Steps>
+<Step>
+Select the Code-Based tool you want to add variables.
+</Step>
+<Step>
+Add the variables to the function parameters.
+</Step>
+<Step>
+Go to **Variables** tab at the top. 
+</Step>
+<Step>
+Add a description for the variable, select the type of the variable, and select the optionality of the variable.
+</Step>
+<Step>
+Your variables are now added as properties in the function schema exposed to the LLM.
+</Step>
+</Steps>
+
+<MaximPlayer url="https://drive.google.com/file/d/1K0Setmf5hEop3euIIljhALUqyeAlRLmR/preview"/>
+
+### Add variables to Schema-Based Tool
+<Steps>
+<Step>
+Select the Schema-Based tool you want to add variables.
+</Step>
+<Step>
+Add the variables to the schema properties.
+</Step>
+<Step>
+Add a description for the schema properties and select the type of the schema properties.
+</Step>
+<Step>
+Add the variable names to the required array to make them non-optional.
+</Step>
+</Steps>
+
+<MaximPlayer url="https://drive.google.com/file/d/1XWxZBETWGOkvsbxLAdNjxP6QL9olQTiu/preview"/>
+
+### Add variables to API-Based Tool
+<Steps>
+<Step>
+Select the API-Based tool you want to add variables.
+</Step>
+<Step>
+You can add variables to the API payload by using the `{{variable_name}}` syntax.
+</Step>
+<Step>
+Go to **Variables** tab in the Endpoint editor. 
+</Step>
+<Step>
+Add a description for the variable, select the type of the variable, and select the optionality of the variable.
+</Step>
+<Step>
+Your variables are now added as properties in the function schema exposed to the LLM.
+</Step>
+</Steps>
+
+<MaximPlayer url="https://drive.google.com/file/d/12JinAFeGgwmfqtLT6rPA4MxxXC306xhY/preview"/>
 
 ---
 

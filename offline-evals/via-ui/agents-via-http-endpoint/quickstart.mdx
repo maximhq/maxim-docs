@@ -17,6 +17,56 @@ See it in action:
 
 <MaximPlayer url="https://drive.google.com/file/d/12c3B1TWifq4cAa-43lF2enCLoN7PO0JX/preview" />
 
+## Variables in HTTP Endpoints
+
+Variables let you parameterize requests and manage dynamic values. Maxim provides two ways to work with them.
+
+### Using Variables in Request Body and Headers
+
+Use `{{variable_name}}` syntax to substitute dataset column values directly in your endpoint configuration:
+
+```json
+{
+  "query": "{{input}}",
+  "user_name": "{{user_name}}",
+  "temperature": "{{temp}}"
+}
+```
+
+Variables resolve at runtime from your dataset columns. This works in both the request body and headers.
+
+### Using Variables in Scripts
+
+In workflow scripts, access and manage variables programmatically using the `maxim` API:
+
+```javascript
+function prescript(request) {
+  // Get variables from dataset or simulation context
+  var inputQuery = maxim.getVariable("input");
+  var userName = maxim.getVariable("user_name");
+  
+  // Set or modify variables during execution
+  maxim.setVariable("sessionId", "unique-session-123");
+  
+  // Use variables in request modifications
+  request.data = {
+    query: inputQuery,
+    metadata: {
+      user: userName,
+      timestamp: Date.now()
+    }
+  };
+  
+  return request;
+}
+```
+
+### Managing Variables in the Editor
+
+Configure and preview variables in the **Variables** tab of the HTTP endpoint editor. This tab shows all variables and lets you add values for single-turn tests and verify their usage in the endpoint.
+
+![Variables in http endpoint](/images/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/variable-editor/variable-editor.png)
+
 ## Test Your Endpoint
 
 Send messages to your API from the **Messages** panel to test your endpoint with a conversational experience. See this demonstrated at the end of the video above.

@@ -38,17 +38,17 @@ Create completely new datasets with custom configurations tailored to your evalu
 
 Configure the columns for your dataset based on your selected use case:
 
-### Use Case Templates
+#### Use Case Templates
 
-**Prompt/Workflow Testing:**
-- `input`: User queries or transcripts or whatever that goes as input to an llm (Input type)
-- `expected_output`: Expected output of the agent (expected output type)
-- `variable`: Any custom variable column (variable type)
+1. **Prompt/Workflow Testing:**
+   - `input`: User queries or transcripts or whatever that goes as input to a LLM (Input type)
+   - `expected_output`: Expected output of the agent (expected output type)
+   - `variable`: Any custom variable column (variable type)
 
-**Agent Simulation:**
-- `scenario`: User scenario or intent to be enacted by the simulation agent  (scenario type)
-- `expected_steps`: Expected steps of the agent to complete the given scenario (requires documents as context)
-- `persona`: User's demographic, behavioural or emotional persona (variable type)
+2. **Agent Simulation:**
+   - `scenario`: User scenario or intent to be enacted by the simulation agent (Scenario type)
+   - `expected_steps`: Expected steps of the agent to complete the given scenario (requires documents as context)
+   - `persona`: User's demographic, behavioural or emotional persona (variable type)
 
 > To generate expected output or expected steps, a context source is **mandatory** to prevent hallucination.
 
