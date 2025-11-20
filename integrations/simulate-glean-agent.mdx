@@ -1,0 +1,288 @@
+---
+title: Simulate Glean Agents
+description: Test and evaluate your Glean agents with Maxim AI
+---
+
+## Overview
+
+[Glean](https://www.glean.com/) provides powerful AI agents that can interact with your enterprise data and tools. With Maxim, you can test these agents at scale using automated simulations to ensure they handle various scenarios correctly before deploying to production.
+
+This guide shows you how to:
+1. Create an agent in Glean
+2. Connect the agent endpoint to Maxim
+3. Run automated simulations to test agent behavior
+4. Evaluate performance across multiple scenarios
+
+## Prerequisites
+
+- A Glean workspace with agent creation access
+- Glean API credentials
+- A Maxim account
+
+## Step 1: Create Your Agent in Glean
+
+First, create and configure your agent in Glean:
+
+1. Navigate to your Glean workspace
+2. Create a new agent with your desired capabilities:
+   - Define the agent's purpose and instructions
+   - Configure any tools or data sources the agent needs
+   - Set up the agent's behavior and guardrails
+
+3. Once created, note your agent's ID - you'll need this for the API endpoint
+
+## Step 2: Get Your Glean API Credentials
+
+To connect Maxim to your Glean agent, you'll need:
+
+- **Instance Name**: Your Glean instance name (e.g., `instance-name-be`)
+- **API Token**: Your Glean API Bearer token for authentication
+- **Agent ID**: The unique identifier for your agent
+
+You can find these in your Glean workspace settings and agent configuration.
+
+<Note>
+The API token will be used in the `Authorization: Bearer <token>` header when making requests to your Glean agent.
+</Note>
+
+## Step 3: Configure HTTP Endpoint in Maxim
+
+Now, set up the Glean agent as an HTTP endpoint in Maxim:
+
+<Steps>
+<Step title="Create a new HTTP endpoint workflow">
+1. In Maxim, navigate to the **Evaluate** section
+2. Click on **Agents via HTTP Endpoint** or create a new workflow
+3. Name your workflow (e.g., "Customer Support Agent", "Travel Agent")
+</Step>
+
+<Step title="Configure the endpoint">
+Set up your Glean agent endpoint with the following configuration:
+
+**Endpoint URL:**
+```
+https://instance-name-be.glean.com/rest/api/v1/agents/runs/wait
+```
+Replace `instance-name-be` with your Glean instance name.
+
+**Method:** POST
+
+**Headers:**
+Add the required headers:
+
+| Key | Value |
+|-----|-------|
+| `Content-Type` | `application/json` |
+| `Accept` | `application/json` |
+| `Authorization` | `Bearer <your-glean-api-token>` |
+
+Replace `<your-glean-api-token>` with your actual Glean API token.
+
+
+</Step>
+
+<Step title="Configure the request body">
+Set up the message structure that Glean expects:
+
+```json
+{
+  "agent_id": "string",
+  "input": {},
+  "messages": [
+    {
+      "role": "USER",
+      "content": [
+        {
+          "text": "string",
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "metadata": {}
+}
+```
+
+**Map your variables:**
+- `agent_id`: Your Glean agent ID (string)
+- `input`: Additional input parameters (object, can be empty `{}`)
+- `messages[0].content[0].text`: The user message from your dataset
+- `metadata`: Optional metadata (object, can be empty `{}`)
+
+**Example with actual values:**
+```json
+{
+  "agent_id": "my-customer-support-agent",
+  "input": {},
+  "messages": [
+    {
+      "role": "USER",
+      "content": [
+        {
+          "text": "{{user_message}}",
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "metadata": {}
+}
+```
+
+In this example, `{{user_message}}` is a variable that will be replaced with values from your dataset.
+
+**Complete curl example for reference:**
+```bash
+curl -L 'https://instance-name-be.glean.com/rest/api/v1/agents/runs/wait' \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer <token>' \
+  -d '{
+    "agent_id": "my-customer-support-agent",
+    "input": {},
+    "messages": [
+      {
+        "role": "USER",
+        "content": [
+          {
+            "text": "I need a refund for order #12345",
+            "type": "text"
+          }
+        ]
+      }
+    ],
+    "metadata": {}
+  }'
+```
+
+</Step>
+</Steps>
+
+## Step 4: Create a Simulation Dataset
+
+Create a dataset with scenarios to test your agent:
+
+<Steps>
+<Step title="Navigate to Datasets">
+Go to the **Library** section and select **Datasets**
+</Step>
+
+<Step title="Create or import dataset">
+Create a new dataset with columns for:
+- **scenario**: Description of what the agent should do
+- **user_message**: The initial user message
+- **expected_outcome** (optional): What you expect the agent to accomplish
+- **context** (optional): Any additional context needed
+
+Example dataset for a Customer Support agent:
+
+| scenario | user_message | expected_outcome |
+|----------|--------------|------------------|
+| Refund request | "I need a refund for order #12345" | Agent verifies order and processes refund |
+| Product inquiry | "What's the warranty on the iPhone 15?" | Agent provides accurate warranty information |
+| Account update | "I need to change my billing address" | Agent guides through address update process |
+
+</Step>
+</Steps>
+
+## Step 5: Run Simulated Sessions
+
+Now you can test your agent with automated simulations:
+
+<Steps>
+<Step title="Set up the test run">
+1. Navigate to your HTTP endpoint workflow
+2. Click **Test** in the top right
+3. Select **Simulated session** mode
+
+</Step>
+
+<Step title="Configure simulation parameters">
+
+**Dataset**: Select the dataset you created with test scenarios
+
+**Environment** (optional): Choose if you have different environments configured
+
+**Response fields to evaluate**:
+- **Output field**: Select the field from the response that contains the agent's final answer
+- **Context field** (optional): Select fields containing retrieved context or tool outputs
+
+**Select evaluators**: Choose evaluators to assess your agent:
+- Task Completion
+- Agent Trajectory
+
+You can also browse the Evaluator Store to add more evaluators.
+
+</Step>
+
+<Step title="Trigger the test run">
+Click **Trigger test run** to start the simulation.
+
+The system will:
+1. Iterate through each scenario in your dataset
+2. Simulate multi-turn conversations based on the scenario
+3. Evaluate the agent's performance using your selected evaluators
+4. Generate a comprehensive report
+</Step>
+
+<Step title="Review results">
+Once complete, you'll see a comprehensive test run report with:
+
+**Test Summary (Left Panel)**
+- HTTP endpoint and dataset information
+- Status overview (e.g., "10 Completed")
+- Test run duration
+- Simulation cost and evaluation cost
+- Timestamp and author information
+
+**Summary by Evaluator**
+- Pass/Fail status for each evaluator
+- Mean scores (e.g., 0.4/1)
+- Pass rates (e.g., 40%)
+- Visual indicators for performance
+
+**Latency Metrics**
+- Minimum, maximum, and p50 latency
+- Helps identify performance bottlenecks
+
+**Detailed Results Table**
+Each row shows:
+- **Status**: Whether the simulation completed successfully
+- **Agent scenario**: The test scenario from your dataset
+- **Expected steps**: The expected agent behavior you defined
+- **sessionId**: Unique identifier for each simulated session
+- **Avg. latency (ms)**: Response time for that scenario
+- **Cost ($)**: Individual test cost
+- **Tokens**: Token usage per scenario
+
+You can:
+- Click on any row to view the full conversation transcript
+- Sort by any column to identify patterns
+- Filter results to focus on specific scenarios
+- Export the report for further analysis
+
+</Step>
+</Steps>
+
+## Advanced: Single Turn Testing
+
+For quick validation, you can also run single-turn tests:
+
+1. In the test setup modal, select **Single turn** instead of **Simulated session**
+2. This will send one message per dataset row without multi-turn conversation
+3. Useful for:
+   - Quick validation of changes
+   - Testing specific inputs
+   - Regression testing with known inputs/outputs
+
+
+## Resources
+
+<CardGroup cols="3">
+  <Card title="Build AI Agents with Glean" icon="book" href="https://www.glean.com/product/ai-agents">
+    Glean Agents
+  </Card>
+  <Card title="Maxim Docs" icon="book" href="https://www.getmaxim.ai/docs/simulations/text-simulation/simulation-runs">
+    Simulation Runs on Maxim
+  </Card>
+</CardGroup>
