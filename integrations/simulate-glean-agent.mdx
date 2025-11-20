@@ -168,19 +168,21 @@ Go to the **Library** section and select **Datasets**
 </Step>
 
 <Step title="Create or import dataset">
-Create a new dataset with columns for:
-- **scenario**: Description of what the agent should do
-- **user_message**: The initial user message
-- **expected_outcome** (optional): What you expect the agent to accomplish
-- **context** (optional): Any additional context needed
+When creating your dataset, select the **Agent simulation** template. This will create a dataset with the following columns:
 
-Example dataset for a Customer Support agent:
+- **user_message**: The initial message from the user to start the conversation
+- **agent_scenario**: Description of what the user is trying to accomplish
+- **expected_steps**: Step-by-step description of how you expect the agent to handle the scenario
 
-| scenario | user_message | expected_outcome |
-|----------|--------------|------------------|
-| Refund request | "I need a refund for order #12345" | Agent verifies order and processes refund |
-| Product inquiry | "What's the warranty on the iPhone 15?" | Agent provides accurate warranty information |
-| Account update | "I need to change my billing address" | Agent guides through address update process |
+
+Example dataset for a Customer Support bot:
+
+| user_message | agent_scenario | expected_steps |
+|--------------|----------------|----------------|
+| "I need a refund for order #12345" | Customer requesting refund for defective product | 1) Agent greets customer and acknowledges refund request; 2) Agent verifies order details and purchase history; 3) Agent confirms defect reason; 4) Agent processes refund and provides confirmation |
+| "What's the warranty on the iPhone 15?" | User inquiring about product warranty information | 1) Agent provides accurate warranty period (typically 1 year); 2) Agent explains what's covered under warranty; 3) Agent offers extended warranty options if available |
+| "I need to change my billing address" | Customer wanting to update account information | 1) Agent verifies customer identity; 2) Agent guides customer through address update process; 3) Agent confirms new address and updates account |
+| "My order hasn't arrived yet" | Customer checking on delayed order status | 1) Agent asks for order number; 2) Agent looks up tracking information; 3) Agent explains current status and expected delivery; 4) Agent offers solution if delayed |
 
 </Step>
 </Steps>
