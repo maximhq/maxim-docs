@@ -324,6 +324,7 @@
                         "group": "Integrations",
                         "pages": [
                             "integrations/overview",
+                            "integrations/simulate-glean-agent",
                             "integrations/create-a-pagerduty-integration",
                             "integrations/create-a-slack-integration"
                         ]
