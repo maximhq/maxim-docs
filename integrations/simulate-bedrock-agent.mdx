@@ -99,43 +99,83 @@ Replace the default code with the following:
 import json
 import uuid
 import boto3
+import logging
+from botocore.exceptions import ClientError
 
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Initialize Bedrock client
 bedrock_client = boto3.client("bedrock-agent-runtime", region_name="us-east-1")
 
-AGENT_ID = "4UDWU64G6Z"       # Replace with your Agent ID
-AGENT_ALIAS_ID = "YOUR_ALIAS"  # Replace with your Alias ID
+# Replace these with your actual values
+AGENT_ID = "4UDWU64G6Z"       # Your Agent ID
+AGENT_ALIAS_ID = "YOUR_ALIAS"  # Your Alias ID
 
 def lambda_handler(event, context):
-    # Parse incoming request body
-    body = json.loads(event.get("body") or "{}")
-    user_message = body.get("message", "")
-    session_id = body.get("sessionId") or str(uuid.uuid4())
+    """
+    Lambda handler to invoke Bedrock agent and maintain multi-turn conversations.
+    The sessionId parameter enables conversation context across multiple turns.
+    """
+    try:
+        # Parse incoming request body
+        body = json.loads(event.get("body") or "{}")
+        user_message = body.get("message", "")
+        session_id = body.get("sessionId") or str(uuid.uuid4())
+        
+        if not user_message:
+            return _response(400, {"error": "message is required"})
+        
+        logger.info(f"Invoking agent {AGENT_ID} with sessionId: {session_id}")
+        
+        # Call the Bedrock agent with sessionId to maintain conversation context
+        # The same sessionId across multiple calls enables multi-turn conversations
+        response = bedrock_client.invoke_agent(
+            agentId=AGENT_ID,
+            agentAliasId=AGENT_ALIAS_ID,
+            sessionId=session_id,  # Maintains context across conversation turns
+            inputText=user_message,
+            enableTrace=True,  # Enable trace for debugging
+            streamingConfigurations={
+                "applyGuardrailInterval": 20,
+                "streamFinalResponse": False
+            }
+        )
+        
+        # Process the streaming response
+        completion_text = ""
+        for event_stream in response.get("completion", []):
+            # Collect agent output
+            if "chunk" in event_stream:
+                chunk = event_stream["chunk"]
+                completion_text += chunk["bytes"].decode("utf-8")
+            
+            # Log trace output for debugging (optional)
+            if "trace" in event_stream:
+                trace_event = event_stream.get("trace")
+                trace = trace_event.get("trace", {})
+                for key, value in trace.items():
+                    logger.info("%s: %s", key, value)
+        
+        logger.info(f"Agent response length: {len(completion_text)} characters")
+        
+        # Return the response with sessionId so Maxim can maintain continuity
+        return _response(200, {
+            "reply": completion_text,
+            "sessionId": session_id,
+        })
     
-    if not user_message:
-        return _response(400, {"error": "message is required"})
+    except ClientError as e:
+        logger.error("AWS Client error: %s", str(e))
+        return _response(500, {"error": f"AWS error: {str(e)}"})
     
-    # Call the Bedrock agent with sessionId to maintain conversation context
-    # The same sessionId across multiple calls enables multi-turn conversations
-    response = bedrock_client.invoke_agent(
-        agentId=AGENT_ID,
-        agentAliasId=AGENT_ALIAS_ID,
-        sessionId=session_id,  # Maintains context across conversation turns
-        inputText=user_message,
-    )
-    
-    # The result comes as a streaming event sequence
-    completion_text = ""
-    for event_stream in response["completion"]:
-        if "chunk" in event_stream:
-            completion_text += event_stream["chunk"]["bytes"].decode("utf-8")
-    
-    # Return the response with sessionId so Maxim can maintain continuity
-    return _response(200, {
-        "reply": completion_text,
-        "sessionId": session_id,
-    })
+    except Exception as e:
+        logger.error("Unexpected error: %s", str(e))
+        return _response(500, {"error": "Internal server error"})
 
 def _response(status_code, body_dict):
+    """Helper function to format HTTP response"""
     return {
         "statusCode": status_code,
         "headers": {
@@ -146,7 +186,10 @@ def _response(status_code, body_dict):
     }
 ```
 
-**Important**: Replace `AGENT_ID` and `AGENT_ALIAS_ID` with your actual values.
+**Important**: 
+- Replace `AGENT_ID` and `AGENT_ALIAS_ID` with your actual values
+- The code includes `enableTrace=True` for debugging - you can set this to `False` in production if you don't need detailed traces
+- Logs are sent to CloudWatch Logs for monitoring and debugging
 </Step>
 
 <Step title="Configure IAM permissions">
@@ -192,6 +235,10 @@ curl -X POST https://your-lambda-url.lambda-url.us-east-1.on.aws/ \
 ```
 
 You should receive a response with the agent's reply.
+
+<Note>
+**Multi-turn Conversation Support**: The `sessionId` parameter enables conversation context. When you send multiple messages with the same `sessionId`, the Bedrock agent remembers previous messages and can reference them in responses. This allows for natural, contextual conversations where the agent can build on earlier information.
+</Note>
 </Step>
 </Steps>
 
@@ -369,6 +416,45 @@ You can:
 
 </Step>
 </Steps>
+
+## Understanding Multi-turn Conversations
+
+Bedrock agents natively support multi-turn conversations through the `sessionId` parameter. Here's how it works in Maxim simulations:
+
+### How Session Context Works
+
+1. **Session Initialization**: When a simulation starts, Maxim generates a unique `sessionId` for each scenario
+2. **Context Preservation**: The same `sessionId` is passed with every message in that conversation
+3. **Agent Memory**: Bedrock stores all messages and agent responses for that `sessionId`
+4. **Context Access**: The agent can reference any previous information from the session
+
+### Example Conversation Flow
+
+```
+Turn 1 (sessionId: "abc123"):
+User: "I want to invest $10,000"
+Agent: "Great! What's your risk tolerance and investment timeline?"
+
+Turn 2 (same sessionId: "abc123"):
+User: "I'm comfortable with moderate risk, 5-year timeline"
+Agent: "Based on your $10,000 investment and 5-year moderate risk profile,
+       I recommend a balanced portfolio of 60% stock ETFs and 40% bonds..."
+```
+
+The agent remembers the $10,000 amount from Turn 1 and references it in Turn 2.
+
+### Session Lifecycle
+
+- **Duration**: Session data is stored by Bedrock for up to 1 hour by default
+- **Isolation**: Each scenario in your test run gets a unique `sessionId` for clean test isolation
+- **Cleanup**: After 1 hour of inactivity, session context is automatically cleared
+
+### Testing Context Retention
+
+To test your agent's ability to maintain context:
+- Create scenarios that require remembering information across multiple turns
+- Include follow-up questions that reference earlier parts of the conversation
+- Test edge cases like very long conversations or complex information tracking
 
 <Note>
 **Single turn vs. Simulated session**: Single-turn testing is faster and cheaper but doesn't test the agent's ability to maintain context and handle follow-up questions. Use simulated sessions to test realistic conversation flows where the agent needs to remember previous context.
