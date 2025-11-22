@@ -325,6 +325,7 @@
                         "pages": [
                             "integrations/overview",
                             "integrations/simulate-glean-agent",
+                            "integrations/simulate-bedrock-agent",
                             "integrations/create-a-pagerduty-integration",
                             "integrations/create-a-slack-integration"
                         ]
