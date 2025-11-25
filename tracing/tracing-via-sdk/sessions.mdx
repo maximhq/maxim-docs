@@ -1,9 +1,14 @@
 ---
 title: Sessions
-description: Learn how to group related traces into sessions to track complete user interactions with your GenAI system.
+description:
+    Learn how to group related traces into sessions to track complete user interactions with your
+    GenAI system.
 ---
 
-Sessions are particularly useful for tracking multi-turn conversations or complex workflows that span multiple API calls or user interactions. Maintain context across multiple traces, analyze user behavior, and debug multi-interaction issues with sessions. Track the full lifecycle of user engagement by organizing traces into sessions.
+Sessions are particularly useful for tracking multi-turn conversations or complex workflows that
+span multiple API calls or user interactions. Maintain context across multiple traces, analyze user
+behavior, and debug multi-interaction issues with sessions. Track the full lifecycle of user
+engagement by organizing traces into sessions.
 
 <div className="w-full flex justify-end -mb-11">
     <LanguageSwitcher />
@@ -21,7 +26,7 @@ Sessions are particularly useful for tracking multi-turn conversations or comple
 
     ```python Python
     session = logger.session({
-        "id":"session-id", 
+        "id":"session-id",
         "name":"session-name"
     })
     ```
@@ -38,6 +43,7 @@ Sessions are particularly useful for tracking multi-turn conversations or comple
         new SessionConfig("session-id", "session-name")
     );
     ```
+
 </CodeGroup>
 </Step>
 
@@ -68,6 +74,7 @@ After creating a `session` object, you can add multiple traces across the lifecy
         new TraceConfig("trace-id", "trace-name")
     );
     ```
+
 </CodeGroup>
 </Step>
 
@@ -100,6 +107,32 @@ After creating a `session` object, you can add multiple traces across the lifecy
         new TraceConfig("trace-id", "trace-name", "session-id")
     );
     ```
+
+</CodeGroup>
+</Step>
+
+<Step title="End a session">
+When you're done with a session, call `end()` to mark it as complete and finalize the session lifecycle.
+
+This also is a trigger for any session-level evaluations you might have set up.
+
+<CodeGroup>
+    ```typescript JS/TS
+    session.end();
+    ```
+
+    ```python Python
+    session.end()
+    ```
+
+    ```go Go
+    session.End()
+    ```
+
+    ```java Java
+    session.end();
+    ```
+
 </CodeGroup>
 </Step>
 </Steps>
