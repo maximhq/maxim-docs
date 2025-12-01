@@ -141,3 +141,15 @@ button[type='button'] div.text-gray-900 {
 #table-of-contents-layout > #table-of-contents{
     padding-top: 4rem;
 }
+
+/* Image styling with border radius and shadow */
+.mdx-content img,
+div.mdx-content img,
+article img {
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
