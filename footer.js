@@ -5,6 +5,13 @@
             return;
         }
 
+        // Build image paths
+        const basePath = window.location.origin;
+        const socPath = basePath + '/images/soc.png';
+        const hipaaPath = basePath + '/images/hipaa.png';
+        const isoPath = basePath + '/images/iso.png';
+        const gdprPath = basePath + '/images/gdpr.png';
+
         // Create footer HTML
         const footerHTML = `
             <section class="section-footer" id="custom-footer">
@@ -33,10 +40,10 @@
                                     </div>
                                 </div>
                                 <div class="footer-badge-box">
-                                    <img src="/images/soc.png" loading="lazy" width="45" alt="SOC Compliance" class="compliance-logo">
-                                    <img src="/images/hipaa.png" loading="lazy" width="45" alt="HIPAA Compliance" class="compliance-logo">
-                                    <img src="/images/iso.png" loading="lazy" width="45" alt="ISO Compliance" class="compliance-logo">
-                                    <img src="/images/gdpr.png" loading="lazy" width="45" alt="GDPR Compliance" class="compliance-logo">
+                                    <img src="${socPath}" loading="lazy" width="45" alt="SOC Compliance" class="compliance-logo" onerror="this.src='/images/soc.png'">
+                                    <img src="${hipaaPath}" loading="lazy" width="45" alt="HIPAA Compliance" class="compliance-logo" onerror="this.src='/images/hipaa.png'">
+                                    <img src="${isoPath}" loading="lazy" width="45" alt="ISO Compliance" class="compliance-logo" onerror="this.src='/images/iso.png'">
+                                    <img src="${gdprPath}" loading="lazy" width="45" alt="GDPR Compliance" class="compliance-logo" onerror="this.src='/images/gdpr.png'">
                                 </div>
                                 <div class="footer-left-bottom">
                                     <a href="https://x.com/getmaximai" target="_blank" rel="noopener noreferrer" class="footer-social-link twitter w-inline-block"></a>
