@@ -1,0 +1,1284 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "contact": {
+      "name": "Maxim Engineering",
+      "email": "eng@getmaxim.ai"
+    },
+    "title": "Maxim SDK API - batched-logging",
+    "description": "API documentation for Maxim SDK batched-logging endpoints"
+  },
+  "servers": [
+    {
+      "url": "https://api.getmaxim.ai"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-maxim-api-key",
+        "description": "API key for authentication"
+      }
+    },
+    "schemas": {
+      "Trace": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the trace."
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "trace"
+            ],
+            "description": "Type of the entity."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the trace. If not provided, the trace will be created without a name."
+          },
+          "sessionId": {
+            "type": "string",
+            "description": "Unique identifier for the session. If not provided, the trace will be created without a session."
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Tags for the trace. If not provided, the trace will be created without tags."
+          },
+          "input": {
+            "type": "string",
+            "description": "Input for the trace."
+          },
+          "output": {
+            "type": "string",
+            "description": "Output for the trace."
+          },
+          "feedback": {
+            "type": "object",
+            "properties": {
+              "score": {
+                "type": "number",
+                "description": "Score for the feedback."
+              },
+              "comment": {
+                "type": "string",
+                "description": "Comment for the feedback. If not provided, the feedback will be created without a comment."
+              }
+            },
+            "required": [
+              "score"
+            ],
+            "description": "Feedback for the trace."
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": {
+              "nullable": true
+            },
+            "description": "Metadata for the trace."
+          },
+          "metrics": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "number"
+            },
+            "description": "Metrics for the entity."
+          },
+          "evaluate": {
+            "type": "object",
+            "properties": {
+              "evaluators": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1,
+                "description": "Evaluators for the trace. If not provided, the trace will be created without evaluators."
+              },
+              "variables": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Variables for the evaluator. If not provided, the evaluator will be created without variables."
+              }
+            },
+            "required": [
+              "evaluators"
+            ]
+          },
+          "attachment": {
+            "type": "object",
+            "properties": {
+              "attachmentId": {
+                "type": "string",
+                "description": "Unique identifier for the attachment."
+              },
+              "url": {
+                "type": "string",
+                "format": "uri",
+                "description": "URL of the attachment."
+              },
+              "tags": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Tags for the attachment. If not provided, the attachment will be created without tags."
+              },
+              "metadata": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Metadata for the attachment. If not provided, the attachment will be created without metadata."
+              }
+            },
+            "required": [
+              "attachmentId",
+              "url"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "type"
+        ]
+      },
+      "ChatCompletionResult": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "object": {
+            "type": "string",
+            "enum": [
+              "chat.completion"
+            ]
+          },
+          "created": {
+            "type": "number"
+          },
+          "model": {
+            "type": "string"
+          },
+          "choices": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "index": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "object",
+                  "properties": {
+                    "role": {
+                      "type": "string",
+                      "enum": [
+                        "assistant"
+                      ]
+                    },
+                    "content": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "function_call": {
+                      "type": "object",
+                      "properties": {
+                        "arguments": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "arguments",
+                        "name"
+                      ]
+                    },
+                    "tool_calls": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "function": {
+                            "type": "object",
+                            "properties": {
+                              "arguments": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "arguments",
+                              "name"
+                            ]
+                          },
+                          "type": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "function",
+                          "type"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "role",
+                    "content"
+                  ]
+                },
+                "logprobs": {
+                  "type": "object",
+                  "nullable": true,
+                  "properties": {
+                    "text_offset": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      }
+                    },
+                    "token_logprobs": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      }
+                    },
+                    "tokens": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "top_logprobs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                },
+                "finish_reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "index",
+                "message",
+                "logprobs",
+                "finish_reason"
+              ]
+            }
+          },
+          "usage": {
+            "type": "object",
+            "properties": {
+              "prompt_tokens": {
+                "type": "number"
+              },
+              "completion_tokens": {
+                "type": "number"
+              },
+              "total_tokens": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "prompt_tokens",
+              "completion_tokens",
+              "total_tokens"
+            ]
+          },
+          "cost": {
+            "type": "object",
+            "properties": {
+              "input": {
+                "type": "number"
+              },
+              "output": {
+                "type": "number"
+              },
+              "total": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "input",
+              "output",
+              "total"
+            ]
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "message"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "object",
+          "created",
+          "model",
+          "choices",
+          "usage"
+        ],
+        "title": "Chat Completion Result"
+      },
+      "TextCompletionResult": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "object": {
+            "type": "string",
+            "enum": [
+              "text_completion"
+            ]
+          },
+          "created": {
+            "type": "number"
+          },
+          "model": {
+            "type": "string"
+          },
+          "choices": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "index": {
+                  "type": "number"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "logprobs": {
+                  "type": "object",
+                  "nullable": true,
+                  "properties": {
+                    "text_offset": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      }
+                    },
+                    "token_logprobs": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      }
+                    },
+                    "tokens": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "top_logprobs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                },
+                "finish_reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "index",
+                "text",
+                "logprobs",
+                "finish_reason"
+              ]
+            }
+          },
+          "usage": {
+            "type": "object",
+            "properties": {
+              "prompt_tokens": {
+                "type": "number"
+              },
+              "completion_tokens": {
+                "type": "number"
+              },
+              "total_tokens": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "prompt_tokens",
+              "completion_tokens",
+              "total_tokens"
+            ]
+          },
+          "cost": {
+            "type": "object",
+            "properties": {
+              "input": {
+                "type": "number"
+              },
+              "output": {
+                "type": "number"
+              },
+              "total": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "input",
+              "output",
+              "total"
+            ]
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "message"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "object",
+          "created",
+          "model",
+          "choices",
+          "usage"
+        ],
+        "title": "Text Completion Result"
+      }
+    },
+    "parameters": {}
+  },
+  "paths": {
+    "/v1/logging/batch": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Batch push logs",
+        "summary": "Batch push logs",
+        "tags": [
+          "SDK Logging"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "repoId": {
+                    "type": "string"
+                  },
+                  "logs": {
+                    "type": "array",
+                    "items": {
+                      "oneOf": [
+                        {
+                          "$ref": "#/components/schemas/Trace"
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "description": "Unique identifier for the session."
+                            },
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "session"
+                              ],
+                              "description": "Type of the entity."
+                            },
+                            "name": {
+                              "type": "string",
+                              "description": "Name of the session. If not provided, the session will be created without a name."
+                            },
+                            "tags": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "string"
+                              },
+                              "description": "Tags for the session. If not provided, the session will be created without tags."
+                            },
+                            "feedback": {
+                              "type": "object",
+                              "properties": {
+                                "score": {
+                                  "type": "number",
+                                  "description": "Score for the feedback."
+                                },
+                                "comment": {
+                                  "type": "string",
+                                  "description": "Comment for the feedback. If not provided, the feedback will be created without a comment."
+                                }
+                              },
+                              "required": [
+                                "score"
+                              ],
+                              "description": "Feedback for the session."
+                            },
+                            "evaluate": {
+                              "type": "object",
+                              "properties": {
+                                "evaluators": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "minItems": 1,
+                                  "description": "Evaluators for the session. If not provided, the session will be created without evaluators."
+                                },
+                                "variables": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "string"
+                                  },
+                                  "description": "Variables for the evaluator. If not provided, the evaluator will be created without variables."
+                                }
+                              },
+                              "required": [
+                                "evaluators"
+                              ]
+                            },
+                            "metrics": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "number"
+                              },
+                              "description": "Metrics for the entity."
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "type"
+                          ],
+                          "title": "Session"
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "description": "Unique identifier for the span."
+                            },
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "span"
+                              ],
+                              "description": "Type of the entity."
+                            },
+                            "name": {
+                              "type": "string",
+                              "description": "Name of the span. If not provided, the span will be created without a name."
+                            },
+                            "tags": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "string"
+                              },
+                              "description": "Tags for the span. If not provided, the span will be created without tags."
+                            },
+                            "traceId": {
+                              "type": "string"
+                            },
+                            "spanId": {
+                              "type": "string"
+                            },
+                            "evaluate": {
+                              "type": "object",
+                              "properties": {
+                                "evaluators": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "minItems": 1,
+                                  "description": "Evaluators for the span. If not provided, the span will be created without evaluators."
+                                },
+                                "variables": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "string"
+                                  },
+                                  "description": "Variables for the evaluator. If not provided, the evaluator will be created without variables."
+                                }
+                              },
+                              "required": [
+                                "evaluators"
+                              ]
+                            },
+                            "metadata": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "nullable": true
+                              },
+                              "description": "Metadata for the span."
+                            },
+                            "error": {
+                              "type": "object",
+                              "properties": {
+                                "errorId": {
+                                  "type": "string",
+                                  "description": "Unique identifier for the error."
+                                },
+                                "errorMessage": {
+                                  "type": "string",
+                                  "description": "Error message."
+                                },
+                                "errorCode": {
+                                  "type": "string",
+                                  "description": "Error code. If not provided, the error will be created without a code."
+                                },
+                                "errorType": {
+                                  "type": "string",
+                                  "description": "Error type. If not provided, the error will be created without a type."
+                                }
+                              },
+                              "required": [
+                                "errorId",
+                                "errorMessage"
+                              ]
+                            },
+                            "attachment": {
+                              "type": "object",
+                              "properties": {
+                                "attachmentId": {
+                                  "type": "string",
+                                  "description": "Unique identifier for the attachment."
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "description": "URL of the attachment."
+                                },
+                                "tags": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "string"
+                                  },
+                                  "description": "Tags for the attachment. If not provided, the attachment will be created without tags."
+                                },
+                                "metadata": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "nullable": true
+                                  },
+                                  "description": "Metadata for the attachment. If not provided, the attachment will be created without metadata."
+                                }
+                              },
+                              "required": [
+                                "attachmentId",
+                                "url"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "type"
+                          ],
+                          "title": "Span"
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "description": "Unique identifier for the generation."
+                            },
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "generation"
+                              ],
+                              "description": "Type of the entity."
+                            },
+                            "name": {
+                              "type": "string",
+                              "description": "Name of the generation. If not provided, the generation will be created without a name."
+                            },
+                            "tags": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "string"
+                              },
+                              "description": "Tags for the generation. If not provided, the generation will be created without tags."
+                            },
+                            "traceId": {
+                              "type": "string"
+                            },
+                            "spanId": {
+                              "type": "string"
+                            },
+                            "model": {
+                              "type": "string"
+                            },
+                            "provider": {
+                              "type": "string",
+                              "enum": [
+                                "openai",
+                                "bedrock",
+                                "anthropic",
+                                "huggingface",
+                                "azure",
+                                "together",
+                                "groq",
+                                "google"
+                              ],
+                              "description": "Provider for the generation. One of: 'openai', 'bedrock', 'anthropic', 'huggingface', 'azure', 'together', 'groq', 'google'."
+                            },
+                            "metadata": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "nullable": true
+                              },
+                              "description": "Metadata for the entity."
+                            },
+                            "metrics": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "number"
+                              },
+                              "description": "Metrics for the entity."
+                            },
+                            "messages": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "role": {
+                                    "type": "string",
+                                    "enum": [
+                                      "assistant",
+                                      "user",
+                                      "system",
+                                      "model",
+                                      "chatbot",
+                                      "tool"
+                                    ],
+                                    "description": "Role of the message sender"
+                                  },
+                                  "content": {
+                                    "anyOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "array",
+                                        "items": {
+                                          "anyOf": [
+                                            {
+                                              "type": "object",
+                                              "properties": {
+                                                "type": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "text"
+                                                  ],
+                                                  "description": "Content type"
+                                                },
+                                                "text": {
+                                                  "type": "string",
+                                                  "description": "Text content"
+                                                }
+                                              },
+                                              "required": [
+                                                "type",
+                                                "text"
+                                              ],
+                                              "description": "Text content object"
+                                            },
+                                            {
+                                              "type": "object",
+                                              "properties": {
+                                                "type": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "image_url"
+                                                  ],
+                                                  "description": "Content type"
+                                                },
+                                                "image_url": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "url": {
+                                                      "type": "string",
+                                                      "description": "Image URL"
+                                                    },
+                                                    "detail": {
+                                                      "type": "string",
+                                                      "enum": [
+                                                        "auto",
+                                                        "low",
+                                                        "high"
+                                                      ],
+                                                      "description": "Image detail level"
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "url"
+                                                  ],
+                                                  "description": "Image URL configuration"
+                                                }
+                                              },
+                                              "required": [
+                                                "type",
+                                                "image_url"
+                                              ],
+                                              "description": "Image URL content object"
+                                            }
+                                          ],
+                                          "description": "Content schema"
+                                        }
+                                      },
+                                      {
+                                        "nullable": true
+                                      }
+                                    ],
+                                    "description": "Message content"
+                                  },
+                                  "tool_call_id": {
+                                    "type": "string",
+                                    "description": "Tool call ID for tool messages"
+                                  },
+                                  "tool_calls": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string",
+                                          "description": "Tool call identifier"
+                                        },
+                                        "type": {
+                                          "type": "string",
+                                          "enum": [
+                                            "function"
+                                          ],
+                                          "description": "Tool call type"
+                                        },
+                                        "function": {
+                                          "type": "object",
+                                          "properties": {
+                                            "name": {
+                                              "type": "string",
+                                              "description": "Function name"
+                                            },
+                                            "arguments": {
+                                              "type": "string",
+                                              "description": "Function arguments as JSON string"
+                                            }
+                                          },
+                                          "required": [
+                                            "name",
+                                            "arguments"
+                                          ],
+                                          "description": "Function call details"
+                                        }
+                                      },
+                                      "required": [
+                                        "id",
+                                        "type",
+                                        "function"
+                                      ],
+                                      "description": "Tool call object"
+                                    },
+                                    "description": "Tool calls made by the assistant in this message"
+                                  }
+                                },
+                                "required": [
+                                  "role"
+                                ],
+                                "description": "Message to send to the model"
+                              },
+                              "description": "Messages for the generation."
+                            },
+                            "modelParameters": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "nullable": true
+                              }
+                            },
+                            "result": {
+                              "oneOf": [
+                                {
+                                  "$ref": "#/components/schemas/ChatCompletionResult"
+                                },
+                                {
+                                  "$ref": "#/components/schemas/TextCompletionResult"
+                                }
+                              ],
+                              "discriminator": {
+                                "propertyName": "object",
+                                "mapping": {
+                                  "chat.completion": "#/components/schemas/ChatCompletionResult",
+                                  "text_completion": "#/components/schemas/TextCompletionResult"
+                                }
+                              }
+                            },
+                            "maximPromptId": {
+                              "type": "string"
+                            },
+                            "maximPromptVersionId": {
+                              "type": "string"
+                            },
+                            "error": {
+                              "type": "object",
+                              "properties": {
+                                "errorMessage": {
+                                  "type": "string",
+                                  "description": "Error message."
+                                },
+                                "errorCode": {
+                                  "type": "string",
+                                  "description": "Error code. If not provided, the error will be created without a code."
+                                },
+                                "errorType": {
+                                  "type": "string",
+                                  "description": "Error type. If not provided, the error will be created without a type."
+                                }
+                              },
+                              "required": [
+                                "errorMessage"
+                              ]
+                            },
+                            "evaluate": {
+                              "type": "object",
+                              "properties": {
+                                "evaluators": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "minItems": 1,
+                                  "description": "Evaluators for the generation. If not provided, the generation will be created without evaluators."
+                                },
+                                "variables": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "string"
+                                  },
+                                  "description": "Variables for the evaluator. If not provided, the evaluator will be created without variables."
+                                }
+                              },
+                              "required": [
+                                "evaluators"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "type",
+                            "model",
+                            "provider",
+                            "messages",
+                            "modelParameters"
+                          ],
+                          "title": "Generation"
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "description": "Unique identifier for the retrieval."
+                            },
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "retrieval"
+                              ],
+                              "description": "Type of the entity."
+                            },
+                            "name": {
+                              "type": "string",
+                              "description": "Name of the retrieval. If not provided, the retrieval will be created without a name."
+                            },
+                            "tags": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "string"
+                              },
+                              "description": "Tags for the retrieval. If not provided, the retrieval will be created without tags."
+                            },
+                            "traceId": {
+                              "type": "string"
+                            },
+                            "spanId": {
+                              "type": "string"
+                            },
+                            "input": {
+                              "type": "string"
+                            },
+                            "output": {
+                              "anyOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                }
+                              ]
+                            },
+                            "metadata": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "nullable": true
+                              }
+                            },
+                            "metrics": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "number"
+                              },
+                              "description": "Metrics for the entity."
+                            },
+                            "evaluate": {
+                              "type": "object",
+                              "properties": {
+                                "evaluators": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "minItems": 1,
+                                  "description": "Evaluators for the retrieval. If not provided, the retrieval will be created without evaluators."
+                                },
+                                "variables": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "string"
+                                  },
+                                  "description": "Variables for the evaluator. If not provided, the evaluator will be created without variables."
+                                }
+                              },
+                              "required": [
+                                "evaluators"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "type"
+                          ],
+                          "title": "Retrieval"
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "description": "Unique identifier for the tool call."
+                            },
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "toolCall"
+                              ],
+                              "description": "Type of the entity."
+                            },
+                            "name": {
+                              "type": "string",
+                              "description": "Name of the tool call."
+                            },
+                            "description": {
+                              "type": "string",
+                              "description": "Description of the tool call."
+                            },
+                            "args": {
+                              "type": "string",
+                              "description": "Arguments for the tool call as a JSON string."
+                            },
+                            "tags": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "string"
+                              },
+                              "description": "Tags for the tool call. If not provided, the tool call will be created without tags."
+                            },
+                            "traceId": {
+                              "type": "string"
+                            },
+                            "spanId": {
+                              "type": "string"
+                            },
+                            "result": {
+                              "type": "string",
+                              "description": "Result for the tool call as a JSON string."
+                            },
+                            "error": {
+                              "type": "object",
+                              "properties": {
+                                "errorMessage": {
+                                  "type": "string",
+                                  "description": "Message of the error."
+                                },
+                                "errorCode": {
+                                  "type": "string",
+                                  "description": "Code of the error. If not provided, the error will be created without a code."
+                                },
+                                "errorType": {
+                                  "type": "string",
+                                  "description": "Type of the error. If not provided, the error will be created without a type."
+                                }
+                              },
+                              "required": [
+                                "errorMessage"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "type",
+                            "name",
+                            "description",
+                            "args"
+                          ],
+                          "title": "Tool Call"
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "description": "Unique identifier for the event."
+                            },
+                            "name": {
+                              "type": "string",
+                              "description": "Name of the event."
+                            },
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "event"
+                              ],
+                              "description": "Type of the event."
+                            },
+                            "traceId": {
+                              "type": "string"
+                            },
+                            "spanId": {
+                              "type": "string"
+                            },
+                            "tags": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "string"
+                              },
+                              "description": "Tags for the event. If not provided, the event will be created without tags."
+                            },
+                            "metadata": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "nullable": true
+                              },
+                              "description": "Metadata for the event. If not provided, the event will be created without metadata."
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "name",
+                            "type"
+                          ],
+                          "title": "Event"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "repoId",
+                  "logs"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully logged message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Success status"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  }
+}
