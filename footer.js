@@ -5,12 +5,11 @@
             return;
         }
 
-        // Build image paths
-        const basePath = window.location.origin;
-        const socPath = basePath + '/images/soc.png';
-        const hipaaPath = basePath + '/images/hipaa.png';
-        const isoPath = basePath + '/images/iso.png';
-        const gdprPath = basePath + '/images/gdpr.png';
+        // Compliance logo CDN URLs
+        const socPath = 'https://cdn.prod.website-files.com/665ab0daac869acad030a349/66fe99bae027e906828812ed_21972-312_SOC_NonCPA.png';
+        const hipaaPath = 'https://cdn.prod.website-files.com/665ab0daac869acad030a349/674059445b7e5f0567d4aa54_image%20(15).png';
+        const isoPath = 'https://cdn.prod.website-files.com/665ab0daac869acad030a349/6703769213e45e2379621c47_ISO%2027001.png';
+        const gdprPath = 'https://cdn.prod.website-files.com/665ab0daac869acad030a349/66fe9aa86579ed03ca44fde2_PNG_GDPR-e1672263252689.png';
 
         // Create footer HTML
         const footerHTML = `
@@ -40,10 +39,10 @@
                                     </div>
                                 </div>
                                 <div class="footer-badge-box">
-                                    <img src="${socPath}" loading="lazy" width="45" alt="SOC Compliance" class="compliance-logo" onerror="this.src='/images/soc.png'">
-                                    <img src="${hipaaPath}" loading="lazy" width="45" alt="HIPAA Compliance" class="compliance-logo" onerror="this.src='/images/hipaa.png'">
-                                    <img src="${isoPath}" loading="lazy" width="45" alt="ISO Compliance" class="compliance-logo" onerror="this.src='/images/iso.png'">
-                                    <img src="${gdprPath}" loading="lazy" width="45" alt="GDPR Compliance" class="compliance-logo" onerror="this.src='/images/gdpr.png'">
+                                    <img src="${socPath}" loading="lazy" width="45" alt="SOC Compliance" class="compliance-logo">
+                                    <img src="${hipaaPath}" loading="lazy" width="45" alt="HIPAA Compliance" class="compliance-logo">
+                                    <img src="${isoPath}" loading="lazy" width="45" alt="ISO Compliance" class="compliance-logo">
+                                    <img src="${gdprPath}" loading="lazy" width="45" alt="GDPR Compliance" class="compliance-logo">
                                 </div>
                                 <div class="footer-left-bottom">
                                     <a href="https://x.com/getmaximai" target="_blank" rel="noopener noreferrer" class="footer-social-link twitter w-inline-block"></a>
