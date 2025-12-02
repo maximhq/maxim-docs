@@ -889,23 +889,24 @@
                 "href": "https://www.getmaxim.ai"
             },
             {
-                "label": "Careers",
-                "href": "https://www.getmaxim.ai/careers"
-            },
-            {
                 "label": "Blog",
                 "href": "https://www.getmaxim.ai/blog"
             },
             {
                 "label": "Pricing",
                 "href": "https://www.getmaxim.ai/pricing"
+            },
+            {
+                "label": "Get started",
+                "href": "https://app.getmaxim.ai/sign-up"
             }
         ],
         "primary": {
             "type": "button",
-            "label": "Get started free",
-            "href": "https://www.getmaxim.ai/login"
+            "label": "Book a demo",
+            "href": "https://www.getmaxim.ai/demo"
         }
+        
     },
     "redirects": [
         {
