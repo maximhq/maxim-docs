@@ -921,30 +921,7 @@
                                       "type": "string"
                                     },
                                     "payload": {
-                                      "type": "object",
-                                      "properties": {
-                                        "text": {
-                                          "type": "string"
-                                        },
-                                        "files": {
-                                          "type": "array",
-                                          "items": {
-                                            "type": "object",
-                                            "properties": {
-                                              "id": {
-                                                "type": "string"
-                                              },
-                                              "url": {
-                                                "type": "string"
-                                              }
-                                            },
-                                            "required": [
-                                              "id",
-                                              "url"
-                                            ]
-                                          }
-                                        }
-                                      }
+                                      "type": "string"
                                     }
                                   },
                                   "required": [

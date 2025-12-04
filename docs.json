@@ -744,6 +744,13 @@
                             "source": "public-apis/openapi/logging.json",
                             "directory": "Logging"
                         }
+                    },
+                    {
+                        "group": "Batched Logging",
+                        "openapi": {
+                            "source": "public-apis/openapi/batched-logging.json",
+                            "directory": "Batched Logging"
+                        }
                     }
                 ]
             },

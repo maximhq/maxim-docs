@@ -62,6 +62,7 @@
           {
             "schema": {
               "type": "number",
+              "nullable": true,
               "default": 10,
               "description": "Maximum number of records to return. 10 by default"
             },

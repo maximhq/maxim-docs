@@ -40,6 +40,8 @@
             "type": "string",
             "enum": [
               "WORKFLOW",
+              "VOICE_WORKFLOW",
+              "VOICE_WORKFLOW_SIMULATION",
               "WORKFLOW_SIMULATION",
               "PROMPT_CHAIN",
               "DATASET",
