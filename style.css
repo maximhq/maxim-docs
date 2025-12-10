@@ -211,9 +211,157 @@ h5#sidebar-title {
     color: #505152;
 }
 
+/* Default sidebar link styling */
 #sidebar-group li > a.font-semibold {
     background-color: #f4f4f5;
     border-radius: 4px;
+}
+
+/* Active sidebar link - right side indicator with brand color - MUST be more specific */
+#sidebar-group li > a.font-semibold[aria-current="page"],
+#sidebar-group li > a[aria-current="page"].font-semibold,
+#sidebar-group li > a[aria-current="page"],
+#sidebar-group li > a.active,
+aside a[aria-current="page"],
+aside a.active,
+[data-sidebar] a[aria-current="page"],
+[data-sidebar] a.active,
+aside nav a[aria-current="page"],
+aside nav a.active,
+nav[role="navigation"] a[aria-current="page"],
+nav[role="navigation"] a.active,
+aside a[aria-current="page"].font-semibold,
+aside a.active.font-semibold {
+    position: relative !important;
+    border-right: 3px solid #a3ffdc !important;
+    background-color: rgba(163, 255, 220, 0.15) !important;
+    color: #0b1a22 !important;
+    font-weight: 600 !important;
+    border-radius: 4px 0 0 4px !important;
+}
+
+/* Override the default background for active links - more specific */
+#sidebar-group li > a.font-semibold[aria-current="page"],
+#sidebar-group li > a[aria-current="page"].font-semibold,
+li > a.font-semibold[aria-current="page"],
+li > a[aria-current="page"].font-semibold {
+    background-color: rgba(163, 255, 220, 0.2) !important;
+    color: #0b1a22 !important;
+}
+
+/* Target any link with aria-current in sidebar */
+aside a[aria-current="page"],
+aside a[aria-current="page"].font-semibold,
+aside a[aria-current="page"]:not([class*="bg-"]),
+nav a[aria-current="page"],
+nav a[aria-current="page"].font-semibold {
+    background-color: rgba(163, 255, 220, 0.2) !important;
+    color: #0b1a22 !important;
+}
+
+/* Universal selector for any active link in sidebar - most aggressive */
+aside [aria-current="page"],
+aside [aria-current="page"] a,
+[data-sidebar] [aria-current="page"],
+[data-sidebar] [aria-current="page"] a,
+nav [aria-current="page"],
+nav [aria-current="page"] a {
+    background-color: rgba(163, 255, 220, 0.2) !important;
+    border-right: 3px solid #a3ffdc !important;
+    color: #0b1a22 !important;
+    font-weight: 600 !important;
+    position: relative !important;
+}
+
+/* Ensure the link itself gets the background */
+aside a[aria-current="page"],
+[data-sidebar] a[aria-current="page"],
+nav a[aria-current="page"] {
+    background-color: rgba(163, 255, 220, 0.2) !important;
+    border-right: 3px solid #a3ffdc !important;
+    color: #0b1a22 !important;
+    font-weight: 600 !important;
+    position: relative !important;
+    display: block !important;
+}
+
+/* Use pseudo-element ::before to create background color (works even with inline styles) */
+aside a[aria-current="page"]::before,
+[data-sidebar] a[aria-current="page"]::before,
+nav a[aria-current="page"]::before,
+#sidebar-group li > a[aria-current="page"]::before,
+aside a.active::before,
+nav a.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(163, 255, 220, 0.2) !important;
+    border-radius: 4px 0 0 4px;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Use pseudo-element ::after for right border */
+#sidebar-group li > a[aria-current="page"]::after,
+#sidebar-group li > a.active::after,
+aside a[aria-current="page"]::after,
+aside a.active::after,
+nav[role="navigation"] a[aria-current="page"]::after,
+nav[role="navigation"] a.active::after,
+[data-sidebar] a[aria-current="page"]::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: #a3ffdc !important;
+    border-radius: 2px 0 0 2px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Ensure parent has position relative for pseudo-elements */
+aside a[aria-current="page"],
+[data-sidebar] a[aria-current="page"],
+nav a[aria-current="page"],
+#sidebar-group li > a[aria-current="page"],
+a[aria-current="page"] {
+    position: relative !important;
+}
+
+/* Most aggressive - target ANY element with aria-current in sidebar area */
+*[aria-current="page"] {
+    position: relative !important;
+}
+
+*[aria-current="page"]::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(163, 255, 220, 0.2) !important;
+    border-radius: 4px 0 0 4px;
+    z-index: -1;
+    pointer-events: none;
+}
+
+*[aria-current="page"]::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: #a3ffdc !important;
+    border-radius: 2px 0 0 2px;
+    z-index: 2;
+    pointer-events: none;
 }
 
 button[type='button'] div.text-gray-900 {
