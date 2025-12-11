@@ -13,26 +13,14 @@ description: Track and collect user feedback in application traces using Maxim's
     ```typescript JS/TS
     trace.feedback({
         score: 5,
-        feedback: "Great job!",
-        metadata: {
-            "flow": "support",
-            "properties" :{
-                "name": "John Doe"
-            }
-        }
+        comment: "Great job!",
     });
     ```
 
     ```python Python
     trace.feedback({
         "score":5, 
-        "comment":"Great job!", 
-        "metadata": {
-            "flow": "support",
-            "properties":{
-                "name": "John Doe"
-            }
-        }
+        "comment": "Great job!", 
     })
     ```
 
