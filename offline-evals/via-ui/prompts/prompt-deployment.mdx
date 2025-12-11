@@ -47,6 +47,8 @@ description: Quick iterations on Prompts should not require code deployments eve
         View existing deployments for any prompt from the deploy button in the header.
 
         <img src="/images/docs/evaluate/how-to/evaluate-prompts/deployments/deployment-list.png" alt="Deployments list" width="100%" className="max-w-full" />
+
+        <Info>When you create multiple deployments via the UI, only the latest deployment is available for use.</Info>
     </Step>
 </Steps>
 
@@ -163,5 +165,36 @@ Use multiselect variables
       .and_()
       .deployment_var("Tenant ID", ["Tenant1"])
       .build())
+  ```
+</CodeGroup>
+
+Fetch a specific prompt version
+
+You can fetch a specific version of a prompt:
+
+<CodeGroup>
+  ```typescript JS/TS
+  import { Maxim, QueryBuilder } from "@maximai/maxim-js";
+
+  const maxim = new Maxim({ apiKey: "maxim-api-key", promptManagement: true });
+
+  const prompt = await maxim.getPrompt(
+    "prompt-id",
+    new QueryBuilder()
+      .promptVersionNumber(1) // fetches version 1
+      .build(),
+  );
+  ```
+
+  ```python Python
+  from maxim import Maxim, Config
+  from maxim.models import QueryBuilder
+
+  maxim = Maxim(Config(api_key="", prompt_management=True))
+
+  prompt = maxim.get_prompt("prompt-id",
+    QueryBuilder()  
+    .prompt_version_number(1) # fetches version 1
+    .build())
   ```
 </CodeGroup>
