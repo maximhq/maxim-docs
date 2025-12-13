@@ -5,11 +5,15 @@ description: Analyzes the vocal and emotional journey of the user throughout the
 
 ## Input
 - **Required Inputs:**
-  - **`actual_output`**: URL of the audio recording to evaluate
+  - **`output`**: URL of the audio recording to evaluate
 
 ## Output
 - **`Result`**: Score is one among the discrete values : 0.2, 0.4, 0.6, 0.8, 1
 - **`Reasoning`**: Brief explanation for the score
+
+<Note>
+  Supported models: Gemini 2.5 Flash (recommended), GPT-4o Audio Preview, Gemini 2.5 Pro. Gemini 2.5 Flash is recommended for best performance and latency.
+</Note>
 
 ## Interpretation
 - **0.2**: Very dissatisfied
