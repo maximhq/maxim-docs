@@ -106,6 +106,41 @@ if (prompt) {
 
 </CodeGroup>
 
+## Querying a Specific Prompt Version
+
+Retrieve a specific version of a prompt using the version number:
+
+<CodeGroup>
+
+```python Python
+# Query a specific prompt version
+prompt = maxim.get_prompt(
+    id="prompt-id",
+    rule=QueryBuilder()
+    .prompt_version_number(1)  # fetches version 1
+    .build(),
+)
+
+if prompt:
+    print(f"Retrieved version: {prompt.version_id}")
+```
+
+```typescript JS/TS
+// Query a specific prompt version
+const prompt = await maxim.getPrompt(
+  'prompt-id',
+  new QueryBuilder()
+    .promptVersionNumber(1) // fetches version 1
+    .build()
+);
+
+if (prompt) {
+  console.log(`Retrieved version: ${prompt.version}`);
+}
+```
+
+</CodeGroup>
+
 ## Querying Multiple Prompts
 
 Retrieve all prompts that match specific deployment criteria:
@@ -175,6 +210,19 @@ if (prompts && prompts.length > 0) {
 ```
 
 </CodeGroup>
+
+## Supported Variable Types
+
+When building queries using `deploymentVar`, ensure the value matches the type defined in your deployment configuration:
+
+| Variable Type | SDK Data Type | Example Value |
+| :--- | :--- | :--- |
+| **Text** | String | `"lorem"` |
+| **Number** | Number | `42` |
+| **Boolean** | Boolean | `true` or `false` |
+| **Select** | String | `"Production"` |
+| **Multi-select** | String[] | `["US-East", "EU-West"]` |
+
 
 ## Using Tags for Fine-Grained Filtering
 
@@ -322,8 +370,7 @@ prompt = maxim.getPrompt("prompt-id", QueryBuilder().and_()
 </CodeGroup>
 
 ## Caching and Performance
-
-The Maxim SDK automatically caches prompt configurations to improve performance using the cache provided to the constructor.
+The Maxim SDK automatically caches prompt configurations to improve performance using the cache provided to the constructor. When you request a prompt or prompt chain, the SDK first checks the cache for a matching deployment variable rule before making an API call.
 
 ## Best Practices
 
