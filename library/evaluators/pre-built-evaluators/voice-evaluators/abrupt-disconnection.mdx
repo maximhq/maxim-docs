@@ -5,11 +5,15 @@ description: Detects if there is unexpected call terminations or early terminati
 
 ## Input
 - **Required Inputs:**
-  - **`actual_output`**: URL of the audio recording to evaluate
+  - **`output`**: URL of the audio recording to evaluate
 
 ## Output
 - **`Result`**: Binary score (0 or 1)
 - **`Reasoning`**: Brief explanation of the detection
+
+<Note>
+  Supported models: Gemini 2.5 Flash (recommended), GPT-4o Audio Preview, Gemini 2.5 Pro. Gemini 2.5 Flash is recommended for best performance and latency.
+</Note>
 
 ## Interpretation
 - **1**: Abrupt disconnection detected

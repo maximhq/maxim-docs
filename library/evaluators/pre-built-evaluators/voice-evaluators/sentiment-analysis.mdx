@@ -5,11 +5,15 @@ description: Analyzes the speech patterns, acoustic features like pitch and voca
 
 ## Input
 - **Required Inputs:**
-  - **`actual_output`**: URL of the audio recording to evaluate
+  - **`output`**: URL of the audio recording to evaluate
 
 ## Output
 - **`Result`**: One of `positive`, `negative`, or `neutral`
 - **`Reasoning`**: Brief explanation for the classification
+
+<Note>
+  Supported models: Gemini 2.5 Flash (recommended), GPT-4o Audio Preview, Gemini 2.5 Pro. Gemini 2.5 Flash is recommended for best performance and latency.
+</Note>
 
 ## Interpretation
 - **positive**: Predominantly positive affect (e.g., satisfied, pleased)

@@ -5,11 +5,15 @@ description: Identifies and counts the number of instances where the User or Sim
 
 ## Input
 - **Required Inputs:**
-  - **`actual_output`**: URL of the audio recording to evaluate
+  - **`output`**: URL of the audio recording to evaluate
 
 ## Output
 - **`Result`**: Count of inappropriate interruptions (integer)
 - **`Reasoning`**: Brief explanation of detected interruptions
+
+<Note>
+  Supported models: Gemini 2.5 Flash (recommended), GPT-4o Audio Preview, Gemini 2.5 Pro. Gemini 2.5 Flash is recommended for best performance and latency.
+</Note>
 
 ## Interpretation
 - **Higher counts**: More frequent user interruptions 
