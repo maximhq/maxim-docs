@@ -187,15 +187,81 @@ The **Expected Tool Calls** column type allows you to specify which tools (such 
 
 Use this column to list the names of the tools or actions that should be called, optionally including parameters or expected arguments. This helps ensure that the agent's tool usage aligns with your expectations for the task.
 
-**Examples:**
-- "search_web"
-- "get_weather(location='San Francisco')"
-- "send_email(recipient, subject, body)"
 
-Including expected tool calls in your dataset enables more precise evaluation of agent behavior, particularly in scenarios where tool usage is critical to task completion.
+### Supported Tool Call Formats
 
+Tool calls can be provided as a single object or an array of objects. Below are the supported formats:
+
+#### Basic Format
+
+```json
+{
+    "name": "function_name",
+    "arguments": {}
+}
+```
+
+For `arguments` or `input` field, both parsed JSON object and stringified JSON are supported:
+
+```json
+/* Parsed Object */
+{
+    "name": "get_weather",
+    "arguments": {
+        "location": "San Francisco",
+        "unit": "celsius"
+    }
+}
+
+/* Stringified JSON */
+{
+    "name": "get_weather",
+    "arguments": "{\"location\": \"San Francisco\", \"unit\": \"celsius\"}"
+}
+```
+
+
+
+#### OpenAI Format
+
+```json
+{
+    "id": "<tool_call_id>",
+    "type": "function",
+    "function": {
+        "name": "<function_name>",
+        "arguments": {}
+    }
+}
+```
+
+#### Anthropic Format
+
+```json
+{
+    "type": "tool_use",
+    "id": "<tool_call_id>",
+    "name": "<function_name>",
+    "input": {}
+}
+```
+
+#### Bedrock Format
+
+```json
+{
+    "toolUse": {
+        "toolUseId": "id",
+        "name": "function_name",
+        "input": {}
+    }
+}
+```
 
 #### `inAnyOrder`
+
+Allows tool calls to match in any order.
+
 ```json
 [
     {
@@ -229,9 +295,12 @@ Including expected tool calls in your dataset enables more precise evaluation of
 This combinator indicates that **all** listed tool calls are mandatory, but they may be executed in any order; any ordering is considered valid.
 
 #### `anyOne`
+
+Allows matching any one of the specified alternatives. 
+
 ```json
 [
-     {
+    {
         "anyOne": [
             {
                 "name": "get_pull_request_reviews",
@@ -256,7 +325,6 @@ This combinator indicates that **all** listed tool calls are mandatory, but they
 The `anyOne` combinator is used when any one of several possible tool calls is acceptable to fulfill the requirement. This is useful in scenarios where there are multiple valid ways for an agent to achieve the same outcome, and you want to allow for flexibility in the agent's approach.
 
 For example, in the following JSON, either `get_pull_request_reviews` or `get_pull_request_comments` (with the specified arguments) will be considered a valid response. The agent only needs to make one of these tool calls to satisfy the expectation.
-
 
 ### Conversation History
 
