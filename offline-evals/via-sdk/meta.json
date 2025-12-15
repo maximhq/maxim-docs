@@ -1,4 +1,10 @@
 {
   "title": "Via SDK",
-  "pages": ["prompts", "agent-http", "agent-no-code"]
+  "pages": [
+    "prompts",
+    "agent-http",
+    "agent-no-code",
+    "logging",
+    "local-agent"
+  ]
 }
