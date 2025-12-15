@@ -1,0 +1,318 @@
+---
+title: Run Test on Logs
+description: Learn how to execute offline evaluations on datasets curated from your production logs using the Maxim SDK.
+---
+
+## How to run tests on log data?
+
+Once you have curated a dataset from your logs, you can run evaluators against it to assess quality, identify issues, or validate new evaluation criteria.
+
+## Using a Hosted Dataset
+
+If you created a dataset via the Maxim dashboard, use the dataset ID directly:
+
+<CodeGroup>
+```python Python
+from maxim import Maxim
+from maxim.models import LocalData, YieldedOutput
+
+maxim = Maxim({"api_key": "your-api-key"})
+
+def replay_output(data: LocalData) -> YieldedOutput:
+    """Return the existing output from the log."""
+    return YieldedOutput(data=data.get("Output") or data.get("output") or "")
+
+result = (
+    maxim.create_test_run(
+        name="Eval on Production Logs",
+        in_workspace_id="your-workspace-id"
+    )
+    .with_data("your-dataset-id")  # Dataset ID from Maxim
+    .yields_output(replay_output)
+    .with_evaluators("Clarity", "Bias", "Output Relevance")
+    .run()
+)
+
+print(f"View results: {result.test_run_result.link}")
+```
+
+```typescript JS/TS
+import { Maxim, type Data, type YieldedOutput } from '@maximai/maxim-js';
+
+const maxim = new Maxim({ apiKey: 'your-api-key' });
+
+function replayOutput(data: Data): YieldedOutput {
+  // Return the existing output from the log
+  return { data: data.output || '' };
+}
+
+const result = await maxim
+  .createTestRun('Eval on Production Logs', 'your-workspace-id')
+  .withData('your-dataset-id') // Dataset ID from Maxim
+  .yieldsOutput(replayOutput)
+  .withEvaluators('Clarity', 'Bias', 'Output Relevance')
+  .run();
+
+console.log(`View results: ${result.testRunResult.link}`);
+```
+</CodeGroup>
+
+## Using a Local Dataset
+
+For log data stored locally (e.g., exported JSON/CSV), pass the data directly:
+
+<CodeGroup>
+```python Python
+import json
+from maxim import Maxim
+from maxim.models import LocalData, YieldedOutput
+
+maxim = Maxim({"api_key": "your-api-key"})
+
+# Load exported logs
+with open("exported_logs.json", "r") as f:
+    logs = json.load(f)
+
+# Transform to dataset format
+dataset = [
+    {
+        "input": log["input"],
+        "output": log["output"],
+        "context": log.get("retrieved_context", ""),
+    }
+    for log in logs
+]
+
+def replay_output(data: LocalData) -> YieldedOutput:
+    output = data.get("Output") or data.get("output") or ""
+    context = data.get("Context") or data.get("context")
+    
+    return YieldedOutput(
+        data=output,
+        retrieved_context_to_evaluate=context,  # For RAG evaluators
+    )
+
+result = (
+    maxim.create_test_run(
+        name="Eval on Local Logs",
+        in_workspace_id="your-workspace-id"
+    )
+    .with_data(dataset)
+    .with_data_structure({
+        "input": "INPUT",
+        "output": "OUTPUT",
+        "context": "CONTEXT",
+    })
+    .yields_output(replay_output)
+    .with_evaluators(
+        "Clarity",
+        "Faithfulness",  # Uses retrieved context
+        "Context Relevance",
+    )
+    .run()
+)
+
+print(f"View results: {result.test_run_result.link}")
+```
+
+```typescript JS/TS
+import fs from 'fs';
+import { Maxim, type Data, type YieldedOutput } from '@maximai/maxim-js';
+
+const maxim = new Maxim({ apiKey: 'your-api-key' });
+
+// Load exported logs
+const logs = JSON.parse(fs.readFileSync('exported_logs.json', 'utf-8'));
+
+// Transform to dataset format
+const dataset: Data[] = logs.map((log: any) => ({
+  input: log.input,
+  output: log.output,
+  context: log.retrievedContext || '',
+}));
+
+function replayOutput(data: Data): YieldedOutput {
+  return {
+    data: data.output || '',
+    retrievedContextToEvaluate: data.context, // For RAG evaluators
+  };
+}
+
+const result = await maxim
+  .createTestRun('Eval on Local Logs', 'your-workspace-id')
+  .withData(dataset)
+  .withDataStructure({
+    input: 'INPUT',
+    output: 'OUTPUT',
+    context: 'CONTEXT',
+  })
+  .yieldsOutput(replayOutput)
+  .withEvaluators(
+    'Clarity',
+    'Faithfulness', // Uses retrieved context
+    'Context Relevance'
+  )
+  .run();
+
+console.log(`View results: ${result.testRunResult.link}`);
+```
+</CodeGroup>
+
+## Including Metadata
+
+If your logs contain usage metadata (tokens, cost, latency), include it for accurate reporting:
+
+<CodeGroup>
+```python Python
+from maxim.models import (
+    YieldedOutput,
+    YieldedOutputMeta,
+    YieldedOutputTokenUsage,
+    YieldedOutputCost,
+)
+
+def replay_output_with_meta(data: LocalData) -> YieldedOutput:
+    return YieldedOutput(
+        data=data.get("Output") or "",
+        meta=YieldedOutputMeta(
+            usage=YieldedOutputTokenUsage(
+                prompt_tokens=data.get("prompt_tokens", 0),
+                completion_tokens=data.get("completion_tokens", 0),
+                total_tokens=data.get("total_tokens", 0),
+                latency=data.get("latency", 0),
+            ),
+            cost=YieldedOutputCost(
+                input_cost=data.get("input_cost", 0),
+                output_cost=data.get("output_cost", 0),
+                total_cost=data.get("total_cost", 0),
+            ),
+        ),
+    )
+```
+
+```typescript JS/TS
+function replayOutputWithMeta(data: Data): YieldedOutput {
+  return {
+    data: data.output || '',
+    meta: {
+      usage: {
+        promptTokens: data.promptTokens || 0,
+        completionTokens: data.completionTokens || 0,
+        totalTokens: data.totalTokens || 0,
+        latency: data.latency || 0,
+      },
+      cost: {
+        input: data.inputCost || 0,
+        output: data.outputCost || 0,
+        total: data.totalCost || 0,
+      },
+    },
+  };
+}
+```
+</CodeGroup>
+
+## Using Custom Evaluators
+
+For domain-specific analysis, create custom evaluators:
+
+<CodeGroup>
+```python Python
+from maxim.evaluators import BaseEvaluator
+from maxim.models import LocalEvaluatorResultParameter, LocalEvaluatorReturn
+
+class ResponseLengthEvaluator(BaseEvaluator):
+    """Evaluates if the response meets length requirements."""
+    
+    def evaluate(
+        self, result: LocalEvaluatorResultParameter, data: LocalData
+    ) -> dict[str, LocalEvaluatorReturn]:
+        output = result.output or ""
+        word_count = len(output.split())
+        
+        # Score based on word count
+        if word_count < 10:
+            score, reasoning = 0, f"Too short ({word_count} words)"
+        elif word_count > 500:
+            score, reasoning = 0.5, f"Too long ({word_count} words)"
+        else:
+            score, reasoning = 1, f"Good length ({word_count} words)"
+        
+        return {
+            "Response Length": LocalEvaluatorReturn(
+                score=score,
+                reasoning=reasoning,
+            )
+        }
+
+# Use in test run
+result = (
+    maxim.create_test_run(
+        name="Custom Eval on Logs",
+        in_workspace_id="your-workspace-id"
+    )
+    .with_data(dataset)
+    .yields_output(replay_output)
+    .with_evaluators(
+        "Clarity",
+        ResponseLengthEvaluator(),  # Custom evaluator
+    )
+    .run()
+)
+```
+
+```typescript JS/TS
+import { BaseEvaluator, type EvaluatorResult } from '@maximai/maxim-js';
+
+class ResponseLengthEvaluator extends BaseEvaluator {
+  async evaluate(result: any, data: Data): Promise<EvaluatorResult> {
+    const output = result.output || '';
+    const wordCount = output.split(/\s+/).length;
+
+    let score: number;
+    let reasoning: string;
+
+    if (wordCount < 10) {
+      score = 0;
+      reasoning = `Too short (${wordCount} words)`;
+    } else if (wordCount > 500) {
+      score = 0.5;
+      reasoning = `Too long (${wordCount} words)`;
+    } else {
+      score = 1;
+      reasoning = `Good length (${wordCount} words)`;
+    }
+
+    return {
+      'Response Length': { score, reasoning },
+    };
+  }
+}
+
+// Use in test run
+const result = await maxim
+  .createTestRun('Custom Eval on Logs', 'your-workspace-id')
+  .withData(dataset)
+  .yieldsOutput(replayOutput)
+  .withEvaluators('Clarity', new ResponseLengthEvaluator())
+  .run();
+```
+</CodeGroup>
+
+## Analyzing Results
+
+After the test run completes, results are available in the Maxim dashboard. You can:
+
+- **View aggregate scores** across all entries
+- **Drill into individual entries** to see per-evaluator results
+- **Filter by pass/fail** status
+- **Export results** for further analysis
+- **Compare test runs** across different time periods
+
+## Next Steps
+
+- [Custom Evaluators](/library/evaluators/custom-evaluators) - Build evaluators for your specific needs
+- [Pre-built Evaluators](/library/evaluators/pre-built-evaluators/overview) - Explore available evaluators
+- [CI/CD Integration](/offline-evals/via-sdk/prompts/ci-cd-integration) - Automate evaluations in your pipeline
+
+<Note>[Schedule a demo](https://getmaxim.ai/demo) to see how Maxim AI helps teams ship reliable agents 5x faster</Note>
