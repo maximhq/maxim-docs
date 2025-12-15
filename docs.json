@@ -110,6 +110,14 @@
                                             "offline-evals/via-sdk/agent-no-code/agent-on-maxim"
                                         ]
                                     },
+                                    {
+                                        "group": "Logging",
+                                        "pages": [
+                                            "offline-evals/via-sdk/logging/overview",
+                                            "offline-evals/via-sdk/logging/curate-dataset",
+                                            "offline-evals/via-sdk/logging/run-test"
+                                        ]
+                                    },
                                     "offline-evals/via-sdk/local-agent"
                                 ]
                             },
@@ -673,6 +681,13 @@
                         "openapi": {
                             "source": "public-apis/openapi/prompts.json",
                             "directory": "Prompts"
+                        }
+                    },
+                    {
+                        "group": "Prompt Tools",
+                        "openapi": {
+                            "source": "public-apis/openapi/prompt-tools.json",
+                            "directory": "Prompt Tools"
                         }
                     },
                     {
