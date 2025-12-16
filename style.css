@@ -85,10 +85,10 @@ body > #navbar:first-child {
     display: block !important;
 }
 
-/* Target any Mintlify-specific classes that might have borders */
-.z-10,
-.mx-auto,
-.relative {
+/* Target any Mintlify-specific classes that might have borders - scoped to navbar only */
+#navbar .z-10,
+#navbar .mx-auto,
+#navbar .relative {
     border-top: none !important;
 }
 
@@ -426,7 +426,7 @@ button[type='button'] div.text-gray-900 {
 }
 
 /* Image styling with border radius and shadow */
-.mdx-content img,
+/* .mdx-content img,
 div.mdx-content img,
 article img {
     border-radius: 10px;
@@ -435,6 +435,19 @@ article img {
     display: block;
     max-width: 100%;
     height: auto;
+} */
+
+.mdx-content > div[style*="border: 1px solid"] {
+    display: block !important;
+    overflow: visible !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.mdx-content,
+.mdx-content > *,
+.mdx-content > div {
+    overflow: visible !important;
 }
 
 /* Footer Styles - Site-wide footer at bottom */
