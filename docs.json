@@ -684,6 +684,13 @@
                         }
                     },
                     {
+                        "group": "Prompt Tools",
+                        "openapi": {
+                            "source": "public-apis/openapi/prompt-tools.json",
+                            "directory": "Prompt Tools"
+                        }
+                    },
+                    {
                         "group": "Datasets",
                         "openapi": {
                             "source": "public-apis/openapi/datasets.json",

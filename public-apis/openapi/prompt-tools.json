@@ -1,0 +1,958 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "contact": {
+      "name": "Maxim Engineering",
+      "email": "eng@getmaxim.ai"
+    },
+    "title": "Maxim SDK API - prompt-tools",
+    "description": "API documentation for Maxim SDK prompt-tools endpoints"
+  },
+  "servers": [
+    {
+      "url": "https://api.getmaxim.ai"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-maxim-api-key",
+        "description": "API key for authentication"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "paths": {
+    "/v1/prompt-tools": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Prompt Tool"
+        ],
+        "description": "Get prompt tools for a workspace",
+        "summary": "Get Prompt Tools",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the workspace"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the prompt tool"
+            },
+            "required": false,
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Name of the prompt tool"
+            },
+            "required": false,
+            "name": "name",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Folder ID"
+            },
+            "required": false,
+            "name": "folderId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "nullable": true,
+              "maximum": 100,
+              "default": 10,
+              "description": "Maximum number of records to return"
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Pagination cursor"
+            },
+            "required": false,
+            "name": "cursor",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Prompt tools retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "config": {
+                            "nullable": true
+                          },
+                          "folderId": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "workspaceId": {
+                            "type": "string"
+                          },
+                          "accountId": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "type": "string"
+                          },
+                          "fromMcpServer": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "description",
+                          "type",
+                          "workspaceId",
+                          "accountId",
+                          "createdAt",
+                          "updatedAt"
+                        ]
+                      }
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "hasMore": {
+                          "type": "boolean"
+                        },
+                        "cursor": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "required": [
+                        "hasMore",
+                        "cursor"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "pagination"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Prompt Tool"
+        ],
+        "description": "Create a new prompt tool",
+        "summary": "Create Prompt Tool",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workspaceId": {
+                    "type": "string",
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the prompt tool"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description of the prompt tool"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "PROGRAM",
+                      "API",
+                      "SCHEMA"
+                    ],
+                    "description": "Type of the prompt tool"
+                  },
+                  "folderId": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "Folder ID where the prompt tool is located"
+                  },
+                  "config": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "args": {
+                            "type": "string"
+                          },
+                          "code": {
+                            "type": "string"
+                          },
+                          "lang": {
+                            "type": "string",
+                            "enum": [
+                              "javascript"
+                            ],
+                            "default": "javascript"
+                          },
+                          "scripts": {
+                            "type": "string"
+                          },
+                          "sample": {
+                            "type": "string"
+                          },
+                          "schema": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "function"
+                                ]
+                              },
+                              "function": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "parameters": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "nullable": true
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "name",
+                                  "description"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "function"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "args",
+                          "code",
+                          "schema"
+                        ],
+                        "title": "Program"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "headers": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "key": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "value": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "key",
+                                "value"
+                              ]
+                            }
+                          },
+                          "method": {
+                            "type": "string",
+                            "enum": [
+                              "GET",
+                              "POST",
+                              "PUT",
+                              "DELETE",
+                              "PATCH"
+                            ]
+                          },
+                          "params": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "key": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "value": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "key",
+                                "value"
+                              ]
+                            }
+                          },
+                          "payload": {
+                            "type": "string"
+                          },
+                          "scripts": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          },
+                          "schema": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "function"
+                                ]
+                              },
+                              "function": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "parameters": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "nullable": true
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "name",
+                                  "description"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "function"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "method",
+                          "url",
+                          "schema"
+                        ],
+                        "title": "HTTP(s) API"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "schema": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "function"
+                                ]
+                              },
+                              "function": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "parameters": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "nullable": true
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "name",
+                                  "description",
+                                  "parameters"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "function"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "schema"
+                        ],
+                        "title": "Schema"
+                      }
+                    ],
+                    "description": "Configuration for the prompt tool"
+                  }
+                },
+                "required": [
+                  "workspaceId",
+                  "name",
+                  "description",
+                  "type"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Prompt tool created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "config": {
+                          "nullable": true
+                        },
+                        "folderId": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "workspaceId": {
+                          "type": "string"
+                        },
+                        "accountId": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "fromMcpServer": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "description",
+                        "type",
+                        "workspaceId",
+                        "accountId",
+                        "createdAt",
+                        "updatedAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Prompt Tool"
+        ],
+        "description": "Update an existing prompt tool",
+        "summary": "Update Prompt Tool",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workspaceId": {
+                    "type": "string",
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "Unique identifier for the prompt tool"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the prompt tool"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description of the prompt tool"
+                  },
+                  "config": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "args": {
+                            "type": "string"
+                          },
+                          "code": {
+                            "type": "string"
+                          },
+                          "lang": {
+                            "type": "string",
+                            "enum": [
+                              "javascript"
+                            ],
+                            "default": "javascript"
+                          },
+                          "scripts": {
+                            "type": "string"
+                          },
+                          "sample": {
+                            "type": "string"
+                          },
+                          "schema": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "function"
+                                ]
+                              },
+                              "function": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "parameters": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "nullable": true
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "name",
+                                  "description"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "function"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "args",
+                          "code",
+                          "schema"
+                        ],
+                        "title": "Program"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "headers": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "key": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "value": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "key",
+                                "value"
+                              ]
+                            }
+                          },
+                          "method": {
+                            "type": "string",
+                            "enum": [
+                              "GET",
+                              "POST",
+                              "PUT",
+                              "DELETE",
+                              "PATCH"
+                            ]
+                          },
+                          "params": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "key": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "value": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "key",
+                                "value"
+                              ]
+                            }
+                          },
+                          "payload": {
+                            "type": "string"
+                          },
+                          "scripts": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          },
+                          "schema": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "function"
+                                ]
+                              },
+                              "function": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "parameters": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "nullable": true
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "name",
+                                  "description"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "function"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "method",
+                          "url",
+                          "schema"
+                        ],
+                        "title": "HTTP(s) API"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "schema": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "function"
+                                ]
+                              },
+                              "function": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "parameters": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                      "nullable": true
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "name",
+                                  "description",
+                                  "parameters"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "function"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "schema"
+                        ],
+                        "title": "Schema"
+                      }
+                    ],
+                    "description": "Configuration for the prompt tool"
+                  },
+                  "folderId": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "Folder ID"
+                  },
+                  "newWorkspaceId": {
+                    "type": "string",
+                    "description": "New Workspace ID if moving"
+                  }
+                },
+                "required": [
+                  "workspaceId",
+                  "id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Prompt tool updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "config": {
+                          "nullable": true
+                        },
+                        "folderId": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "workspaceId": {
+                          "type": "string"
+                        },
+                        "accountId": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "fromMcpServer": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "description",
+                        "type",
+                        "workspaceId",
+                        "accountId",
+                        "createdAt",
+                        "updatedAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Prompt tool not found"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Prompt Tool"
+        ],
+        "description": "Delete a prompt tool",
+        "summary": "Delete Prompt Tool",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the workspace"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the prompt tool"
+            },
+            "required": true,
+            "name": "id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Prompt tool deleted successfully"
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Prompt tool not found"
+          }
+        }
+      }
+    }
+  }
+}
