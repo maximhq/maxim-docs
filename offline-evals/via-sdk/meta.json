@@ -4,7 +4,6 @@
     "prompts",
     "agent-http",
     "agent-no-code",
-    "logging",
     "local-agent"
   ]
 }
