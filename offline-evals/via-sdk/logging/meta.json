@@ -1,9 +1,0 @@
-{
-    "title": "Logging",
-    "description": "Learn how to run offline evaluations on logs.",
-    "pages": [
-        "overview",
-        "curate-dataset",
-        "run-test"
-    ]
-}
