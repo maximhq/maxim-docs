@@ -1,0 +1,150 @@
+---
+title: Offline Evaluations via Logs
+description: Learn how to run offline evaluations on datasets, prompts or workflows.
+---
+
+## What is it?
+
+You can run evaluations on your local datasets or historical datasets before deploying them to production or for testing new versions of your agent.
+
+- Running evaluations of datasets curated for specific scenarios.
+- Compare models output with provided ground truths (expected output, expected tool call, etc.)
+
+## Preparing Datasets
+
+Datasets are collections of data used for testing and evaluating agents within evaluations.
+
+The first step is to create a robust [evaluation dataset](/library/datasets/import-or-create-datasets). You can source this data from anywhere in the Maxim platform.
+
+### Hosted Dataset
+
+You can create a dataset from Maxim Dashboard and use it in your test runs. Datasets support various fields for evaluating your agents, such as:
+
+- `Input` - The user query
+- `Output` - The model response
+- `Expected Output` - For validating model response
+- `Expected Tool Call` - For validating tool calls, etc.
+
+You can find a list of all supported fields in the [Dataset documentation](/library/datasets/import-or-create-datasets#column-types).
+
+<Note>You can also curate your production logs on Maxim into datasets to test for specific scenarios. See [Curate Datasets](/library/datasets/curate-datasets).</Note>
+
+### Using Local Data
+
+You can also run tests directly on local data (like from a local JSON or CSV file) without uploading it first.
+
+```json
+[
+  {
+    "input": "Hello",
+    "expected_output": "Hello",
+    "output": "Hello, how may I assist you?"
+  },
+  {
+    "input": "What is the capital of France?",
+    "expected_output": "Paris",
+    "output": "The capital of France is Paris"
+  }
+]
+```
+
+## Setting Evaluators
+
+Evaluators let you test your model's responses on different metrics. You can either use existing evaluators provided by Maxim (like Accuracy, Tone, Toxicity) or [create your own custom evaluator](/library/evaluators/custom-evaluators).
+
+<CodeGroup>
+```python Python
+from maxim.evaluators import BaseEvaluator
+
+# Using pre-built evaluators
+evaluators = ["Accuracy", "Tone"]
+```
+```typescript JS/TS
+// Using pre-built evaluators
+const evaluators = ['Accuracy', 'Tone'];
+```
+</CodeGroup>
+
+## Putting it together
+
+<CodeGroup>
+```python Python
+import json
+from maxim import Maxim
+from maxim.models import LocalData, YieldedOutput
+
+maxim = Maxim({"api_key": "your-api-key"})
+
+# Option A: Hosted Dataset ID
+dataset = "dataset-id"
+
+# Option B: Local Data
+dataset = [
+    {
+        "input": "What is the capital of France?",
+        "output": "Paris",
+        "expected_output": "Paris"
+    }
+]
+
+# 2. Define Replay Logic
+# You can run your models, retrieve from a context source, etc.
+def replay_log(row: LocalData) -> YieldedOutput:
+    return YieldedOutput(
+        data=row["output"]
+    )
+
+# 3. Running the Test
+result = (
+    maxim.create_test_run(
+        name="Offline Log Eval",
+        in_workspace_id="your-workspace-id"
+    )
+    .with_data(dataset)
+    .yields_output(replay_log)
+    .with_evaluators("Accuracy", "Tone")
+    .run()
+)
+
+print(f"View results: {result.test_run_result.link}")
+```
+
+```typescript JS/TS
+import { Maxim, Data, YieldedOutput } from '@maximai/maxim-js';
+
+const maxim = new Maxim({ apiKey: 'your-api-key' });
+
+// Option A: Hosted Dataset ID
+const dataset = 'dataset-id';
+
+// Option B: Local Data
+const dataset = [
+  { 
+    input: 'What is the capital of France?', 
+    output: 'Paris', 
+    expectedOutput: 'Paris' 
+  }
+];
+
+// 2. Define Replay Logic
+// You can run your models, retrieve from a context source, etc.
+function replayLog(row: Data): YieldedOutput {
+  return { data: row.output };
+}
+
+// 3. Running the Test
+const result = await maxim
+  .createTestRun('Offline Log Eval', 'your-workspace-id')
+  .withData(dataset)
+  .yieldsOutput(replayLog)
+  .withEvaluators('Accuracy', 'Tone')
+  .run();
+
+console.log(`View results: ${result.testRunResult.link}`);
+```
+</CodeGroup>
+
+## Next Steps
+
+-   **[Curate Datasets](/library/datasets/curate-datasets)**: Detailed guide on creating datasets from logs.
+-   **[Custom Evaluators](/library/evaluators/custom-evaluators)**: Build your own evaluation logic.
