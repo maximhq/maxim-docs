@@ -1207,11 +1207,40 @@
                   },
                   "modelParameters": {
                     "type": "object",
+                    "properties": {
+                      "promptTools": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string",
+                              "description": "Tool name"
+                            },
+                            "description": {
+                              "type": "string",
+                              "description": "Tool description"
+                            },
+                            "config": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "nullable": true
+                              },
+                              "description": "Tool configuration"
+                            }
+                          },
+                          "required": [
+                            "name"
+                          ]
+                        },
+                        "description": "Array of prompt tools"
+                      }
+                    },
+                    "default": {},
                     "additionalProperties": {
                       "nullable": true
                     },
-                    "default": {},
-                    "description": "Model parameters"
+                    "description": "Model parameters including prompt tools"
                   }
                 },
                 "required": [
