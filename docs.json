@@ -388,7 +388,8 @@
                                         "group": "OpenAI",
                                         "pages": [
                                             "sdk/python/integrations/openai/one-line-integration",
-                                            "sdk/python/integrations/openai/agents-sdk"
+                                            "sdk/python/integrations/openai/agents-sdk",
+                                            "sdk/python/integrations/openai/realtime"
                                         ]
                                     },
                                     {

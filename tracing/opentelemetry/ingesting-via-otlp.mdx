@@ -16,7 +16,10 @@ OpenTelemetry Protocol (OTLP) is a vendor-neutral, industry-standard telemetry f
 - A Maxim account and Log Repository
 - Your Log Repository ID (for the `x-maxim-repo-id` header)
 - Your Maxim API Key (for the `x-maxim-api-key` header) - [Learn how to obtain API keys](/settings/maxim-api-keys)
-- Familiarity with OpenTelemetry Semantic Conventions for Generative AI: [Generative AI Semantic Conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/)
+- Familiarity with OpenTelemetry Semantic Conventions. Currently we support the following semantic conventions:
+    - Generative AI: [Generative AI Semantic Conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/)
+    - OpenInference: [OpenInference Semantic Conventions](https://github.com/Arize-ai/openinference/blob/main/spec/semantic_conventions.md)
+    - AI SDK: [AI SDK Semantic Conventions](https://ai-sdk.dev/docs/ai-sdk-core/telemetry)
 
 <Note>
 Ensure you have created a Log Repository in Maxim and have your Log Repository ID ready. You can find it in the Maxim Dashboard under **Logs > Repositories**.
@@ -92,4 +95,55 @@ span_exporter = OTLPSpanExporter(
 tracer_provider.add_span_processor(SimpleSpanProcessor(span_exporter))
 # Make it the global provider
 trace_api.set_tracer_provider(tracer_provider)
+```
+
+## Maxim-specific additional attributes
+
+Maxim supports the following additional attributes to enrich your traces:
+
+- `maxim-trace-tags`: A `Map<string, string>` of tags that will be attached to the parent trace of the span (if the current node is a trace itself, this will be attached to the same trace).
+- `maxim-tags`: A `Map<string, string>` of tags that will be attached to the current node.
+- `maxim-trace-metrics`: A `Map<string, number>` of metrics that will be attached to the parent trace of the span (if the current node is a trace itself, this will be attached to the same trace).
+- `maxim-metrics`: A `Map<string, number>` of metrics that will be attached to the current node.
+    
+<Note>
+For OpenInference, the above tags should be present in the `metadata` field of the OpenInference log line. Example shown below:
+</Note>
+
+```python
+    with using_attributes(
+        session_id="my-test-session",
+        user_id="my-test-user",
+        metadata={
+            "test-int": 1,
+            "test-str": "string",
+            "test-list": [1, 2, 3],
+            "test-dict": {
+                "key-1": "val-1",
+                "key-2": "val-2",
+            },
+            "maxim-trace-tags": {
+                "tag-1": "val-1",
+                "tag-2": "val-2",
+            },
+            "maxim-tags": {
+                "tag-3": "val-3",
+            },
+            "maxim-metrics": {
+                "metric-1": 1,
+                "metric-2": 2,
+            },
+            "maxim-trace-metrics": {
+                "trace-metric-1": 1,
+                "trace-metric-2": 2,
+            },
+        },
+        tags=["tag-1", "tag-2"],
+        prompt_template="Who won the soccer match in {city} on {date}",
+        prompt_template_version="v1.0",
+        prompt_template_variables={
+            "city": "Johannesburg",
+            "date": "July 11th",
+        },
+    ):
 ```
