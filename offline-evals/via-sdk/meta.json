@@ -4,6 +4,7 @@
     "prompts",
     "agent-http",
     "agent-no-code",
-    "local-agent"
+    "local-agent",
+    "offline-evals-via-logging"
   ]
 }
