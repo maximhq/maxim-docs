@@ -2109,6 +2109,251 @@
           }
         }
       }
+    },
+    "/v2/prompts/versions": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Prompt Version"
+        ],
+        "description": "Get versions of a prompt with enriched tool details",
+        "summary": "Get Prompt Versions (v2)",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Version ID you want to query"
+            },
+            "required": false,
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Prompt ID whose versions you want to query"
+            },
+            "required": false,
+            "name": "promptId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Prompt versions retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "type": "number"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "promptId": {
+                          "type": "string"
+                        },
+                        "config": {
+                          "type": "object",
+                          "properties": {
+                            "tags": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "nullable": true
+                              }
+                            },
+                            "model": {
+                              "type": "string"
+                            },
+                            "author": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "email": {
+                                  "type": "string"
+                                },
+                                "image": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "name",
+                                "email",
+                                "image"
+                              ]
+                            },
+                            "modelId": {
+                              "type": "string"
+                            },
+                            "messages": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "index": {
+                                    "type": "number"
+                                  },
+                                  "payload": {
+                                    "type": "object",
+                                    "properties": {
+                                      "role": {
+                                        "type": "string"
+                                      },
+                                      "content": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "role",
+                                      "content"
+                                    ]
+                                  },
+                                  "currentType": {
+                                    "type": "string"
+                                  },
+                                  "originalType": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "index",
+                                  "payload",
+                                  "currentType",
+                                  "originalType"
+                                ]
+                              }
+                            },
+                            "provider": {
+                              "type": "string"
+                            },
+                            "modelParameters": {
+                              "type": "object",
+                              "properties": {
+                                "n": {
+                                  "type": "number"
+                                },
+                                "top_p": {
+                                  "type": "number"
+                                },
+                                "logprobs": {
+                                  "type": "boolean"
+                                },
+                                "max_tokens": {
+                                  "type": "number"
+                                },
+                                "promptTools": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string"
+                                      },
+                                      "name": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "name"
+                                    ]
+                                  }
+                                },
+                                "temperature": {
+                                  "type": "number"
+                                },
+                                "presence_penalty": {
+                                  "type": "number"
+                                },
+                                "frequency_penalty": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "n",
+                                "top_p",
+                                "logprobs",
+                                "max_tokens",
+                                "promptTools",
+                                "temperature",
+                                "presence_penalty",
+                                "frequency_penalty"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "tags",
+                            "model",
+                            "author",
+                            "modelId",
+                            "messages",
+                            "provider",
+                            "modelParameters"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "deletedAt": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "version",
+                        "description",
+                        "promptId",
+                        "config",
+                        "createdAt",
+                        "updatedAt",
+                        "deletedAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Prompt not found"
+          }
+        }
+      }
     }
   }
 }
