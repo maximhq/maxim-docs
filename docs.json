@@ -311,6 +311,7 @@
                             "library/context-sources",
                             "library/prompt-tools",
                             "library/prompt-partials"
+                            
                         ]
                     },
                     {

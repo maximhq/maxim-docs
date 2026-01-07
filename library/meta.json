@@ -7,6 +7,7 @@
     "datasets",
     "context-sources",
     "prompt-tools",
-    "prompt-partials"
+    "prompt-partials",
+    "two-way-merge"
     ]
 }
