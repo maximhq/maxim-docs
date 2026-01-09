@@ -12,18 +12,24 @@ Find and resolve issues in your Agents with clear error diagnostics. When a step
 
 This targeted error handling helps you quickly fix issues before they cascade through your AI workflow.
 
-![Error details shown for a failed step in an Agent](/images/docs/offline-evals/via-ui/agents-via-no-code-builder/prompt-chain-error-state.png)
+![Error details shown for a failed step in an Agent](/images/docs/evaluate/how-to/prompt-chains/prompt-chain-error-state.png)
 
 In this example, the agent stopped at the Code node due to the input being a non-JSON parseable string.  
-In addition, once the workflow is executed, you can view the full execution log of the node by clicking on the <Icon icon="scroll" /> icon in the top right corner for every node.
+Click on the `View run logs` button in the bottom toolbar to see the full execution log of the chain and the data passed in each node.
 
-![Traces shown for error details for a node in an Agent](/images/docs/offline-evals/via-ui/agents-via-no-code-builder/prompt-chain-trace-sheet.png)
+![Traces shown for error details for a node in an Agent](/images/docs/evaluate/how-to/prompt-chains/prompt-chain-trace-sheet.png)
 
+### Debugging errors in loops
 In cases where a node executes multiple times due to loops, view the execution log of each iteration and in cases of errors, use it to identify the exact inputs and outputs that led to the error.
 
 Let's take an example use case where the code checks if the input is JSON parseable or not. And here, the code block has a bug where it sends back the data to the code block to send it in an infinite loop.
 
-![Infinite loop in a code block](/images/docs/offline-evals/via-ui/agents-via-no-code-builder/prompt-chain-infinite-loop.png)
+![Infinite loop in a code block](/images/docs/evaluate/how-to/prompt-chains/prompt-chain-infinite-loop.png)
 
-In this case, click on the <Icon icon="scroll" /> icon in the top right corner of the code block to show the execution log of each iteration.
-![Traces shown for error details for a node in an Agent](/images/docs/offline-evals/via-ui/agents-via-no-code-builder/prompt-chain-infinite-loop-trace-sheet.png)
+Click on the `View run logs` button in the bottom toolbar to see the data passed in each iteration.
+![Traces shown for error details for a node in an Agent](/images/docs/evaluate/how-to/prompt-chains/prompt-chain-infinite-loop-trace-sheet.png)
+
+### Search and filtering
+You can search and filter the execution log by using the search bar and the filters to filter specific types of errors.
+
+![Search and filter the execution log](/images/docs/evaluate/how-to/prompt-chains/prompt-chain-sheet-filtering.png)

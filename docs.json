@@ -49,14 +49,14 @@
                                     {
                                         "group": "Agent via No-Code Builder",
                                         "pages": [
-                                            "offline-evals/via-ui/agents-via-no-code-builder/quickstart",
-                                            "offline-evals/via-ui/agents-via-no-code-builder/types-of-nodes",
-                                            "offline-evals/via-ui/agents-via-no-code-builder/agent-deployment",
-                                            "offline-evals/via-ui/agents-via-no-code-builder/error-debugging",
-                                            "offline-evals/via-ui/agents-via-no-code-builder/loops",
-                                            "offline-evals/via-ui/agents-via-no-code-builder/multi-agent-system",
-                                            "offline-evals/via-ui/agents-via-no-code-builder/agent-evals",
-                                            "offline-evals/via-ui/agents-via-no-code-builder/variables-in-agents"
+                                            "offline-evals/via-ui/agents-via-no-code-builder/experiment-with-prompt-chains",
+                                            "offline-evals/via-ui/agents-via-no-code-builder/debug-errors-at-every-node",
+                                            "offline-evals/via-ui/agents-via-no-code-builder/use-loops-in-chains",
+                                            "offline-evals/via-ui/agents-via-no-code-builder/use-api-nodes-within-chains",
+                                            "offline-evals/via-ui/agents-via-no-code-builder/deploy-prompt-chains",
+                                            "offline-evals/via-ui/agents-via-no-code-builder/test-prompt-chains",
+                                            "offline-evals/via-ui/agents-via-no-code-builder/querying-prompt-chains",
+                                            "offline-evals/via-ui/agents-via-no-code-builder/multi-agent-system"
                                         ]
                                     },
                                     {
