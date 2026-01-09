@@ -335,6 +335,7 @@
                         "pages": [
                             "settings/members-and-roles",
                             "settings/model-configuration",
+                            "settings/audit-logs",
                             "settings/maxim-api-keys",
                             "settings/custom-pricing",
                             "settings/vault",
