@@ -1,0 +1,181 @@
+---
+title: "Realtime API"
+description: Learn how to integrate Maxim with the OpenAI Realtime API in TypeScript
+---
+
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
+Trace OpenAI Realtime sessions with Maxim to gain full observability into your real-time voice and text interactions.
+
+## Prerequisites
+
+- Node.js 18+
+- [OpenAI TypeScript SDK](https://www.npmjs.com/package/openai) (`npm install openai`)
+- [Maxim TypeScript SDK](https://www.npmjs.com/package/@maximai/maxim-js) (`npm install @maximai/maxim-js`)
+- API keys for OpenAI and Maxim
+
+## Environment Variables
+
+```env
+MAXIM_API_KEY=your_maxim_api_key
+MAXIM_LOG_REPO_ID=your_log_repository_id
+OPENAI_API_KEY=your_openai_api_key
+```
+
+## Initialize Maxim Logger
+
+```typescript
+import { Maxim } from "@maximai/maxim-js";
+
+const maxim = new Maxim({ apiKey: process.env.MAXIM_API_KEY });
+const logger = await maxim.logger({ id: process.env.MAXIM_LOG_REPO_ID });
+
+if (!logger) {
+  throw new Error("Failed to create logger");
+}
+```
+
+## Wrap OpenAI Realtime Client
+
+Use the `wrapOpenAIRealtime` function to automatically trace all events in your Realtime session:
+
+```typescript {6}
+import { OpenAIRealtimeWS } from "openai/realtime/ws";
+import { wrapOpenAIRealtime } from "@maximai/maxim-js/openai";
+
+const rt = new OpenAIRealtimeWS({ model: "gpt-4o-realtime-preview-2024-12-17" });
+
+const wrapper = wrapOpenAIRealtime(rt, logger);
+```
+
+## Add Custom Session Metadata
+
+You can pass additional metadata to enrich your Realtime sessions with custom names and tags:
+
+```typescript {3-6}
+const wrapper = wrapOpenAIRealtime(rt, logger, {
+  "maxim-session-name": "Voice Assistant Demo",
+  "maxim-session-tags": { 
+    mode: "audio", 
+    feature: "customer-support",
+    environment: "production"
+  },
+});
+```
+
+## Available Metadata Options
+
+The third parameter to `wrapOpenAIRealtime` accepts the following options:
+
+| Option | Type | Description |
+|--------|------|-------------|
+| `maxim-session-name` | `string` | Custom name for the session displayed in the Maxim dashboard |
+| `maxim-session-tags` | `Record<string, string> \| string` | Key-value pairs for filtering and organizing sessions |
+| `maxim-session-id` | `string` | Custom ID for the session (auto-generated if not provided) |
+
+## Basic Usage Example
+
+Here's a minimal example showing how to set up OpenAI Realtime with Maxim tracing:
+
+```typescript
+import { OpenAIRealtimeWS } from "openai/realtime/ws";
+import { Maxim } from "@maximai/maxim-js";
+import { wrapOpenAIRealtime } from "@maximai/maxim-js/openai";
+
+async function main() {
+  // Initialize Maxim
+  const maxim = new Maxim({ apiKey: process.env.MAXIM_API_KEY });
+  const logger = await maxim.logger({ id: process.env.MAXIM_LOG_REPO_ID });
+
+  if (!logger) {
+    throw new Error("Failed to create logger");
+  }
+
+  // Create and wrap the Realtime client
+  const rt = new OpenAIRealtimeWS({ model: "gpt-4o-realtime-preview-2024-12-17" });
+  const wrapper = wrapOpenAIRealtime(rt, logger, {
+    "maxim-session-name": "Realtime Audio Chat",
+    "maxim-session-tags": { mode: "audio", tools: "enabled" },
+  });
+
+  // Configure session on connection
+  rt.socket.on("open", () => {
+    rt.send({
+      type: "session.update",
+      session: {
+        output_modalities: ["audio"],
+        instructions: "You are a helpful voice assistant.",
+        audio: {
+          input: {
+            transcription: { model: "gpt-4o-mini-transcribe" },
+            turn_detection: {
+              type: "server_vad",
+              threshold: 0.5,
+              prefix_padding_ms: 300,
+              silence_duration_ms: 500,
+            },
+          },
+          output: {
+            voice: "coral",
+          },
+        },
+      },
+    });
+  });
+
+  // Handle events
+  rt.on("session.updated", () => {
+    console.log("Session ready!");
+  });
+
+  rt.on("error", (err) => {
+    console.error("Error:", err);
+  });
+}
+
+main().catch(console.error);
+```
+
+## Cleanup
+
+Always clean up resources when your session ends:
+
+```typescript
+async function cleanup() {
+  rt.close();
+  wrapper.cleanup();
+  await logger?.flush();
+  await logger?.cleanup();
+  await maxim.cleanup();
+}
+
+// Handle graceful shutdown
+process.on("SIGINT", cleanup);
+rt.socket.on("close", cleanup);
+```
+
+## What Gets Traced
+
+The Maxim wrapper automatically captures:
+
+- **Session lifecycle**: Connection, configuration updates, and disconnection
+- **Audio events**: Input/output audio buffers and transcriptions (if `audio` modality is enabled)
+- **Conversation items**: User messages, assistant responses, and function calls
+- **Tool calls**: Function invocations and their results
+- **Errors**: Any errors that occur during the session
+
+## View traces in the Maxim dashboard
+
+<MaximPlayer url="https://drive.google.com/file/d/1hJwQpZvq_LMvK5zruD2S58OGnxLLvQTY/preview"/>
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card title="OpenAI Realtime API" icon="microphone" href="https://platform.openai.com/docs/guides/realtime">
+    Official OpenAI Realtime documentation
+  </Card>
+  <Card title="Maxim JS SDK" icon="code" href="https://www.npmjs.com/package/@maximai/maxim-js">
+    Maxim TypeScript SDK on npm
+  </Card>
+</CardGroup>
+

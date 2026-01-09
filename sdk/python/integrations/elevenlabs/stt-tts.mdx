@@ -1,0 +1,310 @@
+---
+title: "ElevenLabs STT-TTS"
+description: "Learn how to integrate Maxim observability with ElevenLabs STT-TTS flow for real-time voice AI applications with comprehensive tracing and monitoring."
+---
+
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
+ElevenLabs enables you to build real-time voice AI applications with industry-leading speech synthesis and transcription. Maxim's integration provides comprehensive observability for your ElevenLabs voice agents, offering real-time monitoring of conversation flows, function calls, and performance metrics.
+
+This integration allows you to:
+
+- Monitor voice agent conversations in real-time
+- Trace STT and TTS operations with automatic span capture
+- Link multiple operations under a single trace for end-to-end visibility
+- Debug and optimize your voice AI applications
+
+## Requirements
+
+```text
+elevenlabs>=1.0.0
+maxim-py>=3.9.0
+python-dotenv>=1.1.0
+```
+
+## Environment Variables
+
+Set up the following environment variables in your `.env` file:
+
+```bash
+EL_API_KEY=your_elevenlabs_api_key
+MAXIM_API_KEY=your_maxim_api_key
+MAXIM_LOG_REPO_ID=your_maxim_log_repo_id
+```
+
+## Initialize Logger and Instrument ElevenLabs
+
+```python
+from elevenlabs.client import ElevenLabs
+from maxim import Maxim
+from maxim.logger.elevenlabs import instrument_elevenlabs
+
+# Initialize Maxim logger
+# Automatically reads MAXIM_API_KEY and MAXIM_LOG_REPO_ID from environment
+logger = Maxim().logger()
+
+# Instrument ElevenLabs - patches SDK methods for automatic tracing
+instrument_elevenlabs(logger)
+
+# Initialize ElevenLabs client AFTER instrumentation
+client = ElevenLabs(api_key=elevenlabs_api_key)
+```
+
+<Note>
+Always call `instrument_elevenlabs(logger)` before creating the ElevenLabs client to ensure all operations are traced.
+</Note>
+
+---
+
+## Text-to-Speech (TTS)
+
+Convert text to natural-sounding speech with automatic tracing.
+
+```python
+import os
+from dotenv import load_dotenv
+from elevenlabs.client import ElevenLabs
+from elevenlabs.play import play
+
+from maxim import Maxim
+from maxim.logger.elevenlabs import instrument_elevenlabs
+
+load_dotenv()
+
+logger = Maxim().logger()
+instrument_elevenlabs(logger)
+
+elevenlabs_api_key = os.getenv("EL_API_KEY")
+client = ElevenLabs(api_key=elevenlabs_api_key)
+
+audio = client.text_to_speech.convert(
+    text="The first move is what sets everything in motion.",
+    voice_id="JBFqnCBsd6RMkjVDRZzb",
+    model_id="eleven_multilingual_v2",
+    output_format="mp3_44100_128",
+)
+
+play(audio)
+```
+
+The instrumentation automatically captures:
+- Input text
+- Voice ID and model used
+- Output audio metadata
+- Latency metrics
+
+---
+
+## Speech-to-Text (STT)
+
+Transcribe audio to text with automatic tracing.
+
+```python
+import os
+from dotenv import load_dotenv
+from elevenlabs.client import ElevenLabs
+
+from maxim import Maxim
+from maxim.logger.elevenlabs import instrument_elevenlabs
+
+load_dotenv()
+
+logger = Maxim().logger()
+instrument_elevenlabs(logger)
+
+elevenlabs_api_key = os.getenv("EL_API_KEY")
+client = ElevenLabs(api_key=elevenlabs_api_key)
+
+with open("audio_file.wav", "rb") as audio_file:
+    transcript = client.speech_to_text.convert(
+        file=audio_file,
+        model_id="scribe_v1"
+    )
+
+print(transcript.text)
+```
+
+The instrumentation automatically captures:
+- Input audio attachment
+- Model used for transcription
+- Output transcript text
+- Processing time
+
+---
+
+## Linking Operations with Trace ID
+
+Link multiple STT, TTS, or LLM operations under a single trace using the `x-maxim-trace-id` header.
+
+```python
+from uuid import uuid4
+from elevenlabs.core import RequestOptions
+from maxim.logger.components.trace import TraceConfigDict
+
+# Create a shared trace ID
+trace_id = str(uuid4())
+
+# Create a trace
+trace = logger.trace(
+    TraceConfigDict(
+        id=trace_id,
+        name="Voice Pipeline",
+        tags={"provider": "elevenlabs", "operation": "pipeline"},
+    )
+)
+
+# Create request options with trace ID header
+request_options = RequestOptions(
+    additional_headers={
+        "x-maxim-trace-id": trace_id
+    }
+)
+
+# STT operation - linked to trace
+with open("input.wav", "rb") as audio_file:
+    transcript = client.speech_to_text.convert(
+        file=audio_file,
+        model_id="scribe_v1",
+        request_options=request_options
+    )
+
+# TTS operation - linked to same trace
+audio = client.text_to_speech.convert(
+    text="Response to the transcript",
+    voice_id="JBFqnCBsd6RMkjVDRZzb",
+    model_id="eleven_multilingual_v2",
+    request_options=request_options
+)
+
+trace.end()
+```
+
+---
+
+## Combining with LLM Calls
+
+Build a complete voice pipeline by combining ElevenLabs STT/TTS with an LLM for processing.
+
+```python
+from uuid import uuid4
+from openai import OpenAI
+from elevenlabs.client import ElevenLabs
+from elevenlabs.core import RequestOptions
+
+from maxim import Maxim
+from maxim.logger.elevenlabs import instrument_elevenlabs
+from maxim.logger.openai import MaximOpenAIClient
+from maxim.logger.components.trace import TraceConfigDict
+
+# Initialize logger and instrument
+logger = Maxim().logger()
+instrument_elevenlabs(logger)
+
+# Initialize clients
+elevenlabs_client = ElevenLabs(api_key=elevenlabs_api_key)
+openai_client = MaximOpenAIClient(
+    client=OpenAI(api_key=openai_api_key),
+    logger=logger
+)
+
+# Create unified trace
+trace_id = str(uuid4())
+trace = logger.trace(
+    TraceConfigDict(
+        id=trace_id,
+        name="STT-LLM-TTS Pipeline",
+    )
+)
+
+request_options = RequestOptions(
+    additional_headers={"x-maxim-trace-id": trace_id}
+)
+
+# 1. Speech-to-Text
+with open("user_audio.wav", "rb") as audio_file:
+    transcript = elevenlabs_client.speech_to_text.convert(
+        file=audio_file,
+        model_id="scribe_v1",
+        request_options=request_options
+    )
+
+# 2. LLM Processing
+response = openai_client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": transcript.text},
+    ],
+    extra_headers={"x-maxim-trace-id": trace_id}
+)
+llm_response = response.choices[0].message.content
+
+# 3. Text-to-Speech
+audio = elevenlabs_client.text_to_speech.convert(
+    text=llm_response,
+    voice_id="JBFqnCBsd6RMkjVDRZzb",
+    model_id="eleven_multilingual_v2",
+    request_options=request_options
+)
+
+trace.end()
+logger.cleanup()
+```
+
+---
+
+## What Gets Traced
+
+| Operation | Captured Data |
+|-----------|---------------|
+| **Text-to-Speech** | Input text, voice ID, model ID, output format, audio metadata, latency |
+| **Speech-to-Text** | Input audio attachment, model ID, output transcript, processing time |
+| **Linked Operations** | All operations under same trace ID with parent-child relationships |
+
+---
+
+## Debug Mode
+
+Enable debug mode for detailed logging during development:
+
+```python
+logger = Maxim({"debug": True}).logger()
+```
+
+---
+
+## Cleanup
+
+Always call `logger.cleanup()` before your application exits to ensure all traces are flushed:
+
+```python
+if __name__ == "__main__":
+    try:
+        # Your application code
+        run_voice_pipeline()
+    finally:
+        logger.cleanup()
+```
+
+---
+
+## What gets logged to Maxim
+
+- **Text-to-Speech**: Input text, voice ID, model ID, output format, audio metadata, latency
+- **Speech-to-Text**: Input audio attachment, model ID, output transcript, processing time
+- **Linked Operations**: All operations under same trace ID with parent-child relationships
+
+<MaximPlayer url="https://drive.google.com/file/d/1Yjd5JMzLxe4sYMRlF8PHLeGOoMNsg3mM/preview"/>
+
+---
+
+## Resources
+
+<CardGroup cols="2">
+  <Card title="Full Pipeline Cookbook" icon="github" href="/cookbooks/integrations/elevenlabs">
+    Complete STT-LLM-TTS pipeline tutorial with detailed walkthrough
+  </Card>
+  <Card title="ElevenLabs Docs" icon="book" href="https://elevenlabs.io/docs">
+    Official ElevenLabs documentation
+  </Card>
+</CardGroup>

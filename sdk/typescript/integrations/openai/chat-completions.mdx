@@ -1,0 +1,282 @@
+---
+title: "Chat Completions"
+description: Learn how to integrate Maxim with the OpenAI Chat Completions API in TypeScript
+---
+
+Trace OpenAI Chat Completions with Maxim to gain full observability into your LLM interactions, including tool calls and streaming responses.
+
+## Prerequisites
+
+- Node.js 18+
+- [OpenAI TypeScript SDK](https://www.npmjs.com/package/openai) (`npm install openai`)
+- [Maxim TypeScript SDK](https://www.npmjs.com/package/@maximai/maxim-js) (`npm install @maximai/maxim-js`)
+- API keys for OpenAI and Maxim
+
+## Environment Variables
+
+```env
+MAXIM_API_KEY=your_maxim_api_key
+MAXIM_LOG_REPO_ID=your_log_repository_id
+OPENAI_API_KEY=your_openai_api_key
+```
+
+## Initialize Maxim Logger
+
+```typescript
+import { Maxim } from "@maximai/maxim-js";
+
+const maxim = new Maxim({ apiKey: process.env.MAXIM_API_KEY });
+const logger = await maxim.logger({ id: process.env.MAXIM_LOG_REPO_ID });
+
+if (!logger) {
+  throw new Error("Failed to create logger");
+}
+```
+
+## Wrap OpenAI Client
+
+Use `MaximOpenAIClient` to wrap your OpenAI client for automatic tracing:
+
+```typescript {5}
+import OpenAI from "openai";
+import { MaximOpenAIClient } from "@maximai/maxim-js/openai";
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const client = new MaximOpenAIClient(openai, logger);
+```
+
+## Basic Usage
+
+Make chat completion requests using the wrapped client:
+
+```typescript
+const response = await client.chat.completions.create({
+  model: "gpt-4o-mini",
+  messages: [
+    { role: "user", content: "What is the capital of France?" }
+  ],
+  max_tokens: 200,
+});
+
+console.log(response.choices[0]?.message?.content);
+```
+
+## Custom Headers for Tracing
+
+You can pass custom headers to enrich your traces:
+
+```typescript {9-12}
+const response = await client.chat.completions.create(
+  {
+    model: "gpt-4o-mini",
+    messages: [{ role: "user", content: "Hello!" }],
+    max_tokens: 200,
+  },
+  {
+    headers: {
+      "maxim-trace-id": "your-custom-trace-id",
+      "maxim-generation-name": "greeting-response",
+    },
+  }
+);
+```
+
+## Available Header Options
+
+| Header | Type | Description |
+|--------|------|-------------|
+| `maxim-trace-id` | `string` | Link this generation to an existing trace |
+| `maxim-session-id` | `string` | Link the parent trace to an existing session |
+| `maxim-trace-tags` | `string` (JSON) | Custom tags for the trace (e.g., `'{"env": "prod"}'`) |
+| `maxim-generation-name` | `string` | Custom name for the generation in the dashboard |
+
+## Tool Calling Example
+
+Here's a complete example demonstrating tool calls with tracing:
+
+```typescript
+import OpenAI from "openai";
+import { Maxim } from "@maximai/maxim-js";
+import { MaximOpenAIClient } from "@maximai/maxim-js/openai";
+import { v4 as uuid } from "uuid";
+
+async function main() {
+  const maxim = new Maxim({ apiKey: process.env.MAXIM_API_KEY });
+  const logger = await maxim.logger({ id: process.env.MAXIM_LOG_REPO_ID });
+
+  if (!logger) {
+    throw new Error("Logger is not available");
+  }
+
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  const client = new MaximOpenAIClient(openai, logger);
+
+  // Create a trace to group all generations in the tool call flow
+  const trace = logger.trace({ id: uuid() });
+
+  // Define tools
+  const tools: OpenAI.Chat.Completions.ChatCompletionTool[] = [
+    {
+      type: "function",
+      function: {
+        name: "get_weather",
+        description: "Get the current weather in a given location",
+        parameters: {
+          type: "object",
+          properties: {
+            location: {
+              type: "string",
+              description: "The city and state, e.g. San Francisco, CA",
+            },
+            unit: {
+              type: "string",
+              enum: ["celsius", "fahrenheit"],
+            },
+          },
+          required: ["location"],
+        },
+      },
+    },
+  ];
+
+  const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
+    { role: "user", content: "What's the weather like in San Francisco?" },
+  ];
+
+  // First call - model requests a tool call
+  const firstResponse = await client.chat.completions.create(
+    {
+      model: "gpt-4o-mini",
+      messages: messages,
+      tools: tools,
+      tool_choice: "required",
+      max_tokens: 200,
+    },
+    {
+      headers: {
+        "maxim-trace-id": trace.id,
+        "maxim-generation-name": "tool-call-request",
+      },
+    }
+  );
+
+  const toolCall = firstResponse.choices[0]?.message?.tool_calls?.[0];
+
+  // Simulate tool execution
+  const toolResult = JSON.stringify({
+    location: "San Francisco, CA",
+    temperature: 72,
+    unit: "fahrenheit",
+    condition: "sunny",
+  });
+
+  // Second call - pass tool result back to model
+  const secondMessages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
+    ...messages,
+    firstResponse.choices[0]?.message as OpenAI.Chat.Completions.ChatCompletionMessageParam,
+    {
+      role: "tool",
+      tool_call_id: toolCall!.id,
+      content: toolResult,
+    },
+  ];
+
+  const secondResponse = await client.chat.completions.create(
+    {
+      model: "gpt-4o-mini",
+      messages: secondMessages,
+      tools: tools,
+      max_tokens: 200,
+    },
+    {
+      headers: {
+        "maxim-trace-id": trace.id,
+        "maxim-generation-name": "tool-call-response",
+      },
+    }
+  );
+
+  console.log("Response:", secondResponse.choices[0]?.message?.content);
+
+  // Set trace output and end
+  trace.output(secondResponse.choices[0]?.message?.content || "");
+  trace.end();
+
+  await logger.cleanup();
+  await maxim.cleanup();
+}
+
+main().catch(console.error);
+```
+
+## Grouping Generations with Traces
+
+Use traces to group related generations together:
+
+```typescript
+// Create a trace
+const trace = logger.trace({ id: uuid() });
+
+// All generations with the same trace ID are grouped together
+await client.chat.completions.create(
+  { model: "gpt-4o-mini", messages: [...] },
+  { headers: { "maxim-trace-id": trace.id } }
+);
+
+await client.chat.completions.create(
+  { model: "gpt-4o-mini", messages: [...] },
+  { headers: { "maxim-trace-id": trace.id } }
+);
+
+// Set the final output and end the trace
+trace.output("Final result");
+trace.end();
+```
+
+## Streaming Support
+
+The wrapped client supports streaming responses:
+
+```typescript
+const stream = await client.chat.completions.create({
+  model: "gpt-4o-mini",
+  messages: [{ role: "user", content: "Write a haiku about coding" }],
+  stream: true,
+});
+
+for await (const chunk of stream) {
+  process.stdout.write(chunk.choices[0]?.delta?.content || "");
+}
+```
+
+## Cleanup
+
+Always clean up resources when done:
+
+```typescript
+await logger.cleanup();
+await maxim.cleanup();
+```
+
+## What gets logged to Maxim
+
+- **Request Details**: Model name, parameters, and all other settings
+- **Message History**: Complete conversation history including user messages and assistant responses
+- **Response Content**: Full assistant responses and metadata
+- **Usage Statistics**: Input tokens, output tokens, total tokens consumed
+- **Error Handling**: Any errors that occur during the request
+
+![Chat Completions Trace](/images/docs/sdk/typescript/openai/chat-completions.png)
+
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card title="OpenAI Chat Completions" icon="message" href="https://platform.openai.com/docs/guides/chat-completions">
+    Official OpenAI Chat Completions documentation
+  </Card>
+  <Card title="Maxim JS SDK" icon="code" href="https://www.npmjs.com/package/@maximai/maxim-js">
+    Maxim TypeScript SDK on npm
+  </Card>
+</CardGroup>
+
