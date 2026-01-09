@@ -66,6 +66,10 @@ Navigate to the repository where you want to evaluate your logs.
 Click on `Configure evaluation` in the top right corner of the page. This will open up the evaluation configuration sheet.
 
 ![Screenshot of the repository page with the configure evaluation button highlighted](/images/docs/configure_eval.png)
+<Note>
+You can create multiple configurations for auto evaluation on logs. Each configuration can be used to evaluate logs based on different criteria.
+Explained in the [Multiple configurations for auto evaluations](#multiple-configurations-for-auto-evaluations) section.
+</Note>
 </Step>
 <Step title="Understand evaluation levels">
 The `Auto Evaluation` section allows you to configure evaluators at different levels of granularity:
@@ -197,6 +201,19 @@ This tab contains the following sections:
 When you click on any node in the tree view, the right panel displays the evaluation results specific to that level. This helps you understand which component's evaluation you're viewing and its place in the overall interaction hierarchy.
 
 Learn more about evaluating individual components in [Node Level Evaluation](/online-evals/via-sdk/node-level-evaluation).
+
+## Multiple configurations for auto evaluations
+
+You can create multiple configurations on a single log repository for auto evaluations. Each configuration can be used to evaluate logs based on different criteria.
+
+<Steps>
+<Step title="Add configuration">
+Click on the `Add configuration` button in the top right corner of the sheet. This will add a new configuration to the list.
+</Step>
+<Step title="Modify configuration">
+You can add or remove evaluators, filters, and sampling rate for each configuration. Check the [Setting Up Auto Evaluation on Logs](#setting-up-auto-evaluation) section for more details on setting up a single configuration.
+</Step>
+</Steps>
 
 ## Dataset Curation
 
