@@ -1,0 +1,884 @@
+---
+title: "Interactive Audio Chat with OpenAI Realtime API"
+description: "Learn how to build an interactive voice assistant using OpenAI's Realtime API with Maxim observability and tool calling support"
+---
+
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
+This cookbook demonstrates how to build an interactive audio chat application using OpenAI's Realtime API with WebSocket, featuring real-time voice interactions, tool calling, and comprehensive observability through Maxim.
+
+<MaximPlayer url="https://drive.google.com/file/d/1qIUrAeJLKXKWhgQUe2AsybqUV_cUi1Up/preview"/>
+
+## Prerequisites
+
+- Node.js 18+
+- [OpenAI TypeScript SDK](https://www.npmjs.com/package/openai) (`npm install openai`)
+- [Maxim TypeScript SDK](https://www.npmjs.com/package/@maximai/maxim-js) (`npm install @maximai/maxim-js`)
+- Audio dependencies: `npm install node-record-lpcm16 speaker`
+- sox for audio recording: `brew install sox` (macOS) or `apt install sox` (Linux)
+- API keys for OpenAI and Maxim
+
+## Environment Variables
+
+```env
+OPENAI_API_KEY=your_openai_api_key
+MAXIM_API_KEY=your_maxim_api_key
+MAXIM_LOG_REPO_ID=your_log_repository_id
+```
+
+## Project Setup
+
+Create a new project and install dependencies:
+
+```bash
+mkdir openai-realtime-audio
+cd openai-realtime-audio
+npm init -y
+npm install openai @maximai/maxim-js dotenv node-record-lpcm16 speaker
+npm install -D typescript ts-node @types/node
+```
+
+---
+
+## Architecture Overview
+
+The application uses a WebSocket connection to OpenAI's Realtime API for bidirectional audio streaming:
+
+| Component | Responsibility |
+|-----------|---------------|
+| **OpenAIRealtimeWS** | WebSocket connection to OpenAI Realtime API |
+| **Maxim Logger** | Observability and tracing for all interactions |
+| **Audio Capture** | Records microphone input using `node-record-lpcm16` |
+| **Audio Playback** | Plays assistant responses using `speaker` |
+| **Tool Handler** | Executes function calls requested by the model |
+
+---
+
+## Code Walkthrough: Key Components
+
+### 1. Imports and Audio Dependencies
+
+```typescript
+import { config } from "dotenv";
+config();
+
+import * as readline from "readline";
+import { OpenAIRealtimeWS } from "openai/realtime/ws";
+import { Maxim } from "@maximai/maxim-js";
+import { wrapOpenAIRealtime } from "@maximai/maxim-js/openai";
+import { SessionUpdateEvent } from "openai/resources/realtime/realtime";
+
+// Audio dependencies
+let record: any;
+let Speaker: any;
+
+try {
+  record = require("node-record-lpcm16");
+} catch {
+  console.error("❌ Missing dependency: npm install node-record-lpcm16");
+  console.error("   Also install sox: brew install sox (macOS) or apt install sox (Linux)");
+}
+
+try {
+  Speaker = require("speaker");
+} catch {
+  console.error("❌ Missing dependency: npm install speaker");
+}
+```
+
+The audio dependencies are loaded dynamically with error handling to provide helpful installation messages.
+
+### 2. Define Tools for the Assistant
+
+```typescript
+const tools = [
+  {
+    type: "function" as const,
+    name: "get_weather",
+    description: "Get the current weather for a location",
+    parameters: {
+      type: "object",
+      properties: {
+        location: { type: "string", description: 'City name, e.g. "San Francisco"' },
+        unit: { type: "string", enum: ["celsius", "fahrenheit"], description: "Temperature unit" },
+      },
+      required: ["location"],
+    },
+  },
+  {
+    type: "function" as const,
+    name: "calculate",
+    description: "Perform a mathematical calculation",
+    parameters: {
+      type: "object",
+      properties: {
+        expression: { type: "string", description: 'Math expression to evaluate, e.g. "2 + 2 * 3"' },
+      },
+      required: ["expression"],
+    },
+  },
+  {
+    type: "function" as const,
+    name: "get_time",
+    description: "Get the current date and time",
+    parameters: {
+      type: "object",
+      properties: {
+        timezone: { type: "string", description: 'Timezone, e.g. "America/New_York"' },
+      },
+    },
+  },
+];
+```
+
+### 3. Implement Tool Execution
+
+```typescript
+function executeTool(name: string, args: Record<string, any>): string {
+  console.log(`\n🔧 Calling tool: ${name}(${JSON.stringify(args)})`);
+
+  switch (name) {
+    case "get_weather": {
+      const location = args["location"] || "Unknown";
+      const unit = args["unit"] || "fahrenheit";
+      const temp = unit === "celsius" 
+        ? Math.floor(Math.random() * 30 + 5) 
+        : Math.floor(Math.random() * 50 + 40);
+      const conditions = ["sunny", "cloudy", "rainy", "partly cloudy"][Math.floor(Math.random() * 4)];
+      return JSON.stringify({ location, temperature: temp, unit, conditions });
+    }
+    case "calculate": {
+      try {
+        const expr = String(args["expression"]).replace(/[^0-9+\-*/().% ]/g, "");
+        const result = Function(`"use strict"; return (${expr})`)();
+        return JSON.stringify({ expression: args["expression"], result });
+      } catch {
+        return JSON.stringify({ error: "Invalid expression" });
+      }
+    }
+    case "get_time": {
+      const tz = args["timezone"] || "UTC";
+      try {
+        const now = new Date().toLocaleString("en-US", { timeZone: tz });
+        return JSON.stringify({ timezone: tz, datetime: now });
+      } catch {
+        return JSON.stringify({ timezone: "UTC", datetime: new Date().toISOString() });
+      }
+    }
+    default:
+      return JSON.stringify({ error: `Unknown tool: ${name}` });
+  }
+}
+```
+
+### 4. Initialize Maxim and OpenAI Realtime
+
+```typescript {7-11}
+const maxim = new Maxim({ apiKey: process.env.MAXIM_API_KEY });
+const logger = await maxim.logger({ id: process.env.MAXIM_LOG_REPO_ID });
+
+if (!logger) {
+  throw new Error("Failed to create logger");
+}
+
+const rt = new OpenAIRealtimeWS({ model: "gpt-4o-realtime-preview-2024-12-17" });
+const wrapper = wrapOpenAIRealtime(rt, logger, {
+  "maxim-session-name": "Realtime Audio Chat",
+  "maxim-session-tags": { mode: "audio", tools: "enabled" },
+});
+```
+
+The `wrapOpenAIRealtime` function integrates Maxim with the OpenAI Realtime WebSocket, automatically capturing all interactions for observability.
+
+### 5. Configure the Realtime Session
+
+```typescript
+rt.socket.on("open", () => {
+  rt.send({
+    type: "session.update",
+    session: {
+      type: "realtime",
+      output_modalities: ["audio"],
+      instructions: "You are a helpful voice assistant with access to tools. Use them when appropriate. Keep responses brief and conversational.",
+      tools,
+      audio: {
+        input: {
+          transcription: { model: "gpt-4o-mini-transcribe" },
+          turn_detection: {
+            type: "server_vad",
+            threshold: 0.5,
+            prefix_padding_ms: 300,
+            silence_duration_ms: 500,
+          },
+        },
+        output: {
+          voice: "coral",
+        },
+      },
+    },
+  } as SessionUpdateEvent);
+});
+```
+
+### 6. Handle Audio Playback
+
+```typescript
+let audioBuffer: Buffer[] = [];
+let speaker: any = null;
+
+function createSpeaker() {
+  return new Speaker({
+    channels: 1,
+    bitDepth: 16,
+    sampleRate: 24000,
+  });
+}
+
+// Collect audio deltas
+rt.on("response.output_audio.delta", (event: any) => {
+  if (event.delta) {
+    const audioData = Buffer.from(event.delta, "base64");
+    audioBuffer.push(audioData);
+  }
+});
+
+// Play audio when response is complete
+rt.on("response.output_audio.done", () => {
+  if (audioBuffer.length > 0) {
+    try {
+      speaker = createSpeaker();
+      const fullAudio = Buffer.concat(audioBuffer);
+      speaker.write(fullAudio);
+      speaker.end();
+    } catch (e) {
+      console.error("Audio playback error:", e);
+    }
+    audioBuffer = [];
+  }
+});
+```
+
+### 7. Handle Function Calls
+
+```typescript
+rt.on("response.function_call_arguments.done", (event: any) => {
+  const callId = event.call_id;
+  const name = event.name;
+  let args = {};
+  try {
+    args = JSON.parse(event.arguments || "{}");
+  } catch {
+    // ignore parse errors
+  }
+
+  const result = executeTool(name, args);
+
+  // Send the function result back to the conversation
+  rt.send({
+    type: "conversation.item.create",
+    item: {
+      type: "function_call_output",
+      call_id: callId,
+      output: result,
+    },
+  });
+
+  // Trigger a new response to continue the conversation
+  rt.send({ type: "response.create" });
+});
+```
+
+### 8. Microphone Recording
+
+```typescript
+let isRecording = false;
+let recordingStream: any = null;
+
+function startRecording() {
+  if (isRecording) return;
+  isRecording = true;
+  console.log("\n🔴 Recording... (press [r] or release space to stop)");
+
+  try {
+    recordingStream = record.record({
+      sampleRate: 24000,
+      channels: 1,
+      audioType: "raw",
+      recorder: "sox",
+    });
+
+    recordingStream.stream().on("data", (chunk: Buffer) => {
+      // Convert to base64 and send to OpenAI
+      const base64Audio = chunk.toString("base64");
+      rt.send({
+        type: "input_audio_buffer.append",
+        audio: base64Audio,
+      });
+    });
+
+    recordingStream.stream().on("error", (err: Error) => {
+      console.error("Recording error:", err.message);
+      stopRecording();
+    });
+  } catch (e) {
+    console.error("Failed to start recording:", e);
+    isRecording = false;
+  }
+}
+
+function stopRecording() {
+  if (!isRecording) return;
+  isRecording = false;
+  console.log("⬜ Recording stopped. Processing...");
+
+  if (recordingStream) {
+    try {
+      recordingStream.stop();
+    } catch {
+      // ignore
+    }
+    recordingStream = null;
+  }
+
+  // Commit the audio buffer and request response
+  rt.send({ type: "input_audio_buffer.commit" });
+  rt.send({ type: "response.create" });
+}
+```
+
+### 9. Cleanup Resources
+
+```typescript
+async function cleanup() {
+  console.log("\n👋 Goodbye!");
+
+  if (recordingStream) {
+    try {
+      recordingStream.stop();
+    } catch {
+      // ignore
+    }
+  }
+
+  if (speaker) {
+    try {
+      speaker.end();
+    } catch {
+      // ignore
+    }
+  }
+
+  rl.close();
+  rt.close();
+  wrapper.cleanup();
+  await logger?.flush();
+  await logger?.cleanup();
+  await maxim.cleanup();
+  process.exit(0);
+}
+
+rt.socket.on("close", cleanup);
+process.on("SIGINT", cleanup);
+```
+
+---
+
+## Complete Code
+
+```typescript [expandable]
+/**
+ * Interactive AUDIO chat with OpenAI Realtime API + Maxim logging + Tool Calling
+ *
+ * Run with: npx ts-node realtime_audio.ts
+ *
+ * Requirements:
+ * - npm install node-record-lpcm16 speaker
+ * - sox (macOS: brew install sox)
+ * - For macOS: may need to allow microphone access
+ */
+
+import { config } from "dotenv";
+config();
+
+import * as readline from "readline";
+import { OpenAIRealtimeWS } from "openai/realtime/ws";
+import { Maxim } from "@maximai/maxim-js";
+import { wrapOpenAIRealtime } from "@maximai/maxim-js/openai";
+import { SessionUpdateEvent } from "openai/resources/realtime/realtime";
+
+// Audio dependencies - wrap in try/catch for helpful error messages
+let record: any;
+let Speaker: any;
+
+try {
+  record = require("node-record-lpcm16");
+} catch {
+  console.error("❌ Missing dependency: npm install node-record-lpcm16");
+  console.error("   Also install sox: brew install sox (macOS) or apt install sox (Linux)");
+}
+
+try {
+  Speaker = require("speaker");
+} catch {
+  console.error("❌ Missing dependency: npm install speaker");
+}
+
+// Define tools
+const tools = [
+  {
+    type: "function" as const,
+    name: "get_weather",
+    description: "Get the current weather for a location",
+    parameters: {
+      type: "object",
+      properties: {
+        location: { type: "string", description: 'City name, e.g. "San Francisco"' },
+        unit: { type: "string", enum: ["celsius", "fahrenheit"], description: "Temperature unit" },
+      },
+      required: ["location"],
+    },
+  },
+  {
+    type: "function" as const,
+    name: "calculate",
+    description: "Perform a mathematical calculation",
+    parameters: {
+      type: "object",
+      properties: {
+        expression: { type: "string", description: 'Math expression to evaluate, e.g. "2 + 2 * 3"' },
+      },
+      required: ["expression"],
+    },
+  },
+  {
+    type: "function" as const,
+    name: "get_time",
+    description: "Get the current date and time",
+    parameters: {
+      type: "object",
+      properties: {
+        timezone: { type: "string", description: 'Timezone, e.g. "America/New_York"' },
+      },
+    },
+  },
+];
+
+// Tool implementations
+function executeTool(name: string, args: Record<string, any>): string {
+  console.log(`\n🔧 Calling tool: ${name}(${JSON.stringify(args)})`);
+
+  switch (name) {
+    case "get_weather": {
+      const location = args["location"] || "Unknown";
+      const unit = args["unit"] || "fahrenheit";
+      const temp = unit === "celsius" ? Math.floor(Math.random() * 30 + 5) : Math.floor(Math.random() * 50 + 40);
+      const conditions = ["sunny", "cloudy", "rainy", "partly cloudy"][Math.floor(Math.random() * 4)];
+      return JSON.stringify({ location, temperature: temp, unit, conditions });
+    }
+    case "calculate": {
+      try {
+        const expr = String(args["expression"]).replace(/[^0-9+\-*/().% ]/g, "");
+        const result = Function(`"use strict"; return (${expr})`)();
+        return JSON.stringify({ expression: args["expression"], result });
+      } catch {
+        return JSON.stringify({ error: "Invalid expression" });
+      }
+    }
+    case "get_time": {
+      const tz = args["timezone"] || "UTC";
+      try {
+        const now = new Date().toLocaleString("en-US", { timeZone: tz });
+        return JSON.stringify({ timezone: tz, datetime: now });
+      } catch {
+        return JSON.stringify({ timezone: "UTC", datetime: new Date().toISOString() });
+      }
+    }
+    default:
+      return JSON.stringify({ error: `Unknown tool: ${name}` });
+  }
+}
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+async function main() {
+  if (!record || !Speaker) {
+    console.error("\n⚠️  Audio dependencies not installed. Install them with:");
+    console.error("   npm install node-record-lpcm16 speaker");
+    console.error("   brew install sox  (macOS) or apt install sox (Linux)\n");
+    process.exit(1);
+  }
+
+  const openAIKey = process.env["OPENAI_API_KEY"];
+  const maximApiKey = process.env["MAXIM_API_KEY"];
+  const repoId = process.env["MAXIM_LOG_REPO_ID"];
+
+  if (!openAIKey || !maximApiKey || !repoId) {
+    console.error("Set OPENAI_API_KEY, MAXIM_API_KEY, and MAXIM_LOG_REPO_ID");
+    process.exit(1);
+  }
+
+  const maxim = new Maxim({ apiKey: maximApiKey });
+  const logger = await maxim.logger({ id: repoId });
+  if (!logger) {
+    console.error("Failed to create logger");
+    process.exit(1);
+  }
+
+  const rt = new OpenAIRealtimeWS({ model: "gpt-4o-realtime-preview-2024-12-17" });
+  const wrapper = wrapOpenAIRealtime(rt, logger, {
+    "maxim-session-name": "Realtime Audio Chat",
+    "maxim-session-tags": { mode: "audio", tools: "enabled" },
+  });
+
+  let isRecording = false;
+  let recordingStream: any = null;
+  let speaker: any = null;
+  let audioBuffer: Buffer[] = [];
+
+  // Create speaker for playback (24kHz, 16-bit, mono - OpenAI's format)
+  function createSpeaker() {
+    return new Speaker({
+      channels: 1,
+      bitDepth: 16,
+      sampleRate: 24000,
+    });
+  }
+
+  rt.socket.on("open", () => {
+    rt.send({
+      type: "session.update",
+      session: {
+        type: "realtime",
+        output_modalities: ["audio"],
+        instructions:
+          "You are a helpful voice assistant with access to tools. Use them when appropriate. Keep responses brief and conversational.",
+        tools,
+        audio: {
+          input: {
+            transcription: { model: "gpt-4o-mini-transcribe" },
+            turn_detection: {
+              type: "server_vad",
+              threshold: 0.5,
+              prefix_padding_ms: 300,
+              silence_duration_ms: 500,
+            },
+          },
+          output: {
+            voice: "coral",
+          },
+        },
+      },
+    } as SessionUpdateEvent);
+  });
+
+  rt.on("session.updated", () => {
+    console.log("\n🎙️  AUDIO CHAT STARTED");
+    console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+    console.log("Commands:");
+    console.log("  [r]     - Start/stop recording");
+    console.log("  [space] - Push-to-talk (hold)");
+    console.log("  [exit]  - Quit");
+    console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+    console.log("📦 Tools: get_weather, calculate, get_time\n");
+    promptUser();
+  });
+
+  // Handle assistant's audio response
+  rt.on("response.output_audio.delta", (event: any) => {
+    if (event.delta) {
+      const audioData = Buffer.from(event.delta, "base64");
+      audioBuffer.push(audioData);
+    }
+  });
+
+  // Play audio when response is done
+  rt.on("response.output_audio.done", () => {
+    if (audioBuffer.length > 0) {
+      try {
+        speaker = createSpeaker();
+        const fullAudio = Buffer.concat(audioBuffer);
+        speaker.write(fullAudio);
+        speaker.end();
+      } catch (e) {
+        console.error("Audio playback error:", e);
+      }
+      audioBuffer = [];
+    }
+  });
+
+  // Handle function calls
+  rt.on("response.function_call_arguments.done", (event: any) => {
+    const callId = event.call_id;
+    const name = event.name;
+    let args = {};
+    try {
+      args = JSON.parse(event.arguments || "{}");
+    } catch {
+      // ignore
+    }
+
+    const result = executeTool(name, args);
+
+    rt.send({
+      type: "conversation.item.create",
+      item: {
+        type: "function_call_output",
+        call_id: callId,
+        output: result,
+      },
+    });
+
+    rt.send({ type: "response.create" });
+  });
+
+  rt.on("response.done", (event: any) => {
+    const output = event.response?.output || [];
+    const hasFunctionCalls = output.some((item: any) => item.type === "function_call");
+
+    if (!hasFunctionCalls) {
+      console.log("\n");
+      promptUser();
+    }
+  });
+
+  rt.on("error", (err: any) => {
+    console.error("\n❌ Error:", err.message || err);
+    promptUser();
+  });
+
+  // Start recording microphone
+  function startRecording() {
+    if (isRecording) return;
+    isRecording = true;
+    console.log("\n🔴 Recording... (press [r] or release space to stop)");
+
+    try {
+      recordingStream = record.record({
+        sampleRate: 24000,
+        channels: 1,
+        audioType: "raw",
+        recorder: "sox",
+      });
+
+      recordingStream.stream().on("data", (chunk: Buffer) => {
+        // Convert to base64 and send to OpenAI
+        const base64Audio = chunk.toString("base64");
+        rt.send({
+          type: "input_audio_buffer.append",
+          audio: base64Audio,
+        });
+      });
+
+      recordingStream.stream().on("error", (err: Error) => {
+        console.error("Recording error:", err.message);
+        stopRecording();
+      });
+    } catch (e) {
+      console.error("Failed to start recording:", e);
+      isRecording = false;
+    }
+  }
+
+  // Stop recording
+  function stopRecording() {
+    if (!isRecording) return;
+    isRecording = false;
+    console.log("⬜ Recording stopped. Processing...");
+
+    if (recordingStream) {
+      try {
+        recordingStream.stop();
+      } catch {
+        // ignore
+      }
+      recordingStream = null;
+    }
+
+    // Commit the audio buffer and request response
+    rt.send({ type: "input_audio_buffer.commit" });
+    rt.send({ type: "response.create" });
+  }
+
+  function promptUser() {
+    rl.question("> ", (input) => {
+      const cmd = input.trim().toLowerCase();
+
+      if (cmd === "exit" || cmd === "quit" || cmd === "q") {
+        cleanup();
+        return;
+      }
+
+      if (cmd === "r") {
+        if (isRecording) {
+          stopRecording();
+        } else {
+          startRecording();
+        }
+        promptUser();
+        return;
+      }
+
+      // If they type text, send as text message
+      if (cmd && cmd !== "r") {
+        rt.send({
+          type: "conversation.item.create",
+          item: { type: "message", role: "user", content: [{ type: "input_text", text: cmd }] },
+        });
+        rt.send({ type: "response.create" });
+        return;
+      }
+
+      promptUser();
+    });
+  }
+
+  // Handle raw keypress for push-to-talk (space bar)
+  if (process.stdin.isTTY) {
+    process.stdin.setRawMode(true);
+    process.stdin.on("keypress", (_str: string, key: any) => {
+      if (key && key.name === "space") {
+        if (!isRecording) {
+          startRecording();
+        }
+      }
+    });
+
+    process.stdin.on("data", (data: Buffer) => {
+      // Space key released (approximation - stop on any key after space)
+      if (isRecording && data.toString() !== " ") {
+        stopRecording();
+      }
+    });
+  }
+
+  async function cleanup() {
+    console.log("\n👋 Goodbye!");
+
+    if (recordingStream) {
+      try {
+        recordingStream.stop();
+      } catch {
+        // ignore
+      }
+    }
+
+    if (speaker) {
+      try {
+        speaker.end();
+      } catch {
+        // ignore
+      }
+    }
+
+    rl.close();
+    rt.close();
+    wrapper.cleanup();
+    await logger?.flush();
+    await logger?.cleanup();
+    await maxim.cleanup();
+    process.exit(0);
+  }
+
+  rt.socket.on("close", cleanup);
+
+  // Handle Ctrl+C
+  process.on("SIGINT", cleanup);
+}
+
+main().catch(console.error);
+```
+
+---
+
+## How to Use
+
+1. **Set Environment Variables**: Configure your API keys in a `.env` file.
+2. **Run the Script**: Execute with `npx ts-node realtime_audio.ts`.
+3. **Interact via Voice**: Press `[r]` to start/stop recording, or hold `[space]` for push-to-talk.
+4. **Type Text**: You can also type text messages directly at the prompt.
+5. **Use Tools**: Ask about weather, time, or perform calculations—the assistant will use the appropriate tool.
+6. **Monitor in Maxim**: All interactions are automatically logged to your Maxim dashboard.
+
+## Run the Script
+
+```bash
+npx ts-node realtime_audio.ts
+```
+
+---
+
+## Observability with Maxim
+
+The `wrapOpenAIRealtime` function automatically captures all Realtime API interactions:
+
+- **Session Events**: Session creation, updates, and configuration changes
+- **Audio Streams**: Input and output audio events with transcriptions
+- **Function Calls**: Tool invocations with arguments and results
+- **Responses**: Complete assistant responses with metadata
+- **Errors**: Any errors that occur during the session
+
+### Custom Session Headers
+
+You can pass custom headers to enrich your sessions:
+
+```typescript {3-6}
+const wrapper = wrapOpenAIRealtime(rt, logger, {
+  "maxim-session-name": "Realtime Audio Chat",
+  "maxim-session-tags": { 
+    mode: "audio", 
+    tools: "enabled",
+    environment: "production"
+  },
+});
+```
+
+| Header | Type | Description |
+|--------|------|-------------|
+| `maxim-session-name` | `string` | Custom name for the session |
+| `maxim-session-tags` | `object` | Key-value pairs for session metadata |
+| `maxim-session-id` | `string` | Custom ID for the session |
+
+---
+
+## Troubleshooting
+
+- **Audio not recording**
+  - Ensure `sox` is installed: `brew install sox` (macOS) or `apt install sox` (Linux)
+  - Check microphone permissions in your system settings
+  - Verify `node-record-lpcm16` is installed correctly
+
+- **No audio playback**
+  - Check that `speaker` package is installed
+  - Verify your system audio output is configured correctly
+  - Try adjusting the speaker sample rate if needed
+
+- **WebSocket connection fails**
+  - Verify your `OPENAI_API_KEY` is valid and has Realtime API access
+  - Check your network connection and firewall settings
+
+- **No Maxim traces**
+  - Ensure `MAXIM_API_KEY` and `MAXIM_LOG_REPO_ID` are set correctly
+  - Verify `wrapOpenAIRealtime` is called before any events are sent
+  - Call `wrapper.cleanup()` before exiting to flush pending logs
+
+- **Tools not working**
+  - Ensure tools are included in the session configuration
+  - Check that `response.function_call_arguments.done` handler is properly registered
+  - Verify the tool result is sent back with the correct `call_id`
+
+---
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card title="OpenAI Realtime API" icon="bolt" href="https://platform.openai.com/docs/guides/realtime">
+    Official OpenAI Realtime API documentation
+  </Card>
+  <Card title="Maxim JS SDK" icon="code" href="https://www.npmjs.com/package/@maximai/maxim-js">
+    Maxim TypeScript SDK on npm
+  </Card>
+</CardGroup>
+

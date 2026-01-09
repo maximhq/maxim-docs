@@ -422,7 +422,14 @@
                                     },
                                     {
                                         "group": "LiveKit",
-                                        "pages": ["sdk/python/integrations/livekit/livekit"]
+                                        "pages": [
+                                            "sdk/python/integrations/livekit/livekit",
+                                            "sdk/python/integrations/livekit/livekit-otel"
+                                        ]
+                                    },
+                                    {
+                                        "group": "ElevenLabs",
+                                        "pages": ["sdk/python/integrations/elevenlabs/stt-tts"]
                                     },
                                     {
                                         "group": "Smolagents",
@@ -591,6 +598,14 @@
                                     {
                                         "group": "Vercel",
                                         "pages": ["sdk/typescript/integrations/vercel/vercel"]
+                                    },
+                                    {
+                                        "group": "OpenAI",
+                                        "pages": [
+                                            "sdk/typescript/integrations/openai/chat-completions",
+                                            "sdk/typescript/integrations/openai/responses",
+                                            "sdk/typescript/integrations/openai/realtime"
+                                        ]
                                     }
                                 ]
                             },
@@ -784,11 +799,13 @@
                             "cookbooks/integrations/react-agent",
                             "cookbooks/integrations/vercel",
                             "cookbooks/integrations/groq",
+                            "cookbooks/integrations/elevenlabs",
                             "cookbooks/integrations/livekit",
                             "cookbooks/integrations/pydantic",
                             "cookbooks/integrations/together",
                             "cookbooks/integrations/smolagents",
-                            "cookbooks/integrations/llamaindex"
+                            "cookbooks/integrations/llamaindex",
+                            "cookbooks/integrations/openai-realtime"
                         ]
                     },
                     {
@@ -916,7 +933,6 @@
             "label": "Book a demo",
             "href": "https://www.getmaxim.ai/demo"
         }
-        
     },
     "redirects": [
         {

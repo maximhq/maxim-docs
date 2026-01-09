@@ -1,17 +1,19 @@
 ---
-title: "Real Time Interview Voice Agent Using LiveKit"
-description: "Learn how to add Maxim observability for LiveKit based voice agents"
+title: "Personal Shopper Multi-Agent Using LiveKit"
+description: "Learn how to build an e-commerce personal shopper with triage, sales, and returns departments using LiveKit and Maxim observability"
 ---
 
 import { MaximPlayer } from "/snippets/maximPlayer.mdx"
 
-This tutorial will guide you through building a real-time, voice-based Interview Agent using LiveKit for audio and Maxim for observability. The agent conducts mock interviews tailored to your provided Job Description (JD), supports web search, and logs all activity for transparency and debugging.
+This tutorial will guide you through building a sophisticated multi-agent personal shopping assistant using LiveKit for real-time voice interactions and Maxim for observability. The system features three specialized agents—Triage, Sales, and Returns—that seamlessly hand off conversations while maintaining customer context and order history.
+
+<MaximPlayer url="https://drive.google.com/file/d/1gNwV84BzoKdIbh-kAltctYfTzOZuyuC5/preview"/>
 
 ## Prerequisites
-- Python 3.8+
+- Python 3.9+
 - LiveKit server credentials (URL, API key, secret)
-- Tavily API key (for web search tool)
-- Google Cloud credentials (for Gemini LLM and voice)
+- OpenAI API key (for LLM and TTS)
+- Deepgram API key (for STT)
 - Maxim account (API key, log repo ID)
 
 ## Project Setup
@@ -23,11 +25,8 @@ LIVEKIT_API_KEY=your_livekit_api_key
 LIVEKIT_API_SECRET=your_livekit_api_secret
 MAXIM_API_KEY=your_maxim_api_key
 MAXIM_LOG_REPO_ID=your_maxim_log_repo_id
-TAVILY_API_KEY=your_tavily_api_key
-# For Google Gemini (if needed):
-# GOOGLE_API_KEY=your_google_api_key
-# or
-# GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json
+OPENAI_API_KEY=your_openai_api_key
+DEEPGRAM_API_KEY=your_deepgram_api_key
 ```
 
 ## Install Dependencies
@@ -37,13 +36,12 @@ pip install -r requirements.txt
 
 ## Add Dependencies to requirements.txt
 ```text
-ipykernel>=6.29.5
 livekit>=0.1.0
-livekit-agents[google,openai]~=1.0
+livekit-agents[openai,deepgram,silero]~=1.0
 livekit-api>=1.0.2
 maxim-py==3.9.0
 python-dotenv>=1.1.0
-tavily-python>=0.7.5
+pyyaml>=6.0
 ```
 
 ## Set Up a Virtual Environment
@@ -55,275 +53,930 @@ source venv/bin/activate
 ## Create a Project Directory and Navigate into It
 
 ```
-mkdir interview_voice_agent
-cd interview_voice_agent
+mkdir personal_shopper_agent
+cd personal_shopper_agent
 ```
 
 ---
 
+## Architecture Overview
+
+The Personal Shopper system uses a multi-agent architecture with three specialized agents:
+
+| Agent | Responsibility |
+|-------|---------------|
+| **Triage Agent** | Greets customers, identifies them, and routes to appropriate department |
+| **Sales Agent** | Handles product recommendations, order creation, and purchases |
+| **Returns Agent** | Processes returns, retrieves order history, and handles refunds |
+
+Each agent can transfer conversations to other agents while preserving the full conversation context and customer identification.
+
+---
+
 ## Code Walkthrough: Key Components
+
 Below, each section of the code is presented with a technical explanation.
 
 ### 1. Imports and Initialization
 
 ```python
-import os
-import uuid
 import logging
-import dotenv
-from livekit import agents
-from livekit import api as livekit_api
-from livekit.agents import Agent, AgentSession, function_tool
-from livekit.api.room_service import CreateRoomRequest
-from livekit.plugins import google
+from dataclasses import dataclass, field
+from typing import Optional
+
+from database import CustomerDatabase
+from dotenv import load_dotenv
+from livekit.agents import JobContext, WorkerOptions, cli
+from livekit.agents.llm import function_tool
+from livekit.agents.voice import Agent, AgentSession, RunContext
+from livekit.plugins import deepgram, openai, silero
+from utils import load_prompt
 from maxim import Maxim
 from maxim.logger.livekit import instrument_livekit
-from tavily import TavilyClient
 
-dotenv.load_dotenv(override=True)
-logging.basicConfig(level=logging.DEBUG)
+load_dotenv()
 
-logger = Maxim().logger()
-TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
+maxim = Maxim()
+maxim_logger = maxim.logger()
 ```
 
-### Explanation:
-- Imports all required libraries for real-time audio, AI agent orchestration, logging, and web search.
+- Imports all required libraries for real-time audio, multi-agent orchestration, and observability.
 - Loads environment variables and configures logging for debugging and traceability.
-- Initializes the Maxim logger and retrieves the Tavily API key for web search functionality.
+- Initializes the Maxim logger.
 
-### 2. Maxim Event Instrumentation
+### 2. Maxim Instrumentation
 
-```python {11}
-def on_event(event: str, data: dict):
-    if event == "maxim.trace.started":
-        trace_id = data["trace_id"]
-        trace = data["trace"]
-        logging.debug(f"Trace started - ID: {trace_id}", extra={"trace": trace})
-    elif event == "maxim.trace.ended":
-        trace_id = data["trace_id"]
-        trace = data["trace"]
-        logging.debug(f"Trace ended - ID: {trace_id}", extra={"trace": trace})
-
-instrument_livekit(logger, on_event)
-
+```python {4}
+instrument_livekit(maxim_logger)
 ```
 
-### Explanation:
-Defines a callback to log when Maxim traces start and end, providing visibility into the agent's lifecycle.
-instrument_livekit integrates Maxim with LiveKit, ensuring all relevant events are captured for observability.
+The `instrument_livekit` function integrates Maxim with LiveKit, automatically capturing all agent interactions, transfers, and tool calls for comprehensive observability.
 
----
 
-### 3. InterviewAgent Class
+### 3. UserData Class for Session State
 
 ```python
-class InterviewAgent(Agent):
-    def __init__(self, jd: str) -> None:
-        super().__init__(instructions=f"You are a professional interviewer conducting a Mock Interview with the job description: {jd}\\nAsk relevant interview questions, listen to answers, and follow up as a real interviewer would.")
+@dataclass
+class UserData:
+    """Class to store user data and agents during a call."""
 
-    @function_tool()
-    async def web_search(self, query: str) -> str:
-        if not TAVILY_API_KEY:
-            return "Tavily API key is not set. Please set the TAVILY_API_KEY environment variable."
-        tavily_client = TavilyClient(api_key=TAVILY_API_KEY)
-        try:
-            response = tavily_client.search(query=query, search_depth="basic")
-            if response.get('answer'):
-                return response['answer']
-            return str(response.get('results', 'No results found.'))
-        except Exception as e:
-            return f"An error occurred during web search: {e}"
+    personas: dict[str, Agent] = field(default_factory=dict)
+    prev_agent: Optional[Agent] = None
+    ctx: Optional[JobContext] = None
 
-```
-### Explanation:
-- Defines the main agent class, which is initialized with a Job Description (JD) and uses it to guide the interview.
-- The web_search method is exposed as a tool, allowing the agent to perform real-time web searches using Tavily.
-- Handles missing API keys and exceptions gracefully, returning informative error messages.
-- Focus on the System Instructions provided, you can modify it as per your requirements (incase you are building an agent for some other usecase) -
+    # Customer information
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    customer_id: Optional[str] = None
+    current_order: Optional[dict] = None
 
-```text
-You are a professional interviewer.
-The job description is: {jd}\\nAsk relevant interview questions,
-listen to answers, and follow up as a real interviewer would.
+    def is_identified(self) -> bool:
+        """Check if the customer is identified."""
+        return self.first_name is not None and self.last_name is not None
+
+    def summarize(self) -> str:
+        """Return a summary of the user data."""
+        if self.is_identified():
+            return f"Customer: {self.first_name} {self.last_name} (ID: {self.customer_id})"
+        return "Customer not yet identified."
 ```
 
-### 4. Entrypoint: Starting the Interview Session
+- Maintains session state across agent transfers including customer identity and current order.
+- The `is_identified()` method enables personalized interactions once the customer provides their name.
+- The `summarize()` method provides context to each agent about the current customer.
+
+### 4. BaseAgent Class with Context Preservation
 
 ```python
-async def entrypoint(ctx: agents.JobContext):
-    print("\\n🎤 Welcome to your AI Interviewer! Paste your Job Description below.\\n")
-    jd = input("Paste the Job Description (JD) and press Enter:\\n")
-    room_name = os.getenv("LIVEKIT_ROOM_NAME") or f"interview-room-{uuid.uuid4().hex}"
-    lkapi = livekit_api.LiveKitAPI(
-        url=os.getenv("LIVEKIT_URL"),
-        api_key=os.getenv("LIVEKIT_API_KEY"),
-        api_secret=os.getenv("LIVEKIT_API_SECRET"),
+class BaseAgent(Agent):
+    async def on_enter(self) -> None:
+        agent_name = self.__class__.__name__
+        logger.info(f"Entering {agent_name}")
+
+        userdata: UserData = self.session.userdata
+
+        # Create a personalized prompt based on customer identification
+        custom_instructions = self.instructions
+        if userdata.is_identified():
+            custom_instructions += (
+                f"\n\nYou are speaking with {userdata.first_name} {userdata.last_name}."
+            )
+
+        chat_ctx = self.chat_ctx.copy()
+
+        # Copy context from previous agent if it exists
+        if userdata.prev_agent:
+            items_copy = self._truncate_chat_ctx(
+                userdata.prev_agent.chat_ctx.items, keep_function_call=True
+            )
+            existing_ids = {item.id for item in chat_ctx.items}
+            items_copy = [item for item in items_copy if item.id not in existing_ids]
+            chat_ctx.items.extend(items_copy)
+
+        chat_ctx.add_message(
+            role="system", content=f"You are the {agent_name}. {userdata.summarize()}"
+        )
+        await self.update_chat_ctx(chat_ctx)
+        self.session.generate_reply()
+
+    async def _transfer_to_agent(self, name: str, context: RunContext_T) -> Agent:
+        """Transfer to another agent while preserving context."""
+        userdata = context.userdata
+        current_agent = context.session.current_agent
+        next_agent = userdata.personas[name]
+        userdata.prev_agent = current_agent
+        return next_agent
+```
+
+- The `on_enter()` method is called when an agent takes control of the conversation.
+- Automatically injects customer context and conversation history from the previous agent.
+- The `_transfer_to_agent()` method enables seamless handoffs between specialized agents.
+
+### 5. Triage Agent
+
+```python
+class TriageAgent(BaseAgent):
+    def __init__(self) -> None:
+        super().__init__(
+            instructions=load_prompt("triage_prompt.yaml"),
+            stt=deepgram.STT(),
+            llm=openai.LLM(model="gpt-4o-mini"),
+            tts=openai.TTS(),
+            vad=silero.VAD.load(),
+        )
+
+    @function_tool
+    async def identify_customer(self, first_name: str, last_name: str):
+        """Identify a customer by their first and last name."""
+        userdata: UserData = self.session.userdata
+        userdata.first_name = first_name
+        userdata.last_name = last_name
+        userdata.customer_id = db.get_or_create_customer(first_name, last_name)
+        return f"Thank you, {first_name}. I've found your account."
+
+    @function_tool
+    async def transfer_to_sales(self, context: RunContext_T) -> Agent:
+        userdata: UserData = self.session.userdata
+        if userdata.is_identified():
+            message = f"Thank you, {userdata.first_name}. I'll transfer you to our Sales team."
+        else:
+            message = "I'll transfer you to our Sales team."
+        await self.session.say(message)
+        return await self._transfer_to_agent("sales", context)
+
+    @function_tool
+    async def transfer_to_returns(self, context: RunContext_T) -> Agent:
+        userdata: UserData = self.session.userdata
+        if userdata.is_identified():
+            message = f"Thank you, {userdata.first_name}. I'll transfer you to our Returns department."
+        else:
+            message = "I'll transfer you to our Returns department."
+        await self.session.say(message)
+        return await self._transfer_to_agent("returns", context)
+```
+
+- Acts as the entry point for all customer interactions.
+- Identifies customers and routes them to Sales or Returns based on their needs.
+- Uses personalized messages when the customer has been identified.
+
+### 6. Sales Agent
+
+```python
+class SalesAgent(BaseAgent):
+    def __init__(self) -> None:
+        super().__init__(
+            instructions=load_prompt("sales_prompt.yaml"),
+            stt=deepgram.STT(),
+            llm=openai.LLM(model="gpt-4o-mini"),
+            tts=openai.TTS(),
+            vad=silero.VAD.load(),
+        )
+
+    @function_tool
+    async def start_order(self):
+        """Start a new order for the customer."""
+        userdata: UserData = self.session.userdata
+        if not userdata.is_identified():
+            return "Please identify the customer first."
+        userdata.current_order = {"items": []}
+        return "I've started a new order for you. What would you like to purchase?"
+
+    @function_tool
+    async def add_item_to_order(self, item_name: str, quantity: int, price: float):
+        """Add an item to the current order."""
+        userdata: UserData = self.session.userdata
+        if not userdata.current_order:
+            userdata.current_order = {"items": []}
+        item = {"name": item_name, "quantity": quantity, "price": price}
+        userdata.current_order["items"].append(item)
+        return f"Added {quantity}x {item_name} to your order."
+
+    @function_tool
+    async def complete_order(self):
+        """Complete the current order and save it to the database."""
+        userdata: UserData = self.session.userdata
+        if not userdata.current_order or not userdata.current_order.get("items"):
+            return "There are no items in the current order."
+        
+        total = sum(
+            item["price"] * item["quantity"] for item in userdata.current_order["items"]
+        )
+        userdata.current_order["total"] = total
+        order_id = db.add_order(userdata.customer_id, userdata.current_order)
+        
+        summary = f"Order #{order_id} has been completed. Total: ${total:.2f}"
+        userdata.current_order = None
+        return summary
+```
+
+- Handles the complete order lifecycle: start, add items, and complete.
+- Calculates order totals and persists orders to the customer database.
+- Validates that customers are identified before processing orders.
+
+### 7. Returns Agent
+
+```python
+class ReturnsAgent(BaseAgent):
+    def __init__(self) -> None:
+        super().__init__(
+            instructions=load_prompt("returns_prompt.yaml"),
+            stt=deepgram.STT(),
+            llm=openai.LLM(model="gpt-4o-mini"),
+            tts=openai.TTS(),
+            vad=silero.VAD.load(),
+        )
+
+    @function_tool
+    async def get_order_history(self):
+        """Get the order history for the current customer."""
+        userdata: UserData = self.session.userdata
+        if not userdata.is_identified():
+            return "Please identify the customer first."
+        return db.get_customer_order_history(userdata.first_name, userdata.last_name)
+
+    @function_tool
+    async def process_return(self, order_id: int, item_name: str, reason: str):
+        """Process a return for an item from a specific order."""
+        userdata: UserData = self.session.userdata
+        if not userdata.is_identified():
+            return "Please identify the customer first."
+        return f"Return processed for {item_name} from Order #{order_id}. Reason: {reason}. A refund will be issued within 3-5 business days."
+```
+
+- Retrieves customer order history for context-aware return processing.
+- Processes returns with order ID, item name, and reason tracking.
+- Can transfer back to Triage or Sales as needed.
+
+### 8. Entrypoint: Starting the Multi-Agent Session
+
+```python
+async def entrypoint(ctx: JobContext):
+    # Initialize user data with context
+    userdata = UserData(ctx=ctx)
+
+    # Create agent instances
+    triage_agent = TriageAgent()
+    sales_agent = SalesAgent()
+    returns_agent = ReturnsAgent()
+
+    # Register all agents in the userdata
+    userdata.personas.update(
+        {"triage": triage_agent, "sales": sales_agent, "returns": returns_agent}
     )
-    try:
-        req = CreateRoomRequest(
-            name=room_name,
-            empty_timeout=600,# keep the room alive 10m after empty
-            max_participants=2,# interviewer + candidate
-        )
-        room = await lkapi.room.create_room(req)
-        print(f"\\nRoom created! Join this link in your browser to start the interview: {os.getenv('LIVEKIT_URL')}/join/{room.name}\\n")
-        session = AgentSession(
-            llm=google.beta.realtime.RealtimeModel(model="gemini-2.0-flash-exp", voice="Puck"),
-        )
-        await session.start(room=room, agent=InterviewAgent(jd))
-        await ctx.connect()
-        await session.generate_reply(
-            instructions="Greet the candidate and start the interview."
-        )
-    finally:
-        await lkapi.aclose()
+
+    # Create session with userdata
+    session = AgentSession[UserData](userdata=userdata)
+
+    await session.start(
+        agent=triage_agent,  # Start with the Triage agent
+        room=ctx.room,
+    )
 ```
 
-### Explanation:
-- Prompts the user for a Job Description and creates a new LiveKit room for the interview session.
-- Initializes the agent session with the provided JD and configures the LLM and TTS voice.
-- Prints a join link for the user to access the interview room in their browser.
-- Ensures proper cleanup of resources after the session ends.
+- Initializes all three agents and registers them for cross-agent transfers.
+- Starts the session with the Triage agent as the entry point.
+- The `AgentSession` manages state across the entire conversation.
 
 ---
 
-### 5. Main Block
+## Supporting Files
+
+### database.py - Customer Database
 
 ```python
-if __name__ == "__main__":
-    opts = agents.WorkerOptions(entrypoint_fnc=entrypoint)
-    agents.cli.run_app(opts)
+import json
+from datetime import datetime
+from typing import Optional
+
+class CustomerDatabase:
+    def __init__(self, db_file: str = "customers.json"):
+        self.db_file = db_file
+        self._load_db()
+
+    def _load_db(self):
+        try:
+            with open(self.db_file, "r") as f:
+                self.data = json.load(f)
+        except FileNotFoundError:
+            self.data = {"customers": {}, "orders": []}
+            self._save_db()
+
+    def _save_db(self):
+        with open(self.db_file, "w") as f:
+            json.dump(self.data, f, indent=2)
+
+    def get_or_create_customer(self, first_name: str, last_name: str) -> str:
+        key = f"{first_name.lower()}_{last_name.lower()}"
+        if key not in self.data["customers"]:
+            self.data["customers"][key] = {
+                "id": key,
+                "first_name": first_name,
+                "last_name": last_name,
+                "created_at": datetime.now().isoformat(),
+                "orders": []
+            }
+            self._save_db()
+        return key
+
+    def add_order(self, customer_id: str, order: dict) -> int:
+        order_id = len(self.data["orders"]) + 1
+        order["id"] = order_id
+        order["customer_id"] = customer_id
+        order["created_at"] = datetime.now().isoformat()
+        self.data["orders"].append(order)
+        self.data["customers"][customer_id]["orders"].append(order_id)
+        self._save_db()
+        return order_id
+
+    def get_customer_order_history(self, first_name: str, last_name: str) -> str:
+        key = f"{first_name.lower()}_{last_name.lower()}"
+        if key not in self.data["customers"]:
+            return "No order history found."
+        
+        customer = self.data["customers"][key]
+        if not customer["orders"]:
+            return "No orders found for this customer."
+        
+        history = f"Order history for {first_name} {last_name}:\n"
+        for order_id in customer["orders"]:
+            order = next((o for o in self.data["orders"] if o["id"] == order_id), None)
+            if order:
+                history += f"\nOrder #{order_id} - Total: ${order.get('total', 0):.2f}\n"
+                for item in order.get("items", []):
+                    history += f"  - {item['quantity']}x {item['name']} (${item['price']} each)\n"
+        return history
 ```
 
-### Explanation:
-Entry point for the script. Configures the worker options and launches the agent using the provided entry point function.
+### utils.py - Prompt Loader
+
+```python
+import yaml
+
+def load_prompt(filename: str) -> str:
+    with open(filename, "r") as f:
+        data = yaml.safe_load(f)
+    return data.get("instructions", "")
+```
+
+### Prompt Files
+
+Create three YAML files for agent prompts:
+
+**triage_prompt.yaml**
+```yaml
+instructions: |
+  You are the Personal Shopper Triage agent. Your job is to determine if the customer needs 
+  help with making a purchase (Sales) or returning an item (Returns).
+  
+  Follow these guidelines:
+  - Greet the customer warmly and ask how you can help them today
+  - Ask for the customer's first and last name to identify them using identify_customer
+  - Listen carefully to determine if they want to make a purchase or return an item
+  - Transfer them to the appropriate department once you understand their needs
+  
+  Important: Always identify the customer before transferring them to another department.
+```
+
+**sales_prompt.yaml**
+```yaml
+instructions: |
+  You are the Sales agent for our personal shopping service. You help customers find and 
+  purchase products that meet their needs.
+  
+  Sales Policies:
+  - 30-day price match guarantee on all items
+  - Free shipping on orders over $50
+  - 10% discount for first-time customers (promo code: WELCOME10)
+  
+  Order Process:
+  1. Identify the customer using identify_customer
+  2. Start a new order using start_order
+  3. Add items using add_item_to_order (include item name, quantity, and price)
+  4. Complete the order using complete_order
+```
+
+**returns_prompt.yaml**
+```yaml
+instructions: |
+  You are the Returns agent for our personal shopping service. You help customers with 
+  returning items and processing refunds.
+  
+  Return Policies:
+  - 60-day return window for most items
+  - Items must be in original condition with tags attached
+  - Free return shipping for defective items
+  
+  Return Process:
+  1. Identify the customer using identify_customer
+  2. Retrieve their order history using get_order_history
+  3. Confirm which item they want to return
+  4. Process the return using process_return
+```
+
+---
 
 ## How to Use
-- Paste your JD: The agent will use it to generate relevant interview questions.
-- Room is created: A join link is printed, open it in your browser to join the interview room or you can also trigger the voice agent via the console as we are doing in the below video.
-- Interact with the AI interviewer:
-    - Your voice is transcribed (STT)
-    - Gemini LLM processes and generates responses
-- Monitor in Maxim:
-    - All prompts, responses, and events are logged for review and debugging
+
+1. **Start the Agent**: Run the script to launch the multi-agent system.
+2. **Connect via LiveKit**: Join the room using a LiveKit client or the console.
+3. **Interact with Triage**: The Triage agent will greet you and ask for your name.
+4. **Get Routed**: Based on your needs, you'll be transferred to Sales or Returns.
+5. **Complete Your Task**: Make purchases or process returns with the specialized agents.
+6. **Monitor in Maxim**: All agent interactions, transfers, and tool calls are logged.
 
 ## Run the Script
 
-```python
-python interview_agent.py
+```bash
+python personal_shopper.py console
 
 # or if you are using uv for dependency management
-
 uv sync
-uv run interview_agent.py console
-
+uv run personal_shopper.py console
 ```
 
 ## Observability with Maxim
-Every action, prompt, and web search is logged in your Maxim dashboard.
-Use Maxim to debug, audit, and improve your agent's performance.
+
+Every agent interaction, transfer, and tool call is automatically logged in your Maxim dashboard:
+- **Agent Transfers**: See when and why customers are transferred between agents
+- **Customer Identification**: Track customer lookups and account creation
+- **Order Processing**: Monitor order creation, item additions, and completions
+- **Return Processing**: Audit return requests and processing
+
+Use Maxim to debug conversation flows, analyze agent performance, and improve your multi-agent system.
+
 
 ## Troubleshooting
-- No audio or agent is silent
-  - Check your Google Cloud credentials
-  - Confirm browser and microphone permissions
-- Web search not working
-  - Ensure your TAVILY_API_KEY is set in .env
-- No Maxim traces
-  - Ensure your MAXIM_API_KEY is set in .env
 
-<MaximPlayer url="https://www.youtube.com/embed/zHzjisB900Q?si=8RMWJPM1DC7cfj8b" />
+- **Agent not responding**
+  - Check your OpenAI API key is set correctly
+  - Verify Deepgram API key for speech-to-text
+- **Transfers not working**
+  - Ensure all agents are registered in `userdata.personas`
+  - Check that agent names match exactly ("triage", "sales", "returns")
+- **No Maxim traces**
+  - Ensure your MAXIM_API_KEY is set in .env
+  - Verify `instrument_livekit(maxim_logger)` is called before agent creation
+- **Order not saving**
+  - Check that `database.py` has write permissions for `customers.json`
 
-## Complete Code: interview_agent.py
+## Complete Code: personal_shopper.py
 
-```python
+```python [expandable]
 import logging
-import os
-import uuid
-import dotenv
-from livekit import agents
-from livekit import api as livekit_api
-from livekit.agents import Agent, AgentSession, function_tool
-from livekit.api.room_service import CreateRoomRequest
-from livekit.plugins import google
+from dataclasses import dataclass, field
+from typing import Optional
+
+from database import CustomerDatabase
+from dotenv import load_dotenv
+from livekit.agents import JobContext, WorkerOptions, cli
+from livekit.agents.llm import function_tool
+from livekit.agents.voice import Agent, AgentSession, RunContext
+from livekit.plugins import deepgram, openai, silero
+from utils import load_prompt
 from maxim import Maxim
 from maxim.logger.livekit import instrument_livekit
-from tavily import TavilyClient
 
-dotenv.load_dotenv(override=True)
-logging.basicConfig(level=logging.DEBUG)
+load_dotenv()
 
-logger = Maxim().logger()
-TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
+maxim = Maxim()
+maxim_logger = maxim.logger()
+instrument_livekit(maxim_logger)
 
-def on_event(event: str, data: dict):
-    if event == "maxim.trace.started":
-        trace_id = data["trace_id"]
-        trace = data["trace"]
-        logging.debug(f"Trace started - ID: {trace_id}", extra={"trace": trace})
-    elif event == "maxim.trace.ended":
-        trace_id = data["trace_id"]
-        trace = data["trace"]
-        logging.debug(f"Trace ended - ID: {trace_id}", extra={"trace": trace})
 
-instrument_livekit(logger, on_event)
+# Initialize the customer database
+db = CustomerDatabase()
 
-class InterviewAgent(Agent):
-    def __init__(self, jd: str) -> None:
-        super().__init__(instructions=f"You are a professional interviewer. The job description is: {jd}\\nAsk relevant interview questions, listen to answers, and follow up as a real interviewer would.")
 
-    @function_tool()
-    async def web_search(self, query: str) -> str:
-        if not TAVILY_API_KEY:
-            return "Tavily API key is not set. Please set the TAVILY_API_KEY environment variable."
-        tavily_client = TavilyClient(api_key=TAVILY_API_KEY)
-        try:
-            response = tavily_client.search(query=query, search_depth="basic")
-            if response.get('answer'):
-                return response['answer']
-            return str(response.get('results', 'No results found.'))
-        except Exception as e:
-            return f"An error occurred during web search: {e}"
+@dataclass
+class UserData:
+    """Class to store user data and agents during a call."""
 
-async def entrypoint(ctx: agents.JobContext):
-    print("\\n🎤 Welcome to your AI Interviewer! Paste your Job Description below.\\n")
-    jd = input("Paste the Job Description (JD) and press Enter:\\n")
-    room_name = os.getenv("LIVEKIT_ROOM_NAME") or f"interview-room-{uuid.uuid4().hex}"
-    lkapi = livekit_api.LiveKitAPI(
-        url=os.getenv("LIVEKIT_URL"),
-        api_key=os.getenv("LIVEKIT_API_KEY"),
-        api_secret=os.getenv("LIVEKIT_API_SECRET"),
+    personas: dict[str, Agent] = field(default_factory=dict)
+    prev_agent: Optional[Agent] = None
+    ctx: Optional[JobContext] = None
+
+    # Customer information
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    customer_id: Optional[str] = None
+    current_order: Optional[dict] = None
+
+    def is_identified(self) -> bool:
+        """Check if the customer is identified."""
+        return self.first_name is not None and self.last_name is not None
+
+    def reset(self) -> None:
+        """Reset customer information."""
+        self.first_name = None
+        self.last_name = None
+        self.customer_id = None
+        self.current_order = None
+
+    def summarize(self) -> str:
+        """Return a summary of the user data."""
+        if self.is_identified():
+            return (
+                f"Customer: {self.first_name} {self.last_name} (ID: {self.customer_id})"
+            )
+        return "Customer not yet identified."
+
+
+RunContext_T = RunContext[UserData]
+
+
+class BaseAgent(Agent):
+    async def on_enter(self) -> None:
+        agent_name = self.__class__.__name__
+
+        userdata: UserData = self.session.userdata
+        if userdata.ctx and userdata.ctx.room:
+            await userdata.ctx.room.local_participant.set_attributes(
+                {"agent": agent_name}
+            )
+
+        # Create a personalized prompt based on customer identification
+        custom_instructions = self.instructions
+        if userdata.is_identified():
+            custom_instructions += (
+                f"\n\nYou are speaking with {userdata.first_name} {userdata.last_name}."
+            )
+
+        chat_ctx = self.chat_ctx.copy()
+
+        # Copy context from previous agent if it exists
+        if userdata.prev_agent:
+            items_copy = self._truncate_chat_ctx(
+                userdata.prev_agent.chat_ctx.items, keep_function_call=True
+            )
+            existing_ids = {item.id for item in chat_ctx.items}
+            items_copy = [item for item in items_copy if item.id not in existing_ids]
+            chat_ctx.items.extend(items_copy)
+
+        chat_ctx.add_message(
+            role="system", content=f"You are the {agent_name}. {userdata.summarize()}"
+        )
+        await self.update_chat_ctx(chat_ctx)
+        self.session.generate_reply()
+
+    def _truncate_chat_ctx(
+        self,
+        items: list,
+        keep_last_n_messages: int = 6,
+        keep_system_message: bool = False,
+        keep_function_call: bool = False,
+    ) -> list:
+        """Truncate the chat context to keep the last n messages."""
+
+        def _valid_item(item) -> bool:
+            if (
+                not keep_system_message
+                and item.type == "message"
+                and item.role == "system"
+            ):
+                return False
+            if not keep_function_call and item.type in [
+                "function_call",
+                "function_call_output",
+            ]:
+                return False
+            return True
+
+        new_items = []
+        for item in reversed(items):
+            if _valid_item(item):
+                new_items.append(item)
+            if len(new_items) >= keep_last_n_messages:
+                break
+        new_items = new_items[::-1]
+
+        while new_items and new_items[0].type in [
+            "function_call",
+            "function_call_output",
+        ]:
+            new_items.pop(0)
+
+        return new_items
+
+    async def _transfer_to_agent(self, name: str, context: RunContext_T) -> Agent:
+        """Transfer to another agent while preserving context."""
+        userdata = context.userdata
+        current_agent = context.session.current_agent
+        next_agent = userdata.personas[name]
+        userdata.prev_agent = current_agent
+
+        return next_agent
+
+
+class TriageAgent(BaseAgent):
+    def __init__(self) -> None:
+        super().__init__(
+            instructions=load_prompt("triage_prompt.yaml"),
+            stt=deepgram.STT(),
+            llm=openai.LLM(model="gpt-4o-mini"),
+            tts=openai.TTS(),
+            vad=silero.VAD.load(),
+        )
+
+    @function_tool
+    async def identify_customer(self, first_name: str, last_name: str):
+        """
+        Identify a customer by their first and last name.
+
+        Args:
+            first_name: The customer's first name
+            last_name: The customer's last name
+        """
+        userdata: UserData = self.session.userdata
+        userdata.first_name = first_name
+        userdata.last_name = last_name
+        userdata.customer_id = db.get_or_create_customer(first_name, last_name)
+
+        return f"Thank you, {first_name}. I've found your account."
+
+    @function_tool
+    async def transfer_to_sales(self, context: RunContext_T) -> Agent:
+        # Create a personalized message if customer is identified
+        userdata: UserData = self.session.userdata
+        if userdata.is_identified():
+            message = f"Thank you, {userdata.first_name}. I'll transfer you to our Sales team who can help you find the perfect product."
+        else:
+            message = "I'll transfer you to our Sales team who can help you find the perfect product."
+
+        await self.session.say(message)
+        return await self._transfer_to_agent("sales", context)
+
+    @function_tool
+    async def transfer_to_returns(self, context: RunContext_T) -> Agent:
+        # Create a personalized message if customer is identified
+        userdata: UserData = self.session.userdata
+        if userdata.is_identified():
+            message = f"Thank you, {userdata.first_name}. I'll transfer you to our Returns department who can assist with your return or exchange."
+        else:
+            message = "I'll transfer you to our Returns department who can assist with your return or exchange."
+
+        await self.session.say(message)
+        return await self._transfer_to_agent("returns", context)
+
+
+class SalesAgent(BaseAgent):
+    def __init__(self) -> None:
+        super().__init__(
+            instructions=load_prompt("sales_prompt.yaml"),
+            stt=deepgram.STT(),
+            llm=openai.LLM(model="gpt-4o-mini"),
+            tts=openai.TTS(),
+            vad=silero.VAD.load(),
+        )
+
+    @function_tool
+    async def identify_customer(self, first_name: str, last_name: str):
+        """
+        Identify a customer by their first and last name.
+
+        Args:
+            first_name: The customer's first name
+            last_name: The customer's last name
+        """
+        userdata: UserData = self.session.userdata
+        userdata.first_name = first_name
+        userdata.last_name = last_name
+        userdata.customer_id = db.get_or_create_customer(first_name, last_name)
+
+        return f"Thank you, {first_name}. I've found your account."
+
+    @function_tool
+    async def start_order(self):
+        """Start a new order for the customer."""
+        userdata: UserData = self.session.userdata
+        if not userdata.is_identified():
+            return "Please identify the customer first using the identify_customer function."
+
+        userdata.current_order = {"items": []}
+
+        return "I've started a new order for you. What would you like to purchase?"
+
+    @function_tool
+    async def add_item_to_order(self, item_name: str, quantity: int, price: float):
+        """
+        Add an item to the current order.
+
+        Args:
+            item_name: The name of the item
+            quantity: The quantity to purchase
+            price: The price per item
+        """
+        userdata: UserData = self.session.userdata
+        if not userdata.is_identified():
+            return "Please identify the customer first using the identify_customer function."
+
+        if not userdata.current_order:
+            userdata.current_order = {"items": []}
+
+        item = {"name": item_name, "quantity": quantity, "price": price}
+
+        userdata.current_order["items"].append(item)
+
+        return f"Added {quantity}x {item_name} to your order."
+
+    @function_tool
+    async def complete_order(self):
+        """Complete the current order and save it to the database."""
+        userdata: UserData = self.session.userdata
+        if not userdata.is_identified():
+            return "Please identify the customer first using the identify_customer function."
+
+        if not userdata.current_order or not userdata.current_order.get("items"):
+            return "There are no items in the current order."
+
+        # Calculate order total
+        total = sum(
+            item["price"] * item["quantity"] for item in userdata.current_order["items"]
+        )
+        userdata.current_order["total"] = total
+
+        # Save order to database
+        order_id = db.add_order(userdata.customer_id, userdata.current_order)
+
+        # Create a summary of the order
+        summary = f"Order #{order_id} has been completed. Total: ${total:.2f}\n"
+        summary += "Items:\n"
+        for item in userdata.current_order["items"]:
+            summary += f"- {item['quantity']}x {item['name']} (${item['price']} each)\n"
+
+        # Reset the current order
+        userdata.current_order = None
+
+        return summary
+
+    @function_tool
+    async def transfer_to_triage(self, context: RunContext_T) -> Agent:
+        # Create a personalized message if customer is identified
+        userdata: UserData = self.session.userdata
+        if userdata.is_identified():
+            message = f"Thank you, {userdata.first_name}. I'll transfer you back to our Triage agent who can better direct your inquiry."
+        else:
+            message = "I'll transfer you back to our Triage agent who can better direct your inquiry."
+
+        await self.session.say(message)
+        return await self._transfer_to_agent("triage", context)
+
+    @function_tool
+    async def transfer_to_returns(self, context: RunContext_T) -> Agent:
+        # Create a personalized message if customer is identified
+        userdata: UserData = self.session.userdata
+        if userdata.is_identified():
+            message = f"Thank you, {userdata.first_name}. I'll transfer you to our Returns department for assistance with your return request."
+        else:
+            message = "I'll transfer you to our Returns department for assistance with your return request."
+
+        await self.session.say(message)
+        return await self._transfer_to_agent("returns", context)
+
+
+class ReturnsAgent(BaseAgent):
+    def __init__(self) -> None:
+        super().__init__(
+            instructions=load_prompt("returns_prompt.yaml"),
+            stt=deepgram.STT(),
+            llm=openai.LLM(model="gpt-4o-mini"),
+            tts=openai.TTS(),
+            vad=silero.VAD.load(),
+        )
+
+    @function_tool
+    async def identify_customer(self, first_name: str, last_name: str):
+        """
+        Identify a customer by their first and last name.
+
+        Args:
+            first_name: The customer's first name
+            last_name: The customer's last name
+        """
+        userdata: UserData = self.session.userdata
+        userdata.first_name = first_name
+        userdata.last_name = last_name
+        userdata.customer_id = db.get_or_create_customer(first_name, last_name)
+
+        return f"Thank you, {first_name}. I've found your account."
+
+    @function_tool
+    async def get_order_history(self):
+        """Get the order history for the current customer."""
+        userdata: UserData = self.session.userdata
+        if not userdata.is_identified():
+            return "Please identify the customer first using the identify_customer function."
+
+        order_history = db.get_customer_order_history(
+            userdata.first_name, userdata.last_name
+        )
+        return order_history
+
+    @function_tool
+    async def process_return(self, order_id: int, item_name: str, reason: str):
+        """
+        Process a return for an item from a specific order.
+
+        Args:
+            order_id: The ID of the order containing the item to return
+            item_name: The name of the item to return
+            reason: The reason for the return
+        """
+        userdata: UserData = self.session.userdata
+        if not userdata.is_identified():
+            return "Please identify the customer first using the identify_customer function."
+
+        # In a real system, we would update the order in the database
+        # For this example, we'll just return a confirmation message
+        return f"Return processed for {item_name} from Order #{order_id}. Reason: {reason}. A refund will be issued within 3-5 business days."
+
+    @function_tool
+    async def transfer_to_triage(self, context: RunContext_T) -> Agent:
+        # Create a personalized message if customer is identified
+        userdata: UserData = self.session.userdata
+        if userdata.is_identified():
+            message = f"Thank you, {userdata.first_name}. I'll transfer you back to our Triage agent who can better direct your inquiry."
+        else:
+            message = "I'll transfer you back to our Triage agent who can better direct your inquiry."
+
+        await self.session.say(message)
+        return await self._transfer_to_agent("triage", context)
+
+    @function_tool
+    async def transfer_to_sales(self, context: RunContext_T) -> Agent:
+        # Create a personalized message if customer is identified
+        userdata: UserData = self.session.userdata
+        if userdata.is_identified():
+            message = f"Thank you, {userdata.first_name}. I'll transfer you to our Sales team who can help you find new products."
+        else:
+            message = "I'll transfer you to our Sales team who can help you find new products."
+
+        await self.session.say(message)
+        return await self._transfer_to_agent("sales", context)
+
+
+async def entrypoint(ctx: JobContext):
+    # Initialize user data with context
+    userdata = UserData(ctx=ctx)
+
+    # Create agent instances
+    triage_agent = TriageAgent()
+    sales_agent = SalesAgent()
+    returns_agent = ReturnsAgent()
+
+    # Register all agents in the userdata
+    userdata.personas.update(
+        {"triage": triage_agent, "sales": sales_agent, "returns": returns_agent}
     )
-    try:
-        req = CreateRoomRequest(
-            name=room_name,
-            empty_timeout=600,# keep the room alive 10m after empty
-            max_participants=2,# interviewer + candidate
-        )
-        room = await lkapi.room.create_room(req)
-        print(f"\\nRoom created! Join this link in your browser to start the interview: {os.getenv('LIVEKIT_URL')}/join/{room.name}\\n")
-        session = AgentSession(
-            llm=google.beta.realtime.RealtimeModel(model="gemini-2.0-flash-exp", voice="Puck"),
-        )
-        await session.start(room=room, agent=InterviewAgent(jd))
-        await ctx.connect()
-        await session.generate_reply(
-            instructions="Greet the candidate and start the interview."
-        )
-    finally:
-        await lkapi.aclose()
+
+    # Create session with userdata
+    session = AgentSession[UserData](userdata=userdata)
+
+    await session.start(
+        agent=triage_agent,  # Start with the Triage agent
+        room=ctx.room,
+    )
+
 
 if __name__ == "__main__":
-    opts = agents.WorkerOptions(entrypoint_fnc=entrypoint)
-    agents.cli.run_app(opts)
-
+    cli.run_app(WorkerOptions(entrypoint_fnc=entrypoint))
 ```
+
+## What gets logged to Maxim
+
+- **Agent Transfers**: See when and why customers are transferred between agents
+- **Customer Identification**: Track customer lookups and account creation
+- **Order Processing**: Monitor order creation, item additions, and completions
+- **Return Processing**: Audit return requests and processing
+
 
 ## Resources
 
 <CardGroup cols="1">
-    <Card title="Cookbook Code" icon="github" href="https://github.com/maximhq/maxim-cookbooks/blob/main/python/observability-online-eval/livekit/livekit-openai.py">
-        Python Notebook for LiveKit & Maxim
+    <Card title="Cookbook Code" icon="github" href="https://github.com/maximhq/maxim-cookbooks/tree/main/python/observability-online-eval/livekit">
+        Python code for LiveKit Personal Shopper with Maxim
+    </Card>
+    <Card title="Livekit Cookbooks" icon="github" href="https://github.com/livekit-examples/python-agents-examples/tree/main/complex-agents/personal_shopper">
+    LiveKit Python Agents Examples
     </Card>
 </CardGroup>
+
