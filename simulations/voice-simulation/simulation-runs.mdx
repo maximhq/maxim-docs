@@ -1,0 +1,59 @@
+---
+title: Voice Simulation Runs
+description: Test your Voice Agent's interaction capabilities with realistic voice simulations across thousands of scenarios.
+---
+
+## Test voice agents at scale with simulated conversations
+
+Run tests with datasets containing multiple scenarios for your voice agent to evaluate performance across different situations.
+
+<Steps>
+
+<Step title="Create a dataset for testing">
+Configure your agent dataset template with:
+- **Agent scenarios**: Define specific situations for testing (e.g., "Update address", "Order an iPhone")
+- **Expected steps**: List the actions and responses you expect
+
+![Voice Agent Dataset](/images/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/evaluate-simulated-voice-agent/voice-agent-dataset.png)
+</Step>
+
+<Step title="Set up the test run">
+- Navigate to your voice agent and click **Test**
+- **Simulated session** mode will be pre-selected (voice agents can't be tested in single-turn mode)
+- Select your agent dataset from the dropdown
+- Choose relevant evaluators
+
+<Note>
+  Only built-in evaluators are currently supported for voice simulation runs. Custom evaluators will be available soon.
+</Note>
+
+![Configure simulation test run](/images/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/evaluate-simulated-voice-agent/trigger-voice-simulation-testrun.png)
+
+</Step>
+
+<Step title="Trigger the test run">
+Click **Trigger test run** to start. The system will call your voice agent and simulate conversations for each scenario.
+</Step>
+
+<Step title="Review results">
+Each session runs end-to-end for thorough evaluation:
+- View detailed results for every scenario
+- Text-based evaluators assess turn-by-turn call transcription
+- Audio-based evaluators analyze the call recording
+
+![Simulation test run result](/images/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/evaluate-simulated-voice-agent/voice-simulation-testrun-report.png)
+</Step>
+
+<Step title="Inspect individual entries">
+Click any entry to see detailed results for that specific scenario.
+
+By default, test runs evaluate these performance metrics from the recording audio file:
+- **Avg latency**: How long the agent took to respond
+- **Talk ratio**: Agent talk time compared to simulation agent talk time
+- **Avg pitch**: The average pitch of the agent's responses
+- **Words per minute**: The agent's speech rate
+
+![Simulation test run entry](/images/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/evaluate-simulated-voice-agent/single-entry-result.png)
+</Step>
+
+</Steps>

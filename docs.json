@@ -190,7 +190,10 @@
                             },
                             {
                                 "group": "Voice Simulation",
-                                "pages": ["simulations/voice-simulation/voice-simulation"]
+                                "pages": [
+                                    "simulations/voice-simulation/voice-simulation",
+                                    "simulations/voice-simulation/simulation-runs"
+                                ]
                             }
                         ]
                     },
