@@ -317,7 +317,8 @@
                         "group": "Dashboards",
                         "pages": [
                             "dashboards/test-runs-comparison-dashboard",
-                            "dashboards/custom-logs-dashboard"
+                            "dashboards/custom-logs-dashboard",
+                            "dashboards/live-trends-dashboard"
                         ]
                     },
                     {
