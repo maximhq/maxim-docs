@@ -1,134 +1,223 @@
 ---
 title: Set Up Human Annotation on Logs
-description: Set up human evaluation to assess log quality and improve your AI applications. Automated evaluators offer initial assessments, but human evaluation adds value with rich qualitative insights, in-depth comments, and improved rewritten outputs.
+description: Set up human evaluation to assess log quality and improve your AI applications. Automated evaluators provide baseline signals, while human evaluation adds qualitative insights, detailed feedback, and improved rewritten outputs.
 ---
 
-## The Need For Human Evaluation
+## Why Human Evaluation Matters
 
-While automated evaluators can provide baseline assessments, they may not capture nuanced human judgment, context, and emotional understanding. Human evaluation complements automated evaluation by providing qualitative feedback, detailed comments, and rewritten outputs that help refine your AI applications.
+Automated evaluators are useful for consistent, large-scale assessments, but they often miss nuance, such as context, intent, tone, and human judgment. Human evaluation complements automation by adding:
+
+- Qualitative feedback and detailed comments
+- Context-aware judgments
+- Rewritten outputs that demonstrate better responses
 
 Human evaluators configured for logs are the same evaluators used in test runs, ensuring consistency across your evaluation workflow.
 
+---
+
+## Ways to Annotate Logs
+
+Maxim supports two approaches to human annotation:
+
+### Internal annotation (in-app)
+
+Team members annotate logs directly within the Maxim UI after human evaluators are configured on a log repository.
+
+### External annotation (via email)
+
+Invite external raters (outside your organization) to annotate selected logs through an email-based workflow.
+
 <Note>
 
-**Before you start**
+### Before you start
 
-You need to have logging set up to capture interactions between your LLM and users before you can evaluate them. To do so, integrate the [Maxim SDK](/tracing/tracing-via-sdk/traces) into your application.
+- Ensure logging is set up to capture interactions between your LLM and users.  
+  Integrate the [Maxim SDK](/tracing/tracing-via-sdk/traces) into your application.
 
-Also, if you do not have a **Human Evaluator** created in your workspace, create one by navigating to the **Evaluators** (<Icon icon="square-check" className="w-5 h-5 inline" />) tab from the sidebar, as you'll need it to set up human evaluation.
+- Make sure at least one **Human Evaluator** exists in your workspace.  
+  Create one from the **Evaluators** (<Icon icon="square-check" className="w-5 h-5 inline" />) tab in the sidebar.
 
 </Note>
 
-## Setting Up Human Evaluation
+---
+
+## Setting Up Self Annotation
 
 <Steps>
 
-<Step title="Navigate to repository">
+<Step title="Navigate to the repository">
 
-Navigate to the log repository where you want to set up human evaluation.
+Open the log repository where you want to enable human evaluation.
 
 </Step>
 
-<Step title="Configure evaluation">
+<Step title="Open evaluation configuration">
 
-Click `Configure evaluation` in the top right corner of the page. This opens the evaluation configuration sheet.
+Click **Configure evaluation** in the top-right corner of the page. This opens the evaluation configuration sheet.
 
 </Step>
 
 <Step title="Select human evaluators">
 
-In the **Human evaluation** section, select the human evaluators you want to use:
+In the **Human evaluation** section, choose the evaluators you want to enable:
 
-- **Session evaluators**: For multi-turn interactions (sessions)
+- **Session evaluators** – For multi-turn interactions
+- **Trace evaluators** – For single-response evaluations
 
-- **Trace evaluators**: For single responses (traces)
-
-Choose evaluators from the dropdown. The same human evaluators used in test runs are available here.
+Select evaluators from the dropdown. The same evaluators used in test runs are available here.
 
 </Step>
 
-<Step title="Save configuration">
+<Step title="Save the configuration">
 
-Click `Save configurations` at the bottom of the sheet to save your human evaluation setup.
+Click **Save configurations** at the bottom of the sheet.
 
 </Step>
 
 </Steps>
 
-Once human evaluators are configured, columns for each evaluator are automatically added to the logs table. Team members can annotate logs directly from these columns.
+Once configured, the logs table automatically adds a column for each human evaluator. Team members can start annotating logs immediately.
 
-## Annotating logs
+---
 
-You can annotate logs from two places:
+## Annotating Logs
+
+You can annotate logs from two locations.
 
 ### From the logs table
 
-When human evaluators are configured, columns for each evaluator appear in the logs table:
+When human evaluators are enabled, corresponding columns appear in the logs table:
 
-1. Click on any cell in a human evaluator column
+1. Click a cell in a human evaluator column
+2. Provide a rating in the annotation form
+3. Optionally add comments or a rewritten output
+4. Click **Save**
 
-2. In the annotation form, provide a rating for that evaluator
-
-3. Optionally add comments or provide a rewritten output
-
-4. Click `Save` to submit your annotation
-
-The column shows the average score across all team members who have annotated that log.
+The column displays the average score across all annotations for that log.
 
 ![Screenshot of the logs table with human evaluator columns](/images/docs/online-evals/via-ui/set-up-human-annotation-on-logs/human-annotation-logs-table.png)
 
 ### From trace details
 
-1. Open any trace from the logs table
-
-2. Click the `Annotate` button in the top right corner of the trace details sheet
-
-3. In the annotation form, provide ratings for all configured human evaluators at once
-
-4. Optionally add comments for each evaluator or provide a rewritten output
-
+1. Open a trace from the logs table
+2. Click **Annotate** in the top-right corner of the trace details panel
+3. Provide ratings for all configured evaluators
+4. Optionally add comments or rewritten outputs
 5. Save your annotations
 
 ![Screenshot of the trace details sheet with the annotate button highlighted](/images/docs/online-evals/via-ui/set-up-human-annotation-on-logs/human-annotation-trace-details.png)
 
-### Using saved views for annotation queues
+---
 
-To make specific views based on filters for raters to annotate, you can use saved views. This allows you to create filtered queues of logs that need annotation. Raters can:
+## Using Saved Views as Annotation Queues
 
-1. Apply filters to narrow down logs that need annotation (e.g., unannotated logs, specific time ranges, or certain criteria)
+Saved views help organize annotation work by creating filtered queues of logs:
 
-2. Save these filtered views for quick access
+1. Apply filters (e.g. unannotated logs, time ranges, specific attributes)
+2. Save the filtered view
+3. Share the view with raters to work through annotations systematically
 
-3. Use saved views to work through annotation queues systematically
+This ensures evaluators focus on the most relevant logs and keeps annotation workflows organized.
 
-This helps organize annotation work and ensures raters focus on the most relevant logs for evaluation.
+---
 
-## Viewing annotations
+## Inviting External Raters
 
-Annotations can be viewed in two places:
+<Steps>
+
+<Step title="Navigate to the repository">
+
+Open the log repository where you want to trigger external human evaluation.
+
+</Step>
+
+<Step title="Select traces or sessions">
+
+Select one or more traces or sessions from the table, then use the floating action panel to click **Add evaluators**.
+
+Tips:
+- Select individual logs using row checkboxes
+- Use the top checkbox to select all logs within the current filters and time range
+
+![Screenshot of the select traces for annotation](/images/docs/online-evals/via-ui/set-up-human-annotation-on-logs/external/select-traces-for-annotation.png)
+
+</Step>
+
+<Step title="Choose evaluators">
+
+Select one or more **Human Evaluators** from the dropdown.
+
+Optionally, include other evaluators if you want to retroactively evaluate existing logs.
+
+![Screenshot of the add evaluators button](/images/docs/online-evals/via-ui/set-up-human-annotation-on-logs/external/add-evaluators-button.png)
+
+</Step>
+
+<Step title="Invite external raters via email">
+
+Click **Trigger** to open the **Human Evaluation** dialog.
+
+In the dialog:
+- Enter external rater email addresses
+- Add instructions for raters
+- Choose what data they can access
+
+Visibility options:
+- **Only trace-level data** (input, output, tags, metadata)
+- **Entire trace tree**, including nested steps
+
+Click **Add evaluators** to send invitations.
+
+![Screenshot of the human evaluation dialog](/images/docs/online-evals/via-ui/set-up-human-annotation-on-logs/external/human-evaluation-dialog.png)
+
+</Step>
+
+<Step title="Start annotation">
+
+Invited external raters receive an email with a link to the annotation dashboard.
+
+![Screenshot of the email with the link to the annotation dashboard](/images/docs/online-evals/via-ui/set-up-human-annotation-on-logs/external/email-with-link.png)
+
+</Step>
+
+<Step title="Annotation dashboard">
+
+External raters use the dashboard to review data and submit annotations.
+
+![Screenshot of the annotation dashboard](/images/docs/online-evals/via-ui/set-up-human-annotation-on-logs/external/annotation-dashboard.png)
+
+</Step>
+
+</Steps>
+
+---
+
+## Viewing Annotations
+
+Annotations are visible in two places.
 
 ### Logs table
 
-Human evaluator scores are displayed as columns in the logs table. The scores shown are the average across all team members who have annotated that log. Click on any score cell to add or edit your annotation.
+- Human evaluator scores appear as columns
+- Scores are averaged across all annotators
+- Click any cell to add or edit an annotation
+
+Internal and external annotations are treated identically; the only difference is the annotation source.
 
 ### Trace details (Evaluation tab)
 
-When you open a trace, the `Evaluation` tab shows:
+The **Evaluation** tab shows:
+- **Average scores** per evaluator
+- **Individual annotations**, including scores, comments, and rewritten outputs
+- **Pass/fail status**, based on evaluator criteria
 
-- **Average scores**: Aggregated scores for each human evaluator
+---
 
-- **Individual annotations**: Breakdown of scores, comments, and rewritten outputs from each team member
+## Understanding Annotation Scores
 
-- **Pass/fail status**: Whether the log passed or failed based on evaluator criteria
+- **Average scores** – Mean score across all annotators for a log
+- **Individual breakdown** – View each annotator’s scores, comments, and rewrites
+- **Pass/fail evaluation** – Determined by evaluator configuration
+- **Rewritten outputs** – Multiple rewritten versions may exist and are all preserved
 
-## Understanding annotation scores
-
-- **Average scores**: When multiple team members annotate the same log, the average score is shown in the table columns
-
-- **Individual breakdown**: Click on any annotation to see individual scores, comments, and rewritten outputs from each annotator
-
-- **Pass/fail**: Scores are evaluated against pass/fail criteria defined in the evaluator configuration
-
-- **Rewritten outputs**: Multiple team members can provide rewritten outputs; all versions are visible in the trace details view
-
-Human annotation helps improve your AI applications by providing qualitative feedback that automated systems cannot capture, enabling continuous refinement based on real-world usage.
+Human annotation provides insights that automated systems cannot capture, enabling continuous improvement of your AI applications based on real-world usage.
