@@ -22,6 +22,145 @@ description: Sessions act as a history by saving your prompt's complete state as
 <Note>
 Save sessions quickly using Cmd+S ( Mac) or Ctrl+S (Windows/Linux).
 </Note>
+---
+## Resolve prompt session conflicts
+
+<Note>
+This feature is currently in beta. Please reach out to us on <a href="mailto:contact@getmaxim.ai">contact@getmaxim.ai</a> if you'd like to try it out.
+</Note>
+
+The conflict resolution merge feature helps you resolve conflicts when working on prompt sessions with your team. When someone else makes changes to a prompt session while you're editing it, Maxim automatically detects conflicts and guides you through resolving them.
+
+- **Messages**: Content and attachments in conversation messages
+- **Variables**: Prompt variables and their bindings
+- **Model**: Selected model and provider
+- **Tools**: Attached tools and agent mode settings
+- **Configuration Parameters**: Model parameters like temperature, max tokens, etc.
+- **Response Format**: Structured output settings
+
+## When Conflicts Are Detected
+
+Conflicts are automatically detected when:
+
+1. You're editing a prompt session
+2. Another user makes changes to the same prompt session
+3. The sessions have conflicting changes that can't be automatically merged
+
+## Understanding the Merge Interface
+
+The merge interface shows conflicts in a unified view with clear visual indicators:
+
+- **Your changes** (Current): Shown in pink/magenta - these are your current edits
+- **Incoming changes**: Shown in green - these are from the latest session's changes
+- **Conflict badges**: Show how many unresolved conflicts remain in each section
+
+## Navigate to Conflict Resolution Icon
+
+When conflicts are detected, you'll see a notification in the header, next to the title of the prompt. Click on the notification and then click on the "Resolve conflicts" button.
+
+![Two way merge dialog](/images/docs/library/two-way-merge/two-way-merge-dialog.png)
+
+## Review Conflicts by Section
+
+The merge interface organizes conflicts into clear sections. Review each section to understand what has changed:
+
+#### Messages Section
+
+Each message in your conversation is compared. Conflicts can occur in:
+- **Message content**: Different text in the same message position
+- **Attachments**: Different files attached to messages
+
+![Messages conflict](/images/docs/library/two-way-merge/messages-conflict.png)
+
+#### Variables Section
+
+Variables are compared by their keys. You'll see:
+- Variables that exist in both sessions with different values
+- Variables that only exist in your session
+- Variables that only exist in the incoming session
+
+![Variables conflict](/images/docs/library/two-way-merge/variables-conflict.png)
+
+#### Model Section
+
+If different models or providers are selected, you'll see a conflict here.
+
+![Provider conflict](/images/docs/library/two-way-merge/provider-conflict.png)
+
+#### Tools Section
+
+Conflicts in tools include:
+- **Tools attached**: Different sets of tools
+- **Agent mode**: Enabled/disabled state differences
+- **Max tool calls**: Different limits set
+
+![Tools conflict](/images/docs/library/two-way-merge/tools-conflict.png)
+
+#### Configuration Parameters
+
+Model parameters like temperature, max tokens, top_p, etc. are compared individually.
+
+![Model parameters conflict](/images/docs/library/two-way-merge/model-configuration-params-conflict.png)
+
+### Resolve Individual Conflicts
+
+For each conflict, you have two options, along with the option to accept both where applicable:
+
+**Accept Current (Your Changes)**
+Keep your version of the change. Click the "Accept current" button.
+
+**Accept Incoming (Latest Session)**
+Use the version from the latest session. Click the "Accept incoming" button.
+
+**Accept Both (When Available)**
+For some conflicts (like tools or attachments), you can accept both versions. This combines elements from both sides. Click the "Accept both" button.
+
+![Accepted current conflict](/images/docs/library/two-way-merge/accepted-current-conflict.png)
+
+### Use Bulk Actions (Optional)
+
+If you want to accept all changes from one side, use the bulk action buttons:
+
+- **Accept all current**: Resolves all conflicts in favor of your changes
+- **Accept all incoming**: Resolves all conflicts in favor of the latest session
+
+![Accepted all current changes](/images/docs/library/two-way-merge/accepted-all-current-changes.png)
+
+<Note>
+After using a bulk action, you can still adjust individual conflicts. Click **"Undo"** next to the bulk action notification to revert the bulk action and resolve conflicts individually.
+</Note>
+
+### Review Resolution Status
+
+As you resolve conflicts, watch the conflict count in each card. Each card shows how many conflicts remain.
+
+![Unresolved conflicts](/images/docs/library/two-way-merge/unresolved-conflicts.png)
+
+### Complete the Merge
+
+Once all conflicts are resolved:
+
+1. Click on the "Merge changes" button to create the merged session
+2. You'll be redirected to the new merged session
+
+<Note>
+The merge creates a new session that combines your changes with the incoming changes based on your resolutions. Your original session and the incoming session remain unchanged. You can use the session drop down to navigate between sessions.
+</Note>
+
+## Show Unchanged Items
+
+By default, the merge interface only shows conflicts. To see all items (including those without conflicts), check the **"Show unchanged items"** checkbox.
+
+This is useful when you want to:
+- Verify that certain items are indeed unchanged
+- Get a complete view of the session comparison
+- Understand the full context of changes
+
+## Merge conflict detection on publishing a version of a prompt
+
+When you try to publish a new version of the prompt, Maxim will check for conflicts and if any are detected, you will be asked to resolve them before publishing the version.
+
+
 
 ## Next steps
 
