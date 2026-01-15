@@ -73,6 +73,51 @@ response_text = response.text
 print(response_text)
 ```
 
+## Maxim-specific Headers
+
+The Gemini instrumentation supports additional headers via the `http_options.headers` parameter within the `config` dictionary to enhance trace metadata and organization. You can use the following headers:
+
+- **`x-maxim-trace-id`**: Associate LLM calls with a specific trace ID (UUID string). All calls with the same trace ID will be grouped together in a single trace.
+- **`x-maxim-trace-tags`**: Add custom tags to traces as a JSON string containing key-value pairs. Useful for filtering and organizing traces.
+- **`x-maxim-generation-name`**: Assign a custom name to a specific generation/LLM call within a trace (string).
+- **`x-maxim-session-id`**: Associate traces with a specific session ID (string).
+
+### Example: Using HTTP Headers
+
+```python
+import json
+from uuid import uuid4
+from google import genai
+from maxim.logger.gemini import MaximGeminiClient
+
+client = MaximGeminiClient(
+    client=genai.Client(api_key=GEMINI_API_KEY), 
+    logger=logger
+)
+
+trace_id = str(uuid4())
+
+response = client.models.generate_content(
+    model="gemini-2.0-flash",
+    contents="Explain how AI works",
+    config={
+        "system_instruction": "You are a helpful assistant",
+        "temperature": 0.8,
+        "http_options": {
+            "headers": {
+                "x-maxim-trace-tags": json.dumps({
+                    "environment": "production",
+                    "feature": "ai-explanation",
+                    "version": "1.0"
+                }),
+                "x-maxim-trace-id": trace_id,
+                "x-maxim-generation-name": "ai-explanation-generation"
+            }
+        }
+    }
+)
+```
+
 ## Advanced Use-Cases
 
 ### Function Calling Support
@@ -285,7 +330,5 @@ trace2.end()
 ## Resources
 
 <CardGroup cols={2}>
-  <Card title="Google Gemini integration Notebook (Colab)" icon="google" href="https://colab.research.google.com/drive/1qtjxlIIlOInQcRhXRP5eJvrWenXmJfSS?usp=sharing">
-    
-  </Card>
+  <Card title="Google Gemini integration Notebook (Colab)" icon="google" href="https://colab.research.google.com/drive/1qtjxlIIlOInQcRhXRP5eJvrWenXmJfSS?usp=sharing" />
 </CardGroup>

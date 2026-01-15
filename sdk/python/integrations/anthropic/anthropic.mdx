@@ -62,6 +62,43 @@ response_text = response.content[0].text
 print(response_text)
 ```
 
+## Maxim-specific Headers
+
+The Anthropic instrumentation supports additional headers via the `extra_headers` parameter to enhance trace metadata and organization. You can use the following headers:
+
+- **`x-maxim-trace-id`**: Associate LLM calls with a specific trace ID (UUID string). All calls with the same trace ID will be grouped together in a single trace.
+- **`x-maxim-trace-tags`**: Add custom tags to traces as a JSON string containing key-value pairs. Useful for filtering and organizing traces.
+- **`x-maxim-generation-name`**: Assign a custom name to a specific generation/LLM call within a trace (string).
+- **`x-maxim-session-id`**: Associate traces with a specific session ID (string).
+
+### Example: Using Extra Headers
+
+```python
+import json
+from uuid import uuid4
+from anthropic import Anthropic
+from maxim.logger.anthropic import MaximAnthropicClient
+
+client = MaximAnthropicClient(client=Anthropic(api_key=ANTHROPIC_API_KEY), logger=logger)
+
+trace_id = str(uuid4())
+
+response = client.messages.create(
+    messages=[{"role": "user", "content": "Explain how AI works"}],
+    model="claude-opus-4-5-20251101",
+    max_tokens=1000,
+    extra_headers={
+        "x-maxim-trace-tags": json.dumps({
+            "environment": "production",
+            "feature": "ai-explanation",
+            "version": "1.0"
+        }),
+        "x-maxim-trace-id": trace_id,
+        "x-maxim-generation-name": "ai-explanation-generation"
+    }
+)
+```
+
 ## Advanced Use Case: Streaming Support
 
 ### Initialize Maxim SDK and Anthropic Client
@@ -248,11 +285,7 @@ response3 = client.messages.create(
 ## Resources
 
 <CardGroup cols={2}>
-  <Card title="Anthropic integration cookbook (GitHub)" icon="github" href="https://github.com/maximhq/maxim-cookbooks/blob/main/python/observability-online-eval/anthropic/basic.ipynb">
-    
-  </Card>
+  <Card title="Anthropic integration cookbook (GitHub)" icon="github" href="https://github.com/maximhq/maxim-cookbooks/blob/main/python/observability-online-eval/anthropic/basic.ipynb" />
 
-   <Card title="Anthropic + Maxim integration Notebook (Colab)" icon="google" href="https://colab.research.google.com/drive/1Urk3XvEA6-K4yZyKC9oUb94KQUGcvAYM?usp=sharing">
-    
-  </Card>
+   <Card title="Anthropic + Maxim integration Notebook (Colab)" icon="google" href="https://colab.research.google.com/drive/1Urk3XvEA6-K4yZyKC9oUb94KQUGcvAYM?usp=sharing" />
 </CardGroup>
