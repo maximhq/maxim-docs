@@ -1,0 +1,41 @@
+---
+title: Prompt Retrieval Testing
+description: Retrieval quality directly impacts the quality of output from your AI application. While testing prompts, Maxim allows you to connect your RAG pipeline via a simple API endpoint and evaluates the retrieved context for every run. Context specific evaluators for precision, recall and relevance make it easy to see where retrieval quality is low.
+---
+
+## Fetch retrieved context while running prompts
+
+To mimic the real output that your users would see when sending a query, it is necessary to consider what context is being retrieved and fed to the LLM. To make this easier in Maxim's playground, we allow you to attach the Context Source and fetch the relevant chunks. Follow the steps given below to use context in the prompt playground.
+
+<Steps>
+	<Step title="Create a Context Source">
+		Create a new [Context Source](/library/context-sources#bring-your-rag-via-an-api-endpoint) in the Library of type API.
+
+        ![Create context source](/images/docs/evaluate/how-to/evaluate-prompts/rag-quality/create-context-source.png)
+	</Step>
+	<Step title="Configure your RAG endpoint">
+		Set up the API endpoint of your RAG pipeline that provides the response of the final chunks for any given input.
+
+        ![RAG API endpoint](/images/docs/evaluate/how-to/evaluate-prompts/rag-quality/api-endpoint.png)
+	</Step>
+	<Step title="Add context variable to your prompt">
+		Reference a variable `{{context}}` in  your prompt to provide instructions on using this dynamic data.
+
+		![Variable usage](/images/docs/evaluate/how-to/evaluate-prompts/rag-quality/prompt-with-context-variable.png)
+	</Step>
+    <Step title="Link the Context Source">
+        Connect the Context Source as the dynamic value of the context variable in the variables table.
+
+        ![Variable linking](/images/docs/evaluate/how-to/evaluate-prompts/rag-quality/dynamic-context-link.png)
+    </Step>
+    <Step title="Test with real-time retrieval">
+        Run your prompt to see the retrieved context that is fetched for that input.
+
+        ![Retrieved context](/images/docs/evaluate/how-to/evaluate-prompts/rag-quality/retrieved-context.png)
+    </Step>
+</Steps>
+
+# Next steps
+
+[Evaluate Retrieval Quality](/offline-evals/via-ui/prompts/retrieval) - check how to evaluate retrieval quality.
+
