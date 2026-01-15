@@ -9,7 +9,9 @@ Have a dataset ready directly for evaluation? Maxim lets you evaluate your AI's 
 
 <Steps>
 
-<Step title="Prepare Your Dataset">
+<Step>
+
+### Prepare Your Dataset
 
 Include these columns in your dataset:
 - Input queries or prompts
@@ -19,10 +21,15 @@ Include these columns in your dataset:
 ![Configure Test Run for Datasets](/images/docs/evaluate/how-to/evaluate-datasets/evaluation-dataset.png)
 </Step>
 
-<Step title="Configure the Test Run">
+<Step>
+
+### Configure the Test Run
 
 - On the Dataset page, click the "Test" button, on the top right corner
 - Your Dataset should already be pre-selected in the drop-down. Attach the [Evaluators](/library/evaluators/pre-built-evaluators/overview) and [Context Sources](/library/context-sources#bring-your-rag-via-an-api-endpoint) you want to use.
+Here's a polished, documentation-ready version of that line:
+* Map the evaluator's variables using values from the dropdown, based on your dataset columns. All column types are available for mapping. If a dataset column is of type `Variables`, you can reference it using
+  `dataset.columns["column_name"]`.
 - Click "Trigger Test Run"
 
 The Dataset appears pre-selected in the drop-down. You can attach the evaluators and context sources (if any) you want to use.
