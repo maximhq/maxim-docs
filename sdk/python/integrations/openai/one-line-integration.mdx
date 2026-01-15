@@ -58,15 +58,51 @@ response_text = response.choices[0].message.content
 print(response_text)
 ```
 
+## Maxim-specific Headers
+
+The OpenAI instrumentation supports additional headers via the `extra_headers` parameter to enhance trace metadata and organization. You can use the following headers:
+
+- **`x-maxim-trace-id`**: Associate LLM calls with a specific trace ID (UUID string). All calls with the same trace ID will be grouped together in a single trace.
+- **`x-maxim-trace-tags`**: Add custom tags to traces as a JSON string containing key-value pairs. Useful for filtering and organizing traces.
+- **`x-maxim-generation-name`**: Assign a custom name to a specific generation/LLM call within a trace (string).
+- **`x-maxim-session-id`**: Associate traces with a specific session ID (string).
+
+### Example: Using Extra Headers
+
+```python
+import json
+from uuid import uuid4
+from openai import OpenAI
+from maxim.logger.openai import MaximOpenAIClient
+
+client = MaximOpenAIClient(client=OpenAI(api_key=OPENAI_API_KEY), logger=logger)
+
+trace_id = str(uuid4())
+
+response = client.chat.completions.create(
+    messages=[{"role": "user", "content": "Explain how AI works"}],
+    model="gpt-4o",
+    max_tokens=1000,
+    extra_headers={
+        "x-maxim-trace-tags": json.dumps({
+            "environment": "production",
+            "feature": "ai-explanation",
+            "version": "1.0"
+        }),
+        "x-maxim-trace-id": trace_id,
+        "x-maxim-generation-name": "ai-explanation-generation"
+    }
+)
+
+response_text = response.choices[0].message.content
+print(response_text)
+```
+
 ![Demo](/images/docs/sdk/python/openai/py-openai-integration.gif)
 
 <CardGroup cols={2}>
-  <Card title="OpenAI one line integration cookbook" icon="github" href="https://github.com/maximhq/maxim-cookbooks/blob/main/python/observability-online-eval/openai/openai-sdk/one-line-integration.ipynb">
-    
-  </Card>
-  <Card title="OpenAI one line integration cookbook" icon="g" href="https://colab.research.google.com/github/maximhq/maxim-cookbooks/blob/main/python/observability-online-eval/openai/openai-sdk/one-line-integration.ipynb?authuser=1#scrollTo=0XWIM8tvNg6u">
-    
-  </Card>
+  <Card title="OpenAI one line integration cookbook (Github)" icon="github" href="https://github.com/maximhq/maxim-cookbooks/blob/main/python/observability-online-eval/openai/openai-sdk/one-line-integration.ipynb" />
+  <Card title="OpenAI one line integration Notebook (Colab)" icon="google" href="https://colab.research.google.com/github/maximhq/maxim-cookbooks/blob/main/python/observability-online-eval/openai/openai-sdk/one-line-integration.ipynb?authuser=1#scrollTo=0XWIM8tvNg6u" />
 </CardGroup>
 
 ## Using OpenAI Responses API
@@ -176,9 +212,20 @@ if __name__ == "__main__":
 
 You can pass optional headers via `extra_headers` to control trace metadata:
 
+- **`x-maxim-trace-id`**: Associate LLM calls with a specific trace ID (UUID string). All calls with the same trace ID will be grouped together in a single trace.
+- **`x-maxim-trace-tags`**: Add custom tags to traces as a JSON string containing key-value pairs. Useful for filtering and organizing traces.
+- **`x-maxim-generation-name`**: Assign a custom name to a specific generation/LLM call within a trace (string).
+- **`x-maxim-session-id`**: Associate traces with a specific session ID (string).
+
 ```python
+import json
+
 extra_headers = {
     "x-maxim-trace-id": "my-trace-id",
+    "x-maxim-trace-tags": json.dumps({
+        "environment": "production",
+        "feature": "homepage"
+    }),
     "x-maxim-generation-name": "homepage-summary",
     "x-maxim-session-id": "abc123",
 }
