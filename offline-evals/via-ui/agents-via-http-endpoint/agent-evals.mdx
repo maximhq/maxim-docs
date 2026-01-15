@@ -28,6 +28,25 @@ See how to map outputs for evaluation:
 
 </Warning>
 
+### Mapping Evaluator Variables
+
+You can map evaluator variables to any fields in your workflow’s response payload.
+
+Once your workflow is ready for testing, run the endpoint **at least once** to generate the response payload structure. After the response is available, you can:
+
+* Select the evaluators you want to use
+* Map each evaluator variable to:
+
+  * A value from the dropdown, **or**
+  * A field from your workflow response payload using the path
+    `run.response.<field_name>`
+
+This allows you to flexibly connect evaluator inputs to dynamic data returned by your workflow.
+
+[Learn more about mapping evaluator variables](/library/evaluators/variables-mapping#agent-variable-mapping)
+
+![Map evaluators variables](/images/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/agent-evals/http-runs-evaluators-mappings.png)
+
 ## Test Multi-Turn Conversations
 
 Real conversations create fascinating puzzles because:
