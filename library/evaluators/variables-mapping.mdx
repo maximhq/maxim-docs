@@ -1,12 +1,12 @@
 ---
 title: Map Variables to Evaluators
-description: Map variables from your prompts, workflows, or datasets to evaluator inputs using our flexible mapping system
+description: Map variables from your prompts, agents, or datasets to evaluator inputs using our flexible mapping system
 ---
 
 import { MaximPlayer } from '/snippets/maximPlayer.mdx';
 import { Plus } from 'lucide-react';
 
-Variable mapping defines where evaluators should access data from during evaluation. You can map variables from prompts, workflows, or datasets to any pre-built or custom evaluator.
+Variable mapping defines where evaluators should access data from during evaluation. You can map variables from prompts, agents, or datasets to any pre-built or custom evaluator.
 
 When you select an evaluator, Maxim automatically fills in variable mappings based on common patterns. You can modify these mappings to fit your specific needs. If a variable isn't found in Maxim's built-in options, it falls back to matching dataset column names.
 
@@ -24,7 +24,7 @@ Access any dataset column by its type or column name. These variables are availa
 
 ## Run Variables
 
-Access run-specific data using the `run.` prefix. Available options depend on your entity type (prompt or workflow).
+Access run-specific data using the `run.` prefix. Available options depend on your entity type (prompt or agent).
 
 ## Prompt Variable Mapping
 
@@ -58,18 +58,18 @@ Variable mapping works the same as single-turn prompts:
 - `run.retrieval` (`String`) - Retrieved context
 - `run.toolCalls` (`JSON`) - Tool calls with details
 
-## Workflow Variable Mapping
+## Agent Variable Mapping
 
-### Single-Turn Workflows
+### Single-Turn Agents
 
-Access workflow response data using the `response.` prefix:
+Access agent response data using the `response.` prefix:
 
 - `run.input` (`String`) - Input variable
 - `run.output` (`String`) - Output variable
 - `run.retrieval` (`String`) - Retrieved context
-- `run.response` (`JSON/any`) - Workflow response with nested field access via dropdown or dot notation for objects, index notation for arrays
+- `run.response` (`JSON/any`) - Agent response with nested field access via dropdown or dot notation for objects, index notation for arrays
 
-### Multi-Turn Workflows
+### Multi-Turn Agent
 
 For simulation runs, map variables from the conversation:
 
@@ -212,3 +212,11 @@ Access no-code agent run data:
 - `run.output` (`String`) - Output variable
 - `run.retrieval` (`String`) - Retrieved context based on your selection
 - `run.toolCalls` (`JSON`) - Tool calls with name, arguments, and results
+
+## Custom code variables mapping
+
+If your use case is'nt met by the above variables mapping options, you can write your own custom code to manupluate and access the variables in your evaluator.
+
+You can write your own custom code to manupluate and access the variables in your evaluator.
+
+![Custom code variables mapping](/images/custom-variables-mapping-via-code.gif)
