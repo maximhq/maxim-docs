@@ -1,0 +1,10 @@
+---
+title: "Logging refinements: Cost charts & data connectors"
+description: "27 November 2025"
+---
+
+We’ve introduced new charts to track cost and token usage for [<u>AI evaluations</u>](https://www.getmaxim.ai/blog/ai-agent-quality-evaluation/) in logs, providing visibility into spend at both the eval and repository levels. You can now visualize trends across evaluation scores, costs, and token consumption in a single view.
+
+![Logging Refinements Cost Charts & Data Connectors](</images/Logging refinements- Cost charts & data connectors.png>)
+
+Also, evaluation data is now included by default when sending logs via data connectors to [<u>OTel-compatible</u>](https://www.getmaxim.ai/docs/tracing/opentelemetry/forwarding-via-data-connectors) platforms such as Snowflake and New Relic. This includes evaluation scores and associated metadata, like reasoning, rewritten outputs, and human comments; ensuring downstream systems have a full evaluation context for analysis and reporting.
