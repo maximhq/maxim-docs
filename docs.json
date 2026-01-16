@@ -706,6 +706,13 @@
                         }
                     },
                     {
+                        "group": "Prompt Partials",
+                        "openapi": {
+                            "source": "public-apis/openapi/prompt-partials.json",
+                            "directory": "Prompt Partial"
+                        }
+                    },
+                    {
                         "group": "Datasets",
                         "openapi": {
                             "source": "public-apis/openapi/datasets.json",
