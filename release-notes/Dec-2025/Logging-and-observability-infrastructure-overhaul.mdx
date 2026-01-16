@@ -1,0 +1,10 @@
+---
+title: "Logging And Observability Infrastructure Overhaul"
+description: "10 Dec 2025"
+---
+
+We’ve made significant improvements to the core infrastructure behind logging and [observability](https://www.getmaxim.ai/products/agent-observability), removing major latency bottlenecks.
+
+With the new log ingestion system, ingestions are substantially faster and more stable, eliminating backlogs during high-throughput spikes, even when logs arrive out of order. [Logs](https://www.getmaxim.ai/docs/dashboards/custom-logs-dashboard#custom-logs-dashboards) are now available for analysis much sooner, including during peak traffic.
+
+We’ve also improved how the system scales and processes work under heavy load. Now, log processing scales automatically with demand and isolates workloads from one another. The result is more consistent processing times, better reliability at scale, and no impact from one customer’s heavy load on another – keeping your observability data timely and dependable as usage grows.
