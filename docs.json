@@ -193,6 +193,7 @@
                                 "group": "Text Simulation",
                                 "pages": [
                                     "simulations/text-simulation/overview",
+                                    "simulations/text-simulation/custom-simulation",
                                     "simulations/text-simulation/simulation-runs"
                                 ]
                             },
