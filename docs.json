@@ -842,7 +842,7 @@
                            {
                                 "group": "Dec 2025",
                                 "pages": [
-                        "release-notes/Dec-2025/Collaborative-conflict-resolution-for-prompt-changes",
+                        "release-notes/Dec-2025/Collaborative-conflict-resolution-for-Prompt-changes",
                         "release-notes/Dec-2025/External-human-annotation-of-logs",
                         "release-notes/Dec-2025/Logging-and-observability-infrastructure-overhaul",
                         "release-notes/Dec-2025/Run-evaluations-on-attachments"
@@ -853,7 +853,7 @@
                                 "pages": [
                         "release-notes/Nov-2025/Cost-charts--data-connectors",
                         "release-notes/Nov-2025/Filter-and-search-based-on-eval-reasoning",
-                        "release-notes/Nov-2025/One-line-integration-with-openai-realtime-and-elevenlabs",
+                        "release-notes/Nov-2025/One-line-integration-with-OpenAI-Realtime-and-Elevenlabs",
                         "release-notes/Nov-2025/Refined-human-evaluation-flow-on-test-runs-and-logs",
                         "release-notes/Nov-2025/data-curation-flows"
                     ]
