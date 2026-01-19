@@ -1,0 +1,98 @@
+---
+title: Custom Simulation
+description: Create simulations with your own custom prompt instructions
+---
+
+## What is Custom Simulation?
+
+Custom Simulation extends Maxim's standard simulation capabilities by giving you full control over the simulation agent's behavior. Instead of relying on default simulation prompts, you can provide your own custom instructions to define exactly how the simulation agent should interact with your target agent.
+
+This feature works with both **agent simulation** and **prompt simulation** modes, allowing you to create highly specific test scenarios tailored to your use case. Custom simulation can be used both for individual simulations and within [test runs](/simulations/text-simulation/simulation-runs) for batch evaluation across multiple scenarios.
+
+## Configuration Options
+
+### Model Selection
+
+Choose the model that powers your simulation agent. We recommend GPT-4.1 for its strong instruction-following capabilities and low latency. You can also configure parameters like temperature, max tokens, response format - the same options available in the [prompt playground](/offline-evals/via-ui/prompts/prompt-playground#configuring-parameters).
+
+### Simulation Prompt
+
+Write your custom instructions for the simulation agent. This prompt defines the simulation agent's behavior, goals, personality, and conversation strategy.
+
+![Custom simulation prompt configuration](/images/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/custom-simulation/custom-simulation-prompt-config.png)
+
+Your simulation prompt should include:
+- The persona or role the simulation agent should adopt
+- The goal or objective the simulation agent is trying to achieve
+- Any specific behaviors, questions, or edge cases to explore
+- Conditions for when the conversation should end
+
+<Note>
+Maxim automatically appends an `end_simulation` tool to your custom prompt. The simulation agent calls this tool when:
+- The goal defined in your prompt has been achieved
+- The conversation has reached a natural conclusion
+
+This is the default behavior. If you provide specific end conditions in your prompt, those instructions will be followed instead.
+</Note>
+
+#### Using Prompt Partials
+
+Type `{{` in your simulation prompt to insert reusable prompt snippets from your Library. Prompt partials help you maintain consistency across simulations and avoid duplicating common instructions.
+
+For example, you might create partials for:
+- Common customer personas
+- Standard conversation scenarios
+- Business rules and constraints
+
+Learn more about creating and managing partials in the [Prompt Partials](/library/prompt-partials) documentation.
+
+#### Defining Variables
+
+Add variables to your simulation prompt using `{{variable_name}}` syntax. Each variable can be configured with:
+
+- **Static text** - Fixed values that remain constant across simulation runs
+- **Context source** - Dynamic values pulled from your connected data sources, enabling data-driven simulations
+
+Variables make your simulations flexible and reusable across different test scenarios.
+
+### First Message Initiator
+
+Configure who starts the conversation:
+
+- **Simulation speaks first** - The simulation agent sends the opening message, useful for testing how your agent handles incoming customer inquiries
+- **Simulation waits** - Your target agent receives an initial trigger to start, useful for testing outbound or proactive agent scenarios
+
+![First message initiator configuration](/images/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/custom-simulation/custom-simulation-initiator-config.png)
+
+## Example Prompt
+
+Here's an example simulation prompt for testing a customer support agent:
+
+```
+You are a frustrated customer who purchased a laptop 2 weeks ago.
+The laptop has been overheating and shutting down unexpectedly.
+
+Your goal is to get a full refund, not a replacement or repair.
+
+Behavior guidelines:
+- Start by explaining the issue calmly
+- Become more insistent if the agent offers alternatives to a refund
+- Mention you've already tried basic troubleshooting
+- If the agent requests proof of purchase, provide order #{{order_number}}
+
+End the conversation when:
+- You receive confirmation of a refund
+- The agent explicitly states a refund is not possible
+- The conversation exceeds 5 exchanges without progress
+```
+
+This prompt uses the `{{order_number}}` variable, which can be set to a static value or linked to a context source for data-driven testing.
+
+![Running a custom simulation](/images/docs/evaluate/how-to/evaluate-workflows-via-api-endpoint/custom-simulation/custom-simulation-run.png)
+
+## Related Documentation
+
+- [Prompt Partials](/library/prompt-partials) - Create reusable prompt snippets
+- [Context Sources](/library/context-sources) - Connect dynamic data sources
+- [Simulation Overview](/simulations/text-simulation/overview) - Learn about simulation fundamentals
+- [Simulation Runs](/simulations/text-simulation/simulation-runs) - Evaluate simulated sessions
