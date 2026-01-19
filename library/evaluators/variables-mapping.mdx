@@ -40,24 +40,50 @@ Access run data:
 
 - `run.input` (`String`) - Input variable
 - `run.output` (`String`) - Output variable
-- `run.retrieval` (`String`) - Retrieved context based on your selection
+- `run.context` (`String`) - Retrieved context based on your selection
 - `run.toolCalls` (`JSON`) - Tool calls with name, arguments, and results
 
 ### Multi-Turn Prompts
 
-Variable mapping works the same as single-turn prompts:
+Variable mapping in multi-turn prompts works the same way as in single-turn prompts.
 
-**Version variables:**
-- `version.messages` (`JSON`) - All messages in the prompt version
-- `version.systemMessage` (`String`) - System message
-- `version.userMessages` (`JSON`) - Combined user messages
+#### Version Variables
 
-**Run variables:**
-- `run.input` (`String`) - Input variable
-- `run.output` (`String`) - Output variable
-- `run.retrieval` (`String`) - Retrieved context
-- `run.toolCalls` (`JSON`) - Tool calls with details
+- `version.messages` (`JSON`) — All messages defined in the prompt version  
+- `version.systemMessage` (`String`) — System message  
+- `version.userMessages` (`JSON`) — Combined user messages  
 
+#### Run Variables
+
+- `run.input` (`String`) — Input variable  
+- `run.toolCalls` (`JSON`) — Tool calls with details  
+- `run.sessionMessages` (`JSON`) — All messages in the session  
+  - `run.sessionMessages[*]` — All messages in the session  
+  - `run.sessionMessages[index]` — Message at a specific index  
+  - `run.sessionMessages[turn].input` — Input message for a specific or all turns  
+  - `run.sessionMessages[turn].output` — Output message for a specific or all turns  
+
+For prompt simulation runs, you can also access variable bindings from all turns in a session using the `run.context` (`JSON`) object.
+
+If your prompt defines variables such as `context` and `context2`, their resolved values across turns are available as an array in `run.context`. Each array entry represents the variable bindings for a single turn in the session.
+
+You can:
+
+- Map all turns using `run.context[*]` in your evaluator  
+- Access a specific turn using `run.context[index]`  
+
+```json
+[
+  {
+    "context": "<retrieved context from the source>",
+    "context2": "<retrieved context from the source>"
+  },
+  {
+    "context": "<retrieved context from the source>",
+    "context2": "<retrieved context from the source>"
+  }
+]
+```
 ## Agent Variable Mapping
 
 ### Single-Turn Agents
@@ -66,7 +92,7 @@ Access agent response data using the `response.` prefix:
 
 - `run.input` (`String`) - Input variable
 - `run.output` (`String`) - Output variable
-- `run.retrieval` (`String`) - Retrieved context
+- `run.context` (`String`) - Retrieved context
 - `run.response` (`JSON/any`) - Agent response with nested field access via dropdown or dot notation for objects, index notation for arrays
 
 ### Multi-Turn Agent
@@ -210,7 +236,7 @@ Access no-code agent run data:
 
 - `run.input` (`String`) - Input variable
 - `run.output` (`String`) - Output variable
-- `run.retrieval` (`String`) - Retrieved context based on your selection
+- `run.context` (`String`) - Retrieved context based on your selection
 - `run.toolCalls` (`JSON`) - Tool calls with name, arguments, and results
 
 ## Custom code variables mapping
