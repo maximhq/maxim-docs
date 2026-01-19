@@ -853,7 +853,7 @@
                                 "pages": [
                         "release-notes/Nov-2025/Cost-charts--data-connectors",
                         "release-notes/Nov-2025/Filter-and-search-based-on-eval-reasoning",
-                        "release-notes/Nov-2025/One-line-integration-with-OpenAI-Realtime-and-Elevenlabs",
+                        "release-notes/Nov-2025/One-line-integration-with-OpenAI-Realtime-and-ElevenLabs",
                         "release-notes/Nov-2025/Refined-human-evaluation-flow-on-test-runs-and-logs",
                         "release-notes/Nov-2025/data-curation-flows"
                     ]
