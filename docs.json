@@ -21,6 +21,21 @@
                         "pages": ["introduction/overview", "introduction/running-your-first-eval"]
                     },
                     {
+                        "group": "Prompt Engineering",
+                        "pages": [
+                            "prompt-engineering/prompt-playground",
+                            "prompt-engineering/prompt-partials",
+                            "prompt-engineering/prompt-versions",
+                            "prompt-engineering/prompt-sessions",
+                            "prompt-engineering/tool-calls",
+                            "prompt-engineering/mcp",
+                            "prompt-engineering/retrieval",
+                            "prompt-engineering/prompt-deployment",
+                            "prompt-engineering/prompt-optimization",
+                            "prompt-engineering/folders-and-tags"
+                        ]
+                    },
+                    {
                         "group": "Offline Evals",
                         "pages": [
                             "offline-evals/overview",
@@ -32,18 +47,10 @@
                                         "group": "Prompts",
                                         "pages": [
                                             "offline-evals/via-ui/prompts/quickstart",
-                                            "offline-evals/via-ui/prompts/prompt-playground",
-                                            "offline-evals/via-ui/prompts/tool-calls",
-                                            "offline-evals/via-ui/prompts/mcp",
-                                            "offline-evals/via-ui/prompts/prompt-partials",
-                                            "offline-evals/via-ui/prompts/retrieval",
-                                            "offline-evals/via-ui/prompts/prompt-versions",
-                                            "offline-evals/via-ui/prompts/prompt-sessions",
                                             "offline-evals/via-ui/prompts/prompt-evals",
-                                            "offline-evals/via-ui/prompts/prompt-deployment",
-                                            "offline-evals/via-ui/prompts/folders-and-tags",
-                                            "offline-evals/via-ui/prompts/human-annotation",
-                                            "offline-evals/via-ui/prompts/prompt-optimization"
+                                            "offline-evals/via-ui/prompts/tool-calls",
+                                            "offline-evals/via-ui/prompts/retrieval",
+                                            "offline-evals/via-ui/prompts/human-annotation"
                                         ]
                                     },
                                     {

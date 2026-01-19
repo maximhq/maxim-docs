@@ -1,0 +1,53 @@
+---
+title: Prompt Tool Calls
+description: Ensuring your prompt selects the accurate tool call (function) is crucial for building reliable and efficient AI workflows. Maxim’s playground allows you to attach your tools (API, code or schema) and measure tool call accuracy for agentic systems.
+---
+
+import { MaximPlayer } from "/snippets/maximPlayer.mdx"
+
+<MaximPlayer url="https://www.youtube.com/embed/LGItsF0y5qk" />
+
+Tool call usage is a core part of any agentic AI workflow. Maxim's playground allows you to effectively test if the right tools are being chosen by the LLM and if they are getting successfully executed. 
+
+In Maxim, you can create [prompt tools](/library/prompt-tools#create-a-code-tool) within the `library` section of your workspace. These could be executable or just the schema and then attached to your prompt for testing.
+
+## Attach and Run Your Tools in Playground
+
+<Steps>
+	<Step title="Create a new tool">
+		Create a new tool in the library. Use an API or code for executable tools and schema if you only want to test tool choice.
+
+        ![Create Prompt tool](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/create-tool.png)
+	</Step>
+	<Step title="Attach tools to your prompt">
+		Select and attach tools to the prompt within the configuration section.
+
+        ![Attach Prompt Tool](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/attach-tool.png)
+	</Step>
+	<Step title="Send prompt with tool instructions">
+		Send your prompt referencing the tool usage instructions.
+
+		![Prompt with tool instructions](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/prompt-tool-instruction.png)
+	</Step>
+    <Step title="Review assistant's tool selection">
+        Check the assistant response with tool choice and arguments.
+
+        ![Assistant message of tool choice](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/tool-details.png)
+    </Step>
+    <Step title="Examine tool execution results">
+        For executable tools, check the tool response message that is shown post execution.
+
+        ![Tool message](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/tool-response.png)
+    </Step>
+    <Step title="Manually test different scenarios">
+        Edit tool type messages manually to test for different responses.
+
+        ![Tool message edit](/images/docs/evaluate/how-to/evaluate-prompts/run-tool-call/manual-tool-message.png)
+    </Step>
+</Steps>
+
+By experimenting in the playground, you can now make sure your prompt is calling the right tools in specific scenarios and that the execution of the tool leads to the right responses. 
+
+## Next steps
+
+[Measure Tool Call Accuracy](/offline-evals/via-ui/prompts/tool-calls) - check how to measure tool call accuracy.
