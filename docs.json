@@ -839,47 +839,66 @@
                     {
                         "group": "Release Notes",
                         "pages": [
+                           {
+                                "group": "Dec 2025",
+                                "pages": [
+                        "release-notes/Dec-2025/Collaborative-conflict-resolution-for-Prompt-changes",
+                        "release-notes/Dec-2025/External-human-annotation-of-logs",
+                        "release-notes/Dec-2025/Logging-and-observability-infrastructure-overhaul",
+                        "release-notes/Dec-2025/Run-evaluations-on-attachments"
+                    ]
+                },
+                {
+                                "group": "Nov 2025",
+                                "pages": [
+                        "release-notes/Nov-2025/Cost-charts--data-connectors",
+                        "release-notes/Nov-2025/Filter-and-search-based-on-eval-reasoning",
+                        "release-notes/Nov-2025/One-line-integration-with-OpenAI-Realtime-and-ElevenLabs",
+                        "release-notes/Nov-2025/Refined-human-evaluation-flow-on-test-runs-and-logs",
+                        "release-notes/Nov-2025/data-curation-flows"
+                    ]
+                },
                             {
                                 "group": "Oct 2025",
                                 "pages": [
-                                    "release-notes/Oct 2025/synthetic-data-generation",
-                                    "release-notes/Oct 2025/workspace-rbac",
-                                    "release-notes/Oct 2025/retroactive-evals",
-                                    "release-notes/Oct 2025/flexible-evaluators",
-                                    "release-notes/Oct 2025/litellm-support"
+                                    "release-notes/Oct-2025/synthetic-data-generation",
+                                    "release-notes/Oct-2025/workspace-rbac",
+                                    "release-notes/Oct-2025/retroactive-evals",
+                                    "release-notes/Oct-2025/flexible-evaluators",
+                                    "release-notes/Oct-2025/litellm-support"
                                 ]
                             },
                             {
                                 "group": "Sep 2025",
                                 "pages": [
-                                    "release-notes/Sep 2025/enhanced-graphs-and-search",
-                                    "release-notes/Sep 2025/audit-logs",
-                                    "release-notes/Sep 2025/environment-management",
-                                    "release-notes/Sep 2025/evaluator-session-history",
-                                    "release-notes/Sep 2025/openai-responses-api",
-                                    "release-notes/Sep 2025/voice-agent-simulation"
+                                    "release-notes/Sep-2025/enhanced-graphs-and-search",
+                                    "release-notes/Sep-2025/audit-logs",
+                                    "release-notes/Sep-2025/environment-management",
+                                    "release-notes/Sep-2025/evaluator-session-history",
+                                    "release-notes/Sep-2025/openai-responses-api",
+                                    "release-notes/Sep-2025/voice-agent-simulation"
                                 ]
                             },
                             {
                                 "group": "Aug 2025",
                                 "pages": [
-                                    "release-notes/Aug 2025/flexi-evals",
-                                    "release-notes/Aug 2025/google-cloud-marketplace",
-                                    "release-notes/Aug 2025/workspace-duplication",
-                                    "release-notes/Aug 2025/custom-metric-support",
-                                    "release-notes/Aug 2025/saml-based-sso",
-                                    "release-notes/Aug 2025/new-providers-open-router-cerebras",
-                                    "release-notes/Aug 2025/openai-gpt-5"
+                                    "release-notes/Aug-2025/flexi-evals",
+                                    "release-notes/Aug-2025/google-cloud-marketplace",
+                                    "release-notes/Aug-2025/workspace-duplication",
+                                    "release-notes/Aug-2025/custom-metric-support",
+                                    "release-notes/Aug-2025/saml-based-sso",
+                                    "release-notes/Aug-2025/new-providers-open-router-cerebras",
+                                    "release-notes/Aug-2025/openai-gpt-5"
                                 ]
                             },
                             {
                                 "group": "July 2025",
                                 "pages": [
-                                    "release-notes/July 2025/ai-simulations-prompt-playground",
-                                    "release-notes/July 2025/grok-4-model",
-                                    "release-notes/July 2025/unlimited-log-size",
-                                    "release-notes/July 2025/datasets-file-attachments",
-                                    "release-notes/July 2025/human-annotation-revamp"
+                                    "release-notes/July-2025/ai-simulations-prompt-playground",
+                                    "release-notes/July-2025/grok-4-model",
+                                    "release-notes/July-2025/unlimited-log-size",
+                                    "release-notes/July-2025/datasets-file-attachments",
+                                    "release-notes/July-2025/human-annotation-revamp"
                                 ]
                             }
                         ]
