@@ -244,6 +244,407 @@
           }
         }
       }
+    },
+    "/v1/test-runs/simulations": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "Trigger a simulation test run.",
+        "summary": "Trigger simulation test run",
+        "tags": [
+          "Simulation"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "workspaceId": {
+                        "type": "string",
+                        "description": "Workspace ID where the simulation will run"
+                      },
+                      "entityId": {
+                        "type": "string",
+                        "description": "ID of the entity to simulate (prompt version ID, workflow ID)"
+                      },
+                      "datasetId": {
+                        "type": "string",
+                        "description": "Dataset ID to use for the simulation"
+                      },
+                      "datasetSplitId": {
+                        "type": "string",
+                        "description": "Optional dataset split ID"
+                      },
+                      "evaluators": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "description": "The evaluator ID"
+                            },
+                            "variableMapping": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "string"
+                              },
+                              "description": "Optional variable mapping for the evaluator"
+                            }
+                          },
+                          "required": [
+                            "id"
+                          ],
+                          "description": "Evaluator configuration with optional variable mapping"
+                        },
+                        "description": "Array of evaluators with optional variable mapping to run on the simulation results."
+                      },
+                      "contextToEvaluate": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "DATASOURCE",
+                                "DATASET_COLUMN"
+                              ]
+                            },
+                            "payload": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "payload"
+                          ]
+                        },
+                        "description": "Context sources to include in evaluation"
+                      }
+                    },
+                    "required": [
+                      "workspaceId",
+                      "entityId",
+                      "datasetId"
+                    ]
+                  },
+                  {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "simulationType": {
+                            "type": "string",
+                            "enum": [
+                              "PROMPT_SIMULATION"
+                            ]
+                          },
+                          "simulationConfig": {
+                            "allOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "persona": {
+                                    "type": "string",
+                                    "description": "Dataset column name containing the persona for the simulated user"
+                                  },
+                                  "maxTurns": {
+                                    "type": "number",
+                                    "minimum": 1,
+                                    "description": "Maximum number of conversation turns"
+                                  },
+                                  "tools": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "description": "List of tool IDs available to the agent"
+                                  },
+                                  "context": {
+                                    "oneOf": [
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": {
+                                            "type": "string",
+                                            "enum": [
+                                              "CONTEXT_SOURCE"
+                                            ]
+                                          },
+                                          "payload": {
+                                            "type": "string",
+                                            "description": "Datasource ID"
+                                          }
+                                        },
+                                        "required": [
+                                          "type",
+                                          "payload"
+                                        ],
+                                        "description": "Use a datasource (context source)",
+                                        "title": "Context Source"
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": {
+                                            "type": "string",
+                                            "enum": [
+                                              "DATASET_COLUMN"
+                                            ]
+                                          },
+                                          "payload": {
+                                            "type": "string",
+                                            "description": "Dataset column name"
+                                          }
+                                        },
+                                        "required": [
+                                          "type",
+                                          "payload"
+                                        ],
+                                        "description": "Use a dataset column as the context source",
+                                        "title": "Dataset"
+                                      }
+                                    ],
+                                    "description": "Context configuration for the simulation"
+                                  }
+                                }
+                              },
+                              {
+                                "oneOf": [
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "MAXIM"
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "type"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ],
+                            "description": "Configuration for prompt simulation"
+                          }
+                        },
+                        "required": [
+                          "simulationType",
+                          "simulationConfig"
+                        ],
+                        "title": "Prompt Simulation"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "simulationType": {
+                            "type": "string",
+                            "enum": [
+                              "WORKFLOW_SIMULATION"
+                            ]
+                          },
+                          "simulationConfig": {
+                            "allOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "persona": {
+                                    "type": "string",
+                                    "description": "Dataset column name containing the persona for the simulated user"
+                                  },
+                                  "maxTurns": {
+                                    "type": "number",
+                                    "minimum": 1,
+                                    "description": "Maximum number of conversation turns"
+                                  },
+                                  "tools": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "description": "List of tool IDs available to the agent"
+                                  },
+                                  "context": {
+                                    "oneOf": [
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": {
+                                            "type": "string",
+                                            "enum": [
+                                              "CONTEXT_SOURCE"
+                                            ]
+                                          },
+                                          "payload": {
+                                            "type": "string",
+                                            "description": "Datasource ID"
+                                          }
+                                        },
+                                        "required": [
+                                          "type",
+                                          "payload"
+                                        ],
+                                        "description": "Use a datasource (context source)",
+                                        "title": "Context Source"
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": {
+                                            "type": "string",
+                                            "enum": [
+                                              "DATASET_COLUMN"
+                                            ]
+                                          },
+                                          "payload": {
+                                            "type": "string",
+                                            "description": "Dataset column name"
+                                          }
+                                        },
+                                        "required": [
+                                          "type",
+                                          "payload"
+                                        ],
+                                        "description": "Use a dataset column as the context source",
+                                        "title": "Dataset"
+                                      }
+                                    ],
+                                    "description": "Context configuration for the simulation"
+                                  }
+                                }
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "responseFields": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "description": "Fields to extract from the HTTP response for simulation"
+                                  }
+                                }
+                              },
+                              {
+                                "oneOf": [
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "MAXIM"
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "type"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ],
+                            "description": "Configuration for HTTP agent simulation"
+                          },
+                          "environmentId": {
+                            "type": "string",
+                            "description": "Environment ID for variable resolution in the agent config"
+                          }
+                        },
+                        "required": [
+                          "simulationType",
+                          "simulationConfig"
+                        ],
+                        "title": "HTTP Agent Simulation"
+                      }
+                    ]
+                  }
+                ],
+                "description": "Payload for triggering a simulation test run"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Simulation test run triggered successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Test run ID"
+                        },
+                        "workspaceId": {
+                          "type": "string",
+                          "description": "Workspace ID"
+                        },
+                        "status": {
+                          "type": "string",
+                          "description": "Current status of the test run"
+                        },
+                        "entityId": {
+                          "type": "string",
+                          "description": "Entity ID being tested"
+                        },
+                        "entityType": {
+                          "type": "string",
+                          "description": "Type of entity being tested"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "description": "Creation timestamp"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "workspaceId",
+                        "status",
+                        "entityType",
+                        "createdAt"
+                      ],
+                      "description": "Response from triggering a simulation"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request payload or missing required configuration"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Insufficient permissions to run simulations"
+          },
+          "404": {
+            "description": "Entity (prompt version, workflow) or dataset not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
     }
   }
 }
