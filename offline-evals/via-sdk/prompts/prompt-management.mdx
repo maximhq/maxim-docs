@@ -211,6 +211,45 @@ if (prompts && prompts.length > 0) {
 
 </CodeGroup>
 
+## Automatic logging
+
+You can configure the SDK to automatically log the prompt runs.
+
+<CodeGroup>
+
+```python Python
+trace = logger.trace(config={"id": str(uuid.uuid4()), "name": "trace-name"})
+
+prompt_id = "your-prompt-id"
+prompt_version_number = 1
+prompt = maxim.get_prompt(prompt_id, QueryBuilder().prompt_version_number(prompt_version_number))
+
+prompt.with_logger(parent=trace)
+
+result = prompt.run(
+  input="Hello",
+  variables={"tone": "cheerful and calm"}
+)
+```
+
+```typescript JS/TS
+const trace = logger.trace({id: "trace-id", name: "trace-name"})
+
+const promptId = "your-prompt-id"
+const promptVersionNumber = 1
+const prompt = await maxim.getPrompt(
+  promptId,
+  new QueryBuilder().promptVersionNumber(promptVersionNumber).build(),
+);
+
+const promptWithLogger = prompt?.withLogger({parent: trace})
+const result = await promptWithLogger?.run("Hello", {
+  variables: { tone: "cheerful and calm" },
+});
+```
+
+</CodeGroup>
+
 ## Supported Variable Types
 
 When building queries using `deploymentVar`, ensure the value matches the type defined in your deployment configuration:
