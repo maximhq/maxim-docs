@@ -39,7 +39,7 @@ Use `MaximOpenAIClient` to wrap your OpenAI client for automatic tracing:
 
 ```typescript {5}
 import OpenAI from "openai";
-import { MaximOpenAIClient } from "@maximai/maxim-js/openai";
+import { MaximOpenAIClient } from "@maximai/maxim-js/openai-sdk";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const client = new MaximOpenAIClient(openai, logger);
@@ -97,7 +97,7 @@ Here's a complete example demonstrating tool calls with tracing:
 ```typescript
 import OpenAI from "openai";
 import { Maxim } from "@maximai/maxim-js";
-import { MaximOpenAIClient } from "@maximai/maxim-js/openai";
+import { MaximOpenAIClient } from "@maximai/maxim-js/openai-sdk";
 import { v4 as uuid } from "uuid";
 
 async function main() {
