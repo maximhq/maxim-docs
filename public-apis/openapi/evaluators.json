@@ -62,6 +62,7 @@
           {
             "schema": {
               "type": "number",
+              "nullable": true,
               "default": 10,
               "description": "Maximum number of records to return. 10 by default"
             },
@@ -400,6 +401,1603 @@
                   },
                   "required": [
                     "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Evaluator not found"
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Evaluator"
+        ],
+        "description": "Create a new evaluator",
+        "summary": "Create evaluator",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "workspaceId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Unique identifier for the workspace"
+                      },
+                      "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Name of the evaluator"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Description of the evaluator"
+                      },
+                      "tags": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Tags for the evaluator"
+                      }
+                    },
+                    "required": [
+                      "workspaceId",
+                      "name"
+                    ]
+                  },
+                  {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "AI"
+                            ]
+                          },
+                          "config": {
+                            "type": "object",
+                            "properties": {
+                              "passFailCriteria": {
+                                "type": "object",
+                                "properties": {
+                                  "entryLevel": {
+                                    "type": "object",
+                                    "properties": {
+                                      "value": {
+                                        "anyOf": [
+                                          {
+                                            "type": "number"
+                                          },
+                                          {
+                                            "type": "string"
+                                          },
+                                          {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string"
+                                            }
+                                          }
+                                        ]
+                                      },
+                                      "operator": {
+                                        "type": "string"
+                                      },
+                                      "name": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "value",
+                                      "operator",
+                                      "name"
+                                    ]
+                                  },
+                                  "runLevel": {
+                                    "type": "object",
+                                    "properties": {
+                                      "value": {
+                                        "anyOf": [
+                                          {
+                                            "type": "number"
+                                          },
+                                          {
+                                            "type": "string"
+                                          },
+                                          {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string"
+                                            }
+                                          }
+                                        ]
+                                      },
+                                      "operator": {
+                                        "type": "string"
+                                      },
+                                      "name": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "value",
+                                      "operator",
+                                      "name"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "entryLevel",
+                                  "runLevel"
+                                ]
+                              },
+                              "optionalVariables": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "description": "Names of variables to mark as optional."
+                              },
+                              "gradingStyle": {
+                                "type": "string",
+                                "enum": [
+                                  "YesNo",
+                                  "Scale",
+                                  "Multiselect",
+                                  "Number"
+                                ]
+                              },
+                              "scale": {
+                                "type": "object",
+                                "properties": {
+                                  "min": {
+                                    "type": "number"
+                                  },
+                                  "max": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "min",
+                                  "max"
+                                ]
+                              },
+                              "model": {
+                                "type": "string"
+                              },
+                              "modelId": {
+                                "type": "string"
+                              },
+                              "provider": {
+                                "type": "string"
+                              },
+                              "instructions": {
+                                "type": "string"
+                              },
+                              "modelParameters": {
+                                "nullable": true,
+                                "description": "Model parameters including prompt tools"
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "type"
+                        ],
+                        "title": "AI Evaluator"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "Programmatic"
+                            ]
+                          },
+                          "config": {
+                            "type": "object",
+                            "properties": {
+                              "passFailCriteria": {
+                                "type": "object",
+                                "properties": {
+                                  "entryLevel": {
+                                    "type": "object",
+                                    "properties": {
+                                      "value": {
+                                        "anyOf": [
+                                          {
+                                            "type": "number"
+                                          },
+                                          {
+                                            "type": "string"
+                                          },
+                                          {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string"
+                                            }
+                                          }
+                                        ]
+                                      },
+                                      "operator": {
+                                        "type": "string"
+                                      },
+                                      "name": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "value",
+                                      "operator",
+                                      "name"
+                                    ]
+                                  },
+                                  "runLevel": {
+                                    "type": "object",
+                                    "properties": {
+                                      "value": {
+                                        "anyOf": [
+                                          {
+                                            "type": "number"
+                                          },
+                                          {
+                                            "type": "string"
+                                          },
+                                          {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string"
+                                            }
+                                          }
+                                        ]
+                                      },
+                                      "operator": {
+                                        "type": "string"
+                                      },
+                                      "name": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "value",
+                                      "operator",
+                                      "name"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "entryLevel",
+                                  "runLevel"
+                                ]
+                              },
+                              "optionalVariables": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "description": "Names of variables to mark as optional."
+                              },
+                              "lang": {
+                                "type": "string",
+                                "enum": [
+                                  "javascript",
+                                  "python"
+                                ]
+                              },
+                              "code": {
+                                "type": "object",
+                                "properties": {
+                                  "javascript": {
+                                    "type": "string"
+                                  },
+                                  "python": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "javascript",
+                                  "python"
+                                ]
+                              },
+                              "responseType": {
+                                "type": "string",
+                                "enum": [
+                                  "YesNo",
+                                  "Scale",
+                                  "Multiselect",
+                                  "Number"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "lang",
+                              "code",
+                              "responseType"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "config"
+                        ],
+                        "title": "Programmatic Evaluator"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "API"
+                            ]
+                          },
+                          "config": {
+                            "type": "object",
+                            "properties": {
+                              "passFailCriteria": {
+                                "type": "object",
+                                "properties": {
+                                  "entryLevel": {
+                                    "type": "object",
+                                    "properties": {
+                                      "value": {
+                                        "anyOf": [
+                                          {
+                                            "type": "number"
+                                          },
+                                          {
+                                            "type": "string"
+                                          },
+                                          {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string"
+                                            }
+                                          }
+                                        ]
+                                      },
+                                      "operator": {
+                                        "type": "string"
+                                      },
+                                      "name": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "value",
+                                      "operator",
+                                      "name"
+                                    ]
+                                  },
+                                  "runLevel": {
+                                    "type": "object",
+                                    "properties": {
+                                      "value": {
+                                        "anyOf": [
+                                          {
+                                            "type": "number"
+                                          },
+                                          {
+                                            "type": "string"
+                                          },
+                                          {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string"
+                                            }
+                                          }
+                                        ]
+                                      },
+                                      "operator": {
+                                        "type": "string"
+                                      },
+                                      "name": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "value",
+                                      "operator",
+                                      "name"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "entryLevel",
+                                  "runLevel"
+                                ]
+                              },
+                              "optionalVariables": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "description": "Names of variables to mark as optional."
+                              },
+                              "method": {
+                                "type": "string",
+                                "enum": [
+                                  "GET",
+                                  "POST",
+                                  "PUT",
+                                  "DELETE",
+                                  "PATCH"
+                                ]
+                              },
+                              "url": {
+                                "type": "string",
+                                "format": "uri"
+                              },
+                              "headers": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "key": {
+                                      "type": "string"
+                                    },
+                                    "value": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "key",
+                                    "value"
+                                  ]
+                                }
+                              },
+                              "params": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "key": {
+                                      "type": "string"
+                                    },
+                                    "value": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "key",
+                                    "value"
+                                  ]
+                                }
+                              },
+                              "payload": {
+                                "type": "string"
+                              },
+                              "outputMapping": {
+                                "type": "object",
+                                "properties": {
+                                  "score": {
+                                    "type": "string"
+                                  },
+                                  "reasoning": {
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              "timeout": {
+                                "type": "number",
+                                "default": 120,
+                                "description": "Timeout in seconds"
+                              },
+                              "concurrency": {
+                                "type": "number",
+                                "default": 1,
+                                "description": "Max number of concurrent calls to this endpoint"
+                              }
+                            },
+                            "required": [
+                              "method",
+                              "url"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "config"
+                        ],
+                        "title": "API Evaluator"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "Human"
+                            ]
+                          },
+                          "config": {
+                            "type": "object",
+                            "properties": {
+                              "passFailCriteria": {
+                                "type": "object",
+                                "properties": {
+                                  "entryLevel": {
+                                    "type": "object",
+                                    "properties": {
+                                      "value": {
+                                        "anyOf": [
+                                          {
+                                            "type": "number"
+                                          },
+                                          {
+                                            "type": "string"
+                                          },
+                                          {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string"
+                                            }
+                                          }
+                                        ]
+                                      },
+                                      "operator": {
+                                        "type": "string"
+                                      },
+                                      "name": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "value",
+                                      "operator",
+                                      "name"
+                                    ]
+                                  },
+                                  "runLevel": {
+                                    "type": "object",
+                                    "properties": {
+                                      "value": {
+                                        "anyOf": [
+                                          {
+                                            "type": "number"
+                                          },
+                                          {
+                                            "type": "string"
+                                          },
+                                          {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string"
+                                            }
+                                          }
+                                        ]
+                                      },
+                                      "operator": {
+                                        "type": "string"
+                                      },
+                                      "name": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "value",
+                                      "operator",
+                                      "name"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "entryLevel",
+                                  "runLevel"
+                                ]
+                              },
+                              "optionalVariables": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "description": "Names of variables to mark as optional."
+                              },
+                              "scale": {
+                                "type": "object",
+                                "properties": {
+                                  "min": {
+                                    "type": "number"
+                                  },
+                                  "max": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "min",
+                                  "max"
+                                ]
+                              },
+                              "instructions": {
+                                "type": "string"
+                              },
+                              "evaluationType": {
+                                "type": "string",
+                                "enum": [
+                                  "YesNo",
+                                  "Scale",
+                                  "Multiselect",
+                                  "Number"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "evaluationType"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "config"
+                        ],
+                        "title": "Human Evaluator"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Evaluator created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "config": {
+                          "type": "object",
+                          "properties": {
+                            "model": {
+                              "type": "string"
+                            },
+                            "provider": {
+                              "type": "string"
+                            },
+                            "variables": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "nullable": true
+                              }
+                            },
+                            "gradingStyle": {
+                              "type": "string"
+                            },
+                            "passFailCriteria": {
+                              "type": "object",
+                              "properties": {
+                                "runLevel": {
+                                  "type": "object",
+                                  "properties": {
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "value": {
+                                      "type": "number"
+                                    },
+                                    "operator": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "name",
+                                    "value",
+                                    "operator"
+                                  ]
+                                },
+                                "entryLevel": {
+                                  "type": "object",
+                                  "properties": {
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "value": {
+                                      "type": "string"
+                                    },
+                                    "operator": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "name",
+                                    "value",
+                                    "operator"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "runLevel",
+                                "entryLevel"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "model",
+                            "provider",
+                            "gradingStyle",
+                            "passFailCriteria"
+                          ]
+                        },
+                        "accountId": {
+                          "type": "string"
+                        },
+                        "workspaceId": {
+                          "type": "string"
+                        },
+                        "builtin": {
+                          "type": "boolean"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "deletedAt": {
+                          "type": "string"
+                        },
+                        "tags": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "label": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "label",
+                              "value"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "description",
+                        "type",
+                        "config",
+                        "accountId",
+                        "workspaceId",
+                        "builtin",
+                        "createdAt",
+                        "updatedAt",
+                        "deletedAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Evaluator"
+        ],
+        "description": "Update an existing evaluator",
+        "summary": "Update evaluator",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workspaceId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier for the evaluator"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the evaluator"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description of the evaluator"
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Tags for the evaluator"
+                  },
+                  "config": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "passFailCriteria": {
+                            "type": "object",
+                            "properties": {
+                              "entryLevel": {
+                                "type": "object",
+                                "properties": {
+                                  "value": {
+                                    "anyOf": [
+                                      {
+                                        "type": "number"
+                                      },
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "operator": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "value",
+                                  "operator",
+                                  "name"
+                                ]
+                              },
+                              "runLevel": {
+                                "type": "object",
+                                "properties": {
+                                  "value": {
+                                    "anyOf": [
+                                      {
+                                        "type": "number"
+                                      },
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "operator": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "value",
+                                  "operator",
+                                  "name"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "entryLevel",
+                              "runLevel"
+                            ]
+                          },
+                          "optionalVariables": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "Names of variables to mark as optional."
+                          },
+                          "gradingStyle": {
+                            "type": "string",
+                            "enum": [
+                              "YesNo",
+                              "Scale",
+                              "Multiselect",
+                              "Number"
+                            ]
+                          },
+                          "scale": {
+                            "type": "object",
+                            "properties": {
+                              "min": {
+                                "type": "number"
+                              },
+                              "max": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "min",
+                              "max"
+                            ]
+                          },
+                          "model": {
+                            "type": "string"
+                          },
+                          "modelId": {
+                            "type": "string"
+                          },
+                          "provider": {
+                            "type": "string"
+                          },
+                          "instructions": {
+                            "type": "string"
+                          },
+                          "modelParameters": {
+                            "nullable": true,
+                            "description": "Model parameters including prompt tools"
+                          }
+                        },
+                        "title": "AI Evaluator"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "passFailCriteria": {
+                            "type": "object",
+                            "properties": {
+                              "entryLevel": {
+                                "type": "object",
+                                "properties": {
+                                  "value": {
+                                    "anyOf": [
+                                      {
+                                        "type": "number"
+                                      },
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "operator": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "value",
+                                  "operator",
+                                  "name"
+                                ]
+                              },
+                              "runLevel": {
+                                "type": "object",
+                                "properties": {
+                                  "value": {
+                                    "anyOf": [
+                                      {
+                                        "type": "number"
+                                      },
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "operator": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "value",
+                                  "operator",
+                                  "name"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "entryLevel",
+                              "runLevel"
+                            ]
+                          },
+                          "optionalVariables": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "Names of variables to mark as optional."
+                          },
+                          "lang": {
+                            "type": "string",
+                            "enum": [
+                              "javascript",
+                              "python"
+                            ]
+                          },
+                          "code": {
+                            "type": "object",
+                            "properties": {
+                              "javascript": {
+                                "type": "string"
+                              },
+                              "python": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "javascript",
+                              "python"
+                            ]
+                          },
+                          "responseType": {
+                            "type": "string",
+                            "enum": [
+                              "YesNo",
+                              "Scale",
+                              "Multiselect",
+                              "Number"
+                            ]
+                          }
+                        },
+                        "title": "Programmatic Evaluator"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "passFailCriteria": {
+                            "type": "object",
+                            "properties": {
+                              "entryLevel": {
+                                "type": "object",
+                                "properties": {
+                                  "value": {
+                                    "anyOf": [
+                                      {
+                                        "type": "number"
+                                      },
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "operator": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "value",
+                                  "operator",
+                                  "name"
+                                ]
+                              },
+                              "runLevel": {
+                                "type": "object",
+                                "properties": {
+                                  "value": {
+                                    "anyOf": [
+                                      {
+                                        "type": "number"
+                                      },
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "operator": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "value",
+                                  "operator",
+                                  "name"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "entryLevel",
+                              "runLevel"
+                            ]
+                          },
+                          "optionalVariables": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "Names of variables to mark as optional."
+                          },
+                          "method": {
+                            "type": "string",
+                            "enum": [
+                              "GET",
+                              "POST",
+                              "PUT",
+                              "DELETE",
+                              "PATCH"
+                            ]
+                          },
+                          "url": {
+                            "type": "string",
+                            "format": "uri"
+                          },
+                          "headers": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "key": {
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "key",
+                                "value"
+                              ]
+                            }
+                          },
+                          "params": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "key": {
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "key",
+                                "value"
+                              ]
+                            }
+                          },
+                          "payload": {
+                            "type": "string"
+                          },
+                          "outputMapping": {
+                            "type": "object",
+                            "properties": {
+                              "score": {
+                                "type": "string"
+                              },
+                              "reasoning": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "timeout": {
+                            "type": "number",
+                            "default": 120,
+                            "description": "Timeout in seconds"
+                          },
+                          "concurrency": {
+                            "type": "number",
+                            "default": 1,
+                            "description": "Max number of concurrent calls to this endpoint"
+                          }
+                        },
+                        "title": "API Evaluator"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "passFailCriteria": {
+                            "type": "object",
+                            "properties": {
+                              "entryLevel": {
+                                "type": "object",
+                                "properties": {
+                                  "value": {
+                                    "anyOf": [
+                                      {
+                                        "type": "number"
+                                      },
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "operator": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "value",
+                                  "operator",
+                                  "name"
+                                ]
+                              },
+                              "runLevel": {
+                                "type": "object",
+                                "properties": {
+                                  "value": {
+                                    "anyOf": [
+                                      {
+                                        "type": "number"
+                                      },
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "operator": {
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "value",
+                                  "operator",
+                                  "name"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "entryLevel",
+                              "runLevel"
+                            ]
+                          },
+                          "optionalVariables": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "Names of variables to mark as optional."
+                          },
+                          "scale": {
+                            "type": "object",
+                            "properties": {
+                              "min": {
+                                "type": "number"
+                              },
+                              "max": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "min",
+                              "max"
+                            ]
+                          },
+                          "instructions": {
+                            "type": "string"
+                          },
+                          "evaluationType": {
+                            "type": "string",
+                            "enum": [
+                              "YesNo",
+                              "Scale",
+                              "Multiselect",
+                              "Number"
+                            ]
+                          }
+                        },
+                        "title": "Human Evaluator"
+                      }
+                    ],
+                    "description": "Configuration for the evaluator"
+                  }
+                },
+                "required": [
+                  "workspaceId",
+                  "id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Evaluator updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "config": {
+                          "type": "object",
+                          "properties": {
+                            "model": {
+                              "type": "string"
+                            },
+                            "provider": {
+                              "type": "string"
+                            },
+                            "variables": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "nullable": true
+                              }
+                            },
+                            "gradingStyle": {
+                              "type": "string"
+                            },
+                            "passFailCriteria": {
+                              "type": "object",
+                              "properties": {
+                                "runLevel": {
+                                  "type": "object",
+                                  "properties": {
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "value": {
+                                      "type": "number"
+                                    },
+                                    "operator": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "name",
+                                    "value",
+                                    "operator"
+                                  ]
+                                },
+                                "entryLevel": {
+                                  "type": "object",
+                                  "properties": {
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "value": {
+                                      "type": "string"
+                                    },
+                                    "operator": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "name",
+                                    "value",
+                                    "operator"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "runLevel",
+                                "entryLevel"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "model",
+                            "provider",
+                            "gradingStyle",
+                            "passFailCriteria"
+                          ]
+                        },
+                        "accountId": {
+                          "type": "string"
+                        },
+                        "workspaceId": {
+                          "type": "string"
+                        },
+                        "builtin": {
+                          "type": "boolean"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "deletedAt": {
+                          "type": "string"
+                        },
+                        "tags": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "label": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "label",
+                              "value"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "description",
+                        "type",
+                        "config",
+                        "accountId",
+                        "workspaceId",
+                        "builtin",
+                        "createdAt",
+                        "updatedAt",
+                        "deletedAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Evaluator not found"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Evaluator"
+        ],
+        "description": "Delete an existing evaluator",
+        "summary": "Delete evaluator",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Unique identifier for the workspace"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Unique identifier for the evaluator"
+            },
+            "required": true,
+            "name": "id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Evaluator deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success"
                   ]
                 }
               }
