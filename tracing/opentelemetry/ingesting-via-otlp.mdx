@@ -1,25 +1,17 @@
 ---
 title: Ingesting via OTLP Endpoint
-description: Learn how to send OpenTelemetry (OTLP) traces to Maxim for AI and LLM Observability. Maxim supports OTLP ingestion, offering advanced visibility into your AI infrastructure with the widely adopted OpenTelemetry Protocol.
+description: Learn how to send OpenTelemetry (OTLP) traces to Maxim for AI and LLM observability using OpenTelemetry and OpenInference semantic conventions.
 ---
 
 ## What Is OTLP Ingestion?
 
-OpenTelemetry Protocol (OTLP) is a vendor-neutral, industry-standard telemetry format for transmitting trace data. Maxim provides OTLP ingestion capabilities for both AI and LLM Observability, enabling deep insights into your AI systems.
-
-## Overview
-
-OpenTelemetry Protocol (OTLP) is a vendor-neutral, industry-standard telemetry format for transmitting trace data. Maxim provides OTLP ingestion capabilities for both AI and LLM Observability, enabling deep insights into your AI systems.
+OpenTelemetry Protocol (OTLP) is a vendor-neutral standard for trace data. Maxim accepts OTLP traces over HTTP and maps supported semantic convention attributes into Maxim traces, spans, generations, and tool calls.
 
 ## Before you begin
 
 - A Maxim account and Log Repository
 - Your Log Repository ID (for the `x-maxim-repo-id` header)
 - Your Maxim API Key (for the `x-maxim-api-key` header) - [Learn how to obtain API keys](/settings/maxim-api-keys)
-- Familiarity with OpenTelemetry Semantic Conventions. Currently we support the following semantic conventions:
-    - Generative AI: [Generative AI Semantic Conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/)
-    - OpenInference: [OpenInference Semantic Conventions](https://github.com/Arize-ai/openinference/blob/main/spec/semantic_conventions.md)
-    - AI SDK: [AI SDK Semantic Conventions](https://ai-sdk.dev/docs/ai-sdk-core/telemetry)
 
 <Note>
 Ensure you have created a Log Repository in Maxim and have your Log Repository ID ready. You can find it in the Maxim Dashboard under **Logs > Repositories**.
@@ -47,16 +39,40 @@ Maxim's OTLP endpoint requires the following headers:
 - `x-maxim-api-key`: Your Maxim API Key
 - `Content-Type`: `application/json`, `application/x-protobuf`, or `application/protobuf`
 
-
 ## Supported Trace Format
 
-Maxim currently supports traces that follow the OpenTelemetry Semantic Conventions for Generative AI ([specification](https://opentelemetry.io/docs/specs/semconv/gen-ai/)).
+Maxim currently supports OTLP traces using the following semantic conventions:
+
+- OpenTelemetry GenAI conventions (`gen_ai.*`)
+- OpenInference conventions (`llm.*` and `openinference.span.kind`)
+
+## Conventions and support
+
+- OpenTelemetry GenAI: [Generative AI Semantic Conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/)
+- OpenInference: [OpenInference Semantic Conventions](https://github.com/Arize-ai/openinference/blob/main/spec/semantic_conventions.md)
+- AI SDK: [AI SDK Semantic Conventions](https://ai-sdk.dev/docs/ai-sdk-core/telemetry)
+
+## Quick start (OTLP JSON)
+
+Use OTLP JSON with required headers:
+
+```bash
+curl -X POST "https://api.getmaxim.ai/v1/otel" \
+  -H "Content-Type: application/json" \
+  -H "x-maxim-api-key: <MAXIM_API_KEY>" \
+  -H "x-maxim-repo-id: <LOG_REPOSITORY_ID>" \
+  --data @payload.json
+```
+
+<Note>
+Ingestion via OTLP also supports the latest (v1.39.0) version of OpenTelemetry Semantic Conventions.
+</Note>
 
 ## Best Practices
 
 - Use binary Protobuf (`application/x-protobuf`) for optimal performance and robustness
 - Batch traces to reduce network overhead
-- Include rich attributes following GenAI semantic conventions
+- Include rich attributes following supported conventions (`gen_ai.*` or `llm.*`)
 - Secure your headers and avoid exposing credentials
 - Monitor attribute size limits and apply appropriate quotas
 
@@ -67,83 +83,168 @@ Maxim currently supports traces that follow the OpenTelemetry Semantic Conventio
 | 200         | Success                                                              | `{ "data": { "success": true } }`                                   |
 | 403         | Missing or invalid headers - `x-maxim-repo-id` or `x-maxim-api-key`  | `{ "code": 403, "message": "Invalid access error" }`                |
 
-## Code Examples
+## Examples
 
-### Python Example
+<AccordionGroup type="multiple">
+<Accordion title="OpenTelemetry GenAI: simple chat">
 
-```python
-from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
-from opentelemetry.sdk.trace.export import SimpleSpanProcessor
-from opentelemetry.sdk import trace as trace_sdk
-from opentelemetry import trace as trace_api
+Save as `payload.json` and send with the curl command above:
 
-# Replace with your actual Maxim API key
-maxim_api_key = "your_api_key_here"
-# Replace with your actual repository ID
-repo_id = "your_repository_id_here"
-
-tracer_provider = trace_sdk.TracerProvider()
-span_exporter = OTLPSpanExporter(
-    endpoint="https://api.getmaxim.ai/v1/otel",
-    headers={
-        "x-maxim-api-key": f"{maxim_api_key}",
-        "x-maxim-repo-id": f"{repo_id}",
-    },
-)
-
-# Register the exporter
-tracer_provider.add_span_processor(SimpleSpanProcessor(span_exporter))
-# Make it the global provider
-trace_api.set_tracer_provider(tracer_provider)
+```json
+{
+  "resourceSpans": [
+    {
+      "resource": {
+        "attributes": [
+          { "key": "service.name", "value": { "stringValue": "otel-test-genai" } }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": { "name": "@opentelemetry/instrumentation-genai", "version": "0.1.0" },
+          "spans": [
+            {
+              "traceId": "5f8c7f9a3ef14f67af716ef4cf4a9d23",
+              "spanId": "8f2c9c1c6e5d4b2a",
+              "name": "chat gpt-4o",
+              "kind": "2",
+              "startTimeUnixNano": "1739340000000000000",
+              "endTimeUnixNano": "1739340000850000000",
+              "attributes": [
+                { "key": "gen_ai.operation.name", "value": { "stringValue": "chat" } },
+                { "key": "gen_ai.provider.name", "value": { "stringValue": "openai" } },
+                { "key": "gen_ai.request.model", "value": { "stringValue": "gpt-4o" } },
+                { "key": "gen_ai.response.model", "value": { "stringValue": "gpt-4o-2024-08-06" } },
+                { "key": "gen_ai.response.id", "value": { "stringValue": "chatcmpl-AYk3gR7Lz5yMPnOGH8kT1wQ" } },
+                {
+                  "key": "gen_ai.response.finish_reasons",
+                  "value": { "arrayValue": { "values": [{ "stringValue": "stop" }] } }
+                },
+                { "key": "gen_ai.usage.input_tokens", "value": { "intValue": "24" } },
+                { "key": "gen_ai.usage.output_tokens", "value": { "intValue": "156" } },
+                {
+                  "key": "gen_ai.input.messages",
+                  "value": {
+                    "stringValue": "[{\"role\":\"user\",\"parts\":[{\"type\":\"text\",\"content\":\"Explain the difference between REST and GraphQL APIs in a few sentences.\"}]}]"
+                  }
+                },
+                {
+                  "key": "gen_ai.output.messages",
+                  "value": {
+                    "stringValue": "[{\"role\":\"assistant\",\"parts\":[{\"type\":\"text\",\"content\":\"REST uses resource-specific endpoints; GraphQL uses a single query endpoint where clients request exact fields.\"}],\"finish_reason\":\"stop\"}]"
+                  }
+                }
+              ],
+              "events": [],
+              "links": [],
+              "status": {},
+              "flags": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
 ```
+
+</Accordion>
+
+<Accordion title="OpenTelemetry GenAI: additional Maxim metadata">
+
+For GenAI spans, pass additional values in `maxim.metadata` JSON.
+
+```json
+{
+  "key": "maxim.metadata",
+  "value": {
+    "stringValue": "{\"maxim-trace-name\":\"simple-chat\",\"maxim-trace-tags\":{\"environment\":\"production\"},\"maxim-tags\":{\"prompt-version\":\"v3.2.1\"},\"maxim-trace-metrics\":{\"user-satisfaction\":4.5},\"maxim-metrics\":{\"latency_ms\":870}}"
+  }
+}
+```
+
+</Accordion>
+
+<Accordion title="OpenInference: minimal `llm.*` + `openinference.span.kind` payload">
+
+For OpenInference, include `llm.*` attributes and set `openinference.span.kind`.
+
+```json
+{
+  "resourceSpans": [
+    {
+      "resource": {
+        "attributes": [
+          { "key": "service.name", "value": { "stringValue": "openinference-example" } }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": { "name": "openinference.instrumentation", "version": "1.0.0" },
+          "spans": [
+            {
+              "traceId": "2ea0f3d8a9d74f86bc889fbeeb2ed5d4",
+              "spanId": "3f4a7b9d1c2e8f60",
+              "name": "llm response",
+              "kind": "2",
+              "startTimeUnixNano": "1739340100000000000",
+              "endTimeUnixNano": "1739340100320000000",
+              "attributes": [
+                { "key": "openinference.span.kind", "value": { "stringValue": "LLM" } },
+                { "key": "llm.system", "value": { "stringValue": "openai" } },
+                { "key": "llm.model_name", "value": { "stringValue": "gpt-4o-mini" } },
+                { "key": "llm.token_count.prompt", "value": { "intValue": "36" } },
+                { "key": "llm.token_count.completion", "value": { "intValue": "48" } },
+                {
+                  "key": "metadata",
+                  "value": {
+                    "stringValue": "{\"maxim-trace-tags\":{\"team\":\"support-ai\"},\"maxim-tags\":{\"workflow\":\"triage\"},\"maxim-trace-metrics\":{\"quality\":0.93},\"maxim-metrics\":{\"latency_ms\":320}}"
+                  }
+                }
+              ],
+              "events": [
+                {
+                  "timeUnixNano": "1739340100050000000",
+                  "name": "llm.prompt",
+                  "attributes": [
+                    { "key": "content", "value": { "stringValue": "{\"content\":\"Summarize the ticket in one sentence.\"}" } }
+                  ]
+                },
+                {
+                  "timeUnixNano": "1739340100250000000",
+                  "name": "llm.completion",
+                  "attributes": [
+                    { "key": "content", "value": { "stringValue": "{\"content\":\"Customer requests prorated refund after annual plan cancellation.\"}" } }
+                  ]
+                }
+              ],
+              "links": [],
+              "status": {},
+              "flags": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+</Accordion>
+</AccordionGroup>
 
 ## Maxim-specific additional attributes
 
-Maxim supports the following additional attributes to enrich your traces:
+Maxim supports the following additional keys:
 
-- `maxim-trace-tags`: A `Map<string, string>` of tags that will be attached to the parent trace of the span (if the current node is a trace itself, this will be attached to the same trace).
-- `maxim-tags`: A `Map<string, string>` of tags that will be attached to the current node.
-- `maxim-trace-metrics`: A `Map<string, number>` of metrics that will be attached to the parent trace of the span (if the current node is a trace itself, this will be attached to the same trace).
-- `maxim-metrics`: A `Map<string, number>` of metrics that will be attached to the current node.
-    
+- `maxim-trace-tags`: `Map<string, string>` for parent trace tags
+- `maxim-tags`: `Map<string, string>` for current span/generation tags
+- `maxim-trace-metrics`: `Map<string, number>` for parent trace metrics
+- `maxim-metrics`: `Map<string, number>` for current span/generation metrics
+- `maxim-trace-name`: trace display name (GenAI path)
+
 <Note>
-For OpenInference, the above tags should be present in the `metadata` field of the OpenInference log line. Example shown below:
+Where to place these keys:
+- For OpenTelemetry GenAI (`gen_ai.*`): put them inside `maxim.metadata` (or `metadata`)
+- For OpenInference (`llm.*`): put them inside `metadata`
 </Note>
-
-```python
-    with using_attributes(
-        session_id="my-test-session",
-        user_id="my-test-user",
-        metadata={
-            "test-int": 1,
-            "test-str": "string",
-            "test-list": [1, 2, 3],
-            "test-dict": {
-                "key-1": "val-1",
-                "key-2": "val-2",
-            },
-            "maxim-trace-tags": {
-                "tag-1": "val-1",
-                "tag-2": "val-2",
-            },
-            "maxim-tags": {
-                "tag-3": "val-3",
-            },
-            "maxim-metrics": {
-                "metric-1": 1,
-                "metric-2": 2,
-            },
-            "maxim-trace-metrics": {
-                "trace-metric-1": 1,
-                "trace-metric-2": 2,
-            },
-        },
-        tags=["tag-1", "tag-2"],
-        prompt_template="Who won the soccer match in {city} on {date}",
-        prompt_template_version="v1.0",
-        prompt_template_variables={
-            "city": "Johannesburg",
-            "date": "July 11th",
-        },
-    ):
-```

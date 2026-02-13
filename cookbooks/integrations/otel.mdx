@@ -1,0 +1,179 @@
+---
+title: "Sending OTLP Traces to Maxim"
+description: "Learn how to send OpenTelemetry (OTLP) traces to Maxim for AI observability using the OpenTelemetry Python SDK and OpenAI instrumentation."
+---
+
+This cookbook shows how to send OTLP traces to Maxim's ingestion endpoint. You'll configure the OpenTelemetry Python SDK to export traces from an instrumented OpenAI client, then view them in your Maxim dashboard.
+
+## Prerequisites
+
+- Python 3.8+
+- [OpenTelemetry Python SDK](https://opentelemetry.io/docs/languages/python/) and OTLP exporter
+- [OpenTelemetry OpenAI Instrumentation](https://opentelemetry-python-contrib.readthedocs.io/en/latest/instrumentation-genai/openai.html) (`opentelemetry-instrumentation-openai`)
+- [OpenAI Python SDK](https://pypi.org/project/openai/)
+- [Maxim API key](/settings/maxim-api-keys) and Log Repository ID
+- [python-dotenv](https://pypi.org/project/python-dotenv/) (optional, for `.env`)
+
+## 1. Install Dependencies
+
+```bash
+pip install opentelemetry-api opentelemetry-sdk opentelemetry-exporter-otlp-proto-http opentelemetry-instrumentation-openai openai python-dotenv
+```
+
+## 2. Set Up Environment Variables
+
+Create a `.env` file in your project root:
+
+```env
+MAXIM_API_KEY=your_maxim_api_key_here
+MAXIM_LOG_REPO_ID=your_log_repository_id_here
+OPENAI_API_KEY=your_openai_api_key_here
+```
+
+<Note>
+Create a Log Repository in the [Maxim Dashboard](https://app.getmaxim.ai/) under **Logs > Repositories** if you don't have one yet.
+</Note>
+
+## 3. Configure OpenTelemetry and Export to Maxim
+
+Set up the OpenTelemetry SDK with an OTLP exporter that sends traces to Maxim:
+
+```python
+import os
+from dotenv import load_dotenv
+
+from opentelemetry import trace
+from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
+from opentelemetry.instrumentation.openai import OpenAIInstrumentor
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+
+load_dotenv()
+
+# Create tracer provider
+trace_provider = TracerProvider()
+
+# Configure OTLP exporter to Maxim
+trace_provider.add_span_processor(
+    BatchSpanProcessor(
+        OTLPSpanExporter(
+            endpoint="https://api.getmaxim.ai/v1/otel",
+            headers={
+                "x-maxim-api-key": os.getenv("MAXIM_API_KEY", ""),
+                "x-maxim-repo-id": os.getenv("MAXIM_LOG_REPO_ID", ""),
+            },
+        )
+    )
+)
+
+# Set as global tracer provider
+trace.set_tracer_provider(trace_provider)
+
+# Instrument OpenAI client to emit gen_ai.* traces
+OpenAIInstrumentor().instrument()
+```
+
+<Note>
+Use `BatchSpanProcessor` for production (batches spans before sending). For development or debugging, use `SimpleSpanProcessor` instead for immediate span export.
+</Note>
+
+## 4. Make an OpenAI Call
+
+Use the standard OpenAI client. Traces are automatically captured and sent to Maxim:
+
+```python
+from openai import OpenAI
+
+client = OpenAI()
+
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "user", "content": "Explain the difference between REST and GraphQL in two sentences."}
+    ],
+    max_tokens=256,
+)
+
+print(response.choices[0].message.content)
+```
+
+## 5. Visualize in Maxim
+
+All instrumented OpenAI calls are traced and appear in your [Maxim dashboard](https://app.getmaxim.ai/). Navigate to your Log Repository to view:
+
+- Input and output messages
+- Token usage and model information
+- Latency and timing
+
+## Quick Test with curl
+
+You can also send a minimal OTLP JSON payload directly:
+
+```bash
+curl -X POST "https://api.getmaxim.ai/v1/otel" \
+  -H "Content-Type: application/json" \
+  -H "x-maxim-api-key: $MAXIM_API_KEY" \
+  -H "x-maxim-repo-id: $MAXIM_LOG_REPO_ID" \
+  --data '{
+    "resourceSpans": [{
+      "resource": {
+        "attributes": [
+          {"key": "service.name", "value": {"stringValue": "otel-test-genai"}},
+          {"key": "telemetry.sdk.name", "value": {"stringValue": "otel-test"}},
+          {"key": "telemetry.sdk.language", "value": {"stringValue": "typescript"}},
+          {"key": "telemetry.sdk.version", "value": {"stringValue": "1.0.0"}}
+        ]
+      },
+      "scopeSpans": [{
+        "scope": {"name": "@opentelemetry/instrumentation-genai", "version": "0.1.0"},
+        "spans": [{
+          "traceId": "5f8c7f9a3ef14f67af716ef4cf4a9d23",
+          "spanId": "8f2c9c1c6e5d4b2a",
+          "name": "chat gpt-4o",
+          "kind": "2",
+          "startTimeUnixNano": "1739340000000000000",
+          "endTimeUnixNano": "1739340000850000000",
+          "attributes": [
+            {"key": "gen_ai.operation.name", "value": {"stringValue": "chat"}},
+            {"key": "gen_ai.provider.name", "value": {"stringValue": "openai"}},
+            {"key": "gen_ai.request.model", "value": {"stringValue": "gpt-4o"}},
+            {"key": "gen_ai.response.model", "value": {"stringValue": "gpt-4o-2024-08-06"}},
+            {"key": "gen_ai.agent.name", "value": {"stringValue": "simple-chat"}},
+            {"key": "gen_ai.response.id", "value": {"stringValue": "chatcmpl-AYk3gR7Lz5yMPnOGH8kT1wQ"}},
+            {"key": "gen_ai.response.finish_reasons", "value": {"arrayValue": {"values": [{"stringValue": "stop"}]}}},
+            {"key": "gen_ai.usage.input_tokens", "value": {"intValue": "24"}},
+            {"key": "gen_ai.usage.output_tokens", "value": {"intValue": "156"}},
+            {"key": "gen_ai.request.temperature", "value": {"doubleValue": 0.7}},
+            {"key": "gen_ai.request.max_tokens", "value": {"intValue": "1024"}},
+            {"key": "gen_ai.request.top_p", "value": {"doubleValue": 1.0}},
+            {"key": "server.address", "value": {"stringValue": "api.openai.com"}},
+            {"key": "server.port", "value": {"intValue": "443"}},
+            {"key": "maxim.metadata", "value": {"stringValue": "{\"maxim-trace-name\":\"simple-chat\"}"}},
+            {"key": "gen_ai.input.messages", "value": {"stringValue": "[{\"role\":\"user\",\"parts\":[{\"type\":\"text\",\"content\":\"Explain the difference between REST and GraphQL APIs in a few sentences.\"}]}]"}},
+            {"key": "gen_ai.output.messages", "value": {"stringValue": "[{\"role\":\"assistant\",\"parts\":[{\"type\":\"text\",\"content\":\"REST APIs use fixed endpoints where each URL represents a specific resource, and the server determines what data is returned. GraphQL, on the other hand, provides a single endpoint where clients can specify exactly what data they need using a query language, reducing over-fetching and under-fetching. REST relies on HTTP methods (GET, POST, PUT, DELETE) for operations, while GraphQL uses queries and mutations. This makes GraphQL more flexible for complex data requirements, though REST can be simpler for straightforward CRUD operations.\"}],\"finish_reason\":\"stop\"}]"}}
+          ],
+          "events": [],
+          "links": [],
+          "status": {},
+          "flags": 0
+        }]
+      }]
+    }]
+  }'
+```
+
+## Enriching Traces with Maxim Attributes
+
+You can add tags and metrics to traces using Maxim-specific attributes (`maxim-trace-tags`, `maxim-tags`, `maxim-trace-metrics`, `maxim-metrics`). Place them inside `maxim.metadata` or `metadata` depending on your convention. For the full attribute reference and OpenInference support, see [Ingesting via OTLP](/tracing/opentelemetry/ingesting-via-otlp).
+
+---
+
+For more details, see the [OpenTelemetry Python documentation](https://opentelemetry.io/docs/languages/python/) and [Ingesting via OTLP](/tracing/opentelemetry/ingesting-via-otlp).
+
+## Resources
+
+<CardGroup cols="1">
+    <Card title="OTLP Ingestion Reference" icon="book" href="/tracing/opentelemetry/ingesting-via-otlp">
+        Full endpoint specs, conventions, and payload examples
+    </Card>
+</CardGroup>

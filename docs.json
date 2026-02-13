@@ -825,7 +825,8 @@
                             "cookbooks/integrations/together",
                             "cookbooks/integrations/smolagents",
                             "cookbooks/integrations/llamaindex",
-                            "cookbooks/integrations/openai-realtime"
+                            "cookbooks/integrations/openai-realtime",
+                            "cookbooks/integrations/otel"
                         ]
                     },
                     {
