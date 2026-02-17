@@ -358,6 +358,12 @@
                             "settings/setup-sso-with-okta",
                             "settings/setup-sso-with-google"
                         ]
+                    },
+                    {
+                        "group": "CI/CD",
+                        "pages": [
+                            "cicd/maxim-cli"
+                        ]
                     }
                 ]
             },

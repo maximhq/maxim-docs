@@ -1,0 +1,142 @@
+---
+title: Maxim CLI
+slug: maximcli
+index: 2
+group: CICD
+---
+
+## Installation
+
+```bash title="Shell command to install the CLI"
+wget https://downloads.getmaxim.ai/cli/<VERSION>/<OS>/<ARCH>/maxim
+```
+
+```bash title="Example: for linux amd64"
+wget https://downloads.getmaxim.ai/cli/v1/linux/amd64/maxim
+```
+
+<Callout>
+Use .exe extension for windows downloads. For example <br/>`wget https://downloads.getmaxim.ai/cli/v1/windows/amd64/maxim.exe`
+</Callout>
+
+### Supported OS + ARCH
+
+<table class="border-collapse w-[200px]">
+<tbody>
+<tr class="px-2 border border-content-tertiary bg-background-highlight-secondary">
+<td class="px-2 font-medium border border-content-tertiary">OS</td>
+<td class="px-2 font-medium border border-content-tertiary">ARCH</td>
+</tr>
+<tr class="px-2 border border-content-tertiary">
+<td class="px-2 border border-content-tertiary">Linux</td>
+<td class="px-2 border border-content-tertiary">amd64</td>
+</tr>
+<tr class="px-2 border border-content-tertiary">
+<td class="px-2 border border-content-tertiary">Linux</td>
+<td class="px-2 border border-content-tertiary">386</td>
+</tr>
+<tr class="px-2 border border-content-tertiary">
+<td class="px-2 border border-content-tertiary">Darwin</td>
+<td class="px-2 border border-content-tertiary">amd64</td>
+</tr>
+<tr class="px-2 border border-content-tertiary">
+<td class="px-2 border border-content-tertiary">Darwin</td>
+<td class="px-2 border border-content-tertiary">arm64</td>
+</tr>
+<tr class="px-2 border border-content-tertiary">
+<td class="px-2 border border-content-tertiary">Windows</td>
+<td class="px-2 border border-content-tertiary">amd64</td>
+</tr>
+<tr class="px-2 border border-content-tertiary">
+<td class="px-2 border border-content-tertiary">Windows</td>
+<td class="px-2 border border-content-tertiary">386</td>
+</tr>
+</tbody>
+</table>
+
+## Env Variables
+
+You will require to set these environment variables before using the CLI.
+
+<table class="border-collapse">
+<tbody>
+<tr class="px-2 border border-content-tertiary bg-background-highlight-secondary">
+<td class="px-2 font-medium border border-content-tertiary">Name</td>
+<td class="px-2 font-medium border border-content-tertiary">Value</td>
+</tr>
+<tr class="px-2 border border-content-tertiary">
+<td class="px-2 border border-content-tertiary">MAXIM_API_KEY</td>
+<td class="px-2 border border-content-tertiary">API Key from Settings</td>
+</tr>
+</tbody>
+</table>
+
+## Trigger a test run
+
+```bash title="Shell command to trigger a test run"
+maxim test -w <workflow_id> -d <dataset_id> -e <evaluator_names separated by comma>  --json
+```
+
+<table class="border-collapse">
+<tbody>
+<tr class="px-2 border border-content-tertiary bg-background-highlight-secondary">
+<td class="px-2 font-medium border border-content-tertiary">Argument</td>
+<td class="px-2 font-medium border border-content-tertiary">Description</td>
+</tr>
+<tr class="px-2 border border-content-tertiary">
+<td class="px-2 border border-content-tertiary">-w</td>
+<td class="px-2 border border-content-tertiary">Workflow ID or IDs. If you send more than one ID (comma separated), it will create a comparison run.</td>
+</tr>
+<tr class="px-2 border border-content-tertiary">
+<td class="px-2 border border-content-tertiary">-d</td>
+<td class="px-2 border border-content-tertiary">Dataset ID</td>
+</tr>
+<tr class="px-2 border border-content-tertiary">
+<td class="px-2 border border-content-tertiary">-e</td>
+<td class="px-2 border border-content-tertiary">Evaluator names. Eg `Bias,BLEU`</td>
+</tr>
+<tr class="px-2 border border-content-tertiary">
+<td class="px-2 border border-content-tertiary">--json</td>
+<td class="px-2 border border-content-tertiary">Output in JSON (optional)</td>
+</tr>
+</tbody>
+</table>
+
+## Programmatic Evaluator Management
+
+```bash title="Shell command to push an evaluator"
+maxim evaluator push --file <file_path> --workspace <workspace_id> --name <evaluator_name>
+```
+
+<table class="border-collapse">
+<tbody>
+<tr class="px-2 border border-content-tertiary bg-background-highlight-secondary">
+<td class="px-2 font-medium border border-content-tertiary">Argument</td>
+<td class="px-2 font-medium border border-content-tertiary">Description</td>
+</tr>
+<tr class="px-2 border border-content-tertiary">
+<td class="px-2 border border-content-tertiary">--file</td>
+<td class="px-2 border border-content-tertiary">Path to evaluator code file (.py, .js, .mjs, .cjs)</td>
+</tr>
+<tr class="px-2 border border-content-tertiary">
+<td class="px-2 border border-content-tertiary">--workspace</td>
+<td class="px-2 border border-content-tertiary">Workspace ID</td>
+</tr>
+<tr class="px-2 border border-content-tertiary">
+<td class="px-2 border border-content-tertiary">--name</td>
+<td class="px-2 border border-content-tertiary">Evaluator name</td>
+</tr>
+<tr class="px-2 border border-content-tertiary">
+<td class="px-2 border border-content-tertiary">--response-type</td>
+<td class="px-2 border border-content-tertiary">Response type (Boolean, Number, String). Default: Number</td>
+</tr>
+<tr class="px-2 border border-content-tertiary">
+<td class="px-2 border border-content-tertiary">--pass-criteria</td>
+<td class="px-2 border border-content-tertiary">Pass/fail criteria as JSON (e.g. '&#123;"entryLevel":&#123;"name":"score","operator":">=","value":0.9&#125;,"runLevel":&#123;"name":"queriesPassed","operator":">=","value":90&#125;&#125;')</td>
+</tr>
+<tr class="px-2 border border-content-tertiary">
+<td class="px-2 border border-content-tertiary">--optional-variables</td>
+<td class="px-2 border border-content-tertiary">Comma-separated list of variable names to mark as optional (e.g. 'context,metadata')</td>
+</tr>
+</tbody>
+</table>
