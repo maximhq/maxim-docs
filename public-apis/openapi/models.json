@@ -1,0 +1,413 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "contact": {
+      "name": "Maxim Engineering",
+      "email": "eng@getmaxim.ai"
+    },
+    "title": "Maxim SDK API - models",
+    "description": "API documentation for Maxim SDK models endpoints"
+  },
+  "servers": [
+    {
+      "url": "https://api.getmaxim.ai"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-maxim-api-key",
+        "description": "API key for authentication"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "paths": {
+    "/v1/models": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Models"
+        ],
+        "description": "Get all configured model providers.",
+        "summary": "Get model providers",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ],
+              "description": "Whether to include models in the response"
+            },
+            "required": false,
+            "name": "includeModels",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Model providers retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "Provider name (e.g., openai, anthropic, azure)"
+                          },
+                          "accountId": {
+                            "type": "string"
+                          },
+                          "workspaceId": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "keys": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "type": "string",
+                                  "description": "Masked API key value"
+                                },
+                                "providerId": {
+                                  "type": "string"
+                                },
+                                "enabled": {
+                                  "type": "boolean"
+                                },
+                                "meta": {
+                                  "nullable": true
+                                },
+                                "customPricingStructureId": {
+                                  "type": "string",
+                                  "nullable": true
+                                },
+                                "models": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string"
+                                      },
+                                      "label": {
+                                        "type": "string"
+                                      },
+                                      "name": {
+                                        "type": "string"
+                                      },
+                                      "provider": {
+                                        "type": "string"
+                                      },
+                                      "config": {
+                                        "nullable": true
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "label",
+                                      "name",
+                                      "provider"
+                                    ]
+                                  },
+                                  "description": "Included when includeModels=true"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "updatedAt": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "name",
+                                "value",
+                                "providerId",
+                                "enabled",
+                                "createdAt",
+                                "updatedAt"
+                              ]
+                            }
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "accountId",
+                          "keys",
+                          "createdAt",
+                          "updatedAt"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Models"
+        ],
+        "description": "Update an existing model provider key configuration",
+        "summary": "Update model provider key",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier of the model provider key to update"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Name for the API key configuration"
+                  },
+                  "value": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The API key value (omit to keep existing value)"
+                  },
+                  "models": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "List of model IDs to associate with this key"
+                  },
+                  "meta": {
+                    "type": "object",
+                    "properties": {
+                      "key2": {
+                        "type": "string",
+                        "description": "Secondary API key for Azure"
+                      },
+                      "secretAccessKey": {
+                        "type": "string",
+                        "description": "Secret access key for AWS Bedrock"
+                      },
+                      "sessionToken": {
+                        "type": "string",
+                        "description": "Session token for AWS Bedrock"
+                      }
+                    },
+                    "description": "Key-related metadata fields. Includes key2 for Azure, secretAccessKey and sessionToken for Bedrock."
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "description": "Whether the key is enabled"
+                  },
+                  "customPricingStructureId": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "ID of a custom pricing structure to use for this key"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Model provider key updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string",
+                          "description": "Masked API key value"
+                        },
+                        "providerId": {
+                          "type": "string"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "meta": {
+                          "nullable": true
+                        },
+                        "customPricingStructureId": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "models": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "provider": {
+                                "type": "string"
+                              },
+                              "config": {
+                                "nullable": true
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "label",
+                              "name",
+                              "provider"
+                            ]
+                          },
+                          "description": "Included when includeModels=true"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "value",
+                        "providerId",
+                        "enabled",
+                        "createdAt",
+                        "updatedAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Model provider key not found"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Models"
+        ],
+        "description": "Delete a model provider key configuration",
+        "summary": "Delete model provider key",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Unique identifier of the model provider key to delete"
+            },
+            "required": true,
+            "name": "id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Model provider key deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "success"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "404": {
+            "description": "Model provider key not found"
+          }
+        }
+      }
+    }
+  }
+}

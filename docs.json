@@ -769,6 +769,13 @@
                         }
                     },
                     {
+                        "group": "Models",
+                        "openapi": {
+                            "source": "public-apis/openapi/models.json",
+                            "directory": "Models"
+                        }
+                    },
+                    {
                         "group": "Test runs",
                         "openapi": {
                             "source": "public-apis/openapi/test-runs.json",
