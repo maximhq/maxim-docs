@@ -118,7 +118,8 @@
                                         ]
                                     },
                                     "offline-evals/via-sdk/local-agent",
-                                    "offline-evals/via-sdk/offline-evals-via-logging"
+                                    "offline-evals/via-sdk/offline-evals-via-logging",
+                                    "offline-evals/via-sdk/simulation"
                                 ]
                             },
                             {
@@ -988,6 +989,14 @@
         }
     },
     "redirects": [
+        {
+            "source": "/offline-evals/via-sdk/prompts/simulation",
+            "destination": "/offline-evals/via-sdk/simulation"
+        },
+        {
+            "source": "/offline-evals/via-sdk/agent-http/simulation",
+            "destination": "/offline-evals/via-sdk/simulation"
+        },
         {
             "source": "/",
             "destination": "/introduction/overview"

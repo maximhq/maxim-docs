@@ -14,6 +14,8 @@ class TestRunBuilder(Generic[T])
 
 Builder for test runs.
 
+**Execution flow:** With platform evaluators only (e.g. `"Bias"`), the SDK pushes entries and the Maxim platform runs the prompt or workflow. With local evaluators or `yields_output()`, the SDK runs the prompt/workflow locally (or calls your output function) and then runs evaluators locally.
+
 #### \_\_init\_\_
 
 ```python
@@ -70,7 +72,7 @@ def with_evaluators(
         *evaluators: Union[str, BaseEvaluator]) -> "TestRunBuilder[T]"
 ```
 
-Add evaluators to the test run
+Add evaluators to the test run. Use platform evaluators by name (e.g. `"Bias"`) or `BaseEvaluator` instances for local evaluators. With local evaluators, the SDK runs the prompt/workflow locally to get output before evaluating.
 
 **Arguments**:
 
@@ -186,22 +188,49 @@ Set the prompt chain version ID for the test run. Optionally, you can also set t
 
 - `ValueError` - If a workflow ID, prompt version ID or output function is already set for this run builder
 
-#### yields\_output
+#### with\_simulation\_config
 
 ```python
-def yields_output(
-    output_function: Callable[[LocalData], Union[YieldedOutput,
-                                                 Awaitable[YieldedOutput]]]
-) -> "TestRunBuilder[T]"
+def with_simulation_config(simulation_config: SimulationConfig) -> "TestRunBuilder[T]"
 ```
 
-Set the output function for the test run
+Set the simulation configuration for the test run. Use this to run AI-simulated multi-turn conversations against your prompt or workflow.
+
+**Execution flow:** With platform evaluators only, the simulation runs on the Maxim platform. With local evaluators, the SDK fetches simulation output and runs your evaluators locally.
+
+When used with `yields_output()`, the SDK runs your output function locally in a turn-by-turn loop. You can omit both `with_prompt_version_id()` and `with_workflow_id()` for SDK-only simulation. Your function receives `SimulationContext` with `conversation_history`, `current_user_input`, `turn_number`, `total_cost`, and `total_tokens`. Use `turn.response.get("output", "")` for the assistant's text in each turn.
 
 **Arguments**:
 
 | Name | Type | Description |
 |------|------|-------------|
-| `output_function` | _Callable[[T], Union[[[YieldedOutput](/sdk/python/references/models/test_run)](/sdk/python/references/models/test_run), Awaitable[YieldedOutput]]]_ | The output function to use |
+| `simulation_config` | _SimulationConfig_ | The simulation configuration (e.g., `max_turns`, `persona`) |
+
+**Returns**:
+
+| Name | Description |
+|------|-------------|
+| `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` | The current TestRunBuilder instance for method chaining |
+
+**Raises**:
+
+- `ValueError` - If simulation config is used with `with_prompt_chain_version_id` (use `with_workflow_id` or `with_prompt_version_id` instead)
+
+#### yields\_output
+
+```python
+def yields_output(
+    output_function: Callable[..., Union[YieldedOutput, Awaitable[YieldedOutput]]]
+) -> "TestRunBuilder[T]"
+```
+
+Set the output function for the test run. When combined with `with_simulation_config()`, enables local-execution simulation where your function is called turn-by-turn with `SimulationContext` (conversation history, current user input, turn number, total_cost, total_tokens). You can omit both `with_prompt_version_id()` and `with_workflow_id()` for SDK-only simulation. Use `turn.response.get("output", "")` for the assistant's text in each turn of `conversation_history`.
+
+**Arguments**:
+
+| Name | Type | Description |
+|------|------|-------------|
+| `output_function` | _Callable[[LocalData] or [LocalData, Optional[SimulationContext]], Union[[YieldedOutput](/sdk/python/references/models/test_run), Awaitable[YieldedOutput]]]_ | The output function. Accepts `(data, simulation_context)` when used with simulation |
 
 **Returns**:
 
