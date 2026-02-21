@@ -1,0 +1,49 @@
+---
+title: "Prompt Engineering With Maxim Build Compare And Evaluate Prompts"
+---
+
+In this cookbook, we’ll walk you through the process of prompt engineering within the Maxim platform. Selecting the right prompt is an iterative process -- one that fundamentally shapes how your agent behaves and defines the user experience.
+
+TL;DR
+
+We’ll explore how to manage and version prompts, compare different prompt iterations, create reusable prompt templates, and evaluate prompt quality and performance against real user queries. Together, these practices enable you to build AI agents that are robust, reliable, and ready for real-world use.
+
+<iframe src="https://www.youtube.com/embed/8BBwVjnF8Ls" title="YouTube video player" frameborder="0" className="w-full aspect-video rounded-xl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen />
+
+Here, we’ll experiment with the prompt of a Coding Agent that performs two primary functions: generating new code (e.g., creating a JavaScript function for random hex code selection) and improving existing code (refactoring).
+
+## Set up a prompt experiment
+
+When building an AI agent, the ability to rapidly experiment is crucial. For product teams, it’s equally important to replicate agent behavior without writing code or updating the codebase each time just to test a minor prompt change.
+
+With the Maxim UI, you can define your [system message](https://www.getmaxim.ai/docs/prompt-engineering/prompt-playground#adding-system-and-user-prompts), [select the model](https://www.getmaxim.ai/docs/prompt-engineering/prompt-playground#selecting-a-model) of your choice, and run user queries to analyze how the agent responds based on the given instructions. As you refine your prompts, you can [adjust model parameters](https://www.getmaxim.ai/docs/prompt-engineering/prompt-playground#configuring-parameters), attach tools and variables, and define output formats -- allowing you to iterate quickly, even on complex prompts.
+
+<iframe src="https://www.youtube.com/embed/8BBwVjnF8Ls?start=40" title="YouTube video player" frameborder="0" className="w-full aspect-video rounded-xl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen />
+
+## Manage and compare prompt versions
+
+Run side-by-side comparisons across different [prompt iterations](https://www.getmaxim.ai/docs/prompt-engineering/prompt-versions), for e.g., compare how different models perform with the same prompt or experiment with varying system messages. [Evaluate how each version](https://www.getmaxim.ai/docs/prompt-engineering/prompt-versions#compare-prompt-versions) responds to the same user query, and analyze differences in generation quality, cost, and latency.
+
+Once you’re satisfied with a configuration, you can publish that version, ensuring a clear changelog of your prompt’s evolution as you continue to iterate.
+
+<iframe src="https://www.youtube.com/embed/8BBwVjnF8Ls?start=185" title="YouTube video player" frameborder="0" className="w-full aspect-video rounded-xl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen />
+
+## Structure prompts with partials and conditional statements
+
+As your prompts grow more complex, copying repeated blocks of text -- such as global rules or output formatting guidelines -- into every agent prompt becomes inefficient. [Prompt Partials](https://www.getmaxim.ai/docs/prompt-engineering/prompt-partials) let you treat these components as reusable templates, keeping prompts clean and ensuring that updates to your core guidelines automatically propagate across all agents that use them.
+
+Use Jinja2 syntax to define conditional (if-else) logic directly in your prompt. This enables you to create a dynamic prompt that adapts based on variables or the context of the user’s request, running different instructions as needed and eliminating the need to maintain separate prompts for every scenario.
+
+<iframe src="https://www.youtube.com/embed/8BBwVjnF8Ls?start=318" title="YouTube video player" frameborder="0" className="w-full aspect-video rounded-xl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen />
+
+## Evaluation runs on prompts
+
+Trigger a test run to [evaluate your prompt](https://www.getmaxim.ai/docs/offline-evals/via-ui/prompts/prompt-evals#prompt-evals) across hundreds of user queries. The evaluation run report provides a comprehensive view of agent performance and output quality, enabling you to make metric-driven decisions by clearly highlighting the trade-offs between [different versions](https://www.getmaxim.ai/docs/prompt-engineering/prompt-versions). Explore in more detail in this cookbook \<link this\>.
+
+Since real-world LLM interactions are rarely single-turn, you can also attach the conversation history to your test dataset to include prior [multi-turn](https://www.getmaxim.ai/docs/library/evaluators/variables-mapping#multi-turn-prompts) exchanges between the user and the LLM, alongside your Input, when running prompt tests. This provides essential context, enabling the model to understand the ongoing dialogue instead of treating each query in isolation.
+
+<iframe src="https://www.youtube.com/embed/8BBwVjnF8Ls?start=640" title="YouTube video player" frameborder="0" className="w-full aspect-video rounded-xl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen />
+
+<Note>
+  [Connect with the Maxim team](https://www.getmaxim.ai/demo) for hands-on support in setting up prompt experiments and evaluations for your use cases.
+</Note>
