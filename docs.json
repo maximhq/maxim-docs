@@ -823,6 +823,14 @@
                 "tab": "Cookbooks",
                 "groups": [
                     {
+                        "group": "Product Cookbooks",
+                        "pages": [
+                            "cookbooks/product-cookbooks/pm-cookbook-foundations-of-a-repeatable-evals-process",
+                            "cookbooks/product-cookbooks/observability-processes-for-effective-error-analysis-as-a-pm",
+                            "cookbooks/product-cookbooks/prompt-engineering-with-maxim-build-compare-and-evaluate-prompts"
+                        ]
+                    },
+                    {
                         "group": "Integrations",
                         "pages": [
                             "cookbooks/integrations/agno",
