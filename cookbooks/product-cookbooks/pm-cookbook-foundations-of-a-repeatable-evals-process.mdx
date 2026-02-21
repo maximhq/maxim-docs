@@ -1,18 +1,16 @@
 ---
-title: "PM Cookbook Foundations Of A Repeatable Evals Process"
+title: "PM Cookbook: Foundations of a Repeatable Evals Process"
+description: "In this cookbook, we’ll help you set up the foundation for measuring and improving the quality of your AI agents, while defining a repeatable and collaborative evaluation process across the AI development lifecycle."
 ---
-
-In this cookbook, we’ll help you set up the foundation for measuring and improving the quality of your AI agents, while defining a repeatable and collaborative evaluation process across the AI development lifecycle.
 
 Flow of this cookbook:
 
-1. **Prompt Engineering**: Iterate on prompts and model choices, compare multiple versions, and identify the best combination for your use case.
-2. **Offline Evals**[:](https://www.getmaxim.ai/docs/offline-evals/overview) Test your agent’s performance across hundreds of user queries and scenarios, and define the quality metrics that matter most, using Maxim’s built-in or your own custom evals.
-3. **Observability**: Log and trace complex agentic trajectories and get real-time insight into quality, performance, and failure modes.
-4. **Online Evals**: Run continuous quality checks on production logs, receive proactive alerts on performance/quality degradation, and improve agents over time.
+1. **Prompt Engineering:** Iterate on prompts and model choices, compare multiple versions, and identify the best combination for your use case.
+2. **Offline Evals:** Test your agent’s performance across hundreds of user queries and scenarios, and define the quality metrics that matter most, using Maxim’s built-in or your own custom evals.
+3. **Observability:** Log and trace complex agentic trajectories and get real-time insight into quality, performance, and failure modes.
+4. **Online Evals:** Run continuous quality checks on production logs, receive proactive alerts on performance/quality degradation, and improve agents over time.
 
-\
-Here, we’ll walk through an example of a healthcare scribing agent that takes a doctor–patient conversation and a patient ID as input, checks the patient’s history, and generates structured clinical documentation.
+> Here, we’ll walk through an example of a healthcare scribing agent that takes a doctor–patient conversation and a patient ID as input, checks the patient’s history, and generates structured clinical documentation.
 
 <iframe src="https://www.youtube.com/embed/DRGrw7Nfazo" title="YouTube video player" frameborder="0" className="w-full aspect-video rounded-xl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen />
 
@@ -22,9 +20,9 @@ The starting point for any AI product involves experimenting with prompts, model
 
 In this section, we will set up and run prompt experiments using the Maxim UI:
 
-1. Define system and user messages, and select from 1,000+ [models](https://www.getmaxim.ai/docs/settings/model-configuration#model-configuration) supported across providers on the platform.
-2. Run manual iterations to refine prompts and adjust [model parameters](https://www.getmaxim.ai/docs/sdk/typescript/reference/core/classes/MaximLogger#parameters) such as temperature or response format.
-3. Attach tools to your prompt as needed. In this example, we’ll attach an API-based prompt tool that retrieves a patient’s history from the database using their patient ID, and uses that for clinical note generation.
+1. Define system and user messages, and select from [1,000+ models](https://www.getmaxim.ai/docs/settings/model-configuration#model-configuration) supported across providers on the platform.
+2. Run manual iterations to refine prompts and adjust model parameters such as temperature or response format.
+3. Attach tools to your prompt as needed. In this example, we’ll attach an API-based prompt tool that retrieves a patient’s history from the database using their patient ID and uses that for clinical note generation.
 4. Manage [multiple versions of a prompt](https://www.getmaxim.ai/docs/prompt-engineering/prompt-versions) and run side-by-side comparisons to evaluate differences in generated output.
 
 <iframe src="https://www.youtube.com/embed/DRGrw7Nfazo?start=118" title="YouTube video player" frameBorder="0" className="w-full aspect-video rounded-xl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
@@ -36,14 +34,14 @@ However, manual validation is difficult to scale beyond a few test cases.
 To build confidence in your workflows and evaluate quality at scale, we’ll set up and run [automated evaluations](https://www.getmaxim.ai/docs/offline-evals/via-ui/prompts/prompt-evals#prompt-evals) on different versions of the prompt and evaluate their performance across multiple queries and scenarios.
 
 - First, we’ll create a [test dataset](https://www.getmaxim.ai/docs/library/datasets/import-or-create-datasets#import-or-create-datasets), which in this case is a collection of doctor–patient interaction transcripts and corresponding patient IDs.
-  - During test runs, each transcript is passed to the agent along with the fetched patient history. You can analyze the quality of the generated notes using Maxim’s built-in and [custom evals](https://www.getmaxim.ai/docs/library/evaluators/custom-evaluators#custom-evaluators).
-- Next, to measure key metrics of your agent’s quality, we’ll attach evaluators to our test runs. You can use Maxim’s [built-in evals](https://www.getmaxim.ai/docs/library/evaluators/pre-built-evaluators/overview) or create [custom](https://www.getmaxim.ai/docs/library/evaluators/custom-evaluators), domain-specific evaluators to ensure key SOPs are being followed.
+  - During test runs, each transcript is passed to the agent along with the fetched patient history. You can analyze the quality of the generated notes using Maxim’s [built-in](https://maximai.mintlify.app/library/evaluators/pre-built-evaluators/overview) and [custom evals](https://www.getmaxim.ai/docs/library/evaluators/custom-evaluators#custom-evaluators).
+- Next, to measure key metrics of your agent’s quality, we’ll attach evaluators to our test runs. You can use Maxim’s built-in evals or create custom, domain-specific evaluators to ensure key SOPs are being followed.
   - Use [human evals](https://www.getmaxim.ai/docs/library/evaluators/custom-evaluators#human-evaluators) to ask SMEs to score outputs directly in the report, or use Maxim’s [human-annotator dashboard](https://www.getmaxim.ai/docs/release-notes/Dec-2025/External-human-annotation-of-logs#external-human-annotation-of-logs) to request external SMEs to rate outputs and add comments or corrections without requiring access to the main platform.
 - Trigger evaluation runs to compare which agent version performs best, and make informed decisions by combining evaluation metrics with model parameters such as cost, latency, etc.
 
 <iframe src="https://www.youtube.com/embed/DRGrw7Nfazo?start=462" title="YouTube video player" frameBorder="0" className="w-full aspect-video rounded-xl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
 
-The evaluation run report provides a comprehensive view of agent performance and output quality, enabling you to make metric-driven decisions by clearly highlighting the trade-offs between [different versions](https://www.getmaxim.ai/docs/prompt-engineering/prompt-versions).
+**Evaluation run report** provides a comprehensive view of agent performance and output quality, enabling you to make metric-driven decisions by clearly highlighting the trade-offs between [different versions](https://www.getmaxim.ai/docs/prompt-engineering/prompt-versions).
 
 - Get a high-level summary of evaluation scores and agent performance, along with a unified comparison view that shows the input parameters, tools called, generated output, and eval scores for each test case across different versions of the agent.
 - Filter by quality metrics and dig deeper into specific test cases to analyze the generated output and evaluator reasoning -- understand why a particular score was given, identify failure modes, and use those insights to improve your agents.
@@ -59,7 +57,7 @@ To ensure the reliability of AI workflows, it is essential to maintain complete 
 - Track key performance metrics like cost, tokens, latency, user feedback etc. and monitor their trends over time through [interactive charts](https://www.getmaxim.ai/docs/tracing/dashboard).
 - Use the omnibar to [search and filter through logs](https://www.getmaxim.ai/docs/tracing/dashboard#create-filters-and-saved-views), navigate to failure cases, and dig deeper into these scenarios to understand what went wrong. Save these views to revisit them over time.
 
-These logs and [traces](https://www.getmaxim.ai/docs/tracing/tracing-via-sdk/traces) serve as a structured source of insight - enabling teams to identify recurring failure modes through error analysis, uncover common themes and agent behavior patterns, and surface edge cases. These insights help establish a continuous feedback loop between production and development.
+These logs and traces serve as a structured source of insight - enabling teams to identify recurring failure modes through error analysis, uncover common themes and agent behavior patterns, and surface edge cases. These insights help establish a continuous feedback loop between production and development.
 
 <iframe src="https://www.youtube.com/embed/DRGrw7Nfazo?start=1117" title="YouTube video player" frameBorder="0" className="w-full aspect-video rounded-xl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
 
@@ -67,10 +65,10 @@ These logs and [traces](https://www.getmaxim.ai/docs/tracing/tracing-via-sdk/tra
 
 As production traffic scales, manually reviewing every log, trace, or span becomes impractical. [Online evaluations](https://www.getmaxim.ai/docs/online-evals/overview) enable continuous, automated quality checks on agent performance -- scoring granular interactions, including sessions, traces, spans, generations, retrieval steps, and tool calls, against defined metrics and surfacing those that fall below quality thresholds.
 
-- [Set up online evaluations on production logs](https://www.getmaxim.ai/docs/online-evals/via-ui/set-up-auto-evaluation-on-logs) using the same type of evals applied pre-release, giving you a holistic view of agent quality across the entire development lifecycle.
+- Set up [online evaluations on production logs](https://www.getmaxim.ai/docs/online-evals/via-ui/set-up-auto-evaluation-on-logs) using the same type of evals applied pre-release, giving you a holistic view of agent quality across the entire development lifecycle.
 - Configure [automated alerts](https://www.getmaxim.ai/docs/online-evals/set-up-alerts-and-notifications) to receive real-time notifications whenever performance or quality metrics degrade, or when a custom error condition is triggered, ensuring the user experience is not impacted.
 - Narrow down the low-scoring logs/traces and analyze them to identify root causes and recurring failure modes.
-- Annotate these interactions, rewrite corrected outputs and use them to [curate and refine your test datasets](https://www.getmaxim.ai/docs/online-evals/via-ui/set-up-auto-evaluation-on-logs#dataset-curation) -- creating new ground truth for future agent iterations and evaluation runs.
+- Annotate these interactions, rewrite corrected outputs, and use them to [curate and refine your test datasets](https://www.getmaxim.ai/docs/online-evals/via-ui/set-up-auto-evaluation-on-logs#dataset-curation) -- creating new ground truth for future agent iterations and evaluation runs.
 
 <iframe src="https://www.youtube.com/embed/DRGrw7Nfazo?start=1249" title="YouTube video player" frameBorder="0" className="w-full aspect-video rounded-xl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
 
@@ -78,8 +76,6 @@ As production traffic scales, manually reviewing every log, trace, or span becom
 
 We hope this cookbook helps you set up a repeatable process to ensure the reliability of your agent at every stage of development, enabling you to move faster on your product roadmap while keeping user trust at the core of your AI products.
 
-<Info>
+<Tip>
   [Connect with the Maxim team](https://www.getmaxim.ai/demo) for hands-on support in setting up evals for your production use cases.
-</Info>
-
----
+</Tip>

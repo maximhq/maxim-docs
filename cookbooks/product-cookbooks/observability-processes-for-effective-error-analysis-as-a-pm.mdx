@@ -1,18 +1,15 @@
 ---
-title: "Observability Processes For Effective Error Analysis As A PM"
+title: "Observability Processes for Effective Error Analysis as a PM"
+description: "There is no evals without observability. To identify failure modes and improve agent quality, you need granular visibility into complex agentic trajectories -- including model responses, retrieval steps, and tool calls -- along with the ability to monitor production metrics like latency, cost, token usage, and evaluation scores."
 ---
-
-There is no evals without observability. To identify failure modes and improve agent quality, you need granular visibility into complex agentic trajectories -- including model responses, retrieval steps, and tool calls -- along with the ability to monitor production metrics like latency, cost, token usage, and evaluation scores.
 
 In this cookbook, we will discuss how a robust [observability](https://www.getmaxim.ai/docs/introduction/overview#3-observability) process is critical to shipping reliable AI workflows.
 
-TL;DR
-
-We’ll learn how to analyze detailed traces, filter logs to identify failure cases, run automated and human evaluations on production data, set up real-time alerts, and refine test datasets using production interactions.
+**TL;DR**: We’ll learn how to analyze detailed traces, filter logs to identify failure cases, run automated and human evaluations on production data, set up real-time alerts, and refine test datasets using production interactions.
 
 <iframe src="https://www.youtube.com/embed/f-QCKA46ZZM" title="YouTube video player" frameborder="0" className="w-full aspect-video rounded-xl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen />
 
-Here, we’ll take an example of an Insurance Claims Processing Agent. This agent accepts a user’s claim request (including policy documents and incident descriptions), extracts the evidence, retrieves the relevant policy details, does coverage analysis, and outputs a final decision on whether the claim should be processed.
+> Here, we’ll take an example of an Insurance Claims Processing Agent. This agent accepts a user’s claim request (including policy documents and incident descriptions), extracts the evidence, retrieves the relevant policy details, does coverage analysis, and outputs a final decision on whether the claim should be processed.
 
 ## Analyze Logs and Traces
 
@@ -29,7 +26,7 @@ Use the [detailed trace view](https://www.getmaxim.ai/docs/tracing/tracing-via-s
 
 <iframe src="https://www.youtube.com/embed/f-QCKA46ZZM?start=46" title="YouTube video player" frameBorder="0" className="w-full aspect-video rounded-xl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
 
-## Search and Filter Through Logs
+## Search and Filter through Logs
 
 As your application scales, manually reviewing every log becomes impractical. You need a fast, reliable way to cut through the noise and isolate the traces that signal performance degradation or logic errors. With the [Omnibar](https://www.getmaxim.ai/docs/tracing/dashboard#how-to-use-the-dashboard), you can quickly filter for key indicators -- whether it’s specific error cases, a low online eval score, or performance bottlenecks like high-latency queries -- to focus on the traces that matter most.
 
@@ -41,7 +38,7 @@ Stack multiple filters to narrow in on the root cause and drill into individual 
 
 Run continuous quality checks by [attaching evaluators directly to your production logs](https://www.getmaxim.ai/docs/online-evals/via-ui/set-up-auto-evaluation-on-logs). You can configure automated evaluations and also enable human annotators to rate traces with human evals -- directly from the UI.
 
-From the logs table, [drill into individual traces](https://www.getmaxim.ai/docs/online-evals/via-ui/set-up-auto-evaluation-on-logs#dataset-curation) to review evaluator scores and reasoning, debug issues, and understand what went wrong. You can also [annotate logs directly](https://www.getmaxim.ai/docs/online-evals/via-ui/set-up-human-annotation-on-logs), add comments, or suggest corrected outputs when the agent has hallucinated.
+From the logs table, drill into individual traces to review evaluator scores and reasoning, debug issues, and understand what went wrong. You can also [annotate logs directly](https://www.getmaxim.ai/docs/online-evals/via-ui/set-up-human-annotation-on-logs), add comments, or suggest corrected outputs when the agent has hallucinated.
 
 <iframe src="https://www.youtube.com/embed/f-QCKA46ZZM?start=420" title="YouTube video player" frameBorder="0" className="w-full aspect-video rounded-xl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
 
@@ -59,8 +56,10 @@ This ensures your agent improves with each release while preventing past issues 
 
 <iframe src="https://www.youtube.com/embed/f-QCKA46ZZM?start=731" title="YouTube video player" frameBorder="0" className="w-full aspect-video rounded-xl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
 
+---
+
 Effective error analysis using logs creates a tight feedback loop that strengthens agent reliability, catches issues early, and ensures your agent improves with every iteration.
 
-<Info>
+<Tip>
   [Connect with the Maxim team](https://www.getmaxim.ai/demo) for hands-on support in setting up granular observability into your agent’s performance in production.
-</Info>
+</Tip>

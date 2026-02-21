@@ -358,6 +358,12 @@
                             "settings/setup-sso-with-okta",
                             "settings/setup-sso-with-google"
                         ]
+                    },
+                    {
+                        "group": "CI/CD",
+                        "pages": [
+                            "cicd/maxim-cli"
+                        ]
                     }
                 ]
             },
@@ -763,6 +769,13 @@
                         }
                     },
                     {
+                        "group": "Models",
+                        "openapi": {
+                            "source": "public-apis/openapi/models.json",
+                            "directory": "Models"
+                        }
+                    },
+                    {
                         "group": "Test runs",
                         "openapi": {
                             "source": "public-apis/openapi/test-runs.json",
@@ -809,6 +822,14 @@
             {
                 "tab": "Cookbooks",
                 "groups": [
+                    {
+                        "group": "Product Cookbooks",
+                        "pages": [
+                            "cookbooks/product-cookbooks/pm-cookbook-foundations-of-a-repeatable-evals-process",
+                            "cookbooks/product-cookbooks/observability-processes-for-effective-error-analysis-as-a-pm",
+                            "cookbooks/product-cookbooks/prompt-engineering-with-maxim-build-compare-and-evaluate-prompts"
+                        ]
+                    },
                     {
                         "group": "Integrations",
                         "pages": [
