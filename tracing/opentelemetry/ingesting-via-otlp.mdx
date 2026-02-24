@@ -1,6 +1,6 @@
 ---
 title: Ingesting via OTLP Endpoint
-description: Learn how to send OpenTelemetry (OTLP) traces to Maxim for AI and LLM observability using OpenTelemetry and OpenInference semantic conventions.
+description: Learn how to send OpenTelemetry (OTLP) traces to Maxim for AI and LLM observability using OpenTelemetry, OpenInference, and AI SDK semantic conventions.
 ---
 
 ## What Is OTLP Ingestion?
@@ -44,7 +44,8 @@ Maxim's OTLP endpoint requires the following headers:
 Maxim currently supports OTLP traces using the following semantic conventions:
 
 - OpenTelemetry GenAI conventions (`gen_ai.*`)
-- OpenInference conventions (`llm.*` and `openinference.span.kind`)
+- OpenInference conventions (`llm.*`)
+- AI SDK conventions (`ai.*`)
 
 ## Conventions and support
 
@@ -72,7 +73,7 @@ Ingestion via OTLP also supports the latest (v1.39.0) version of OpenTelemetry S
 
 - Use binary Protobuf (`application/x-protobuf`) for optimal performance and robustness
 - Batch traces to reduce network overhead
-- Include rich attributes following supported conventions (`gen_ai.*` or `llm.*`)
+- Include rich attributes following supported conventions (`gen_ai.*`, `llm.*`, or `ai.*`)
 - Secure your headers and avoid exposing credentials
 - Monitor attribute size limits and apply appropriate quotas
 
@@ -231,6 +232,82 @@ For OpenInference, include `llm.*` attributes and set `openinference.span.kind`.
 ```
 
 </Accordion>
+
+<Accordion title="AI SDK: simple chat with ai.* attributes">
+
+For AI SDK spans, use `ai.*` attributes. Messages can be provided via the `ai.prompt.messages` attribute or via events (`ai.prompt.system`, `ai.prompt.prompt`, `ai.response.text`, etc.).
+
+```json
+{
+  "resourceSpans": [
+    {
+      "resource": {
+        "attributes": [
+          { "key": "service.name", "value": { "stringValue": "otel-test-ai" } }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": { "name": "@ai-sdk/openai", "version": "1.0.0" },
+          "spans": [
+            {
+              "traceId": "7a0f3c9e2d4b1e8f6c5a9d3b7e1f4c8a",
+              "spanId": "9e2c4a1b8d7f3e6c",
+              "name": "ai.streamText",
+              "kind": "2",
+              "startTimeUnixNano": "1739340000000000000",
+              "endTimeUnixNano": "1739340000850000000",
+              "attributes": [
+                { "key": "operation.name", "value": { "stringValue": "ai.streamText" } },
+                { "key": "ai.model.provider", "value": { "stringValue": "openai.chat" } },
+                { "key": "ai.model.id", "value": { "stringValue": "gpt-4o" } },
+                { "key": "ai.response.model", "value": { "stringValue": "gpt-4o-2024-08-06" } },
+                { "key": "ai.response.id", "value": { "stringValue": "chatcmpl-AYk3gR7Lz5yMPnOGH8kT1wQ" } },
+                { "key": "ai.response.finishReason", "value": { "stringValue": "stop" } },
+                { "key": "ai.usage.promptTokens", "value": { "intValue": "24" } },
+                { "key": "ai.usage.completionTokens", "value": { "intValue": "156" } },
+                {
+                  "key": "ai.prompt.messages",
+                  "value": {
+                    "stringValue": "[{\"role\":\"user\",\"content\":\"Explain the difference between REST and GraphQL APIs in a few sentences.\"}]"
+                  }
+                },
+                {
+                  "key": "ai.response.text",
+                  "value": {
+                    "stringValue": "REST uses resource-specific endpoints; GraphQL uses a single query endpoint where clients request exact fields."
+                  }
+                }
+              ],
+              "events": [],
+              "links": [],
+              "status": {},
+              "flags": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+</Accordion>
+
+<Accordion title="AI SDK: additional Maxim metadata">
+
+For AI SDK spans, pass additional values in `maxim.metadata` JSON.
+
+```json
+{
+  "key": "maxim.metadata",
+  "value": {
+    "stringValue": "{\"maxim-trace-name\":\"ai-sdk-chat\",\"maxim-trace-tags\":{\"environment\":\"production\"},\"maxim-tags\":{\"prompt-version\":\"v3.2.1\"},\"maxim-trace-metrics\":{\"user-satisfaction\":4.5},\"maxim-metrics\":{\"latency_ms\":870}}"
+  }
+}
+```
+
+</Accordion>
 </AccordionGroup>
 
 ## Maxim-specific additional attributes
@@ -241,10 +318,11 @@ Maxim supports the following additional keys:
 - `maxim-tags`: `Map<string, string>` for current span/generation tags
 - `maxim-trace-metrics`: `Map<string, number>` for parent trace metrics
 - `maxim-metrics`: `Map<string, number>` for current span/generation metrics
-- `maxim-trace-name`: trace display name (GenAI path)
+- `maxim-trace-name`: trace display name (GenAI and AI SDK paths)
 
 <Note>
 Where to place these keys:
 - For OpenTelemetry GenAI (`gen_ai.*`): put them inside `maxim.metadata` (or `metadata`)
 - For OpenInference (`llm.*`): put them inside `metadata`
+- For AI SDK (`ai.*`): put them inside `maxim.metadata` (or `metadata`)
 </Note>
