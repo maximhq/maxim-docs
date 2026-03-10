@@ -53,6 +53,11 @@
                     "type": "string",
                     "description": "Name of the dataset"
                   },
+                  "folderId": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "Unique identifier for the folder"
+                  },
                   "createDefaultColumns": {
                     "type": "boolean",
                     "description": "Create default columns for the dataset. Columns Input and Expected Output will get created by default"
