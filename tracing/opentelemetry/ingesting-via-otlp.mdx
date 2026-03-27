@@ -1,6 +1,6 @@
 ---
 title: Ingesting via OTLP Endpoint
-description: Learn how to send OpenTelemetry (OTLP) traces to Maxim for AI and LLM observability using OpenTelemetry, OpenInference, and AI SDK semantic conventions.
+description: Learn how to send OpenTelemetry (OTLP) traces to Maxim for AI and LLM observability using OpenTelemetry, OpenInference, and AI SDK semantic conventions—including sessions, metadata, and session end signals.
 ---
 
 ## What Is OTLP Ingestion?
@@ -308,11 +308,142 @@ For AI SDK spans, pass additional values in `maxim.metadata` JSON.
 ```
 
 </Accordion>
+
+<Accordion title="OTLP: trace linked to a session via maxim.metadata">
+
+On the **root span** of a trace, set `maxim.metadata` (or `metadata`) to a JSON string that includes `maxim-session-id`. Maxim will create the session (with optional name, tags, and metrics) and attach the OTLP trace to that session.
+
+```json
+{
+  "key": "maxim.metadata",
+  "value": {
+    "stringValue": "{\"maxim-session-id\":\"550e8400-e29b-41d4-a716-446655440000\",\"maxim-session-name\":\"Support chat\",\"maxim-session-tags\":{\"channel\":\"web\"},\"maxim-session-metrics\":{\"turns\":1},\"maxim-trace-name\":\"otel-session-example\"}"
+  }
+}
+```
+
+Use the **same OTLP `traceId`** for every span that belongs to one logical user interaction so traces group correctly in the UI.
+
+</Accordion>
+
+<Accordion title="OTLP: session end marker span (maxim.session.end)">
+
+To end a session from OTLP without going through the Logging API, send a **root-level** span whose only required Maxim-specific attribute is `maxim.session.end` with a **string value equal to the session id**. The span’s `endTimeUnixNano` is used as the session end time. That span does not emit ordinary trace or child-span logs—it only closes the session.
+
+If this span appears in the **same OTLP payload** as other spans for the same conversation, give it the **same `traceId`** as those spans so the export appears as a single trace in Maxim.
+
+```json
+{
+  "traceId": "5f8c7f9a3ef14f67af716ef4cf4a9d23",
+  "spanId": "aaaaaaaaaaaaaaaa",
+  "name": "session.end",
+  "kind": "2",
+  "startTimeUnixNano": "1739340000000000000",
+  "endTimeUnixNano": "1739340000100000000",
+  "attributes": [
+    {
+      "key": "maxim.session.end",
+      "value": { "stringValue": "550e8400-e29b-41d4-a716-446655440000" }
+    }
+  ],
+  "events": [],
+  "links": [],
+  "status": {},
+  "flags": 0
+}
+```
+
+</Accordion>
 </AccordionGroup>
+
+## Linking traces to sessions via OTLP
+
+When you ingest OTLP traces, Maxim can **create a session** and **associate the trace** with it if the **root span** (a span with no parent in the payload, or whose parent is missing from the batch) includes session details inside structured metadata.
+
+### Where to put session fields
+
+Put session fields in a **JSON object** serialized as the string value of either:
+
+- `maxim.metadata`, or  
+- `metadata`
+
+The JSON may contain these keys (all except `maxim-session-id` are optional):
+
+| Key | Purpose |
+| --- | --- |
+| `maxim-session-id` | **Required** to link the trace to a session. Non-empty string; becomes the session id in Maxim. |
+| `maxim-session-name` | Display name for the session. |
+| `maxim-session-tags` | Object map of string tags applied to the session (values may be coerced to strings). |
+| `maxim-session-metrics` | Object map of numeric metrics (numbers, or strings that parse as finite numbers). |
+
+You can combine these with existing Maxim trace fields in the same JSON object, such as `maxim-trace-name`, `maxim-trace-tags`, `maxim-tags`, `maxim-trace-metrics`, and `maxim-metrics`.
+
+## Ending a session
+
+A session can be closed in more than one way. Choose the option that fits how you instrument your app (pure OTLP, hybrid with HTTP APIs, or SDK elsewhere).
+
+### Behavior you should know
+
+- **Trace end ≠ session end.** When a root OTLP span finishes, Maxim records a trace **end** with that span’s end time. That does **not** end the session.
+- **Session end** is a separate signal: it finalizes the session lifecycle (including triggers such as session-level evaluations, depending on your setup).
+
+### Option 1 — OTLP span attribute `maxim.session.end`
+
+Add a span attribute:
+
+- **Key:** `maxim.session.end`  
+- **Value:** string (or value that resolves to a string), equal to the **session id** you want to close.
+
+Ingest behavior:
+
+- The span’s **`endTimeUnixNano`** is used as the session **end** timestamp.
+- No Maxim trace or generation logs are produced from that span; it acts as a **session-end marker** only.
+
+This is useful when everything goes through your OpenTelemetry pipeline and you want to close the session at a specific point in that pipeline.
+
+### Option 2 — Public Logging API (`POST /v1/logging`)
+
+You can end a session with the **single-action** public logging endpoint, which is the same API used by Maxim SDKs under the hood for structured logging.
+
+**Endpoint:** `https://api.getmaxim.ai/v1/logging`
+
+**Headers:**
+
+- `Content-Type: application/json`
+- `x-maxim-api-key`: your Maxim API key
+
+**Body** (session end):
+
+```json
+{
+  "repoId": "<LOG_REPOSITORY_ID>",
+  "entity": "session",
+  "action": "end",
+  "entityId": "<SESSION_ID>"
+}
+```
+
+- `repoId` — Log Repository id (same repository you use for OTLP `x-maxim-repo-id`).
+- `entityId` — The session id to end (must match the id you used when creating or linking the session).
+
+On success, the API responds with a JSON body that includes confirmation of the `entity`, `action`, and `entityId`. Use this when an HTTP client or backend that does not speak OTLP needs to **explicitly** close a session (for example after a webhook, batch job, or admin action).
+
+Other session actions (`create`, `add-trace`, `add-tag`, `add-metric`, feedback, evaluate, and more) use the same endpoint with different `action` and `data` fields. Refer to your OpenAPI / API reference for the full **Logging** schema if you need those operations.
+
+### Choosing OTLP vs Logging API for session end
+
+| Approach | Best when |
+| --- | --- |
+| `maxim.session.end` on an OTLP span | Session boundaries are known inside the traced request flow; you already export OTLP to Maxim. |
+| `POST /v1/logging` with `session` + `end` | A non-OTLP component must end the session, or you already use the public logging API for other entities. |
+
+You can mix approaches in the same application: for example, link traces to a session via OTLP metadata, then end the session later from a worker using the Logging API.
 
 ## Maxim-specific additional attributes
 
-Maxim supports the following additional keys:
+### Trace and span metadata (inside JSON)
+
+Maxim supports the following additional keys **inside** the `maxim.metadata` or `metadata` JSON string (in addition to [session fields](#linking-traces-to-sessions-via-otlp) above):
 
 - `maxim-trace-tags`: `Map<string, string>` for parent trace tags
 - `maxim-tags`: `Map<string, string>` for current span/generation tags
@@ -320,8 +451,12 @@ Maxim supports the following additional keys:
 - `maxim-metrics`: `Map<string, number>` for current span/generation metrics
 - `maxim-trace-name`: trace display name (GenAI and AI SDK paths)
 
+### Span-level OTLP attributes
+
+- **`maxim.session.end`** — String value = session id to end; see [Ending a session](#ending-a-session) (OTLP `maxim.session.end`). Not part of the JSON metadata blob; set as a normal OTLP span attribute.
+
 <Note>
-Where to place these keys:
+Where to place metadata keys:
 - For OpenTelemetry GenAI (`gen_ai.*`): put them inside `maxim.metadata` (or `metadata`)
 - For OpenInference (`llm.*`): put them inside `metadata`
 - For AI SDK (`ai.*`): put them inside `maxim.metadata` (or `metadata`)
