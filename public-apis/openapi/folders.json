@@ -127,7 +127,8 @@
                       "CONTEXT_SOURCE",
                       "PROMPT_COMPARISONS",
                       "LOG_REPOSITORY",
-                      "PROMPT_TOOL"
+                      "PROMPT_TOOL",
+                      "EVALUATOR"
                     ],
                     "description": "Type of entity for the folder"
                   },
@@ -243,7 +244,8 @@
                 "CONTEXT_SOURCE",
                 "PROMPT_COMPARISONS",
                 "LOG_REPOSITORY",
-                "PROMPT_TOOL"
+                "PROMPT_TOOL",
+                "EVALUATOR"
               ]
             },
             "required": true,
@@ -389,7 +391,8 @@
                 "CONTEXT_SOURCE",
                 "PROMPT_COMPARISONS",
                 "LOG_REPOSITORY",
-                "PROMPT_TOOL"
+                "PROMPT_TOOL",
+                "EVALUATOR"
               ]
             },
             "required": true,
