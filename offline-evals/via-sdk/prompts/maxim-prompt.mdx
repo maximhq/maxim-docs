@@ -72,6 +72,50 @@ console.log(`Test completed! View results: ${result.testRunResult.link}`);
 
 </CodeGroup>
 
+## Using Presets
+
+If you have saved test configuration presets on the Maxim platform, you can use them to automatically load datasets, evaluators, and other settings without specifying them manually. Use the `with_preset` function with the preset name:
+
+```python Python
+from maxim import Maxim
+
+# Initialize Maxim SDK
+maxim = Maxim({"api_key": "your-maxim-api-key"})
+
+# Test using a saved preset — dataset, evaluators, and context
+# settings are loaded from the preset automatically
+result = (
+    maxim.create_test_run(
+        name="Prompt Test with Preset",
+        in_workspace_id="your-workspace-id",
+    )
+    .with_prompt_version_id("prompt-version-id")
+    .with_preset("My Saved Preset")
+    .run()
+)
+
+print(f"Test completed! View results: {result.test_run_result.link}")
+```
+
+The preset provides default values for datasets, evaluators, context-to-evaluate settings, and simulation config. Any values you set explicitly via other builder methods will take priority over the preset defaults. For example, you can override the preset's dataset while keeping its evaluators:
+
+```python Python
+result = (
+    maxim.create_test_run(
+        name="Prompt Test with Preset Override",
+        in_workspace_id="your-workspace-id",
+    )
+    .with_prompt_version_id("prompt-version-id")
+    .with_preset("My Saved Preset")
+    .with_data("different-dataset-id")  # Overrides the preset's dataset
+    .run()
+)
+```
+
+<Note>
+  If the preset includes human evaluators, you must also call `with_human_evaluation_config` to provide the reviewer emails.
+</Note>
+
 ## Important Notes
 
 1. **Variable Mapping**: Ensure that variable names in your testing data match the variable names defined in your Maxim prompt.

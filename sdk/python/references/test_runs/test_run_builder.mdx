@@ -216,6 +216,32 @@ When used with `yields_output()`, the SDK runs your output function locally in a
 
 - `ValueError` - If simulation config is used with `with_prompt_chain_version_id` (use `with_workflow_id` or `with_prompt_version_id` instead)
 
+#### with\_preset
+
+```python
+def with_preset(preset_name: str) -> "TestRunBuilder[T]"
+```
+
+Set a preset (test configuration) to use for this test run. The preset provides default values for datasets, evaluators, simulation config, and context-to-evaluate settings. Any values explicitly set via other builder methods will take priority over preset defaults.
+
+Requires an entity to be set first via `with_workflow_id()`, `with_prompt_version_id()`, or `with_prompt_chain_version_id()`, as the preset is scoped to a specific entity.
+
+**Arguments**:
+
+| Name | Type | Description |
+|------|------|-------------|
+| `preset_name` | _str_ | The name of the preset (test config) saved on the Maxim platform |
+
+**Returns**:
+
+| Name | Description |
+|------|-------------|
+| `[TestRunBuilder](/sdk/python/references/test_runs/test_run_builder)[T]` | The current TestRunBuilder instance for method chaining |
+
+**Raises**:
+
+- `ValueError` - If preset_name is empty or not a string
+
 #### yields\_output
 
 ```python
