@@ -453,6 +453,10 @@
                           "type": "string"
                         },
                         "description": "Tags for the evaluator"
+                      },
+                      "folderId": {
+                        "type": "string",
+                        "description": "Unique identifier for the folder to place the evaluator in"
                       }
                     },
                     "required": [
@@ -1778,6 +1782,10 @@
                       }
                     ],
                     "description": "Configuration for the evaluator"
+                  },
+                  "folderId": {
+                    "type": "string",
+                    "description": "Unique identifier for the folder to move the evaluator into"
                   }
                 },
                 "required": [
