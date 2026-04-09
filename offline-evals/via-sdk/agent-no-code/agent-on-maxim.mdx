@@ -65,6 +65,49 @@ console.log(`Test run completed! View results: ${result.testRunResult.link}`);
 
 </CodeGroup>
 
+## Using Presets
+
+If you have saved test configuration presets on the Maxim platform, you can use them to automatically load datasets, evaluators, and other settings without specifying them manually:
+
+```python Python
+from maxim import Maxim
+
+maxim = Maxim({"api_key": "your-api-key"})
+
+# Test using a saved preset — dataset, evaluators, and context
+# settings are loaded from the preset automatically
+result = (
+    maxim.create_test_run(
+        name="No-code Agent Test with Preset",
+        in_workspace_id="your-workspace-id",
+    )
+    .with_prompt_chain_version_id("your-prompt-chain-version-id")
+    .with_preset("My Saved Preset")
+    .run()
+)
+
+print(f"Test completed! View results: {result.test_run_result.link}")
+```
+
+Any values you set explicitly via other builder methods will take priority over the preset defaults:
+
+```python Python
+result = (
+    maxim.create_test_run(
+        name="No-code Agent Test with Preset Override",
+        in_workspace_id="your-workspace-id",
+    )
+    .with_prompt_chain_version_id("your-prompt-chain-version-id")
+    .with_preset("My Saved Preset")
+    .with_data("different-dataset-id")  # Overrides the preset's dataset
+    .run()
+)
+```
+
+<Note>
+  If the preset includes human evaluators, you must also call `with_human_evaluation_config` to provide the reviewer emails.
+</Note>
+
 ## Next Steps
 
 - [Local Agent Testing](/offline-evals/via-sdk/local-agent) - Learn how to create custom agents with local logic
