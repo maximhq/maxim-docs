@@ -756,6 +756,13 @@
                         }
                     },
                     {
+                        "group": "Workflows",
+                        "openapi": {
+                            "source": "public-apis/openapi/workflows.json",
+                            "directory": "Workflows"
+                        }
+                    },
+                    {
                         "group": "Integrations",
                         "openapi": {
                             "source": "public-apis/openapi/integrations.json",
