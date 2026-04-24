@@ -1,0 +1,595 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "contact": {
+      "name": "Maxim Engineering",
+      "email": "eng@getmaxim.ai"
+    },
+    "title": "Maxim SDK API - workflows",
+    "description": "API documentation for Maxim SDK workflows endpoints"
+  },
+  "servers": [
+    {
+      "url": "https://api.getmaxim.ai"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-maxim-api-key",
+        "description": "API key for authentication"
+      }
+    },
+    "schemas": {
+      "Workflow": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string"
+          },
+          "accountId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "HTTP",
+              "VOICE"
+            ]
+          },
+          "folderId": {
+            "type": "string"
+          },
+          "config": {
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "workspaceId",
+          "accountId",
+          "name",
+          "type",
+          "createdAt",
+          "updatedAt"
+        ]
+      }
+    },
+    "parameters": {}
+  },
+  "paths": {
+    "/v1/workflows": {
+      "post": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Workflow"
+        ],
+        "description": "Create a new workflow. Only minimal metadata is set at creation time — `name`, `type`, optional `folderId`, `description`, `environmentId`, and `config.language`. To set HTTP fields (method, url, headers, scripts, authentication) or VOICE fields (phoneNumber, dialCode, countryCode), follow up with `PUT /v1/workflows`.",
+        "summary": "Create Workflow",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "workspaceId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier for the workspace"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Name of the workflow"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "HTTP",
+                      "VOICE"
+                    ],
+                    "description": "Type of workflow (HTTP or VOICE)"
+                  },
+                  "folderId": {
+                    "type": "string",
+                    "description": "Unique identifier for the folder"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description of the workflow"
+                  },
+                  "environmentId": {
+                    "type": "string",
+                    "description": "Default environment identifier for the workflow"
+                  },
+                  "config": {
+                    "type": "object",
+                    "properties": {
+                      "language": {
+                        "type": "string",
+                        "description": "Script language for the workflow"
+                      }
+                    },
+                    "description": "Optional workflow configuration overrides"
+                  }
+                },
+                "required": [
+                  "workspaceId",
+                  "name",
+                  "type"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Workflow created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Workflow"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Workflow"
+        ],
+        "description": "Get workflow details. If id or name is provided, returns a single workflow object. Otherwise, lists workflows (filtered by type — defaults to HTTP — and folderId) with cursor-based pagination.",
+        "summary": "Get Workflows",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier for the workspace"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Unique identifier of a specific workflow to fetch"
+            },
+            "required": false,
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Name of a specific workflow to fetch"
+            },
+            "required": false,
+            "name": "name",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Filter workflows by folder. Omit (with ignoreFolders=false) to list root-level workflows."
+            },
+            "required": false,
+            "name": "folderId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "HTTP",
+                "VOICE"
+              ],
+              "default": "HTTP",
+              "description": "Workflow type filter. Defaults to HTTP; pass VOICE to list voice workflows."
+            },
+            "required": false,
+            "name": "type",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "boolean",
+              "nullable": true,
+              "default": false,
+              "description": "When true, include workflows from all folders instead of only root-level ones."
+            },
+            "required": false,
+            "name": "ignoreFolders",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "nullable": true,
+              "maximum": 100,
+              "default": 10,
+              "description": "Maximum number of records to return (max: 100)"
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Pagination cursor (id of the last item from the previous page)"
+            },
+            "required": false,
+            "name": "cursor",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workflows retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/Workflow"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Workflow"
+                          }
+                        }
+                      ],
+                      "description": "Single Workflow if fetching by id/name, array otherwise."
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "hasMore": {
+                          "type": "boolean"
+                        },
+                        "cursor": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      },
+                      "required": [
+                        "hasMore",
+                        "cursor"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Workflow not found"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Workflow"
+        ],
+        "description": "Delete a workflow by id. Also removes any scheduled jobs targeting this workflow.",
+        "summary": "Delete Workflow",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Unique identifier of the workflow to delete"
+            },
+            "required": true,
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Workspace that owns the workflow"
+            },
+            "required": true,
+            "name": "workspaceId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Workflow deleted successfully"
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Workflow not found"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Workflow"
+        ],
+        "description": "Update a workflow. All fields except `id` and `workspaceId` are optional; only fields you provide are changed. The `config` object is shallow-merged with the existing config — top-level keys you omit are preserved, keys you send overwrite. Nested objects and arrays are replaced wholesale (no deep merge). The workflow's `type` cannot be changed. Config fields are validated against the workflow's stored type (HTTP or VOICE).",
+        "summary": "Update Workflow",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Unique identifier of the workflow to update"
+                  },
+                  "workspaceId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Workspace that currently owns the workflow"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "New name for the workflow"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "New description for the workflow"
+                  },
+                  "folderId": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "Move the workflow to this folder. Pass null to remove from any folder; omit to leave unchanged."
+                  },
+                  "newWorkspaceId": {
+                    "type": "string",
+                    "description": "Move the workflow to this workspace. Omit to keep it in the current workspace."
+                  },
+                  "config": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "nullable": true
+                    },
+                    "description": "Partial workflow config. Top-level keys are shallow-merged with the existing config; nested objects/arrays are replaced, not merged."
+                  },
+                  "evalConfig": {
+                    "type": "object",
+                    "properties": {
+                      "datasetIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "evals": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            },
+                            "builtin": {
+                              "type": "boolean",
+                              "default": false
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "name",
+                            "type"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "datasetIds"
+                    ],
+                    "description": "Evaluation configuration (full replacement when provided)"
+                  }
+                },
+                "required": [
+                  "id",
+                  "workspaceId"
+                ]
+              },
+              "examples": {
+                "Rename only": {
+                  "summary": "Rename a workflow without touching its config",
+                  "value": {
+                    "id": "wf_abc123",
+                    "workspaceId": "ws_xyz",
+                    "name": "renamed-workflow"
+                  }
+                },
+                "Partial HTTP config update": {
+                  "summary": "Change a single HTTP config field (other keys preserved)",
+                  "value": {
+                    "id": "wf_abc123",
+                    "workspaceId": "ws_xyz",
+                    "config": {
+                      "method": "GET"
+                    }
+                  }
+                },
+                "Full HTTP config replacement": {
+                  "summary": "Supply a complete HTTP config (overwrites top-level keys)",
+                  "value": {
+                    "id": "wf_abc123",
+                    "workspaceId": "ws_xyz",
+                    "config": {
+                      "method": "POST",
+                      "url": "https://api.example.com/chat",
+                      "scheme": "https",
+                      "headers": [
+                        {
+                          "id": "h1",
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "params": [],
+                      "payload": "{\"query\":\"{{input}}\"}",
+                      "scripts": "function prescript(req){return req}",
+                      "authentication": {
+                        "type": "none"
+                      },
+                      "variables": {
+                        "input": ""
+                      },
+                      "timeout": 120,
+                      "maxRetries": 3,
+                      "concurrency": 10,
+                      "contextToEvaluate": ""
+                    }
+                  }
+                },
+                "VOICE config update": {
+                  "summary": "Set phone details on a VOICE workflow",
+                  "value": {
+                    "id": "wf_voice1",
+                    "workspaceId": "ws_xyz",
+                    "config": {
+                      "phoneNumber": "4155550123",
+                      "dialCode": "+1",
+                      "countryCode": "US",
+                      "country": "United States",
+                      "timeout": 60,
+                      "concurrency": 1,
+                      "maxRetries": 3,
+                      "language": "en-US"
+                    }
+                  }
+                },
+                "Move to another folder": {
+                  "summary": "Pass null to remove from any folder",
+                  "value": {
+                    "id": "wf_abc123",
+                    "workspaceId": "ws_xyz",
+                    "folderId": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Workflow updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Workflow"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters or workflow not found in workspace"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    }
+  }
+}
