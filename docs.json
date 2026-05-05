@@ -810,6 +810,13 @@
                             "source": "public-apis/openapi/logging.json",
                             "directory": "Logging"
                         }
+                    },
+                    {
+                        "group": "Workspaces",
+                        "openapi": {
+                            "source": "public-apis/openapi/workspaces.json",
+                            "directory": "Workspaces"
+                        }
                     }
                 ]
             },

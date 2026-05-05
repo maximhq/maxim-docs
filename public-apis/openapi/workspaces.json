@@ -1,0 +1,208 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "contact": {
+      "name": "Maxim Engineering",
+      "email": "eng@getmaxim.ai"
+    },
+    "title": "Maxim SDK API - workspaces",
+    "description": "API documentation for Maxim SDK workspaces endpoints"
+  },
+  "servers": [
+    {
+      "url": "https://api.getmaxim.ai"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-maxim-api-key",
+        "description": "API key for authentication"
+      }
+    },
+    "schemas": {},
+    "parameters": {}
+  },
+  "paths": {
+    "/v1/workspaces": {
+      "get": {
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Workspace"
+        ],
+        "description": "List all workspaces in the authenticated account. Optionally filter by `id` or `name` to fetch a specific workspace. Supports cursor-based pagination via `cursor` and `limit`.",
+        "summary": "Get Workspaces",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "description": "Optional workspace id to fetch a single workspace"
+            },
+            "required": false,
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Optional workspace name to filter by (exact match)"
+            },
+            "required": false,
+            "name": "name",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "description": "Cursor for pagination - id of the last item from the previous page"
+            },
+            "required": false,
+            "name": "cursor",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "description": "Maximum number of workspaces to return (1-100, default 20)"
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workspaces retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "description": "Unique identifier for the workspace"
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "Name of the workspace"
+                              },
+                              "accountId": {
+                                "type": "string",
+                                "description": "Identifier of the account that owns the workspace"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "description": "ISO timestamp of when the workspace was created"
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "description": "ISO timestamp of when the workspace was last updated"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name",
+                              "accountId",
+                              "createdAt",
+                              "updatedAt"
+                            ]
+                          }
+                        },
+                        "pagination": {
+                          "type": "object",
+                          "properties": {
+                            "nextCursor": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "hasMore": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "nextCursor",
+                            "hasMore"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "data",
+                        "pagination"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "description": "Unique identifier for the workspace"
+                            },
+                            "name": {
+                              "type": "string",
+                              "description": "Name of the workspace"
+                            },
+                            "accountId": {
+                              "type": "string",
+                              "description": "Identifier of the account that owns the workspace"
+                            },
+                            "createdAt": {
+                              "type": "string",
+                              "description": "ISO timestamp of when the workspace was created"
+                            },
+                            "updatedAt": {
+                              "type": "string",
+                              "description": "ISO timestamp of when the workspace was last updated"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "name",
+                            "accountId",
+                            "createdAt",
+                            "updatedAt"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "data"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          },
+          "403": {
+            "description": "Forbidden - insufficient permissions"
+          },
+          "404": {
+            "description": "Workspace not found"
+          }
+        }
+      }
+    }
+  }
+}
