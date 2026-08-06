@@ -123,6 +123,10 @@ You can combine multiple filter conditions using "All" (AND) or "Any" (OR) logic
 
 **Sampling**: Choose a sampling rate to control what percentage of logs are evaluated. This helps manage costs by preventing evaluation of every single log.
 
+<Note>
+Sampling and rate limiting apply to trace-level evaluation only; session-level evaluators run on every session regardless of the sampling rate.
+</Note>
+
 ![Screenshot of filters and sampling](/images/docs/filters_sampling.png)
 
 You can also enable **Rate Limiting** to cap the maximum number of logs sampled per time period, providing additional cost control.
