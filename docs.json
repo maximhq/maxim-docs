@@ -1004,7 +1004,7 @@
         "primary": {
             "type": "button",
             "label": "Book a demo",
-            "href": "https://www.getmaxim.ai/demo"
+            "href": "https://www.getmaxim.ai/book-a-demo"
         }
     },
     "redirects": [
@@ -1495,6 +1495,166 @@
         {
             "source": "/api/log-repositories/get",
             "destination": "/log-repositories/log-repository/get-log-repositories"
+        },
+        {
+            "source": "/dashboards/test-runs-comparison",
+            "destination": "/dashboards/test-runs-comparison-dashboard"
+        },
+        {
+            "source": "/data-engine/datasets",
+            "destination": "/library/datasets/import-or-create-datasets"
+        },
+        {
+            "source": "/dataset-and-datapoints/datasets",
+            "destination": "/library/datasets/import-or-create-datasets"
+        },
+        {
+            "source": "/dataset-and-datapoints/using-synthetic-datasets",
+            "destination": "/library/datasets/synthetic-data-generation"
+        },
+        {
+            "source": "/evaluations/overview",
+            "destination": "/offline-evals/overview"
+        },
+        {
+            "source": "/evaluators/creating-a-human-evaluator",
+            "destination": "/library/evaluators/custom-evaluators"
+        },
+        {
+            "source": "/evaluators/creating-evaluators",
+            "destination": "/library/evaluators/custom-evaluators"
+        },
+        {
+            "source": "/evaluators/evaluator-store",
+            "destination": "/library/evaluators/pre-built-evaluators/overview"
+        },
+        {
+            "source": "/exports",
+            "destination": "/tracing/exports"
+        },
+        {
+            "source": "/integrations/crewai",
+            "destination": "/sdk/python/integrations/crewai/crewai"
+        },
+        {
+            "source": "/integrations/langchain",
+            "destination": "/sdk/python/integrations/langchain/langchain"
+        },
+        {
+            "source": "/integrations/langgraph",
+            "destination": "/sdk/python/integrations/langgraph/langgraph-with-decorator"
+        },
+        {
+            "source": "/integrations/litellm",
+            "destination": "/sdk/python/integrations/litellm/litellm-sdk"
+        },
+        {
+            "source": "/library/evaluators/pre-built-evaluators/ai-evaluators/overview",
+            "destination": "/library/evaluators/pre-built-evaluators/overview"
+        },
+        {
+            "source": "/library/evaluators/pre-built-evaluators/programmatic-evaluators/overview",
+            "destination": "/library/evaluators/pre-built-evaluators/overview"
+        },
+        {
+            "source": "/library/evaluators/pre-built-evaluators/statistical-evaluators/overview",
+            "destination": "/library/evaluators/pre-built-evaluators/overview"
+        },
+        {
+            "source": "/metadata",
+            "destination": "/tracing/tracing-via-sdk/metadata"
+        },
+        {
+            "source": "/monitoring/logging",
+            "destination": "/tracing/overview"
+        },
+        {
+            "source": "/offline-evals/via-ui/agents-via-no-code-builder/agent-deployment",
+            "destination": "/offline-evals/via-ui/agents-via-no-code-builder/deploy-prompt-chains"
+        },
+        {
+            "source": "/offline-evals/via-ui/agents-via-no-code-builder/types-of-nodes",
+            "destination": "/offline-evals/via-ui/agents-via-no-code-builder/experiment-with-prompt-chains"
+        },
+        {
+            "source": "/offline-evals/via-ui/prompts/folders-and-tags",
+            "destination": "/prompt-engineering/folders-and-tags"
+        },
+        {
+            "source": "/offline-evals/via-ui/prompts/mcp",
+            "destination": "/prompt-engineering/mcp"
+        },
+        {
+            "source": "/offline-evals/via-ui/prompts/prompt-deployment",
+            "destination": "/prompt-engineering/prompt-deployment"
+        },
+        {
+            "source": "/offline-evals/via-ui/prompts/prompt-management",
+            "destination": "/prompt-engineering/prompt-versions"
+        },
+        {
+            "source": "/offline-evals/via-ui/prompts/prompt-optimization",
+            "destination": "/prompt-engineering/prompt-optimization"
+        },
+        {
+            "source": "/offline-evals/via-ui/prompts/prompt-partials",
+            "destination": "/prompt-engineering/prompt-partials"
+        },
+        {
+            "source": "/offline-evals/via-ui/prompts/prompt-playground",
+            "destination": "/prompt-engineering/prompt-playground"
+        },
+        {
+            "source": "/offline-evals/via-ui/prompts/prompt-sessions",
+            "destination": "/prompt-engineering/prompt-sessions"
+        },
+        {
+            "source": "/offline-evals/via-ui/prompts/prompt-versions",
+            "destination": "/prompt-engineering/prompt-versions"
+        },
+        {
+            "source": "/prompts/creating-a-prompt",
+            "destination": "/prompt-engineering/prompt-playground"
+        },
+        {
+            "source": "/prompts/prompt-playground",
+            "destination": "/prompt-engineering/prompt-playground"
+        },
+        {
+            "source": "/prompts/prompt-sessions",
+            "destination": "/prompt-engineering/prompt-sessions"
+        },
+        {
+            "source": "/release-notes/July 2025/ai-simulations-prompt-playground",
+            "destination": "/release-notes/July-2025/ai-simulations-prompt-playground"
+        },
+        {
+            "source": "/set-up-alerts-and-notifications",
+            "destination": "/online-evals/set-up-alerts-and-notifications"
+        },
+        {
+            "source": "/simulation/overview",
+            "destination": "/simulations/text-simulation/overview"
+        },
+        {
+            "source": "/simulations/overview",
+            "destination": "/simulations/text-simulation/overview"
+        },
+        {
+            "source": "/simulations/simulation-runs",
+            "destination": "/simulations/text-simulation/simulation-runs"
+        },
+        {
+            "source": "/tracing-concepts",
+            "destination": "/tracing/concepts"
+        },
+        {
+            "source": "/tracing-quickstart",
+            "destination": "/tracing/quickstart"
+        },
+        {
+            "source": "/user-feedback",
+            "destination": "/tracing/tracing-via-sdk/user-feedback"
         }
     ],
     "footer": {
